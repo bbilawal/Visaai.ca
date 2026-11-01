@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { localeAlternates } from '@/lib/seo/alternates'
+import { SITE_BRAND } from '@/lib/site-config'
 
 // generateMetadata, not a static `metadata` object: canonical is per-locale
 // now, and only the route receives the locale it is rendering.
@@ -11,7 +12,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   return {
-    title: 'Privacy Policy — VisaAI',
+    title: `Privacy Policy — ${SITE_BRAND}`,
     description: 'How VisaAI collects, uses, stores, and protects your personal information.',
     alternates: localeAlternates('/privacy', locale),
   }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { localeAlternates } from '@/lib/seo/alternates'
+import { SITE_BRAND, SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 
 /**
  * Metadata-only layout for the guest funnel's front door.
@@ -21,9 +22,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   return {
-    title: 'Start a visa application — VisaAI',
-    description:
-      'Choose your destination and get a free eligibility assessment. No account or card required.',
+    title: SITE_DEFAULT_COUNTRY
+      ? `Start a Canada visa application — ${SITE_BRAND}`
+      : 'Start a visa application — VisaAI',
+    description: SITE_DEFAULT_COUNTRY
+      ? 'Start a free Canada visa assessment: choose your Canadian visa type in the guided intake. No account or card required.'
+      : 'Choose your destination and get a free eligibility assessment. No account or card required.',
     alternates: localeAlternates('/applications/new', locale),
   }
 }

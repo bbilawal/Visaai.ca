@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { SITE_BRAND } from '@/lib/site-config'
 
 /**
  * Root 404.
@@ -19,7 +20,7 @@ import type { Metadata } from 'next'
  * that could itself be missing.
  */
 export const metadata: Metadata = {
-  title: 'Page not found — VisaAI',
+  title: `Page not found — ${SITE_BRAND}`,
   // A 404 has no content and dilutes the corpus. It must never be indexed.
   robots: { index: false, follow: true },
 }

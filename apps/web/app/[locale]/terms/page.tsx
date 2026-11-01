@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { localeAlternates } from '@/lib/seo/alternates'
+import { SITE_BRAND } from '@/lib/site-config'
 
 export async function generateMetadata({
   params,
@@ -9,7 +10,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   return {
-    title: 'Terms of Service — VisaAI',
+    title: `Terms of Service — ${SITE_BRAND}`,
     description: 'The terms that govern your use of VisaAI.',
     alternates: localeAlternates('/terms', locale),
   }

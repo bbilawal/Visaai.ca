@@ -1,5 +1,6 @@
 import { SITE_URL } from '@/lib/seo/site'
 import { listPublishedCountries, listPublishableVisaPages } from '@/lib/visa-registry'
+import { SITE_BRAND } from '@/lib/site-config'
 
 /**
  * `/llms.txt` — an AI-readable index of the published visa pages.
@@ -41,7 +42,7 @@ export async function GET(): Promise<Response> {
   const lines: string[] = []
   const w = (s = '') => lines.push(s)
 
-  w('# VisaAI')
+  w(`# ${SITE_BRAND}`)
   w()
   w('> Official-source visa requirements. Every requirement published on this')
   w('> site is bound to a verbatim excerpt from the issuing government’s own')

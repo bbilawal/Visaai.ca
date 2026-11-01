@@ -10,6 +10,8 @@
  * So: no `aggregateRating`, no `review`, no `foundingDate`, no employee count.
  * If a field is not verifiable from the product itself, it is absent.
  */
+import { SITE_BRAND } from '@/lib/site-config'
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
 /** Serialise for a <script type="application/ld+json"> tag. */
@@ -27,7 +29,7 @@ export function organizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'VisaAI',
+    name: SITE_BRAND,
     url: SITE_URL,
     // Absolute URL: Google rejects a relative `logo`, and this is what feeds
     // the knowledge-panel / rich-result brand image.
@@ -47,7 +49,7 @@ export function webApplicationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'VisaAI',
+    name: SITE_BRAND,
     url: SITE_URL,
     image: `${SITE_URL}/brand/og-v3.png`,
     applicationCategory: 'BusinessApplication',

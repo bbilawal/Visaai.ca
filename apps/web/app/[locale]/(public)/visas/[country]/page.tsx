@@ -13,6 +13,7 @@ import {
 } from '@/lib/visa-registry'
 import { VerifiedStamp } from '@/components/visas/verified-stamp'
 import { OfficialSourceList } from '@/components/visas/official-source-list'
+import { SITE_BRAND } from '@/lib/site-config'
 
 /**
  * Country visa hub: /visas/{country}
@@ -54,13 +55,13 @@ export async function generateMetadata({
 
   const types = await listVisaTypes(c.code)
   return {
-    title: `${c.name} visa types and official sources — VisaAI`,
+    title: `${c.name} visa types and official sources — ${SITE_BRAND}`,
     description:
       `The ${types.length} visa categories ${c.immigration_authority ?? c.name} publishes, ` +
       `each linked to its official government page. Last verified ${c.last_verified_at?.slice(0, 10) ?? 'n/a'}.`,
     alternates: localeAlternates(`/visas/${c.slug}`, locale),
     openGraph: {
-      title: `${c.name} visa types — VisaAI`,
+      title: `${c.name} visa types — ${SITE_BRAND}`,
       url: `${SITE_URL}/visas/${c.slug}`,
       type: 'article',
     },

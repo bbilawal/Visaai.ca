@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { localeAlternates } from '@/lib/seo/alternates'
 import { listPublishedCountries } from '@/lib/visa-registry'
 import { SITE_URL } from '@/lib/seo/site'
+import { SITE_BRAND, SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 
 /**
  * The public visa index: /visas
@@ -34,9 +35,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   return {
-    title: 'Visa information by country — VisaAI',
-    description:
-      'Official visa categories, authorities and application pages for each destination VisaAI covers, with a link to the government source for every entry.',
+    title: SITE_DEFAULT_COUNTRY
+      ? `Canadian visa information — ${SITE_BRAND}`
+      : 'Visa information by country — VisaAI',
+    description: SITE_DEFAULT_COUNTRY
+      ? 'Official Canadian visa categories and IRCC application pages, with a link to the government source for every entry.'
+      : 'Official visa categories, authorities and application pages for each destination VisaAI covers, with a link to the government source for every entry.',
     alternates: localeAlternates('/visas', locale),
   }
 }
@@ -47,7 +51,7 @@ export default async function VisasIndexPage() {
   const itemList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Visa information by country',
+    name: SITE_DEFAULT_COUNTRY ? 'Canadian visa information' : 'Visa information by country',
     itemListElement: countries.map((c, i) => ({
       '@type': 'ListItem',
       position: i + 1,
@@ -77,7 +81,9 @@ export default async function VisasIndexPage() {
       </nav>
 
       <p className="eyebrow mb-2">Reference</p>
-      <h1 className="type-h1 mb-3">Visa information by country</h1>
+      <h1 className="type-h1 mb-3">
+        {SITE_DEFAULT_COUNTRY ? 'Canadian visa information' : 'Visa information by country'}
+      </h1>
       <p className="lede mb-8 max-w-[640px]">
         The visa categories each authority actually publishes, with a direct
         link to the official page for every one. VisaAI does not issue visas and

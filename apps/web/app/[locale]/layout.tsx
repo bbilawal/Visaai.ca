@@ -16,7 +16,7 @@ import { BetaBanner } from '@/components/beta/beta-banner'
 import { FeedbackWidget } from '@/components/beta/feedback-widget'
 import { routing } from '@/i18n/routing'
 import { LOCALES, dirFor, type Locale } from '@/i18n/config'
-import { SITE_CONFIG } from '@/lib/site-config'
+import { SITE_BRAND, SITE_CONFIG } from '@/lib/site-config'
 import '../globals.css'
 
 const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono', display: 'swap' })
@@ -74,12 +74,16 @@ export async function generateMetadata({
       description: SITE_CONFIG.mode === 'canada'
         ? 'Prepare a Canada visa application with structured, applicant-controlled guidance.'
         : 'Prepare stronger visa applications with AI-powered guidance.',
-      images: [{ url: '/brand/og-v3.png', width: 1200, height: 630, alt: 'VisaAI' }],
+      images: [{ url: '/brand/og-v3.png', width: 1200, height: 630, alt: SITE_BRAND }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'VisaAI — AI-Powered Immigration Copilot',
-      description: 'Prepare stronger visa applications with AI-powered guidance.',
+      title: SITE_CONFIG.mode === 'canada'
+        ? 'VisaAI Canada — Canada visa application preparation'
+        : 'VisaAI — AI-Powered Immigration Copilot',
+      description: SITE_CONFIG.mode === 'canada'
+        ? 'Prepare a Canada visa application with structured, applicant-controlled guidance.'
+        : 'Prepare stronger visa applications with AI-powered guidance.',
       images: ['/brand/og-v3.png'],
     },
     // NO `alternates` here on purpose. Metadata merges field-by-field, so a

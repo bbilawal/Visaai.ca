@@ -7,6 +7,7 @@ import {
   robotsForCoverage,
   translationCoverage,
 } from '@/lib/seo/translation-coverage'
+import { SITE_BRAND } from '@/lib/site-config'
 
 /**
  * Revalidated, not force-dynamic.
@@ -45,7 +46,7 @@ export async function generateMetadata({
   const coverage = translationCoverage(locale, 'pricing', localeMessages, englishMessages)
 
   return {
-    title: `${t('eyebrow')} — VisaAI`,
+    title: `${t('eyebrow')} — ${SITE_BRAND}`,
     description: t('heroLede'),
     alternates: localeAlternates('/pricing', locale),
     robots: robotsForCoverage(coverage),

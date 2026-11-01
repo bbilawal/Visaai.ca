@@ -17,6 +17,7 @@ import {
 } from '@/lib/visa-registry'
 import { VerifiedStamp } from '@/components/visas/verified-stamp'
 import { OfficialSourceList } from '@/components/visas/official-source-list'
+import { SITE_BRAND } from '@/lib/site-config'
 
 /**
  * Visa detail page: /visas/{country}/{visa}
@@ -69,7 +70,7 @@ export async function generateMetadata({
   return {
     // The authority's own name for the visa is the title, because that is what
     // people search for — "subclass 600", "Standard Visitor visa", "B-1/B-2".
-    title: `${t.official_name} — ${c.name} | VisaAI`,
+    title: `${t.official_name} — ${c.name} | ${SITE_BRAND}`,
     description: publishable
       ? `${officialCount} official requirement${officialCount === 1 ? '' : 's'} for the ${t.official_name} in ${c.name}, each traced to ${c.immigration_authority ?? 'the issuing authority'}.`
       : `Official ${c.name} ${t.official_name} information and government source links.`,
