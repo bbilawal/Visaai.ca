@@ -1,0 +1,51 @@
+{
+  "run_id": "visaai-e2e-20260812",
+  "generated_at": "2026-08-12T23:20:12.640Z",
+  "git_head": "256d3ab4fa687e487c359e292f07c45fef699304",
+  "target_environment": "http://localhost:3100",
+  "browser": "Chromium (Playwright) + Chrome (extension, exploratory)",
+  "total_supported_destination_countries": 33,
+  "total_supported_visa_categories": 6,
+  "total_supported_visa_subtypes": 0,
+  "exhaustive_matrix_rows": 71,
+  "exhaustive_matrix_completed": 71,
+  "countries_touched": 33,
+  "countries_100_percent_complete": 33,
+  "real_life_scenarios_planned": 1000,
+  "real_life_scenarios_completed": 1015,
+  "scenario_pass_rate": 1,
+  "matrix_pass_rate": 1,
+  "status_breakdown": {
+    "PASS_WITH_FINDINGS": 1084,
+    "PASS": 2
+  },
+  "P0_found": 0,
+  "P0_fixed": 0,
+  "P1_found": 2,
+  "P1_fixed": 2,
+  "P2_found": 4,
+  "P2_fixed": 4,
+  "P3_found": 1,
+  "P3_fixed": 0,
+  "blocked_defects": 0,
+  "accuracy_claims_checked": 6,
+  "accuracy_mismatches": 0,
+  "hallucination_suspicions": 0,
+  "hallucinations_confirmed": 0,
+  "console_error_scenarios": 1086,
+  "network_failure_scenarios": 39,
+  "regression_tests_added": 16,
+  "completion": {
+    "matrix_complete": true,
+    "scenarios_complete": true,
+    "stages_covered": true,
+    "all_defects_handled": true,
+    "p0_p1_clear": true,
+    "regression_gates_pass": true,
+    "gates_not_run": [
+      "formatter",
+      "lint"
+    ],
+    "definition_of_done_met": true
+  }
+}

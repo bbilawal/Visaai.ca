@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-long-term-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "permanent_residence",
+    "official_name": "Long-Term Residence Permit",
+    "slug": "long-term-residence-permit",
+    "purpose": "Türkiye's indefinite residence permit, granted after eight continuous years of residence, carrying most rights of a Turkish citizen — and closed entirely to refugees, conditional refugees, subsidiary and temporary protection beneficiaries and humanitarian permit holders.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "Two clauses decide whether this route exists for a given person at all. The eight-year count treats STUDENT permits as HALF their duration and every other permit at full value, so a person who studied for six years and worked for two has five years counted, not eight. And protection beneficiaries — refugees, conditional refugees, subsidiary and temporary protection, humanitarian permit holders — are excluded outright, however long they have been present.\n\nThe permit is issued INDEFINITELY, which is why the two cancellation grounds are quoted: a serious public order threat, or more than a continuous year outside Turkey for a reason other than health, education or compulsory public service.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 42-45 of Law 6458 and Articles 40-43 of the implementing regulation",
+      "description": "Both instruments in one sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "long term residence permit shall be regulated by articles 42-45 of the law on foreigners and international protection. besides, long term residence permit shall be regulated by articles 40-43 of the regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 10,
+      "source_excerpt_display": "Long term residence permit shall be regulated by Articles 42-45 of the Law on Foreigners and International Protection. Besides, long term residence permit shall be regulated by Articles 40-43 of the Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "who_eight_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: eight continuous years on a permit, issued by governorates on ministry approval",
+      "description": "Or foreigners who meet conditions set by the ministry, which the authority states as an alternative.",
+      "source_role": "requirements",
+      "source_excerpt": "- a long term residence permit shall be issued by the governorates, upon approval of the ministry, to the foreigners that have continuously resided in turkey for at least eight years on a permit or to foreigners that meet the conditions set out by the ministry.",
+      "parameters": {
+        "years": 8,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "- A long term residence permit shall be issued by the governorates, upon approval of the Ministry, to the foreigners that have continuously resided in Turkey for at least eight years on a permit or to foreigners that meet the conditions set out by the Ministry."
+    },
+    {
+      "requirement_code": "who_excluded_protection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "EXCLUDED: refugees, conditional refugees, subsidiary and temporary protection beneficiaries, and humanitarian permit holders",
+      "description": "An outright bar on transfer, however long the person has been present.",
+      "source_role": "requirements",
+      "source_excerpt": "- refugees, conditional refugees and subsidiary protection beneficiaries as well as persons under temporary protection and humanitarian residence permit holders are not entitled to the right of transfer to a long-term residence permit.",
+      "display_order": 30,
+      "source_excerpt_display": "- Refugees, conditional refugees and subsidiary protection beneficiaries as well as persons under temporary protection and humanitarian residence permit holders are not entitled to the right of transfer to a long-term residence permit."
+    },
+    {
+      "requirement_code": "duration_indefinite",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duration: issued INDEFINITELY",
+      "description": "The only indefinite permit on this page.",
+      "source_role": "requirements",
+      "source_excerpt": "long term residence permit shall be issued indefinitely.",
+      "display_order": 40,
+      "source_excerpt_display": "Long term residence permit shall be issued indefinitely."
+    },
+    {
+      "requirement_code": "condition_eight_years_student_half",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: eight continuous years — with STUDENT permits counting only HALF their duration",
+      "description": "The half-count is the clause that most often makes an apparently qualified applicant ineligible, and it is quoted in the sentence that carries it.",
+      "source_role": "requirements",
+      "source_excerpt": "- having continuous residence in turkey for at least eight years (in calculation of continuous eight years, half of the duration of student resident permits, as stated in law article 38, and the full duration of all other types of residence permits shall be taken into account.);",
+      "parameters": {
+        "years": 8,
+        "student_permit_weight": 0.5,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "- Having continuous residence in Turkey for at least eight years (In calculation of continuous eight years, half of the duration of student resident permits, as stated in Law Article 38, and the full duration of all other types of residence permits shall be taken into account.);"
+    },
+    {
+      "requirement_code": "condition_no_social_assistance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: no social assistance received in the past three years",
+      "description": "A three-year look-back.",
+      "source_role": "requirements",
+      "source_excerpt": "- not having received social assistance in the past three years;",
+      "parameters": {
+        "years": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "- Not having received social assistance in the past three years;"
+    },
+    {
+      "requirement_code": "condition_stable_income",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: sufficient and stable income for themselves and any family",
+      "description": "No figure is stated on this page and none is invented.",
+      "source_role": "requirements",
+      "source_excerpt": "- having sufficient and stable income to maintain themselves or, if any, support their family;",
+      "display_order": 70,
+      "source_excerpt_display": "- Having sufficient and stable income to maintain themselves or, if any, support their family;"
+    },
+    {
+      "requirement_code": "condition_medical_insurance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: valid medical insurance",
+      "description": "Fourth of five conditions.",
+      "source_role": "requirements",
+      "source_excerpt": "- to be covered with a valid medical insurance;",
+      "display_order": 80,
+      "source_excerpt_display": "- To be covered with a valid medical insurance;"
+    },
+    {
+      "requirement_code": "condition_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: not posing a public order or security threat, except where the Migration Policies Board approves",
+      "description": "The exception is part of the condition.",
+      "source_role": "requirements",
+      "source_excerpt": "- not to be posing a public order or public security threat (except the foreigners who are approved by the migration policies board)",
+      "display_order": 90,
+      "source_excerpt_display": "- Not to be posing a public order or public security threat (except the foreigners who are approved by the Migration Policies Board)"
+    },
+    {
+      "requirement_code": "rights_granted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Rights: the same as Turkish citizens, except military service, voting, standing for election, public service and vehicle import duty exemption",
+      "description": "The exclusions are enumerated by the authority and are quoted whole rather than summarised as \"most rights\".",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners holding a long-term residence permit may benefit from the same rights as accorded to turkish citizens with the exception of the provisions of special laws, and of compulsory military service, the right to vote and to be elected, entering public services, and exemption from customs duties when importing vehicles.",
+      "display_order": 100,
+      "source_excerpt_display": "Foreigners holding a long-term residence permit may benefit from the same rights as accorded to Turkish citizens with the exception of the provisions of special laws, and of compulsory military service, the right to vote and to be elected, entering public services, and exemption from customs duties when importing vehicles."
+    },
+    {
+      "requirement_code": "cancellation_security_threat",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on posing a serious public security or public order threat",
+      "description": "First of two grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- poses a serious public security or public order threat,",
+      "display_order": 110,
+      "source_excerpt_display": "- poses a serious public security or public order threat,"
+    },
+    {
+      "requirement_code": "cancellation_year_outside",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on more than a continuous year outside Turkey, other than for health, education or compulsory public service",
+      "description": "The named exceptions are what make an extended absence survivable.",
+      "source_role": "requirements",
+      "source_excerpt": "- stays out of turkey continuously for more than one year for reasons other than health, education and compulsory public service in his/her country.",
+      "parameters": {
+        "max_continuous_absence_years": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "- stays out of Turkey continuously for more than one year for reasons other than health, education and compulsory public service in his/her country."
+    },
+    {
+      "requirement_code": "reapplication_no_eight_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "On re-application the eight-year condition is NOT required",
+      "description": "A genuine concession, easily missed by someone whose permit was cancelled.",
+      "source_role": "requirements",
+      "source_excerpt": "in re-applications, the condition of continuous residence in turkey for eight years on a residence permit shall not be required.",
+      "display_order": 130,
+      "source_excerpt_display": "In re-applications, the condition of continuous residence in Turkey for eight years on a residence permit shall not be required."
+    },
+    {
+      "requirement_code": "reapplication_who",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who may re-apply after cancellation for absence",
+      "description": "The authority adds \"assignment\" to the list of excused reasons here.",
+      "source_role": "requirements",
+      "source_excerpt": "those whose long-term residence permits have been cancelled for being outside of turkey continuously for more than a year for a reason other than health, education, assignment and compulsory public service in their own countries can make a re-application.",
+      "display_order": 140,
+      "source_excerpt_display": "Those whose long-term residence permits have been cancelled for being outside of Turkey continuously for more than a year for a reason other than health, education, assignment and compulsory public service in their own countries can make a re-application."
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 150,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 160,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 180,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 190,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 210,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 220,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 230,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

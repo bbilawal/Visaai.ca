@@ -1,0 +1,193 @@
+country_code,country,visaai_id,visa_slug,official_name,official_code,category,lifecycle_state,data_quality,active_requirements,quotable_requirements,active_sources,last_verified_at
+AU,Australia,au-business-innovation-and-investment-provisional-visa-subclass-188,business-innovation-and-investment-provisional-visa-subclass-188,Business Innovation and Investment (Provisional) visa (subclass 188),subclass 188,investor,active,verified,0,0,2,2026-08-20
+AU,Australia,au-electronic-travel-authority-subclass-601,electronic-travel-authority-subclass-601,Electronic Travel Authority (subclass 601),subclass 601,eta,active,verified,0,0,2,2026-08-20
+AU,Australia,au-partner-visa-apply-in-australia-subclass-820-and-801,partner-visa-apply-in-australia-subclass-820-and-801,Partner visa (apply in Australia) (subclass 820 and 801),subclass 820/801,family,active,verified,0,0,4,2026-08-20
+AU,Australia,au-skilled-independent-visa-subclass-189,skilled-independent-visa-subclass-189,Skilled Independent visa (subclass 189),subclass 189,permanent_residence,active,verified,0,0,2,2026-08-20
+AU,Australia,au-skills-in-demand-visa-subclass-482,skills-in-demand-visa-subclass-482,Skills in Demand visa (subclass 482),subclass 482,work,active,verified,0,0,4,2026-08-20
+AU,Australia,au-student-visa-subclass-500,student-visa-subclass-500,Student visa (subclass 500),subclass 500,student,active,verified,0,0,5,2026-08-20
+AU,Australia,au-temporary-graduate-visa-subclass-485,temporary-graduate-visa-subclass-485,Temporary Graduate visa (subclass 485),subclass 485,other,active,verified,0,0,2,2026-08-20
+AU,Australia,au-visitor-visa-subclass-600,visitor-visa-subclass-600,Visitor visa (subclass 600),subclass 600,visitor,active,verified,0,0,4,2026-08-20
+AU,Australia,au-visitor-visa-subclass-600-business-visitor-stream,visitor-visa-subclass-600-business-visitor-stream,Visitor visa (subclass 600) — Business visitor stream,subclass 600 (Business visitor stream),business,active,verified,0,0,2,2026-08-20
+AU,Australia,au-working-holiday-visa-subclass-417,working-holiday-visa-subclass-417,Working Holiday visa (subclass 417),subclass 417,other,active,verified,0,0,2,2026-08-20
+AT,Austria,at-eu-blue-card,eu-blue-card,EU Blue Card,,work,active,verified,6,6,1,2026-08-25
+AT,Austria,at-family-reunification,family-reunification,Family Reunification,,family,active,verified,5,5,1,2026-08-25
+AT,Austria,at-other-forms-of-settlement,other-forms-of-settlement,Other Forms of Settlement,,permanent_residence,active,verified,5,5,1,2026-08-25
+AT,Austria,at-rwr-graduates,red-white-red-card-graduates,Red-White-Red Card – Graduates of Austrian Universities,,work,active,verified,6,6,1,2026-08-25
+AT,Austria,at-rwr-other-key-workers,red-white-red-card-other-key-workers,Red-White-Red Card – Other Key Workers,,work,active,verified,6,6,1,2026-08-25
+AT,Austria,at-rwr-regular-workers-seasonal,red-white-red-card-regular-workers-tourism-agriculture-forestry,"Red-White-Red Card – Regular Workers in Tourism, Agriculture and Forestry",,work,active,verified,5,5,1,2026-08-25
+AT,Austria,at-rwr-self-employed-key-workers,red-white-red-card-self-employed-key-workers,Red-White-Red Card – Self-employed Key Workers,,business,active,verified,5,5,1,2026-08-25
+AT,Austria,at-rwr-skilled-shortage,red-white-red-card-skilled-workers-shortage-occupations,Red-White-Red Card – Skilled Workers in Shortage Occupations,,work,active,verified,3,3,1,2026-08-25
+AT,Austria,at-rwr-start-up-founders,red-white-red-card-start-up-founders,Red-White-Red Card – Start-up Founders,,business,active,verified,3,3,1,2026-08-25
+AT,Austria,at-rwr-very-highly-qualified,red-white-red-card-very-highly-qualified-workers,Red-White-Red Card – Very Highly Qualified Workers,,work,active,verified,9,9,1,2026-08-25
+AT,Austria,at-rwr-card-plus,red-white-red-card-plus,Red-White-Red Card Plus,,work,active,verified,5,5,1,2026-08-25
+CA,Canada,ca-business-visitors,business-visitors,Business visitors,,other,active,verified,25,25,2,2026-08-21
+CA,Canada,ca-electronic-travel-authorization-eta,electronic-travel-authorization-eta,Electronic travel authorization (eTA),eTA,eta,active,verified,17,17,4,2026-08-21
+CA,Canada,ca-express-entry,express-entry,Express Entry,,permanent_residence,active,verified,17,17,3,2026-08-21
+CA,Canada,ca-sponsor-your-spouse-partner-or-child,sponsor-your-spouse-partner-or-child,"Sponsor your spouse, partner or child",,family,active,verified,23,23,5,2026-08-21
+CA,Canada,ca-study-permit,study-permit,Study permit,,student,active,verified,23,23,6,2026-08-21
+CA,Canada,ca-super-visa,super-visa-parents-grandparents,Super visa for parents and grandparents,,parent,active,verified,25,25,4,2026-08-23
+CA,Canada,ca-visitor-visa-temporary-resident-visa,visitor-visa-temporary-resident-visa,Visitor visa (temporary resident visa),TRV,visitor,active,verified,18,18,6,2026-08-21
+CA,Canada,ca-work-permit,work-permit,Work permit,,work,active,verified,14,14,5,2026-08-21
+CN,China,cn-permanent-residence,permanent-residence,Approval of Foreign Nationals' Eligibility for Permanent Residence in China,,permanent_residence,active,verified,47,47,1,2026-08-26
+CN,China,cn-exit-entry-permit,exit-entry-permit,Issuance of Exit-Entry Permits for Foreigners,,other,active,verified,16,16,1,2026-08-26
+CN,China,cn-residence-permit,residence-permit,Issuance of Residence Permit for Foreigners,,other,active,verified,24,24,1,2026-08-26
+CN,China,cn-travel-permit,travel-permit,Issuance of Travel Permits for Foreigners,,other,active,verified,13,13,1,2026-08-26
+CN,China,cn-visa-extension-change-reissuance,visa-extension-change-reissuance,"Visa Extension, Change and Reissuance for Foreigners",,other,active,verified,25,25,1,2026-08-26
+DK,Denmark,dk-permanent-residence,permanent-residence,Apply for a permanent residence permit,,permanent_residence,active,verified,35,35,1,2026-08-26
+DK,Denmark,dk-short-stay-visa,short-stay-visa,Apply for a short term visa to private visits and tourist visits,,visitor,active,verified,28,28,1,2026-08-26
+DK,Denmark,dk-family-spouse-partner,family-reunification-spouse,Apply for family reunification as a spouse,,spouse_partner,active,verified,35,35,1,2026-08-26
+DK,Denmark,dk-fast-track-scheme,fast-track-scheme,Fast-Track Scheme,,skilled_worker,active,verified,32,32,1,2026-08-26
+DK,Denmark,dk-student-higher-education,higher-education,Higher educational programmes,,student,active,verified,29,29,1,2026-08-26
+DK,Denmark,dk-employed-phd,phd-studies,PhD studies (full degree),,academic,active,verified,23,23,1,2026-08-26
+DK,Denmark,dk-researcher,researcher,Researchers,,research,active,verified,33,33,1,2026-08-26
+DK,Denmark,dk-pay-limit-scheme,pay-limit-scheme,The Pay Limit Scheme,,skilled_worker,active,verified,27,27,1,2026-08-26
+DK,Denmark,dk-positive-list-higher-education,positive-list-higher-education,The Positive List for People with a Higher Education,,skilled_worker,active,verified,28,28,1,2026-08-26
+DK,Denmark,dk-positive-list-skilled-work,positive-list-skilled-work,The Positive List for Skilled Work,,skilled_worker,active,verified,25,25,1,2026-08-26
+EG,Egypt,eg-tourism-evisa,tourism-evisa,Tourism Visa (e-Visa),,evisa,active,verified,14,14,1,2026-08-26
+FI,Finland,fi-employed-person,residence-permit-employed-person,Residence permit application for an employed person (TTOL),OLE_TY1,work,active,unverified,0,0,2,2026-08-23
+FI,Finland,fi-entrepreneur,residence-permit-entrepreneur,Residence permit application for an entrepreneur,OLE_YRI,entrepreneur,active,unverified,0,0,2,2026-08-23
+FI,Finland,fi-specialist,residence-permit-specialist,Residence permit application for persons employed as a specialist,OLE_TY2,skilled_worker,active,unverified,0,0,2,2026-08-23
+FI,Finland,fi-residence-permit-studies,residence-permit-studies,Residence permit application for studies,OLE_OPI,student,active,unverified,0,0,2,2026-08-23
+FI,Finland,fi-family-spouse,family-ties-spouse-with-residence-permit,Residence permit application on the basis of family ties when your spouse has a residence permit,,spouse_partner,active,unverified,0,0,4,2026-08-23
+FR,France,fr-autorisation-travail-salarie,autorisation-travail-salarie,Autorisation de travail d'un salarié étranger en France,,work,active,verified,23,23,1,2026-08-24
+FR,France,fr-carte-resident,carte-resident,Carte de résident de 10 ans d'un étranger en France,,permanent_residence,active,verified,12,12,1,2026-08-24
+FR,France,fr-carte-resident-longue-duree-ue,carte-resident-longue-duree-ue,Carte de résident de longue durée-UE (étranger en France depuis 5 ans),,permanent_residence,active,verified,12,12,1,2026-08-24
+FR,France,fr-carte-sejour-entrepreneur,carte-sejour-entrepreneur,"Carte de séjour ""entrepreneur/profession libérale"" d'un étranger en France",,entrepreneur,active,verified,10,10,1,2026-08-24
+FR,France,fr-carte-sejour-vie-privee-familiale,carte-sejour-vie-privee-familiale,"Carte de séjour ""vie privée et familiale"" d'un étranger en France",,family,active,verified,11,11,1,2026-08-24
+FR,France,fr-carte-sejour-recherche-emploi,carte-sejour-recherche-emploi,Carte de séjour ou VLS-TS - Recherche d'emploi/création d'entreprise,,other,active,verified,9,9,1,2026-08-24
+FR,France,fr-carte-sejour-pluriannuelle-generale,carte-sejour-pluriannuelle-generale,Carte de séjour pluriannuelle,,other,active,verified,11,11,1,2026-08-24
+FR,France,fr-carte-sejour-talent-famille,carte-sejour-talent-famille,"Carte de séjour pluriannuelle ""talent-famille""",,dependant,active,verified,7,7,1,2026-08-24
+FR,France,fr-carte-sejour-visiteur,carte-sejour-visiteur,"Carte de séjour temporaire ""visiteur"" d'un étranger en France",,visitor,active,verified,12,12,1,2026-08-24
+FR,France,fr-carte-sejour-talent,carte-sejour-talent,Carte talent : carte de séjour pluriannuelle d'un étranger en France,,skilled_worker,active,verified,18,18,1,2026-08-24
+FR,France,fr-carte-sejour-salarie-detache-ict,carte-sejour-salarie-detache-ict,Étranger en France : carte de séjour pluriannuelle - salarié détaché ICT,,temporary_worker,active,verified,8,8,1,2026-08-24
+FR,France,fr-carte-sejour-travailleur-saisonnier,carte-sejour-travailleur-saisonnier,Étranger en France : carte de séjour pluriannuelle - travailleur saisonnier,,temporary_worker,active,verified,10,10,1,2026-08-24
+FR,France,fr-carte-sejour-etudiant,carte-sejour-etudiant,Étudiant étranger en France : visa de long séjour ou titre de séjour,,student,active,verified,22,22,1,2026-08-24
+FR,France,fr-carte-sejour-stagiaire,carte-sejour-stagiaire,Stagiaire étranger en France : visa de long séjour ou carte de séjour,,exchange,active,verified,11,11,1,2026-08-24
+FR,France,fr-carte-sejour-salarie,carte-sejour-salarie,Travail d'un étranger en France : carte de séjour - salarié/travailleur temporaire,,skilled_worker,active,verified,9,9,1,2026-08-24
+FR,France,fr-transit-visa,transit,Un étranger en transit en France doit-il demander un visa ?,,other,active,verified,4,4,1,2026-08-24
+FR,France,fr-visa-court-sejour,visa-court-sejour,Visa de court séjour Schengen (étranger en France pour 3 mois maximum),,visitor,active,verified,18,18,1,2026-08-24
+FR,France,fr-visa-long-sejour,visa-long-sejour,Visa de long séjour (séjour de plus de 3 mois à 1 an),,other,active,verified,15,15,1,2026-08-24
+HK,Hong Kong SAR,hk-general-employment-policy,general-employment-policy,General Employment Policy (GEP),GEP,work,active,verified,19,19,1,2026-08-24
+HK,Hong Kong SAR,hk-non-local-graduates,immigration-arrangements-for-non-local-graduates,Immigration Arrangements for Non-local Graduates (IANG),IANG,work,active,verified,13,13,1,2026-08-24
+HK,Hong Kong SAR,hk-quality-migrant-admission-scheme,quality-migrant-admission-scheme,Quality Migrant Admission Scheme (QMAS),QMAS,skilled_worker,active,verified,19,19,1,2026-08-24
+HK,Hong Kong SAR,hk-residence-as-dependant,residence-as-dependant,Residence as dependant,,dependant,active,verified,16,16,1,2026-08-24
+IE,Ireland,ie-long-stay-employment-visa,long-stay-employment-visa,Long Stay Employment Visa (D),,work,active,verified,23,23,2,2026-08-22
+IE,Ireland,ie-long-term-study-visa,long-term-study-visa,Long Term Study Visa (D),D,student,active,verified,17,17,1,2026-08-22
+IE,Ireland,ie-family-reunification-non-eea,family-reunification-joining-an-irish-national,Non-EEA family reunification: joining an Irish national,,family_reunification,active,verified,12,12,2,2026-08-23
+IE,Ireland,ie-short-stay-business-visa,short-stay-business-visa,Short Stay 'C' Business Visa,C,business,active,verified,16,16,1,2026-08-22
+IE,Ireland,ie-short-stay-c-visa,short-stay-c-visa,Short Stay 'C' Visa,C,visitor,active,verified,21,21,2,2026-08-21
+JP,Japan,jp-nursing-care,nursing-care,在留資格「介護」,,work,active,verified,4,4,1,2026-08-24
+JP,Japan,jp-intra-company-transferee,intra-company-transferee,在留資格「企業内転勤」,,temporary_worker,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-medical-services,medical-services,在留資格「医療」,,work,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-dependent,dependent,在留資格「家族滞在」,,dependant,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-engineer-specialist-humanities-international-services,engineer-specialist-humanities-international-services,在留資格「技術・人文知識・国際業務」,,skilled_worker,active,verified,16,16,1,2026-08-24
+JP,Japan,jp-instructor,instructor,在留資格「教育」,,work,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-spouse-or-child-of-permanent-resident,spouse-or-child-of-permanent-resident,在留資格「永住者の配偶者等」,,spouse_partner,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-specified-skilled-worker,specified-skilled-worker,在留資格「特定技能」,,skilled_worker,active,verified,4,4,1,2026-08-24
+JP,Japan,jp-student,student,在留資格「留学」,,student,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-temporary-visitor,temporary-visitor,在留資格「短期滞在」,,visitor,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-researcher,researcher,在留資格「研究」,,research,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-business-manager,business-manager,在留資格「経営・管理」,,entrepreneur,active,verified,3,3,1,2026-08-24
+JP,Japan,jp-highly-skilled-professional,highly-skilled-professional,在留資格「高度専門職」（高度人材ポイント制）,,skilled_worker,active,verified,6,6,1,2026-08-24
+JO,Jordan,jo-tourist-visa,tourist-visa,التأشيرة التي تحتاجها لزيارة المملكة الأردنية الهاشمية,,tourism,active,verified,9,9,1,2026-08-24
+LB,Lebanon,lb-annual-residence,annual-residence,Annual Residence,,other,active,verified,17,17,2,2026-08-26
+LB,Lebanon,lb-artist-visa,artist-visa,Artist Entry Visa and Residency,,performer,active,verified,26,26,3,2026-08-26
+LB,Lebanon,lb-courtesy-residence,courtesy-residence,Courtesy Residence,,family,active,verified,21,21,1,2026-08-26
+LB,Lebanon,lb-domestic-worker,domestic-worker,"Domestic Worker — entry visa, work permit and residence",,temporary_worker,active,verified,30,30,3,2026-08-26
+LB,Lebanon,lb-entry-visa,entry-visa,Entry Visa — terms and conditions,,visitor,active,verified,35,35,1,2026-08-26
+LB,Lebanon,lb-foreign-expert-at-port,foreign-expert-at-port,Entry Visa for Foreign Technical Specialists at Ports,,temporary_worker,active,verified,11,11,1,2026-08-26
+LB,Lebanon,lb-permanent-residence,permanent-residence,Permanent Residence,,permanent_residence,active,verified,23,23,1,2026-08-26
+LB,Lebanon,lb-six-month-bank-statement-residence,six-month-bank-statement-residence,Six-Month Multiple-Entry Residence Permit Based on a Bank Statement,,other,active,verified,9,9,1,2026-08-26
+LB,Lebanon,lb-passport-renewal-temporary-residence,passport-renewal-temporary-residence,Temporary Residence Permit Pending Passport Renewal,,other,active,verified,10,10,1,2026-08-26
+LB,Lebanon,lb-religious-student-visa,religious-student-visa,"Visas and Residency for Students of Religion, Missionaries, Volunteers and Men of Religion",,religious,active,verified,23,23,1,2026-08-26
+MY,Malaysia,my-long-term-social-visit-pass,long-term-social-visit-pass,Long-Term Social Visit Pass,,spouse_partner,active,verified,22,22,1,2026-08-24
+MY,Malaysia,my-residence-pass,residence-pass,Residence Pass,,permanent_residence,active,verified,20,20,1,2026-08-24
+MY,Malaysia,my-student-pass,student-pass,Student Pass,,student,active,verified,22,22,1,2026-08-24
+NL,Netherlands,nl-european-blue-card,european-blue-card,European Blue Card residence permit,,work,active,verified,15,15,1,2026-08-22
+NL,Netherlands,nl-orientation-year,orientation-year,Residence permit for orientation year,,work,active,verified,15,15,1,2026-08-22
+NL,Netherlands,nl-partner-residence-permit,partner-residence-permit,Residence permit for partner,,family,active,verified,16,16,1,2026-08-22
+NL,Netherlands,nl-highly-skilled-migrant,highly-skilled-migrant,Residence permit highly skilled migrant,,work,active,verified,14,14,1,2026-08-22
+NL,Netherlands,nl-student-residence-permit-higher-education,student-residence-permit-higher-education,Student residence permit for university or higher professional education,,student,active,verified,17,17,2,2026-08-21
+NZ,New Zealand,nz-accredited-employer-work-visa,accredited-employer-work-visa,Accredited Employer Work Visa,AEWV,work,active,verified,18,18,1,2026-08-22
+NZ,New Zealand,nz-exchange-student-visa,exchange-student-visa,Exchange Student Visa,,student,active,verified,16,16,1,2026-08-22
+NZ,New Zealand,nz-post-study-work-visa,post-study-work-visa,Post Study Work Visa,,work,active,verified,20,20,1,2026-08-22
+NZ,New Zealand,nz-visitor-visa,visitor-visa,Visitor Visa,,visitor,active,verified,16,16,2,2026-08-21
+NZ,New Zealand,nz-working-holiday-visa,working-holiday-visa,Working Holiday Visa,,working_holiday,active,verified,18,18,3,2026-08-23
+NO,Norway,no-family-cohabitant,family-immigration-cohabitant,Family immigration with a Norwegian or Nordic citizen (cohabitant),,family,active,verified,11,11,3,2026-08-22
+NO,Norway,no-family-spouse,family-immigration-spouse,Family immigration with a Norwegian or Nordic citizen (spouse or registered partner),,family,active,verified,11,11,3,2026-08-22
+NO,Norway,no-skilled-worker,skilled-worker,Skilled worker residence permit,,work,active,verified,14,14,1,2026-08-22
+NO,Norway,no-study-permit,study-permit,Study permit,,student,active,verified,13,13,1,2026-08-22
+NO,Norway,no-visitor-visa,visitors-visa,Visitor's visa,,visitor,active,verified,14,14,2,2026-08-22
+OM,Oman,om-commercial-work-permit,commercial-work-permit,إصدار تصاريح مزاولة العمل التجاري (المنشآت),,work,active,verified,8,8,1,2026-08-24
+OM,Oman,om-private-work-permit,private-work-permit,إصدار تصاريح مزاولة العمل الخاصة (الأفراد),,work,active,verified,9,9,1,2026-08-24
+OM,Oman,om-work-permit-cancellation,work-permit-cancellation,إلغاء تصريح مزاولة العمل (الأفراد),,other,active,verified,6,6,1,2026-08-24
+OM,Oman,om-work-permit-renewal,work-permit-renewal,تجديد بيانات القوى العاملة غير العُمانية (الأفراد),,work,active,verified,4,4,1,2026-08-24
+OM,Oman,om-heat-work-permit,heat-work-permit,تصاريح العمل في أوقات الظهيرة لأشهر الصيف,,other,active,verified,3,3,1,2026-08-24
+OM,Oman,om-work-permit-transfer,work-permit-transfer,نقل خدمات القوى العاملة غير العمانية (الأفراد),,work,active,verified,3,3,1,2026-08-24
+PT,Portugal,pt-estatuto-residente-longa-duracao,estatuto-residente-longa-duracao,Aquisição do Estatuto de Residente de Longa Duração (ERLD) – Art. 125.º,,permanent_residence,active,verified,7,7,1,2026-08-24
+PT,Portugal,pt-autorizacao-residencia-geral,autorizacao-residencia-geral,"Autorização de Residência (Regime e Requisitos Gerais) – Art.º 77.º, n.º 1",,other,active,verified,11,11,1,2026-08-24
+PT,Portugal,pt-estudantes-ensino-superior,estudantes-ensino-superior,Autorização de Residência Emitida a Estudantes do Ensino Superior – Art. 91.º,,student,active,verified,6,6,1,2026-08-24
+PT,Portugal,pt-atividade-altamente-qualificada,atividade-altamente-qualificada,Autorização de Residência para Atividade Altamente Qualificada – Art. 90.º,,skilled_worker,active,verified,7,7,1,2026-08-24
+PT,Portugal,pt-tech-visa,tech-visa,"Autorização de Residência para Atividade Altamente Qualificada Exercida para Empresa Certificada – Art. 90.º – ""Tech Visa""",,skilled_worker,active,verified,8,8,1,2026-08-24
+PT,Portugal,pt-trabalho-independente-com-visto,trabalho-independente-com-visto,"Autorização de Residência para Exercício de Atividade Profissional Independente com Visto de Residência – Art. 89.º, n.º 1",,entrepreneur,active,verified,6,6,1,2026-08-24
+PT,Portugal,pt-trabalho-subordinado-sem-visto,trabalho-subordinado-sem-visto,"Autorização de Residência para Exercício de Atividade Profissional Subordinada, com Dispensa de Visto de Residência – Art. 88.º, n.º 2",,work,active,verified,7,7,1,2026-08-24
+PT,Portugal,pt-trabalho-subordinado-com-visto,trabalho-subordinado-com-visto,"Autorização de Residência para Exercício de Atividade Profissional Subordinada, com Visto de Residência – Art. 88.º, n.º 1",,work,active,verified,7,7,1,2026-08-24
+PT,Portugal,pt-trabalho-visto-procura-emprego,trabalho-visto-procura-emprego,"Autorização de Residência para Exercício de Atividade Profissional Subordinada, com Visto para Procura de Trabalho – Art. 88.º, n.º 7",,other,active,verified,6,6,1,2026-08-24
+PT,Portugal,pt-startup-visa,startup-visa,"Autorização de Residência para Imigrantes Empreendedores – ""StartUP Visa"" – Art. 89.º, n.º 4",,entrepreneur,active,verified,6,6,1,2026-08-24
+PT,Portugal,pt-autorizacao-residencia-investimento,autorizacao-residencia-investimento,Autorização de Residência para Investimento – Art. 90.º-A,,investor,active,verified,11,11,2,2026-08-24
+PT,Portugal,pt-nomadas-digitais,nomadas-digitais,"Autorização de Residência para o Exercício de atividade profissional prestada de forma remota – Art. 88.º, n.º 1 ""Nómadas Digitais""",,other,active,verified,5,5,1,2026-08-24
+PT,Portugal,pt-autorizacao-residencia-permanente,autorizacao-residencia-permanente,Autorização de Residência Permanente – Art. 80.º,,permanent_residence,active,verified,6,6,1,2026-08-24
+PT,Portugal,pt-cartao-azul-ue,cartao-azul-ue,Concessão de «Cartão Azul UE» e Autorização de Residência para Titulares de «Cartão Azul UE» Noutro Estado-Membro – Art. 121.º-A e seguintes,,skilled_worker,active,verified,8,8,1,2026-08-24
+PT,Portugal,pt-reagrupamento-familiar-em-territorio,reagrupamento-familiar-em-territorio,"Reagrupamento Familiar, com Familiar em Território Nacional – Art. 98.º, n.º 2",,family_reunification,active,verified,7,7,1,2026-08-24
+PT,Portugal,pt-reagrupamento-familiar-fora,reagrupamento-familiar-fora,"Reagrupamento Familiar, com Familiar Fora de Território Nacional – Art. 98.º, n.º 1",,family_reunification,active,verified,8,8,1,2026-08-24
+QA,Qatar,qa-mission-issued-visas,mission-issued-visas,"Types of visas issued by the diplomatic, consular and representative missions of the State of Qatar abroad",,other,active,verified,4,4,1,2026-08-24
+SG,Singapore,sg-dependants-pass,dependants-pass,Dependant's Pass,,dependant,active,verified,20,20,5,2026-08-23
+SG,Singapore,sg-employment-pass,employment-pass,Employment Pass,,work,active,verified,21,21,4,2026-08-23
+SG,Singapore,sg-entrepass,entrepass,EntrePass,,entrepreneur,active,verified,25,25,4,2026-08-23
+SG,Singapore,sg-long-term-visit-pass,long-term-visit-pass,Long-Term Visit Pass (family of a Singapore citizen or permanent resident),,family,active,verified,17,17,3,2026-08-23
+SG,Singapore,sg-one-pass,overseas-networks-expertise-pass,Overseas Networks & Expertise Pass,,work,active,verified,23,23,4,2026-08-23
+SG,Singapore,sg-s-pass,s-pass,S Pass,,skilled_worker,active,verified,21,21,4,2026-08-23
+SG,Singapore,sg-entry-visa,entry-visa,Singapore entry visa,,visitor,active,verified,20,20,3,2026-08-23
+SG,Singapore,sg-student-pass,students-pass,Student's Pass,,student,active,verified,25,25,4,2026-08-23
+SE,Sweden,se-work-permit-employed,work-permit-employed,"Arbetstillstånd för anställda (work permit, employed)",,work,active,verified,10,10,1,2026-08-22
+SE,Sweden,se-eu-blue-card,eu-blue-card,EU Blue Card (Sweden),,work,active,verified,15,15,1,2026-08-22
+SE,Sweden,se-family-partner,family-residence-permit-partner,Residence permit to live with a partner in Sweden,,family,active,verified,15,15,2,2026-08-22
+SE,Sweden,se-schengen-visa,schengen-visa,Schengenvisum (Schengen visa),,visitor,active,verified,12,12,2,2026-08-22
+SE,Sweden,se-higher-education-study-permit,higher-education-study-permit,Uppehållstillstånd för studier vid högre utbildning (residence permit for higher education studies),,student,active,verified,13,13,1,2026-08-22
+TH,Thailand,th-transit-visa,transit-visa,คนเดินทางผ่านราชอาณาจักร (Transit Visa),,other,active,verified,10,10,1,2026-08-24
+TH,Thailand,th-non-immigrant-visa,non-immigrant-visa,คนอยู่ชั่วคราว (Non-Immigrant Visa),,other,active,verified,13,13,1,2026-08-24
+TH,Thailand,th-tourist-visa,tourist-visa,นักท่องเที่ยว (Tourist Visa),,tourism,active,verified,11,11,1,2026-08-24
+TR,Türkiye,tr-archaeological-documentary-visa,archaeological-documentary-visa,"Archaeological Excavation, Exploration and Documentary Purpose Visas",,research,active,verified,12,12,2,2026-08-26
+TR,Türkiye,tr-e-visa,e-visa,e-Visa,,evisa,active,verified,14,14,2,2026-08-26
+TR,Türkiye,tr-family-residence-permit,family-residence-permit,Family Residence Permit,,family_reunification,active,verified,28,28,2,2026-08-26
+TR,Türkiye,tr-humanitarian-residence-permit,humanitarian-residence-permit,Humanitarian Residence Permit,,humanitarian,active,verified,24,24,2,2026-08-26
+TR,Türkiye,tr-internship-work-permit-exemption,internship-work-permit-exemption,Internship Visa / Work Permit Exemption,,exchange,active,verified,15,15,2,2026-08-26
+TR,Türkiye,tr-long-term-residence-permit,long-term-residence-permit,Long-Term Residence Permit,,permanent_residence,active,verified,23,23,2,2026-08-26
+TR,Türkiye,tr-religious-foundation-personnel,religious-foundation-personnel,Personnel Assigned to Foreign Religious Foundations,,religious,active,verified,9,9,2,2026-08-26
+TR,Türkiye,tr-human-trafficking-victim-residence-permit,human-trafficking-victim-residence-permit,Residence Permit for Victims of Human Trafficking,,humanitarian,active,verified,19,19,2,2026-08-26
+TR,Türkiye,tr-foreign-mission-personnel,foreign-mission-personnel,Residence Procedures for Foreign Mission Personnel and Their Family Members,,diplomatic,active,verified,7,7,1,2026-08-26
+TR,Türkiye,tr-short-term-residence-permit,short-term-residence-permit,Short-Term Residence Permit,,other,active,verified,48,48,2,2026-08-26
+TR,Türkiye,tr-student-residence-permit,student-residence-permit,Student Residence Permit,,student,active,verified,27,27,2,2026-08-26
+TR,Türkiye,tr-tour-operator-representative-visa,tour-operator-representative-visa,Tour Operator Representative Visa,,temporary_worker,active,verified,10,10,2,2026-08-26
+TR,Türkiye,tr-tourist-visa,tourist-visa,Tourist Visa,,tourism,active,verified,11,11,2,2026-08-26
+TR,Türkiye,tr-transportation-visa,transportation-visa,Transportation Visa,,crew,active,verified,11,11,2,2026-08-26
+TR,Türkiye,tr-working-visa,working-visa,Working Visa,,work,active,verified,14,14,2,2026-08-26
+AE,United Arab Emirates,ae-blue-residency,blue-residency,Blue Residence,,permanent_residence,active,verified,15,15,1,2026-08-25
+AE,United Arab Emirates,ae-golden-residency,golden-residency,Golden Residency,,permanent_residence,active,verified,14,14,1,2026-08-25
+AE,United Arab Emirates,ae-green-residency,green-residency,Green Residence,,work,active,verified,11,11,1,2026-08-25
+GB,United Kingdom,gb-electronic-travel-authorisation-eta,electronic-travel-authorisation-eta,Electronic travel authorisation (ETA),ETA,eta,active,verified,16,16,3,2026-08-21
+GB,United Kingdom,gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,"Family visas: apply, extend or switch — Apply as a partner or spouse",,family,active,verified,25,25,4,2026-08-21
+GB,United Kingdom,gb-skilled-worker-visa,skilled-worker-visa,Skilled Worker visa,,work,active,verified,23,23,5,2026-08-21
+GB,United Kingdom,gb-standard-visitor-visa,standard-visitor-visa,Standard Visitor visa,,visitor,active,verified,16,16,3,2026-08-21
+GB,United Kingdom,gb-standard-visitor-visa-visit-on-business,standard-visitor-visa-visit-on-business,Standard Visitor visa — Visit on business,,business,active,verified,14,14,3,2026-08-21
+GB,United Kingdom,gb-student-visa,student-visa,Student visa,,student,active,verified,20,20,5,2026-08-21
+GB,United Kingdom,gb-youth-mobility-scheme,youth-mobility-scheme,Youth Mobility Scheme visa,,youth_mobility,active,verified,20,20,3,2026-08-23
+US,United States of America,us-business-visitor,business-visitor,Business visitor,B-1,business,active,verified,13,13,6,2026-08-24
+US,United States of America,us-exchange-visitor,exchange-visitor,Exchange visitor,J,other,active,verified,13,13,2,2026-08-24
+US,United States of America,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,family-immigration-immediate-relative-and-family-preference-immigrant-visas,Family Immigration (Immediate Relative and Family Preference immigrant visas),,family,active,verified,20,20,7,2026-08-24
+US,United States of America,us-student-visa-academic-f-vocational-m,student-visa-academic-f-vocational-m,"Student Visa (academic F, vocational M)",F-1/M-1,student,active,verified,44,44,8,2026-08-24
+US,United States of America,us-temporary-worker-visas,temporary-worker-visas,Temporary Worker Visas,,work,active,verified,13,13,6,2026-08-24
+US,United States of America,us-transiting-the-united-states,transiting-the-united-states,Transiting the United States,C,other,active,verified,6,6,4,2026-08-24
+US,United States of America,us-treaty-trader-treaty-investor,treaty-trader-treaty-investor,Treaty trader/treaty investor,E,other,active,verified,26,26,3,2026-08-24
+US,United States of America,us-visa-waiver-program-esta,visa-waiver-program-esta,Visa Waiver Program / ESTA,VWP,eta,active,verified,8,8,5,2026-08-24
+US,United States of America,us-visitor-visa-b-1-business-b-2-tourism,visitor-visa-b-1-business-b-2-tourism,Visitor Visa (B-1 business / B-2 tourism),B-1/B-2,visitor,active,verified,15,15,7,2026-08-24

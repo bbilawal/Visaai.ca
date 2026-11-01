@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-other-key-workers",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "Scored like the other Red-White-Red routes, at the same 55-point threshold as shortage occupations. Its distinguishing feature is the language flexibility: German at A1, A2 or B1, or English at A2 or B1, will satisfy the certificate requirement — the widest language option of any Austrian route extracted.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/other-key-workers/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as sources already live in this registry.",
+  "not_extracted": [
+    "THE POINTS TABLE. Its criterion-to-score mapping does not survive normalization — rows flatten so criteria and scores become separate consecutive lines. The threshold is quoted because the page states it in prose; the individual scores are not.",
+    "Fees. The page names none."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "points_threshold_55",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A minimum of 55 points",
+      "description": "The same threshold as shortage occupations, and stated in prose so it is quoted.",
+      "source_role": "requirements",
+      "source_excerpt": "you reach a minimum of 55 points according to the following list of criteria:",
+      "display_order": 10,
+      "source_excerpt_display": "you reach a minimum of 55 points according to the following list of criteria:"
+    },
+    {
+      "requirement_code": "ams_confirms_then_authority_issues",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The AMS confirms, then the residence authority issues the card",
+      "description": "Two bodies in sequence, and the card is conditional on the general settlement requirements as well as the points.",
+      "source_role": "requirements",
+      "source_excerpt": "if all requirements are met, the ams will send confirmation to the residence authority which will then issue the red-white-red card, provided that the general requirements under austrian settlement and residence law are met (health insurance coverage).",
+      "display_order": 20,
+      "source_excerpt_display": "If all requirements are met, the AMS will send confirmation to the residence authority which will then issue the Red-White-Red Card, provided that the general requirements under Austrian settlement and residence law are met (health insurance coverage)."
+    },
+    {
+      "requirement_code": "travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document",
+      "description": "A passport or equivalent.",
+      "source_role": "requirements",
+      "source_excerpt": "valid travel document (e.g. passport)",
+      "display_order": 30,
+      "source_excerpt_display": "Valid travel document (e.g. passport)"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, under six months old",
+      "description": "Dimensions and recency both stated.",
+      "source_role": "requirements",
+      "source_excerpt": "photo (dimensions: 45x35mm) which is not older than six months",
+      "display_order": 40,
+      "source_excerpt_display": "Photo (dimensions: 45x35mm) which is not older than six months"
+    },
+    {
+      "requirement_code": "health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance covering all risks",
+      "description": "Compulsory insurance or an equivalent policy.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)",
+      "display_order": 50,
+      "source_excerpt_display": "Evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)"
+    },
+    {
+      "requirement_code": "language_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Language certificate: German A1–B1 or English A2–B1, under five years old",
+      "description": "The widest language option of any Austrian route here, and the certificate carries its own five-year expiry.",
+      "source_role": "requirements",
+      "source_excerpt": "language diploma or language course certificate at the a1, a2 or b1 levels of the common european framework of reference for languages for german or the a2 or b1 levels for english. the certificate should not be older than five years.",
+      "display_order": 60,
+      "source_excerpt_display": "Language diploma or language course certificate at the A1, A2 or B1 levels of the Common European Framework of Reference for Languages for German or the A2 or B1 levels for English. The certificate should not be older than five years."
+    }
+  ]
+}

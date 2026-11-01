@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "se-schengen-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Migrationsverket page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "translation_note": "THE SOURCE IS SWEDISH. Every source_excerpt in this file is verbatim Swedish, and scripts/verify-excerpts.ts proves that as it does for any other language. The `label` and `description` fields are ENGLISH RENDERINGS produced during extraction, and each description states the translation explicitly so the two can be compared side by side. A reviewer who does not read Swedish can still verify that the quote is genuinely on the page, but cannot independently verify the translation — that is a real reduction in reviewability and is the reason this note exists. Migrationsverket's English site was not usable: it is a 1,771-character summary that states no requirement, and the agency's sitemap contains no /English/ URLs at all.",
+  "source_roles": {
+    "requirements": "https://www.migrationsverket.se/du-vill-ansoka/besoka-sverige/besoka-sverige-upp-till-90-dagar-visum.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The list of nationalities that need a Schengen visa. Migrationsverket links an external list rather than stating it.",
+    "The reduced-fee list for countries in the EU visa facilitation agreements. Stated on the page but as a country list that is better handled with the nationality lists above.",
+    "VFS Global submission locations. Operational and country-specific.",
+    "The EU visa calculator rules for 90/180 counting. Linked, not stated.",
+    "Rules for visits longer than 90 days, which are a residence permit rather than this visa."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "schengen_90_in_180",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Up to 90 days in any 180-day period in the Schengen area",
+      "description": "Translation of the Swedish quote: entry and stay in the Schengen area for up to 90 days in a 180-day period.",
+      "source_role": "requirements",
+      "source_excerpt": "för att få resa in och vara i schengenområdet upp till 90 dagar under en period av 180 dagar",
+      "display_order": 10,
+      "source_excerpt_display": "för att få resa in och vara i Schengenområdet upp till 90 dagar under en period av 180 dagar"
+    },
+    {
+      "requirement_code": "visa_required_by_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Schengen visa is required if your nationality needs one to enter Sweden and the Schengen area",
+      "description": "Migrationsverket links the country list rather than stating it, so no nationality rule is attached.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska ha ett schengenvisum för att besöka sverige i upp till 90 dagar om du kommer från ett land vars medborgare behöver visum för att resa in i sverige och schengenområdet.",
+      "display_order": 20,
+      "source_excerpt_display": "Du ska ha ett Schengenvisum för att besöka Sverige i upp till 90 dagar om du kommer från ett land vars medborgare behöver visum för att resa in i Sverige och Schengenområdet."
+    },
+    {
+      "requirement_code": "passport_valid_3_months_after",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 3 months after you leave the Schengen area",
+      "description": "Translation: you need a passport valid for at least three months after you leave the Schengen area.",
+      "source_role": "requirements",
+      "source_excerpt": "du behöver ha ett pass som är giltigt minst tre månader efter att du lämnat schengenområdet",
+      "display_order": 30,
+      "source_excerpt_display": "Du behöver ha ett pass som är giltigt minst tre månader efter att du lämnat Schengenområdet"
+    },
+    {
+      "requirement_code": "return_ticket",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A return ticket valid within 90 days",
+      "description": "Translation: a return ticket that must be valid within 90 days.",
+      "source_role": "requirements",
+      "source_excerpt": "en tur- och returbiljett som ska vara giltig inom 90 dagar",
+      "display_order": 40,
+      "source_excerpt_display": "en tur- och returbiljett som ska vara giltig inom 90 dagar"
+    },
+    {
+      "requirement_code": "invitation_or_hotel_booking",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A written invitation from your host, or a hotel booking confirmation",
+      "description": "Translation: a written invitation from the family member or friend you will stay with, or a booking confirmation if staying at a hotel.",
+      "source_role": "requirements",
+      "source_excerpt": "en skriftlig inbjudan från din familjemedlem eller vän som du ska bo hos, eller en bokningsbekräftelse om du ska bo på hotell",
+      "display_order": 50,
+      "source_excerpt_display": "en skriftlig inbjudan från din familjemedlem eller vän som du ska bo hos, eller en bokningsbekräftelse om du ska bo på hotell"
+    },
+    {
+      "requirement_code": "maintenance_700_sek_per_day",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "SEK 700 for each day of the visit, sometimes less",
+      "description": "Translation: Sweden requires SEK 700 for each day of the visit; the amount may be lower in some cases, for example for young children, if food and lodging are paid in advance, or if staying with relatives or friends. Recorded WITH those exceptions inside the quote, because 700/day presented alone would overstate the requirement.",
+      "parameters": {
+        "per_day_sek": 700,
+        "currency": "SEK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "sverige kräver att du har 700 kronor för varje dag som besöket i sverige varar. beloppet kan i vissa fall bli lägre, till exempel för yngre barn, om du betalar kostnaden för kost och logi i förväg eller om du ska bo hos släkt eller vänner.",
+      "display_order": 60,
+      "source_excerpt_display": "Sverige kräver att du har 700 kronor för varje dag som besöket i Sverige varar. Beloppet kan i vissa fall bli lägre, till exempel för yngre barn, om du betalar kostnaden för kost och logi i förväg eller om du ska bo hos släkt eller vänner."
+    },
+    {
+      "requirement_code": "proof_of_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of funds — bank statements, or a sponsor's undertaking",
+      "description": "Translation: show you have enough money for maintenance using, for example, bank statements or a document in which your host promises to cover all costs during the visit.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska visa att du har tillräckligt med pengar för uppehället med hjälp av exempelvis kontoutdrag från din bank eller dokument där den som bjuder in dig till sverige lovar att stå för alla kostnader under besöket.",
+      "display_order": 70,
+      "source_excerpt_display": "Du ska visa att du har tillräckligt med pengar för uppehället med hjälp av exempelvis kontoutdrag från din bank eller dokument där den som bjuder in dig till Sverige lovar att stå för alla kostnader under besöket."
+    },
+    {
+      "requirement_code": "travel_medical_insurance",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Medical travel insurance covering at least EUR 30,000, valid in all Schengen countries",
+      "description": "Translation: it is RECOMMENDED that you have individual medical travel insurance covering emergency medical care, urgent hospital treatment or repatriation for medical reasons; it should cover at least EUR 30,000 and be valid in all Schengen countries. Marked not officially required because Migrationsverket writes 'rekommenderat' and 'bör' (recommended / should), not 'måste'.",
+      "parameters": {
+        "minimum_cover_eur": 30000,
+        "currency": "EUR",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "det är rekommenderat att du har en individuell medicinsk reseförsäkring som täcker de kostnader som kan uppstå i samband med akut läkarhjälp, brådskande sjukhusvård eller transport till hemlandet av medicinska skäl. försäkringen bör täcka kostnader på minst 30 000 euro och gälla i alla schengenländer.",
+      "display_order": 80,
+      "source_excerpt_display": "Det är rekommenderat att du har en individuell medicinsk reseförsäkring som täcker de kostnader som kan uppstå i samband med akut läkarhjälp, brådskande sjukhusvård eller transport till hemlandet av medicinska skäl. Försäkringen bör täcka kostnader på minst 30 000 euro och gälla i alla Schengenländer."
+    },
+    {
+      "requirement_code": "border_police_no_advance_ruling",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The border police cannot say in advance whether you will be allowed in",
+      "description": "Translation: the border police cannot give an advance ruling on whether you will be permitted to enter; that decision is taken at the border check itself. Recorded so an approved visa is never shown as guaranteed entry.",
+      "source_role": "requirements",
+      "source_excerpt": "gränspolisen kan inte ge förhandsbesked om du kommer att få resa in i sverige, utan det beslutet tas direkt vid gränskontrollen.",
+      "display_order": 90,
+      "source_excerpt_display": "Gränspolisen kan inte ge förhandsbesked om du kommer att få resa in i Sverige, utan det beslutet tas direkt vid gränskontrollen."
+    },
+    {
+      "requirement_code": "apply_to_main_destination",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply to the country that is your main destination if visiting several Schengen countries",
+      "description": "Translation: if visiting several Schengen countries, apply to the authorities of the country that is your main destination.",
+      "source_role": "requirements",
+      "source_excerpt": "om du ska besöka flera länder i schengenområdet ska du ansöka om schengenvisum hos myndigheterna i det land som är din huvudsakliga destination.",
+      "display_order": 100,
+      "source_excerpt_display": "Om du ska besöka flera länder i Schengenområdet ska du ansöka om Schengenvisum hos myndigheterna i det land som är din huvudsakliga destination."
+    },
+    {
+      "requirement_code": "visa_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa fee: EUR 90 from age 12, EUR 45 for ages 6-11, free under 6",
+      "description": "Translation: aged 12 or over EUR 90; children 6-11 EUR 45; children 0-5 no fee; the fee is not refunded if the application is refused.",
+      "parameters": {
+        "eur_12_and_over": 90,
+        "eur_6_to_11": 45,
+        "eur_under_6": 0,
+        "currency": "EUR",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "person som är 12 år eller äldre: 90 euro barn 6–11 år: 45 euro barn 0–5 år: ingen avgift du får inte tillbaka avgiften om du får avslag på din ansökan.",
+      "display_order": 110,
+      "source_excerpt_display": "Person som är 12 år eller äldre: 90 euro Barn 6–11 år: 45 euro Barn 0–5 år: ingen avgift Du får inte tillbaka avgiften om du får avslag på din ansökan."
+    },
+    {
+      "requirement_code": "fee_exemptions",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Some applicants pay no fee — school pupils, students, researchers, and young NGO representatives",
+      "description": "Translation: some Schengen visa applicants do not pay the fee — school pupils, university and doctoral students and accompanying teachers travelling for study or education, researchers travelling for scientific research or a conference, and representatives of non-profit organisations aged 25 or under. Recorded so the fee above is never shown as universal.",
+      "source_role": "requirements",
+      "source_excerpt": "vissa som ansöker om schengenvisum behöver inte betala ansökningsavgift: skolelever, högskole- och forskarstuderande samt medföljande lärare som reser till sverige i studie- eller utbildningssyfte forskare som reser till sverige för vetenskaplig forskning eller konferens företrädare för ideella organisationer som är 25 år eller yngre",
+      "display_order": 120,
+      "source_excerpt_display": "Vissa som ansöker om Schengenvisum behöver inte betala ansökningsavgift: skolelever, högskole- och forskarstuderande samt medföljande lärare som reser till Sverige i studie- eller utbildningssyfte forskare som reser till Sverige för vetenskaplig forskning eller konferens företrädare för ideella organisationer som är 25 år eller yngre"
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-visitor-visa-temporary-resident-visa",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eligibility.html",
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+    "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html",
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+  },
+  "page_dates": {
+    "eligibility": "2026-07-19",
+    "forms_imm5484": "2026-05-13"
+  },
+  "not_extracted": [
+    "IMM 5484 document checklist contents — the registered 'documents' URL is a PDF download wrapper and states no requirements in its HTML. The checklist itself is a PDF and was not parsed.",
+    "Marine crew documents (seaman's book, ship/port agent invitation, recruiter introduction letter, employment contract). These appear on the apply page under a purpose-specific branch; the normalizer flattens the page's tabs, so attributing them to the general visitor route would be wrong.",
+    "Business visitor qualification criteria — same branch-flattening hazard.",
+    "Visa-office-specific additional documents. The page states 'your visa office may require additional documents' but the list is per-country and behind a selector.",
+    "Processing times — not stated on any page read.",
+    "The list of countries and territories whose citizens must give biometrics. IRCC gates it behind a separate checker tool. Until it is extracted, the biometrics step and fee are shown unconditionally with the condition stated in their description."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_travel_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a valid travel document, such as a passport",
+      "source_role": "eligibility",
+      "source_excerpt": "you must: have a valid travel document , like a passport",
+      "display_order": 10,
+      "source_excerpt_display": "You must: have a valid travel document, like a passport"
+    },
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "source_role": "eligibility",
+      "source_excerpt": "be in good health",
+      "display_order": 20,
+      "description": "IRCC lists this under the lead-in \"you must:\" on the eligibility page. The lead-in is not part of this quote because it does not sit adjacent to this bullet on the page.",
+      "source_excerpt_display": "be in good health"
+    },
+    {
+      "requirement_code": "no_convictions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have no criminal or immigration-related convictions",
+      "description": "IRCC also lists separate grounds of inadmissibility, including criminal activity, human rights violations, organized crime, and security, health or financial reasons. Listed under the same \"you must:\" lead-in as the other basic requirements.",
+      "source_role": "eligibility",
+      "source_excerpt": "have no criminal or immigration-related convictions",
+      "display_order": 30,
+      "source_excerpt_display": "have no criminal or immigration-related convictions"
+    },
+    {
+      "requirement_code": "ties_to_home_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Satisfy an officer that you have ties to your home country",
+      "description": "IRCC names a job, a home, financial assets or family as examples of ties.",
+      "source_role": "eligibility",
+      "source_excerpt": "convince an immigration officer that you have ties—such as a job, home, financial assets or family—that will take you back to your home country",
+      "display_order": 40,
+      "source_excerpt_display": "convince an immigration officer that you have ties—such as a job, home, financial assets or family—that will take you back to your home country"
+    },
+    {
+      "requirement_code": "will_leave_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Satisfy an officer that you will leave Canada at the end of your visit",
+      "source_role": "eligibility",
+      "source_excerpt": "convince an immigration officer that you will leave canada at the end of your visit",
+      "display_order": 50,
+      "source_excerpt_display": "convince an immigration officer that you will leave Canada at the end of your visit"
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for your stay",
+      "description": "IRCC does not publish a fixed threshold: the amount depends on the length of the stay and on whether you stay in a hotel or with friends or relatives.",
+      "source_role": "eligibility",
+      "source_excerpt": "have enough money for your stay the amount of money you will need depends on how long you will stay and if you will stay in a hotel, or with friends or relatives.",
+      "display_order": 60,
+      "source_excerpt_display": "have enough money for your stay The amount of money you will need depends on how long you will stay and if you will stay in a hotel, or with friends or relatives."
+    },
+    {
+      "requirement_code": "passport_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Digital copy of your valid passport or travel document",
+      "description": "A clear, colour copy of the passport you will travel on, including the page showing your birth date and country of origin, and any pages with stamps, visas or markings. IRCC states the document should be valid for at least 6 months from your planned travel date.",
+      "parameters": {
+        "recommended_validity_months": 6,
+        "colour": true
+      },
+      "source_role": "application",
+      "source_excerpt": "all applicants need to include a digital copy of your valid (not expired) passport or travel document your passport or travel document should be valid for at least 6 months from the date you plan to travel.",
+      "display_order": 100,
+      "source_excerpt_display": "All applicants need to include a digital copy of your valid (not expired) passport or travel document Your passport or travel document should be valid for at least 6 months from the date you plan to travel."
+    },
+    {
+      "requirement_code": "minor_travel_authorization",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter authorizing a minor child to travel to Canada",
+      "description": "IRCC notes other documents may also be needed depending on whether the minor travels alone or accompanied.",
+      "rule": {
+        "any": [
+          {
+            "fact": "travelling_with_minor",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "fact": "is_minor",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "source_role": "application",
+      "source_excerpt": "a letter that authorizes a minor child to travel to canada (if applicable) you may need to include other documents , depending on whether the minor child travels alone or not.",
+      "display_order": 110,
+      "source_excerpt_display": "a letter that authorizes a minor child to travel to Canada (if applicable) You may need to include other documents, depending on whether the minor child travels alone or not."
+    },
+    {
+      "requirement_code": "imm5257",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Application for Visitor Visa (Temporary Resident Visa)",
+      "official_form_code": "IMM 5257",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html",
+      "source_role": "forms",
+      "source_excerpt": "application for visitor visa (temporary resident visa) (imm 5257)",
+      "display_order": 200,
+      "source_excerpt_display": "Application for visitor visa (temporary resident visa) (IMM 5257)"
+    },
+    {
+      "requirement_code": "imm5645",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Family Information form",
+      "official_form_code": "IMM 5645",
+      "description": "IRCC lists this among supporting documents your personalized checklist may include.",
+      "rule": {
+        "fact": "has_dependants",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "application",
+      "source_excerpt": "your document checklist may include supporting documents such as the following: family information (imm 5645) form",
+      "display_order": 210,
+      "source_excerpt_display": "Your document checklist may include supporting documents such as the following: Family Information (IMM 5645) form"
+    },
+    {
+      "requirement_code": "imm5476",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Use of a Representative",
+      "official_form_code": "IMM 5476",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "application",
+      "source_excerpt": "use of a representative (imm 5476) (opens in a new tab) (if using an authorized representative)",
+      "display_order": 220,
+      "source_excerpt_display": "Use of a representative (IMM 5476) (opens in a new tab) (if using an authorized representative)"
+    },
+    {
+      "requirement_code": "imm5475",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Authority to Release Personal Information to a Designated Individual",
+      "official_form_code": "IMM 5475",
+      "rule": {
+        "fact": "authorizes_information_release",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "application",
+      "source_excerpt": "authority to release personal information to a designated individual (imm 5475) form (opens in a new tab) (if authorizing information from your case file to be released to someone other than yourself)",
+      "display_order": 230,
+      "source_excerpt_display": "Authority to Release Personal Information to a Designated Individual (IMM 5475) form (opens in a new tab) (if authorizing information from your case file to be released to someone other than yourself)"
+    },
+    {
+      "requirement_code": "invitation_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter of invitation from someone in Canada",
+      "description": "IRCC states a visitor may also need a letter of invitation. Where you are visiting family, IRCC also asks for proof of your relationship to the person inviting you — a marriage certificate, a statutory declaration of common-law union (IMM 5409), a birth certificate, or an official document naming you as a parent.",
+      "rule": {
+        "fact": "purpose",
+        "op": "in",
+        "value": [
+          "family",
+          "visit_family",
+          "visit_friends"
+        ]
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "you may also need a medical exam and letter of invitation from someone who lives in canada.",
+      "display_order": 120,
+      "source_excerpt_display": "You may also need a medical exam and letter of invitation from someone who lives in Canada."
+    },
+    {
+      "requirement_code": "medical_exam",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Immigration medical exam",
+      "description": "IRCC states a visitor may need one. It does not state a universal trigger on this page.",
+      "source_role": "eligibility",
+      "source_excerpt": "you may also need a medical exam and letter of invitation from someone who lives in canada.",
+      "display_order": 300,
+      "source_excerpt_display": "You may also need a medical exam and letter of invitation from someone who lives in Canada."
+    },
+    {
+      "requirement_code": "biometrics",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Give your biometrics (fingerprints and photograph)",
+      "description": "Required for citizens of certain countries or territories; IRCC publishes a separate tool to check whether you need to give them. VisaAI lists this for everyone because that country list has not been extracted yet, so it cannot yet tell you which side of the line you fall on.",
+      "source_role": "fees",
+      "source_excerpt": "if you are a citizen of certain countries or territories, you have to give your biometrics (fingerprints and photograph) when you apply for a: visitor visa",
+      "display_order": 310,
+      "source_excerpt_display": "If you are a citizen of certain countries or territories, you have to give your biometrics (fingerprints and photograph) when you apply for a: visitor visa"
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visitor visa processing fee",
+      "description": "CAD 100.00 per person. A family of 5 or more people applying at the same time and place pays a maximum of CAD 500.00.",
+      "parameters": {
+        "amount": 100,
+        "currency": "CAD",
+        "unit": "per person",
+        "family_maximum": 500,
+        "family_minimum_size": 5,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "visitor visa - per person single or multiple entry temporary resident visa what's this? single or multiple entry temporary resident visa the same fee applies to both types of visas. we’ll decide which visa to give you based on your application. find out more about the difference between single and multiple entry visas . 100.00",
+      "display_order": 400,
+      "source_excerpt_display": "Visitor visa - per person Single or multiple entry temporary resident visa What's this? Single or multiple entry temporary resident visa The same fee applies to both types of visas. We’ll decide which visa to give you based on your application. Find out more about the difference between single and multiple entry visas. 100.00"
+    },
+    {
+      "requirement_code": "biometrics_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Biometrics fee",
+      "description": "CAD 85.00 per individual. IRCC states a family maximum applies to a family of 2 or more eligible people. Payable only if you must give biometrics, which depends on your citizenship — see the biometrics step above.",
+      "parameters": {
+        "amount": 85,
+        "currency": "CAD",
+        "unit": "per individual",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "biometrics – per individual 85.00",
+      "display_order": 410,
+      "source_excerpt_display": "Biometrics – per individual 85.00"
+    },
+    {
+      "requirement_code": "travel_history",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Evidence of previous travel",
+      "description": "IRCC lists this under a heading it labels \"recommended documents\", not as a requirement. Copies of previous passports or visas used in the last 10 years, entry and exit stamps, and study or work permits showing time spent outside your country.",
+      "source_role": "application",
+      "source_excerpt": "recommended documents travel history if you’ve travelled to canada or to other countries, this can show that you’ve been able to get a visa in the past.",
+      "display_order": 500,
+      "source_excerpt_display": "Recommended documents Travel history If you’ve travelled to Canada or to other countries, this can show that you’ve been able to get a visa in the past."
+    }
+  ],
+  "extraction_note": "Nine excerpts in this file were repaired on 2026-08-21 after scripts/verify-excerpts.ts was written. They had been assembled rather than quoted: block joins were punctuated into sentences, the accessibility text '(opens in a new tab)' was silently dropped, and one fee excerpt used a literal '...' to elide the interleaved \"what's this?\" expander. Every claim was correct; none of those quotes were verbatim. The claims are unchanged - only the evidence now matches the page."
+}

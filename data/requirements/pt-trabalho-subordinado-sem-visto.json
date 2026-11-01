@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-trabalho-subordinado-sem-visto",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address and is neither registered nor read.",
+  "structure_note": "THE REGULARISATION ROUTE, AND IT DOES NOT START WITH A VISA. Art. 88.º n.º 2 waives the residence visa and runs on a manifestação de interesse filed through the SAPA portal. Legal entry can be proved two ways — a visa that was valid at the moment of entry, OR twelve months of social security contributions — and Art. 88.º n.º 6 goes further: legal entry is PRESUMED where the applicant works in Portugal and has been regularised with social security for at least twelve months. That presumption is the whole route for people who are already here.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-subordinada-com-dispensa-de-visto-de-residencia-art-88-o-n-o-"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several routes require. Published on vistos.mne.gov.pt, which resets our connection from the production address and answers 200 from a second egress. Not registered, not read.",
+    "The fees. Every page links a single fee schedule rather than stating amounts.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "manifestacao_de_interesse_via_sapa",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The expression of interest is filed, preferably electronically, through the SAPA portal, and the application is then formalised on AIMA's own form",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "a manifestação de interesse é preferencialmente formulada através de plataforma eletrónica (portal sapa) e o pedido é formalizado com impresso próprio assinado pelo requerente ou pelo seu representante legal e pode ser apresentado nas lojas aima",
+      "source_excerpt_display": "A manifestação de interesse é preferencialmente formulada através de plataforma eletrónica (Portal SAPA) e o pedido é formalizado com impresso próprio assinado pelo requerente ou pelo seu representante legal e pode ser apresentado nas Lojas AIMA"
+    },
+    {
+      "requirement_code": "legal_entry_two_ways",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of legal entry: a visa that was valid at the moment of entry into Portugal, OR 12 months of social security contributions",
+      "description": "The second alternative is what makes this route reachable without ever having held a residence visa.",
+      "parameters": {
+        "contribution_months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "comprovativo de entrada legal – através de visto que se encontrava válido no momento da entrada em portugal ou de 12 meses de contribuições para a segurança social;",
+      "source_excerpt_display": "Comprovativo de entrada legal – através de visto que se encontrava válido no momento da entrada em Portugal ou de 12 meses de contribuições para a segurança social;"
+    },
+    {
+      "requirement_code": "legal_entry_is_presumed_after_twelve_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Legal entry is PRESUMED where you work in Portugal and have been regularised with social security for at least 12 months",
+      "description": "A presumption, not merely an alternative proof — Art. 88.º n.º 6. Recorded because it decides whether the route exists at all for someone already in the country.",
+      "parameters": {
+        "months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "presume-se a entrada legal em portugal sempre que o requerente trabalhe em território nacional e tenha a sua situação regularizada perante a segurança social há pelo menos 12 meses, conforme previsto no n.º 6 do art. 88.º do repsae.",
+      "source_excerpt_display": "Presume-se a entrada legal em Portugal sempre que o requerente trabalhe em território nacional e tenha a sua situação regularizada perante a segurança social há pelo menos 12 meses, conforme previsto no n.º 6 do art. 88.º do REPSAE."
+    },
+    {
+      "requirement_code": "employment_promise_or_employer_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the promise of an employment contract, OR a sworn declaration from the employer attesting the employment relationship",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "cópia da promessa de contrato de trabalho ou declaração sob compromisso de honra da entidade patronal atestando o vínculo laboral ;",
+      "source_excerpt_display": "Cópia da promessa de contrato de trabalho ou declaração sob compromisso de honra da Entidade Patronal atestando o vínculo laboral;"
+    },
+    {
+      "requirement_code": "criminal_record_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A duly authenticated criminal record from your country of nationality, or where you lived for more than a year before Portugal",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "registo criminal do país da nacionalidade da pessoa que requer ou registo criminal do país onde o cidadão residia há mais de um ano, antes de residir em portugal devidamente autenticado ;",
+      "source_excerpt_display": "Registo Criminal do país da nacionalidade da pessoa que requer ou registo criminal do país onde o cidadão residia há mais de um ano, antes de residir em Portugal devidamente autenticado;"
+    },
+    {
+      "requirement_code": "tax_and_social_security_registration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of registration with the tax authority and with social security",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "comprovativo de inscrição na administração fiscal ; comprovativo de inscrição na segurança social .",
+      "source_excerpt_display": "Comprovativo de inscrição na administração fiscal; Comprovativo de inscrição na segurança social."
+    },
+    {
+      "requirement_code": "sapa_registration_precedes_the_expression_of_interest",
+      "kind": "step",
+      "officially_required": true,
+      "label": "You must register and authenticate as a SAPA user before creating an expression of interest, and can then upload documents and receive AIMA notifications online",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "o interessado deve começar por efetuar e confirmar um registo como utilizador e autenticar-se. uma vez autenticado, poderá apresentar, na respetiva página, a manifestação de interesse, de acordo com a sua situação concreta, e carregar os documentos para o efeito.",
+      "source_excerpt_display": "O interessado deve começar por efetuar e confirmar um registo como utilizador e autenticar-se. Uma vez autenticado, poderá apresentar, na respetiva página, a manifestação de interesse, de acordo com a sua situação concreta, e carregar os documentos para o efeito."
+    }
+  ]
+}

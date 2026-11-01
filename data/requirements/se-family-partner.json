@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "visaai_id": "se-family-partner",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "ENGLISH SOURCE, unlike the three earlier Swedish extractions. Migrationsverket has a full English tree at /en/ (1,011 urls). COUNTRY_EXPANSION_RESEARCH.md said the sitemap held 'zero under /English/' and concluded Sweden was Swedish-only; the count was right and the conclusion was wrong -- I searched the path prefix I already knew and read a null result as absence. The earlier Swedish files stay as they are; they verify and the Swedish text is authoritative.\n\nNO BOUNDS NEEDED, AND THAT IS A DELIBERATE CALL. The page is 40,183 characters and repeats itself, because Migrationsverket inlines this route's four tabs (important-to-know, how-it-works, apply) into the main url. But every repetition belongs to THIS route -- sibling routes (child, other relative, parents of minors) each have their own url. Repetition inside one route is harmless for attribution. Compare no-family-spouse.json, where one url carries 8+ different family routes and a bound is what keeps a cohabitant's rule from being filed under spouses.\n\nWHOSE OBLIGATION IS IT. As in Norway, Migrationsverket splits requirements three ways: 'requirements that apply to both of you', 'requirements for the person who wants to move to sweden', and 'requirements for the person in sweden'. The maintenance requirement -- income AND housing -- falls on the person already in Sweden, who is not the applicant. Each label names whose obligation it is.\n\nTHE BIGGEST TRAP HERE IS THE SWEDISH-CITIZEN EXEMPTION. A partner who is a Swedish citizen does not need to meet the maintenance requirement at all, provided the relationship is well established -- which flips the single hardest condition off for a large share of applicants. Encoding the thresholds without the exemption would tell those couples they must clear an income bar Sweden does not ask them to clear.",
+  "source_roles": {
+    "requirements": "https://www.migrationsverket.se/en/you-want-to-apply/live-with-someone/live-with-a-partner-child-or-other-relative/live-with-a-partner.html",
+    "eligibility": "https://www.migrationsverket.se/en/word-explanations/maintenance-requirement-for-the-person-in-sweden.html"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null
+  },
+  "not_extracted": [
+    "The sibling family routes, each at its own url: children living with a parent, children living with a relative who is not their parent, adults living with another relative, parents of children under 18, parents of unaccompanied minors, and the 'other ties to Sweden' route. Each needs its own visa type.",
+    "The list of countries and territories mapped to Swedish embassies and consulates-general handling migration cases. The page renders it as a selector; it is a lookup table, not a requirement, and it changes without notice.",
+    "The full list of who pays no application fee. The page states such exemptions exist and enumerates them; only the two headline bands are recorded.",
+    "What counts as income for the maintenance requirement, and the full list of who is exempt. The maintenance page details both; only the thresholds, the housing rule and the Swedish-citizen exemption are recorded.",
+    "The rules for applying from inside Sweden. The page links a separate 'can I get a residence permit if I apply from within Sweden?' page for the exceptions.",
+    "Alien's passport applications, for applicants who have no passport. A separate process handled at the embassy.",
+    "The child allowance and large family supplement that reduce the child maintenance amounts. Both are Swedish social benefits administered elsewhere.",
+    "Extension and permanent-permit rules. This file covers first applications only."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "both_over_21",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Both of you are over 21 years old",
+      "description": "Applies to both of you. Migrationsverket states exceptions are possible on special grounds, giving having children together as its example.",
+      "source_role": "requirements",
+      "source_excerpt": "you must both be over 21 years old exceptions can only be made on special grounds, for example if you have children together.",
+      "parameters": {
+        "minimum_age_years": 21
+      },
+      "display_order": 10,
+      "source_excerpt_display": "You must both be over 21 years old Exceptions can only be made on special grounds, for example if you have children together."
+    },
+    {
+      "requirement_code": "relationship_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are married, registered partners or cohabiting partners, or plan to become so",
+      "description": "Note the final clause: an intention to enter one of these relationships qualifies. Sweden does not require the relationship to already exist at the time of application.",
+      "source_role": "requirements",
+      "source_excerpt": "you must be married, registered partners, or cohabiting partners, or plan to enter one of these relationships",
+      "display_order": 20,
+      "source_excerpt_display": "You must be married, registered partners, or cohabiting partners, or plan to enter one of these relationships"
+    },
+    {
+      "requirement_code": "plans_to_settle_together",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You can show plans to settle in Sweden together",
+      "description": "Migrationsverket allows the relocation plans to be supplied after the application if they cannot be described at the time.",
+      "source_role": "requirements",
+      "source_excerpt": "to be granted a residence permit, you must be able to show that you have plans to settle in sweden together. if you cannot describe your specific relocation plans at the time of application, you can add this information later.",
+      "display_order": 30,
+      "source_excerpt_display": "To be granted a residence permit, you must be able to show that you have plans to settle in Sweden together. If you cannot describe your specific relocation plans at the time of application, you can add this information later."
+    },
+    {
+      "requirement_code": "applicant_valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Person moving to Sweden: a valid passport",
+      "description": "Listed under 'requirements for the person who wants to move to sweden'. EU/EEA citizens may use a national ID card instead.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have a valid passport eu/eea citizens must have a valid passport or national id card.",
+      "display_order": 40,
+      "source_excerpt_display": "You must have a valid passport EU/EEA citizens must have a valid passport or national ID card."
+    },
+    {
+      "requirement_code": "applicant_outside_sweden",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Person moving to Sweden: currently located outside Sweden",
+      "description": "Listed under 'requirements for the person who wants to move to sweden'. Migrationsverket links a separate page for the exceptions, which is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you must currently be located outside of sweden there are some exceptions, see can i get a residence permit if i apply from within sweden?",
+      "display_order": 50,
+      "source_excerpt_display": "You must currently be located outside of Sweden There are some exceptions, see Can I get a residence permit if I apply from within Sweden?"
+    },
+    {
+      "requirement_code": "sponsor_residence_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Person in Sweden: holds one of the qualifying statuses",
+      "description": "THE SPONSOR'S OBLIGATION. A temporary permit generally does not qualify -- the one exception Migrationsverket lists is a temporary permit held as a refugee or person in need of subsidiary protection, or granted due to exceptionally distressing circumstances.",
+      "source_role": "requirements",
+      "source_excerpt": "the person in sweden must have one of the following: swedish citizenship nordic citizenship permanent residence permit permanent residence card permanent right of residence permanent residence status temporary residence permit as a refugee or person in need of subsidiary protection, or due to exceptionally distressing circumstances.",
+      "display_order": 60,
+      "source_excerpt_display": "The person in Sweden must have one of the following: Swedish citizenship Nordic citizenship permanent residence permit permanent residence card permanent right of residence permanent residence status temporary residence permit as a refugee or person in need of subsidiary protection, or due to exceptionally distressing circumstances."
+    },
+    {
+      "requirement_code": "sponsor_maintenance_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Person in Sweden: meets the maintenance requirement (support and housing)",
+      "description": "THE SPONSOR'S OBLIGATION, and the hardest condition here. It is two tests, not one: enough income to support both of you, AND a home large enough for both. See the Swedish-citizen exemption below before assuming it applies.",
+      "source_role": "requirements",
+      "source_excerpt": "the person in sweden must meet the maintenance requirement the person in sweden must be able to support both of you and have a large enough home to house you both. some people may be exempt from the maintenance requirement.",
+      "display_order": 70,
+      "source_excerpt_display": "The person in Sweden must meet the maintenance requirement The person in Sweden must be able to support both of you and have a large enough home to house you both. Some people may be exempt from the maintenance requirement."
+    },
+    {
+      "requirement_code": "maintenance_income_thresholds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Person in Sweden: SEK 10,314 per month must remain after rent, for cohabiting partners",
+      "description": "A RESIDUAL-INCOME TEST, NOT A SALARY BAR. Migrationsverket asks what is left after tax and rent, to cover food, clothing, hygiene, telephony and insurance for the whole household -- so a high salary with a high rent can still fail. SEK 6,243 is the single-adult figure; SEK 10,314 applies to cohabiting spouses or partners, which is the figure relevant to this route. Children add SEK 3,336 (0-6), 4,004 (7-10), 4,672 (11-14) or 5,339 (15+), reduced by any child allowance. Migrationsverket dates these to 2026, so they are revised.",
+      "source_role": "eligibility",
+      "source_excerpt": "in 2026, the amount you must have left over after tax and the rent is paid is: sek 6,243 for a single adult sek 10,314 for cohabiting spouses or cohabiting partners sek 3,336 for children 0–6 years of age sek 4,004 for children 7–10 years of age sek 4,672 for children 11–14 years of age sek 5,339 for children 15 years of age or older.",
+      "parameters": {
+        "per_month_single_adult_sek": 6243,
+        "per_month_cohabiting_partners_sek": 10314,
+        "per_month_child_0_6_sek": 3336,
+        "per_month_child_7_10_sek": 4004,
+        "per_month_child_11_14_sek": 4672,
+        "per_month_child_15_plus_sek": 5339,
+        "currency": "SEK",
+        "stated_for_year": 2026
+      },
+      "display_order": 80,
+      "source_excerpt_display": "In 2026, the amount you must have left over after tax and the rent is paid is: SEK 6,243 for a single adult SEK 10,314 for cohabiting spouses or cohabiting partners SEK 3,336 for children 0–6 years of age SEK 4,004 for children 7–10 years of age SEK 4,672 for children 11–14 years of age SEK 5,339 for children 15 years of age or older."
+    },
+    {
+      "requirement_code": "maintenance_housing",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Person in Sweden: housing secured for at least one year ahead, large enough for everyone",
+      "description": "The second half of the maintenance requirement, and easy to overlook next to the income figures. Note it is forward-looking: housing for at least one year in the FUTURE, not housing held now.",
+      "source_role": "eligibility",
+      "source_excerpt": "you must be able to show that you have housing for at least one year in the future that is large enough to accommodate all of you.",
+      "display_order": 90,
+      "source_excerpt_display": "You must be able to show that you have housing for at least one year in the future that is large enough to accommodate all of you."
+    },
+    {
+      "requirement_code": "swedish_citizen_maintenance_exemption",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Exemption: a Swedish citizen partner need not meet the maintenance requirement",
+      "description": "NOT a requirement -- a relief from the one above, and the single most consequential fact on this page. If your partner is a Swedish citizen and the relationship is well established, the income and housing tests do not apply at all. The exception to the exception matters too: they must still meet it if children are moving with you whom they are not the parent or guardian of.",
+      "source_role": "requirements",
+      "source_excerpt": "as a swedish citizen, your partner does not need to meet the maintenance requirement, as long as the two of you have a well-established relationship (for example, if you have lived together for a long time). however, your partner must meet the maintenance requirement if you have any children who will be moving to sweden with the two of you, and your partner is not their parent or legal guardian.",
+      "display_order": 100,
+      "source_excerpt_display": "As a Swedish citizen, your partner does not need to meet the maintenance requirement, as long as the two of you have a well-established relationship (for example, if you have lived together for a long time). However, your partner must meet the maintenance requirement if you have any children who will be moving to Sweden with the two of you, and your partner is not their parent or legal guardian."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee: SEK 2,000 for adults, SEK 1,000 for children under 18",
+      "description": "Migrationsverket states plainly that the fee is not refunded if the application is rejected. Some applicants pay nothing; the page lists those categories and they are not extracted.",
+      "source_role": "requirements",
+      "source_excerpt": "what does it cost to apply? adults: sek 2,000 children under 18 years of age: sek 1,000 you will not receive a refund if your application is rejected.",
+      "parameters": {
+        "adults_sek": 2000,
+        "children_under_18_sek": 1000,
+        "currency": "SEK"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "What does it cost to apply? Adults: SEK 2,000 Children under 18 years of age: SEK 1,000 You will not receive a refund if your application is rejected."
+    },
+    {
+      "requirement_code": "register_relationship_tax_agency",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Person in Sweden: register the marriage or partnership with the Swedish Tax Agency",
+      "description": "A preparation step Migrationsverket asks for before applying, and one done by the partner in Sweden at a different authority.",
+      "source_role": "requirements",
+      "source_excerpt": "if you and the person in sweden have married or entered into a registered partnership, it is important that the person in sweden registers this relationship with the swedish tax agency.",
+      "display_order": 120,
+      "source_excerpt_display": "If you and the person in Sweden have married or entered into a registered partnership, it is important that the person in Sweden registers this relationship with the Swedish Tax Agency."
+    },
+    {
+      "requirement_code": "translate_documents",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Submit documents in Swedish or English, with certified translations",
+      "description": "Note the requirement to include the original alongside the translation -- a translation on its own is not accepted.",
+      "source_role": "requirements",
+      "source_excerpt": "all submitted documents should be in swedish or english. if you have translated your documents, the translation should be certified. you must also include a copy of the document in its original language.",
+      "display_order": 130,
+      "source_excerpt_display": "All submitted documents should be in Swedish or English. If you have translated your documents, the translation should be certified. You must also include a copy of the document in its original language."
+    },
+    {
+      "requirement_code": "select_embassy_for_interview",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Name the Swedish embassy or consulate-general for your interview",
+      "description": "Chosen in the application itself. Not every Swedish mission handles migration cases, and the mission you visit may not be the one deciding your case -- some interviews are held by video link, with a different embassy responsible.",
+      "source_role": "requirements",
+      "source_excerpt": "in your application, you must indicate which swedish embassy or consulate-general you want to visit for your interview. not all swedish embassies and consulates-general handle migration cases.",
+      "display_order": 140,
+      "source_excerpt_display": "In your application, you must indicate which Swedish embassy or consulate-general you want to visit for your interview. Not all Swedish embassies and consulates-general handle migration cases."
+    },
+    {
+      "requirement_code": "fast_track_90_day_decision",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Optional: additional conditions for a decision within 90 days",
+      "description": "NOT required for the permit -- these are extra conditions that, if all met, get you a faster decision. The well-established-relationship test is quantified here in a way it is not elsewhere on the page: two years living together, or one year if you have children together.",
+      "source_role": "requirements",
+      "source_excerpt": "in order to receive a decision within 90 days, you must meet the requirements to get a residence permit . in addition, the following requirements must be met: your relationship with your partner must be well-established if you do not have children together, you must have lived together for at least two years. if you have children together, you must have lived together for at least one year. your partner must be a swedish citizen at the time of your application, you and your partner must be living together abroad and have done so for a continuous period of at least 12 months",
+      "parameters": {
+        "decision_days": 90,
+        "lived_together_years_no_children": 2,
+        "lived_together_years_with_children": 1,
+        "living_together_abroad_months": 12
+      },
+      "display_order": 150,
+      "source_excerpt_display": "In order to receive a decision within 90 days, you must meet the requirements to get a residence permit. In addition, the following requirements must be met: Your relationship with your partner must be well-established If you do not have children together, you must have lived together for at least two years. If you have children together, you must have lived together for at least one year. Your partner must be a Swedish citizen At the time of your application, you and your partner must be living together abroad and have done so for a continuous period of at least 12 months"
+    }
+  ]
+}

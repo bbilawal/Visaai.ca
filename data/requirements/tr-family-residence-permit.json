@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-family-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "family_reunification",
+    "official_name": "Family Residence Permit",
+    "slug": "family-residence-permit",
+    "purpose": "Türkiye's family reunification permit for the foreign spouse and children of Turkish citizens, permit-holders, refugees and subsidiary protection beneficiaries — up to three years at a time, never exceeding the sponsor's own permit, with income and insurance conditions on the sponsor.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The conditions fall on the SPONSOR as much as the applicant, and the sponsor's income test is the sharpest number on the page: the minimum wage in total, plus not less than a third of the minimum wage per family member. Both halves are quoted, because either alone understates it.\n\nThe three routes OUT of a family permit matter as much as the way in — divorce after three years, the sponsor's death, or turning 18 after three years. The domestic-violence carve-out inside the divorce rule waives the three years entirely, and dropping it would tell somebody they must stay married for three years to remain.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 34-37 of Law 6458",
+      "description": "The authority cites its own instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "family residence permit is regulated in articles 34-37 of foreigners and international protection law no. 6458",
+      "display_order": 10,
+      "source_excerpt_display": "Family residence permit is regulated in Articles 34-37 of Foreigners and International Protection Law No. 6458"
+    },
+    {
+      "requirement_code": "legal_basis_regulation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And Articles 30-34 of the implementing regulation",
+      "description": "The second instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "additionally, family residence permit is regulated in articles 30-34 of regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 20,
+      "source_excerpt_display": "Additionally, family residence permit is regulated in Articles 30-34 of Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "who_spouse",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: the foreign spouse",
+      "description": "First of three categories.",
+      "source_role": "requirements",
+      "source_excerpt": "a) foreign spouse,",
+      "display_order": 30,
+      "source_excerpt_display": "a) foreign spouse,"
+    },
+    {
+      "requirement_code": "who_children",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: foreign children, or the foreign minor children of the spouse",
+      "description": "Second of three categories.",
+      "source_role": "requirements",
+      "source_excerpt": "b) foreign children or foreign minor children of their spouse,",
+      "display_order": 40,
+      "source_excerpt_display": "b) foreign children or foreign minor children of their spouse,"
+    },
+    {
+      "requirement_code": "who_dependent_children",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: dependent foreign children, including the spouse's",
+      "description": "Third of three categories.",
+      "source_role": "requirements",
+      "source_excerpt": "c) dependent foreign children or dependent foreign children of their spouse,",
+      "display_order": 50,
+      "source_excerpt_display": "c) dependent foreign children or dependent foreign children of their spouse,"
+    },
+    {
+      "requirement_code": "whose_family",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Whose family: Turkish citizens, Article 28 persons, permit holders, refugees and subsidiary protection beneficiaries",
+      "description": "The sponsor categories, quoted whole.",
+      "source_role": "requirements",
+      "source_excerpt": "of turkish citizens, persons within the scope of article 28 of law no 5901 or, foreigners holding one of the residence permits as well as refugees and subsidiary protection beneficiaries.",
+      "display_order": 60,
+      "source_excerpt_display": "of Turkish citizens, persons within the scope of Article 28 of Law No 5901 or, foreigners holding one of the residence permits as well as refugees and subsidiary protection beneficiaries."
+    },
+    {
+      "requirement_code": "polygamous_marriage",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Polygamous marriage: only ONE spouse may be issued a permit — but children from other spouses may be",
+      "description": "Both halves are in one sentence and neither is safe to drop.",
+      "source_role": "requirements",
+      "source_excerpt": "in cases of a polygamous marriage pursuant to the regulation in the country of citizenship, only one of the spouses shall be issued a family residence permit. however, a family residence permit may be granted to the foreigner’s children from other spouses.",
+      "display_order": 70,
+      "source_excerpt_display": "In cases of a polygamous marriage pursuant to the regulation in the country of citizenship, only one of the spouses shall be issued a family residence permit. However, a family residence permit may be granted to the foreigner’s children from other spouses."
+    },
+    {
+      "requirement_code": "custody_consent",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Children: the consent of a parent abroad who shares custody is required",
+      "description": "A document that must be obtained from outside the country.",
+      "source_role": "requirements",
+      "source_excerpt": "for family residence permits issued to children, if any, the consent of the mother or the father who lives abroad and who shares custody shall be sought.",
+      "display_order": 80,
+      "source_excerpt_display": "For family residence permits issued to children, if any, the consent of the mother or the father who lives abroad and who shares custody shall be sought."
+    },
+    {
+      "requirement_code": "education_right_to_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit carries schooling rights to age 18 without a separate student permit",
+      "description": "A right rather than a requirement, and it saves a second application.",
+      "source_role": "requirements",
+      "source_excerpt": "family residence permits shall entitle the holder right of education in primary and secondary educational institutions until the age of 18 the without obtaining a student residence permit.",
+      "parameters": {
+        "until_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Family residence permits shall entitle the holder right of education in primary and secondary educational institutions until the age of 18 the without obtaining a student residence permit."
+    },
+    {
+      "requirement_code": "exit_divorce_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Transfer out on divorce after three years — waived entirely for victims of domestic violence",
+      "description": "The carve-out is court-established and removes the three-year condition. Quoted whole because dropping it changes the answer for the people it protects.",
+      "source_role": "requirements",
+      "source_excerpt": "- in the event of divorce, if the foreign spouse of a turkish citizen resided on a family residence permit for at least three years (if it is established by the relevant court that the foreign spouse has been a victim for reasons of domestic violence, the condition for three years residence shall not be sought)",
+      "parameters": {
+        "years": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "- In the event of divorce, if the foreign spouse of a Turkish citizen resided on a family residence permit for at least three years (if it is established by the relevant court that the foreign spouse has been a victim for reasons of domestic violence, the condition for three years residence shall not be sought)"
+    },
+    {
+      "requirement_code": "exit_sponsor_death",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Transfer out on the death of the sponsor",
+      "description": "Second of three exits.",
+      "source_role": "requirements",
+      "source_excerpt": "- in the case of death of the sponsor if the spouse resides on a family residence permit depending on the sponsor,",
+      "display_order": 110,
+      "source_excerpt_display": "- In the case of death of the sponsor if the spouse resides on a family residence permit depending on the sponsor,"
+    },
+    {
+      "requirement_code": "exit_turning_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Transfer out on reaching 18 after three years on a family permit",
+      "description": "Third of three exits.",
+      "source_role": "requirements",
+      "source_excerpt": "- if the foreigner reaching the age of 18 has resided on a family residence permit for at least three years",
+      "parameters": {
+        "age": 18,
+        "years": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "- If the foreigner reaching the age of 18 has resided on a family residence permit for at least three years"
+    },
+    {
+      "requirement_code": "duration_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duration: a maximum of three years at a time",
+      "description": "Longer than the short-term default.",
+      "source_role": "requirements",
+      "source_excerpt": "- a family residence permit issued for a maximum duration of three years at a time.",
+      "parameters": {
+        "max_years": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "- A family residence permit issued for a maximum duration of three years at a time."
+    },
+    {
+      "requirement_code": "duration_capped_by_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Never exceeding the sponsor's own residence permit, under any circumstances",
+      "description": "The binding cap, stated absolutely.",
+      "source_role": "requirements",
+      "source_excerpt": "- family residence permit cannot exceed the duration of the sponsor’s residence permit under any circumstances.",
+      "display_order": 140,
+      "source_excerpt_display": "- Family residence permit cannot exceed the duration of the sponsor’s residence permit under any circumstances."
+    },
+    {
+      "requirement_code": "sponsor_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The SPONSOR's conditions: insurance for all members, the minimum wage plus a third per member, a clean family-crime record for five years, and a year's registered residence",
+      "description": "Quoted whole. The income test is two figures — the minimum wage in total AND a third of it per family member — and either alone understates what is required.",
+      "source_role": "requirements",
+      "source_excerpt": "(the sponsor is required to have a valid health insurance covering all family members; have a monthly income in any case not less than the minimum wage in total corresponding not less than one third of the minimum wage per each family member; submit proof of not having been convicted of any crime against family during the five years preceding the application with a criminal record certificate; have been residing in turkey for at least one year on a residence permit and have been registered with the address based registration system)",
+      "parameters": {
+        "sponsor_prior_residence_years": 1,
+        "clean_record_years": 5,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "(the sponsor is required to have a valid health insurance covering all family members; have a monthly income in any case not less than the minimum wage in total corresponding not less than one third of the minimum wage per each family member; submit proof of not having been convicted of any crime against family during the five years preceding the application with a criminal record certificate; have been residing in Turkey for at least one year on a residence permit and have been registered with the address based registration system)"
+    },
+    {
+      "requirement_code": "applicant_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The APPLICANT's conditions, including being over 18 for each spouse and not marrying to obtain the permit",
+      "description": "Quoted whole; the marriage-of-convenience test is stated by the authority itself.",
+      "source_role": "requirements",
+      "source_excerpt": "(to submit supporting information and documents regarding the reason of the stay,, to assert that they live or intend to live together with specified persons, to be over 18 years of age for each spouse, not to fall within the scope of article 7, not to have entered into the marriage for the purpose of obtaining a family residence permit)",
+      "parameters": {
+        "minimum_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "(to submit supporting information and documents regarding the reason of the stay,, to assert that they live or intend to live together with specified persons, to be over 18 years of age for each spouse, not to fall within the scope of Article 7, not to have entered into the marriage for the purpose of obtaining a family residence permit)"
+    },
+    {
+      "requirement_code": "cancellation_conditions_lapsed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if a condition is not met or no longer applies",
+      "description": "First of three.",
+      "source_role": "requirements",
+      "source_excerpt": "- conditions set out for family residence permit are not met or no longer apply,",
+      "display_order": 170,
+      "source_excerpt_display": "- Conditions set out for family residence permit are not met or no longer apply,"
+    },
+    {
+      "requirement_code": "cancellation_used_outside_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if used outside the purpose it was issued for",
+      "description": "Second of three.",
+      "source_role": "requirements",
+      "source_excerpt": "- it is established that the residence permit is used outside the purposes of those it is issued for,",
+      "display_order": 180,
+      "source_excerpt_display": "- it is established that the residence permit is used outside the purposes of those it is issued for,"
+    },
+    {
+      "requirement_code": "cancellation_removal_or_entry_ban",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on a current removal decision or entry ban",
+      "description": "Third of three.",
+      "source_role": "requirements",
+      "source_excerpt": "- there is a current removal decision or an entry ban to turkey in respect to the foreigner",
+      "display_order": 190,
+      "source_excerpt_display": "- there is a current removal decision or an entry ban to Turkey in respect to the foreigner"
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 200,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 210,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 230,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 250,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 260,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 270,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 280,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

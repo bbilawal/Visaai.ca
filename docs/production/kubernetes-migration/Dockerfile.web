@@ -1,0 +1,61 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Multi-stage image for apps/web (Next.js 16).
+# =============================================================================
+# Build from the REPO ROOT:
+#   docker build -f docs/production/kubernetes-migration/Dockerfile.web \
+#     --build-arg NEXT_PUBLIC_SUPABASE_URL=https://<ref>.supabase.co \
+#     --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY=... \
+#     --build-arg NEXT_PUBLIC_API_URL=https://api.visaai.co \
+#     -t registry.example.com/visaai/web:$(git rev-parse --short HEAD) .
+#
+# ⚠️ NEXT_PUBLIC_* is BAKED AT BUILD TIME. That means the web image is
+# ENVIRONMENT-SPECIFIC: a "staging" image and a "prod" image are different builds
+# with different public URLs/keys. You cannot promote the exact same web image
+# across environments the way you can with the api image. Build one per env.
+#
+# PREREQUISITE (code change): set `output: 'standalone'` in apps/web/next.config
+# so Next emits a minimal self-contained server bundle. Without it, this
+# Dockerfile's `standalone` COPY paths won't exist.
+# =============================================================================
+
+FROM node:20-slim AS base
+ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
+RUN corepack enable && corepack prepare pnpm@9 --activate
+WORKDIR /repo
+
+FROM base AS deps
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY packages/types/package.json packages/types/
+COPY apps/web/package.json apps/web/
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+FROM deps AS build
+# NEXT_PUBLIC_* must be present as build args → env for `next build` to bake them.
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY \
+    NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+    NEXT_TELEMETRY_DISABLED=1
+COPY packages/ packages/
+COPY apps/web/ apps/web/
+RUN pnpm build:types \
+ && pnpm --filter web build
+
+# ---- runner: Next.js standalone output, non-root ----------------------------
+FROM node:20-slim AS runner
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init \
+ && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+# `output: 'standalone'` bundles a server.js + only the node_modules it needs.
+COPY --from=build /repo/apps/web/.next/standalone ./
+COPY --from=build /repo/apps/web/.next/static ./apps/web/.next/static
+COPY --from=build /repo/apps/web/public ./apps/web/public
+USER node
+EXPOSE 3000
+ENTRYPOINT ["dumb-init", "--"]
+# standalone server entrypoint lives at apps/web/server.js inside the bundle.
+CMD ["node", "apps/web/server.js"]

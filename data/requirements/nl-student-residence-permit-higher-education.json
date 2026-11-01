@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nl-student-residence-permit-higher-education",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IND page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://ind.nl/en/residence-permits/study/student-residence-permit-for-university-or-higher-professional-education"
+  },
+  "page_dates": {
+    "requirements": "2026-06-08"
+  },
+  "not_extracted": [
+    "The general requirements that apply to everyone. IND links a separate page; not a registered source.",
+    "The income requirement amount. Linked, not stated, and it changes periodically — recalling a figure would be a fabricated threshold.",
+    "The document list. IND explicitly delegates it to the recognised sponsor rather than publishing it.",
+    "The preparatory-period rules (usually 1 year, institution decides admission afterwards). Stated on the page but they govern a period before the study programme rather than the permit's requirements.",
+    "Fee exceptions. IND links a fees page for these; only the headline € 254,00 is recorded."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "general_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the general requirements that apply to everyone",
+      "description": "IND links a separate general-requirements page, which is not a registered source, so its contents are not reproduced here.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the general requirements that apply to everyone .",
+      "display_order": 10,
+      "source_excerpt_display": "You meet the general requirements that apply to everyone."
+    },
+    {
+      "requirement_code": "proof_of_registration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof, or temporary proof, of registration as a student",
+      "source_role": "requirements",
+      "source_excerpt": "you have proof of registration or temporary proof of registration as a student at a university or institute of higher professional education",
+      "display_order": 20,
+      "source_excerpt_display": "You have proof of registration or temporary proof of registration as a student at a university or institute of higher professional education"
+    },
+    {
+      "requirement_code": "accredited_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The study programme must be accredited by NVAO or listed in EQAR",
+      "source_role": "requirements",
+      "source_excerpt": "your study programme is accredited: this means that it has been recognised by accreditation organisation of the netherlands and flanders or nvao (in the netherlands) or the european quality assurance register for higher education or eqar (europe).",
+      "display_order": 30,
+      "source_excerpt_display": "Your study programme is accredited: this means that it has been recognised by Accreditation Organisation of the Netherlands and Flanders or NVAO (in the Netherlands) or the European Quality Assurance Register for Higher Education or EQAR (Europe)."
+    },
+    {
+      "requirement_code": "recognised_sponsor_institution",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The educational institution must be an IND-recognised sponsor",
+      "description": "Consequential rather than administrative: only a recognised sponsor can lodge this application at all. See institution_applies_on_your_behalf.",
+      "source_role": "requirements",
+      "source_excerpt": "your educational institution is a sponsor recognised by the ind .",
+      "display_order": 40,
+      "source_excerpt_display": "Your educational institution is a sponsor recognised by the IND."
+    },
+    {
+      "requirement_code": "full_time_enrolment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enrol on a full-time study programme",
+      "source_role": "requirements",
+      "source_excerpt": "you will enrol on a full-time study programme.",
+      "display_order": 50,
+      "source_excerpt_display": "You will enrol on a full-time study programme."
+    },
+    {
+      "requirement_code": "income_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the income requirements",
+      "description": "No amount recorded. IND links a separate income-requirements page that is not a registered source, and the figure changes periodically. Inventing or recalling one would be a fabricated threshold.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the income requirements .",
+      "display_order": 60,
+      "source_excerpt_display": "You meet the income requirements."
+    },
+    {
+      "requirement_code": "study_progress_50_percent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Obtain at least 50% of the credits for each study year",
+      "description": "A condition of KEEPING the permit rather than obtaining it. The institution assesses it and must report insufficient progress to the IND.",
+      "source_role": "requirements",
+      "source_excerpt": "every year you make enough progress in your studies. this means that you obtain at least 50% of the credits for each study year.",
+      "display_order": 70,
+      "source_excerpt_display": "Every year you make enough progress in your studies. This means that you obtain at least 50% of the credits for each study year."
+    },
+    {
+      "requirement_code": "institution_applies_on_your_behalf",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your educational institution submits the application",
+      "description": "Unusual and worth surfacing: the applicant does not lodge this application themselves.",
+      "source_role": "requirements",
+      "source_excerpt": "your educational institution submits the application and applies for your mvv and student residence permit at the same time.",
+      "display_order": 100,
+      "source_excerpt_display": "Your educational institution submits the application and applies for your MVV and student residence permit at the same time."
+    },
+    {
+      "requirement_code": "mvv_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A valid provisional residence permit (mvv) is needed",
+      "source_role": "requirements",
+      "source_excerpt": "a valid provisional residence permit (mvv) is needed for this application",
+      "display_order": 110,
+      "source_excerpt_display": "A valid provisional residence permit (MVV) is needed for this application"
+    },
+    {
+      "requirement_code": "documents_legalised_and_translated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Foreign documents must be legalised and translated into Dutch, English, French or German",
+      "source_role": "requirements",
+      "source_excerpt": "have official foreign documents legalised and translated into dutch, english, french or german.",
+      "display_order": 120,
+      "source_excerpt_display": "Have official foreign documents legalised and translated into Dutch, English, French or German."
+    },
+    {
+      "requirement_code": "collect_documents",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The document list comes from your educational institution",
+      "description": "IND does not publish the document list on this page; the recognised sponsor holds it. A fact about the process rather than a document the applicant obtains.",
+      "source_role": "requirements",
+      "source_excerpt": "the educational institution has a list of documents you need. collect all documents before your educational institution submits the application.",
+      "display_order": 130,
+      "source_excerpt_display": "The educational institution has a list of documents you need. Collect all documents before your educational institution submits the application."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "parameters": {
+        "amount": 254,
+        "currency": "EUR",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "the application costs € 254,00. for all fees and exceptions, visit our web page fees: application costs . the costs are paid through the educational institution.",
+      "display_order": 140,
+      "source_excerpt_display": "The application costs € 254,00. For all fees and exceptions, visit our web page Fees: application costs. The costs are paid through the educational institution."
+    },
+    {
+      "requirement_code": "decision_period_60_days",
+      "kind": "step",
+      "officially_required": false,
+      "label": "The IND decides within 60 days",
+      "description": "A service commitment, not an applicant obligation, and IND states it may be extended.",
+      "source_role": "requirements",
+      "source_excerpt": "the ind must take a decision within 60 days. this is called the decision period. we can extend the decision period if it takes longer to decide.",
+      "display_order": 150,
+      "source_excerpt_display": "The IND must take a decision within 60 days. This is called the decision period. We can extend the decision period if it takes longer to decide."
+    },
+    {
+      "requirement_code": "mvv_appointment_within_3_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Make an appointment at the Dutch representation within 3 months of the decision",
+      "source_role": "requirements",
+      "source_excerpt": "you have to make the appointment within 3 months after the ind has taken a decision on your application.",
+      "display_order": 160,
+      "source_excerpt_display": "You have to make the appointment within 3 months after the IND has taken a decision on your application."
+    },
+    {
+      "requirement_code": "passport_valid_6_months_at_mvv",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 6 more months when the mvv sticker is placed",
+      "source_role": "requirements",
+      "source_excerpt": "your passport must be valid for at least another 6 months when the dutch representation places the mvv visa sticker in the passport. the mvv is valid for 90 days.",
+      "display_order": 170,
+      "source_excerpt_display": "Your passport must be valid for at least another 6 months when the Dutch representation places the MVV visa sticker in the passport. The MVV is valid for 90 days."
+    },
+    {
+      "requirement_code": "collect_residence_permit",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Collect the residence permit in person at an IND desk",
+      "source_role": "requirements",
+      "source_excerpt": "when your student residence permit is ready at the ind desk, your educational institution will receive a letter. you must make an appointment to collect it.",
+      "display_order": 180,
+      "source_excerpt_display": "When your student residence permit is ready at the IND desk, your educational institution will receive a letter. You must make an appointment to collect it."
+    },
+    {
+      "requirement_code": "application_form_7504",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Application for the purpose of residence 'study' (recognised sponsor), higher education",
+      "description": "Submitted by the recognised sponsor, not by the applicant.",
+      "official_form_code": "7504",
+      "source_role": "requirements",
+      "source_excerpt": "application for the purpose of residence 'study' (recognised sponsor) higher education 7504",
+      "display_order": 190,
+      "source_excerpt_display": "Application for the purpose of residence 'study' (recognised sponsor) Higher education 7504"
+    }
+  ]
+}

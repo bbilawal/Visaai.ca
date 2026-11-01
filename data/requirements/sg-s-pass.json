@@ -1,0 +1,322 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-s-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official Ministry of Manpower pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "A LOWER SALARY BAR THAT COSTS THE EMPLOYER MORE. The Employment Pass key facts say 'no foreign worker levy or quota required'. The S Pass says 'yes. employers are subject to a quota and levy', requires the employer to provide medical insurance, and requires a Primary Care Plan for workers in large dormitories or CMP sectors before the pass can be issued at all. The S Pass is rationed; the Employment Pass is not. That is the difference between them, and neither page says it — it is only visible with both in one registry.\n\nTHREE SALARY REGIMES LIVE AT ONCE. The Employment Pass publishes two columns. The S Pass publishes three, and each binds somebody today: $3,150 for renewals of passes expiring 1 Sep 2025 to 31 Aug 2026, $3,300 for new applications from 1 Sep 2025, $3,600 for new applications from 1 Jan 2027. Financial services runs its own three, and all three converge on $5,650 at 45 and above — so the increases fall entirely on younger candidates in that sector.\n\nA CEILING NOBODY EXPECTS. 'the pass can only be valid up to 1 month before your passport expiry date.' A candidate with 14 months of passport gets 13 months of pass, whatever the approval said.\n\nAN AUTHORITY PUBLISHING ITS OWN APPROVAL RATE. 'if the sat shows that the candidate is eligible, there is around a 90% chance that the candidate will get a pass.' Stored verbatim, and stored as MOM's statement about MOM's tool — not as a VisaAI prediction.\n\nBOUNDS CHECKED. Four pages. The $3,300 and $3,600 figures both appear on the eligibility table and are restated on key facts; the table row is quoted for the regimes, and the key-facts sentence for the forward-dated increase, because they say different things about the same numbers.",
+  "source_roles": {
+    "requirements": "https://www.mom.gov.sg/passes-and-permits/s-pass/eligibility",
+    "eligibility": "https://www.mom.gov.sg/passes-and-permits/s-pass/key-facts",
+    "documents": "https://www.mom.gov.sg/passes-and-permits/s-pass/documents-required",
+    "application": "https://www.mom.gov.sg/passes-and-permits/s-pass/apply-for-a-pass"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "documents": null,
+    "application": null
+  },
+  "freshness_note": "MOM publishes no dateModified in the head, so freshness reads as unknown rather than fresh. The corroborating signal here is unusually strong: the eligibility page carries a salary regime that EXPIRES on 31 August 2026 alongside two later ones, which means it is being maintained on a schedule rather than left alone. A page carrying a currently-live window that ends next week is not a stale page.",
+  "not_extracted": [
+    "The full S Pass qualifying salary table by single year of age — 23 through 45+, two sectors, three effective-date regimes, 138 figures. The endpoints and the dates that switch between them are stored; the table is MOM's to publish and revise.",
+    "The quota (dependency ratio ceiling) percentages and the levy rates by sector and tier. Those are the EMPLOYER's constraint and cost, they turn on the employer's existing workforce, and MOM publishes them on a separate page. The fact that a quota and levy apply is stored; the numbers are not.",
+    "The R1 higher-skilled levy status and the experience-recognition rule for S Pass holders converting to Work Permits. A levy classification, not a pass requirement.",
+    "The list of occupations not eligible for an S Pass, and the accredited-institution list in the application form's drop-down. MOM holds both behind its own tooling.",
+    "Renewal, cancellation, appeal, pass-card replacement and changing employers. This route covers a first S Pass.",
+    "Tech@SG. A separate programme MOM cross-sells on the same page.",
+    "The Dependant's Pass conditions themselves — see sg-dependants-pass. What is stored here is only the salary at which an S Pass holder becomes eligible for one."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "employer_applies_and_reapplies_on_job_change",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer applies — and a new employer must apply all over again",
+      "description": "MOM adds the second half here that the Employment Pass page leaves to its renewal guidance. Changing jobs is a new pass, not a transfer.",
+      "source_role": "eligibility",
+      "source_excerpt": "who can apply an employer or appointed employment agent must apply on behalf of the applicant. if the pass holder changes jobs, the new employer has to apply for a new pass .",
+      "display_order": 10,
+      "source_excerpt_display": "Who can apply An employer or appointed employment agent must apply on behalf of the applicant. If the pass holder changes jobs, the new employer has to apply for a new pass."
+    },
+    {
+      "requirement_code": "any_nationality_with_job_offer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Open to any nationality, with a job offer in Singapore",
+      "description": "MOM states the nationality-blindness explicitly, which matters on a pass that is otherwise rationed by quota.",
+      "source_role": "requirements",
+      "source_excerpt": "the s pass is for foreign employees across all nationalities or citizenships who: ... have a job offer in singapore.",
+      "display_order": 20,
+      "source_excerpt_display": "The S Pass is for foreign employees across all nationalities or citizenships who: ... Have a job offer in Singapore."
+    },
+    {
+      "requirement_code": "qualifying_salary_current",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "$3,300 a month for a new application, rising with age to $4,800 at 45 and above",
+      "description": "Benchmarked to the top third of local associate professional and technician salaries by age. This column covers new applications from 1 September 2025 and renewals of passes expiring from 1 September 2026.",
+      "source_role": "requirements",
+      "source_excerpt": "$3,300 (increases progressively with age from age 23, up to $4,800 at age 45 and above)",
+      "display_order": 30,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_all_sectors": 3300,
+        "max_all_sectors_age_45_plus": 4800,
+        "regime": "new applications from 2025-09-01; renewals expiring from 2026-09-01"
+      },
+      "source_excerpt_display": "$3,300 (increases progressively with age from age 23, up to $4,800 at age 45 and above)"
+    },
+    {
+      "requirement_code": "qualifying_salary_expiring_regime",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An older, lower column still binds some renewals: $3,150 to $4,650",
+      "description": "For renewals of passes expiring between 1 September 2025 and 31 August 2026. It is on its way out and is stored because somebody is renewing against it today.",
+      "source_role": "requirements",
+      "source_excerpt": "$3,150 (increases progressively with age from age 23, up to $4,650 at age 45 and above)",
+      "display_order": 40,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_all_sectors": 3150,
+        "max_all_sectors_age_45_plus": 4650,
+        "regime": "renewals of passes expiring 2025-09-01 to 2026-08-31"
+      },
+      "source_excerpt_display": "$3,150 (increases progressively with age from age 23, up to $4,650 at age 45 and above)"
+    },
+    {
+      "requirement_code": "qualifying_salary_from_2027",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And a higher one is already dated: $3,600 to $5,100 from 1 January 2027",
+      "description": "For new applications from 1 Jan 2027 and renewals of passes expiring from 1 Jan 2028. MOM restates it as a sentence on the key facts page as well as in the table.",
+      "source_role": "eligibility",
+      "source_excerpt": "the s pass minimum qualifying salary will increase from $3,300 to $3,600 for new applications from 1 january 2027 and renewals expiring from 1 january 2028.",
+      "display_order": 50,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_all_sectors": 3600,
+        "max_all_sectors_age_45_plus": 5100,
+        "effective_from": "2027-01-01",
+        "renewals_expiring_from": "2028-01-01"
+      },
+      "source_excerpt_display": "The S Pass minimum qualifying salary will increase from $3,300 to $3,600 for new applications from 1 January 2027 and renewals expiring from 1 January 2028."
+    },
+    {
+      "requirement_code": "financial_services_converge_at_45",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Financial services starts higher and ends in the same place",
+      "description": "$3,650, $3,800 and $4,000 at the bottom across the three regimes — and $5,650 at 45 and above in all three. The increases fall entirely on younger candidates in that sector.",
+      "source_role": "requirements",
+      "source_excerpt": "financial services ... $3,650 (increases progressively with age from age 23, up to $5,650 at age 45 and above) $3,800 (increases progressively with age from age 23, up to $5,650 at age 45 and above) $4,000 (increases progressively with age from age 23, up to $5,650 at age 45 and above)",
+      "display_order": 60,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "financial_services_floors": [
+          3650,
+          3800,
+          4000
+        ],
+        "financial_services_age_45_plus": 5650
+      },
+      "source_excerpt_display": "financial services ... $3,650 (increases progressively with age from age 23, up to $5,650 at age 45 and above) $3,800 (increases progressively with age from age 23, up to $5,650 at age 45 and above) $4,000 (increases progressively with age from age 23, up to $5,650 at age 45 and above)"
+    },
+    {
+      "requirement_code": "quota_and_levy_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer is subject to a quota and a monthly levy",
+      "description": "The Employment Pass page says 'no foreign worker levy or quota required'. This one says the opposite. A firm at its dependency ratio ceiling cannot hire another S Pass holder however qualified.",
+      "source_role": "eligibility",
+      "source_excerpt": "quota or levy yes. employers are subject to a quota and levy for s pass employees.",
+      "display_order": 70,
+      "source_excerpt_display": "Quota or levy Yes. Employers are subject to a quota and levy for S Pass employees."
+    },
+    {
+      "requirement_code": "employer_must_provide_medical_insurance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer MUST provide medical insurance",
+      "description": "For the Employment Pass, MOM says employers 'can choose'. Here it is mandatory.",
+      "source_role": "eligibility",
+      "source_excerpt": "medical insurance employers must provide medical insurance for s pass holders.",
+      "display_order": 80,
+      "source_excerpt_display": "Medical insurance Employers must provide medical insurance for S Pass holders."
+    },
+    {
+      "requirement_code": "primary_care_plan",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A Primary Care Plan must be bought and declared before the pass can be issued",
+      "description": "Applies to workers who stay in dormitories accommodating seven or more, or who work in construction, marine shipyard or process sectors. Bought after the in-principle approval, declared on MyMOM Portal before issuance.",
+      "source_role": "eligibility",
+      "source_excerpt": "after getting the in-principle approval or renewal letter, buy a pcp for workers who either: ... stay in dormitories that can accommodate 7 or more workers ... work in cmp sectors ... before the s pass can be issued or renewed, declare the pcp purchase on mymom portal .",
+      "display_order": 90,
+      "parameters": {
+        "dormitory_capacity_threshold": 7,
+        "sectors": "construction, marine shipyard, process"
+      },
+      "source_excerpt_display": "After getting the in-principle approval or renewal letter, buy a PCP for workers who either: ... Stay in dormitories that can accommodate 7 or more workers ... Work in CMP sectors ... Before the S Pass can be issued or renewed, declare the PCP purchase on myMOM Portal."
+    },
+    {
+      "requirement_code": "qualifications_optional",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Declaring qualifications is optional",
+      "description": "Unlike the Employment Pass, where they earn COMPASS points. If they are declared, the employer carries the duty that they are authentic and from an accredited institution on MOM's own list.",
+      "source_role": "requirements",
+      "source_excerpt": "declaring qualifications is optional .",
+      "display_order": 100,
+      "source_excerpt_display": "Declaring qualifications is optional."
+    },
+    {
+      "requirement_code": "self_assessment_tool_gate",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Do not apply if the Self-Assessment Tool says the candidate is not eligible",
+      "description": "MOM's instruction, not advice: an application filed against a negative SAT result will be rejected.",
+      "source_role": "requirements",
+      "source_excerpt": "if the sat shows that the candidate is not eligible, you shouldn’t apply for the s pass because it will be rejected.",
+      "display_order": 110,
+      "source_excerpt_display": "If the SAT shows that the candidate is not eligible, you shouldn’t apply for the S Pass because it will be rejected."
+    },
+    {
+      "requirement_code": "sat_ninety_percent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "MOM publishes the odds: around 90% after a positive Self-Assessment Tool result",
+      "description": "An authority stating its own approval rate for a pre-check. Recorded verbatim as MOM's statement about MOM's tool, not as a VisaAI prediction.",
+      "source_role": "requirements",
+      "source_excerpt": "if the sat shows that the candidate is eligible, there is around a 90% chance that the candidate will get a pass.",
+      "display_order": 120,
+      "parameters": {
+        "stated_by": "MOM",
+        "approval_rate_after_positive_sat": "around 90%"
+      },
+      "source_excerpt_display": "If the SAT shows that the candidate is eligible, there is around a 90% chance that the candidate will get a pass."
+    },
+    {
+      "requirement_code": "dependants_pass_at_6000",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Dependant's Pass needs $6,000 — nearly double the S Pass floor",
+      "description": "The S Pass qualifies at $3,300. Bringing a spouse needs $6,000. Most S Pass holders cannot, and MOM states the threshold on this page rather than leaving it to the Dependant's Pass one.",
+      "source_role": "requirements",
+      "source_excerpt": "pass holders who have a fixed monthly salary of at least $6,000 are eligible for a dependant’s pass for their spouse and children.",
+      "display_order": 130,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 6000,
+        "period": "month"
+      },
+      "source_excerpt_display": "Pass holders who have a fixed monthly salary of at least $6,000 are eligible for a Dependant’s Pass for their spouse and children."
+    },
+    {
+      "requirement_code": "passport_validity_caps_the_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your passport caps the pass: it expires a month before your passport does",
+      "description": "A first S Pass can run two years, but not past one month before the passport's expiry. A candidate with 14 months of passport gets 13 months of pass.",
+      "source_role": "eligibility",
+      "source_excerpt": "note: the duration granted is limited by your passport validity. the pass can only be valid up to 1 month before your passport expiry date.",
+      "display_order": 140,
+      "parameters": {
+        "buffer_months_before_passport_expiry": 1,
+        "first_pass_max_years": 2
+      },
+      "source_excerpt_display": "Note: The duration granted is limited by your passport validity. The pass can only be valid up to 1 month before your passport expiry date."
+    },
+    {
+      "requirement_code": "passport_personal_particulars",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Personal particulars page of the candidate's passport",
+      "description": "If the name differs from other documents, an explanation letter and supporting documents such as a deed poll are needed too.",
+      "source_role": "documents",
+      "source_excerpt": "personal particulars page of candidate’s passport. learn more about the upload requirements.",
+      "display_order": 150,
+      "source_excerpt_display": "Personal particulars page of candidate’s passport. Learn more about the upload requirements."
+    },
+    {
+      "requirement_code": "acra_business_profile",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The company's latest ACRA business profile",
+      "description": null,
+      "source_role": "documents",
+      "source_excerpt": "company’s latest business profile or instant information registered with acra.",
+      "display_order": 160,
+      "source_excerpt_display": "Company’s latest business profile or instant information registered with ACRA."
+    },
+    {
+      "requirement_code": "regulated_occupation_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Regulated occupations need documents from their professional body",
+      "description": "MOM names fourteen: dentist, diagnostic radiographer, doctor, emergency medical technician, football player or coach, lawyer, nurse, occupational therapist, paramedic, pharmacist, physiotherapist, radiation therapist, speech therapist and TCM practitioner.",
+      "source_role": "documents",
+      "source_excerpt": "additional documents are required for: ... healthcare professionals, lawyers, football players or coaches",
+      "display_order": 170,
+      "source_excerpt_display": "Additional documents are required for: ... Healthcare professionals, lawyers, football players or coaches"
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$105 application fee",
+      "description": "Paid by the employer, same as the Employment Pass.",
+      "source_role": "application",
+      "source_excerpt": "pay the $105 fee by giro, visa, mastercard or amex.",
+      "display_order": 180,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 105,
+        "payer": "employer",
+        "stage": "application"
+      },
+      "source_excerpt_display": "Pay the $105 fee by GIRO, Visa, Mastercard or Amex."
+    },
+    {
+      "requirement_code": "processing_ten_business_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Processed or updated within 10 business days",
+      "description": null,
+      "source_role": "application",
+      "source_excerpt": "processing time: processed or given an update within 10 business days.",
+      "display_order": 190,
+      "parameters": {
+        "business_days": 10
+      },
+      "source_excerpt_display": "Processing time: Processed or given an update within 10 business days."
+    },
+    {
+      "requirement_code": "medical_and_insurance_at_issuance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "At issuance: a completed medical examination form, medical insurance details and work injury compensation insurance details",
+      "description": "Three insurance and health items the Employment Pass does not ask for. If the candidate is certified fit, the Primary Care Plan must be bought for those who need one.",
+      "source_role": "application",
+      "source_excerpt": "candidate's completed medical examination form. if certified fit to work, buy the primary care plan for those who are required to have it.",
+      "display_order": 200,
+      "source_excerpt_display": "Candidate's completed medical examination form. If certified fit to work, buy the Primary Care Plan for those who are required to have it."
+    },
+    {
+      "requirement_code": "singapore_address_housing_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Singapore residential address that meets the housing requirements",
+      "description": "Checked against MOM's housing rules at issuance, not merely recorded.",
+      "source_role": "application",
+      "source_excerpt": "candidate's singapore residential address, which must meet the housing requirements for you to get the pass issued.",
+      "display_order": 210,
+      "source_excerpt_display": "Candidate's Singapore residential address, which must meet the housing requirements for you to get the pass issued."
+    }
+  ]
+}

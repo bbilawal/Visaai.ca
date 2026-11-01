@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-one-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official Ministry of Manpower pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE TOP OF A LADDER NO MOM PAGE DRAWS. S Pass $3,300 a month, quota and levy, employer applies. Employment Pass $5,600, COMPASS 40 points, employer applies. ONE Pass S$30,000 — and the CANDIDATE may apply, COMPASS does not apply, and the Fair Consideration Framework advertising duty does not apply. The exemptions run the opposite way to the cost.\n\nIT UNDOES THE EMPLOYMENT PASS'S CENTRAL CONSTRAINT. An EP binds a person to one employer; a new job is a new application. A ONE Pass holder may 'concurrently start, operate and work for multiple companies at any one time' and needs 'no need to reapply for a pass if you change jobs'. A different relationship to the state, not a better-paid version of the same one.\n\nAND IT RESTORES THE LETTER OF CONSENT. The Dependant's Pass extraction records that the LOC is gone — a DP holder who wants to work needs an EP, S Pass or DP-Work Permit. That is true of the page it was read from, which covers dependants of EP and S Pass holders. This page says 'your spouse will be able to apply to work on a letter of consent.' The LOC was not abolished; it was restricted to this pass.\n\nSALARY FROM ONE EMPLOYER, WITH THE ARITHMETIC PRINTED. S$20,000 + S$10,000 = S$30,000 is NOT eligible; S$30,000 + S$5,000 is. Ireland's family route says incomes cannot be combined between people; this says they cannot be combined between jobs held by one person.\n\nTWO CURRENCIES ON ONE PAGE. The salary threshold is SGD; the employer size thresholds are USD — market capitalisation US$500 million or annual revenue US$200 million. Every figure here carries its own currency for that reason.\n\nBOUNDS CHECKED. Four pages. The S$30,000 figure appears in three places on the eligibility page — past employment, prospective employment, and the multi-employer rule — and each requirement quotes the one it belongs to.",
+  "source_roles": {
+    "requirements": "https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/eligibility",
+    "eligibility": "https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/key-facts",
+    "documents": "https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/documents-required",
+    "application": "https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/apply-for-a-pass"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "documents": null,
+    "application": null
+  },
+  "freshness_note": "No dateModified in the head, so freshness reads as unknown rather than fresh. The corroborating signal is that the documents page uses a worked example dated 'may 2024' for a rolling 12-month payslip window, and cross-sells EDB's Global Founder Programme, which is a live scheme. Neither is a dateline and neither is treated as one.",
+  "not_extracted": [
+    "The outstanding-achievements route's own document requirements. MOM holds them on a further page and reviews them 'holistically' with MCCY, MOE, NRF and A*STAR — a discretionary assessment by several agencies, not a checklist, and it would be dishonest to render it as one.",
+    "The renewal criteria as a checklist. They are stored as one requirement because they decide whether a five-year pass is worth applying for, but the detail of the five-locals test — and the prevailing EP minimum qualifying salary it points at — belongs to renewal.",
+    "EDB's Global Founder Programme, cross-sold on the key facts page. A separate scheme run by a separate agency.",
+    "The Letter of Consent process for a ONE Pass holder's spouse. This page establishes that it exists for them; its conditions are on MOM's LOC pages.",
+    "Passes for family members. The ONE Pass has its own family page, distinct from the Dependant's Pass page registered as sg-dependants-pass — which is exactly why that route's extraction says it does not cover ONE Pass families.",
+    "The financial-data sources MOM names for proving employer size (PitchBook, Yahoo Finance, Crunchbase, Bloomberg, Google Finance, alternatives.pe). Those are acceptable sources, not requirements, and the list is MOM's to revise."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "candidate_may_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may apply yourself — or let an employer do it",
+      "description": "The Employment Pass and S Pass must be lodged by an employer. Here MOM accepts either, which makes this the only Singapore work pass a person can pursue before they have a job offer in hand.",
+      "source_role": "eligibility",
+      "source_excerpt": "who can apply candidates who meet the eligibility criteria can apply. ... appointed employment agencies and employers can also apply on behalf of their candidate.",
+      "display_order": 10,
+      "source_excerpt_display": "Who can apply Candidates who meet the eligibility criteria can apply. ... Appointed employment agencies and employers can also apply on behalf of their candidate."
+    },
+    {
+      "requirement_code": "one_work_pass_application_at_a_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only one work pass application per candidate at a time",
+      "description": "You cannot hedge between a ONE Pass and an Employment Pass. Choosing one closes the other until it is decided.",
+      "source_role": "eligibility",
+      "source_excerpt": "note: you may only submit 1 work pass application per candidate at a time. for example, you may only apply for either an overseas networks & expertise pass or employment pass for your candidate at any one time.",
+      "display_order": 20,
+      "source_excerpt_display": "Note: You may only submit 1 work pass application per candidate at a time. For example, you may only apply for either an Overseas Networks & Expertise Pass or Employment Pass for your candidate at any one time."
+    },
+    {
+      "requirement_code": "salary_past_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route 1: S$30,000 a month for the 12 consecutive months before you apply",
+      "description": "Nine times the S Pass floor and more than five times the Employment Pass floor. Foreign currency is accepted at equivalence, and the twelve months must be consecutive and immediately before the application.",
+      "source_role": "requirements",
+      "source_excerpt": "earned a fixed monthly salary of at least s$30,000, or its equivalent in foreign currency, for the 12 consecutive months leading up to the date of application.",
+      "display_order": 30,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 30000,
+        "period": "month",
+        "consecutive_months": 12,
+        "foreign_currency_equivalent_accepted": true
+      },
+      "source_excerpt_display": "Earned a fixed monthly salary of at least S$30,000, or its equivalent in foreign currency, for the 12 consecutive months leading up to the date of application."
+    },
+    {
+      "requirement_code": "salary_prospective_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route 2: S$30,000 a month under a future Singapore employer, starting within six months",
+      "description": "MOM will not take a prospective application further out than that. The start date, not the offer date, is what the six months runs to.",
+      "source_role": "requirements",
+      "source_excerpt": "will earn a fixed monthly salary of at least s$30,000 under an established company that is based in singapore. ... when applying based on prospective employment in singapore, submit your application only when your employment will start within 6 months.",
+      "display_order": 40,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 30000,
+        "period": "month",
+        "apply_within_months_of_start": 6
+      },
+      "source_excerpt_display": "Will earn a fixed monthly salary of at least S$30,000 under an established company that is based in Singapore. ... When applying based on prospective employment in Singapore, submit your application only when your employment will start within 6 months."
+    },
+    {
+      "requirement_code": "established_company_thresholds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must be an established company: US$500m market cap or US$200m revenue",
+      "description": "One of the two, not both. Global office totals may be counted, case by case. Note the currency switch — the salary test is in Singapore dollars and the company test is in US dollars, on the same page.",
+      "source_role": "requirements",
+      "source_excerpt": "for a company to be considered established, it must have at least one of the following: ... market capitalisation of at least us$500 million ... annual revenue of at least us$200 million",
+      "display_order": 50,
+      "parameters": {
+        "currency": "USD",
+        "market_capitalisation": 500000000,
+        "annual_revenue": 200000000,
+        "satisfy": "at_least_one_of",
+        "global_office_totals_considered": true
+      },
+      "source_excerpt_display": "For a company to be considered established, it must have at least one of the following: ... Market capitalisation of at least US$500 million ... Annual revenue of at least US$200 million"
+    },
+    {
+      "requirement_code": "salary_from_one_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The S$30,000 must come from ONE employer — MOM prints the arithmetic",
+      "description": "S$20,000 plus S$10,000 is S$30,000 and does not qualify. S$30,000 plus S$5,000 does. Ireland's family route bars combining incomes between people; this bars combining them between jobs held by one person.",
+      "source_role": "requirements",
+      "source_excerpt": "if you drew salaries from more than one employer in the 12 consecutive months leading up to the date of application, your qualifying fixed monthly salary of at least s$30,000 should come from one employer only.",
+      "display_order": 60,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 30000,
+        "combine_employers": false
+      },
+      "source_excerpt_display": "If you drew salaries from more than one employer in the 12 consecutive months leading up to the date of application, your qualifying fixed monthly salary of at least S$30,000 should come from one employer only."
+    },
+    {
+      "requirement_code": "outstanding_achievements_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route 3: outstanding achievements in sport, arts and culture, or academia and research — no salary test",
+      "description": "Reviewed holistically by MOM with MCCY, MOE, NRF and A*STAR. A discretionary multi-agency assessment, not a checklist, and it is stored as one because rendering it as criteria would invent precision MOM does not claim.",
+      "source_role": "requirements",
+      "source_excerpt": "you may apply without meeting the salary criteria if you have outstanding achievements in at least one of the areas below: ... sports ... arts and culture ... academia and research",
+      "display_order": 70,
+      "source_excerpt_display": "You may apply without meeting the salary criteria if you have outstanding achievements in at least one of the areas below: ... Sports ... Arts and culture ... Academia and research"
+    },
+    {
+      "requirement_code": "existing_pass_holders_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you already work in Singapore, you need a year here first",
+      "description": "A short qualifier that closes the fastest route in: arriving on an Employment Pass and converting immediately.",
+      "source_role": "requirements",
+      "source_excerpt": "existing pass holders need to have worked in singapore for at least 1 year.",
+      "display_order": 80,
+      "parameters": {
+        "min_years_in_singapore": 1
+      },
+      "source_excerpt_display": "Existing pass holders need to have worked in Singapore for at least 1 year."
+    },
+    {
+      "requirement_code": "compass_and_fcf_exemption",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exempt from COMPASS and from Fair Consideration Framework job advertising",
+      "description": "The two gates that shape every Employment Pass application do not apply here. The highest-paid pass carries the fewest conditions on the employer.",
+      "source_role": "eligibility",
+      "source_excerpt": "exemption from complementarity assessment framework (compass) and fair consideration framework job advertising requirements",
+      "display_order": 90,
+      "source_excerpt_display": "Exemption from Complementarity Assessment Framework (COMPASS) and Fair Consideration Framework job advertising requirements"
+    },
+    {
+      "requirement_code": "multiple_companies_and_job_changes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work for several companies at once, and change jobs without reapplying",
+      "description": "The Employment Pass ties a person to one employer and makes a job change a new application. This pass does neither, subject to the holder's own employment contract.",
+      "source_role": "eligibility",
+      "source_excerpt": "flexibility to concurrently start, operate and work for multiple companies at any one time (subject to your employment contract terms, where relevant) ... no need to reapply for a pass if you change jobs",
+      "display_order": 100,
+      "source_excerpt_display": "Flexibility to concurrently start, operate and work for multiple companies at any one time (subject to your employment contract terms, where relevant) ... No need to reapply for a pass if you change jobs"
+    },
+    {
+      "requirement_code": "spouse_letter_of_consent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your spouse can work on a Letter of Consent",
+      "description": "The Letter of Consent is not available to dependants of Employment Pass or S Pass holders, who need a work pass of their own. It survives for this pass. Same instrument, restricted to the top rung.",
+      "source_role": "eligibility",
+      "source_excerpt": "your spouse will be able to apply to work on a letter of consent .",
+      "display_order": 110,
+      "source_excerpt_display": "Your spouse will be able to apply to work on a Letter of Consent."
+    },
+    {
+      "requirement_code": "no_levy_or_quota",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No foreign worker levy and no quota",
+      "description": "As with the Employment Pass, and unlike the S Pass.",
+      "source_role": "eligibility",
+      "source_excerpt": "foreign worker levy or quota no foreign worker levy or quota required.",
+      "display_order": 120,
+      "source_excerpt_display": "Foreign worker levy or quota No foreign worker levy or quota required."
+    },
+    {
+      "requirement_code": "pass_duration_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five years first time, five years on renewal",
+      "description": "Against two years for a first Employment Pass or S Pass.",
+      "source_role": "eligibility",
+      "source_excerpt": "first-time candidates: up to 5 years",
+      "display_order": 130,
+      "parameters": {
+        "first_pass_max_years": 5
+      },
+      "source_excerpt_display": "First-time candidates: Up to 5 years"
+    },
+    {
+      "requirement_code": "renewal_criteria",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Renewal needs either a five-year salary average or five local employees",
+      "description": "S$30,000 a month averaged over five years in Singapore, or a Singapore company you started that employs at least five locals each paid at least the prevailing Employment Pass minimum. Worth knowing before applying: the second route turns the pass into a founder's obligation.",
+      "source_role": "requirements",
+      "source_excerpt": "to be eligible for renewal, the pass holder must meet one of the following : ... earned a fixed monthly salary of at least s$30,000 on average over the past 5 years in singapore. ... started and is operating a singapore-based company that employs at least 5 locals, each earning a gross monthly salary that is at least the prevailing ep minimum qualifying salary .",
+      "display_order": 140,
+      "parameters": {
+        "satisfy": "at_least_one_of",
+        "min_local_employees": 5,
+        "salary_average_years": 5
+      },
+      "source_excerpt_display": "To be eligible for renewal, the pass holder must meet one of the following: ... Earned a fixed monthly salary of at least S$30,000 on average over the past 5 years in Singapore. ... Started and is operating a Singapore-based company that employs at least 5 locals, each earning a gross monthly salary that is at least the prevailing EP minimum qualifying salary."
+    },
+    {
+      "requirement_code": "passport_page",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport page, including any amendments",
+      "description": "If the passport name differs from other documents, an explanation letter and supporting documents such as a deed poll are needed as well.",
+      "source_role": "documents",
+      "source_excerpt": "all overseas networks & expertise pass applications need to include a passport page , including any amendments.",
+      "display_order": 150,
+      "source_excerpt_display": "All Overseas Networks & Expertise Pass applications need to include a passport page, including any amendments."
+    },
+    {
+      "requirement_code": "twelve_months_payslips",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Twelve consecutive months of payslips",
+      "description": "MOM gives the worked example: an application in May 2024 needs May 2023 to April 2024. A gap in the run is a gap in the evidence.",
+      "source_role": "documents",
+      "source_excerpt": "monthly payslips for the 12 consecutive months leading up to the date of application",
+      "display_order": 160,
+      "parameters": {
+        "months": 12
+      },
+      "source_excerpt_display": "Monthly payslips for the 12 consecutive months leading up to the date of application"
+    },
+    {
+      "requirement_code": "iras_notice_of_assessment",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For Singapore employment: the most recent IRAS notice of assessment",
+      "description": "Or the latest income tax return filed with IRAS — Form B1 — if the notice has not arrived yet.",
+      "source_role": "documents",
+      "source_excerpt": "most recent notice of assessment from the inland revenue authority of singapore",
+      "display_order": 170,
+      "source_excerpt_display": "Most recent Notice of Assessment from the Inland Revenue Authority of Singapore"
+    },
+    {
+      "requirement_code": "overseas_employment_verification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For overseas employment: verification from a background screening company",
+      "description": "MOM will not take the employer's own letter for this. It wants third-party verification.",
+      "source_role": "documents",
+      "source_excerpt": "employment verification proof from a background screening company",
+      "display_order": 180,
+      "source_excerpt_display": "Employment verification proof from a background screening company"
+    },
+    {
+      "requirement_code": "employer_financials_within_three_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employer financials obtained within the last three months",
+      "description": "Market capitalisation or annual revenue, current. MOM names PitchBook, Yahoo Finance, Crunchbase, Bloomberg, Google Finance and alternatives.pe as acceptable sources.",
+      "source_role": "documents",
+      "source_excerpt": "latest financial information of the candidate’s employer obtained within the last 3 months. this includes documents indicating the latest market capitalisation or annual company revenue.",
+      "display_order": 190,
+      "parameters": {
+        "max_age_months": 3
+      },
+      "source_excerpt_display": "Latest financial information of the candidate’s employer obtained within the last 3 months. This includes documents indicating the latest market capitalisation or annual company revenue."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$105 application fee",
+      "description": "The same $105 as every other MOM pass, on a route with a S$30,000 salary test.",
+      "source_role": "application",
+      "source_excerpt": "pay the $105 application fee via visa or mastercard.",
+      "display_order": 200,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 105,
+        "stage": "application"
+      },
+      "source_excerpt_display": "Pay the $105 application fee via Visa or Mastercard."
+    },
+    {
+      "requirement_code": "issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$225 to issue the pass, plus $30 for a multiple journey visa",
+      "description": null,
+      "source_role": "application",
+      "source_excerpt": "$225 for each pass ... $30 for each multiple journey visa (if applicable)",
+      "display_order": 210,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 225,
+        "multiple_journey_visa": 30,
+        "stage": "issuance"
+      },
+      "source_excerpt_display": "$225 for each pass ... $30 for each Multiple Journey Visa (if applicable)"
+    },
+    {
+      "requirement_code": "processing_four_weeks",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Four weeks for most cases",
+      "description": "Against ten business days for an Employment Pass and six weeks for an EntrePass.",
+      "source_role": "application",
+      "source_excerpt": "processing time: 4 weeks for most cases",
+      "display_order": 220,
+      "parameters": {
+        "weeks": 4
+      },
+      "source_excerpt_display": "Processing time: 4 weeks for most cases"
+    },
+    {
+      "requirement_code": "ipa_single_entry_six_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The approval letter is a single-entry visa valid six months",
+      "description": "The same mechanism as every MOM pass registered here.",
+      "source_role": "application",
+      "source_excerpt": "is a pre-approved single-entry visa for you to enter singapore. it gives you 6 months to enter singapore and get your pass issued.",
+      "display_order": 230,
+      "parameters": {
+        "entry_window_months": 6,
+        "entries": 1
+      },
+      "source_excerpt_display": "Is a pre-approved single-entry visa for you to enter Singapore. It gives you 6 months to enter Singapore and get your pass issued."
+    }
+  ]
+}

@@ -1,0 +1,739 @@
+{
+  "_comment": [
+    "Evidence for every in-scope country that was PROBED rather than researched.",
+    "",
+    "Split into assessed-with-evidence and nobody-has-looked-yet, because a",
+    "country investigated and not admitted used to leave no trace at all, and the",
+    "next session started from the same blank page.",
+    "",
+    "SECOND PASS 2026-08-26. The first pass stopped at whatever entry point it",
+    "had and recorded `needs_deeper_research` fourteen times. This pass followed",
+    "the links OFF those pages — enumerating each site with list-source-links.ts",
+    "rather than constructing URLs — and split those fourteen into four",
+    "admissions (Türkiye, Egypt, Lebanon, China) and ten evidenced exceptions.",
+    "",
+    "Two entries are CORRECTIONS to their own earlier verdicts, and both are",
+    "recorded as such rather than quietly overwritten:",
+    "",
+    "  CN was called stale because its richest page last references 2021. The",
+    "  registered guides publish datelines in the BODY (2023-03-27, 2021-04-01),",
+    "  which probe-authority.ts does not look at — it reads meta tags.",
+    "",
+    "  PS was called \"no publishing authority identified\". moi.gov.ps answers,",
+    "  permits us, and serves 32,000 current characters. It publishes no entry",
+    "  requirements, which is a different and much better-evidenced finding.",
+    "",
+    "Conclusions in use:",
+    "  admitted                                        - registered and extracted",
+    "  blocked_by_authority                            - they refuse us; permanent",
+    "  blocked_by_our_egress                           - our IP is dropped; BL-3",
+    "  blocked_by_client_rendering                     - willing, but sends no text",
+    "  blocked_unresolvable_redirect_loop              - robots.txt cannot be read",
+    "  readable_but_catalogue_not_enumerable           - pages read, index does not",
+    "  authority_reachable_publishes_no_entry_requirements",
+    "  unresolved_no_reachable_authority               - no host answers at all",
+    "",
+    "The last three exist because collapsing them into \"blocked\" would file an",
+    "infrastructure fault, a rendering choice and a refusal as the same decision."
+  ],
+  "JP": {
+    "conclusion": "blocked_by_authority",
+    "authorities": [
+      {
+        "name": "Ministry of Foreign Affairs (MOFA)",
+        "role": "Issues visas; holds the visa-type hierarchy",
+        "url": "https://www.mofa.go.jp/j_info/visit/visa/index.html",
+        "verdict": "BLOCKED",
+        "evidence": "robots.txt returns HTTP 403. We cannot read what is permitted, so we stop — the same condition as immi.homeaffairs.gov.au. Unchanged from the first pass."
+      },
+      {
+        "name": "Immigration Services Agency (ISA)",
+        "role": "Residence status and in-country procedures",
+        "url": "https://www.moj.go.jp/isa/index.html",
+        "verdict": "NAVIGATION SHELL",
+        "evidence": "re-probed from the VPS: robots.txt 200 with 1 disallow line, path ALLOWED. HTTP 200, 3,402 characters, NO requirement markers, 14 of 24 lines (58%) unique."
+      },
+      {
+        "name": "ISA — search by residence status",
+        "role": "The visa-type hierarchy equivalent",
+        "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+        "verdict": "NAVIGATION SHELL",
+        "evidence": "HTTP 200, 2,402 characters, NO requirement markers, 7 of 16 lines (44%) unique."
+      }
+    ],
+    "note": "Re-probed and unchanged. The authority holding the catalogue refuses to tell us what it permits; the authority we may read publishes navigation shells in Japanese.\n\nThe product question from the first pass still stands and is still not an engineering one: every requirement VisaAI publishes is a verbatim excerpt, so admitting Japan on ISA pages would mean publishing Japanese text to English readers or building translated display. Sweden set the precedent that a non-English source is acceptable (Migrationsverket's Swedish tree is live, with English labels marked as translations), so the question is narrower than it looks — but it is moot until ISA yields a page with requirements on it rather than a menu.",
+    "country": "Japan",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Japan is split across two authorities and only one lets us read it. MOFA holds the visa types and blocks robots.txt outright; ISA is readable but the entry points probed are navigation shells, and its content is in Japanese. That last point is a product decision, not a technical one: every requirement VisaAI publishes is a verbatim excerpt, so admitting Japan means either publishing Japanese text to English readers or building translated display, and neither should be decided by whoever happens to run the next extraction."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt and root both 403. Unchanged."
+  },
+  "FR": {
+    "country": "France",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), confirmed from a second egress",
+    "authorities": [
+      {
+        "name": "France-Visas (Ministry of Europe and Foreign Affairs)",
+        "role": "The official visa portal; holds the short-stay and long-stay hierarchy in English",
+        "url": "https://france-visas.gouv.fr/en/",
+        "verdict": "REFUSED",
+        "evidence": "robots.txt returns HTTP 403 from BOTH the VPS and a second egress path. Identical from two paths means policy against our identified bot, not IP reputation. We cannot read what is permitted, so we stop."
+      }
+    ],
+    "conclusion": "blocked_by_authority",
+    "note": "A clean, English, well-structured portal that we are not permitted to read. Nothing here is an engineering problem: the authority declines to publish crawl rules to us, and the spec forbids working around bot protection. This is the same condition as immi.homeaffairs.gov.au and Japan's MOFA.",
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt and root both 403. Unchanged."
+  },
+  "PT": {
+    "country": "Portugal",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), compared against a second egress",
+    "authorities": [
+      {
+        "name": "Visas Portal (Ministry of Foreign Affairs)",
+        "role": "Official visa portal with an English 'Type of Visa' hierarchy",
+        "url": "https://vistos.mne.gov.pt/en/national-visas/general-information/type-of-visa",
+        "verdict": "BLOCKED BY SOURCE IP (not fixable in code)",
+        "evidence": "Re-diagnosed 2026-08-26. TCP connects on BOTH 80 and 443 and the connection then dies - RST after ClientHello on 443, empty reply on 80. Identical for bare openssl s_client with no SNI, for TLS 1.2 forced, for a browser User-Agent, and for full browser headers. Nothing about our request shapes the outcome, so it is a decision about our source address. HTTP 200 from a second egress. Not fixable by us."
+      },
+      {
+        "name": "AIMA — Agency for Integration, Migration and Asylum",
+        "role": "Residence permits and in-country procedures",
+        "url": "https://aima.gov.pt/pt",
+        "verdict": "READABLE - the fault was ours, and is fixed",
+        "evidence": "Re-diagnosed 2026-08-26, and MISFILED BEFORE. This was never an egress block: aima.gov.pt sends exactly ONE certificate (CN=*.aima.gov.pt, issuer 'Sectigo Public Server Authentication CA OV R36') and omits the intermediate, so the chain cannot be built and curl reports error 60. Browsers hide this by chasing the leaf's AIA extension, which is why it looked fine to a human and dead to the VPS - and why 'works in my browser, dies in production' read as an IP block. An audit of all 28 registered source hosts found 28 verifying cleanly; aima.gov.pt was the only broken chain. apps/api/src/modules/visa-sync/tls-chain.ts now completes the chain from the certificate's own AIA URI, requiring that the fetched issuer actually signed the certificate below it AND anchors to a root already in the system trust store. fetchSource('https://aima.gov.pt/pt') returns HTTP 200, 104,459 bytes from the VPS."
+      }
+    ],
+    "conclusion": "partially_admitted_one_authority_ip_blocked",
+    "note": "Portugal is half open. The MFA visa portal drops our source IP and needs a different egress or an approach to the ministry - neither is a code change. AIMA, which publishes residence permits, is readable from production egress as of 2026-08-26 and is researchable now. Recording both authorities under one 'blocked_by_our_egress' conclusion hid a bug we could fix behind a block we cannot.",
+    "reverified_at": "2026-08-26",
+    "reverification": "Split into two faults after one-variable-at-a-time probing. One was ours and is fixed; one is theirs and stands."
+  },
+  "DK": {
+    "country": "Denmark",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), classified against a second egress",
+    "authorities": [
+      {
+        "name": "New to Denmark (Danish Immigration Service / SIRI)",
+        "role": "Official immigration portal; residence permits for work, study and family",
+        "url": "https://www.nyidanmark.dk/en-GB/Your-situation-is-changing/Work/Residence-card",
+        "verdict": "READABLE AND REQUIREMENT-SHAPED",
+        "evidence": "robots.txt 404 — conventionally unrestricted, and NOT a refusal. HTTP 200, 11,356 characters normalized, markers hit: requirement, document, apply, fee. 100 of 107 lines (93%) unique against the other page probed, so it is page content and not a navigation shell. Body references 2026."
+      },
+      {
+        "name": "New to Denmark — permanent residence",
+        "role": "A second requirement page, used as the boilerplate control",
+        "url": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Permanent-residence-permit/Permanent-residence",
+        "verdict": "READABLE AND REQUIREMENT-SHAPED",
+        "evidence": "HTTP 200, 47,781 characters normalized, markers hit: requirement, eligib, document, apply, fee. 284 of 291 lines (98%) unique. Body references 2026."
+      },
+      {
+        "name": "New to Denmark — route index (\"You want to apply\")",
+        "role": "Would enumerate the visa/permit hierarchy",
+        "url": "https://www.nyidanmark.dk/en-GB/You-want-to-apply",
+        "verdict": "CATALOGUE ENUMERABLE SERVER-SIDE",
+        "evidence": "CORRECTION of this entry, which was probed twice and wrong twice. The route tiles ARE in the server response, as JSON inside an HTML attribute on an Angular component: <app-cards model=\"{&quot;LinkBoxes&quot;:[{&quot;Header&quot;:&quot;Short stay (visa)&quot;,&quot;LinkToPage&quot;:&quot;/en-GB/You-want-to-apply/Short-stay-visa&quot;}, ...]}\"> The server sends 25,114 bytes for a page whose visible text is one heading; both earlier passes measured the rendered text and never asked what the other 24KB was. Walking those attributes from the VPS enumerates 169 pages, every one HTTP 200: 22 top-level categories, 73 with sub-routes, 96 leaves. No sitemap is needed and no URL is constructed."
+      }
+    ],
+    "conclusion": "admitted",
+    "note": "ADMITTED 2026-08-26. This entry was wrong twice, and wrong the same way Cyprus was wrong: it concluded from a convenient slice of the response. Cyprus looked unblocked because only the first twelve lines of its robots.txt were read; Denmark looked unenumerable because only its rendered text was read. Ledger rule 24 is NOT overturned here - Denmark now satisfies it, because every route URL is read from a LinkToPage the authority itself publishes. Content quality measured across 112 candidate routes with the repo's own normalizer: all 112 HTTP 200, 93 over 5,000 normalized characters, 73 referencing 2026. Enumerator: scripts/visa-registry/dk-route-catalogue.mjs.\n\nADMITTED PARTIALLY, AND THE DENOMINATOR IS STATED. Of the 169 enumerated pages, 66 qualify as routes with real requirement content (>= 5,000 normalized characters, >= 4 requirement markers, dateline 2024 or later, excluding the Faroe Islands and Greenland which run their own immigration rules and are not Schengen). TEN are registered and extracted: the short-stay visa, the Pay Limit Scheme, both Positive Lists, Fast-Track, Researchers, higher education, PhD, spouse reunification and permanent residence — 295 requirements in total. The remaining 56 are enumerated and NOT extracted. They are deliberately not registered as empty visa types, because a registered type with no requirements reads as coverage from a distance while publishing nothing, which is the failure rule 29 forbids and the one Finland was found committing this same day. The catalogue is reproducible at any time from scripts/visa-registry/dk-route-catalogue.mjs.",
+    "reverified_at": "2026-08-26",
+    "reverification": "Third pass, and the one that read the whole response instead of the part that renders."
+  },
+  "AT": {
+    "country": "Austria",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), classified against a second egress",
+    "authorities": [
+      {
+        "name": "Migration Platform of the Austrian Federal Government",
+        "role": "Official migration portal; the visa/permit hierarchy in English",
+        "url": "https://www.migration.gv.at/en/types-of-immigration/",
+        "verdict": "INDEX IS ENUMERABLE",
+        "evidence": "robots.txt 200 with ZERO disallow lines — explicitly unrestricted. The index lists its categories SERVER-SIDE: fixed-term-employment, mobility-within-the-eu, permanent-immigration, temporary-residence. This is the gate Denmark failed."
+      },
+      {
+        "name": "Red-White-Red Card plus (route page)",
+        "role": "Representative leaf page",
+        "url": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/redwhiteredcardplus/",
+        "verdict": "READABLE AND REQUIREMENT-SHAPED",
+        "evidence": "HTTP 200, 8,805 characters normalized, markers hit: requirement, eligib, document, apply, fee. 64 of 69 lines (93%) unique against the index, so it is page content rather than menu."
+      }
+    ],
+    "conclusion": "admitted",
+    "note": "ADMITTED and COMPLETE 2026-08-25. **11 routes live with 58 verbatim requirements** — every route migration.gv.at's server-rendered index actually publishes.\n\nELEVEN, not thirteen. Two of the thirteen index URLs — austria-wide-shortage-occupations and regional-shortage-occupations — are OCCUPATION LISTS of German job titles that the skilled-worker route points at. They carry no requirements and registering them would have invented two routes nobody can apply for. Both migrations assert the total is 11 so it cannot creep back. An enumerable index tells you which URLs exist, not which of them are routes; that only became visible by reading the pages.\n\nTwo standing limitations. The POINTS TABLES are not extractable — normalization flattens their rows so criterion-to-score survives only in visual layout — and every Austrian promotion migration fails on an excerpt that is a bare number. Thresholds ARE quoted where stated in prose. And migration.gv.at publishes no dateline except on the EU Blue Card page, whose indexed income figure is quoted WITH its year."
+  },
+  "AE": {
+    "country": "United Arab Emirates",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), classified against a second egress",
+    "authorities": [
+      {
+        "name": "Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)",
+        "role": "Official residency and entry authority; the services index",
+        "url": "https://icp.gov.ae/en/services-details",
+        "verdict": "INDEX IS ENUMERABLE",
+        "evidence": "robots.txt 200, path ALLOWED. The services index lists 7 service pages SERVER-SIDE, including the Blue, Golden and Green Residency routes — read off the site, not constructed. `.gov.ae` is a government-owned domain, which is the officiality standard this project already applies."
+      },
+      {
+        "name": "ICP — UAE Golden Residency (route page)",
+        "role": "Representative leaf page",
+        "url": "https://icp.gov.ae/en/services/uae-golden-residency/",
+        "verdict": "READABLE, REQUIREMENT-SHAPED AND DATED",
+        "evidence": "HTTP 200, 11,225 characters normalized, markers hit: requirement, eligib, document, fee, valid passport. Declared date 2026-08-20 and body references 2026 — it carries the freshness signal that Austria's pages lack entirely."
+      }
+    ],
+    "conclusion": "admitted",
+    "note": "ADMITTED 2026-08-25 as the 14th destination, and now COMPLETE for this authority: all three routes the ICP services index enumerates — Golden (14 requirements), Green (11) and Blue (15) — are live with 40 verbatim-quoted requirements between them.\n\nIt was chosen from the 24 probed countries because it passed the gate almost nothing else passed cleanly: a published dateline. Austria is otherwise as good and publishes no date anywhere; China's English pages are richer still and their most recent year reference is 2021.\n\nStill not registered, and deliberately: visit and tourist visas. Short-stay entry is partly administered by the emirate-level GDRFA authorities, which have not been probed. The catalogue claim here is scoped to what ICP's own index publishes, not to UAE entry policy as a whole."
+  },
+  "TR": {
+    "conclusion": "admitted",
+    "authorities": [
+      {
+        "name": "Ministry of Foreign Affairs",
+        "role": "Publishes the visa-type catalogue and the requirement sections",
+        "url": "https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa",
+        "verdict": "READABLE, REQUIREMENT-SHAPED, CATALOGUE ENUMERABLE",
+        "evidence": "robots.txt 200 with ZERO disallow lines, path ALLOWED. HTTP 200, 19,862 characters normalized, all four markers, 90 of 98 lines (92%) unique. The page enumerates the catalogue SERVER-SIDE — five classes and roughly thirty-five lettered subtypes — and then carries requirement sections under its own headings for tourist, working, internship/work-permit-exemption, tour operator representative, transportation, religious-foundation personnel and archaeological/documentary visas."
+      },
+      {
+        "name": "Ministry of Foreign Affairs — visa information for foreigners",
+        "role": "e-Visa, work visa and passport validity",
+        "url": "https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa",
+        "verdict": "READABLE and requirement-shaped",
+        "evidence": "HTTP 200, 49,575 characters normalized, four markers, 238 of 246 lines (97%) unique, body references 2026."
+      },
+      {
+        "name": "e-Visa portal",
+        "role": "Application system",
+        "url": "https://www.evisa.gov.tr/en/",
+        "verdict": "CLIENT-RENDERED — NOTHING TO EXTRACT",
+        "evidence": "1,176 bytes raw normalizing to ZERO characters. Unchanged from the first pass, and it does not matter: this is the application system, not the requirements publisher."
+      },
+      {
+        "name": "Pre-application system for the sticker visa",
+        "role": "Appointment scheduling",
+        "url": "https://www.visa.gov.tr/",
+        "verdict": "LANDING PAGE",
+        "evidence": "HTTP 200, 3,598 characters, NO requirement markers."
+      }
+    ],
+    "conclusion_detail": "8 routes registered, 96 verbatim requirements.",
+    "note": "The first pass probed the e-Visa PORTAL and recorded `needs_deeper_research` because the portal renders by script. That was the right verdict about the wrong host: the portal is where you apply, and the ministry publishes the requirements itself. Following `Consular Info` -> `More...` off the ministry's own home page reached the catalogue in two clicks.\n\nWhat Türkiye publishes is unusual and worth recording: the catalogue and the requirement sections DO NOT LINE UP. The catalogue lists five classes; the requirement headings are a different set of seven. Eight routes are registered — the ones the authority actually describes — and the enumerated-but-undescribed subtypes (the official visa class, the student-education class, and the tourist sub-purposes) are named in the coverage-exception ledger rather than registered as empty routes.",
+    "country": "Türkiye",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "The e-Visa portal cannot be extracted, but that portal is the application system rather than the requirements publisher. Türkiye's Ministry of Foreign Affairs publishes visa policy separately and has not been probed. Recorded as needing research rather than blocked, because the authority has not refused us — one of its systems simply has no server-side content."
+    }
+  },
+  "CN": {
+    "conclusion": "admitted",
+    "authorities": [
+      {
+        "name": "National Immigration Administration (NIA)",
+        "role": "Publishes the service-guide index",
+        "url": "https://en.nia.gov.cn/n147423/n147478/index.html",
+        "verdict": "INDEX IS ENUMERABLE",
+        "evidence": "robots.txt 404 — conventionally unrestricted. The `Guidelines for Foreigners` page enumerates five service guides server-side under `Entry-Exit and Stay (Residence) of Foreigners`."
+      },
+      {
+        "name": "NIA — Permanent residence guide",
+        "role": "Requirements",
+        "url": "https://en.nia.gov.cn/n147423/n147478/n147715/c158291/content.html",
+        "verdict": "READABLE, REQUIREMENT-SHAPED, DATELINED 2023-03-27",
+        "evidence": "HTTP 200, 11,685 characters normalized, ALL SIX markers, 75 of 80 lines (94%) unique. Publishes its dateline in the body under the title."
+      },
+      {
+        "name": "NIA — Residence permit guide",
+        "role": "Requirements",
+        "url": "https://en.nia.gov.cn/n147423/n147478/n147715/c158270/content.html",
+        "verdict": "READABLE, REQUIREMENT-SHAPED, DATELINED 2021-04-01",
+        "evidence": "HTTP 200, 23,719 characters normalized, four markers, 96 of 104 lines (92%) unique."
+      },
+      {
+        "name": "NIA — Visa extension, change and reissuance guide",
+        "role": "Requirements",
+        "url": "https://en.nia.gov.cn/n147423/n147478/n147715/c158249/content.html",
+        "verdict": "READABLE, REQUIREMENT-SHAPED, DATELINED 2021-04-01",
+        "evidence": "HTTP 200, 26,710 characters normalized, ALL SIX markers, 118 of 126 lines (94%) unique."
+      }
+    ],
+    "conclusion_detail": "3 of the 5 enumerated guides registered, 96 verbatim requirements.",
+    "note": "CORRECTION to this entry's own first verdict. China was recorded as failing the freshness check because its richest English page last references 2021. That verdict was made against the wrong page AND with an incomplete check: probe-authority.ts looks for a dateline in META TAGS, and these guides print theirs in the BODY, on the line under the title.\n\nRead properly, the three registered guides publish 2023-03-27, 2021-04-01 and 2021-04-01. Those are REAL publication dates — more than Austria's migration.gv.at, Singapore's MOM pages or the US ESTA pages give us — and they say the guides are three to five years old. Both facts are recorded in each extraction's page_dates and freshness_note rather than one being used to argue away the other.\n\nThe two remaining guides in the same index (exit-entry permits, travel permits) are readable and not yet extracted; they are named in every China extraction's not_extracted.",
+    "country": "China",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "China reads better than almost anything else probed and fails the check that matters most. 55,000 characters of requirement-shaped English is exactly what this project wants; a body whose most recent year reference is 2021 is exactly what probe-authority.ts's freshness check exists to catch — the German failure mode, where a five-year-old page presents as current and no reachability test can see it.\n\nPublishing five-year-old immigration requirements would be worse than publishing nothing: the whole product promise is that a requirement is what the authority says TODAY, bound to a verified source version. Before China can be admitted, a current NIA page has to be identified — the staleness may be confined to this particular article rather than the site."
+    }
+  },
+  "SA": {
+    "conclusion": "blocked_by_client_rendering",
+    "authorities": [
+      {
+        "name": "Ministry of Foreign Affairs — eServices index",
+        "role": "The service catalogue",
+        "url": "https://www.mofa.gov.sa/en/eservices/Pages/default.aspx",
+        "verdict": "READABLE, BUT THE WRONG CATALOGUE",
+        "evidence": "robots.txt 200 with ZERO disallow lines. HTTP 200, 391,235 bytes raw normalizing to 18,499 characters, 180 of 209 lines (86%) unique, body references 2026. It enumerates roughly forty services and they are overwhelmingly DIPLOMATIC-MISSION services — work visas requested by embassies, exit-reentry visas for accredited mission staff, luggage export permits for diplomats."
+      },
+      {
+        "name": "Ministry of Foreign Affairs — individual service pages",
+        "role": "Where per-service requirements would live",
+        "url": "https://www.mofa.gov.sa/en/eservices/Pages/svc3.aspx",
+        "verdict": "NO BODY TEXT SERVER-SIDE",
+        "evidence": "HTTP 200, 183,555 bytes raw normalizing to 4,311 characters — all of it site navigation and Arabic cookie boilerplate. The service description itself is not in the served markup. A sibling (svc25) behaves identically at 6 of 40 lines (15%) unique."
+      },
+      {
+        "name": "Visa Services Platform",
+        "role": "Where general public visa requirements would live",
+        "url": "https://ksavisa.sa/",
+        "verdict": "CLIENT-RENDERED — NOTHING TO EXTRACT",
+        "evidence": "robots.txt 200 with 1 disallow line, path ALLOWED. HTTP 200, 15,182 bytes raw normalizing to ZERO characters."
+      }
+    ],
+    "note": "Saudi Arabia fails twice over, and the two failures are different. The ministry's eServices index IS readable and IS enumerable — 86% unique, current year — and what it enumerates is a diplomatic-mission service desk rather than a public visa catalogue. Registering those forty services as visa types would produce a country page about luggage export permits for embassy staff.\n\nThe general public visa platform, linked from the same site, sends zero characters. So the readable catalogue is the wrong one and the right one is unreadable. Recorded as client-rendering rather than refusal: every host here serves us willingly.",
+    "country": "Saudi Arabia",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Ministry of Foreign Affairs landing page only. robots.txt 200 with ZERO disallow lines, so access is unrestricted and the site is willing — the entry point simply is not where requirements live. A visa-section index needs to be found before any verdict is defensible."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "Hosts reachable (200/302). Client-rendering unchanged."
+  },
+  "EG": {
+    "conclusion": "admitted",
+    "authorities": [
+      {
+        "name": "Ministry of Interior — e-Visa portal",
+        "role": "Publishes the catalogue, the fees and the entry requirements",
+        "url": "https://visa2egypt.gov.eg/eVisa/FAQ",
+        "verdict": "READABLE and requirement-shaped",
+        "evidence": "robots.txt 404 — conventionally unrestricted. HTTP 200, 2,953 characters normalized, ALL FOUR markers, 36 of 38 lines (95%) unique. Carries a `types of visa and fees` heading enumerating one visa type with two fee lines, and an `entry requirements (on arrival)` list of five documents."
+      },
+      {
+        "name": "Ministry of Interior — e-Visa portal, How to Apply",
+        "role": "Procedure",
+        "url": "https://visa2egypt.gov.eg/eVisa/HowDoIApply",
+        "verdict": "THIN — likely JS-rendered",
+        "evidence": "HTTP 200, 834 characters normalized. Not registered."
+      }
+    ],
+    "conclusion_detail": "1 route registered, 14 verbatim requirements.",
+    "note": "The first pass probed `/eVisa/Home` — 1,630 characters, one marker — and correctly called it an application front door. The FAQ two links away is the requirements publisher.\n\nTwo things about Egypt are worth recording. First, the catalogue enumerates exactly ONE visa type; single and multiple entry are a FEE, not a category, and the registration migration asserts Egypt at one route so a later extraction cannot split the tariff into two. Second, the document list is headed `entry requirements (on arrival)` — those five items are what the port asks for, not what the online application asks for, and every label says so.\n\nThe portal's own navigation links carry a jsessionid and a per-session VISTK token. The bare paths answer 200 and are what is registered; a session URL would have rotted within the hour.",
+    "country": "Egypt",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "The official e-Visa portal. robots.txt 404 (unrestricted), but the home page carries 1,630 characters and one marker — an application front door rather than a requirements publisher. Egypt's requirement pages, if published, are elsewhere."
+    }
+  },
+  "QA": {
+    "conclusion": "blocked_by_client_rendering",
+    "authorities": [
+      {
+        "name": "Ministry of Interior — department services",
+        "role": "Requirements candidate",
+        "url": "https://portal.moi.gov.qa/wps/portal/MOIInternet/services/otherservices",
+        "verdict": "NAVIGATION SHELL",
+        "evidence": "robots.txt 404 — unrestricted. HTTP 200, 70,679 bytes raw normalizing to 1,937 characters, one marker, 3 of 20 lines (15%) unique. Latest year in body: 2021."
+      },
+      {
+        "name": "Ministry of Interior — department forms index",
+        "role": "Forms candidate",
+        "url": "https://portal.moi.gov.qa/wps/portal/MOIInternet/deptformsindex",
+        "verdict": "NAVIGATION SHELL",
+        "evidence": "HTTP 200, 1,917 characters, 3 of 20 lines (15%) unique. Latest year in body: 2021."
+      },
+      {
+        "name": "Ministry of Interior — e-Services portal",
+        "role": "Where the services actually live",
+        "url": "https://eservices.moi.gov.qa/eservices-portal/pages/serviceGroups.xhtml",
+        "verdict": "NO CONNECTION",
+        "evidence": "robots.txt UNREACHABLE from the VPS — the connection did not complete, so there is no HTTP status at all. NOT recorded as a refusal: nothing was said to us either way."
+      }
+    ],
+    "note": "The MOI portal is a WebSphere installation that sends 70KB of markup carrying under 2,000 characters of text, 85% of it shared between pages. Two separate service indexes both score 15% unique, which is the signature of a menu rather than a page.\n\nThe e-Services host, where the actual services are, did not complete a connection from our egress. That is left as unknown rather than filed as a block, because a dropped connection and a refusal are different facts and this project has already twice made the mistake of recording one as the other.",
+    "country": "Qatar",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Ministry of Interior services portal. robots.txt 404 (unrestricted), 2,002 characters, one marker — a services menu rather than requirement text. Needs the specific visa service pages."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "Host reachable (200). Client-rendering unchanged."
+  },
+  "IL": {
+    "country": "Israel",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5)",
+    "authorities": [
+      {
+        "name": "Population and Immigration Authority (gov.il)",
+        "role": "Official immigration authority",
+        "url": "https://www.gov.il/en/departments/population_and_immigration_authority/govil-landing-page",
+        "verdict": "ROBOTS PERMITS, SERVER REFUSES",
+        "evidence": "robots.txt returns 200 with ZERO disallow lines — the site explicitly permits crawling — and the page itself then returns HTTP 403. Two official signals that contradict each other. (robots.txt is also 403 from a second egress and 200 from the VPS, so the refusal is not simply IP reputation.)"
+      }
+    ],
+    "conclusion": "blocked_by_authority",
+    "note": "Recorded as blocked because the server refused the content, but the contradiction is worth keeping: a robots.txt with no disallow lines is an invitation, and a 403 on the page is a refusal. Where the two disagree the refusal governs — we do not get to treat the permissive signal as the operative one because it is the one we prefer. Worth revisiting through the outreach process rather than technically.",
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt 200, root 403. The contradiction stands; the refusal governs."
+  },
+  "TH": {
+    "country": "Thailand",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), classified against a second egress",
+    "authorities": [
+      {
+        "name": "Immigration Bureau, Royal Thai Police",
+        "role": "Official immigration authority",
+        "url": "https://www.immigration.go.th/en/",
+        "verdict": "ROBOTS PERMITS, SERVER REFUSES",
+        "evidence": "robots.txt 200 with 9 disallow lines, and the requested path is ALLOWED by those rules. The page then returns HTTP 403. robots.txt reads identically from both egress paths, so this is not IP reputation."
+      }
+    ],
+    "conclusion": "blocked_by_authority",
+    "note": "Same contradiction as Israel: the crawl rules permit this exact path and the server refuses it. Thailand was added to scope by decision, so this is a real answer to that decision rather than an omission — the authority's own published rules say yes and its server says no, and the refusal governs.",
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt 200, root 403. Unchanged."
+  },
+  "CY": {
+    "country": "Cyprus",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5)",
+    "authorities": [
+      {
+        "name": "Ministry of Interior (moi.gov.cy)",
+        "role": "Official immigration authority",
+        "url": "https://moi.gov.cy/en/",
+        "verdict": "ROBOTS DISALLOWS EVERYTHING",
+        "evidence": "robots.txt returns 200 and its rule is `Disallow: /` — the entire site is closed to automated reading. Unambiguous, and reachable: the file was served to us so we could read the answer."
+      }
+    ],
+    "conclusion": "blocked_by_authority",
+    "note": "The cleanest possible exception. This is not a WAF, an IP block or a parse failure — the authority publishes crawl rules and its rules say no to everything. Respecting that is non-negotiable (spec rule 9), and there is nothing to revisit technically. Any future access is an outreach conversation.",
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt re-read IN FULL. Its first twelve lines name only SEO crawlers, which reads like an opening — but the file continues to `User-agent: * / Disallow: /`, with Googlebot the single exception and ChatGPT-User explicitly barred. Reading the head alone would have reported an unlock that does not exist. Unchanged."
+  },
+  "JO": {
+    "conclusion": "blocked_by_client_rendering",
+    "authorities": [
+      {
+        "name": "Ministry of Interior — electronic visa and residence applications",
+        "role": "Requirements candidate, read off the ministry site",
+        "url": "https://www.moi.gov.jo/AR/Pages/%D8%A7%D9%84%D8%B7%D9%84%D8%A8%D8%A7%D8%AA_%D8%A7%D9%84%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1%D8%A7%D8%AA_%D9%88%D8%A7%D9%84%D8%A7%D9%82%D8%A7%D9%85%D8%A7%D8%AA",
+        "verdict": "NO REQUIREMENT LANGUAGE",
+        "evidence": "robots.txt 404 — unrestricted. HTTP 200, 527,197 bytes raw normalizing to 10,282 characters with NO requirement markers at all. Body references 2026."
+      },
+      {
+        "name": "Ministry of Interior — mechanism for entering the Kingdom",
+        "role": "The entry-procedure page, the most promising link on the site",
+        "url": "https://moi.gov.jo/AR/Pages/%D8%A7%D9%84%D9%8A%D8%A9_%D8%AF%D8%AE%D9%88%D9%84_%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9",
+        "verdict": "SERVER ERROR",
+        "evidence": "HTTP 500. Not a refusal and not a block — the page is broken."
+      }
+    ],
+    "note": "The first pass called the English visa list a landing page — 5.2 MB of markup, 9,855 characters, zero markers — and it was right. This pass enumerated the site properly and found that the English tree is a shell: every substantive link goes to an Arabic page under /AR/.\n\nThe two best Arabic candidates were probed. One returns 500. The other returns half a megabyte of markup carrying ten thousand characters and not one requirement marker in any of the languages the probe knows, Arabic included. Jordan publishes an e-visa application system, not a requirements corpus.",
+    "country": "Jordan",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Readable and willing; the entry point is not where requirements live. Needs the specific visa pages."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "Host reachable (302). Client-rendering unchanged."
+  },
+  "OM": {
+    "conclusion": "blocked_by_client_rendering",
+    "authorities": [
+      {
+        "name": "Royal Oman Police — e-Visa portal, Know your Visa Type",
+        "role": "The catalogue index, read off the portal rather than constructed",
+        "url": "https://evisa.rop.gov.om/en/types-of-visa",
+        "verdict": "CLIENT-RENDERED — NOTHING TO EXTRACT",
+        "evidence": "robots.txt 404 — conventionally unrestricted, so this is not a refusal. HTTP 200, 44,892 bytes raw normalizing to 927 characters, NO requirement markers, and 2 of 6 lines (33%) unique against a sibling. The catalogue is rendered by script."
+      },
+      {
+        "name": "Royal Oman Police — e-Visa FAQ",
+        "role": "Requirements candidate",
+        "url": "https://evisa.rop.gov.om/en/frequently-asked-questions",
+        "verdict": "CLIENT-RENDERED",
+        "evidence": "HTTP 200, 704 characters normalized, 0 of 4 lines (0%) unique — pure menu."
+      },
+      {
+        "name": "Royal Oman Police — Civil Status and Passport services",
+        "role": "Requirements candidate on the main ROP site",
+        "url": "https://www.rop.gov.om/english/Services.aspx?DepartmentName=CivilStatusandPassport",
+        "verdict": "NAVIGATION SHELL",
+        "evidence": "robots.txt 200 with ZERO disallow lines. HTTP 200, 1,759 characters, NO requirement markers, 9 of 21 lines (43%) unique."
+      }
+    ],
+    "note": "Oman is willing and unreadable. Both hosts serve us without restriction — robots.txt is 404 on one and 200-with-no-disallows on the other — and neither sends the content to a server-side reader. Following the portal's own \"Know your Visa Type\" link, which is the correct way to find a catalogue, produced 927 characters of chrome.\n\nThis is B-28's condition, not a refusal and not a parse failure, and it is recorded as its own class so it is not confused with the authorities that say no. Nothing here is fixable by us and nothing is owed by them; if Oman ever server-renders that catalogue it becomes admissible the same day.",
+    "country": "Oman",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "The Royal Oman Police e-Visa portal is an application front door rather than a requirements publisher, and it publishes no dateline. Needs the requirement pages, and freshness will have to be established another way."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "Host reachable (200). Client-rendering unchanged."
+  },
+  "IQ": {
+    "conclusion": "readable_but_publishes_only_outbound_services",
+    "probed_at": "2026-08-25",
+    "authorities": [
+      {
+        "name": "Ministry of Interior (moi.gov.iq)",
+        "role": "Official interior ministry",
+        "url": "https://moi.gov.iq/",
+        "verdict": "ROBOTS PERMITS, SERVER REFUSES (HTTP 403)",
+        "evidence": "robots.txt 200 with 3 disallow lines and the requested path ALLOWED by them; the page then returns HTTP 403. The refusal governs."
+      },
+      {
+        "name": "Ministry of Foreign Affairs (mofa.gov.iq)",
+        "role": "Consular services",
+        "url": "https://mofa.gov.iq/",
+        "verdict": "READABLE AND SUBSTANTIAL — AND ABOUT THE WRONG DIRECTION OF TRAVEL",
+        "evidence": "FOUND on the 2026-08-25 re-probe and readable at 7,829 characters with a 12,514-URL WordPress sitemap. Its readable service pages are Iraqi PASSPORT services for Iraqi citizens: passport issuance, passport extension, replacement of a lost passport, laissez-passer. They are real, current and useful, and not one of them is about entering Iraq. Publishing them under an Iraq visa route would put a page about Iraqi passports in front of someone asking how to enter the country — worse than publishing nothing, because it looks like an answer."
+      },
+      {
+        "name": "MFA www variant (www.mofa.gov.iq)",
+        "role": "Same ministry, www host",
+        "url": "https://www.mofa.gov.iq",
+        "verdict": "ROBOTS PERMITS, SERVER REFUSES (HTTP 530)",
+        "evidence": "HTTP 530 from the VPS — an origin-unreachable status returned by the edge."
+      },
+      {
+        "name": "Candidate hosts (evisa.mofa.gov.iq, gov.iq, dop.gov.iq)",
+        "role": "Looking for an inbound-visa or passports-directorate host",
+        "url": "https://evisa.mofa.gov.iq",
+        "verdict": "DNS FAILS",
+        "evidence": "ENOTFOUND for evisa.mofa.gov.iq and dop.gov.iq; ENODATA for gov.iq. These are evidence about the NAMES we guessed, not about Iraq."
+      }
+    ],
+    "note": "RECLASSIFIED 2026-08-25 from blocked_by_authority. The interior ministry does refuse us, and that part is unchanged. What changed is that a SECOND Iraqi authority was found, is readable, and publishes a real service corpus — for Iraqi citizens travelling out, not for foreigners coming in. The distinction matters because 'blocked' invited a future session to keep hunting for a way past a 403, and the actual open question is different: does any Iraqi authority publish inbound entry requirements at all?"
+  },
+  "KW": {
+    "conclusion": "readable_but_publishes_no_requirements",
+    "probed_at": "2026-08-25",
+    "authorities": [
+      {
+        "name": "Ministry of Interior — Residence Affairs",
+        "role": "The residence service page, read off the ministry home page rather than constructed",
+        "url": "https://www.moi.gov.kw/main/eservices/residence",
+        "verdict": "READABLE — AND IT DESCRIBES THE DEPARTMENT, NOT THE REQUIREMENTS",
+        "evidence": "robots.txt 200 with ZERO disallow lines — fully unrestricted. HTTP 200, 2,206 characters. RECLASSIFIED 2026-08-25 from blocked_by_client_rendering, which was the wrong conclusion: the page is not empty and is not script-rendered, it simply is not about visa requirements. Its substantive content is a directorate mandate — 'organising and supervising the entry and exit of foreigners through the ports or their residence, in addition to keeping residence files for expatriates and recording violations' — plus a link to the Ministerial Decree on the Regulation of the Residence Law. It states no requirement, no fee, no document and no eligibility. Registering it as a visa route would publish a page whose entire content is a job description."
+      },
+      {
+        "name": "Kuwait Government Online (e.gov.kw)",
+        "role": "National portal",
+        "url": "https://www.e.gov.kw",
+        "verdict": "ROBOTS REFUSED (HTTP 403)",
+        "evidence": "robots.txt returns 403 from the VPS. We cannot read what is permitted, so we stop."
+      },
+      {
+        "name": "Kuwait eVisa (evisa.moi.gov.kw)",
+        "role": "eVisa system",
+        "url": "https://evisa.moi.gov.kw",
+        "verdict": "ROBOTS REFUSED (HTTP 502)",
+        "evidence": "robots.txt returns HTTP 502 from the VPS."
+      },
+      {
+        "name": "Ministry of Foreign Affairs (mofa.gov.kw)",
+        "role": "Consular / visa issuance",
+        "url": "https://www.mofa.gov.kw",
+        "verdict": "ROBOTS PERMITS, SERVER REFUSES (HTTP 403)",
+        "evidence": "The published crawl rules permit the path and the server returns 403. The refusal governs."
+      }
+    ],
+    "note": "The 2026-08-25 re-probe widened Kuwait from one host to six and changed the SHAPE of the finding rather than its outcome. It is no longer 'the page is client-rendered' — the page reads fine. It is 'the readable page is about something else, and every other Kuwaiti host either refuses us or does not answer'. That is a better record: a future session knows not to re-probe moi.gov.kw expecting requirements to appear, and knows the open question is whether Kuwait publishes entry requirements anywhere at all."
+  },
+  "BH": {
+    "country": "Bahrain",
+    "probed_at": "2026-08-24",
+    "probed_from": "VPS (2.24.196.5), compared against a second egress",
+    "authorities": [
+      {
+        "name": "Bahrain eVisa (evisa.gov.bh)",
+        "role": "Official visa portal",
+        "url": "https://www.evisa.gov.bh/",
+        "verdict": "CLOUDFLARE BOT CHALLENGE - will not be circumvented",
+        "evidence": "Re-diagnosed 2026-08-26. The 403 is not a policy refusal and not an IP ban: it carries 'cf-mitigated: challenge', 'server: cloudflare' and a 'Just a moment...' interstitial body. Cloudflare is challenging the request because it comes from a datacentre address. Identical for IPv4 and IPv6, for a browser User-Agent, for HTTP/1.1, and for full browser headers."
+      }
+    ],
+    "conclusion": "blocked_by_bot_challenge",
+    "note": "RECLASSIFIED from blocked_by_our_egress. Calling this 'our egress' implied it was ours to fix, and the obvious fix - route through an address Cloudflare does not challenge - is bot-detection evasion. We will not do that, whoever asks. The legitimate routes are an approach to the authority for allowlisting, or leaving Bahrain unpublished. Bahrain therefore does NOT belong with Portugal in BL-3.",
+    "reverified_at": "2026-08-26",
+    "reverification": "Reclassified: a challenge we must not solve, not a block we can fix."
+  },
+  "IR": {
+    "conclusion": "blocked_unresolvable_redirect_loop",
+    "authorities": [
+      {
+        "name": "Ministry of Foreign Affairs",
+        "role": "Visa authority",
+        "url": "https://mfa.gov.ir/",
+        "verdict": "ROBOTS.TXT REDIRECTS TO ITSELF — UNRESOLVABLE",
+        "evidence": "Followed from the VPS with a redirect budget: `https://mfa.gov.ir/robots.txt` answers 307 pointing at `https://mfa.gov.ir/robots.txt`, and does so every time — curl exits 47, \"Maximum (5) redirects followed\", with the effective URL unchanged. The home page behaves identically."
+      },
+      {
+        "name": "e-Visa portal",
+        "role": "Application system",
+        "url": "https://evisa.mfa.ir/",
+        "verdict": "SAME LOOP",
+        "evidence": "Both robots.txt and the root answer 307 to themselves; 5 redirects followed, 0 bytes, no terminal response."
+      }
+    ],
+    "note": "The first pass left Iran deliberately unresolved rather than blocked, because reading a 307 as a refusal is a mistake this project had already made twice in one session. That caution was right and the answer is now in: the redirect does not terminate. It points at itself.\n\nSo this is NOT the Australian case — nobody has refused us. It is the case where the crawl rules cannot be obtained at all, and the consequence is the same, because we do not read a site whose robots.txt we cannot read. Recorded under its own conclusion so it is never confused with a refusal, and so that a future session can tell in one glance whether the loop has been fixed.",
+    "country": "Iran",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Recorded as unresolved rather than blocked. Reading a 307 as a refusal is exactly the mistake this session already made twice (404 read as refusal, dropped connection read as refusal), and probe-authority.ts was fixed during this batch to stop doing it. Iran deserves a proper answer, not an inherited one."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "robots.txt and root both 307, still redirecting to themselves. Unchanged."
+  },
+  "SY": {
+    "conclusion": "blocked_by_client_rendering",
+    "authorities": [
+      {
+        "name": "Ministry of Interior",
+        "role": "Candidate immigration authority",
+        "url": "https://moi.gov.sy/",
+        "verdict": "CLIENT-RENDERED — NOTHING TO EXTRACT",
+        "evidence": "robots.txt 404 — unrestricted. HTTP 200, 1,133 bytes raw normalizing to ZERO characters. Unchanged from the first pass and re-confirmed from the VPS."
+      },
+      {
+        "name": "Other candidate hosts",
+        "role": "Looking for a second Syrian authority",
+        "url": "immigration.gov.sy, passport.gov.sy, mfa.gov.sy",
+        "verdict": "NO CONNECTION FROM THE VPS",
+        "evidence": "All three return no HTTP status at all. Recorded as unreachable, not as refusal."
+      }
+    ],
+    "note": "Syria was already recorded as client-rendered on one host. This pass looked for a second and found none reachable: three further candidate hostnames produced no connection. That is not evidence about Syria's policy and it is not filed as one — it is evidence that we have found exactly one Syrian government host that answers, and it sends no text.",
+    "country": "Syria",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Not a refusal and not a parser failure: there is no server-rendered text (B-28's condition). Whether Syria publishes visa requirements anywhere machine-readable is unknown."
+    },
+    "reverified_at": "2026-08-26",
+    "reverification": "Host reachable (200). Client-rendering unchanged."
+  },
+  "YE": {
+    "conclusion": "unresolved_no_reachable_authority",
+    "authorities": [
+      {
+        "name": "Candidate hosts",
+        "role": "Identifying an authority before probing one",
+        "url": "moi.gov.ye, ipa.gov.ye, passports.gov.ye, immigration.gov.ye",
+        "verdict": "NO CONNECTION FROM THE VPS",
+        "evidence": "Four candidate hostnames, all returning no HTTP status. Identical behaviour across all four, which makes a per-host outage unlikely and tells us nothing about which of them, if any, is the right authority."
+      }
+    ],
+    "note": "Unchanged in substance and widened in evidence: the first pass tried one hostname, this pass tried four, and none answers. The honest position is still the one recorded before — we have not established that any of these is Yemen's immigration authority, so a failure to connect is not yet a finding about Yemen.\n\nNaming the right authority comes first, and doing that needs a source we have not got: an official Yemeni government directory that itself answers. Recorded as unresolved rather than blocked, because 'blocked' would assert a refusal nobody made.",
+    "country": "Yemen",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Recorded honestly as unresolved. The candidate hostname was not verified as Yemen's immigration authority before probing, so a failure to connect is not yet evidence about Yemen — it may be the wrong host, or the service may genuinely be down. Naming the right authority comes first."
+    }
+  },
+  "LB": {
+    "conclusion": "admitted",
+    "authorities": [
+      {
+        "name": "General Directorate of General Security",
+        "role": "Immigration authority; publishes the route index and the requirement pages",
+        "url": "https://www.general-security.gov.lb/en",
+        "verdict": "INDEX IS ENUMERABLE, LEAF PAGES CARRY REAL CONTENT",
+        "evidence": "robots.txt 404 — conventionally unrestricted. The index enumerates route pages server-side with their URLs. Four leaf pages probed together: posts/159 (22,181 chars, 59 of 242 lines unique), posts/5 (20,302 chars, 36 of 221 unique), posts/37 (17,445 chars, 8 of 190 unique) and posts/556 (16,831 chars, 0 of 185 unique). All four hit all four markers and all reference 2026."
+      }
+    ],
+    "conclusion_detail": "4 routes registered, 97 verbatim requirements.",
+    "note": "Lebanon is the case that shows a uniqueness PERCENTAGE is a ratio, and that a huge shared menu moves the denominator. General Security renders an enormous mega-menu on every page, so the boilerplate check scored these pages at 4%, 10%, 16% and 24% — the range that had already condemned Japan. Two of those four pages are genuinely nothing but menu; the other two carry a full document table and a full residence-permit schedule.\n\nWhat separated them was diffing each page against the MOST menu-like one and reading what survived. That diff is now also how the excerpts were taken — by line offset out of the fetcher's own output rather than by hand — which matters on a site full of curly apostrophes, bullet characters and the authority's own spellings ('membres', '6months').\n\nOne trap recorded for whoever extends this: several fee cells on the annual-residence page are printed as `000000 lbp` and `0000,000 lbp`. Those are the authority's own placeholders. Quoting one would publish a free residence permit, so no fee is taken from that page — the amounts come from the separate published fee schedule, registered as its own source.",
+    "country": "Lebanon",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Lebanon would have looked like the strongest candidate in the whole batch on the headline numbers — 22,000 characters, four markers, current year — and the boilerplate check is the only reason it does not. At 10-26% unique, the marker hits are coming from navigation.\n\nThat is not a rejection: 62 unique lines is real content, unlike Japan's 7-of-16 navigation shell. It means extraction here needs bounds drawn tightly around the unique region, and the usual character-count and marker signals will overstate what is present. Worth doing, with care."
+    }
+  },
+  "PS": {
+    "conclusion": "authority_reachable_publishes_no_entry_requirements",
+    "authorities": [
+      {
+        "name": "Ministry of Interior",
+        "role": "Palestinian government host — FOUND on this pass",
+        "url": "https://moi.gov.ps/",
+        "verdict": "READABLE AND CURRENT, BUT NOT AN ENTRY-REQUIREMENTS PUBLISHER",
+        "evidence": "robots.txt returns 200 with a single `Disallow: /private/` — the site permits us everywhere else. HTTP 200, 424,904 bytes raw normalizing to 32,364 characters, body references 2026. Enumerating its links returns news posts, photo galleries, martyr records and security-service pages; no visa or entry section exists to probe."
+      },
+      {
+        "name": "Ministry of Interior — e-services",
+        "role": "Where services would live",
+        "url": "https://eservice.moi.gov.ps/",
+        "verdict": "CLIENT-RENDERED",
+        "evidence": "robots.txt 404. HTTP 200, 11,392 bytes raw normalizing to 109 characters. Latest year in body: 2021."
+      }
+    ],
+    "note": "CORRECTION to this entry's own first verdict, and the correction matters. Palestine was recorded as 'no official government web host publishing entry or visa requirements was identified, so there was nothing to probe'. There IS one: moi.gov.ps answers, publishes crawl rules that permit us, serves 32,000 characters and references the current year. The first pass simply had not found it.\n\nWhat changes is the QUALITY of the exception, not its outcome. The finding is no longer 'we could not find an authority' — which is a statement about our search — but 'the authority is reachable, willing and readable, and publishes no entry or visa requirements', which is a statement about what it publishes. That is consistent with the substantive position §4 asks us to model from authoritative sources rather than assert politically: entry to the West Bank and Gaza is not controlled at points the Palestinian Authority administers.\n\nRecorded so that a future session probes moi.gov.ps for a new section rather than starting again from 'is there a host at all'.",
+    "country": "State of Palestine",
+    "probed_at": "2026-08-26",
+    "probed_from": "VPS (2.24.196.5)",
+    "first_probed_at": "2026-08-24",
+    "superseded": {
+      "probed_at": "2026-08-24",
+      "conclusion": "needs_deeper_research",
+      "note": "Palestine is a different shape of problem from every other country in this scope, and the spec anticipates it: §4 says to model a jurisdiction according to authoritative immigration/entry sources and to avoid unnecessary political assertions.\n\nThe factual position reported by the sources consulted is that the Palestinian Authority does not control external entry points — entry to the West Bank is administered by Israel, and Israel's own authority is recorded here as `blocked_by_authority`. So the question 'which authority publishes entry requirements for this destination' may not have a Palestinian answer at all.\n\nWhat is NOT recorded here is any conclusion about status or sovereignty. What is recorded is narrower and checkable: no Palestinian government source publishing visa requirements has been identified, and until one is, there is nothing to extract. Resolving this needs a person who can name the authoritative entry source, not another probe."
+    }
+  }
+}

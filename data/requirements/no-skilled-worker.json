@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "no-skilled-worker",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official UDI page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "section_note": "THIS PAGE DESCRIBES SEVERAL WORKER CATEGORIES, NOT ONE. UDI concatenates skilled workers, athletes and coaches, seafarers and assignment workers behind a 'what type of work' selector, and the normalizer flattens them into a single text stream. Every excerpt here was checked against the SKILLED WORKER block alone (characters 4,079-14,533 of the normalized text), located by its own heading. The first salary figure in the flattened page — NOK 341,373 per year — belongs to athletes and coaches; quoting it here would have been verbatim, would have passed excerpt verification, and would have been wrong. Excerpt verification proves a quote is ON the page, not that it is about the right subject.",
+  "source_roles": {
+    "requirements": "https://www.udi.no/en/want-to-apply/work-immigration/skilled-workers/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "Any salary figure. UDI states the pay rule qualitatively for skilled workers and publishes no number in this section; the figures elsewhere on the page belong to other worker categories.",
+    "The application fee amount, published on a separate UDI page.",
+    "The list of occupations requiring recognition or authorisation, and the Directorate of Health's authorisation process. Both external links.",
+    "The Labour Inspection Authority's staffing agency register. External link.",
+    "The other worker categories on this page — athletes and coaches, seafarers, assignment workers, seasonal workers, job seekers — each of which is a separate permit and would need its own visa type."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Pay an application fee",
+      "description": "No amount: UDI states the obligation and publishes the figure elsewhere.",
+      "source_role": "requirements",
+      "source_excerpt": "you must pay an application fee .",
+      "display_order": 10,
+      "source_excerpt_display": "You must pay an application fee."
+    },
+    {
+      "requirement_code": "qualifications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Completed vocational training, higher education, or equivalent special qualifications",
+      "source_role": "requirements",
+      "source_excerpt": "you must have one of the following types of education/qualifications a completed vocational training programme of at least three years at upper secondary school level, for example as a carpenter or health worker. there must be a corresponding vocational training programme in norway. completed education or degree from a university/ university college, for example a bachelor's degree as an engineer or nurse.",
+      "display_order": 20,
+      "source_excerpt_display": "You must have one of the following types of education/qualifications a completed vocational training programme of at least three years at upper secondary school level, for example as a carpenter or health worker. There must be a corresponding vocational training programme in Norway. completed education or degree from a university/ university college, for example a bachelor's degree as an engineer or nurse."
+    },
+    {
+      "requirement_code": "special_qualifications_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Special qualifications normally need at least six years of work experience",
+      "description": "The third qualification route, and UDI warns it is hard: 'it takes a lot to get permission in such cases. many applications are rejected.'",
+      "source_role": "requirements",
+      "source_excerpt": "special qualifications are skills acquired through long professional experience, possibly in combination with courses and education. you must have as high competence as someone who has completed vocational education from upper secondary school. generally, you must have at least six years of work experience.",
+      "display_order": 30,
+      "source_excerpt_display": "special qualifications are skills acquired through long professional experience, possibly in combination with courses and education. You must have as high competence as someone who has completed vocational education from upper secondary school. Generally, you must have at least six years of work experience."
+    },
+    {
+      "requirement_code": "documentation_scrutiny_warning",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "UDI applies extra scrutiny to certain trades and countries of issue",
+      "description": "UDI names specific trades and issuing countries following fraudulent documentation. Recorded as guidance, not a rule: it describes how applications are assessed, not a condition anyone can satisfy. Someone in those trades deserves to know before paying a fee.",
+      "source_role": "requirements",
+      "source_excerpt": "it may be difficult to obtain a residence permit to work as a skilled worker at a vocational level, particularly within the restaurant, automotive industry, and construction industries.",
+      "display_order": 40,
+      "source_excerpt_display": "it may be difficult to obtain a residence permit to work as a skilled worker at a vocational level, particularly within the restaurant, automotive industry, and construction industries."
+    },
+    {
+      "requirement_code": "concrete_job_offer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A concrete job offer from one specific employer in Norway",
+      "source_role": "requirements",
+      "source_excerpt": "you must have received a concrete job offer from one specific employer in norway.",
+      "display_order": 50,
+      "source_excerpt_display": "You must have received a concrete job offer from one specific employer in Norway."
+    },
+    {
+      "requirement_code": "employer_confirmation_code",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your employer confirms the offer and gives you a code for the application form",
+      "source_role": "requirements",
+      "source_excerpt": "if you are applying on your own from abroad, your employer must submit confirmation of the job offer before you can submit the application form. you will receive a code from your employer that you must enter in the application form .",
+      "display_order": 60,
+      "source_excerpt_display": "If you are applying on your own from abroad, your employer must submit confirmation of the job offer before you can submit the application form. You will receive a code from your employer that you must enter in the application form."
+    },
+    {
+      "requirement_code": "full_time_or_80_percent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must normally be full-time; 80% is accepted",
+      "source_role": "requirements",
+      "source_excerpt": "the job must normally be full-time. if you have been offered at least an 80% position, we will accept this.",
+      "display_order": 70,
+      "source_excerpt_display": "The job must normally be full-time. If you have been offered at least an 80% position, we will accept this."
+    },
+    {
+      "requirement_code": "job_requires_skilled_qualifications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job offered must require skilled-worker qualifications, and you must hold them",
+      "source_role": "requirements",
+      "source_excerpt": "the job you are offered must require qualifications as a skilled worker. you must have the qualifications that the job requires.",
+      "display_order": 80,
+      "source_excerpt_display": "The job you are offered must require qualifications as a skilled worker. You must have the qualifications that the job requires."
+    },
+    {
+      "requirement_code": "pay_and_conditions_not_poorer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay and working conditions must not be poorer than is normal in Norway",
+      "description": "UDI states this qualitatively for skilled workers and publishes NO figure in this section. The salary numbers elsewhere on the page belong to other worker categories.",
+      "source_role": "requirements",
+      "source_excerpt": "the pay and working conditions must not be poorer than is normal in norway .",
+      "display_order": 90,
+      "source_excerpt_display": "The pay and working conditions must not be poorer than is normal in Norway."
+    },
+    {
+      "requirement_code": "occupational_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold any recognition or authorisation the occupation requires",
+      "description": "UDI gives health personnel authorisation from the Norwegian Directorate of Health as its example.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are going to work in an occupation for which recognition or authorisation is required (external website) , you must have such recognition or authorisation.",
+      "display_order": 100,
+      "source_excerpt_display": "If you are going to work in an occupation for which recognition or authorisation is required (external website), you must have such recognition or authorisation."
+    },
+    {
+      "requirement_code": "staffing_agency_assignment_list",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Working through a staffing agency requires a confirmed list of planned assignments",
+      "description": "The permit is then limited to the assignment period, and the agency must be in the Labour Inspection Authority's register.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are to work through a staffing agency, you must present a list of the assignments that the employer has planned for you. the assignments must be confirmed by the business/businesses you are carrying out the assignments for. it is only possible for you to get a residence permit for the period of time when you are carrying out the assignments on this list.",
+      "display_order": 110,
+      "source_excerpt_display": "If you are to work through a staffing agency, you must present a list of the assignments that the employer has planned for you. The assignments must be confirmed by the business/businesses you are carrying out the assignments for. It is only possible for you to get a residence permit for the period of time when you are carrying out the assignments on this list."
+    },
+    {
+      "requirement_code": "permit_duration_by_qualification",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Permit length depends on the qualification the position requires",
+      "description": "An outcome rather than a requirement, recorded because the difference — one year versus three — materially changes how often someone must reapply.",
+      "source_role": "requirements",
+      "source_excerpt": "if the position requires that you have completed a vocational training programme at upper secondary school level, you can get a residence permit for up to one year at a time. if the position requires that you have completed an education or degree from a university/ university college, you can normally get a residence permit for up to three years at a time.",
+      "display_order": 120,
+      "source_excerpt_display": "If the position requires that you have completed a vocational training programme at upper secondary school level, you can get a residence permit for up to one year at a time. If the position requires that you have completed an education or degree from a university/ university college, you can normally get a residence permit for up to three years at a time."
+    },
+    {
+      "requirement_code": "change_of_employer",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Changing employer in the same type of position needs no new permit; a new type of position does",
+      "description": "UDI adds that starting a NEW type of position requires a new permit first, whether or not the employer changes.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are later going to change employers, but work in the same type of position, you do not need to apply for a new residence permit.",
+      "display_order": 130,
+      "source_excerpt_display": "If you are later going to change employers, but work in the same type of position, you do not need to apply for a new residence permit."
+    },
+    {
+      "requirement_code": "job_loss_six_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "If you lose your job you may stay six months to find another, notifying police within seven days",
+      "description": "Recorded because the seven-day police notification is easy to miss and the consequence of missing it falls on the applicant.",
+      "source_role": "requirements",
+      "source_excerpt": "if you lose your job, you can stay in norway for up to six months to look for a new job. you must notify the police where you live within seven days.",
+      "display_order": 140,
+      "source_excerpt_display": "If you lose your job, you can stay in Norway for up to six months to look for a new job. You must notify the police where you live within seven days."
+    }
+  ]
+}

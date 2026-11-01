@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-specified-skilled-worker",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "TWO LEVELS, AND THE DIFFERENCE IS NOT A MATTER OF DEGREE. Level 1 covers work needing a substantial degree of knowledge or experience and is capped at 3 years designated individually. Level 2 covers SKILLED work and carries fixed renewable periods of 3, 2, 1 year or 6 months. Level 2 also appears on the Dependent status's closed list of sponsoring statuses and level 1 does not — so the level decides whether the worker's family may join them.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/specifiedskilledworker.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page.",
+    "The list of specified industrial fields and the duties permitted in each. The page states they are fixed by ministerial ordinance and published in field-specific annexes, and links them rather than stating them.",
+    "The skills and Japanese-language tests required for each field. Not on this page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "level_one_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Level 1: work needing a substantial degree of knowledge or experience, in a specified industrial field designated by the Minister of Justice, under a conforming employment contract",
+      "description": "The specified industrial fields are those where securing workers is difficult; they are fixed by ministerial ordinance and not listed on this page.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "法務大臣が指定する本邦の公私の機関との雇用に関する契約（入管法第２条の５第１項から第４項までの規定に適合するものに限る。次号において同じ。）に基づいて行う特定産業分野（人材を確保することが困難な状況にあるため外国人により不足する人材の確保を図るべき産業上の分野として法務省令で定めるものをいう。同号において同じ。）であって法務大臣が 指定するものに属する法務省令で定める相当程度の知識又は経験を必要とする技能を要す る業務に従事する活動",
+      "source_excerpt_display": "法務大臣が指定する本邦の公私の機関との雇用に関する契約（入管法第２条の５第１項から第４項までの規定に適合するものに限る。次号において同じ。）に基づいて行う特定産業分野（人材を確保することが困難な状況にあるため外国人により不足する人材の確保を図るべき産業上の分野として法務省令で定めるものをいう。同号において同じ。）であって法務大臣が 指定するものに属する法務省令で定める相当程度の知識又は経験を必要とする技能を要す る業務に従事する活動"
+    },
+    {
+      "requirement_code": "level_one_period_capped_at_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Level 1: period designated individually by the Minister of Justice, within a ceiling of 3 years",
+      "parameters": {
+        "ceiling": "3 years"
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "法務大臣が個々に指定する期間（３年を超えない範囲）",
+      "source_excerpt_display": "法務大臣が個々に指定する期間（３年を超えない範囲）"
+    },
+    {
+      "requirement_code": "level_two_definition_and_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Level 2: work needing SKILLED ability in a designated specified industrial field, with periods of 3 years, 2 years, 1 year or 6 months",
+      "description": "Level 2 has no overall ceiling of the kind level 1 carries.",
+      "parameters": {
+        "period_options": [
+          "3 years",
+          "2 years",
+          "1 year",
+          "6 months"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "法務大臣が指定する本邦の公私の機関との雇用に関する契約に基づいて行う特定産業分野であって法務大臣が指定するものに属する法務省令で定める熟練した技能を要する業務に従事する活動 ３年、２年、１年又は６月",
+      "source_excerpt_display": "法務大臣が指定する本邦の公私の機関との雇用に関する契約に基づいて行う特定産業分野であって法務大臣が指定するものに属する法務省令で定める熟練した技能を要する業務に従事する活動 ３年、２年、１年又は６月"
+    },
+    {
+      "requirement_code": "duties_per_field_are_published_separately",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What work may be done in each field is set out in the field-specific operational annex, not on this page",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "各分野で従事することができる業務については、各分野の「 特定の分野に係る要領別冊 」を御確認ください。",
+      "source_excerpt_display": "各分野で従事することができる業務については、各分野の「 特定の分野に係る要領別冊 」を御確認ください。"
+    }
+  ]
+}

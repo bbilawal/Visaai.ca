@@ -1,0 +1,44 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE.
+# =============================================================================
+# Docker builds use the REPO ROOT as context, so this .dockerignore belongs at
+# the repo root (copy it there) — a .dockerignore inside docs/ is not read by a
+# root-context build. Keeping the build context small = faster builds + no secret
+# leakage of local .env files into an image layer.
+
+# deps / build output (reinstalled/rebuilt inside the image)
+**/node_modules
+**/dist
+**/.next
+**/out
+packages/types/dist
+
+# secrets & local env — NEVER ship these into an image
+**/.env
+**/.env.*
+!**/.env.example
+
+# vcs / ci / editor
+.git
+.github
+.vscode
+.idea
+
+# tests / coverage / reports (not needed at runtime)
+**/coverage
+**/reports
+**/playwright-report
+**/test-results
+**/*.spec.ts
+**/*.test.ts
+apps/web/e2e/.auth
+
+# docs, other apps not built into these images
+docs
+graphify-out
+apps/extension
+apps/sidecar
+
+# misc
+**/*.log
+**/.DS_Store

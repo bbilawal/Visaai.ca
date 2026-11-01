@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-electronic-travel-authority-subclass-601",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made in the Australian ETA app - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
+  },
+  "not_extracted": [
+    "The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) was not used: it renders its whole price table client-side from an API and the served HTML contains the column headings and no amounts. The AUD20 service charge recorded below is quoted from the ETA landing page itself, which does state it.",
+    "The eligible-passport condition carries no rule. The Department publishes the eligible countries and jurisdictions as free-text names, and VisaAI's `nationality` fact has no verified encoding to match them against; guessing a mapping would silently include or exclude applicants. The published list is stored verbatim in parameters instead, and the condition is stated in the description.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "eligible_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a valid passport from an ETA-eligible country or jurisdiction",
+      "description": "The Department publishes the eligible list, stored verbatim in this requirement's parameters. It states an ETA cannot be applied for with a non-citizen passport, a certificate of identity or another travel document such as a Titre de Voyage, that a holder of more than one passport must declare this, and that an Australian citizen holding an ETA-eligible passport cannot apply for an ETA.",
+      "parameters": {
+        "eligible_passport_countries": [
+          "Andorra",
+          "Austria",
+          "Belgium",
+          "Brunei",
+          "Canada",
+          "Denmark",
+          "Finland",
+          "France",
+          "Germany",
+          "Greece",
+          "Hong Kong (SAR of China)",
+          "Iceland",
+          "Ireland",
+          "Italy",
+          "Japan",
+          "Liechtenstein",
+          "Luxembourg",
+          "Malaysia",
+          "Malta",
+          "Monaco",
+          "Norway",
+          "Portugal",
+          "Republic of San Marino",
+          "Singapore",
+          "South Korea",
+          "Spain",
+          "Sweden",
+          "Switzerland",
+          "Taiwan (excluding official or diplomatic passports)",
+          "The Netherlands",
+          "United Kingdom—British Citizen",
+          "United Kingdom—British National (Overseas)",
+          "United States of America",
+          "Vatican City"
+        ],
+        "read_at": "2026-08-21"
+      },
+      "source_role": "landing",
+      "source_excerpt": "You must hold a valid passport from one of these countries or jurisdictions to be eligible for an ETA. You cannot apply for an ETA with a non-citizen passport, certificate of identity or other travel document, such as a Titre de Voyage.",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "apply_from_outside_australia",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply from outside Australia",
+      "source_role": "landing",
+      "source_excerpt": "apply from outside Australia, have an eligible passport, use the Australian ETA app",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "genuine_visitor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a genuine visitor",
+      "source_role": "landing",
+      "source_excerpt": "You must only intend to stay temporarily in Australia and obey any condition or stay period attached to your visa.",
+      "display_order": 30
+    },
+    {
+      "requirement_code": "health_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the health requirement",
+      "description": "The Department states that an applicant who has previously failed the health requirement, or who will be entering health care or hospital environments, should apply for a Visitor visa (subclass 600) instead.",
+      "source_role": "landing",
+      "source_excerpt": "You must meet our health requirement. Where a visa applicant has previously failed to meet the health requirement, the most appropriate visa for these applicants is a Visitor (subclass 600) visa. If you will be entering health care or hospital environments, you should apply for a Visitor (subclass 600) visa.",
+      "display_order": 40
+    },
+    {
+      "requirement_code": "character_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the character requirement",
+      "description": "The Department states that an applicant with a criminal conviction in any country should apply for a Visitor visa (subclass 600) and provide evidence about the convictions, and that an ETA granted on incorrect information may be cancelled.",
+      "source_role": "landing",
+      "source_excerpt": "You must meet our character requirement. If you have a criminal conviction in any country, you should apply for a Visitor visa (subclass 600) and provide evidence about your criminal convictions. If you are granted an ETA, but we find that you provided incorrect information, your ETA may be cancelled.",
+      "display_order": 50
+    },
+    {
+      "requirement_code": "no_debt_to_australian_government",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have repaid, or arranged to repay, any debt to the Australian Government",
+      "source_role": "landing",
+      "source_excerpt": "If you or any family members (including those who don't apply for the visa with you) owe the Australian Government money, you or they must have paid it back or have arranged to pay it back.",
+      "display_order": 60
+    },
+    {
+      "requirement_code": "best_interests_of_the_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Grant must be in the best interests of an applicant under 18",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "We might not grant this visa if it is not in the best interests of an applicant under 18.",
+      "display_order": 70
+    },
+    {
+      "requirement_code": "separate_application_per_family_member",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Each family member must lodge a separate application",
+      "description": "The Department states that applications made from the same mobile device can be submitted and paid for at the same time.",
+      "rule": {
+        "fact": "has_dependants",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "You can't include family members in your application. Each family member, including those listed on your passport, must submit a separate application. If all family members apply using the same mobile device, you can submit and pay for the applications at the same time.",
+      "display_order": 80
+    },
+    {
+      "requirement_code": "truthful_declarations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Declare other passports, other names, and any criminal conviction or domestic violence history",
+      "description": "The Department states an ETA may be cancelled if the information is not accurate, and that a mismatch between ETA details and passport details can cause boarding delays or refusal of entry.",
+      "source_role": "landing",
+      "source_excerpt": "When applying, you must truthfully answer all questions. This includes declaring: if you hold any other passports, if you have been known by any other name, any criminal conviction or domestic violence history. If you do not provide accurate information, we may cancel your ETA.",
+      "display_order": 90
+    },
+    {
+      "requirement_code": "passport_scan_and_photo",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A scan of your passport data page and a photo of yourself, taken in the ETA app",
+      "source_role": "landing",
+      "source_excerpt": "scan your passport to pre-fill your name, date of birth, passport number and other details, take a photo of yourself, answer some questions, including whether you have any criminal convictions, any prior names and contact details in Australia, pay the service fee, submit the application.",
+      "display_order": 200
+    },
+    {
+      "requirement_code": "apply_in_eta_app",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply using the Australian ETA app",
+      "description": "Australia publishes no paper application form number for this visa. The Department requires a mobile device with a camera, near-field communication (NFC) enabled, location services enabled, a valid email address and a valid payment method. Someone may help you apply, and an authorised travel agent or industry representative may apply on your behalf, but you must be physically present.",
+      "source_role": "landing",
+      "source_excerpt": "To apply for an ETA using the Australian ETA app, you need to have: A mobile device with a camera which can take your photo and an image of the Passport data page. Near-field communication (NFC) enabled on your mobile device. Location services enabled on your mobile device. A valid email address. A valid payment method ready to pay the service fee.",
+      "display_order": 400
+    },
+    {
+      "requirement_code": "check_details_before_submitting",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Check every detail is correct before submitting",
+      "source_role": "landing",
+      "source_excerpt": "Note: You must check that all details of your application, including name and date of birth, are correct before submitting your application. You must also check that you have answered all questions in the app correctly.",
+      "display_order": 410
+    },
+    {
+      "requirement_code": "eta_app_service_charge",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Australian ETA app service charge",
+      "description": "AUD20 to use the Australian ETA app. The Department states there is no other charge payable for an ETA. This amount and its currency are quoted from the ETA landing page; the Department's central visa pricing table could not be read because it renders client-side.",
+      "parameters": {
+        "amount": 20,
+        "currency": "AUD",
+        "unit": "per application",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "landing",
+      "source_excerpt": "There is a service charge of AUD20 to use the Australian ETA app. There is no other charge payable for an ETA.",
+      "display_order": 450
+    },
+    {
+      "requirement_code": "alternative_visa_if_ineligible",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "If you cannot use the ETA app, consider an eVisitor (subclass 651) or Visitor (subclass 600) visa",
+      "description": "The Department presents this as an alternative route, not as a requirement of the ETA. It states there is no charge to make an eVisitor visa application.",
+      "source_role": "landing",
+      "source_excerpt": "If you are ineligible or unable to apply for an ETA using the Australian ETA app, you can apply online for another visa that suits your needs through ImmiAccount. European passport holders may be eligible for an eVisitor (subclass 651) visa. There is no charge to make an eVisitor visa application. Other passport holders may be eligible for a Visitor (subclass 600) visa.",
+      "display_order": 500
+    }
+  ]
+}

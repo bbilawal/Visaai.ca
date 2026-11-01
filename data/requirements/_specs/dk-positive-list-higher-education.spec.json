@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-positive-list-higher-education",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "This is the graduate-level Positive List, and it differs from the skilled-work list in three ways that matter.\n\nTHE EDUCATION IS PER JOB TITLE. Every title on the list carries its own required educational level, so 'I have a degree' is not the test — the degree has to match the level the list names for that title. The authority gives its own worked example (civil engineer, professional bachelor's minimum).\n\nHOURS ARE 'USUAL', NOT A NUMBER. The skilled-work and Pay Limit routes state a floor in hours. This one requires that hours be usual for the field, normally 37 a week, with industry exceptions. A reader carrying the 30-hour figure across from the Pay Limit Scheme would apply a test this route does not use.\n\nTHERE IS NO EMPLOYER APPRENTICESHIP CONDITION. The skilled-work list requires the EMPLOYER to have met Læreplads-AUB training obligations, with no exemption possible. That condition does not appear here, and nothing is registered claiming it does.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Positive-List-Higher-Education"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The body references 2028 in permit-duration examples and the list itself is revised on a published schedule, so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The list of job titles itself — several hundred occupations occupying lines 40 to 772 of the page, each with its required educational level. It is data rather than requirement, it is revised on a schedule, and a copy here would be stale while looking authoritative. The requirement that the job appear on the list IS extracted.",
+    "The criteria by which a job title is added to or removed from the list, which describe the authority's own list-making process rather than an applicant's obligations.",
+    "The step-by-step portal walkthrough, the document checklists, and the biometrics appointment procedure.",
+    "The rules for accompanying family members, which are a separate route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "job_on_positive_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must be included in the Positive List",
+      "source_role": "requirements",
+      "lines": [
+        776
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "completed_higher_education",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A completed higher educational programme is required for every job title on the list",
+      "source_role": "requirements",
+      "lines": [
+        780
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "education_level_is_per_job_title",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The required educational level is set per job title, not in general",
+      "description": "Quoted with the authority's own worked example, because the general statement alone does not convey that the level varies.",
+      "source_role": "requirements",
+      "lines": [
+        782,
+        784
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "authorisation_or_recognition_some_titles",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Some job titles additionally require a Danish authorisation or official recognition",
+      "source_role": "requirements",
+      "lines": [
+        786
+      ],
+      "display_order": 40
+    },
+    {
+      "requirement_code": "salary_and_terms_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary and terms of employment must correspond to Danish standards",
+      "source_role": "requirements",
+      "lines": [
+        792
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "weekly_hours_must_be_usual",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working hours must be usual for the field — normally 37 hours a week",
+      "description": "This route sets no numeric floor. Quoted whole, including the industry exception.",
+      "source_role": "requirements",
+      "lines": [
+        802
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "salary_not_lower_than_normal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The offered salary must not be lower than normal in the field",
+      "source_role": "requirements",
+      "lines": [
+        820
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only liquid assets, labour-market pension payments and holiday allowance are taken into account",
+      "source_role": "requirements",
+      "lines": [
+        822,
+        828
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Housing, per diems, car, phone, internet, benefits-in-kind and subscriptions do not count",
+      "source_role": "requirements",
+      "lines": [
+        834,
+        850
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "danish_bank_account",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary must be paid into a Danish bank account in your own name",
+      "source_role": "requirements",
+      "lines": [
+        806
+      ],
+      "display_order": 100
+    },
+    {
+      "requirement_code": "bank_account_180_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Danish bank account must be opened within 180 days",
+      "source_role": "requirements",
+      "lines": [
+        814
+      ],
+      "parameters": {
+        "days_to_open_account": 180,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110
+    },
+    {
+      "requirement_code": "danish_authorisation_where_regulated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Danish authorisation is required for regulated professions, such as doctors",
+      "source_role": "requirements",
+      "lines": [
+        856
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "authorisation_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documentation of the authorisation — or a receipt for having applied — must be attached",
+      "source_role": "requirements",
+      "lines": [
+        858
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "source_role": "requirements",
+      "lines": [
+        866
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "employment_contract_must_be_attached",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the employment contract or job offer must be attached, stating all terms",
+      "source_role": "requirements",
+      "lines": [
+        794
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "lines": [
+        21,
+        22
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        19
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "source_role": "requirements",
+      "lines": [
+        947
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "duration_under_four_years_with_job_seeking",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Shorter employment gives a permit for its duration, plus an automatic 6-month job-seeking permit",
+      "source_role": "requirements",
+      "lines": [
+        953,
+        955
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "no_work_during_job_seeking_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are not allowed to work during the job-seeking period",
+      "source_role": "requirements",
+      "lines": [
+        957
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "duration_employment_four_years_or_more",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Four-year permit where the employment is four years or longer",
+      "source_role": "requirements",
+      "lines": [
+        969
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "passport_shortens_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 3 months before the passport expires",
+      "source_role": "requirements",
+      "lines": [
+        977
+      ],
+      "parameters": {
+        "months_before_passport_expiry": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220
+    },
+    {
+      "requirement_code": "work_limited_to_the_named_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is limited to the employment it was granted for",
+      "source_role": "requirements",
+      "lines": [
+        989
+      ],
+      "display_order": 230
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "source_role": "requirements",
+      "lines": [
+        993
+      ],
+      "display_order": 240
+    },
+    {
+      "requirement_code": "job_seeking_permit_two_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply for a job-seeking permit no later than two days after employment ends",
+      "source_role": "requirements",
+      "lines": [
+        997
+      ],
+      "parameters": {
+        "days_after_employment_ends": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 250
+    },
+    {
+      "requirement_code": "absence_six_months_lapses_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Giving up your Danish address or staying abroad over 6 successive months lapses the permit",
+      "source_role": "requirements",
+      "lines": [
+        901
+      ],
+      "parameters": {
+        "max_successive_months_abroad": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 260
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "lines": [
+        909
+      ],
+      "display_order": 270
+    },
+    {
+      "requirement_code": "biometrics_within_14_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Biometric features must be recorded no later than 14 days after submitting the application",
+      "source_role": "requirements",
+      "lines": [
+        1146
+      ],
+      "parameters": {
+        "days_after_submission": 14,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280
+    }
+  ]
+}

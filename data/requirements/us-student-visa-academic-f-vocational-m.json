@@ -1,0 +1,510 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-student-visa-academic-f-vocational-m",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the USCIS and SEVP pages registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim. This route previously had only travel.state.gov and ceac.state.gov sources, both of which refuse the monitor, so it held no requirements. Two DHS components publish this route: USCIS states who qualifies for F and M status, and SEVP (within ICE) states what the school issues and what the student must then do to keep the status.",
+  "structure_note": "TWO AUTHORITIES AND THEY ANSWER DIFFERENT QUESTIONS. USCIS decides status; SEVP runs the school-certification and record system the status depends on. The most important consequence is recorded here as its own requirement: for F and M students the SCHOOL, through its Designated School Official, holds obligations that decide whether the student's status survives — and a student reading only the eligibility list would not know that.",
+  "source_roles": {
+    "requirements": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment",
+    "application": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment/changing-to-a-nonimmigrant-f-or-m-student-status",
+    "documents": "https://studyinthestates.dhs.gov/students/prepare/students-and-the-form-i-20",
+    "eligibility": "https://studyinthestates.dhs.gov/students/maintaining-status"
+  },
+  "page_dates": {
+    "requirements": "2025-11-20",
+    "application": "2024-11-25",
+    "documents": null,
+    "eligibility": null
+  },
+  "freshness_note": "The two USCIS pages publish Last Reviewed/Updated dates in their markup; the two Study in the States pages do not, and are reported as unknown rather than as fresh.",
+  "not_extracted": [
+    "The visa application fee and the I-901 SEVIS fee amounts. Both pages name the I-901 SEVIS fee as a step and neither states the amount. The consular fee is set by the Department of State, whose host refuses the monitor. No figure is recorded.",
+    "How to apply for the F-1 or M-1 visa at a consulate. The pages state that this happens and refer to the Department of State. The procedure is not reproduced.",
+    "Evidence-of-funds thresholds. USCIS states the applicant must have sufficient funds for self-support; no amount is published, and the amount is in practice set per school on the Form I-20. Nothing is supplied from elsewhere.",
+    "English proficiency test scores. The criterion is stated; no test or score is named.",
+    "The full list of nonimmigrant classifications that may change to student status. The page states that not all may, and directs the reader to the Form I-539 instructions rather than listing them.",
+    "What the DHS final rule of 17 July 2026 actually changes. The Study in the States pages carry it as a site-wide banner naming the rule and its subject — a fixed time period of admission replacing duration of status for F and J — and neither registered page states the new period or the new procedure. The rule is recorded as an announcement, not as a requirement, because we have not read the rule."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "enrolled_in_qualifying_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be enrolled in an academic, language-training, or vocational programme",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "you must be enrolled in an \"academic\" educational program, a language-training program, or a vocational program",
+      "source_excerpt_display": "You must be enrolled in an \"academic\" educational program, a language-training program, or a vocational program"
+    },
+    {
+      "requirement_code": "school_sevp_certified",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your school must be certified by the Student and Exchange Visitor Program",
+      "description": "SEVP certification of the school, not the student's own merits, is the gate. An otherwise qualified student at an uncertified school has no route.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "your school must be approved by the student and exchange visitors program, immigration & customs enforcement",
+      "source_excerpt_display": "Your school must be approved by the Student and Exchange Visitors Program, Immigration & Customs Enforcement"
+    },
+    {
+      "requirement_code": "enrolled_full_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be enrolled as a full-time student at the institution",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "you must be enrolled as a full-time student at the institution",
+      "source_excerpt_display": "You must be enrolled as a full-time student at the institution"
+    },
+    {
+      "requirement_code": "english_proficiency_or_courses_leading_to_it",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be proficient in English, or be enrolled in courses leading to English proficiency",
+      "description": "The second limb matters: enrolling in a language programme satisfies this, so a lack of English is not by itself disqualifying.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "you must be proficient in english or be enrolled in courses leading to english proficiency",
+      "source_excerpt_display": "You must be proficient in English or be enrolled in courses leading to English proficiency"
+    },
+    {
+      "requirement_code": "sufficient_funds_for_self_support",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have sufficient funds available for self-support for the entire course of study",
+      "description": "For the ENTIRE proposed course, not for the first year. No amount is published by USCIS.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "you must have sufficient funds available for self-support during the entire proposed course of study",
+      "source_excerpt_display": "You must have sufficient funds available for self-support during the entire proposed course of study"
+    },
+    {
+      "requirement_code": "residence_abroad_not_given_up",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Maintain a residence abroad which you have no intention of giving up",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "you must maintain a residence abroad which you have no intention of giving up.",
+      "source_excerpt_display": "You must maintain a residence abroad which you have no intention of giving up."
+    },
+    {
+      "requirement_code": "f1_academic_programme_must_lead_to_award",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "F-1: the course of study must culminate in a degree, diploma or certificate, at a school authorised to accept foreign students",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "the f-1 visa (academic student) allows you to enter the united states as a full-time student at an sevp-certified college, university, seminary, conservatory, academic high school, elementary school, or other academic institution or in a language training program. you must be enrolled in a program or course of study that culminates in a degree, diploma, or certificate and your school must be authorized by the u.s. government to accept foreign students.",
+      "source_excerpt_display": "The F-1 Visa (Academic Student) allows you to enter the United States as a full-time student at an SEVP-certified college, university, seminary, conservatory, academic high school, elementary school, or other academic institution or in a language training program. You must be enrolled in a program or course of study that culminates in a degree, diploma, or certificate and your school must be authorized by the U.S. government to accept foreign students."
+    },
+    {
+      "requirement_code": "m1_vocational_programme_excludes_language_training",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M-1 covers vocational and other nonacademic programmes, but NOT language training",
+      "description": "The exclusion is the discriminator between the two classifications at the vocational end, and it is one sentence on the page.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "the m-1 visa (vocational student) category includes students in vocational or other nonacademic programs, other than language training.",
+      "source_excerpt_display": "The M-1 visa (Vocational Student) category includes students in vocational or other nonacademic programs, other than language training."
+    },
+    {
+      "requirement_code": "f1_no_offcampus_work_in_first_academic_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "F-1: no off-campus work during the first academic year; on-campus work is allowed subject to conditions",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "f-1 students may not work off-campus during the first academic year, but may accept on-campus employment subject to certain conditions and restrictions.",
+      "source_excerpt_display": "F-1 students may not work off-campus during the first academic year, but may accept on-campus employment subject to certain conditions and restrictions."
+    },
+    {
+      "requirement_code": "f1_offcampus_employment_categories",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "F-1: after the first academic year, three types of off-campus employment become available",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "after the first academic year, f-1 students may engage in three types of off-campus employment: curricular practical training (cpt) optional practical training (opt) (pre-completion or post-completion) science, technology, engineering, and mathematics (stem) optional practical training extension (opt)",
+      "source_excerpt_display": "After the first academic year, F-1 students may engage in three types of off-campus employment: Curricular Practical Training (CPT) Optional Practical Training (OPT) (pre-completion or post-completion) Science, Technology, Engineering, and Mathematics (STEM) Optional Practical Training Extension (OPT)"
+    },
+    {
+      "requirement_code": "m1_practical_training_only_after_studies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M-1: practical training only after completing your studies",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "m-1 students may engage in practical training only after they have completed their studies.",
+      "source_excerpt_display": "M-1 students may engage in practical training only after they have completed their studies."
+    },
+    {
+      "requirement_code": "offcampus_work_must_be_authorised_before_starting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Any off-campus training employment must relate to your field and be authorised BEFORE you start work",
+      "description": "The authorisation is prior, and it is two-part — the Designated School Official and USCIS. Starting first and regularising later is a status violation.",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "for both f-1 and m-1 students any off-campus training employment must be related to their area of study and must be authorized prior to starting any work by the designated school official (the person authorized to maintain the student and exchange visitor information system (sevis)) and uscis.",
+      "source_excerpt_display": "For both F-1 and M-1 students any off-campus training employment must be related to their area of study and must be authorized prior to starting any work by the Designated School Official (the person authorized to maintain the Student and Exchange Visitor Information System (SEVIS)) and USCIS."
+    },
+    {
+      "requirement_code": "acceptance_and_form_i20_before_change_of_status",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Be accepted by an SEVP-certified school and obtain an initial Form I-20 before USCIS can approve a change of status",
+      "official_form_code": "I-20",
+      "description": "The four steps below are stated by USCIS as things that must happen BEFORE it may approve the application, not as things to do while waiting.",
+      "source_role": "application",
+      "display_order": 130,
+      "source_excerpt": "apply to and receive acceptance from a u.s. student and exchange visitor program (sevp)-certified school. obtain an initial form i-20, certificate of eligibility for nonimmigrant student status, from the sevp-certified school. the designated school official (dso) should give change of status in the issue reason section of the form i-20. pay the i-901 sevis fee. file a form i-539, application to extend/change nonimmigrant status, with uscis.",
+      "source_excerpt_display": "Apply to and receive acceptance from a U.S. Student and Exchange Visitor Program (SEVP)-certified school. Obtain an initial Form I-20, Certificate of Eligibility for Nonimmigrant Student Status, from the SEVP-certified school. The Designated School Official (DSO) should give change of status in the Issue Reason section of the Form I-20. Pay the I-901 SEVIS Fee. File a Form I-539, Application to Extend/Change Nonimmigrant Status, with USCIS."
+    },
+    {
+      "requirement_code": "change_of_status_eligibility_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "To change status from inside the US: lawful admission, still-valid status, no violations, no disqualifying conduct",
+      "source_role": "application",
+      "display_order": 140,
+      "source_excerpt": "you were lawfully admitted to the united states in a nonimmigrant status; your nonimmigrant status remains valid; you have not violated the conditions of your status; and you have not committed any crimes or engaged in any other actions that would make you ineligible for change of status.",
+      "source_excerpt_display": "You were lawfully admitted to the United States in a nonimmigrant status; Your nonimmigrant status remains valid; You have not violated the conditions of your status; and You have not committed any crimes or engaged in any other actions that would make you ineligible for change of status."
+    },
+    {
+      "requirement_code": "do_not_enroll_before_change_of_status_approved",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If your current status does not permit study, do not enrol or begin studies until USCIS approves the change",
+      "description": "The consequence is stated separately and is severe: enrolling early is not merely premature, it removes eligibility for the change of status the student is applying for.",
+      "source_role": "application",
+      "display_order": 150,
+      "source_excerpt": "if you are requesting to change from another nonimmigrant status to f or m student status and your current nonimmigrant status does not permit you to enroll in classes, do not enroll in classes or begin your studies until uscis has approved your change of status.",
+      "source_excerpt_display": "If you are requesting to change from another nonimmigrant status to F or M student status and your current nonimmigrant status does not permit you to enroll in classes, do not enroll in classes or begin your studies until USCIS has approved your change of status."
+    },
+    {
+      "requirement_code": "study_prohibited_in_b1_b2_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Studying while in B-1 or B-2 status is specifically prohibited; enrolling anyway is a status violation that bars the change",
+      "description": "Quoted because it is the single most common way this route is lost before it starts, and because the page contrasts it with E status, where no such prohibition exists.",
+      "source_role": "application",
+      "display_order": 160,
+      "source_excerpt": "the regulations at 8 c.f.r. § 214.2(b)(7) specifically prohibit a course of study in the united states while in b-1 or b-2 status. however, no such prohibition exists for those in e status, so individuals in that status can enroll in school as long as it does not interfere with their ability to maintain their e status.",
+      "source_excerpt_display": "the regulations at 8 C.F.R. § 214.2(b)(7) specifically prohibit a course of study in the United States while in B-1 or B-2 status. However, no such prohibition exists for those in E status, so individuals in that status can enroll in school as long as it does not interfere with their ability to maintain their E status."
+    },
+    {
+      "requirement_code": "status_violation_removes_eligibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enrolling in study while in a status that forbids it makes you ineligible to extend or to change to F-1 or M-1",
+      "source_role": "application",
+      "display_order": 170,
+      "source_excerpt": "individuals who have violated their nonimmigrant status by enrolling in a course of study are not eligible to extend their status or change to f-1 or m-1 status.",
+      "source_excerpt_display": "Individuals who have violated their nonimmigrant status by enrolling in a course of study are not eligible to extend their status or change to F-1 or M-1 status."
+    },
+    {
+      "requirement_code": "m1_must_hold_valid_status_while_pending",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M-1 applicants must hold a valid nonimmigrant status for the whole time the Form I-539 is pending",
+      "description": "An M-specific rule with no F equivalent, and the page states the F position in the opposite direction — F-1 applicants are NOT required to 'bridge the gap'.",
+      "source_role": "application",
+      "display_order": 180,
+      "source_excerpt": "please note that if you are applying to change status to m status, you must maintain a valid nonimmigrant status while your form i-539 change of status application is pending.",
+      "source_excerpt_display": "Please note that if you are applying to change status to M status, you must maintain a valid nonimmigrant status while your Form I-539 change of status application is pending."
+    },
+    {
+      "requirement_code": "f1_no_requirement_to_bridge_the_gap",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "F-1 applicants are not required to 'bridge the gap' to within 30 days of the programme start date",
+      "description": "Recorded because it relieves an obligation the M-1 rule imposes, and because an applicant who assumes the two work alike will file — and pay for — a second Form I-539 they do not need.",
+      "source_role": "application",
+      "display_order": 190,
+      "source_excerpt": "you are not required to obtain status all the way up to the date that is 30 days before your program start date (“bridge the gap”), provided that your nonimmigrant status is unexpired at the time of filing the change of status to f-1 application, and you otherwise remain eligible for a change of status.",
+      "source_excerpt_display": "You are not required to obtain status all the way up to the date that is 30 days before your program start date (“bridge the gap”), provided that your nonimmigrant status is unexpired at the time of filing the change of status to F-1 application, and you otherwise remain eligible for a change of status."
+    },
+    {
+      "requirement_code": "m1_bridge_the_gap_separate_filing_and_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "M-1 'bridge the gap' is a separate Form I-539 with its own filing fee",
+      "official_form_code": "I-539",
+      "official_form_url": "https://www.uscis.gov/i-539",
+      "description": "Two filings, two fees, and failing to make the first one on time causes the second to be denied. No amount is published on this page.",
+      "source_role": "application",
+      "display_order": 200,
+      "source_excerpt": "because extending or changing nonimmigrant status to bridge the gap and changing to m-1 status are two distinct benefits, you must pay a separate filing fee for each request.",
+      "source_excerpt_display": "Because extending or changing nonimmigrant status to bridge the gap and changing to M-1 status are two distinct benefits, you must pay a separate filing fee for each request."
+    },
+    {
+      "requirement_code": "no_employment_more_than_30_days_before_start",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If approved early, do not work — including on campus — more than 30 days before your programme start date",
+      "parameters": {
+        "employment_earliest_days_before_programme_start": 30
+      },
+      "source_role": "application",
+      "display_order": 210,
+      "source_excerpt": "an example of a violation would be engaging in employment, including on-campus employment and practical training, more than 30 days before the program start date as listed on your form i-20.",
+      "source_excerpt_display": "An example of a violation would be engaging in employment, including on-campus employment and practical training, more than 30 days before the program start date as listed on your Form I-20."
+    },
+    {
+      "requirement_code": "m1_cannot_change_to_f_status_inside_the_us",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An M-1 student may not change to F status while in the United States",
+      "source_role": "application",
+      "display_order": 220,
+      "source_excerpt": "note: if you are an m-1 student, you may not change to f status while you are in the united states.",
+      "source_excerpt_display": "NOTE: If you are an M-1 student, you may not change to F status while you are in the United States."
+    },
+    {
+      "requirement_code": "consular_route_steps",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Alternative: leave and apply at a consulate — acceptance, new I-20, SEVIS fee, then the visa",
+      "description": "An alternative to changing status from inside the country, stated by USCIS in its own ordering. Recorded with officially_required false because it is a choice of route, not a condition of the classification.",
+      "source_role": "application",
+      "display_order": 230,
+      "source_excerpt": "apply to and receive acceptance from a sevp-certified school . receive a new initial form i-20 from your designated school official (dso). pay the i-901 sevis fee . apply at a u.s. consulate or embassy for an f-1 or m-1 visa to travel to the united states in order to seek admission as a student.",
+      "source_excerpt_display": "Apply to and receive acceptance from a SEVP-certified school. Receive a new initial Form I-20 from your designated school official (DSO). Pay the I-901 SEVIS fee. Apply at a U.S. consulate or embassy for an F-1 or M-1 visa to travel to the United States in order to seek admission as a student."
+    },
+    {
+      "requirement_code": "visa_exempt_nationals_apply_at_the_port_of_entry",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Nationals of visa-exempt countries such as Canada may apply for admission directly at a port of entry",
+      "source_role": "application",
+      "display_order": 240,
+      "source_excerpt": "if you are from a country where no visa is required, such as canada, you may proceed directly to a u.s. port of entry or a u.s. pre-clearance/pre-flight inspection station and apply for admission to the united states as an f-1 or m-1 student.",
+      "source_excerpt_display": "If you are from a country where no visa is required, such as Canada, you may proceed directly to a U.S. port of entry or a U.S. pre-clearance/pre-flight inspection station and apply for admission to the United States as an F-1 or M-1 student."
+    },
+    {
+      "requirement_code": "studies_begin_only_after_admission_in_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may begin your studies only once an immigration officer has admitted you in F-1 or M-1 status",
+      "source_role": "application",
+      "display_order": 250,
+      "source_excerpt": "once admitted by an immigration officer in f-1 or m-1 status, you may begin your studies.",
+      "source_excerpt_display": "Once admitted by an immigration officer in F-1 or M-1 status, you may begin your studies."
+    },
+    {
+      "requirement_code": "dhs_final_rule_fixed_period_of_admission",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A DHS final rule of 17 July 2026 establishes a fixed period of admission and an extension-of-stay procedure for F students",
+      "description": "CONTRADICTS a sibling authority and that is why it is recorded here. USCIS still describes F and J admission as duration of status on pages last reviewed in 2024 and 2025; SEVP announces on 17 July 2026 that a final rule replaces it with a fixed period. Both are DHS. Where two components of one department disagree, the later dated statement is reported as an announcement and the earlier one is left standing as quoted — resolving it ourselves would publish a rule neither page states.",
+      "parameters": {
+        "published_on": "2026-07-17"
+      },
+      "source_role": "documents",
+      "display_order": 260,
+      "source_excerpt": "on july 17, 2026, dhs published a final rule establishing a fixed time period of admission and an extension of stay procedure for f nonimmigrant academic students, j exchange visitors and representatives of foreign information media.",
+      "source_excerpt_display": "On July 17, 2026, DHS published a final rule establishing a fixed time period of admission and an extension of stay procedure for F nonimmigrant academic students, J exchange visitors and representatives of foreign information media."
+    },
+    {
+      "requirement_code": "form_i20_required_for_all_f_and_m_students",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Every F and M student needs a Form I-20 issued by a Designated School Official",
+      "official_form_code": "I-20",
+      "source_role": "documents",
+      "display_order": 270,
+      "source_excerpt": "all f and m students that study in the united states need a form i-20, “certificate of eligibility for nonimmigrant student status.” once accepted into a student and exchange visitor program (sevp)-certified school , nonimmigrant students will receive a form i-20 from their designated school official (dso) .",
+      "source_excerpt_display": "All F and M students that study in the United States need a Form I-20, “Certificate of Eligibility for Nonimmigrant Student Status.” Once accepted into a Student and Exchange Visitor Program (SEVP)-certified school, nonimmigrant students will receive a Form I-20 from their designated school official (DSO)."
+    },
+    {
+      "requirement_code": "form_i20_for_each_dependent",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Obtain a separate Form I-20 for every dependent you bring with you",
+      "official_form_code": "I-20",
+      "source_role": "documents",
+      "display_order": 280,
+      "source_excerpt": "you must also obtain a form i-20 for any eligible dependents you plan to bring to the united states with you.",
+      "source_excerpt_display": "You must also obtain a Form I-20 for any eligible dependents you plan to bring to the United States with you."
+    },
+    {
+      "requirement_code": "i20_type_dictates_visa_type",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The type of I-20 the school issues dictates which student visa you may obtain and which status you must maintain",
+      "description": "The school, not the applicant, effectively chooses between F and M at this point. Applying for the other visa is not an option once the I-20 is issued.",
+      "source_role": "documents",
+      "display_order": 290,
+      "source_excerpt": "the name (i.e., academic and language students vs. vocational students) on the form i-20 an sevp-certified school issues you will dictate the type of student visa you may obtain from the u.s. department of state and the status you will need to maintain in the united states.",
+      "source_excerpt_display": "the name (i.e., Academic and Language students vs. Vocational Students) on the Form I-20 an SEVP-certified school issues you will dictate the type of student visa you may obtain from the U.S. Department of State and the status you will need to maintain in the United States."
+    },
+    {
+      "requirement_code": "i20_signatures_student_dso_and_parents_under_18",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "You and your DSO must both sign the Form I-20; if you are under 18 your parents must sign it",
+      "source_role": "documents",
+      "display_order": 300,
+      "source_excerpt": "you and your dso must both sign the form i-20. if you are under age 18, your parents must sign the form i-20 for you.",
+      "source_excerpt_display": "You and your DSO must both sign the Form I-20. If you are under age 18, your parents must sign the Form I-20 for you."
+    },
+    {
+      "requirement_code": "i901_sevis_fee_mandatory_before_entry",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The I-901 SEVIS fee is mandatory and must be paid before you enter the United States — and only after you hold the I-20",
+      "description": "The ordering is stated as a dependency: the fee cannot be paid without data printed on the I-20. No amount is published on this page.",
+      "source_role": "documents",
+      "display_order": 310,
+      "source_excerpt": "before you pay the i-901 student and exchange visitor information system (sevis) fee, you must receive the form i-20 from a dso at the school you plan to attend. you will need information from the form i-20 to pay the fee. the i-901 sevis fee is mandatory and must be paid before you enter the united states.",
+      "source_excerpt_display": "Before you pay the I-901 Student and Exchange Visitor Information System (SEVIS) Fee, you must receive the Form I-20 from a DSO at the school you plan to attend. You will need information from the Form I-20 to pay the fee. The I-901 SEVIS Fee is mandatory and must be paid before you enter the United States."
+    },
+    {
+      "requirement_code": "i901_fee_payment_details_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Details needed to pay the I-901 SEVIS fee",
+      "source_role": "documents",
+      "display_order": 320,
+      "source_excerpt": "in order to pay the i-901 sevis fee, all prospective f and m students will need to provide their: name, address, date of birth and email address. country of birth and country of citizenship. school code as listed on the form i-20 “certificate of eligibility for nonimmigrant student status.” sevis identification number as listed on the form i-20.",
+      "source_excerpt_display": "In order to pay the I-901 SEVIS fee, all prospective F and M students will need to provide their: Name, address, date of birth and email address. Country of birth and country of citizenship. School Code as listed on the Form I-20 “Certificate of Eligibility for Nonimmigrant Student Status.” SEVIS Identification Number as listed on the Form I-20."
+    },
+    {
+      "requirement_code": "visa_issuable_365_days_ahead_entry_30_days_ahead",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The visa may be issued up to 365 days ahead, but you may not enter more than 30 days before the programme start date",
+      "description": "Two different clocks that applicants routinely conflate. Holding a valid visa does not permit early entry.",
+      "parameters": {
+        "visa_issuance_days_before_start": 365,
+        "earliest_entry_days_before_start": 30
+      },
+      "source_role": "documents",
+      "display_order": 330,
+      "source_excerpt": "the form i-20 lists your program start date, 30 days before which you are allowed to enter the united states. f-1 and m-1 student visas can be issued up to 365 days in advance of your course of study start date. your type of student visa must match the type of form i-20 you have (e.g., f-1 or m-1).",
+      "source_excerpt_display": "The Form I-20 lists your program start date, 30 days before which you are allowed to enter the United States. F-1 and M-1 student visas can be issued up to 365 days in advance of your course of study start date. Your type of student visa must match the type of Form I-20 you have (e.g., F-1 or M-1)."
+    },
+    {
+      "requirement_code": "original_i20_expected_at_visa_interview",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "You are expected to bring the original Form I-20 to your visa interview",
+      "source_role": "documents",
+      "display_order": 340,
+      "source_excerpt": "you are expected to have the original form i-20 at your visa interview. the consular officer may accept a copy of the form i-20 in limited circumstances that warrant visa issuance prior to you receiving the original form i-20.",
+      "source_excerpt_display": "You are expected to have the original Form I-20 at your visa interview. The consular officer may accept a copy of the Form I-20 in limited circumstances that warrant visa issuance prior to you receiving the original Form I-20."
+    },
+    {
+      "requirement_code": "carry_signed_i20_at_the_port_of_entry",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Carry the signed Form I-20 on you at entry — do not pack it in your suitcase",
+      "source_role": "documents",
+      "display_order": 350,
+      "source_excerpt": "you are expected to have the signed form i-20 on hand as you enter the country. do not pack it away in your suitcase. a u.s. customs and border protection officer will instruct you to present your form i-20 at the port of entry .",
+      "source_excerpt_display": "You are expected to have the signed Form I-20 on hand as you enter the country. Do not pack it away in your suitcase. A U.S. Customs and Border Protection officer will instruct you to present your Form I-20 at the port of entry."
+    },
+    {
+      "requirement_code": "new_i20_circumstances",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "When you must get a new Form I-20 from your DSO",
+      "source_role": "documents",
+      "display_order": 360,
+      "source_excerpt": "if the physical copy of the form is destroyed or misplaced. for travel endorsement. when the student’s sevis status changes (e.g., from initial to active). for any substantive change to student information, such as changes to a student’s personal information, program of study, optional practical training, etc.",
+      "source_excerpt_display": "If the physical copy of the form is destroyed or misplaced. For travel endorsement. When the student’s SEVIS status changes (e.g., from Initial to Active). For any substantive change to student information, such as changes to a student’s personal information, program of study, optional practical training, etc."
+    },
+    {
+      "requirement_code": "contact_dso_on_arrival_and_by_start_date",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Contact your DSO immediately on entering the US, and again on arrival at school no later than the programme start date",
+      "source_role": "eligibility",
+      "display_order": 370,
+      "source_excerpt": "immediately contact your designated school official (dso) when you enter the united states. when you arrive at school, you need to contact your dso again, no later than the program start date listed on your form i-20",
+      "source_excerpt_display": "Immediately contact your designated school official (DSO) when you enter the United States. When you arrive at school, you need to contact your DSO again, no later than the program start date listed on your Form I-20"
+    },
+    {
+      "requirement_code": "maintain_full_course_of_study_and_progress",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Attend all classes, maintain normal academic progress, and keep a full course of study each term",
+      "description": "A reduced course load is possible but only in limited circumstances and only through the DSO — it is not the student’s decision to make.",
+      "source_role": "eligibility",
+      "display_order": 380,
+      "source_excerpt": "attend all your classes, and maintain normal academic progress. if school is too difficult, speak with your dso immediately. maintain a full course of study each term. if you cannot study full time, contact your dso immediately. you may be eligible for a reduced course load in limited circumstances.",
+      "source_excerpt_display": "Attend all your classes, and maintain normal academic progress. If school is too difficult, speak with your DSO immediately. Maintain a full course of study each term. If you cannot study full time, contact your DSO immediately. You may be eligible for a reduced course load in limited circumstances."
+    },
+    {
+      "requirement_code": "program_extension_requested_before_end_date",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A programme extension must be requested BEFORE your programme end date",
+      "source_role": "eligibility",
+      "display_order": 390,
+      "source_excerpt": "talk to your dso about requesting a possible program extension if you do not think you will complete your program of study by the end date listed on your form i-20. an extension must be requested before your program end date.",
+      "source_excerpt_display": "Talk to your DSO about requesting a possible program extension if you do not think you will complete your program of study by the end date listed on your Form I-20. An extension must be requested before your program end date."
+    },
+    {
+      "requirement_code": "f1_annual_vacation_after_one_academic_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "F-1: annual vacation requires one completed academic year and an intention to register for the following term",
+      "source_role": "eligibility",
+      "display_order": 400,
+      "source_excerpt": "f-1 students must complete at least one full academic year at an sevp-certified school to be eligible for annual vacation. additionally, students must intend to register for classes in the academic term following their annual vacation.",
+      "source_excerpt_display": "F-1 students must complete at least one full academic year at an SEVP-certified school to be eligible for annual vacation. Additionally, students must intend to register for classes in the academic term following their annual vacation."
+    },
+    {
+      "requirement_code": "unauthorised_work_forces_immediate_departure",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working without authorisation forces immediate departure and may bar re-entry",
+      "description": "Stated in unusually absolute terms by the authority, and stated twice on the page — once for F and once for M.",
+      "source_role": "eligibility",
+      "display_order": 410,
+      "source_excerpt": "an f student may only work when authorized by a dso in some cases, and u.s. citizenship and immigration services (uscis) in others. if you choose to work without authorization, you will be forced to leave the united states immediately, and you may not be able to re-enter the united states at a later date.",
+      "source_excerpt_display": "An F student may only work when authorized by a DSO in some cases, and U.S. Citizenship and Immigration Services (USCIS) in others. If you choose to work without authorization, you will be forced to leave the United States immediately, and you may not be able to re-enter the United States at a later date."
+    },
+    {
+      "requirement_code": "m1_no_employment_during_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M-1: no employment during the programme; practical training only after completing it, with DSO recommendation and USCIS authorisation",
+      "source_role": "eligibility",
+      "display_order": 420,
+      "source_excerpt": "m-1 students are not eligible for employment during their program of study, but may obtain authorization for practical training employment. you may participate in practical training employment after the completion of your vocational program.",
+      "source_excerpt_display": "M-1 students are not eligible for employment during their program of study, but may obtain authorization for practical training employment. You may participate in practical training employment after the completion of your vocational program."
+    },
+    {
+      "requirement_code": "grace_period_60_days_f_30_days_m",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "After your programme ends: F students have 60 days to leave, M students have 30",
+      "description": "Different for the two classifications, and for M students capped further by the “admit until” date on the Form I-94 rather than by the grace period alone.",
+      "parameters": {
+        "f_grace_days": 60,
+        "m_grace_days": 30
+      },
+      "source_role": "eligibility",
+      "display_order": 430,
+      "source_excerpt": "once you complete your program of study and any authorized period of practical training, f students have 60 days after completion of your program (the program end date on your form i-20) to leave the united states.",
+      "source_excerpt_display": "Once you complete your program of study and any authorized period of practical training, F students have 60 days after completion of your program (the program end date on your Form I-20) to leave the United States."
+    },
+    {
+      "requirement_code": "m_students_latest_date_is_the_i94_admit_until",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M students: the latest date you may remain is the “admit until” date on the Form I-94, not the grace period",
+      "source_role": "eligibility",
+      "display_order": 440,
+      "source_excerpt": "m students have 30 days after completion of their program (the program end date on your form i-20) to leave the united states. the latest date you may remain in the united states is the “admit until” date on your form i-94, “arrival/departure record,” unless you filed for an extension with uscis.",
+      "source_excerpt_display": "M students have 30 days after completion of their program (the program end date on your Form I-20) to leave the United States. The latest date you may remain in the United States is the “admit until” date on your Form I-94, “Arrival/Departure Record,” unless you filed for an extension with USCIS."
+    }
+  ]
+}

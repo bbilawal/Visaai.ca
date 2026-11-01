@@ -1,0 +1,25 @@
+# gitleaks configuration
+#
+# WHY THIS FILE EXISTS (SEC-101)
+# The repo relied on `.gitleaksignore`, which allowlists by FINGERPRINT —
+# commit:file:rule:LINE. That is fragile in exactly the way that matters: the
+# same published key moving down a file produces a new fingerprint and a new
+# failure. Two occurrences of Supabase's local-development keys in
+# .github/workflows/agent-tests.yml were already unlisted, so the secret-scan
+# job would have failed the moment this branch merged.
+#
+# Allowlisting the two literal key strings instead is both more robust and
+# strictly safer than a fingerprint: it can only ever match these exact two
+# published values, never a real credential.
+
+[extend]
+# Keep every default rule. Without this, defining any config REPLACES the
+# built-in ruleset and the scanner quietly stops looking for most secrets.
+useDefault = true
+
+[allowlist]
+description = "Supabase local-development keys (iss=supabase-demo). Not secrets: published in Supabase's own docs, identical in every `supabase start` stack, signed by the fixed demo JWT secret. CI workflows and tests must use them because the local stack accepts nothing else. A real project key has iss=<project-ref> and does NOT match these literals."
+regexes = [
+  '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0''',
+  '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU''',
+]

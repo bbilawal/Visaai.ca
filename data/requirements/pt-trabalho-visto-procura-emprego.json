@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-trabalho-visto-procura-emprego",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address and is neither registered nor read.",
+  "structure_note": "THE VISA CARRIES ITS OWN APPOINTMENT AND ITS OWN CLOCK. A job-seeker visa is valid 120 days and INCLUDES a booked appointment with the permit-granting service inside that validity. The holder may work as an employee until the visa expires or the permit is granted — so the right to work exists before the permit does, which is the opposite of every other employed route here.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-subordinada-com-visto-para-procura-de-trabalho-art-88-o-n-o7"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several routes require. Published on vistos.mne.gov.pt, which resets our connection from the production address and answers 200 from a second egress. Not registered, not read.",
+    "The fees. Every page links a single fee schedule rather than stating amounts.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_the_route_is_for",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For employed workers who hold a job-seeker visa and have already formed or formalised the employment relationship",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "autorização de residência para trabalhadores subordinados/ por conta de outrem que que possuam visto para procura de trabalho e que já tenham constituído ou formalizado a relação laboral e pretendam procurar trabalho em portugal.",
+      "source_excerpt_display": "Autorização de residência para trabalhadores subordinados/ por conta de outrem que que possuam visto para procura de trabalho e que já tenham constituído ou formalizado a relação laboral e pretendam procurar trabalho em Portugal."
+    },
+    {
+      "requirement_code": "visa_validity_120_days_with_appointment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job-seeker visa is valid 120 days and includes a booked appointment with the permit service inside that validity",
+      "description": "The appointment is part of the visa. Missing it is not a rescheduling problem, it runs against a 120-day clock.",
+      "parameters": {
+        "visa_validity_days": 120
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "o visto para procura de trabalho integra uma data de agendamento nos serviços competentes pela concessão de autorização de residência, dentro da validade do visto (120 dias).",
+      "source_excerpt_display": "O visto para procura de trabalho integra uma data de agendamento nos serviços competentes pela concessão de autorização de residência, dentro da validade do visto (120 dias)."
+    },
+    {
+      "requirement_code": "may_work_before_the_permit_is_granted",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The visa holder may carry on employed work until the visa expires or until the permit is granted",
+      "description": "A right that exists before the permit does.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "o titular do visto para procura de trabalho pode exercer uma atividade laboral dependente até ao termo da duração do visto ou até à concessão da respetiva autorização de residência.",
+      "source_excerpt_display": "O titular do visto para procura de trabalho pode exercer uma atividade laboral dependente até ao termo da duração do visto ou até à concessão da respetiva autorização de residência."
+    },
+    {
+      "requirement_code": "valid_job_seeker_visa",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid job-seeker visa",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "visto para procura de trabalho válido;",
+      "source_excerpt_display": "Visto para procura de trabalho válido;"
+    },
+    {
+      "requirement_code": "employer_sworn_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration from the employer attesting the employment relationship",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "declaração sob compromisso de honra da entidade patronal atestando o vínculo laboral ;",
+      "source_excerpt_display": "Declaração sob compromisso de honra da Entidade Patronal atestando o vínculo laboral;"
+    },
+    {
+      "requirement_code": "validity_two_years_renewable_three",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit is valid 2 years from issue, renewable for successive 3-year periods",
+      "parameters": {
+        "initial_years": 2,
+        "renewal_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "a autorização de residência temporária para o exercício de uma atividade profissional é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos.",
+      "source_excerpt_display": "A autorização de residência temporária para o exercício de uma atividade profissional é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos."
+    }
+  ]
+}

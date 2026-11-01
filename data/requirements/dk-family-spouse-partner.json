@@ -1,0 +1,416 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-family-spouse-partner",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Danish Immigration Service page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "THE INTEGRATION REQUIREMENT IS A JOINT SCORE, NOT A CHECKLIST FOR EITHER PERSON. The couple must COLLECTIVELY meet 4 of 6 integration conditions — three apply to the applicant and three to the sponsor in Denmark — and the authority states the trade explicitly: if the applicant meets all three of theirs, the sponsor need meet only one. Registering these as six independent requirements on one person would misstate the test for both people.\n\nON TOP OF THAT, ONE SPONSOR CONDITION IS MANDATORY REGARDLESS OF THE SCORE: Prøve i Dansk 3, or five years of employment involving significant communication in Danish. A couple can satisfy four of six and still be refused on this.\n\nTHE OBLIGATIONS DO NOT END AT APPROVAL. The applicant must pass a Danish test at A1 within six months of being granted the permit and A2 later, and the permit can be revoked if they do not. A page that stops at 'approved' would omit the condition that takes it away again.\n\nAND THE HOUSING REQUIREMENT HAS A GEOGRAPHY. The sponsor's home must not be in an area on the housing requirement list. That is a condition about an address, not about the people, and it is invisible unless stated.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Family/Family-reunification/Spouse-or-cohabiting-partner"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The collateral figure carries its own year in the text ('DKK 61,709.34 (2026 level)'), so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The housing requirement list of areas and its detailed address overview, which the authority publishes separately, states can change as roads are renamed, and describes as a guide only — the regulation is what is in force.",
+    "The full lists of Danish and English tests that can substitute for Prøve i Dansk 1, 3 and the B1 English level, which the authority publishes on separate linked pages.",
+    "The detailed rules for the exemptions, each of which links to its own page: minor children with attachment to Denmark, serious illness or disability, and the special position of economically active Turkish nationals.",
+    "The step-by-step application walkthrough and the document checklists.",
+    "The separate family routes the catalogue enumerates alongside this one — children, adopted and foster children, parents of unaccompanied minors, parents of minor Danish citizens, other family members, and accompanying family of work and study permit holders."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_marriage_or_cohabitation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The marriage must be legally valid under Danish law, or you must be permanent cohabitants",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "if you are married, your marriage needs to be legal under danish law. in order for your marriage to be declared valid in denmark, it needs to have been valid in the country where it took place. a marriage can’t be declared valid in denmark if it violates danish laws.",
+      "source_excerpt_display": "If you are married, your marriage needs to be legal under Danish law. In order for your marriage to be declared valid in Denmark, it needs to have been valid in the country where it took place. A marriage can’t be declared valid in Denmark if it violates Danish laws."
+    },
+    {
+      "requirement_code": "marriage_validity_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What makes a marriage valid: both present, no proxy, both 18 at the ceremony",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "this means that:\n\nboth you and your spouse need to have been present during the wedding ceremony\n\nneither you nor your spouse can have been represented by someone else during the wedding ceremony\n\nyou and your spouse need to have turned 18 at the time of the wedding",
+      "source_excerpt_display": "This means that:\n\nBoth you and your spouse need to have been present during the wedding ceremony\n\nNeither you nor your spouse can have been represented by someone else during the wedding ceremony\n\nYou and your spouse need to have turned 18 at the time of the wedding"
+    },
+    {
+      "requirement_code": "sponsor_assumes_financial_responsibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The partner in Denmark must assume responsibility for supporting the applicant",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "your partner in denmark needs to assume responsibility for supporting you financially if you need it. the application form includes a statement declaring that your partner assumes responsibility for supporting you. your partner needs to sign this statement.",
+      "source_excerpt_display": "Your partner in Denmark needs to assume responsibility for supporting you financially if you need it. The application form includes a statement declaring that your partner assumes responsibility for supporting you. Your partner needs to sign this statement."
+    },
+    {
+      "requirement_code": "both_at_least_24",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Both partners normally need to be at least 24 years old",
+      "source_role": "requirements",
+      "parameters": {
+        "minimum_age": 24,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40,
+      "source_excerpt": "you and your spouse/partner normally need to be at least 24 years old in order for you to qualify for family reunification. this is known as the 24-year requirement.",
+      "source_excerpt_display": "You and your spouse/partner normally need to be at least 24 years old in order for you to qualify for family reunification. This is known as the 24-year requirement."
+    },
+    {
+      "requirement_code": "may_apply_at_23_years_6_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The application may be submitted when the younger partner is 23 years and 6 months",
+      "description": "Registered because the 24-year rule alone would make people wait six months longer than they must.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "you may submit your application for family reunification when the younger spouse/partner is 23 years and 6 months.",
+      "source_excerpt_display": "You may submit your application for family reunification when the younger spouse/partner is 23 years and 6 months."
+    },
+    {
+      "requirement_code": "twenty_four_year_exceptions",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "When the 24-year requirement can be suspended",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "the immigration service can suspend the 24-year requirement in special situations, such as if you, the applicant’s spouse/partner in denmark:\n\nare raising minor children who have an attachment of their own to denmark, or if you have contact with minor children from a previous relationship. read more about minor children\n\nare seriously ill or have a serious disability. read more about serious illness/disability\n\nwork in a field that is included on the positive lists. read about the positive lists\n\nwork for the danish state and hold a position of special importance for denmark’s security or foreign policy. for more information, see the ministry of integration’s memorandum of 26 may 2003 (in danish only)",
+      "source_excerpt_display": "The Immigration Service can suspend the 24-year requirement in special situations, such as if you, the applicant’s spouse/partner in Denmark:\n\nare raising minor children who have an attachment of their own to Denmark, or if you have contact with minor children from a previous relationship. Read more about minor children\n\nare seriously ill or have a serious disability. Read more about serious illness/disability\n\nWork in a field that is included on the Positive Lists. Read about the Positive Lists\n\nWork for the Danish state and hold a position of special importance for Denmark’s security or foreign policy. For more information, see the Ministry of Integration’s memorandum of 26 May 2003 (in Danish only)"
+    },
+    {
+      "requirement_code": "integration_requirement_four_of_six",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The couple must COLLECTIVELY meet 4 of 6 integration conditions",
+      "description": "Quoted with the split — three conditions on each person — because the number alone does not convey that it is a joint score.",
+      "source_role": "requirements",
+      "parameters": {
+        "conditions_required": 4,
+        "conditions_total": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70,
+      "source_excerpt": "normally, you and your spouse/partner in denmark collectively need to meet 4 out of a total of 6 integration-related conditions. 3 of the conditions apply to you, the applicant, and 3 apply to your spouse/partner in denmark. if, for example, your spouse/partner meets all 3 of the conditions that apply to him/her, then you would only need to meet 1 of those that apply to you. if, on the other hand, your spouse only meets 1 condition, you would need to meet all 3 that apply to you.",
+      "source_excerpt_display": "Normally, you and your spouse/partner in Denmark collectively need to meet 4 out of a total of 6 integration-related conditions. 3 of the conditions apply to you, the applicant, and 3 apply to your spouse/partner in Denmark. If, for example, your spouse/partner meets all 3 of the conditions that apply to him/her, then you would only need to meet 1 of those that apply to you. If, on the other hand, your spouse only meets 1 condition, you would need to meet all 3 that apply to you."
+    },
+    {
+      "requirement_code": "integration_conditions_are_tradeable",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Conditions trade between the partners — the authority's own worked example",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "if, for example, the applicant meets all 3 of the conditions that apply to him/her, then you only need to meet 1 of those that apply to you. if, on the other hand, the applicant only meets 1 condition, you need to meet all 3 that apply to you.",
+      "source_excerpt_display": "If, for example, the applicant meets all 3 of the conditions that apply to him/her, then you only need to meet 1 of those that apply to you. If, on the other hand, the applicant only meets 1 condition, you need to meet all 3 that apply to you."
+    },
+    {
+      "requirement_code": "applicant_language_test_or_english_b1",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: Prøve i Dansk 1 or an English test at B1 level",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "you meet one of the conditions of the integration requirement if you have passed prøve i dansk 1 or another danish language test of an equal or higher level. alternately, you can satisfy the condition by passing an english language test at the b1 level or another english test that are equivalent to or at a higher level",
+      "source_excerpt_display": "You meet one of the conditions of the integration requirement if you have passed Prøve i Dansk 1 or another Danish language test of an equal or higher level. Alternately, you can satisfy the condition by passing an English language test at the B1 level or another English test that are equivalent to or at a higher level"
+    },
+    {
+      "requirement_code": "applicant_worked_three_of_five_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: full-time work for at least 3 of the last 5 years",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "you meet one of the conditions of the integration requirement if you have worked for at least 3 of the last 5 years prior to applying for a residence permit.",
+      "source_excerpt_display": "You meet one of the conditions of the integration requirement if you have worked for at least 3 of the last 5 years prior to applying for a residence permit."
+    },
+    {
+      "requirement_code": "full_time_means_30_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time means an average work week of at least 30 hours",
+      "source_role": "requirements",
+      "parameters": {
+        "minimum_hours_per_week": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt": "full-time work should be understood to mean an average work week of at least 30 hours.",
+      "source_excerpt_display": "Full-time work should be understood to mean an average work week of at least 30 hours."
+    },
+    {
+      "requirement_code": "applicant_one_year_education",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: at least 1 year of completed education",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "you satisfy one of the conditions of the integration requirement if you have completed at least 1 year of education.",
+      "source_excerpt_display": "You satisfy one of the conditions of the integration requirement if you have completed at least 1 year of education."
+    },
+    {
+      "requirement_code": "education_must_be_accredited",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The educational programme must be from an accredited organisation",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "in order to satisfy this condition, your educational programme needs to have been offered by an accredited organisation. completing an accredited educational programme means, for example, that you are considered certified in your field, and that the quality of your programme is regulated by the laws of your home country.",
+      "source_excerpt_display": "In order to satisfy this condition, your educational programme needs to have been offered by an accredited organisation. Completing an accredited educational programme means, for example, that you are considered certified in your field, and that the quality of your programme is regulated by the laws of your home country."
+    },
+    {
+      "requirement_code": "education_failed_exam_does_not_count",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A programme completed without passing the final exam does not count",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "if you completed an educational programme but did not pass the final exam, it cannot be counted towards this condition.",
+      "source_excerpt_display": "If you completed an educational programme but did not pass the final exam, it cannot be counted towards this condition."
+    },
+    {
+      "requirement_code": "applicant_visited_denmark_once",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The applicant normally needs to have visited Denmark at least once",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "you, the applicant will normally need to have visited denmark at least once.",
+      "source_excerpt_display": "You, the applicant will normally need to have visited Denmark at least once."
+    },
+    {
+      "requirement_code": "visit_must_have_been_legal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No minimum length, but the visit must have been legal",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "there is no minimum requirement for the length of your visit, but you need to have been in denmark legally (meaning that you entered from another eu country, you held a residence permit, you held a visa or were covered by a visa-waiver programme).",
+      "source_excerpt_display": "There is no minimum requirement for the length of your visit, but you need to have been in Denmark legally (meaning that you entered from another EU country, you held a residence permit, you held a visa or were covered by a visa-waiver programme)."
+    },
+    {
+      "requirement_code": "asylum_entry_does_not_satisfy_visit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Entering Denmark as an asylum seeker does not satisfy the visit requirement",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "you do not meet this requirement if you e.g. entered denmark as an asylum seeker.",
+      "source_excerpt_display": "You do not meet this requirement if you e.g. entered Denmark as an asylum seeker."
+    },
+    {
+      "requirement_code": "both_declare_active_participation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Both partners must sign a declaration of active participation in language learning and integration",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "you, the applicant, and your spouse/partner in denmark will both be asked to declare that you will actively participate in your efforts to learn danish and to integrate into danish society. if you have children who will be accompanying you to denmark, you and your spouse/partner will also be asked to actively participate in their danish-language learning and integration.",
+      "source_excerpt_display": "You, the applicant, and your spouse/partner in Denmark will both be asked to declare that you will actively participate in your efforts to learn Danish and to integrate into Danish society. If you have children who will be accompanying you to Denmark, you and your spouse/partner will also be asked to actively participate in their Danish-language learning and integration."
+    },
+    {
+      "requirement_code": "danish_tests_after_arrival",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "After approval: a Danish test at A1, then at A2",
+      "description": "An obligation that begins when the permit is granted, not before.",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "if you are approved for family reunification and granted a residence permit, first you will need to pass a test in danish at the a1 level or higher , and hereafter you will need to pass a test in danish at a2 level or higher . read more about tests in danish and how to register",
+      "source_excerpt_display": "If you are approved for family reunification and granted a residence permit, first you will need to pass a test in Danish at the A1 level or higher , and hereafter you will need to pass a test in Danish at A2 level or higher . Read more about tests in Danish and how to register"
+    },
+    {
+      "requirement_code": "danish_test_deadlines",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A1 normally within 6 months of the permit being granted",
+      "source_role": "requirements",
+      "parameters": {
+        "months_to_a1_test": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200,
+      "source_excerpt": "normally, you will need to pass a test at a1 level within 6 months of being granted a residence permit. you will normally need to pass a test at a2 level within 9 months of being granted residence permit. read more about deadlines for passing a test in danish",
+      "source_excerpt_display": "Normally, you will need to pass a test at A1 level within 6 months of being granted a residence permit. You will normally need to pass a test at A2 level within 9 months of being granted residence permit. Read more about deadlines for passing a test in Danish"
+    },
+    {
+      "requirement_code": "permit_revoked_if_tests_missed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The residence permit can be revoked if the tests are not passed in time",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "if you don’t pass the tests in time, your residence permit can be revoked.",
+      "source_excerpt_display": "If you don’t pass the tests in time, your residence permit can be revoked."
+    },
+    {
+      "requirement_code": "sponsor_independent_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must have an independent, reasonably sized residence in Denmark",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "you, the spouse/partner of the applicant, need to live in denmark and have an independent, reasonably sized residence at your disposal. this is known as the housing requirement.",
+      "source_excerpt_display": "You, the spouse/partner of the applicant, need to live in Denmark and have an independent, reasonably sized residence at your disposal. This is known as the housing requirement."
+    },
+    {
+      "requirement_code": "housing_size_standard",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reasonably sized: no more than two people per room, or at least 20 sq m each",
+      "source_role": "requirements",
+      "parameters": {
+        "square_metres_per_person": 20,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230,
+      "source_excerpt": "the number of people living in the residence may not be more than double the number of rooms, or\n\nthere must be at least 20 sq. metres of living space for each person living there.",
+      "source_excerpt_display": "the number of people living in the residence may not be more than double the number of rooms, or\n\nthere must be at least 20 sq. metres of living space for each person living there."
+    },
+    {
+      "requirement_code": "housing_requirement_list_area",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor's residence must not be in an area on the housing requirement list",
+      "description": "A condition about the address rather than the people, and invisible unless stated.",
+      "source_role": "requirements",
+      "display_order": 240,
+      "source_excerpt": "you, the applicant’s spouse/partner, will normally be required to reside in an area that is not mentioned in the current regulation about housing requirement list. see the current version of the housing requirement list (in danish only)",
+      "source_excerpt_display": "You, the applicant’s spouse/partner, will normally be required to reside in an area that is not mentioned in the current regulation about housing requirement list. See the current version of the housing requirement list (in Danish only)"
+    },
+    {
+      "requirement_code": "housing_list_assessed_at_submission",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The area is assessed when the application is submitted; moving there later does not disqualify",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "your residence must not be placed in an area mentioned on the housing requirement list at the time your spouse/partner submits his/her application for family reunification. if the area where your residence is located is later included on the housing requirement list, you will still meet this requirement.\n\nif, after your spouse/partner submits his/her application, you move to an area that is mentioned on the housing requirement list, your residence will no longer meet this requirement.",
+      "source_excerpt_display": "Your residence must not be placed in an area mentioned on the housing requirement list at the time your spouse/partner submits his/her application for family reunification. If the area where your residence is located is later included on the housing requirement list, you will still meet this requirement.\n\nIf, after your spouse/partner submits his/her application, you move to an area that is mentioned on the housing requirement list, your residence will no longer meet this requirement."
+    },
+    {
+      "requirement_code": "sponsor_self_supporting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must be self-supporting",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "normally you, the applicant’s spouse/partner in denmark, need to be able to support yourself. this requirement means that if you have received certain forms of social benefits at any time in the past three years, your spouse/partner can’t be approved for family reunification. the forms of social benefits that will prevent your spouse/partner from being approved for family reunification are those made under the terms of the active social policy act (lov om aktiv socialpolitik) or the integration act (integrationsloven).",
+      "source_excerpt_display": "Normally you, the applicant’s spouse/partner in Denmark, need to be able to support yourself. This requirement means that if you have received certain forms of social benefits at any time in the past three years, your spouse/partner can’t be approved for family reunification. The forms of social benefits that will prevent your spouse/partner from being approved for family reunification are those made under the terms of the Active Social Policy Act (lov om aktiv socialpolitik) or the Integration Act (integrationsloven)."
+    },
+    {
+      "requirement_code": "short_benefit_periods_can_disqualify",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Even short periods on cash benefits in the past three years can defeat the self-support requirement",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "even short periods on social benefits such as cash benefits (kontanthjælp) in the past three years can be enough to prevent you from meeting the self-support requirement.",
+      "source_excerpt_display": "Even short periods on social benefits such as cash benefits (kontanthjælp) in the past three years can be enough to prevent you from meeting the self-support requirement."
+    },
+    {
+      "requirement_code": "collateral_financial_guarantee",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must post collateral of DKK 61,709.34 (2026 level)",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "collateral": 61709.34,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt": "normally, you, the spouse/partner of the applicant, will need to have dkk 61,709.34 (2026 level) set aside.",
+      "source_excerpt_display": "Normally, you, the spouse/partner of the applicant, will need to have DKK 61,709.34 (2026 level) set aside."
+    },
+    {
+      "requirement_code": "collateral_form",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The collateral must be a demand guarantee or an escrow account",
+      "source_role": "requirements",
+      "display_order": 290,
+      "source_excerpt": "the money can be available as a demand guarantee (anfordringsgaranti) or placed in an escrow account (deponeringskonto). read more about the financial guarantee",
+      "source_excerpt_display": "The money can be available as a demand guarantee (anfordringsgaranti) or placed in an escrow account (deponeringskonto). Read more about the financial guarantee"
+    },
+    {
+      "requirement_code": "collateral_can_be_reduced",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The collateral can be reduced if the applicant passes two Danish tests",
+      "source_role": "requirements",
+      "display_order": 300,
+      "source_excerpt": "the amount of money you need to have available can be reduced if your spouse/partner passes two tests in danish. in some situations, the guarantee can be released entirely. read more about reducing and eliminating the financial guarantee",
+      "source_excerpt_display": "The amount of money you need to have available can be reduced if your spouse/partner passes two tests in Danish. In some situations, the guarantee can be released entirely. Read more about reducing and eliminating the financial guarantee"
+    },
+    {
+      "requirement_code": "sponsor_mandatory_danish_condition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "MANDATORY for the sponsor: Prøve i Dansk 3, or 5 years' employment with significant Danish communication",
+      "description": "Required regardless of the 4-of-6 score. Quoted with both branches, because either alone is not the condition.",
+      "source_role": "requirements",
+      "display_order": 310,
+      "source_excerpt": "it is a mandatory condition as part of the integration requirement, that you need to have:\n\npassed prøve i dansk 3 or another danish test at the same or higher level, or\n\nbeen in employment for 5 years with significant communication in danish.",
+      "source_excerpt_display": "It is a mandatory condition as part of the integration requirement, that you need to have:\n\npassed Prøve i Dansk 3 or another Danish test at the same or higher level, or\n\nbeen in employment for 5 years with significant communication in Danish."
+    },
+    {
+      "requirement_code": "sponsor_five_years_danish_communication",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "What the five-year employment branch requires",
+      "source_role": "requirements",
+      "display_order": 320,
+      "source_excerpt": "you can also meet the requirement if you have held a regular, full-time position, or been self-employed for at least 5 years in denmark, which has significantly involved communication in danish.",
+      "source_excerpt_display": "You can also meet the requirement if you have held a regular, full-time position, or been self-employed for at least 5 years in Denmark, which has significantly involved communication in Danish."
+    },
+    {
+      "requirement_code": "non_nordic_sponsor_permanent_residence_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sponsor who is not a Danish or Nordic citizen must have held permanent residence for at least three years",
+      "source_role": "requirements",
+      "parameters": {
+        "years_of_permanent_residence": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 330,
+      "source_excerpt": "you need to have held a permanent residence permit at least the past three years.",
+      "source_excerpt_display": "You need to have held a permanent residence permit at least the past three years."
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 8490,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 340,
+      "source_excerpt": "the fee is\ndkk 8,490,-",
+      "source_excerpt_display": "The fee is\nDKK 8,490,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Expected maximum processing time",
+      "source_role": "requirements",
+      "display_order": 350,
+      "source_excerpt": "the expected maximum processing time is\n10 months",
+      "source_excerpt_display": "The expected maximum processing time is\n10 months"
+    }
+  ]
+}

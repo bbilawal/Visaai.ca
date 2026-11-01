@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "hk-non-local-graduates",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department's IANG page, bounded to the entry section",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "SIX MONTHS FROM GRADUATION DECIDES WHETHER YOU NEED A JOB. Apply within six months of the date on your graduation certificate and you are 'not required to have secured an offer of employment upon application'. Apply beyond it and you are 'required to secure an offer of employment', at a level commonly taken up by degree holders, at market remuneration. Same person, same degree, same 24 months if granted — a day's difference in filing changes the requirement from nothing to a graduate-level job offer.\n\nIt is the second deadline in this registry whose consequence is invisible until it has passed; Ireland's pre-marriage LTVP assessment was the first.\n\nA 2x2, NOT A LIST. The same recent/non-recent split runs across TWO populations — non-local graduates of Hong Kong institutions, and GBA campus graduates from mainland Greater Bay Area campuses jointly established with Hong Kong universities. Both are registered; folding them together would hide who the route is open to.\n\nBOUNDED. One URL carrying the entry application and a separate extension-of-stay flow with its own criteria, documents, fees and processing time — the same shape as Hong Kong's GEP and QMAS pages.",
+  "source_roles": {
+    "requirements": "https://www.immd.gov.hk/eng/services/visas/IANG.html"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "this webpage sets out the entry arrangement for persons who wish to enter/stay",
+      "ends_before": "extension of stay apply now",
+      "note": "The ENTRY block only. The page continues with a separate extension-of-stay flow for IANG entrants and their dependants."
+    }
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateModified and no dateline, so freshness reads as UNKNOWN, never fresh. The page's currency markers are the GBA campus graduate category — a recent addition tied to the Greater Bay Area cooperation regulations — and the e-Visa issuance arrangement. Corroboration, not a dateline.",
+  "not_extracted": [
+    "The extension-of-stay flow on the same page, excluded by the bound.",
+    "The list of authorised post-secondary institutions, which the Department publishes as the annex to ID 991 rather than on this page. Whether a specific institution qualifies is the first thing an applicant needs and it is not ours to summarise.",
+    "The supporting-document lists for applicants, dependants and employing companies.",
+    "The fee amounts. IANG is a 'specified scheme' under Schedule 2 of the Immigration Regulations (Cap.115A) and the Department links a fee table rather than publishing figures inline.",
+    "What counts as 'a level commonly taken up by degree holders' or 'market level' remuneration. The Department states both as standards and publishes no threshold; inventing one would be the most tempting and least defensible number on this route.",
+    "Right of abode after seven years' ordinary residence, a consequence rather than a condition of this route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_qualification",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An undergraduate or higher qualification from a full-time, locally-accredited Hong Kong programme",
+      "description": "Awarded by an authorised post-secondary institution — the Department keeps that list in the annex to ID 991 rather than on this page, and whether yours is on it is the first thing to check.",
+      "source_role": "requirements",
+      "source_excerpt": "non-local graduates here refer to non-local students who have obtained an undergraduate or higher qualification in a full-time and locally-accredited programme in the hksar.",
+      "display_order": 10,
+      "source_excerpt_display": "Non-local graduates here refer to non-local students who have obtained an undergraduate or higher qualification in a full-time and locally-accredited programme in the HKSAR."
+    },
+    {
+      "requirement_code": "six_month_line_defines_recent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Six months from the date on your graduation certificate splits the route in two",
+      "description": "Not from the ceremony, not from the results — the date printed on the certificate. Everything else follows from which side of it you file on.",
+      "source_role": "requirements",
+      "source_excerpt": "non-local graduates who submit applications to the immigration department (hereafter “immd”) within six months after the date of their graduation (i.e. the date shown on their graduation certificates) are classified as non-local recent graduates.",
+      "display_order": 20,
+      "parameters": {
+        "months_from_graduation": 6,
+        "measured_from": "date on the graduation certificate"
+      },
+      "source_excerpt_display": "Non-local graduates who submit applications to the Immigration Department (hereafter “ImmD”) within six months after the date of their graduation (i.e. the date shown on their graduation certificates) are classified as non-local recent graduates."
+    },
+    {
+      "requirement_code": "recent_graduate_no_offer_needed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Within six months: no job offer required, and 24 months with no employment condition",
+      "description": "'on time limitation only without other conditions of stay' — you are not tied to an employer, and you did not need one to apply.",
+      "source_role": "requirements",
+      "source_excerpt": "non-local recent graduates who wish to apply to stay and work in the hksar are not required to have secured an offer of employment upon application. they may be granted 24 months' stay on time limitation only without other conditions of stay provided that normal immigration requirements are met.",
+      "display_order": 30,
+      "parameters": {
+        "job_offer_required": false,
+        "stay_months": 24
+      },
+      "source_excerpt_display": "Non-local recent graduates who wish to apply to stay and work in the HKSAR are not required to have secured an offer of employment upon application. They may be granted 24 months' stay on time limitation only without other conditions of stay provided that normal immigration requirements are met."
+    },
+    {
+      "requirement_code": "non_recent_graduate_offer_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beyond six months: a job offer IS required, at graduate level and market pay",
+      "description": "Two further tests come with it — the job must be 'at a level commonly taken up by degree holders' and the remuneration package 'at market level'. The Department publishes no figure for either.",
+      "source_role": "requirements",
+      "source_excerpt": "non-local non-recent graduates who wish to return to work in the hksar are required to secure an offer of employment upon application. the applications will be favourably considered so long as the job is at a level commonly taken up by degree holders and the remuneration package is at market level.",
+      "display_order": 40,
+      "parameters": {
+        "job_offer_required": true,
+        "stay_months": 24
+      },
+      "source_excerpt_display": "Non-local non-recent graduates who wish to return to work in the HKSAR are required to secure an offer of employment upon application. The applications will be favourably considered so long as the job is at a level commonly taken up by degree holders and the remuneration package is at market level."
+    },
+    {
+      "requirement_code": "apply_before_the_certificate_arrives",
+      "kind": "step",
+      "officially_required": true,
+      "label": "You can beat the six-month clock without the certificate in hand",
+      "description": "A letter from the institution confirming you have graduated is enough. Those still waiting on results may instead apply to extend their stay while the results are promulgated.",
+      "source_role": "requirements",
+      "source_excerpt": "non-local recent graduates who have not yet obtained their graduation certificate could apply to stay and work by producing proof from the institution confirming that they have graduated.",
+      "display_order": 50,
+      "source_excerpt_display": "Non-local recent graduates who have not yet obtained their graduation certificate could apply to stay and work by producing proof from the institution confirming that they have graduated."
+    },
+    {
+      "requirement_code": "gba_campus_graduates_included",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Graduates of Greater Bay Area campuses jointly established with Hong Kong universities also qualify",
+      "description": "A full-time programme at a mainland GBA campus set up under the PRC regulations on Chinese-foreign cooperation in running schools. A distinct population, same route.",
+      "source_role": "requirements",
+      "source_excerpt": "gba campus graduates here refer to persons who have obtained an undergraduate or higher qualification in a full-time programme offered by a higher education institution in the mainland cities of the guangdong-hong kong-macao greater bay area jointly established by universities of the mainland and hong kong in accordance with the regulations of the people’s republic of china on chinese-foreign cooperation in running schools.",
+      "display_order": 60,
+      "source_excerpt_display": "GBA campus graduates here refer to persons who have obtained an undergraduate or higher qualification in a full-time programme offered by a higher education institution in the Mainland cities of the Guangdong-Hong Kong-Macao Greater Bay Area jointly established by universities of the Mainland and Hong Kong in accordance with the Regulations of the People’s Republic of China on Chinese-Foreign Cooperation in Running Schools."
+    },
+    {
+      "requirement_code": "gba_recent_no_offer_needed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "GBA campus graduates: the same six-month line, the same consequence",
+      "description": "Within six months, no offer needed and 24 months without an employment condition.",
+      "source_role": "requirements",
+      "source_excerpt": "gba campus recent graduates who wish to apply to come and work in the hksar are not required to have secured an offer of employment upon application. they may be granted 24 months’ stay on time limitation only without other conditions of stay provided that normal immigration requirements are met.",
+      "display_order": 70,
+      "parameters": {
+        "job_offer_required": false,
+        "stay_months": 24
+      },
+      "source_excerpt_display": "GBA campus recent graduates who wish to apply to come and work in the HKSAR are not required to have secured an offer of employment upon application. They may be granted 24 months’ stay on time limitation only without other conditions of stay provided that normal immigration requirements are met."
+    },
+    {
+      "requirement_code": "gba_non_recent_offer_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "GBA campus graduates beyond six months need the offer too",
+      "description": "Identical wording to the non-local non-recent rule, applied to the other population.",
+      "source_role": "requirements",
+      "source_excerpt": "gba campus non-recent graduates who wish to come to work in the hksar are required to secure an offer of employment upon application. the applications will be favourably considered so long as the job is at a level commonly taken up by degree holders and the remuneration package is at market level.",
+      "display_order": 80,
+      "parameters": {
+        "job_offer_required": true,
+        "stay_months": 24
+      },
+      "source_excerpt_display": "GBA campus non-recent graduates who wish to come to work in the HKSAR are required to secure an offer of employment upon application. The applications will be favourably considered so long as the job is at a level commonly taken up by degree holders and the remuneration package is at market level."
+    },
+    {
+      "requirement_code": "normal_immigration_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The general immigration requirements apply on top",
+      "description": "A valid travel document with adequate returnability, a clear criminal record, no security concern, and no likelihood of becoming a burden on Hong Kong. The Department also warns the criteria may change without notice.",
+      "source_role": "requirements",
+      "source_excerpt": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the hksar; have no likelihood of becoming a burden on the hksar, etc.) as well as the relevant specific eligibility criteria detailed above",
+      "display_order": 90,
+      "source_excerpt_display": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the HKSAR; have no likelihood of becoming a burden on the HKSAR, etc.) as well as the relevant specific eligibility criteria detailed above"
+    },
+    {
+      "requirement_code": "dependants_spouse_partner_children",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may sponsor a spouse or recognised partner and unmarried children under 18",
+      "description": "Hong Kong recognises same-sex and opposite-sex civil partnerships and unions recognised where they were entered into. You become the sponsor.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants admitted or seeking admission under the iang may apply to bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration note 2 and unmarried dependent children under the age of 18 to the hksar under the prevailing dependant policy.",
+      "display_order": 100,
+      "parameters": {
+        "max_child_age": 18
+      },
+      "source_excerpt_display": "Applicants admitted or seeking admission under the IANG may apply to bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration Note 2 and unmarried dependent children under the age of 18 to the HKSAR under the prevailing dependant policy."
+    },
+    {
+      "requirement_code": "dependants_may_work_or_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your dependants may work or study without a separate permission",
+      "description": "The same policy as Hong Kong's other routes, and a sharper contrast the further east you look: Singapore requires an employer-lodged work pass, Malaysia an endorsement.",
+      "source_role": "requirements",
+      "source_excerpt": "these dependants are not prohibited from taking up employment or studies in the hksar under the existing policy.",
+      "display_order": 110,
+      "source_excerpt_display": "These dependants are not prohibited from taking up employment or studies in the HKSAR under the existing policy."
+    },
+    {
+      "requirement_code": "dependant_stay_linked_to_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your dependants' stay is tied to yours and to the relationship continuing",
+      "description": "The Department names the failure modes: a change in the marriage relationship, or the sponsor's death. A dependant under 16 needs a parent or guardian to sign.",
+      "source_role": "requirements",
+      "source_excerpt": "the length of stay of such dependants will normally be linked to that of their sponsors.",
+      "display_order": 120,
+      "source_excerpt_display": "The length of stay of such dependants will normally be linked to that of their sponsors."
+    },
+    {
+      "requirement_code": "further_documents_may_be_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "More documents may be demanded after you have supplied everything listed",
+      "description": "The Department reserves this against applicants, dependants and employing companies alike.",
+      "source_role": "requirements",
+      "source_excerpt": "notwithstanding that the documents and information required have been furnished, applicants, accompanying dependants and employing companies may still be required to submit further supporting documents and information in connection with the application(s) when necessary.",
+      "display_order": 130,
+      "source_excerpt_display": "Notwithstanding that the documents and information required have been furnished, applicants, accompanying dependants and employing companies may still be required to submit further supporting documents and information in connection with the application(s) when necessary."
+    }
+  ]
+}

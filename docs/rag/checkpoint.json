@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "project": "visa-knowledge-rag",
+  "updatedAt": "2026-09-04T20:00:00Z",
+  "currentPhase": "schema-live-in-production-code-on-PR-48",
+  "environment": {
+    "database": "local Supabase stack (Postgres 17.6, pgvector), NOT production",
+    "productionDatabase": "self-hosted Supabase on the VPS — migration APPLIED 2026-09-04 (20260820170000, 20260903120000, 20260903130000), verified: 14 kb_* tables, vector 0.8.0, pg_trgm 1.6, 12 freshness policies; registry counts unchanged",
+    "embeddingModel": "deterministic-hash-v1 in local development (the local OPENAI_API_KEY is dead); production carries a working key, so the corpus must be re-embedded from the VPS",
+    "productionEmbeddingModel": "text-embedding-3-small (blocked: OPENAI_API_KEY returns 401)",
+    "node": "v24.14.1 (repo engines say >=20 <21)"
+  },
+  "phases": {
+    "1_discovery": "done",
+    "2_source_registry": "done",
+    "3_ingestion_pipeline": "done",
+    "4_storage_optimisation": "done",
+    "5_data_model_migrations": "done",
+    "6_chunking_embeddings_retrieval": "done",
+    "7_grounded_answers": "done",
+    "8_updates_change_detection": "done",
+    "9_admin_observability": "done",
+    "10_security_privacy": "done",
+    "11_testing": "done",
+    "12_performance": "done",
+    "13_deployment_recovery": "done"
+  },
+  "migrationsApplied": [
+    {
+      "file": "supabase/migrations/20260903120000_visa_knowledge_rag.sql",
+      "target": "local development stack",
+      "appliedAt": "2026-09-03",
+      "idempotent": true,
+      "rollback": "supabase/migrations/rollback/20260903120000_visa_knowledge_rag.down.sql",
+      "rollbackVerified": "forward -> rollback -> forward on a scratch database; source registry intact",
+      "objects": {
+        "tables": 13,
+        "views": 1,
+        "functions": 1,
+        "buckets": 1,
+        "seededRows": 12
+      }
+    }
+  ],
+  "corpus": {
+    "sourceVersionsIngested": 67,
+    "governmentPages": 67,
+    "countriesWithContent": [
+      "CA",
+      "GB",
+      "US"
+    ],
+    "blobs": 80,
+    "blobLogicalBytes": 5340320,
+    "blobStoredBytes": 5340320,
+    "blobsCached": 0,
+    "blobsCachedNote": "every source has redistribution='unknown', treated as do-not-cache",
+    "extractions": 67,
+    "sections": 5074,
+    "chunks": 1242,
+    "distinctChunkTexts": 892,
+    "embeddings": 892,
+    "deduplicationRatio": 0.22,
+    "quarantined": 0,
+    "jobs": {
+      "succeeded": 55,
+      "skipped": 12,
+      "failed": 12
+    },
+    "failedJobsNote": "12 failures are the OPENAI_API_KEY 401 run; corpus intact, 0 chunks without a vector"
+  },
+  "coverage": {
+    "supportedCountries": 17,
+    "activeVisaTypes": 192,
+    "visaTypesWithMappedSource": 192,
+    "visaTypesWithIndexedContent": 14,
+    "visaTypesWithNoSource": 0,
+    "visaTypesWithSourcesButNoContent": 189,
+    "registeredSources": 385,
+    "sourcesIndexed": 67,
+    "staleSources": 373,
+    "reviewItemsOpen": 562
+  },
+  "tests": {
+    "baseline": {
+      "suites": 409,
+      "tests": 3200,
+      "skipped": 51,
+      "failures": 0
+    },
+    "finalNoDatabase": {
+      "suites": 429,
+      "tests": 3565,
+      "skipped": 73,
+      "failures": 0
+    },
+    "finalWithDatabase": {
+      "suites": 445,
+      "tests": 3638,
+      "skipped": 0,
+      "failures": 0
+    },
+    "knowledgeModuleOnly": {
+      "suites": 20,
+      "tests": 365,
+      "failures": 0
+    },
+    "sqlIntegrationSpec": {
+      "tests": 22,
+      "failures": 0
+    },
+    "consecutiveCleanFullRuns": 3,
+    "typecheck": "clean",
+    "webBuild": "clean; /[locale]/knowledge route registered",
+    "lint": "3 remaining, all @typescript-eslint/no-unsafe-* from the untyped SupabaseClient (repo DEBT-001); down from 1114",
+    "e2eConfig": {
+      "serial": "10/10 suites, 13/13 tests pass",
+      "parallel": "2 suites fail (app.e2e-spec + one messaging suite)",
+      "baselineParallel": "identical 2 failures WITHOUT the knowledge module — pre-existing e2e concurrency contention, not caused by this work",
+      "appModuleBoot": "verified: full AppModule including KnowledgeModule boots and serves a request"
+    }
+  },
+  "benchmark": {
+    "questions": 62,
+    "scoredQuestions": 56,
+    "isolationPassed": true,
+    "crossJurisdictionResults": 0,
+    "hitAt10": 0.9643,
+    "mrr": 0.8948,
+    "byKind": {
+      "coverage": 0.875,
+      "formCode": 1.0
+    },
+    "latencyMs": {
+      "uncached": {
+        "p50": 17,
+        "p95": 30
+      },
+      "warm": {
+        "p50": 17,
+        "p95": 34
+      }
+    },
+    "targetP95Ms": 2000,
+    "caveat": "measured with deterministic-hash-v1; NOT a semantic quality claim"
+  },
+  "ingestionPerformance": {
+    "perVersionMs": {
+      "p50": 537,
+      "p95": 3248,
+      "max": 4379
+    },
+    "forcedReingest": {
+      "chunks": 213,
+      "embeddingsCreated": 0,
+      "embeddingsReused": 213,
+      "note": "idempotency observed, not asserted"
+    }
+  },
+  "defectsFixed": [
+    "postgrest .in() request-URI overflow read as an empty result (9 call sites)",
+    "provenance gate approved itself — source URL was in its own allowlist",
+    "greedy regex captured a page date ten days early",
+    "trailing full stop defeated fee normalisation, producing false material changes",
+    "processing-time change classified as editorial churn (bigram-only similarity)",
+    "spurious form code FORM I from 'Form I-551'",
+    "form-code detector could not recognise its own canonical output",
+    "quarantine threshold removed pages over a single editorial marker",
+    "raiseReview relied on a column default it then queried",
+    "String() on untyped rows produced 'null' and '[object Object]' in review titles",
+    "filter(Boolean) did not narrow, allowing null into an insert payload"
+  ],
+  "preExistingDefects": [
+    {
+      "id": "migration-chain-not-replayable",
+      "status": "reported, not fixed",
+      "detail": "supabase db reset fails at 20260821120000: requirement migrations bind to visa_source_versions rows no migration creates (the sync job does). 195 of 248 later failures cascade from it.",
+      "whyNotFixed": "fixing it means committing fetched version fixtures or inventing hashes for content never retrieved; the second is fabrication, the first is the registry owners' decision"
+    },
+    {
+      "id": "fetchSource-utf8-decoded-binaries",
+      "status": "fixed",
+      "detail": "readCapped UTF-8-decoded every body, destroying PDFs"
+    },
+    {
+      "id": "applications-update-rls-test-harness",
+      "status": "fixed",
+      "detail": "admin.auth.verifyOtp signed the admin client in as the stranger; the test failed while RLS worked"
+    },
+    {
+      "id": "e2e-suites-not-concurrency-safe",
+      "status": "reported, not fixed",
+      "detail": "The e2e config's suites share Redis/BullMQ/DB state; run in parallel, app.e2e-spec.ts and one messaging suite fail. Serial (--runInBand) is 10/10. Confirmed pre-existing by running the same parallel config on a stashed tree.",
+      "whyNotFixed": "isolating the e2e suites is unrelated to this work and would touch every one of them"
+    }
+  ],
+  "knownLimitations": [
+    "production embedding model never exercised end to end (401 on the configured key)",
+    "OCR tested against a stub, not a real scanned document",
+    "PDF/DOCX/XLSX extraction has no live-document coverage — all 80 blobs are HTML",
+    "corpus covers 3 of 17 supported countries",
+    "no load test; latency measured at concurrency 1 on 1,242 chunks",
+    "kb_chunk_scopes modelled but unpopulated (Schengen bloc mapping is a registry decision)",
+    "ETag / Last-Modified not stored, so change detection is fetch-and-hash not conditional GET",
+    "one transient 2-suite failure observed across 5 full runs; not reproduced in 3 subsequent runs, failing suite names not captured"
+  ],
+  "nextActions": [
+    {
+      "order": 1,
+      "action": "supply a working OPENAI_API_KEY, re-embed, re-run the benchmark",
+      "blocks": "production",
+      "command": "OPENAI_API_KEY=... npx ts-node -P apps/api/tsconfig.json apps/api/scripts/knowledge-ingest.ts --limit 500 --concurrency 4"
+    },
+    {
+      "order": 2,
+      "action": "check pgvector availability on the VPS, then apply the migration",
+      "blocks": "production",
+      "command": "docker exec -i selfhosted_db psql -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -1 < /tmp/kb.sql"
+    },
+    {
+      "order": 3,
+      "action": "backfill the remaining 14 countries FROM THE VPS (local egress misrepresents reachability)",
+      "blocks": "coverage"
+    },
+    {
+      "order": 4,
+      "action": "review each authority's terms and set visa_sources.redistribution",
+      "blocks": "byte caching only"
+    },
+    {
+      "order": 5,
+      "action": "translate adminKnowledgeOps in the 14 non-English locales",
+      "blocks": "nothing"
+    }
+  ],
+  "commits": [],
+  "documents": [
+    "docs/rag/VISA_RAG_ARCHITECTURE.md",
+    "docs/rag/OFFICIAL_SOURCE_REGISTRY.md",
+    "docs/rag/IMPLEMENTATION_PROGRESS.md",
+    "docs/rag/RAG_TEST_REPORT.md",
+    "docs/rag/REMAINING_EXTERNAL_ACTIONS.md",
+    "docs/rag/DEPLOYMENT.md",
+    "docs/rag/checkpoint.json"
+  ]
+}

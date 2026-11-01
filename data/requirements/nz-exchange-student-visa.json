@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nz-exchange-student-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official INZ page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.immigration.govt.nz/new-zealand-visas/visas/visa/exchange-student-visa"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The list of approved exchange schemes and approved education providers. INZ links these rather than stating them.",
+    "The student fund requirements (how much money counts as enough). INZ links a dedicated page that is not a registered source.",
+    "Form INZ 1014, the Financial Undertaking for a Student. Linked as a PDF from this page; the form itself is not registered as a source.",
+    "The precise age and school-year rules governing permission to work, which INZ splits across a linked section.",
+    "The fee paying student visa, which INZ names in prose here but does not link resolvably. It remains unregistered."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "accepted_into_approved_exchange_scheme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be accepted into an approved student exchange scheme",
+      "source_role": "requirements",
+      "source_excerpt": "show you have been accepted into an approved exchange student scheme",
+      "display_order": 10,
+      "source_excerpt_display": "show you have been accepted into an approved exchange student scheme"
+    },
+    {
+      "requirement_code": "study_abroad_not_eligible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study abroad programmes are NOT approved exchange schemes",
+      "description": "Routing information rather than a hurdle: INZ names the correct alternative. Recorded because applying on the wrong student visa is the most expensive mistake available here.",
+      "source_role": "requirements",
+      "source_excerpt": "study abroad programmes are not approved exchange schemes. students planning to study with a study abroad programme should apply for a fee paying student visa .",
+      "display_order": 20,
+      "source_excerpt_display": "Study Abroad programmes are not approved exchange schemes. Students planning to study with a Study Abroad programme should apply for a Fee Paying Student Visa."
+    },
+    {
+      "requirement_code": "offer_of_place_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of an offer of place, or a letter from your exchange programme organisation",
+      "description": "INZ's own sentence breaks at 'from an' where a link interrupts it; the excerpt preserves what is served.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are attending a school-to-school or tertiary exchange programme, you need to provide evidence of an offer of place from an — this should state you are an exchange student. if you are coming to new zealand with an exchange programme organisation (epo), you need to provide a letter from your epo explaining that you are an exchange student.",
+      "display_order": 30,
+      "source_excerpt_display": "If you are attending a school-to-school or tertiary exchange programme, you need to provide evidence of an offer of place from an — this should state you are an exchange student. If you are coming to New Zealand with an exchange programme organisation (EPO), you need to provide a letter from your EPO explaining that you are an exchange student."
+    },
+    {
+      "requirement_code": "exchange_scheme_acceptance_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of acceptance into the scheme, for example a letter from the organiser",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide evidence that you have been accepted into an . for example, a letter from the scheme organiser.",
+      "display_order": 40,
+      "source_excerpt_display": "You must provide evidence that you have been accepted into an. For example, a letter from the scheme organiser."
+    },
+    {
+      "requirement_code": "outside_new_zealand",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be outside New Zealand when you apply",
+      "description": "INZ adds that a visa can be granted from inside New Zealand only in very special circumstances, and that the applicant must explain why they arrived without a student visa.",
+      "source_role": "requirements",
+      "source_excerpt": "you must be outside new zealand when you apply. we will check our records to make sure you are not already in new zealand.",
+      "display_order": 50,
+      "source_excerpt_display": "You must be outside New Zealand when you apply. We will check our records to make sure you are not already in New Zealand."
+    },
+    {
+      "requirement_code": "sufficient_funds_or_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for living expenses, or an acceptable sponsor",
+      "source_role": "requirements",
+      "source_excerpt": "have enough money to pay your living expenses, or have an acceptable sponsor",
+      "display_order": 60,
+      "source_excerpt_display": "have enough money to pay your living expenses, or have an acceptable sponsor"
+    },
+    {
+      "requirement_code": "intent_to_leave",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show you can leave New Zealand at the end of your stay",
+      "source_role": "requirements",
+      "source_excerpt": "show you can leave new zealand at the end of your stay.",
+      "display_order": 70,
+      "source_excerpt_display": "show you can leave New Zealand at the end of your stay."
+    },
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "source_role": "requirements",
+      "source_excerpt": "be in good health",
+      "display_order": 80,
+      "source_excerpt_display": "be in good health"
+    },
+    {
+      "requirement_code": "good_character",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be of good character",
+      "source_role": "requirements",
+      "source_excerpt": "be of good character",
+      "display_order": 90,
+      "source_excerpt_display": "be of good character"
+    },
+    {
+      "requirement_code": "genuine_reason",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have a genuine reason for coming to New Zealand",
+      "source_role": "requirements",
+      "source_excerpt": "have a genuine reason for coming to new zealand",
+      "display_order": 100,
+      "source_excerpt_display": "have a genuine reason for coming to New Zealand"
+    },
+    {
+      "requirement_code": "practical_work_experience_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence that practical work experience is part of your course, where required",
+      "source_role": "requirements",
+      "source_excerpt": "provide evidence that practical work experience is part of your course, where required",
+      "display_order": 110,
+      "source_excerpt_display": "provide evidence that practical work experience is part of your course, where required"
+    },
+    {
+      "requirement_code": "written_permission_to_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Written permission is needed if you plan to work",
+      "description": "INZ ties this to age and school year — 16 and 17 year olds in years 12 or 13 need permission.",
+      "source_role": "requirements",
+      "source_excerpt": "provide information about your holidays and your course, and have written permission, if you plan to work",
+      "display_order": 120,
+      "source_excerpt_display": "provide information about your holidays and your course, and have written permission, if you plan to work"
+    },
+    {
+      "requirement_code": "work_rights",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Work part-time up to 25 hours a week, depending on age and course length",
+      "description": "A right the visa grants, not an obligation, and explicitly conditional on age and study length.",
+      "source_role": "requirements",
+      "source_excerpt": "work part-time up to 25 hours a week while studying, or in the holidays, depending on your age and how long your study is for.",
+      "display_order": 130,
+      "source_excerpt_display": "work part-time up to 25 hours a week while studying, or in the holidays, depending on your age and how long your study is for."
+    },
+    {
+      "requirement_code": "no_tuition_fees",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "No tuition fees are payable on this visa",
+      "description": "The main practical difference from the fee paying student visa. INZ's sentence trails into a link, and the excerpt preserves that.",
+      "source_role": "requirements",
+      "source_excerpt": "you do not need to pay tuition fees as you are considered a .",
+      "display_order": 140,
+      "source_excerpt_display": "You do not need to pay tuition fees as you are considered a."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "description": "INZ publishes this as a 'from' price; the final fee depends on where the application is made.",
+      "parameters": {
+        "amount_from": 850,
+        "currency": "NZD",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "cost from nzd $850",
+      "display_order": 150,
+      "source_excerpt_display": "Cost From NZD $850"
+    },
+    {
+      "requirement_code": "length_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stay of up to 4 years",
+      "source_role": "requirements",
+      "source_excerpt": "length of stay up to 4 years",
+      "display_order": 160,
+      "source_excerpt_display": "Length of stay Up to 4 years"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-instructor",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "The boundary against the Engineer/Specialist status is the institution, not the subject. Teaching a language at a school is this status; teaching a language at a private company is Engineer/Specialist in Humanities/International Services, whose own examples name 私企業の語学教師.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/instructor.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: language teaching or other teaching at a Japanese elementary, lower-secondary, compulsory-education, high, secondary-education, special-needs, specialised training or miscellaneous school, or an equivalent institution",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "本邦の小学校、中学校、義務教育学校、高等学校、中等教育学校、特別支援学校、専修学校又は各種学校若しくは設備及び編制に関してこれに準ずる教育機関において語学教育その他の教育をする活動",
+      "source_excerpt_display": "本邦の小学校、中学校、義務教育学校、高等学校、中等教育学校、特別支援学校、専修学校又は各種学校若しくは設備及び編制に関してこれに準ずる教育機関において語学教育その他の教育をする活動"
+    },
+    {
+      "requirement_code": "examples",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: language teachers at lower-secondary and high schools",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、中学校・高等学校等の語学教師等。",
+      "source_excerpt_display": "該当例としては、中学校・高等学校等の語学教師等。"
+    },
+    {
+      "requirement_code": "period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: 5 years, 3 years, 1 year or 3 months",
+      "parameters": {
+        "period_options": [
+          "5 years",
+          "3 years",
+          "1 year",
+          "3 months"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "在留期間 ５年、３年、１年又は３月",
+      "source_excerpt_display": "在留期間 ５年、３年、１年又は３月"
+    }
+  ]
+}

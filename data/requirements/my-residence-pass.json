@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "my-residence-pass",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department of Malaysia's Residence Pass page",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE SPONSOR'S STATE OF ORIGIN IS A CONDITION. 'applications in sabah and sarawak must be sponsored by a malaysian citizen of sabah or sarawak origin.' Not a documentary variation — a different sponsor. A Malaysian from Kuala Lumpur cannot sponsor an application made in Sabah. Sabah and Sarawak administer their own immigration under the Malaysia Agreement, and this is the sharpest consequence of that in the registry: the same national citizenship qualifies or does not depending on where the applicant is standing.\n\nTHREE YEARS FOR A CITIZEN'S FAMILY, FIVE FOR A PERMANENT RESIDENT'S. Category 3 needs three years' residence on a valid long-term pass; Category 4 needs five. Same relationship, same pass, two extra years decided by the sponsor's own status. Both figures are on one page and neither is stated as a comparison.\n\nONE PASS DOES WHAT THREE DO ELSEWHERE: 'work, study, and setting up a business without having to convert to another pass'. Malaysia's LTSVP already permits work by endorsement; this goes further. Singapore needs an employer-lodged work pass, a Student's Pass and an EntrePass for the same three things.\n\nNO BOUND NEEDED, CHECKED. Unlike Hong Kong's tabbed pages this one publishes a single subject — categories 3, 4 and 5 of Regulation 16A. Categories 1 and 2, the Residence Pass-Talent route, are not on this page and are not claimed.",
+  "source_roles": {
+    "requirements": "https://www.imi.gov.my/index.php/en/main-services/pass/residence-pass/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The Department publishes no dateModified and no dateline; freshness reads as UNKNOWN, never fresh. The page renders a live server clock in its header and cites Regulation 16A of the Immigration Regulations 1963 as its legal basis, which is the instrument still in force. Corroboration, not a dateline.",
+  "not_extracted": [
+    "Categories 1 and 2 — the Residence Pass-Talent route for highly skilled expatriates, administered with TalentCorp. They are not on this page, and this route does not claim them.",
+    "The per-category document checklists, which run to dozens of items and differ by relationship. What is stored is the eligibility and the conditions that decide whether applying is possible at all.",
+    "The multiple entry visa rates, which the Department states vary 'by country' and publishes in a separate table.",
+    "The renewal and cancellation processes.",
+    "What 'a valid long term pass' includes. The Department uses the phrase as the qualifying period's basis without enumerating which passes count."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "statutory_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass exists under Regulation 16A of the Immigration Regulations 1963",
+      "description": "The Department frames eligibility as falling within a category specified by that regulation, rather than as a discretionary scheme.",
+      "source_role": "requirements",
+      "source_excerpt": "residence pass is a pass issued to any foreign national who falls under any category specified under regulation 16a, immigration regulations 1963.",
+      "display_order": 10,
+      "source_excerpt_display": "Residence Pass is a pass issued to any foreign national who falls under any category specified under Regulation 16A, Immigration Regulations 1963."
+    },
+    {
+      "requirement_code": "category_3_family_of_citizen",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 3: family of a Malaysian citizen",
+      "description": "A husband or wife; a biological, step or adopted child aged 18 and under; a divorcee, widow or widower of a citizen with a biological child who is a Malaysian citizen; a biological mother or father of a citizen; and a mother- or father-in-law of a citizen who already holds a valid pass.",
+      "source_role": "requirements",
+      "source_excerpt": "a person with family ties with a malaysian citizen ( category 3 )",
+      "display_order": 20,
+      "source_excerpt_display": "A person with family ties with a Malaysian citizen (Category 3)"
+    },
+    {
+      "requirement_code": "category_4_family_of_permanent_resident",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 4: family of a Malaysian permanent resident",
+      "description": "Narrower than Category 3 — a husband or wife, and a biological child aged 18 and under. No parents, no step or adopted children, no divorcee route.",
+      "source_role": "requirements",
+      "source_excerpt": "a person with family ties with a permanent resident of malaysia ( category 4 )",
+      "display_order": 30,
+      "source_excerpt_display": "A person with family ties with a Permanent Resident of Malaysia (Category 4)"
+    },
+    {
+      "requirement_code": "category_5_ex_malaysians",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 5: former Malaysians",
+      "description": "Covers a citizen who voluntarily renounced their citizenship and one who was deprived of it — the Department lists both, and does not distinguish between them for eligibility.",
+      "source_role": "requirements",
+      "source_excerpt": "ex-malaysians ( category 5 )",
+      "display_order": 40,
+      "source_excerpt_display": "Ex-Malaysians (Category 5)"
+    },
+    {
+      "requirement_code": "passport_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A travel document valid for at least six months",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must have a valid travel document or passport with a validity of at least six (6) months;",
+      "display_order": 50,
+      "parameters": {
+        "passport_validity_months": 6
+      },
+      "source_excerpt_display": "The applicant must have a valid travel document or passport with a validity of at least six (6) months;"
+    },
+    {
+      "requirement_code": "must_already_hold_a_long_term_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must already be living in Malaysia on a valid long-term pass",
+      "description": "This is not a route in from abroad. The qualifying years are counted on that pass.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant has been staying in malaysia on a valid long term pass;",
+      "display_order": 60,
+      "source_excerpt_display": "The applicant has been staying in Malaysia on a valid long term pass;"
+    },
+    {
+      "requirement_code": "category_3_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 3: three years' residence on a valid long-term pass",
+      "description": "Family of a Malaysian citizen. Compare Category 4 below — the same relationship to a permanent resident costs two more years.",
+      "source_role": "requirements",
+      "source_excerpt": "for category 3, the applicant has resided in malaysia for at least three (3) years on a valid long term pass;",
+      "display_order": 70,
+      "parameters": {
+        "years": 3,
+        "category": 3
+      },
+      "source_excerpt_display": "For Category 3, the applicant has resided in Malaysia for at least three (3) years on a valid long term pass;"
+    },
+    {
+      "requirement_code": "category_4_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 4: five years' residence on a valid long-term pass",
+      "description": "Family of a permanent resident. Two years longer than Category 3 for the same relationship, decided entirely by the sponsor's own status.",
+      "source_role": "requirements",
+      "source_excerpt": "for category 4, the applicant has resided in malaysia for at least five (5) years on a valid long term pass;",
+      "display_order": 80,
+      "parameters": {
+        "years": 5,
+        "category": 4
+      },
+      "source_excerpt_display": "For Category 4, the applicant has resided in Malaysia for at least five (5) years on a valid long term pass;"
+    },
+    {
+      "requirement_code": "sponsor_malaysian_aged_21",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Malaysian sponsor aged 21 or over",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "the application must be sponsored by a malaysian aged 21 years and above;",
+      "display_order": 90,
+      "parameters": {
+        "min_sponsor_age": 21
+      },
+      "source_excerpt_display": "The application must be sponsored by a Malaysian aged 21 years and above;"
+    },
+    {
+      "requirement_code": "sabah_sarawak_sponsor_origin",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "In Sabah and Sarawak the sponsor must be of Sabah or Sarawak origin",
+      "description": "Not a documentary variation — a different sponsor. A Malaysian citizen from elsewhere cannot sponsor an application made in either state, which administer their own immigration under the Malaysia Agreement.",
+      "source_role": "requirements",
+      "source_excerpt": "applications in west malaysia must be sponsored by a malaysia citizen; ... applications in sabah and sarawak must be sponsored by a malaysian citizen of sabah or sarawak origin;",
+      "display_order": 100,
+      "source_excerpt_display": "Applications in West Malaysia must be sponsored by a Malaysia citizen; ... Applications in Sabah and Sarawak must be sponsored by a Malaysian citizen of Sabah or Sarawak origin;"
+    },
+    {
+      "requirement_code": "custody_order_for_divorcee_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The divorcee, widow or widower route needs a court custody order",
+      "description": "Full or joint custody of the biological child, granted by the relevant court of law. Category 3(iii) does not work on the relationship alone.",
+      "source_role": "requirements",
+      "source_excerpt": "for category 3(iii), divorcee / widow / widower to a malaysian citizen who has been granted a full or joint custody of the biological child by the relevant court of law;",
+      "display_order": 110,
+      "source_excerpt_display": "For Category 3(iii), divorcee / widow / widower to a Malaysian citizen who has been granted a full or joint custody of the biological child by the relevant court of law;"
+    },
+    {
+      "requirement_code": "both_parties_attend_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Both you and your sponsor must attend the immigration office in person",
+      "description": "The sponsor cannot send documents; they must be there when the documents are submitted.",
+      "source_role": "requirements",
+      "source_excerpt": "both sponsor and applicant must be present during submission of documents at the immigration office;",
+      "display_order": 120,
+      "source_excerpt_display": "Both sponsor and applicant MUST be present during submission of documents at the Immigration office;"
+    },
+    {
+      "requirement_code": "foreign_documents_certified_by_mission",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Foreign-issued photocopies must be certified by that country's mission in Malaysia",
+      "description": "Certification by the issuing country's own mission in Malaysia — not a local notary, and not the Malaysian mission abroad.",
+      "source_role": "requirements",
+      "source_excerpt": "all photocopied documents issued by a foreign country must be certified by the corresponding foreign missions in malaysia;",
+      "display_order": 130,
+      "source_excerpt_display": "All photocopied documents issued by a foreign country MUST be certified by the corresponding foreign missions in Malaysia;"
+    },
+    {
+      "requirement_code": "form_imm_16a",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form IMM 16A",
+      "description": "Named for the regulation the pass is issued under.",
+      "source_role": "requirements",
+      "source_excerpt": "form imm 16a.",
+      "display_order": 140,
+      "official_form_code": "IMM 16A",
+      "source_excerpt_display": "Form IMM 16a."
+    },
+    {
+      "requirement_code": "passport_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two passport-sized photographs",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "passport size photo (2 copies).",
+      "display_order": 150,
+      "source_excerpt_display": "Passport size photo (2 copies)."
+    },
+    {
+      "requirement_code": "applicant_passport_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopies of your passport, new and old",
+      "description": "Both — the Department asks for the expired one as well as the current.",
+      "source_role": "requirements",
+      "source_excerpt": "photocopy of applicant’s passport (new and old).",
+      "display_order": 160,
+      "source_excerpt_display": "Photocopy of applicant’s passport (new and old)."
+    },
+    {
+      "requirement_code": "where_to_submit",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Where to apply depends on your category",
+      "description": "Categories 3 and 4 may go to the nearest immigration office or to headquarters in Putrajaya. Category 5 must be submitted with originals AND photocopies.",
+      "source_role": "requirements",
+      "source_excerpt": "for category 3 and category 4, application may be submitted to the nearest immigration office or the immigration headquarters, putrajaya ;",
+      "display_order": 170,
+      "source_excerpt_display": "For Category 3 and Category 4, application may be submitted to the nearest Immigration office or the Immigration Headquarters, Putrajaya;"
+    },
+    {
+      "requirement_code": "category_5_originals_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 5 must bring originals as well as photocopies",
+      "description": "Stated only for former Malaysians.",
+      "source_role": "requirements",
+      "source_excerpt": "applications for category 5 must be submitted with original copies and photocopies of supporting documents to the nearest immigration office or the immigration headquarters, putrajaya;",
+      "display_order": 180,
+      "source_excerpt_display": "Applications for Category 5 must be submitted with original copies and photocopies of supporting documents to the nearest Immigration office or the Immigration Headquarters, Putrajaya;"
+    },
+    {
+      "requirement_code": "fee_rm500_five_years",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "RM 500 for five years",
+      "description": "The Department's own figure. A multiple entry visa is charged separately at rates that vary by country.",
+      "source_role": "requirements",
+      "source_excerpt": "residence pass rm 500.00 for five years.",
+      "display_order": 190,
+      "parameters": {
+        "currency": "MYR",
+        "amount": 500,
+        "validity_years": 5
+      },
+      "source_excerpt_display": "Residence Pass RM 500.00 for five years."
+    },
+    {
+      "requirement_code": "work_study_business_without_converting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass itself lets you work, study and start a business",
+      "description": "No conversion to another pass, subject to the conditions of the relevant regulators. Malaysia's Long-Term Social Visit Pass permits work by endorsement; this permits all three outright.",
+      "source_role": "requirements",
+      "source_excerpt": "residence pass holders are eligible to work, study, and setting up a business without having to convert to another pass, subject to the conditions of other relevant authorities.",
+      "display_order": 200,
+      "source_excerpt_display": "Residence Pass holders are eligible to work, study, and setting up a business without having to convert to another pass, subject to the conditions of other relevant authorities."
+    }
+  ]
+}

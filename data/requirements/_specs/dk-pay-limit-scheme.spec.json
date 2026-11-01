@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-pay-limit-scheme",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text. That tool exists because B-33 shipped four verbatim excerpts of the wrong sentences.",
+  "structure_note": "The pay limit is the whole scheme, and two things about it decide outcomes.\n\nFIRST, WHICH SALARY COUNTS. The authority names exactly three admissible components — liquid assets, labour-market pension contributions, and paid holiday allowance — and then names the benefits that look like salary and are NOT counted: canteen, car, phone, internet, and housing. Publishing the threshold without the exclusion list would let someone add DKK 60,000 of housing to a DKK 500,000 offer and believe they qualify.\n\nSECOND, THE JOB-SEEKING TRAP. Losing the job revokes the permit, and a job-seeking permit must be applied for NO LATER THAN TWO DAYS after employment ends. Two days is short enough that a reader who learns it late has already missed it. Work is forbidden during that period, which is the opposite of what 'job seeking permit' suggests to most readers.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Pay-limit-scheme"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateline. Its body states the 2026 pay limit explicitly ('The minimum amount for 2026 is DKK 552,000') and says the amount is regulated every 1 January, so the figure carries its own year and the next revision is visible as a text change. The daily sync is what will notice it.",
+  "not_extracted": [
+    "The step-by-step application walkthrough (create a case order ID, pay the fee, complete AR1, employer completes their part). It is procedure for using SIRI's portal rather than a requirement of Danish law, and it changes with the portal.",
+    "The document checklists. The page publishes two — a general one and a separate, longer one for employment in hotels and restaurants — and they are extracted for no route in this batch. Publishing one and not the other would imply the hospitality checklist does not exist.",
+    "The rules for accompanying family members, which the authority describes on its own pages and which are a separate route.",
+    "Sideline employment, commuting, and external-examiner work, each of which the page links out to as a separate permit with its own conditions."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "salary_minimum_amount",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Annual salary must meet the pay limit — DKK 552,000 for 2026",
+      "description": "The single defining condition of the scheme, with the year it applies to and the date it is re-set.",
+      "source_role": "requirements",
+      "lines": [
+        38
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "minimum_annual_salary": 552000,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 10
+    },
+    {
+      "requirement_code": "no_education_or_field_requirement",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "No educational background or professional field is required",
+      "description": "What distinguishes this scheme from the Positive Lists, stated by the authority rather than inferred from their absence.",
+      "source_role": "requirements",
+      "lines": [
+        28
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only three salary components count towards the pay limit",
+      "description": "The admissible components, quoted with the sentence that scopes them.",
+      "source_role": "requirements",
+      "lines": [
+        40,
+        46
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Canteen, car, phone, internet and housing do NOT count towards the pay limit",
+      "description": "The exclusion that decides borderline cases. Without it the threshold reads as reachable by adding benefits.",
+      "source_role": "requirements",
+      "lines": [
+        50
+      ],
+      "display_order": 40
+    },
+    {
+      "requirement_code": "unpaid_holiday_and_carried_allowance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Unpaid holiday does not lower the threshold, and holiday allowance counts in the year it is paid",
+      "description": "Two timing rules on the same figure, quoted together because the authority states them together.",
+      "source_role": "requirements",
+      "lines": [
+        48
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "danish_bank_account",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary must be paid into a Danish bank account in your own name",
+      "description": "The account must be in the applicant's own name at a bank legally operating in Denmark.",
+      "source_role": "requirements",
+      "lines": [
+        54
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "bank_account_180_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Danish bank account must be opened within 180 days",
+      "description": "All three cases in one sentence: granted abroad, entering after grant, and already holding a permit valid 180 days or more.",
+      "source_role": "requirements",
+      "lines": [
+        62
+      ],
+      "parameters": {
+        "days_to_open_account": 180,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70
+    },
+    {
+      "requirement_code": "salary_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The offered salary must correspond to Danish standards",
+      "description": "A second, separate salary test: meeting the pay limit does not satisfy it.",
+      "source_role": "requirements",
+      "lines": [
+        68
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "terms_of_employment_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Terms of employment must correspond to Danish standards",
+      "description": "Holiday entitlement and notice periods, assessed by the regional labour market councils where SIRI is in doubt.",
+      "source_role": "requirements",
+      "lines": [
+        88
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "minimum_weekly_hours_30",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working hours must be at least 30 hours a week",
+      "description": "A part-time job at the full salary does not qualify.",
+      "source_role": "requirements",
+      "lines": [
+        96
+      ],
+      "parameters": {
+        "minimum_hours_per_week": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100
+    },
+    {
+      "requirement_code": "no_legal_labour_conflict",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must not be encompassed by a legal labour conflict",
+      "description": "Quoted whole, because the same sentence carries the exception for other jobs at an affected employer.",
+      "source_role": "requirements",
+      "lines": [
+        102
+      ],
+      "display_order": 110
+    },
+    {
+      "requirement_code": "danish_authorisation_where_regulated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Danish authorisation is required for regulated professions",
+      "description": "Applies before the permit can be granted, not after arrival.",
+      "source_role": "requirements",
+      "lines": [
+        106
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "description": "A condition on the MAIN applicant's permit that depends on a family member's history, which is easy to miss.",
+      "source_role": "requirements",
+      "lines": [
+        114
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "description": "Payable before the application is submitted, to cover SIRI's case processing.",
+      "source_role": "requirements",
+      "lines": [
+        21,
+        22
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 140
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "description": "Both figures quoted together, because the one-month figure alone reads as a commitment.",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        19
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "description": "Fourteen days without the declaration. The consequence sits in the same sentence as the condition.",
+      "source_role": "requirements",
+      "lines": [
+        206
+      ],
+      "display_order": 160
+    },
+    {
+      "requirement_code": "duration_employment_four_years_or_more",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Four-year permit where the employment is four years or longer",
+      "source_role": "requirements",
+      "lines": [
+        212
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "duration_under_four_years_with_job_seeking",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Shorter employment gives a permit for its duration, plus an automatic 6-month job-seeking permit",
+      "source_role": "requirements",
+      "lines": [
+        228,
+        230
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "no_work_during_job_seeking_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are not allowed to work during the job-seeking period",
+      "description": "The rule that most contradicts what the permit's name suggests.",
+      "source_role": "requirements",
+      "lines": [
+        232
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "passport_shortens_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 3 months before the passport expires",
+      "description": "A short passport silently shortens the permit.",
+      "source_role": "requirements",
+      "lines": [
+        220
+      ],
+      "parameters": {
+        "months_before_passport_expiry": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200
+    },
+    {
+      "requirement_code": "job_seeking_permit_two_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply for a job-seeking permit no later than two days after employment ends",
+      "description": "The shortest deadline on the page, and the one a reader is most likely to learn too late.",
+      "source_role": "requirements",
+      "lines": [
+        258
+      ],
+      "parameters": {
+        "days_after_employment_ends": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 210
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "description": "Stated plainly by the authority; the six-month job-seeking permit is the remedy, not an automatic continuation.",
+      "source_role": "requirements",
+      "lines": [
+        254
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "lines": [
+        160
+      ],
+      "display_order": 230
+    },
+    {
+      "requirement_code": "absence_six_months_lapses_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Giving up your Danish address or staying abroad over 6 successive months lapses the permit",
+      "source_role": "requirements",
+      "lines": [
+        152
+      ],
+      "parameters": {
+        "max_successive_months_abroad": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240
+    },
+    {
+      "requirement_code": "no_work_in_other_schengen_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit does not allow work in other Schengen countries",
+      "source_role": "requirements",
+      "lines": [
+        150
+      ],
+      "display_order": 250
+    },
+    {
+      "requirement_code": "sideline_employment_needs_separate_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sideline job requires a separate permit",
+      "source_role": "requirements",
+      "lines": [
+        138
+      ],
+      "display_order": 260
+    },
+    {
+      "requirement_code": "employment_agreement_with_danish_registered_company",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "As a general rule the employer must be a company registered in Denmark",
+      "description": "Quoted with the exception the authority states in the same sentence.",
+      "source_role": "requirements",
+      "lines": [
+        288
+      ],
+      "display_order": 270
+    }
+  ]
+}

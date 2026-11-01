@@ -1,0 +1,17 @@
+{
+  "$comment": "VisaAI test-agent registry. Local role definitions mapping each agent to a test domain + targets. NOT an external dependency — no framework is cloned/installed. Orchestration (future) runs each domain's existing runner (Jest/Playwright/k6) and aggregates into reports/agent-test-report.{json,md}.",
+  "version": 1,
+  "stack": { "api": "NestJS", "web": "Next.js 15", "extension": "Chrome MV3", "db": "Supabase", "queue": "Upstash Redis + BullMQ", "ai": "LangGraph JS + OpenAI", "fastapi": false, "python": false },
+  "agents": [
+    { "role": "backend-architect", "domain": "integration+schema", "targets": ["di-graph", "module boot", "migrations", "RLS shape"], "runner": "jest" },
+    { "role": "qa-testing-engineer", "domain": "unit", "targets": ["services", "value_hash", "guards", "readback-engine", "write-intent-signer"], "runner": "jest" },
+    { "role": "api-tester", "domain": "contract+rbac", "targets": ["controllers", "DTO validation", "@RequireRole", "OwnerOrAdminGuard"], "runner": "jest" },
+    { "role": "integration-tester", "domain": "lifecycle", "targets": ["intake->documents->verification->preflight->eligibility->execution"], "runner": "jest" },
+    { "role": "ai-engineer", "domain": "ai-correctness", "targets": ["visa-pipeline", "intake/vri/narrative/prefill graphs"], "runner": "jest", "validation": "structure+constraints, never exact text" },
+    { "role": "prompt-agent-evaluator", "domain": "ai-adversarial", "targets": ["prompt injection", "hallucination", "multi-agent consistency", "boundary inputs"], "runner": "jest" },
+    { "role": "security-auditor", "domain": "security", "targets": ["env-leak scan", "RLS bypass", "JWT tamper", "rate limit", "doc-borne prompt injection"], "runner": "jest+script" },
+    { "role": "devops-automator", "domain": "ci+load", "targets": ["GitHub Actions", "execution choke concurrency", "BullMQ throughput"], "runner": "actions+k6" },
+    { "role": "system-test-architect", "domain": "orchestration", "targets": ["coverage aggregation", "gap/contradiction detection", "unified report"], "runner": "node" }
+  ],
+  "reports": ["reports/agent-test-report.json", "reports/agent-test-report.md"]
+}

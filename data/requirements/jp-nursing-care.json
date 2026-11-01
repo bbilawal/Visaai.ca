@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-nursing-care",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "A QUALIFICATION-GATED STATUS. The status requires the Japanese 介護福祉士 (Certified Care Worker) qualification itself — not equivalent experience, not a foreign credential. What changed on 1 April 2020 is that the ROUTE by which the qualification was obtained stopped mattering, which widened the status considerably without widening the qualification requirement.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/nursingcare.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: a holder of the Certified Care Worker qualification providing care or care instruction under a contract with a Japanese public or private body",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "本邦の公私の機関との契約に基づいて介護福祉士の資格を有する者が介護又は介護の指導を行う業務に従事する活動。",
+      "source_excerpt_display": "本邦の公私の機関との契約に基づいて介護福祉士の資格を有する者が介護又は介護の指導を行う業務に従事する活動。"
+    },
+    {
+      "requirement_code": "examples",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: certified care workers",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、介護福祉士。",
+      "source_excerpt_display": "該当例としては、介護福祉士。"
+    },
+    {
+      "requirement_code": "route_to_the_qualification_no_longer_matters",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Since 1 April 2020 the status is granted regardless of the route by which the Certified Care Worker qualification was obtained",
+      "description": "A widening, recorded because someone who qualified by a route that was previously excluded may not know the bar has moved.",
+      "parameters": {
+        "changed_on": "2020-04-01"
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "令和２年４月１日に在留資格「介護」の上陸基準省令が改正され、介護福祉士の資格を取得したルートにかかわらず、在留資格「介護」が認められることとなりました。",
+      "source_excerpt_display": "令和２年４月１日に在留資格「介護」の上陸基準省令が改正され、介護福祉士の資格を取得したルートにかかわらず、在留資格「介護」が認められることとなりました。"
+    },
+    {
+      "requirement_code": "period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: 5 years, 3 years, 1 year or 3 months",
+      "parameters": {
+        "period_options": [
+          "5 years",
+          "3 years",
+          "1 year",
+          "3 months"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "在留期間 ５年、３年、１年又は３月",
+      "source_excerpt_display": "在留期間 ５年、３年、１年又は３月"
+    }
+  ]
+}

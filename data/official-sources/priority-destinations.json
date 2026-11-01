@@ -1,0 +1,1953 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-08-20",
+  "generator": "manual verification against official government sources",
+  "verification_policy": "Every URL in this file was fetched during the 2026-08-20 session. Only government-owned domains are cited. Fields that could not be verified are null and are listed in could_not_verify.",
+  "visaai_supported_visa_types": [
+    "visitor",
+    "tourist",
+    "digital_nomad",
+    "open_work_permit",
+    "student",
+    "work_permit",
+    "citizenship",
+    "family_sponsorship",
+    "permanent_residency",
+    "express_entry",
+    "business",
+    "startup",
+    "investor",
+    "refugee_humanitarian"
+  ],
+  "visaai_supported_visa_types_source": "supabase/migrations/20260616000000_pricing_engine.sql (pricing_visa_tiers seed)",
+  "destinations": [
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "authorities": {
+        "immigration_authority": {
+          "official_name": "Immigration, Refugees and Citizenship Canada",
+          "abbreviation": "IRCC",
+          "root_url": "https://www.canada.ca/en/immigration-refugees-citizenship.html",
+          "verified": true
+        },
+        "foreign_affairs_authority": {
+          "official_name": null,
+          "abbreviation": null,
+          "root_url": null,
+          "verified": false,
+          "note": "Global Affairs Canada was not fetched in this session; visa issuance is administered by IRCC, so no separate consular authority URL is recorded."
+        }
+      },
+      "portals": {
+        "evisa_or_travel_authorisation_portal": {
+          "name": "Electronic travel authorization (eTA)",
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta.html",
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html",
+          "verified": true
+        },
+        "visa_options_index_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/come-canada-tool.html",
+        "secondary_index_urls": [
+          "https://www.canada.ca/en/services/immigration-citizenship.html",
+          "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html",
+          "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html",
+          "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html",
+          "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada.html"
+        ],
+        "eligibility_self_check_tool_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/check-visa-eta.html",
+        "forms_index_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides.html",
+        "fees_index_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "online_account_portal_url": null
+      },
+      "visa_types": [
+        {
+          "visaai_category": "visitor",
+          "official_name": "Visitor visa (temporary resident visa)",
+          "official_code": "TRV",
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/visitor-visa.html",
+          "eligibility_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eligibility.html",
+          "document_checklist_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5484.html",
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "additional_urls": [
+            "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/about-visitor-visa.html"
+          ],
+          "forms": [
+            {
+              "identifier": "IMM 5257",
+              "official_name": "Application for visitor visa (temporary resident visa)",
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html"
+            }
+          ],
+          "application_method": "both",
+          "application_method_note": "Read on the official 'How to apply for a visitor visa' page: 'To apply online, you need a scanner or camera to create electronic copies of your documents, and a valid credit or debit card.' and a section headed 'Applying on paper for specific situations'.",
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "tourist",
+          "official_name": "Electronic travel authorization (eTA)",
+          "official_code": "eTA",
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta.html",
+          "eligibility_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "document_checklist_url": null,
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html",
+          "additional_urls": [
+            "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/facts.html"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": "No plain statement of application method was read on the official eTA 'How to apply' page in this session.",
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": "Visa-exempt air travellers require an eTA rather than a visitor visa; use the official eligibility checker at https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/check-visa-eta.html"
+        },
+        {
+          "visaai_category": "student",
+          "official_name": "Study permit",
+          "official_code": null,
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit.html",
+          "eligibility_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/eligibility.html",
+          "document_checklist_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/get-documents.html",
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/apply.html",
+          "additional_urls": [
+            "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html"
+          ],
+          "forms": [
+            {
+              "identifier": "IMM 1294",
+              "official_name": "Application for a Study Permit Made Outside of Canada",
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1294.html"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official 'Study permit: How to apply' page: 'If you’re applying for a study permit, you must apply online, whether you’re outside of Canada or already in Canada.' The same page also says 'If you need to apply on paper, use another courier to send us your application.'",
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "work_permit",
+          "official_name": "Work permit",
+          "official_code": null,
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html",
+          "additional_urls": [],
+          "forms": [
+            {
+              "identifier": "IMM 1295",
+              "official_name": "Application for a Work Permit Made Outside of Canada",
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html"
+            }
+          ],
+          "application_method": null,
+          "application_method_note": "No plain statement of application method was read on the official work permit pages in this session.",
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": "The path .../work-canada/permit.html redirects to .../work-canada.html; the hub distinguishes 'Employer-specific work permit' and 'Open work permit' but those sub-pages were not fetched in this session."
+        },
+        {
+          "visaai_category": "family_sponsorship",
+          "official_name": "Sponsor your spouse, partner or child",
+          "official_code": null,
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children.html",
+          "eligibility_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/eligibility.html",
+          "document_checklist_url": null,
+          "apply_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/apply.html",
+          "additional_urls": [
+            "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship.html"
+          ],
+          "forms": [
+            {
+              "identifier": "IMM 1344",
+              "official_name": "Application to Sponsor, Sponsorship Agreement and Undertaking",
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1344.html"
+            }
+          ],
+          "application_method": null,
+          "application_method_note": "No plain statement of application method was read on the official sponsorship 'How to apply' page in this session.",
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "express_entry",
+          "official_name": "Express Entry",
+          "official_code": null,
+          "landing_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html",
+          "eligibility_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/works.html",
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada.html"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "fees_read": [],
+          "notes": "Permanent-residence stream for skilled workers; matches VisaAI's 'express_entry' and 'permanent_residency' tiers."
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Business visitors",
+          "official_code": null,
+          "landing_url": null,
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": null,
+          "fees_read": [],
+          "notes": "Listed on the official Visit Canada hub as 'Business visitors: meetings, conferences and trade shows'; the dedicated page was not fetched in this session, so no URL is recorded."
+        }
+      ],
+      "provenance": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship.html",
+          "title": "Immigration, Refugees and Citizenship Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/services/immigration-citizenship.html",
+          "title": "Immigration and citizenship - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/come-canada-tool.html",
+          "title": "Do you want to come to Canada, or extend your stay? - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html",
+          "title": "Visit Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/check-visa-eta.html",
+          "title": "Check if you need a visa or eTA to travel to Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta.html",
+          "title": "Electronic travel authorization (eTA) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "title": "Electronic travel authorization (eTA): Who can apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html",
+          "title": "Electronic travel authorization (eTA): How to apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/facts.html",
+          "title": "Find out about electronic travel authorization (eTA) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/visitor-visa.html",
+          "title": "Visitor visa (temporary resident visa) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/about-visitor-visa.html",
+          "title": "Visitor visa: About the document - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eligibility.html",
+          "title": "Eligibility to apply for a visitor visa - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "title": "How to apply for a visitor visa - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html",
+          "title": "Application for visitor visa (temporary resident visa) (IMM 5257) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5484.html",
+          "title": "Document Checklist: Temporary Resident Visa (Visitor Visa) outside of Canada (IMM 5484) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides.html",
+          "title": "Find IRCC application forms and instructions - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+          "title": "Citizenship and immigration application fees: Fee list",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html",
+          "title": "Study in Canada as an international student - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit.html",
+          "title": "Study permit - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/eligibility.html",
+          "title": "Study permit: Who can apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/get-documents.html",
+          "title": "Study permit: Get the right documents - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/apply.html",
+          "title": "Study permit: How to apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1294.html",
+          "title": "Application for a Study Permit Made Outside of Canada (IMM 1294) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html",
+          "title": "Work in Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html",
+          "title": "Work permit application from outside Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html",
+          "title": "Application for a Work Permit Made Outside of Canada (IMM 1295) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship.html",
+          "title": "Sponsor your family members to immigrate to Canada - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children.html",
+          "title": "Sponsor your spouse, partner or child - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/eligibility.html",
+          "title": "Sponsor your spouse, partner or child: Check if you’re eligible - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/apply.html",
+          "title": "Sponsor your spouse, partner or child: How to apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1344.html",
+          "title": "Application to Sponsor, Sponsorship Agreement and Undertaking (IMM 1344) - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada.html",
+          "title": "Live in Canada permanently - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html",
+          "title": "Immigrate through Express Entry - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/works.html",
+          "title": "Express Entry: Who can apply - Canada.ca",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "country_code": "US",
+      "country_name": "United States of America",
+      "authorities": {
+        "immigration_authority": {
+          "official_name": "U.S. Citizenship and Immigration Services",
+          "abbreviation": "USCIS",
+          "root_url": "https://www.uscis.gov/",
+          "verified": true,
+          "note": "USCIS (Department of Homeland Security) adjudicates petitions and in-country status; U.S. Customs and Border Protection (CBP) operates ESTA."
+        },
+        "foreign_affairs_authority": {
+          "official_name": "U.S. Department of State — Bureau of Consular Affairs",
+          "abbreviation": "DOS/CA",
+          "root_url": "https://travel.state.gov/content/travel/en/us-visas.html",
+          "verified": true,
+          "note": "Root recorded is the official U.S. Visas section of travel.state.gov (title 'U.S. Visas'); the state.gov bureau landing page returned HTTP 404 when probed in this session."
+        }
+      },
+      "portals": {
+        "evisa_or_travel_authorisation_portal": {
+          "name": "Electronic System for Travel Authorization (ESTA)",
+          "url": "https://esta.cbp.dhs.gov/",
+          "apply_url": "https://esta.cbp.dhs.gov/",
+          "verified": true
+        },
+        "visa_options_index_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html",
+        "secondary_index_urls": [
+          "https://travel.state.gov/content/travel/en/us-visas.html",
+          "https://travel.state.gov/content/travel/en/us-visas/tourism-visit.html",
+          "https://travel.state.gov/content/travel/en/us-visas/study.html",
+          "https://travel.state.gov/content/travel/en/us-visas/employment.html",
+          "https://travel.state.gov/content/travel/en/us-visas/immigrate.html",
+          "https://www.uscis.gov/working-in-the-united-states",
+          "https://www.uscis.gov/family/family-of-us-citizens"
+        ],
+        "eligibility_self_check_tool_url": null,
+        "forms_index_url": "https://www.uscis.gov/forms/all-forms",
+        "fees_index_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+        "online_account_portal_url": "https://ceac.state.gov/genniv/"
+      },
+      "visa_types": [
+        {
+          "visaai_category": "visitor",
+          "official_name": "Visitor Visa (B-1 business / B-2 tourism)",
+          "official_code": "B-1/B-2",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+          "document_checklist_url": null,
+          "apply_url": "https://ceac.state.gov/genniv/",
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/tourism-visit.html",
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [
+            {
+              "identifier": "DS-160",
+              "official_name": "Online Nonimmigrant Visa Application",
+              "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official page: 'Complete the Online Visa Application — Online Nonimmigrant Visa Application, Form DS-160'.",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "The official Directory of Visa Categories lists 'Business visitor ~ B-1' and 'Tourism, vacation, pleasure visitor ~ B-2' as separate rows sharing one landing page."
+        },
+        {
+          "visaai_category": "business",
+          "official_name": "Business visitor",
+          "official_code": "B-1",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+          "document_checklist_url": null,
+          "apply_url": "https://ceac.state.gov/genniv/",
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [
+            {
+              "identifier": "DS-160",
+              "official_name": "Online Nonimmigrant Visa Application",
+              "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official page: 'Complete the Online Visa Application — Online Nonimmigrant Visa Application, Form DS-160'.",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "tourist",
+          "official_name": "Visa Waiver Program / ESTA",
+          "official_code": "VWP",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html",
+          "document_checklist_url": null,
+          "apply_url": "https://esta.cbp.dhs.gov/",
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": "No plain statement of application method was read on the official VWP page in this session.",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "ESTA is the official CBP travel-authorisation portal for VWP nationals; it is an authorisation, not a visa."
+        },
+        {
+          "visaai_category": "student",
+          "official_name": "Student Visa (academic F, vocational M)",
+          "official_code": "F-1/M-1",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html",
+          "document_checklist_url": null,
+          "apply_url": "https://ceac.state.gov/genniv/",
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/study.html",
+            "https://studyinthestates.dhs.gov/",
+            "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment"
+          ],
+          "forms": [
+            {
+              "identifier": "DS-160",
+              "official_name": "Online Nonimmigrant Visa Application",
+              "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html"
+            },
+            {
+              "identifier": "I-20",
+              "official_name": "Certificate of Eligibility for Nonimmigrant Student Status (issued by the SEVP-certified school)",
+              "url": null
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official page: 'Complete the Online Visa Application — Online Nonimmigrant Visa Application, Form DS-160'.",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "The official Student Visa page names F-1, M-1, SEVIS, Form I-20 and Form DS-160. No official uscis.gov page for Form I-20 was verified (https://www.uscis.gov/i-20 returned HTTP 404)."
+        },
+        {
+          "visaai_category": "work_permit",
+          "official_name": "Temporary Worker Visas",
+          "official_code": "H-1B, H-2A, H-2B, P-1, Q-1 (as listed on the official page)",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html",
+          "document_checklist_url": null,
+          "apply_url": "https://ceac.state.gov/genniv/",
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/employment.html",
+            "https://www.uscis.gov/working-in-the-united-states",
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [
+            {
+              "identifier": "Form I-129",
+              "official_name": "Petition for a Nonimmigrant Worker",
+              "url": "https://www.uscis.gov/i-129"
+            },
+            {
+              "identifier": "DS-160",
+              "official_name": "Online Nonimmigrant Visa Application",
+              "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html"
+            },
+            {
+              "identifier": "Form I-765",
+              "official_name": "Application for Employment Authorization",
+              "url": "https://www.uscis.gov/i-765"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official page: 'Complete the Online Visa Application — Online Nonimmigrant Visa Application, Form DS-160'. A USCIS petition (Form I-129) is filed by the employer before the visa application.",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "The Directory of Visa Categories lists 'Specialty occupations in fields requiring highly specialized knowledge ~ H-1B ~ DOL then USCIS'. No dedicated official H-1B landing page URL was verified on travel.state.gov or uscis.gov in this session."
+        },
+        {
+          "visaai_category": "family_sponsorship",
+          "official_name": "Family Immigration (Immediate Relative and Family Preference immigrant visas)",
+          "official_code": "IR1, CR1, F1, F2A, F2B, F3, F4 (as listed on the official Directory of Visa Categories)",
+          "landing_url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/family-immigration.html",
+          "eligibility_url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition.html",
+          "document_checklist_url": null,
+          "apply_url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing.html",
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/immigrate.html",
+            "https://www.uscis.gov/family/family-of-us-citizens",
+            "https://www.uscis.gov/family/family-of-us-citizens/bringing-spouses-to-live-in-the-united-states-as-permanent-residents",
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [
+            {
+              "identifier": "Form I-130",
+              "official_name": "Petition for Alien Relative",
+              "url": "https://www.uscis.gov/i-130"
+            },
+            {
+              "identifier": "DS-260",
+              "official_name": "Immigrant Visa Electronic Application",
+              "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/online-immigrant-visa-forms/ds-260-faqs.html"
+            },
+            {
+              "identifier": "Form I-485",
+              "official_name": "Application to Register Permanent Residence or Adjust Status",
+              "url": "https://www.uscis.gov/i-485"
+            }
+          ],
+          "application_method": "both",
+          "application_method_note": "Read on the official 'Submit a Petition' page: 'This can be done either electronically or through the traditional paper process through the mail.'",
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Exchange visitor",
+          "official_code": "J",
+          "landing_url": null,
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "High-volume category listed on the official Directory of Visa Categories ('Exchange visitor ~ J ~ SEVIS') that VisaAI has no matching visa_type for. Dedicated landing page not fetched in this session."
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Treaty trader/treaty investor",
+          "official_code": "E",
+          "landing_url": null,
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "Listed on the official Directory of Visa Categories; maps loosely to VisaAI's 'investor'/'business' tiers. Dedicated landing page not fetched in this session."
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Transiting the United States",
+          "official_code": "C",
+          "landing_url": null,
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "fees_read": [],
+          "notes": "Listed on the official Directory of Visa Categories; VisaAI has no transit visa_type."
+        }
+      ],
+      "provenance": [
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas.html",
+          "title": "U.S. Visas",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html",
+          "title": "Directory of Visa Categories",
+          "language": "en-US",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/",
+          "title": null,
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+          "title": "Visitor Visa",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html",
+          "title": "Visa Waiver Program",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit.html",
+          "title": "Tourism & Visit",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html",
+          "title": "Student Visa",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/study.html",
+          "title": "Study & Exchange",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html",
+          "title": "Temporary Worker Visas",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/employment.html",
+          "title": "Employment",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/family-immigration.html",
+          "title": "Family Immigration",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/immigrate.html",
+          "title": "Immigrate",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition.html",
+          "title": "Submit a Petition",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing.html",
+          "title": "NVC Processing",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
+          "title": "Fees for Visa Services",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html",
+          "title": "DS-160: Online Nonimmigrant Visa Application",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/online-immigrant-visa-forms/ds-260-faqs.html",
+          "title": "DS-260 Immigrant Visa Electronic Application - Frequently Asked Questions",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://ceac.state.gov/genniv/",
+          "title": "Nonimmigrant Visa - Instructions Page",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://esta.cbp.dhs.gov/",
+          "title": "Official ESTA Application Website, U.S. Customs and Border Protection",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/i-129",
+          "title": "Petition for a Nonimmigrant Worker | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/i-130",
+          "title": "Petition for Alien Relative | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/i-485",
+          "title": "Application to Register Permanent Residence or Adjust Status | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/i-539",
+          "title": "Application to Extend/Change Nonimmigrant Status | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/i-765",
+          "title": "Application for Employment Authorization | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/g-1055",
+          "title": "Fee Schedule | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/forms/all-forms",
+          "title": "All Forms | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/working-in-the-united-states",
+          "title": "Working in the United States | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/family/family-of-us-citizens",
+          "title": "Family of U.S. Citizens | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/family/family-of-us-citizens/bringing-spouses-to-live-in-the-united-states-as-permanent-residents",
+          "title": "Bringing Spouses to Live in the United States as Permanent Residents | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://studyinthestates.dhs.gov/",
+          "title": "Homepage | Study in the States",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment",
+          "title": "Students and Employment | USCIS",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "country_code": "GB",
+      "country_name": "United Kingdom",
+      "authorities": {
+        "immigration_authority": {
+          "official_name": "UK Visas and Immigration",
+          "abbreviation": "UKVI",
+          "root_url": "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
+          "verified": true,
+          "note": "UKVI is part of the Home Office (https://www.gov.uk/government/organisations/home-office)."
+        },
+        "foreign_affairs_authority": {
+          "official_name": "Foreign, Commonwealth & Development Office",
+          "abbreviation": "FCDO",
+          "root_url": "https://www.gov.uk/government/organisations/foreign-commonwealth-development-office",
+          "verified": true,
+          "note": "FCDO does not administer UK visas; UKVI/Home Office does. Recorded for completeness only."
+        }
+      },
+      "portals": {
+        "evisa_or_travel_authorisation_portal": {
+          "name": "Electronic travel authorisation (ETA)",
+          "url": "https://www.gov.uk/eta",
+          "apply_url": "https://www.gov.uk/eta/apply",
+          "verified": true
+        },
+        "visa_options_index_url": "https://www.gov.uk/browse/visas-immigration",
+        "secondary_index_urls": [
+          "https://www.gov.uk/browse/visas-immigration/tourist-short-stay-visas",
+          "https://www.gov.uk/browse/visas-immigration/work-visas",
+          "https://www.gov.uk/browse/visas-immigration/student-visas",
+          "https://www.gov.uk/browse/visas-immigration/family-visas",
+          "https://www.gov.uk/apply-to-come-to-the-uk"
+        ],
+        "eligibility_self_check_tool_url": "https://www.gov.uk/check-uk-visa",
+        "forms_index_url": null,
+        "fees_index_url": "https://www.gov.uk/government/publications/visa-regulations-revised-table",
+        "online_account_portal_url": "https://visas-immigration.service.gov.uk/product/uk-visit-visa"
+      },
+      "visa_types": [
+        {
+          "visaai_category": "visitor",
+          "official_name": "Standard Visitor visa",
+          "official_code": null,
+          "landing_url": "https://www.gov.uk/standard-visitor",
+          "eligibility_url": "https://www.gov.uk/standard-visitor",
+          "document_checklist_url": null,
+          "apply_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "additional_urls": [
+            "https://www.gov.uk/standard-visitor/extend-your-stay",
+            "https://www.gov.uk/browse/visas-immigration/tourist-short-stay-visas"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application on the UKVI visa service (no paper form identifier is published on the official guide)",
+              "url": "https://visas-immigration.service.gov.uk/product/uk-visit-visa"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official 'Apply for a Standard Visitor visa' page: 'If you need a Standard Visitor visa, you must apply online before you travel to the UK and attend an appointment at a visa application centre.'",
+          "fee_page_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "fees_read": [
+            {
+              "item": "Standard Visitor visa",
+              "amount": 135,
+              "currency": "GBP",
+              "max_stay": "6 months",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            },
+            {
+              "item": "Standard Visitor visa for medical reasons",
+              "amount": 234,
+              "currency": "GBP",
+              "max_stay": "11 months",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            },
+            {
+              "item": "Standard Visitor visa for academics",
+              "amount": 234,
+              "currency": "GBP",
+              "max_stay": "12 months",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            },
+            {
+              "item": "2 year long-term Standard Visitor visa",
+              "amount": 506,
+              "currency": "GBP",
+              "max_stay": "6 months per visit",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            },
+            {
+              "item": "5 year long-term Standard Visitor visa",
+              "amount": 903,
+              "currency": "GBP",
+              "max_stay": "6 months per visit",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            },
+            {
+              "item": "10 year long-term Standard Visitor visa",
+              "amount": 1128,
+              "currency": "GBP",
+              "max_stay": "6 months per visit",
+              "source_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+              "date_read": "2026-08-20"
+            }
+          ],
+          "notes": "The official Standard Visitor guide has no separate 'eligibility' or 'documents you must provide' part; eligibility is on the Overview page."
+        },
+        {
+          "visaai_category": "business",
+          "official_name": "Standard Visitor visa — Visit on business",
+          "official_code": null,
+          "landing_url": "https://www.gov.uk/standard-visitor/visit-on-business",
+          "eligibility_url": "https://www.gov.uk/standard-visitor/visit-on-business",
+          "document_checklist_url": null,
+          "apply_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "additional_urls": [
+            "https://www.gov.uk/standard-visitor"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application on the UKVI visa service",
+              "url": "https://visas-immigration.service.gov.uk/product/uk-visit-visa"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Same official statement as the Standard Visitor visa: 'you must apply online before you travel to the UK'.",
+          "fee_page_url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "fees_read": [],
+          "notes": "The UK does not publish a separate 'business visa'; business visits are a part of the Standard Visitor route."
+        },
+        {
+          "visaai_category": "tourist",
+          "official_name": "Electronic travel authorisation (ETA)",
+          "official_code": "ETA",
+          "landing_url": "https://www.gov.uk/eta",
+          "eligibility_url": "https://www.gov.uk/eta/when-not-need-eta",
+          "document_checklist_url": null,
+          "apply_url": "https://www.gov.uk/eta/apply",
+          "additional_urls": [],
+          "forms": [],
+          "application_method": "online",
+          "application_method_note": "Read on the official 'Apply for an ETA' page: 'It costs £20 to apply online or through the UK ETA app.'",
+          "fee_page_url": "https://www.gov.uk/eta/apply",
+          "fees_read": [
+            {
+              "item": "Electronic travel authorisation (ETA)",
+              "amount": 20,
+              "currency": "GBP",
+              "max_stay": null,
+              "source_url": "https://www.gov.uk/eta/apply",
+              "date_read": "2026-08-20"
+            }
+          ],
+          "notes": "An ETA is a travel authorisation, not a visa."
+        },
+        {
+          "visaai_category": "student",
+          "official_name": "Student visa",
+          "official_code": null,
+          "landing_url": "https://www.gov.uk/student-visa",
+          "eligibility_url": "https://www.gov.uk/student-visa/course",
+          "document_checklist_url": "https://www.gov.uk/student-visa/documents-you-must-provide",
+          "apply_url": "https://www.gov.uk/student-visa/apply-online",
+          "additional_urls": [
+            "https://www.gov.uk/browse/visas-immigration/student-visas"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application on the UKVI visa service",
+              "url": null
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official 'Apply online' page: 'You must apply online for a Student visa.'",
+          "fee_page_url": "https://www.gov.uk/government/publications/visa-regulations-revised-table",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "work_permit",
+          "official_name": "Skilled Worker visa",
+          "official_code": null,
+          "landing_url": "https://www.gov.uk/skilled-worker-visa",
+          "eligibility_url": "https://www.gov.uk/skilled-worker-visa/your-job",
+          "document_checklist_url": "https://www.gov.uk/skilled-worker-visa/documents-you-must-provide",
+          "apply_url": "https://www.gov.uk/skilled-worker-visa/apply-from-outside-the-uk",
+          "additional_urls": [
+            "https://www.gov.uk/browse/visas-immigration/work-visas"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application on the UKVI visa service; requires a certificate of sponsorship from a licensed sponsor",
+              "url": null
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official Skilled Worker visa Overview page: 'How to apply — You must apply online.'",
+          "fee_page_url": "https://www.gov.uk/skilled-worker-visa/how-much-it-costs",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "family_sponsorship",
+          "official_name": "Family visas: apply, extend or switch — Apply as a partner or spouse",
+          "official_code": null,
+          "landing_url": "https://www.gov.uk/uk-family-visa",
+          "eligibility_url": "https://www.gov.uk/uk-family-visa/partner-spouse",
+          "document_checklist_url": "https://www.gov.uk/uk-family-visa/provide-information",
+          "apply_url": "https://www.gov.uk/uk-family-visa/partner-spouse",
+          "additional_urls": [
+            "https://www.gov.uk/uk-family-visa/proof-income-partner",
+            "https://www.gov.uk/browse/visas-immigration/family-visas"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application on the UKVI visa service",
+              "url": null
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official 'Apply as a partner or spouse' page: 'Outside the UK — You must apply online from outside the UK.' and 'In the UK — You must apply online in the UK.'",
+          "fee_page_url": "https://www.gov.uk/government/publications/visa-regulations-revised-table",
+          "fees_read": [],
+          "notes": "The official family visa guide also covers parent, child, adult dependent relative and private life routes."
+        }
+      ],
+      "provenance": [
+        {
+          "url": "https://www.gov.uk/government/organisations/uk-visas-and-immigration",
+          "title": "UK Visas and Immigration - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/government/organisations/home-office",
+          "title": "Home Office - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/government/organisations/foreign-commonwealth-development-office",
+          "title": "Foreign, Commonwealth & Development Office - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/browse/visas-immigration",
+          "title": "Visas and immigration",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/check-uk-visa",
+          "title": "Check if you need a UK visa - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/apply-to-come-to-the-uk",
+          "title": "How to apply for a visa to come to the UK: Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/find-a-visa-application-centre",
+          "title": "Find a visa application centre - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/browse/visas-immigration/tourist-short-stay-visas",
+          "title": "Visit the UK - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/browse/visas-immigration/work-visas",
+          "title": "Work in the UK - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/browse/visas-immigration/student-visas",
+          "title": "Study in the UK - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/browse/visas-immigration/family-visas",
+          "title": "Family in the UK - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/eta",
+          "title": "Get an electronic travel authorisation (ETA) to visit the UK: Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/eta/apply",
+          "title": "Get an electronic travel authorisation (ETA) to visit the UK: Apply for an ETA - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/eta/when-not-need-eta",
+          "title": "Get an electronic travel authorisation (ETA) to visit the UK: When you do not need an ETA - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/standard-visitor",
+          "title": "Visit the UK as a Standard Visitor: Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "title": "Visit the UK as a Standard Visitor: Apply for a Standard Visitor visa - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/standard-visitor/visit-on-business",
+          "title": "Visit the UK as a Standard Visitor: Visit on business - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/standard-visitor/extend-your-stay",
+          "title": "Visit the UK as a Standard Visitor: When you can extend your stay - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/student-visa",
+          "title": "Student visa : Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/student-visa/course",
+          "title": "Student visa : Your course - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/student-visa/documents-you-must-provide",
+          "title": "Student visa : Documents you'll need to apply - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/student-visa/apply-online",
+          "title": "Student visa : Apply online - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/skilled-worker-visa",
+          "title": "Skilled Worker visa: Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/skilled-worker-visa/your-job",
+          "title": "Skilled Worker visa: Your job - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/skilled-worker-visa/documents-you-must-provide",
+          "title": "Skilled Worker visa: Documents you'll need to apply - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/skilled-worker-visa/how-much-it-costs",
+          "title": "Skilled Worker visa: How much it costs - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/skilled-worker-visa/apply-from-outside-the-uk",
+          "title": "Skilled Worker visa: Apply from outside the UK - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/uk-family-visa",
+          "title": "Family visas: apply, extend or switch: Overview - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/uk-family-visa/partner-spouse",
+          "title": "Family visas: apply, extend or switch: Apply as a partner or spouse - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/uk-family-visa/proof-income-partner",
+          "title": "Family visas: apply, extend or switch: Financial requirements if you’re applying as a partner or spouse - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/uk-family-visa/provide-information",
+          "title": "Family visas: apply, extend or switch: Information and evidence you must provide - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/government/publications/visa-regulations-revised-table",
+          "title": "UK visa fees - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://visas-immigration.service.gov.uk/product/uk-visit-visa",
+          "title": "Select your language",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://www.gov.uk/biometric-residence-permits",
+          "title": "Biometric residence permits (BRPs) - GOV.UK",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "country_code": "AU",
+      "country_name": "Australia",
+      "authorities": {
+        "immigration_authority": {
+          "official_name": "Department of Home Affairs",
+          "abbreviation": "Home Affairs",
+          "root_url": "https://www.homeaffairs.gov.au/about-us/our-portfolios/immigration-and-citizenship",
+          "verified": true,
+          "note": "Visa content is published on the department's immigration site https://immi.homeaffairs.gov.au/visas."
+        },
+        "foreign_affairs_authority": {
+          "official_name": "Department of Foreign Affairs and Trade",
+          "abbreviation": "DFAT",
+          "root_url": null,
+          "verified": false,
+          "note": "https://www.dfat.gov.au/ could not be fetched from this environment (HTTP/2 stream reset, no status returned). DFAT does not administer Australian visas."
+        }
+      },
+      "portals": {
+        "evisa_or_travel_authorisation_portal": {
+          "name": "Electronic Travel Authority (subclass 601)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601",
+          "apply_url": null,
+          "verified": true,
+          "note": "The official subclass 601 page states an app-based path; the Australian ETA app store link was not fetched in this session."
+        },
+        "visa_options_index_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing",
+        "secondary_index_urls": [
+          "https://immi.homeaffairs.gov.au/visas",
+          "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder"
+        ],
+        "eligibility_self_check_tool_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder",
+        "forms_index_url": null,
+        "fees_index_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+        "online_account_portal_url": "https://online.immi.gov.au/lusc/login"
+      },
+      "visa_types": [
+        {
+          "visaai_category": "visitor",
+          "official_name": "Visitor visa (subclass 600)",
+          "official_code": "subclass 600",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
+          "eligibility_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/tourist-stream-overseas",
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/business-visitor-stream"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application lodged through ImmiAccount",
+              "url": "https://online.immi.gov.au/lusc/login"
+            }
+          ],
+          "application_method": "online",
+          "application_method_note": "Read on the official subclass 600 page: 'If you are unable to use the app, you can apply online through ImmiAccount for another visa that suits your needs.'",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "Official streams listed by the department: Tourist stream (applications from overseas), Tourist stream (applications in Australia), Business visitor stream, Sponsored Family stream, Approved Destination Status stream, Frequent Traveller stream."
+        },
+        {
+          "visaai_category": "business",
+          "official_name": "Visitor visa (subclass 600) — Business visitor stream",
+          "official_code": "subclass 600 (Business visitor stream)",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/business-visitor-stream",
+          "eligibility_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/business-visitor-stream",
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600"
+          ],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": "Stream-level 'How to apply' content on immi.homeaffairs.gov.au is rendered client-side and was not readable in this session.",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "tourist",
+          "official_name": "Electronic Travel Authority (subclass 601)",
+          "official_code": "subclass 601",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": "Not read on an official page in this session.",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "Page <title> is 'Subclass 601 Electronic Travel Authority'; the department's own visa index names it 'Electronic Travel Authority (subclass 601)'."
+        },
+        {
+          "visaai_category": "student",
+          "official_name": "Student visa (subclass 500)",
+          "official_code": "subclass 500",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500",
+          "eligibility_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/genuine-student-requirement",
+          "document_checklist_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/disclaimer-for-document-checklist",
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application lodged through ImmiAccount",
+              "url": "https://online.immi.gov.au/lusc/login"
+            }
+          ],
+          "application_method": null,
+          "application_method_note": "Stream-level 'How to apply' content is rendered client-side and was not readable in this session.",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "Page <title> is 'Subclass 500 Student visa'; the department's own visa index names it 'Student visa (subclass 500)'. Sub-pages 'Genuine Student requirement' and 'Disclaimer for Document checklist' come from the department's own navigation data but their HTTP status was not independently confirmed."
+        },
+        {
+          "visaai_category": "work_permit",
+          "official_name": "Skills in Demand visa (subclass 482)",
+          "official_code": "subclass 482",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482",
+          "eligibility_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream",
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/employer-nomination-scheme-186"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application lodged through ImmiAccount",
+              "url": "https://online.immi.gov.au/lusc/login"
+            }
+          ],
+          "application_method": null,
+          "application_method_note": "Stream-level 'How to apply' content is rendered client-side and was not readable in this session.",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "Replaces the former Temporary Skill Shortage visa (subclass 482); .../temporary-skill-shortage-482 redirects to the Skills in Demand URL. Official streams: Core skills stream, Specialist skills stream, Labour agreement stream."
+        },
+        {
+          "visaai_category": "family_sponsorship",
+          "official_name": "Partner visa (apply in Australia) (subclass 820 and 801)",
+          "official_code": "subclass 820/801",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore",
+          "eligibility_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820",
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [
+            "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/permanent-801",
+            "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-offshore"
+          ],
+          "forms": [
+            {
+              "identifier": null,
+              "official_name": "Online application lodged through ImmiAccount",
+              "url": "https://online.immi.gov.au/lusc/login"
+            }
+          ],
+          "application_method": null,
+          "application_method_note": "Stream-level 'How to apply' content is rendered client-side and was not readable in this session.",
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "Offshore equivalent is 'Partner visa (apply overseas) (subclass 309 and 100)'."
+        },
+        {
+          "visaai_category": "permanent_residency",
+          "official_name": "Skilled Independent visa (subclass 189)",
+          "official_code": "subclass 189",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": "investor",
+          "official_name": "Business Innovation and Investment (Provisional) visa (subclass 188)",
+          "official_code": "subclass 188",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": null
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Temporary Graduate visa (subclass 485)",
+          "official_code": "subclass 485",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-graduate-485",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "High-volume post-study work route with no matching VisaAI visa_type (closest is 'open_work_permit')."
+        },
+        {
+          "visaai_category": null,
+          "official_name": "Working Holiday visa (subclass 417)",
+          "official_code": "subclass 417",
+          "landing_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/work-holiday-417",
+          "eligibility_url": null,
+          "document_checklist_url": null,
+          "apply_url": null,
+          "additional_urls": [],
+          "forms": [],
+          "application_method": null,
+          "application_method_note": null,
+          "fee_page_url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "fees_read": [],
+          "notes": "High-volume youth mobility route with no matching VisaAI visa_type."
+        }
+      ],
+      "provenance": [
+        {
+          "url": "https://www.homeaffairs.gov.au/about-us/our-portfolios/immigration-and-citizenship",
+          "title": "Immigration and citizenship",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas",
+          "title": "Explore visa options",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing",
+          "title": "Visa list",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder",
+          "title": "Explore visa options",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing",
+          "title": "Visa fees and charges",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges",
+          "title": "Fees and charges for visa",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://online.immi.gov.au/lusc/login",
+          "title": "ImmiAccount",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
+          "title": "Visitor visa (subclass 600)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/tourist-stream-overseas",
+          "title": null,
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/business-visitor-stream",
+          "title": null,
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601",
+          "title": "Subclass 601 Electronic Travel Authority",
+          "language": "en",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500",
+          "title": "Subclass 500 Student visa",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482",
+          "title": "Skills in Demand visa (subclass 482)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream",
+          "title": null,
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore",
+          "title": "Partner visa (apply in Australia) (subclass 820 and 801)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820",
+          "title": "Subclass 820 Partner visa (temporary)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/permanent-801",
+          "title": null,
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-offshore",
+          "title": "Partner visa (apply overseas) (subclass 309 and 100)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/employer-nomination-scheme-186",
+          "title": "Employer Nomination Scheme (subclass 186) visa",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189",
+          "title": "Skilled Independent visa (subclass 189)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188",
+          "title": "Business Innovation and Investment (Provisional) visa - subclass 188",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-graduate-485",
+          "title": "Temporary Graduate visa - Subclass 485",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        },
+        {
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/work-holiday-417",
+          "title": "Working Holiday visa (subclass 417)",
+          "language": "en-AU",
+          "http_status": 200,
+          "fetched_at": "2026-08-20"
+        }
+      ]
+    }
+  ],
+  "blocked": [
+    {
+      "url": "https://www.canada.ca/*",
+      "method": "WebFetch",
+      "observed_status": 403,
+      "fetch_status": "blocked",
+      "note": "canada.ca is fronted by Akamai and refused WebFetch (HTTP 403) and curl (HTTP/2 INTERNAL_ERROR / timeout). All canada.ca pages in this file were instead verified in a real Chrome browser session, which returned HTTP 200."
+    },
+    {
+      "url": "https://travel.state.gov/*",
+      "method": "WebFetch and curl",
+      "observed_status": 403,
+      "fetch_status": "blocked",
+      "note": "travel.state.gov returned HTTP 403 to WebFetch and curl and served a Cloudflare interstitial ('Just a moment...') in the browser, which cleared on its own without any challenge being solved. Pages were then read normally at HTTP 200. No CAPTCHA or bot check was bypassed."
+    },
+    {
+      "url": "https://ircc.canada.ca/*",
+      "method": "Chrome extension",
+      "observed_status": null,
+      "fetch_status": "blocked",
+      "note": "The browser extension refused navigation to this domain ('Navigation to this domain is not allowed'). The IRCC fee list was verified over curl at HTTP 200 instead."
+    },
+    {
+      "url": "https://www.dfat.gov.au/",
+      "method": "curl",
+      "observed_status": null,
+      "fetch_status": "blocked",
+      "note": "HTTP/2 stream reset (INTERNAL_ERROR), no status code returned. Not required for visa data."
+    },
+    {
+      "url": "https://www.smartraveller.gov.au/",
+      "method": "curl",
+      "observed_status": null,
+      "fetch_status": "blocked",
+      "note": "HTTP/2 stream reset (INTERNAL_ERROR), no status code returned."
+    },
+    {
+      "url": "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-consular-affairs/",
+      "method": "curl",
+      "observed_status": 404,
+      "fetch_status": "not_found",
+      "note": "Guessed Bureau of Consular Affairs URL returned HTTP 404; travel.state.gov/content/travel/en/us-visas.html is used as the verified consular root instead."
+    }
+  ],
+  "could_not_verify": [
+    {
+      "country_code": "CA",
+      "field": "authorities.foreign_affairs_authority",
+      "reason": "Global Affairs Canada was not fetched in this session; no official URL is recorded rather than guessing one."
+    },
+    {
+      "country_code": "CA",
+      "field": "visa_types[visitor/tourist=eTA].application_method",
+      "reason": "No plain statement of application method was read on the official eTA 'How to apply' page."
+    },
+    {
+      "country_code": "CA",
+      "field": "visa_types[work_permit].application_method and .eligibility_url",
+      "reason": "No plain statement was read; .../work-canada/permit.html redirects to the hub page .../work-canada.html and no single canonical work-permit eligibility page was verified."
+    },
+    {
+      "country_code": "CA",
+      "field": "visa_types[family_sponsorship].application_method",
+      "reason": "No plain statement of application method was read on the official 'How to apply' page."
+    },
+    {
+      "country_code": "CA",
+      "field": "portals.online_account_portal_url",
+      "reason": "The IRCC secure account sign-in page was not fetched (authentication-gated)."
+    },
+    {
+      "country_code": "CA",
+      "field": "visa_types[business].* ",
+      "reason": "'Business visitors' is listed on the official Visit Canada hub but the dedicated page was not fetched, so no URL is recorded."
+    },
+    {
+      "country_code": "US",
+      "field": "visa_types[student].forms[I-20].url",
+      "reason": "https://www.uscis.gov/i-20 returned HTTP 404; no official Form I-20 landing page was verified."
+    },
+    {
+      "country_code": "US",
+      "field": "visa_types[work_permit] dedicated H-1B landing page",
+      "reason": "Both https://www.uscis.gov/working-in-the-united-states/temporary-workers/h-1b-specialty-occupations and .../h-1b-specialty-occupations-and-fashion-models returned HTTP 404, and travel.state.gov/.../employment/temporary-worker-visas/h-1b-specialty-occupations.html returned HTTP 404."
+    },
+    {
+      "country_code": "US",
+      "field": "visa_types[family_sponsorship] per-category landing pages",
+      "reason": "travel.state.gov/.../immigrate/family-immigration/immediate-relative-visa.html and .../family-preference-immigrant-visas.html both returned HTTP 404."
+    },
+    {
+      "country_code": "US",
+      "field": "visa_types[tourist=VWP].application_method",
+      "reason": "No plain statement of application method was read on the official Visa Waiver Program page."
+    },
+    {
+      "country_code": "US",
+      "field": "all fees",
+      "reason": "No fee amounts were read plainly on the official Fees for Visa Services page in this session, so none are transcribed."
+    },
+    {
+      "country_code": "GB",
+      "field": "portals.forms_index_url",
+      "reason": "GOV.UK publishes online application journeys rather than numbered visa application forms; no official form-identifier index was verified."
+    },
+    {
+      "country_code": "GB",
+      "field": "visa_types[*].forms[*].identifier",
+      "reason": "No paper form identifiers (e.g. VAF numbers) were found on the official GOV.UK visa guides; all recorded routes are online journeys."
+    },
+    {
+      "country_code": "AU",
+      "field": "visa_types[*].apply_url and most application_method values",
+      "reason": "immi.homeaffairs.gov.au renders each visa's 'Step by step' / 'How to apply' tab client-side from an embedded data payload; only the subclass 600 landing page carried a readable application-method sentence."
+    },
+    {
+      "country_code": "AU",
+      "field": "visa_types[*].document_checklist_url",
+      "reason": "Document checklists on immi.homeaffairs.gov.au are generated per-stream inside the client-rendered tabs and have no separately verified static URL."
+    },
+    {
+      "country_code": "AU",
+      "field": "portals.evisa_or_travel_authorisation_portal.apply_url",
+      "reason": "The subclass 601 ETA is applied for via the Australian ETA mobile app; no official app or portal URL was fetched in this session."
+    },
+    {
+      "country_code": "AU",
+      "field": "authorities.foreign_affairs_authority.root_url",
+      "reason": "https://www.dfat.gov.au/ could not be fetched from this environment."
+    },
+    {
+      "country_code": "AU",
+      "field": "visa_types[601, 600 streams, 500, 482, 820, 189, 188, 485, 417] page <title>",
+      "reason": "Several immi.homeaffairs.gov.au pages ship an empty <title> that is populated by JavaScript; titles marked null in provenance were confirmed HTTP 200 but their rendered title was not read."
+    },
+    {
+      "country_code": "ALL",
+      "field": "processing times",
+      "reason": "No processing times were read on any official page in this session; none are recorded."
+    }
+  ]
+}

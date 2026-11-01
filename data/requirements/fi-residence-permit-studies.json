@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fi-residence-permit-studies",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two official Migri pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "SAME TWO-PAGE SHAPE AS fi-employed-person, and for the same reason: this page says 'see also the general requirements for granting a residence permit on the page first residence permit', and states none of them itself. The six general entry conditions are extracted from that page under the eligibility role.\n\nONE APPLICATION, TWO DIFFERENT PERMITS COME OUT OF IT. Migri grants an A permit (continuous) for a higher education degree and a B permit (temporary) for anything else, exchange students included. The distinction is NOT an eligibility condition — the same application, fee and evidence lead to either — but it changes what the holder gets: study mobility rights inside the EU, and what family members can be granted. Recorded as an outcome, marked not officially required, because presenting it as a requirement would suggest an applicant chooses it. They do not.\n\nA NORMALIZER ARTEFACT WAS AVOIDED RATHER THAN QUOTED. In the attachment list, markup splits 'certificate of insurance' into 'certificate of insuranc e'. Quoting that verbatim would verify clean and read as a typo on a live page; paraphrasing it would break the verbatim rule. So the attachment excerpt stops before it, and the insurance obligation is quoted from the numbered requirement block, where the same authority states it in whole words.\n\nNO BOUNDS NEEDED, CHECKED. One route per page; the three numbered requirement headings occur once each and no sibling permit's conditions appear on the page.",
+  "source_roles": {
+    "requirements": "https://migri.fi/en/residence-permit-application-for-studies",
+    "eligibility": "https://migri.fi/en/first-residence-permit"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null
+  },
+  "freshness_note": "No dateModified on either page — 'unknown', never 'fresh', per the German rule. This page carries a different currency signal from the employed-person page: it dates a specific legislative change ('the legislative amendments that entered into force on 15 april 2022') and its sibling pages carry monthly processing statistics from July 2026.",
+  "not_extracted": [
+    "The tuition-fee amounts. Migri states the obligation to hold the money and links to a separate page; the amounts belong to each educational institution, not to the authority.",
+    "The municipality-of-residence rules and the DVV process. Another authority (the Digital and Population Data Services Agency), on its own site.",
+    "The mobility notification for studying part of a degree in another EU member state. Migri directs the applicant to the other country's authority, which is where that requirement actually lives.",
+    "The extended permit for studies, and the post-graduation residence permit to look for work. Separate applications with their own pages.",
+    "The detailed internship and diploma-work carve-outs from the 30-hour limit. Recorded in the right-to-work entry as stated, but the credit-agreement timing rules are an employment-law calculation rather than a permit condition.",
+    "The insurance-company acceptance criteria, on Migri's separate insurance page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "accepted_study_place",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accepted study place leading to a degree or vocational qualification",
+      "description": "Other study types are possible only with what Migri calls a well-founded reason. Basic education is excluded outright.",
+      "source_role": "requirements",
+      "source_excerpt": "2. you have a study place you can get a residence permit if you have been accepted to study at an educational institution in finland. your studies must lead to a vocational qualification or a degree. you may also get a residence permit for other types of studies if you have a well-founded reason for it. you cannot get a residence permit for studies to complete basic education.",
+      "display_order": 10,
+      "source_excerpt_display": "2. You have a study place You can get a residence permit if you have been accepted to study at an educational institution in Finland. Your studies must lead to a vocational qualification or a degree. You may also get a residence permit for other types of studies if you have a well-founded reason for it. You cannot get a residence permit for studies to complete basic education."
+    },
+    {
+      "requirement_code": "distance_learning_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Mainly-online study cannot support this permit",
+      "description": "An exclusion worth stating on its own: a course that never requires presence in Finland cannot justify a permit to live there, whatever the institution.",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot be granted a residence permit for studies, if your studies mainly consist of distance learning online and do not require you to stay in finland.",
+      "display_order": 20,
+      "source_excerpt_display": "You cannot be granted a residence permit for studies, if your studies mainly consist of distance learning online and do not require you to stay in Finland."
+    },
+    {
+      "requirement_code": "funds_800_per_month",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "EUR 800 per month, and EUR 9,600 in the bank when you apply",
+      "description": "TWO FIGURES, ONE RULE. The monthly figure is the standard; the EUR 9,600 is what Migri requires to be visible in the account at submission for a course of a year or more. A shorter course is measured at EUR 800 per month instead.",
+      "source_role": "requirements",
+      "source_excerpt": "1. you need to be able to support yourself in finland for the entire duration of your studies. you must have at least eur 800 at your disposal every month to be able to pay for your accommodation, food and other needs. add to your application proof of how you will finance your stay in finland during the first year of studies. you must have 9,600 euros in your bank account when you submit the application. if your studies will take less than one year, you must have 800 euros per month at your disposal.",
+      "parameters": {
+        "per_month_eur": 800,
+        "first_year_in_account_eur": 9600,
+        "currency": "EUR"
+      },
+      "display_order": 30,
+      "source_excerpt_display": "1. You need to be able to support yourself in Finland for the entire duration of your studies. You must have at least EUR 800 at your disposal every month to be able to pay for your accommodation, food and other needs. Add to your application proof of how you will finance your stay in Finland during the first year of studies. you must have 9,600 euros in your bank account when you submit the application. If your studies will take less than one year, you must have 800 euros per month at your disposal."
+    },
+    {
+      "requirement_code": "tuition_fee_held_if_unpaid",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the tuition fee is unpaid at application, its money must be in the account too",
+      "description": "On top of the maintenance figure, not instead of it — easy to miss, and it is the difference between a fundable application and a refused one for anyone deferring their fee.",
+      "source_role": "requirements",
+      "source_excerpt": "if you will pay the tuition fee at a later stage, you must have the money for the tuition fee in your bank account when you submit the residence permit application.",
+      "display_order": 40,
+      "source_excerpt_display": "If you will pay the tuition fee at a later stage, you must have the money for the tuition fee in your bank account when you submit the residence permit application."
+    },
+    {
+      "requirement_code": "institutional_support_reduces_funds",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Institutional support can reduce the EUR 800 requirement, with documentation",
+      "description": "Migri says 'do not necessarily need', so this is a possibility rather than an entitlement. Recorded because an applicant with a funded place would otherwise assume the full figure applies to them.",
+      "source_role": "requirements",
+      "source_excerpt": "if your educational institution supports your living in finland, you do not necessarily need to have 800 euros per month at your disposal. attach to your application documentation of the support your educational institution provides.",
+      "display_order": 50,
+      "source_excerpt_display": "If your educational institution supports your living in Finland, you do not necessarily need to have 800 euros per month at your disposal. Attach to your application documentation of the support your educational institution provides."
+    },
+    {
+      "requirement_code": "private_medical_insurance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Private insurance covering medical and pharmaceutical costs, valid on arrival",
+      "description": "A Kela card, an EHIC or a UK GHIC removes the need for separate cover. Quoted from the numbered requirement block rather than the attachment list, where the normalizer breaks the word 'insurance' in two.",
+      "source_role": "requirements",
+      "source_excerpt": "3. you have insurance as a student, you must personally cover the costs if you become ill in finland. in order to get a residence permit, you must take out private insurance that will cover your medical and pharmaceutical expenses. attach a certificate of insurance to your application. your insurance must be valid when you arrive in finland. if you have a kela card, a european health insurance card (ehic) or a uk global health insurance card (ghic) you do not need to take out other insurance.",
+      "display_order": 60,
+      "source_excerpt_display": "3. You have insurance As a student, you must personally cover the costs if you become ill in Finland. In order to get a residence permit, you must take out private insurance that will cover your medical and pharmaceutical expenses. Attach a certificate of insurance to your application. Your insurance must be valid when you arrive in Finland. If you have a Kela card, a European Health Insurance Card (EHIC) or a UK Global Health Insurance Card (GHIC) you do not need to take out other insurance."
+    },
+    {
+      "requirement_code": "apply_abroad_for_first_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first permit is applied for abroad; only extensions are applied for in Finland",
+      "source_role": "requirements",
+      "source_excerpt": "apply for a first residence permit abroad. you can only apply for an extended permit in finland.",
+      "display_order": 70,
+      "source_excerpt_display": "Apply for a first residence permit abroad. You can only apply for an extended permit in Finland."
+    },
+    {
+      "requirement_code": "application_fee_electronic",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic application fee: EUR 600 (EUR 400 for a minor holder)",
+      "description": "Migri publishes a separate, lower fee where the permit holder is a minor. Both are stored so a family does not read the adult figure as universal.",
+      "source_role": "requirements",
+      "source_excerpt": "electronic application fee first permit 600 € electronic application fee, minor holder first permit 400 €",
+      "parameters": {
+        "first_permit_eur": 600,
+        "first_permit_minor_holder_eur": 400,
+        "currency": "EUR"
+      },
+      "display_order": 80,
+      "source_excerpt_display": "Electronic application fee First permit 600 € Electronic application fee, minor holder First permit 400 €"
+    },
+    {
+      "requirement_code": "application_fee_paper",
+      "kind": "fee",
+      "officially_required": false,
+      "label": "Paper application fee: EUR 750 (EUR 430 for a minor holder)",
+      "description": "Not officially required because the channel is the applicant's choice, and Migri states the online fee is the lower one.",
+      "source_role": "requirements",
+      "source_excerpt": "paper application fee first permit 750 € paper application fee, minor holder first permit 430 €",
+      "parameters": {
+        "first_permit_eur": 750,
+        "first_permit_minor_holder_eur": 430,
+        "currency": "EUR"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Paper application fee First permit 750 € Paper application fee, minor holder First permit 430 €"
+    },
+    {
+      "requirement_code": "general_attachments",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport, passport photo, data-page copy, and proof of legal stay where you apply",
+      "description": "The excerpt stops before the next item because markup on this page splits 'certificate of insurance' into two words mid-list. That obligation is recorded in its own entry from the requirement block instead.",
+      "source_role": "requirements",
+      "source_excerpt": "general attachments a valid passport issued by your country of nationality. for more information, see the page passports and other travel documents . show the passport when you visit a service point to prove your identity. a passport photo complying with the photo guidelines issued by the police (poliisi.fi) , or a photograph retrieval code you received from a photo shop the passport photo must be no more than 6 months old. colour copy of the passport page containing your personal data if applicable, a document showing that you are legally staying in the country where you submit your residence permit application to finland (your visa or residence permit, for example)",
+      "parameters": {
+        "max_photo_age_months": 6
+      },
+      "display_order": 100,
+      "source_excerpt_display": "General attachments A valid passport issued by your country of nationality. For more information, see the page Passports and other travel documents. Show the passport when you visit a service point to prove your identity. A passport photo complying with the photo guidelines issued by the police (poliisi.fi), or a photograph retrieval code you received from a photo shop The passport photo must be no more than 6 months old. Colour copy of the passport page containing your personal data If applicable, a document showing that you are legally staying in the country where you submit your residence permit application to Finland (your visa or residence permit, for example)"
+    },
+    {
+      "requirement_code": "certificate_of_acceptance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Certificate of acceptance or attendance from the Finnish institution",
+      "source_role": "requirements",
+      "source_excerpt": "application-specific attachments certificate of acceptance/attendance from your educational institution in finland",
+      "display_order": 110,
+      "source_excerpt_display": "Application-specific attachments Certificate of acceptance/attendance from your educational institution in Finland"
+    },
+    {
+      "requirement_code": "bank_statement_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documentation of funds, including a bank statement covering the past 6 months",
+      "description": "Six months of history, not a balance on the day — a single deposit before applying does not satisfy this.",
+      "source_role": "requirements",
+      "source_excerpt": "documentation of sufficient financial resources . a bank statement covering the past 6 months.",
+      "parameters": {
+        "bank_statement_months": 6
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Documentation of sufficient financial resources. A bank statement covering the past 6 months."
+    },
+    {
+      "requirement_code": "minor_applicant_attachments",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Under 18: birth certificate and guardian's consent to move to Finland",
+      "description": "Conditional on the applicant's age, which is why it is not marked universally required.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are under 18 years of age, you should also attach to your application a birth certificate your parent’s or guardian’s consent for you to move to finland.",
+      "display_order": 130,
+      "source_excerpt_display": "If you are under 18 years of age, you should also attach to your application a birth certificate your parent’s or guardian’s consent for you to move to Finland."
+    },
+    {
+      "requirement_code": "form_mp1",
+      "kind": "form",
+      "officially_required": false,
+      "label": "Form MP_1 — only if you are already in Finland when you apply for a first permit",
+      "official_form_code": "MP_1",
+      "source_role": "requirements",
+      "source_excerpt": "form mp_1 (pdf) if you already are in finland and apply for your first residence permit.",
+      "display_order": 140,
+      "source_excerpt_display": "Form MP_1 (pdf) if you already are in Finland and apply for your first residence permit."
+    },
+    {
+      "requirement_code": "right_to_work_30_hours",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Work in any field, averaging 30 hours a week across the year",
+      "description": "An entitlement rather than a condition, recorded because it is the single most consequential thing this permit grants and it is measured as a YEARLY average — 120 hours a month, 1,560 a year. Both the holder and the employer are responsible for staying inside it.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have been granted a residence permit for studies, you are allowed to work in paid employment in any field for an average of 30 hours per week. the number of working hours can be exceeded some weeks, as long as the average working hours are no more than 30 hours per week at the end of the year.",
+      "parameters": {
+        "average_hours_per_week": 30,
+        "hours_per_month": 120,
+        "hours_per_year": 1560
+      },
+      "display_order": 150,
+      "source_excerpt_display": "If you have been granted a residence permit for studies, you are allowed to work in paid employment in any field for an average of 30 hours per week. The number of working hours can be exceeded some weeks, as long as the average working hours are no more than 30 hours per week at the end of the year."
+    },
+    {
+      "requirement_code": "a_or_b_permit_outcome",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A higher education degree gives a continuous (A) permit; anything else a temporary (B) permit",
+      "description": "AN OUTCOME, NOT A CHOICE. The same application and evidence lead to either. It matters because a B permit carries no right to study in another EU member state, and exchange students always receive one.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are coming to finland to pursue a higher education degree, you will be granted an a permit, that is, a continuous residence permit. if you are coming to finland to pursue a degree other than a higher education degree, you will be granted a b permit, that is, a temporary residence permit. b permits are also granted to exchange students.",
+      "display_order": 160,
+      "source_excerpt_display": "If you are coming to Finland to pursue a higher education degree, you will be granted an A permit, that is, a continuous residence permit. If you are coming to Finland to pursue a degree other than a higher education degree, you will be granted a B permit, that is, a temporary residence permit. B permits are also granted to exchange students."
+    },
+    {
+      "requirement_code": "general_valid_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: hold a valid national passport",
+      "source_role": "eligibility",
+      "source_excerpt": "you have a valid passport. when you apply for a residence permit, you must usually have a valid national passport.",
+      "display_order": 170,
+      "source_excerpt_display": "You have a valid passport. When you apply for a residence permit, you must usually have a valid national passport."
+    },
+    {
+      "requirement_code": "general_no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: no prohibition of entry against you",
+      "source_role": "eligibility",
+      "source_excerpt": "you have not been prescribed a prohibition of entry.",
+      "display_order": 180,
+      "source_excerpt_display": "You have not been prescribed a prohibition of entry."
+    },
+    {
+      "requirement_code": "general_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public order or security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public order or security.",
+      "display_order": 190,
+      "source_excerpt_display": "You are not a danger to public order or security."
+    },
+    {
+      "requirement_code": "general_national_security",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to national security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to national security.",
+      "display_order": 200,
+      "source_excerpt_display": "You are not a danger to national security."
+    },
+    {
+      "requirement_code": "general_public_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public health",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public health.",
+      "display_order": 210,
+      "source_excerpt_display": "You are not a danger to public health."
+    },
+    {
+      "requirement_code": "general_international_relations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to Finland's international relations",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to finland’s international relations.",
+      "display_order": 220,
+      "source_excerpt_display": "You are not a danger to Finland’s international relations."
+    }
+  ]
+}

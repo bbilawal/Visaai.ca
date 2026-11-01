@@ -1,0 +1,217 @@
+{
+  "$comment": "Candidate OFFICIAL government hosts for the 19 countries VisaAI cannot currently publish. Probing to FIND a host is permitted; what a page SAYS is never guessed. Every host here is a government-operated domain (.gov.*, .go.*, .gouv.*, or a national top-level government portal). Non-government aggregators are deliberately excluded.",
+  "generated_for": "docs/visa-data/GLOBAL_COVERAGE_EXCEPTIONS.md re-probe, 2026-08-24",
+  "countries": [
+    {
+      "iso": "AU", "name": "Australia", "known_verdict": "blocked_by_authority (immi.homeaffairs.gov.au robots 403)",
+      "candidates": [
+        { "host": "immi.homeaffairs.gov.au", "role": "Primary visa catalogue (known refusal — re-confirm)" },
+        { "host": "www.homeaffairs.gov.au", "role": "Department portfolio site — separate host, separate robots" },
+        { "host": "www.abf.gov.au", "role": "Australian Border Force — entry and traveller obligations" },
+        { "host": "www.legislation.gov.au", "role": "Migration Regulations 1994 — the law the visa criteria are drawn from" },
+        { "host": "online.immi.gov.au", "role": "ImmiAccount application system" },
+        { "host": "www.dfat.gov.au", "role": "Foreign Affairs and Trade" }
+      ]
+    },
+    {
+      "iso": "US", "name": "United States of America", "known_verdict": "blocked_by_authority (travel.state.gov robots 403)",
+      "candidates": [
+        { "host": "travel.state.gov", "role": "Consular visa catalogue (known refusal — re-confirm)" },
+        { "host": "www.uscis.gov", "role": "US Citizenship and Immigration Services — status, petitions, F/M/J adjudication" },
+        { "host": "www.cbp.gov", "role": "Customs and Border Protection — admission at the port of entry" },
+        { "host": "www.ice.gov", "role": "ICE / SEVP — student and exchange visitor programme" },
+        { "host": "studyinthestates.dhs.gov", "role": "DHS student visa guidance" },
+        { "host": "www.ecfr.gov", "role": "Electronic Code of Federal Regulations — 8 CFR / 22 CFR, the binding text" },
+        { "host": "www.state.gov", "role": "Department of State" },
+        { "host": "esta.cbp.dhs.gov", "role": "ESTA / Visa Waiver Program" }
+      ]
+    },
+    {
+      "iso": "FR", "name": "France", "known_verdict": "blocked_by_authority (france-visas.gouv.fr robots 403)",
+      "candidates": [
+        { "host": "france-visas.gouv.fr", "role": "Official visa portal (known refusal — re-confirm)" },
+        { "host": "www.service-public.fr", "role": "National citizen/foreign-national service portal — publishes residence and entry procedures" },
+        { "host": "administration-etrangers-en-france.interieur.gouv.fr", "role": "Interior Ministry foreign nationals administration (ANEF)" },
+        { "host": "www.interieur.gouv.fr", "role": "Ministry of the Interior" },
+        { "host": "www.immigration.interieur.gouv.fr", "role": "Interior Ministry immigration directorate" },
+        { "host": "www.legifrance.gouv.fr", "role": "CESEDA — the entry and residence code itself" },
+        { "host": "www.diplomatie.gouv.fr", "role": "Ministry for Europe and Foreign Affairs" },
+        { "host": "www.ofii.fr", "role": "OFII — French Office for Immigration and Integration" }
+      ]
+    },
+    {
+      "iso": "CY", "name": "Cyprus", "known_verdict": "blocked_by_authority (moi.gov.cy robots Disallow: /)",
+      "candidates": [
+        { "host": "moi.gov.cy", "role": "Ministry of Interior (known blanket disallow — re-confirm)" },
+        { "host": "www.gov.cy", "role": "National government service portal" },
+        { "host": "mfa.gov.cy", "role": "Ministry of Foreign Affairs — visa issuance through missions" },
+        { "host": "migration.moi.gov.cy", "role": "Civil Registry and Migration Department" },
+        { "host": "www.mfa.gov.cy", "role": "MFA (www variant — distinct robots scope)" },
+        { "host": "cyprusvisa.gov.cy", "role": "Candidate visa portal host" }
+      ]
+    },
+    {
+      "iso": "JP", "name": "Japan", "known_verdict": "blocked_by_authority (mofa.go.jp robots 403; ISA nav shells)",
+      "candidates": [
+        { "host": "www.mofa.go.jp", "role": "Ministry of Foreign Affairs — visa catalogue (known refusal — re-confirm)" },
+        { "host": "www.moj.go.jp", "role": "Ministry of Justice / Immigration Services Agency" },
+        { "host": "www.isa.go.jp", "role": "Immigration Services Agency — candidate dedicated host" },
+        { "host": "www.evisa.mofa.go.jp", "role": "Japan eVisa system" },
+        { "host": "www.japan.go.jp", "role": "Government of Japan national portal" },
+        { "host": "www.mhlw.go.jp", "role": "Health/Labour — specified skilled worker programme" }
+      ]
+    },
+    {
+      "iso": "TH", "name": "Thailand", "known_verdict": "blocked_by_authority (immigration.go.th robots permits, server 403)",
+      "candidates": [
+        { "host": "www.immigration.go.th", "role": "Immigration Bureau (known server refusal — re-confirm)" },
+        { "host": "www.thaievisa.go.th", "role": "Thailand e-Visa official system" },
+        { "host": "consular.mfa.go.th", "role": "MFA Department of Consular Affairs" },
+        { "host": "www.mfa.go.th", "role": "Ministry of Foreign Affairs" },
+        { "host": "thaiedigitalarrival.immigration.go.th", "role": "Digital arrival card system" },
+        { "host": "www.thaiembassy.org", "role": "Official Thai mission network portal" }
+      ]
+    },
+    {
+      "iso": "IL", "name": "Israel", "known_verdict": "blocked_by_authority (gov.il robots permits, server 403)",
+      "candidates": [
+        { "host": "www.gov.il", "role": "National portal / Population and Immigration Authority (known refusal — re-confirm)" },
+        { "host": "www.piba.gov.il", "role": "Population and Immigration Authority — candidate dedicated host" },
+        { "host": "embassies.gov.il", "role": "Israeli mission network — consular visa pages" },
+        { "host": "www.mfa.gov.il", "role": "Ministry of Foreign Affairs" }
+      ]
+    },
+    {
+      "iso": "IQ", "name": "Iraq", "known_verdict": "blocked_by_authority (moi.gov.iq robots permits, server 403)",
+      "candidates": [
+        { "host": "moi.gov.iq", "role": "Ministry of Interior (known refusal — re-confirm)" },
+        { "host": "mofa.gov.iq", "role": "Ministry of Foreign Affairs" },
+        { "host": "www.mofa.gov.iq", "role": "MFA www variant" },
+        { "host": "evisa.mofa.gov.iq", "role": "Candidate Iraqi eVisa host" },
+        { "host": "gov.iq", "role": "National government portal" },
+        { "host": "dop.gov.iq", "role": "Directorate of Passports" }
+      ]
+    },
+    {
+      "iso": "IR", "name": "Iran", "known_verdict": "blocked_unresolvable_redirect_loop (mfa.gov.ir robots.txt 307 to itself)",
+      "candidates": [
+        { "host": "mfa.gov.ir", "role": "Ministry of Foreign Affairs (known loop — re-confirm)" },
+        { "host": "en.mfa.gov.ir", "role": "MFA English tree" },
+        { "host": "evisa.mfa.ir", "role": "e-Visa portal (known loop — re-confirm)" },
+        { "host": "www.mfa.ir", "role": "MFA alternate domain" },
+        { "host": "e-visa.mfa.ir", "role": "Candidate e-visa host" }
+      ]
+    },
+    {
+      "iso": "BH", "name": "Bahrain", "known_verdict": "blocked_by_bot_challenge (evisa.gov.bh Cloudflare interstitial)",
+      "candidates": [
+        { "host": "www.evisa.gov.bh", "role": "eVisa portal (known Cloudflare challenge — re-confirm, do NOT circumvent)" },
+        { "host": "www.bahrain.bh", "role": "Bahrain national eGovernment portal" },
+        { "host": "www.npra.gov.bh", "role": "Nationality, Passports and Residence Affairs" },
+        { "host": "www.mofa.gov.bh", "role": "Ministry of Foreign Affairs" },
+        { "host": "www.iga.gov.bh", "role": "Information and eGovernment Authority" },
+        { "host": "www.lmra.gov.bh", "role": "Labour Market Regulatory Authority — work visas" }
+      ]
+    },
+    {
+      "iso": "JO", "name": "Jordan", "known_verdict": "blocked_by_client_rendering (moi.gov.jo no requirement language; one page HTTP 500)",
+      "candidates": [
+        { "host": "www.moi.gov.jo", "role": "Ministry of Interior (known — re-confirm)" },
+        { "host": "jordan.gov.jo", "role": "Jordan national eGovernment portal" },
+        { "host": "www.psd.gov.jo", "role": "Public Security Directorate — residency and borders" },
+        { "host": "www.mfa.gov.jo", "role": "Ministry of Foreign Affairs" },
+        { "host": "eservices.moi.gov.jo", "role": "MOI e-services" },
+        { "host": "www.mota.gov.jo", "role": "Ministry of Tourism — Jordan Pass entry waiver" }
+      ]
+    },
+    {
+      "iso": "KW", "name": "Kuwait", "known_verdict": "blocked_by_client_rendering (moi.gov.kw navigation shells)",
+      "candidates": [
+        { "host": "www.moi.gov.kw", "role": "Ministry of Interior (known — re-confirm)" },
+        { "host": "www.e.gov.kw", "role": "Kuwait Government Online national portal" },
+        { "host": "evisa.moi.gov.kw", "role": "Kuwait eVisa system" },
+        { "host": "www.mofa.gov.kw", "role": "Ministry of Foreign Affairs" },
+        { "host": "www.paci.gov.kw", "role": "Public Authority for Civil Information" },
+        { "host": "www.manpower.gov.kw", "role": "Public Authority for Manpower — work permits" }
+      ]
+    },
+    {
+      "iso": "OM", "name": "Oman", "known_verdict": "blocked_by_client_rendering (evisa.rop.gov.om catalogue is script-rendered)",
+      "candidates": [
+        { "host": "evisa.rop.gov.om", "role": "Royal Oman Police eVisa portal (known — re-confirm, check embedded JSON)" },
+        { "host": "www.rop.gov.om", "role": "Royal Oman Police main site" },
+        { "host": "www.oman.om", "role": "Oman national eGovernment portal" },
+        { "host": "www.mofa.gov.om", "role": "Ministry of Foreign Affairs" },
+        { "host": "www.mol.gov.om", "role": "Ministry of Labour — work permits" }
+      ]
+    },
+    {
+      "iso": "QA", "name": "Qatar", "known_verdict": "blocked_by_client_rendering (portal.moi.gov.qa WebSphere shells; eservices host no connection)",
+      "candidates": [
+        { "host": "portal.moi.gov.qa", "role": "Ministry of Interior portal (known — re-confirm)" },
+        { "host": "hukoomi.gov.qa", "role": "Hukoomi — Qatar national eGovernment portal" },
+        { "host": "www.hukoomi.gov.qa", "role": "Hukoomi www variant" },
+        { "host": "www.mofa.gov.qa", "role": "Ministry of Foreign Affairs" },
+        { "host": "visa.mofa.gov.qa", "role": "Candidate MFA visa host" },
+        { "host": "eservices.moi.gov.qa", "role": "MOI e-services (known no connection — re-confirm)" },
+        { "host": "www.gov.qa", "role": "Government of Qatar portal" }
+      ]
+    },
+    {
+      "iso": "SA", "name": "Saudi Arabia", "known_verdict": "blocked_by_client_rendering (ksavisa.sa zero chars; mofa.gov.sa is a diplomatic-mission desk)",
+      "candidates": [
+        { "host": "ksavisa.sa", "role": "Visa Services Platform (known zero-char — re-confirm, check embedded JSON)" },
+        { "host": "www.my.gov.sa", "role": "Saudi national unified services portal" },
+        { "host": "www.gov.sa", "role": "Government of Saudi Arabia portal" },
+        { "host": "visa.mofa.gov.sa", "role": "MFA visa system" },
+        { "host": "www.mofa.gov.sa", "role": "Ministry of Foreign Affairs (known readable, wrong catalogue)" },
+        { "host": "www.moi.gov.sa", "role": "Ministry of Interior" },
+        { "host": "www.hrsd.gov.sa", "role": "Human Resources and Social Development — work visas" }
+      ]
+    },
+    {
+      "iso": "SY", "name": "Syria", "known_verdict": "blocked_by_client_rendering (moi.gov.sy zero chars; three sibling hosts no connection)",
+      "candidates": [
+        { "host": "moi.gov.sy", "role": "Ministry of Interior (known zero-char — re-confirm)" },
+        { "host": "www.moi.gov.sy", "role": "MOI www variant" },
+        { "host": "mofaex.gov.sy", "role": "Ministry of Foreign Affairs and Expatriates" },
+        { "host": "www.egov.sy", "role": "Syrian eGovernment portal" },
+        { "host": "syria.gov.sy", "role": "Candidate national portal" },
+        { "host": "immigration.gov.sy", "role": "Immigration and passports (known no connection — re-confirm)" }
+      ]
+    },
+    {
+      "iso": "PS", "name": "State of Palestine", "known_verdict": "authority_reachable_publishes_no_entry_requirements (moi.gov.ps readable, no visa section)",
+      "candidates": [
+        { "host": "moi.gov.ps", "role": "Ministry of Interior (readable — re-enumerate for a visa/entry section)" },
+        { "host": "www.mofa.gov.ps", "role": "Ministry of Foreign Affairs and Expatriates" },
+        { "host": "mofa.gov.ps", "role": "MFA bare-host variant" },
+        { "host": "eservice.moi.gov.ps", "role": "MOI e-services (known client-rendered — re-confirm)" },
+        { "host": "www.palestinecabinet.gov.ps", "role": "Council of Ministers" },
+        { "host": "www.pcbs.gov.ps", "role": "Central Bureau of Statistics — crossings data" }
+      ]
+    },
+    {
+      "iso": "PT", "name": "Portugal", "known_verdict": "partially_admitted (vistos.mne.gov.pt drops our source IP; aima.gov.pt READABLE and researchable now)",
+      "candidates": [
+        { "host": "aima.gov.pt", "role": "AIMA — residence permits (KNOWN READABLE via tls-chain fix)" },
+        { "host": "vistos.mne.gov.pt", "role": "MFA visa portal (known IP block — re-confirm)" },
+        { "host": "www.portaldascomunidades.mne.gov.pt", "role": "MNE consular portal — visa categories" },
+        { "host": "eportugal.gov.pt", "role": "ePortugal national services portal" },
+        { "host": "www.sef.pt", "role": "Former SEF (superseded by AIMA) — check for redirect" },
+        { "host": "imigrante.sef.pt", "role": "Former SEF migrant portal" }
+      ]
+    },
+    {
+      "iso": "YE", "name": "Yemen", "known_verdict": "unresolved_no_reachable_authority (4 candidate hosts, none answers)",
+      "candidates": [
+        { "host": "moi.gov.ye", "role": "Ministry of Interior (known no connection — re-confirm)" },
+        { "host": "www.yemen.gov.ye", "role": "Candidate national portal" },
+        { "host": "mofa.gov.ye", "role": "Ministry of Foreign Affairs" },
+        { "host": "www.mofa.gov.ye", "role": "MFA www variant" },
+        { "host": "passports.gov.ye", "role": "Immigration, Passports and Naturalisation Authority" },
+        { "host": "ipa.gov.ye", "role": "IPA (known no connection — re-confirm)" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-visa-waiver-program-esta",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official CBP pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "eligibility": "https://www.cbp.gov/travel/international-visitors/visa-waiver-program",
+    "requirements": "https://www.cbp.gov/travel/international-visitors/esta"
+  },
+  "page_dates": {
+    "eligibility": null,
+    "requirements": null
+  },
+  "not_extracted": [
+    "The list of 42 VWP countries. CBP states the count on this page but not the membership; the authoritative list lives on travel.state.gov, which returns HTTP 403 to the monitor. Reproducing a list from memory is exactly what the provenance rule forbids.",
+    "The ESTA fee. Neither CBP page states an amount, and the State Department fee schedule is blocked. A fee absent from the sources is left absent rather than recalled.",
+    "The ESTA validity period (commonly two years). Neither registered page states it.",
+    "Grounds of VWP ineligibility under the VWP Improvement and Terrorist Travel Prevention Act of 2015. CBP links an FAQ for these rather than stating them, and that FAQ is not a registered source."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "vwp_participating_country_citizen",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a citizen of one of the 42 Visa Waiver Program countries",
+      "description": "CBP states the count but not the list on this page, and the list is maintained by the State Department on a host that returns 403 to the monitor. No rule is attached, because a rule keyed to a country list VisaAI has not read would either invent membership or silently exclude a genuine VWP national.",
+      "source_role": "eligibility",
+      "source_excerpt": "the visa waiver program (vwp) , administered by the department of homeland security (dhs) in consultation with the state department, permits citizens of 42 countries to travel to the united states for business or tourism for stays of up to 90 days without a visa.",
+      "display_order": 10,
+      "source_excerpt_display": "The Visa Waiver Program (VWP), administered by the Department of Homeland Security (DHS) in consultation with the State Department, permits citizens of 42 countries to travel to the United States for business or tourism for stays of up to 90 days without a visa."
+    },
+    {
+      "requirement_code": "stay_90_days_or_less",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stay 90 days or less",
+      "source_role": "eligibility",
+      "source_excerpt": "for stays of up to 90 days without a visa",
+      "display_order": 20,
+      "source_excerpt_display": "for stays of up to 90 days without a visa"
+    },
+    {
+      "requirement_code": "purpose_business_or_tourism",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Travel for business or tourism only",
+      "source_role": "eligibility",
+      "source_excerpt": "to travel to the united states for business or tourism for stays of up to 90 days without a visa",
+      "display_order": 30,
+      "source_excerpt_display": "to travel to the United States for business or tourism for stays of up to 90 days without a visa"
+    },
+    {
+      "requirement_code": "e_passport_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold an e-passport with an embedded electronic chip",
+      "source_role": "requirements",
+      "source_excerpt": "you must have an e-passport to use the vwp. an e-passport is an enhanced secure passport with an embedded electronic chip. you can readily identify an e-passport, because it has a unique international symbol on the cover.",
+      "display_order": 40,
+      "source_excerpt_display": "You must have an e-Passport to use the VWP. An e-Passport is an enhanced secure passport with an embedded electronic chip. You can readily identify an e-Passport, because it has a unique international symbol on the cover."
+    },
+    {
+      "requirement_code": "esta_authorization",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Obtain an ESTA authorization before travelling",
+      "source_role": "requirements",
+      "source_excerpt": "esta is an automated system that determines the eligibility of visitors to travel to the united states under the visa waiver program (vwp) .",
+      "display_order": 50,
+      "source_excerpt_display": "ESTA is an automated system that determines the eligibility of visitors to travel to the United States under the Visa Waiver Program (VWP)."
+    },
+    {
+      "requirement_code": "esta_application_biographic_info",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Provide biographic information and answers to the VWP eligibility questions",
+      "source_role": "requirements",
+      "source_excerpt": "the esta application collects biographic information and answers to vwp eligibility questions.",
+      "display_order": 60,
+      "source_excerpt_display": "The ESTA application collects biographic information and answers to VWP eligibility questions."
+    },
+    {
+      "requirement_code": "apply_before_booking",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Apply as early as possible, before purchasing airline tickets",
+      "description": "CBP frames this as a recommendation, not a deadline, so it is recorded as not officially required.",
+      "source_role": "requirements",
+      "source_excerpt": "esta applications may be submitted at any time prior to travel, though it is recommended that travelers apply as soon as they begin preparing travel plans or prior to purchasing airline tickets.",
+      "display_order": 70,
+      "source_excerpt_display": "ESTA applications may be submitted at any time prior to travel, though it is recommended that travelers apply as soon as they begin preparing travel plans or prior to purchasing airline tickets."
+    },
+    {
+      "requirement_code": "esta_is_not_admissibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An approved ESTA does not guarantee admission to the United States",
+      "description": "Recorded so an approved ESTA is never presented to a user as an assurance of entry.",
+      "source_role": "requirements",
+      "source_excerpt": "authorization via esta does not determine whether a traveler is admissible to the united states. u.s. customs and border protection officers determine admissibility upon travelers’ arrival.",
+      "display_order": 80,
+      "source_excerpt_display": "Authorization via ESTA does not determine whether a traveler is admissible to the United States. U.S. Customs and Border Protection officers determine admissibility upon travelers’ arrival."
+    }
+  ]
+}

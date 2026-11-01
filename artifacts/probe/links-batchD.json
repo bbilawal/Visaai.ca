@@ -1,0 +1,1104 @@
+{
+  "probedAt": "2026-08-25T00:05:35.007Z",
+  "userAgent": "VisaAI-SourceMonitor/1.0 (+https://visaai.co/bots; visa requirement change monitoring)",
+  "report": [
+    {
+      "start": "https://www.service-public.fr/",
+      "origin": "https://www.service-public.fr",
+      "counts": {
+        "anchors": 96,
+        "payload": 0,
+        "sitemapPages": 35000,
+        "sameHost": 35000,
+        "visaLike": 0
+      },
+      "declaredSitemaps": [],
+      "probes": [],
+      "allVisaLikeUrls": []
+    },
+    {
+      "start": "https://www.moj.go.jp/isa/applications/status/qaq5.html",
+      "origin": "https://www.moj.go.jp",
+      "counts": {
+        "anchors": 142,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 69,
+        "visaLike": 14
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://www.moj.go.jp/isa/about/organization/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1915,
+          "bytesRaw": 17006,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国在留管理庁の概要"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/about/region/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2139,
+          "bytesRaw": 18357,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "地方出入国在留管理官署"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2724,
+          "bytesRaw": 18905,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/tetuduki_index1_1.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2101,
+          "bytesRaw": 18071,
+          "markers": [
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入（帰）国手続について（解説）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/16-5.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4510,
+          "bytesRaw": 23179,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "再入国許可申請"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/ttp2_index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4212,
+          "bytesRaw": 23484,
+          "markers": [
+            "fee",
+            "要件",
+            "申請"
+          ],
+          "latestYear": 2025,
+          "anchorText": "トラスティド・トラベラー・プログラム（TTP）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/06_00005.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1924,
+          "bytesRaw": 17079,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "乗員上陸許可申請（NACCS）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/resources/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2046,
+          "bytesRaw": 17553,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "各種公表資料"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/faq/kanri_qa.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 30349,
+          "bytesRaw": 60059,
+          "markers": [
+            "必要書類",
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国審査・在留審査Q&A"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3573,
+          "bytesRaw": 30558,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "在留手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2402,
+          "bytesRaw": 19733,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "在留資格から探す"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4662,
+          "bytesRaw": 24810,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": 2026,
+          "anchorText": "在留支援"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/guidance/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 6160,
+          "bytesRaw": 30137,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "新規入国者向けガイダンスページ"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/fresc/fresc01.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 12164,
+          "bytesRaw": 58762,
+          "markers": [
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "外国人在留支援センター(FRESC／フレスク）"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://www.moj.go.jp/isa/about/organization/index.html",
+          "text": "出入国在留管理庁の概要"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/about/region/index.html",
+          "text": "地方出入国在留管理官署"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/index.html",
+          "text": "出入国手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/tetuduki_index1_1.html",
+          "text": "出入（帰）国手続について（解説）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/16-5.html",
+          "text": "再入国許可申請"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/ttp2_index.html",
+          "text": "トラスティド・トラベラー・プログラム（TTP）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/06_00005.html",
+          "text": "乗員上陸許可申請（NACCS）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/resources/index.html",
+          "text": "各種公表資料"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/faq/kanri_qa.html",
+          "text": "出入国審査・在留審査Q&A"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/index.html",
+          "text": "在留手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+          "text": "在留資格から探す"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/index.html",
+          "text": "在留支援"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/guidance/index.html",
+          "text": "新規入国者向けガイダンスページ"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/fresc/fresc01.html",
+          "text": "外国人在留支援センター(FRESC／フレスク）"
+        }
+      ]
+    },
+    {
+      "start": "https://mofa.gov.qa/en/consular-services/visas",
+      "origin": "https://mofa.gov.qa",
+      "counts": {
+        "anchors": 88,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 34,
+        "visaLike": 8
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3185,
+          "bytesRaw": 54893,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2868,
+          "bytesRaw": 55950,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4034,
+          "bytesRaw": 70127,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4078,
+          "bytesRaw": 53243,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Travel Advisory"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services/embassy-services",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3185,
+          "bytesRaw": 54893,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas/visas",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2868,
+          "bytesRaw": 55950,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization/legalization",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4034,
+          "bytesRaw": 70127,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory/travel-advice",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4078,
+          "bytesRaw": 53243,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Travel Advice"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services",
+          "text": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas",
+          "text": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization",
+          "text": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory",
+          "text": "Travel Advisory"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services/embassy-services",
+          "text": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas/visas",
+          "text": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization/legalization",
+          "text": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory/travel-advice",
+          "text": "Travel Advice"
+        }
+      ]
+    },
+    {
+      "start": "https://jordan.gov.jo/AR/Pages/%d8%aa%d8%a3%d8%b4%d9%8a%d8%b1%d8%a7%d8%aa_%d8%a7%d9%84%d8%b3%d9%81%d8%b1",
+      "origin": "https://jordan.gov.jo",
+      "counts": {
+        "anchors": 29,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 6,
+        "visaLike": 1
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://jordan.gov.jo/AR/Pages/%d8%aa%d8%a3%d8%b4%d9%8a%d8%b1%d8%a7%d8%aa_%d8%a7%d9%84%d8%b3%d9%81%d8%b1",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3439,
+          "bytesRaw": 104137,
+          "markers": [
+            "متطلبات",
+            "شروط",
+            "وثائق",
+            "رسوم"
+          ],
+          "latestYear": 2024,
+          "anchorText": "طلب إصدار تأشيرة"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://jordan.gov.jo/AR/Pages/%d8%aa%d8%a3%d8%b4%d9%8a%d8%b1%d8%a7%d8%aa_%d8%a7%d9%84%d8%b3%d9%81%d8%b1",
+          "text": "طلب إصدار تأشيرة"
+        }
+      ]
+    },
+    {
+      "start": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7?menu=5ddcb3cdfdf21041a1150b88",
+      "origin": "https://consular.mfa.go.th",
+      "counts": {
+        "anchors": 171,
+        "payload": 68,
+        "sitemapPages": 0,
+        "sameHost": 78,
+        "visaLike": 78
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://consular.mfa.go.th/th/search",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7953,
+          "bytesRaw": 80488,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2024,
+          "anchorText": ""
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/index",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 25664,
+          "bytesRaw": 232298,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "หน้าแรก"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5?menu=5d68c88b15e39c160c00815b",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 12190,
+          "bytesRaw": 106632,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2024,
+          "anchorText": "ประวัติกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5?menu=5d68c88b15e39c160c008166",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 10238,
+          "bytesRaw": 107764,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ผู้บริหารกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%8A%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B9%88%E0%B8%AD?menu=5ddcfcd59ef7372d5f7b7e22",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 10095,
+          "bytesRaw": 113441,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ช่องทางการติดต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%81%E0%B8%8E%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%A2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%87?menu=5ddcfcf39ae18216ea5efb93",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 11709,
+          "bytesRaw": 110430,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2026,
+          "anchorText": "กฎหมายที่เกี่ยวข้อง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/manualduties?menu=662b4c96b9e5d337890d7522",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 9317,
+          "bytesRaw": 97068,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2025,
+          "anchorText": "คู่มือการปฏิบัติหน้าที่"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AA%E0%B8%96%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3?menu=5ddcfd039ef7372d5f7b7e23",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 11188,
+          "bytesRaw": 116204,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "สถิติการให้บริการ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/citizenfeedback?menu=662b4cc125d08e59e94ac262",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 9364,
+          "bytesRaw": 96873,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ผลสำรวจความพึงพอใจ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1379-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%94%E0%B9%88%E0%B8%99?menu=5d68c88b15e39c160c008177",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 17432,
+          "bytesRaw": 127621,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ข่าวเด่น"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1341-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B9%8C?menu=5d68c88b15e39c160c008174",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 13374,
+          "bytesRaw": 123116,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ข่าวประชาสัมพันธ์"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/content-category/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A8%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 14547,
+          "bytesRaw": 128642,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2026,
+          "anchorText": "ประกาศกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AA%E0%B8%AB%E0%B8%A7%E0%B8%B4%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%B5%E0%B8%9E?menu=5ddc93a1c8dde60c5b2fd1e3",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 14313,
+          "bytesRaw": 124578,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2024,
+          "anchorText": "สหวิชาชีพ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-5383-%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5d68c88b15e39c160c00817f",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 16936,
+          "bytesRaw": 134748,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2025,
+          "anchorText": "หนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/legalization?menu=5d68c88b15e39c160c008184",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 19192,
+          "bytesRaw": 160534,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2025,
+          "anchorText": "รับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1308-%E0%B8%84%E0%B8%B8%E0%B9%89%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8?menu=5d68c88b15e39c160c008187",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 20623,
+          "bytesRaw": 146898,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2024,
+          "anchorText": "คุ้มครองคนไทยในต่างประเทศ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7?menu=5ddcb3cdfdf21041a1150b88",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 18799,
+          "bytesRaw": 139229,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2024,
+          "anchorText": "ตรวจลงตรา และเอกสารเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice-category/%E0%B8%84%E0%B8%B9%E0%B9%88%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 9990,
+          "bytesRaw": 96731,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2025,
+          "anchorText": "คู่มือประชาชน"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5d68c88b15e39c160c0081a4",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 13494,
+          "bytesRaw": 114105,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2024,
+          "anchorText": "หนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3?menu=5d68c88b15e39c160c0081a7",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 14841,
+          "bytesRaw": 122806,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2024,
+          "anchorText": "รับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%84%E0%B8%B8%E0%B9%89%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8?menu=5d68c88b15e39c160c0081ad",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 13010,
+          "bytesRaw": 113958,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร"
+          ],
+          "latestYear": 2024,
+          "anchorText": "คุ้มครองคนไทยในต่างประเทศ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7-2?menu=5ddcc31581ed933b442cb6f2",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 13181,
+          "bytesRaw": 112682,
+          "markers": [
+            "requirement",
+            "fee",
+            "เอกสาร",
+            "คุณสมบัติ",
+            "ค่าธรรมเนียม"
+          ],
+          "latestYear": 2024,
+          "anchorText": "ตรวจลงตรา และเอกสารเดินทางคนต่างด้าว"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://consular.mfa.go.th/th/search",
+          "text": ""
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/index",
+          "text": "หน้าแรก"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5?menu=5d68c88b15e39c160c00815b",
+          "text": "ประวัติกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5?menu=5d68c88b15e39c160c008166",
+          "text": "ผู้บริหารกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%8A%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B9%88%E0%B8%AD?menu=5ddcfcd59ef7372d5f7b7e22",
+          "text": "ช่องทางการติดต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%81%E0%B8%8E%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%A2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%87?menu=5ddcfcf39ae18216ea5efb93",
+          "text": "กฎหมายที่เกี่ยวข้อง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/manualduties?menu=662b4c96b9e5d337890d7522",
+          "text": "คู่มือการปฏิบัติหน้าที่"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AA%E0%B8%96%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3?menu=5ddcfd039ef7372d5f7b7e23",
+          "text": "สถิติการให้บริการ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/citizenfeedback?menu=662b4cc125d08e59e94ac262",
+          "text": "ผลสำรวจความพึงพอใจ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1379-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%94%E0%B9%88%E0%B8%99?menu=5d68c88b15e39c160c008177",
+          "text": "ข่าวเด่น"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1341-%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B9%8C?menu=5d68c88b15e39c160c008174",
+          "text": "ข่าวประชาสัมพันธ์"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/content-category/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A8%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%87%E0%B8%AA%E0%B8%B8%E0%B8%A5",
+          "text": "ประกาศกรมการกงสุล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AA%E0%B8%AB%E0%B8%A7%E0%B8%B4%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%B5%E0%B8%9E?menu=5ddc93a1c8dde60c5b2fd1e3",
+          "text": "สหวิชาชีพ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-5383-%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5d68c88b15e39c160c00817f",
+          "text": "หนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/legalization?menu=5d68c88b15e39c160c008184",
+          "text": "รับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1308-%E0%B8%84%E0%B8%B8%E0%B9%89%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8?menu=5d68c88b15e39c160c008187",
+          "text": "คุ้มครองคนไทยในต่างประเทศ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7?menu=5ddcb3cdfdf21041a1150b88",
+          "text": "ตรวจลงตรา และเอกสารเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice-category/%E0%B8%84%E0%B8%B9%E0%B9%88%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99",
+          "text": "คู่มือประชาชน"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5d68c88b15e39c160c0081a4",
+          "text": "หนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3?menu=5d68c88b15e39c160c0081a7",
+          "text": "รับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%84%E0%B8%B8%E0%B9%89%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8?menu=5d68c88b15e39c160c0081ad",
+          "text": "คุ้มครองคนไทยในต่างประเทศ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7-2?menu=5ddcc31581ed933b442cb6f2",
+          "text": "ตรวจลงตรา และเอกสารเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%9F%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B8%AD%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A4%E0%B8%A9",
+          "text": "ตัวอย่างคำแปลแบบฟอร์มเอกสารราชการ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111335-%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%B3%E0%B8%A8%E0%B8%B1%E0%B8%9E%E0%B8%97%E0%B9%8C%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B8%AD%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A4%E0%B8%A9",
+          "text": "คำศัพท์ภาษาอังกฤษที่ใช้ในการแปล"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-7393-general-information?menu=5d68c88b15e39c160c0081e0",
+          "text": "General Information"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-7394-types-of-visa?menu=5d68c88b15e39c160c0081e3",
+          "text": "Types of Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-7395-visa-requirements?menu=5d68c88b15e39c160c0081e6",
+          "text": "Visa Requirements"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%9A%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%A1%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B8%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%95?menu=662b414b849ced14695a8b63",
+          "text": "การป้องกันและปราบปรามการทุจริต"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B8%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%95?menu=662b4156dfe300156763d983",
+          "text": "การประเมินความเสี่ยงการทุจริต"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/ita?menu=662b417c655c5f15a37ca1e3",
+          "text": "การเปิดเผยข้อมูลสาธารณะ (ITA)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-5383-%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5d68c88d15e39c160c008255",
+          "text": "หนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/manualonlinebooking",
+          "text": "วิธีการลงทะเบียนจองคิวออนไลน์"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/21037-%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?menu=5f34ed0fd68bca0d54302fe5",
+          "text": "สถานที่ให้บริการหนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B8%A1-%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B9%88%E0%B8%87%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87",
+          "text": "ค่าธรรมเนียม ระยะเวลาการผลิตและจัดส่งหนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87?page=5d68c88b15e39c160c00817e&amp;menu=5d68c88b15e39c160c00817f",
+          "text": "วิวัฒนาการหนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/doc4passport",
+          "text": "เอกสารทำหนังสือเดินทาง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/legalization?menu=5d68c88d15e39c160c00825c",
+          "text": "รับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%82%E0%B8%B1%E0%B9%89%E0%B8%99%E0%B8%95%E0%B8%AD%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "ขั้นตอนการรับรองเอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "สถานที่ให้บริการรับรองนิติกรณ์เอกสาร"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%81%E0%B9%82%E0%B8%94%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%88%E0%B8%A7%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%86?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "การรับรองเอกสารที่ออกโดยหน่วยงานต่างๆ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%95%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%82%E0%B8%AD%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B4%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3",
+          "text": "เอกสารที่ต้องเตรียมเพื่อขอรับการนิติกรณ์"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%9A%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B8%AD%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A4%E0%B8%A9?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "เอกสารการทะเบียนภาษาอังกฤษ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%9F%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B8%AD%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A4%E0%B8%A9?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "ตัวอย่างแบบฟอร์มเอกสารภาษาอังกฤษ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B9%84%E0%B8%9B%E0%B8%A3%E0%B8%A9%E0%B8%93%E0%B8%B5%E0%B8%A2%E0%B9%8C?page=5d68c88b15e39c160c008183&amp;menu=5d68c88d15e39c160c00825c",
+          "text": "บริการรับรองเอกสารทางไปรษณีย์"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/cate-1308-%E0%B8%84%E0%B8%B8%E0%B9%89%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8?menu=5d68c88d15e39c160c00825f",
+          "text": "คุ้มครองคนไทยในต่างประเทศ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7?menu=5d68c88d15e39c160c00825b",
+          "text": "ตรวจลงตรา และเอกสารเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD-visa?menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "ประเภทและหลักเกณฑ์การขอ Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%84%E0%B8%99%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%9C%E0%B9%88%E0%B8%B2%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3-transit-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Transit Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%97%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7-tourist-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Tourist Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7-%E0%B9%8Cnon-immigrant-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Non-Immigrant Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%97%E0%B8%B9%E0%B8%95-diplomatic-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Diplomatic Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%81%E0%B8%B2%E0%B8%A3-official-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Official Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%AD%E0%B8%B1%E0%B8%98%E0%B8%A2%E0%B8%B2%E0%B8%A8%E0%B8%B1%E0%B8%A2%E0%B9%84%E0%B8%A1%E0%B8%95%E0%B8%A3%E0%B8%B5-courtesy-visa?page=5ddcb94a01330918812bbf22&amp;menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "Courtesy Visa"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9E%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81",
+          "text": "Long Stay"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7-2?menu=5ddcbc0afec2a177182ba0d6",
+          "text": "เอกสารเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7-travel-document-for-aliens-t-d?page=5ddcbc7501330918812bbf24&amp;menu=5ddcbc0afec2a177182ba0d6",
+          "text": "หนังสือเดินทางคนต่างด้าว"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%89%E0%B8%B8%E0%B8%81%E0%B9%80%E0%B8%89%E0%B8%B4%E0%B8%99-emergency-certificate-e-c",
+          "text": "เอกสารเดินทางฉุกเฉิน"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/24687-%E0%B9%81%E0%B8%9C%E0%B8%99%E0%B8%AD%E0%B8%9E%E0%B8%A2%E0%B8%9E%E0%B8%9E%E0%B8%B7%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%AA%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87?menu=5ddcbe3035d0eb2c221f8002",
+          "text": "แผนอพยพพื้นที่เสี่ยง"
+        },
+        {
+          "url": "https://consular.mfa.go.th/cdn-cgi/l/email-protection",
+          "text": "[email&#160;protected]"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD-visa",
+          "text": ""
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/page/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7-2",
+          "text": ""
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B9%81%E0%B8%94%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%B4%E0%B8%97%E0%B8%98%E0%B8%B4%E0%B8%A2%E0%B8%81%E0%B9%80%E0%B8%A7%E0%B9%89%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD%E0%B8%A7%E0%B8%B5%E0%B8%8B?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/voa?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111193-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B8%B5%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9%E0%B8%AA%E0%B8%A1%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%97%E0%B8%A7%E0%B8%B5%E0%B8%8B%E0%B9%88%E0%B8%B2-smart-visa?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111196-%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%AA%E0%B8%B3%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%98%E0%B8%B8%E0%B8%A3%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B9%80%E0%B8%AD%E0%B9%80%E0%B8%9B%E0%B8%84-(apec-business-travel-card-%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD-abtc)?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111194-%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%82%E0%B8%AD%E0%B8%87-%E0%B8%AA%E0%B8%95%E0%B8%A1-%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9E%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3-%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%96%E0%B8%B7%E0%B8%AD%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%94%E0%B8%B2-%E0%B8%95%E0%B8%B2%E0%B8%A1%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111195-%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%A1%E0%B8%B2%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B9%84%E0%B8%82%E0%B9%89%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%87?page=5ddcb438f9e8f9352d566b0d&amp;menu=5ddcb3cdfdf21041a1150b88",
+          "text": "อ่านต่อ"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%97%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7-tourist-visa?page=5ddcb94a01330918812bbf22\\u0026menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7-%E0%B9%8Cnon-immigrant-visa?page=5ddcb94a01330918812bbf22\\u0026menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%97%E0%B8%B9%E0%B8%95-diplomatic-visa?page=5ddcb94a01330918812bbf22\\u0026menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%81%E0%B8%B2%E0%B8%A3-official-visa?page=5ddcb94a01330918812bbf22\\u0026menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%AD%E0%B8%B1%E0%B8%98%E0%B8%A2%E0%B8%B2%E0%B8%A8%E0%B8%B1%E0%B8%A2%E0%B9%84%E0%B8%A1%E0%B8%95%E0%B8%A3%E0%B8%B5-courtesy-visa?page=5ddcb94a01330918812bbf22\\u0026menu=5ddcb8b29b1e8a30447d6f22",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B9%81%E0%B8%94%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%B4%E0%B8%97%E0%B8%98%E0%B8%B4%E0%B8%A2%E0%B8%81%E0%B9%80%E0%B8%A7%E0%B9%89%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD%E0%B8%A7%E0%B8%B5%E0%B8%8B?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/voa?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111193-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B8%B5%E0%B8%9E%E0%B8%B4%E0%B9%80%E0%B8%A8%E0%B8%A9%E0%B8%AA%E0%B8%A1%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%97%E0%B8%A7%E0%B8%B5%E0%B8%8B%E0%B9%88%E0%B8%B2-smart-visa?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111196-%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%AA%E0%B8%B3%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%98%E0%B8%B8%E0%B8%A3%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B9%80%E0%B8%AD%E0%B9%80%E0%B8%9B%E0%B8%84-(apec-business-travel-card-%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD-abtc)?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111194-%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%82%E0%B8%AD%E0%B8%87-%E0%B8%AA%E0%B8%95%E0%B8%A1-%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%8D%E0%B8%B2%E0%B8%95%E0%B9%83%E0%B8%AB%E0%B9%89%E0%B8%9E%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%82%E0%B8%AD%E0%B8%AD%E0%B8%A2%E0%B8%B9%E0%B9%88%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B9%83%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%AD%E0%B8%B2%E0%B8%93%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3-%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%96%E0%B8%B7%E0%B8%AD%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%98%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%94%E0%B8%B2-%E0%B8%95%E0%B8%B2%E0%B8%A1%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        },
+        {
+          "url": "https://consular.mfa.go.th/th/publicservice/111195-%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A5%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%84%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%94%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%A1%E0%B8%B2%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B9%84%E0%B8%82%E0%B9%89%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%87?page=5ddcb438f9e8f9352d566b0d\\u0026menu=5ddcb3cdfdf21041a1150b88",
+          "text": "(from embedded JSON)"
+        }
+      ]
+    }
+  ]
+}

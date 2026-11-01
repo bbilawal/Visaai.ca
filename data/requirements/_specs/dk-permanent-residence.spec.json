@@ -1,0 +1,470 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-permanent-residence",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Danish Immigration Service page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "THIS ROUTE HAS TWO TIERS AND THE SECOND ONE IS NOT OPTIONAL. Denmark publishes basic requirements AND four supplementary requirements, and at least TWO of the four must be met — meeting the basic requirements alone does not qualify anyone. Meeting all four instead reduces the residence requirement from eight years to four. So the supplementary tier is simultaneously a floor and an accelerator, and publishing the basic list on its own would tell a reader they qualify when they do not.\n\nThe four supplementary requirements are: Danish language test 3, four years' employment in the last four years and six months, the active citizen exam or documented active citizenship, and an average annual taxable income of DKK 346,155.57 at 2026 level.\n\nTHE EMPLOYMENT REQUIREMENT IS A RATIO, NOT A DURATION. Three years and six months of regular full-time work WITHIN THE PAST FOUR YEARS. Quoting the 3.5-year figure without its four-year window would let someone count work from a decade ago.\n\nAND 'FULL-TIME' HAS A NUMBER. Thirty hours a week, or 120 a month, combinable across jobs — and the authority publishes an explicit list of what does NOT count, including wage-subsidised positions, unpaid work, job rotation, and any period below the 30-hour line.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Permanent-residence-permit/Permanent-residence"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The income threshold carries its own year in the text ('DKK 346,155.57 (2026 level)') and the page's worked example runs to 2028, so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The full sentencing table — roughly twenty categories of sentence each with its own exclusion period, at lines 100 to 132. The general rules ARE extracted; the table is a schedule of criminal-law consequences that would need a lawyer's reading of any individual case, and publishing it as a checklist would invite exactly that misuse.",
+    "The full list of qualifying and disqualifying social benefits, which the authority publishes on a separate linked page.",
+    "The registration procedure and dates for the active citizen exam.",
+    "The step-by-step application walkthrough and document checklists.",
+    "The separate permanent-residence routes the catalogue enumerates alongside this one — for 18-to-19-year-olds, on strong attachment to Denmark, for retired employees of international organisations, and for Greenland and the Faroe Islands."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eight_years_temporary_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eight years of legal residence — four in certain cases",
+      "description": "Quoted with the four-year alternative, which the authority states in the same sentence.",
+      "source_role": "requirements",
+      "lines": [
+        26
+      ],
+      "parameters": {
+        "years_required": 8,
+        "reduced_years": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 10
+    },
+    {
+      "requirement_code": "eight_years_uninterrupted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The eight years must be uninterrupted legal residence under the Aliens Act",
+      "source_role": "requirements",
+      "lines": [
+        58
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "four_years_requires_all_four_supplementary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The four-year route requires ALL FOUR supplementary requirements",
+      "source_role": "requirements",
+      "lines": [
+        72
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "two_of_four_supplementary_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "At least 2 of the 4 supplementary requirements must be met",
+      "description": "The condition that makes the basic list insufficient on its own.",
+      "source_role": "requirements",
+      "lines": [
+        310
+      ],
+      "parameters": {
+        "supplementary_required": 2,
+        "supplementary_total": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40
+    },
+    {
+      "requirement_code": "over_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be over the age of 18",
+      "source_role": "requirements",
+      "lines": [
+        46
+      ],
+      "parameters": {
+        "minimum_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50
+    },
+    {
+      "requirement_code": "still_meet_current_permit_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must still meet the continuous requirements of your current residence permit",
+      "source_role": "requirements",
+      "lines": [
+        50
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "must_reside_in_denmark_at_decision",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must normally be residing in Denmark when the decision is made",
+      "source_role": "requirements",
+      "lines": [
+        52
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "late_application_can_interrupt_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Applying after your previous permit expired can break the continuity of legal residence",
+      "description": "A procedural slip that resets the eight-year clock.",
+      "source_role": "requirements",
+      "lines": [
+        78
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "multiple_grounds_may_be_combined",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Periods under different residence permits can be combined",
+      "source_role": "requirements",
+      "lines": [
+        84
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "relationships_may_not_be_combined",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Periods based on DIFFERENT spouses or partners may NOT be combined",
+      "description": "The exception to the combining rule, and the one that costs people years.",
+      "source_role": "requirements",
+      "lines": [
+        86
+      ],
+      "display_order": 100
+    },
+    {
+      "requirement_code": "criminal_conviction_bars",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sentence of more than six months makes you permanently ineligible",
+      "description": "Quoted with the under-six-months rule that precedes it, because the two together are the actual test.",
+      "source_role": "requirements",
+      "lines": [
+        94,
+        96
+      ],
+      "display_order": 110
+    },
+    {
+      "requirement_code": "charge_or_indictment_bars",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A pending charge or indictment also bars a permit",
+      "source_role": "requirements",
+      "lines": [
+        98
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "no_overdue_public_debt",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not have any overdue public debts",
+      "source_role": "requirements",
+      "lines": [
+        136
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "public_debt_types",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as public debt",
+      "description": "Quoted whole; day-care payments and overpaid housing benefit are not obviously 'public debt' to a reader.",
+      "source_role": "requirements",
+      "lines": [
+        138,
+        150
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "repaid_debt_needs_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Debt repaid after applying must be documented before the decision",
+      "source_role": "requirements",
+      "lines": [
+        170
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "no_social_benefits_four_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No certain social benefits within four years of applying",
+      "source_role": "requirements",
+      "lines": [
+        174
+      ],
+      "parameters": {
+        "years_without_benefits": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160
+    },
+    {
+      "requirement_code": "benefits_worked_example",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The authority's own worked example of when the four years run from",
+      "description": "Registered because the four-year rule is routinely read as four years before the permit rather than before the application.",
+      "source_role": "requirements",
+      "lines": [
+        178
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "supplementary_cash_benefits_via_partner",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary benefits received because a partner claimed cash benefits can also bar a permit",
+      "source_role": "requirements",
+      "lines": [
+        186
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "danish_language_test_2",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must pass Danish language test 2 (Prøve i Dansk 2) or an equivalent",
+      "source_role": "requirements",
+      "lines": [
+        190
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "declaration_of_residence_and_self_support",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "You must accept a declaration of residence and self-support",
+      "source_role": "requirements",
+      "lines": [
+        204
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "employment_three_years_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Regular full-time employment for at least 3 years and 6 months in the past 4 years",
+      "description": "Quoted with the window, because the duration alone omits the test.",
+      "source_role": "requirements",
+      "lines": [
+        210,
+        212
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "employment_need_not_be_continuous",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The 3 years and 6 months need not be continuous",
+      "source_role": "requirements",
+      "lines": [
+        214
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "full_time_means_30_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time means at least 30 hours a week, or 120 hours a month",
+      "source_role": "requirements",
+      "lines": [
+        220
+      ],
+      "parameters": {
+        "minimum_hours_per_week": 30,
+        "minimum_hours_per_month": 120,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230
+    },
+    {
+      "requirement_code": "hours_combinable_across_jobs",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Hours from more than one job can be combined to reach 30 a week",
+      "source_role": "requirements",
+      "lines": [
+        222
+      ],
+      "display_order": 240
+    },
+    {
+      "requirement_code": "regular_employment_includes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as regular, full-time employment",
+      "source_role": "requirements",
+      "lines": [
+        224,
+        238
+      ],
+      "display_order": 250
+    },
+    {
+      "requirement_code": "regular_employment_excludes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What does NOT count as regular employment",
+      "description": "Wage-subsidised work, unpaid work, job rotation, study placements and any period under 30 hours.",
+      "source_role": "requirements",
+      "lines": [
+        242,
+        254
+      ],
+      "display_order": 260
+    },
+    {
+      "requirement_code": "must_be_employed_at_decision",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be employed when the Immigration Service decides the application",
+      "description": "A separate condition from the 3-year-6-month history, and one that can fail at the last moment.",
+      "source_role": "requirements",
+      "lines": [
+        264
+      ],
+      "display_order": 270
+    },
+    {
+      "requirement_code": "supplementary_danish_test_3",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: Danish language test 3",
+      "source_role": "requirements",
+      "lines": [
+        314
+      ],
+      "display_order": 280
+    },
+    {
+      "requirement_code": "supplementary_four_years_employment",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: 4 years' employment in the past 4 years and 6 months",
+      "source_role": "requirements",
+      "lines": [
+        322
+      ],
+      "display_order": 290
+    },
+    {
+      "requirement_code": "supplementary_active_citizenship",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: the active citizen exam, or a year of documented active citizenship",
+      "source_role": "requirements",
+      "lines": [
+        330
+      ],
+      "display_order": 300
+    },
+    {
+      "requirement_code": "supplementary_income_threshold",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: average annual taxable income of DKK 346,155.57 (2026 level)",
+      "source_role": "requirements",
+      "lines": [
+        382
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "average_annual_taxable_income": 346155.57,
+        "stated_for_year": 2026,
+        "years_averaged": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 310
+    },
+    {
+      "requirement_code": "supplementary_income_countable_types",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Which taxable income counts towards the income threshold",
+      "source_role": "requirements",
+      "lines": [
+        384,
+        394
+      ],
+      "display_order": 320
+    },
+    {
+      "requirement_code": "fee_work_or_study",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee — applicants holding a work or study permit",
+      "source_role": "requirements",
+      "lines": [
+        18,
+        19
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 7570,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 330
+    },
+    {
+      "requirement_code": "fee_family_or_asylum",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee — applicants holding a family reunification or asylum permit",
+      "description": "A second, lower fee. Publishing only the first would overstate the cost for family and asylum applicants by DKK 2,600.",
+      "source_role": "requirements",
+      "lines": [
+        21,
+        22
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 4970,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 340
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Expected maximum processing time",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        16
+      ],
+      "display_order": 350
+    }
+  ]
+}

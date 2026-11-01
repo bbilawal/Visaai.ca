@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-working-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Turkish Ministry of Foreign Affairs page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Where the authority states a period or a threshold, the number is quoted rather than restated.",
+  "structure_note": "Two of this ministry’s pages describe the work route and they do not say the same thing at the same depth, so both are registered. The consular page gives the three documents the application itself needs; the requirements page gives what happens afterwards — who decides, what it costs, and the one-month police registration that turns a work visa into a residence permit.",
+  "source_roles": {
+    "policy": "https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa",
+    "requirements": "https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa"
+  },
+  "page_dates": {
+    "policy": null,
+    "requirements": null
+  },
+  "freshness_note": "Neither page publishes a dateline or a Last-Modified header. The requirements page mentions no year at all; the companion policy page references 2026 in its body. So this route’s freshness rests on a body-year on one of its two sources and on nothing on the other. That is recorded rather than hidden — it is the same state check-source-freshness already reports for Singapore’s MOM pages, the US ESTA pages and all of Austria’s migration.gv.at — and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The visa-exemption roster. The requirements page enumerates fourteen countries whose nationals may enter on a national ID and eight whose expired passports are still accepted, and the companion page carries a country-by-country entry regime running to roughly two hundred entries. None of it is extracted: this registry publishes what a DESTINATION requires, and per-nationality entry policy is a different dataset that would need its own model, its own review and its own freshness guarantees.",
+    "The fee schedule. The authority links a separate PDF (vize-harc-miktarlari-en.pdf) rather than stating amounts in the page body. No Turkish visa fee amount is published here, because none was read from a page this registry monitors.",
+    "The catalogue subtypes with no published requirements. The catalogue page enumerates five classes and roughly thirty-five lettered subtypes, and only some carry a requirements section of their own. Registered here are the routes the authority actually describes: e-Visa, tourist, working, internship and work-permit exemption, tour operator representative, transportation, religious-foundation personnel, and archaeological/documentary. The official visa class, the student-education class and the individual tourist sub-purposes (transit, conference, festival, sportive activity, cultural artistic activity, official visit, visit to the Turkish Republic of Northern Cyprus) are ENUMERATED by the authority and carry no requirement text on either page, so they are named in the coverage-exception ledger rather than registered as empty routes.",
+    "The e-Visa portal itself. www.evisa.gov.tr returns 1,176 bytes that normalize to ZERO characters — it renders entirely by script — so nothing was read from it. Everything published about the e-Visa here comes from the ministry’s own server-rendered description of it."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "passport_validity_60_days_beyond_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 60 days beyond the visa’s duration of stay",
+      "description": "Set by Article 7.1b of Law no. 6458. This is a validity margin ON TOP of the stay, not six months from arrival — the authority works both examples through on the page.",
+      "source_role": "policy",
+      "source_excerpt": "as of 1 january 2015, in accordance with the article 7.1b of “the law on foreigners and international protection” no. 6458, foreigners wishing to enter türkiye should carry a travel document (passport) with an expiration date at least 60 days beyond the “duration of stay” of their visa, e-visa, visa exemption, or residence permit.",
+      "parameters": {
+        "additional_validity_days": 60,
+        "measured_from": "duration of stay",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "As of 1 January 2015, in accordance with the article 7.1b of “the Law on Foreigners and International Protection” no. 6458, foreigners wishing to enter Türkiye should carry a travel document (passport) with an expiration date at least 60 days beyond the “duration of stay” of their visa, e-Visa, visa exemption, or residence permit."
+    },
+    {
+      "requirement_code": "stay_90_days_in_180",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Maximum 90 days of stay within any 180 days",
+      "description": "Binding on all foreigners, whether they travel on a visa or a visa exemption.",
+      "source_role": "requirements",
+      "source_excerpt": "the length of stay provided by visa or visa exemption cannot exceed 90 days within each 180 days. the regulation of 90 days of stay within the last 180 days is binding for all foreigners that will travel to türkiye.",
+      "parameters": {
+        "max_days": 90,
+        "window_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "The length of stay provided by visa or visa exemption cannot exceed 90 days within each 180 days. The regulation of 90 days of stay within the last 180 days is binding for all foreigners that will travel to Türkiye."
+    },
+    {
+      "requirement_code": "medical_insurance_for_stay",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Medical insurance valid for the whole stay",
+      "description": "Required of all applicants, not of a particular route.",
+      "source_role": "requirements",
+      "source_excerpt": "all applicants are required to have a medical insurance that will be valid during their stay in türkiye.",
+      "display_order": 30,
+      "source_excerpt_display": "All applicants are required to have a medical insurance that will be valid during their stay in Türkiye."
+    },
+    {
+      "requirement_code": "apply_one_month_in_advance",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Apply at least one month before travel",
+      "description": "The authority’s own recommendation, stated as a processing-delay precaution.",
+      "source_role": "requirements",
+      "source_excerpt": "in order to avoid inconveniences that may be caused by delays in processing, it is recommended to apply for visas at least one month in advance before the planned travel.",
+      "display_order": 40,
+      "source_excerpt_display": "In order to avoid inconveniences that may be caused by delays in processing, it is recommended to apply for visas at least one month in advance before the planned travel."
+    },
+    {
+      "requirement_code": "visa_does_not_guarantee_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa does not guarantee entry",
+      "description": "Stated by the authority in its own words.",
+      "source_role": "requirements",
+      "source_excerpt": "the visas submitted to foreigners do not guarantee absolute rights of entry to türkiye.",
+      "display_order": 50,
+      "source_excerpt_display": "The visas submitted to foreigners do not guarantee absolute rights of entry to Türkiye."
+    },
+    {
+      "requirement_code": "fees_not_refundable_on_refusal",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa fees are not refunded if the application is rejected",
+      "description": "The authority states this without qualification.",
+      "source_role": "requirements",
+      "source_excerpt": "visa fees are not refundable in cases where applications are rejected",
+      "display_order": 60,
+      "source_excerpt_display": "Visa fees are not refundable in cases where applications are rejected"
+    },
+    {
+      "requirement_code": "minor_needs_both_parents_approval",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicants under 18: written approval from BOTH parents",
+      "description": "The authority names the exceptions itself — divorce with proven custody, or a deceased parent — and they are quoted in the same sentence rather than dropped.",
+      "source_role": "requirements",
+      "source_excerpt": "any applicant under the age of 18 must submit official written approvals from both parents. for those applicants who certify that their parents are officially divorced and prove the parent holding their custody as well as for those with one parent deceased, visas may be issued in accordance with their purpose of visit.",
+      "parameters": {
+        "applies_under_age": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "Any applicant under the age of 18 must submit official written approvals from both parents. For those applicants who certify that their parents are officially divorced and prove the parent holding their custody as well as for those with one parent deceased, visas may be issued in accordance with their purpose of visit."
+    },
+    {
+      "requirement_code": "stay_over_90_days_needs_residence_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Staying longer than 90 days requires a short-term residence permit",
+      "description": "A consular visa cannot exceed 90 days in any category; a longer stay is a separate application to the provincial migration directorate.",
+      "source_role": "requirements",
+      "source_excerpt": "in all types of visa applications, turkish consular offices may issue visas with a maximum duration of stay of 90 days. the foreigners who wish to stay longer than 90 days in türkiye, should apply for “short term residence permit” at the provincial directorate of migration administration in order to extend their residence.",
+      "display_order": 80,
+      "source_excerpt_display": "In all types of visa applications, Turkish consular offices may issue visas with a maximum duration of stay of 90 days. The foreigners who wish to stay longer than 90 days in Türkiye, should apply for “Short Term Residence Permit” at the Provincial Directorate of Migration Administration in order to extend their residence."
+    },
+    {
+      "requirement_code": "application_documents_and_employer_duty",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport, visa application form and an employer letter — then the employer files with MLSS within ten working days",
+      "description": "The applicant’s three documents and the employer’s deadline are one sentence in the source and are kept as one, because separating them hides whose obligation the ten days are.",
+      "source_role": "policy",
+      "source_excerpt": "information on work visa: to work in türkiye, you must apply to the nearest turkish mission to obtain work permit and visa. your passport, visa application form and a letter from your employer are the necessary documents for your application. other documents should be submitted to the turkish ministry of labour and social security (mlss) by your employer within ten working days after your application.",
+      "parameters": {
+        "employer_filing_deadline_working_days": 10,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Information on Work Visa: To work in Türkiye, you must apply to the nearest Turkish mission to obtain work permit and visa. Your passport, visa application form and a letter from your employer are the necessary documents for your application. Other documents should be submitted to the Turkish Ministry of Labour and Social Security (MLSS) by your employer within ten working days after your application."
+    },
+    {
+      "requirement_code": "mlss_decides_within_thirty_days_and_police_within_one_month",
+      "kind": "step",
+      "officially_required": true,
+      "label": "MLSS decides within thirty days; register with the local police within one month of arrival",
+      "description": "Both deadlines are in one sentence in the source. The police registration is BEFORE starting work, which the sentence states and a summary would drop.",
+      "source_role": "policy",
+      "source_excerpt": "you may find the list of those documents in the mlss’s website (http://www.csgb.gov.tr). applications are finalized by the mlss within thirty days at the latest. right after your arrival in türkiye (before starting to work), you should be registered at the local police department within one month to obtain the necessary residence permit.",
+      "parameters": {
+        "mlss_decision_days": 30,
+        "police_registration_months": 1,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "You may find the list of those documents in the MLSS’s website (http://www.csgb.gov.tr). Applications are finalized by the MLSS within thirty days at the latest. Right after your arrival in Türkiye (before starting to work), you should be registered at the local police department within one month to obtain the necessary residence permit."
+    },
+    {
+      "requirement_code": "apply_from_country_of_residence_or_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply through a Turkish consulate in your country of residence or nationality",
+      "description": "Where the application is lodged, stated by the authority.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners lay their applications for work permit through our consular offices in the country of their residence or nationality.",
+      "display_order": 110,
+      "source_excerpt_display": "Foreigners lay their applications for work permit through our consular offices in the country of their residence or nationality."
+    },
+    {
+      "requirement_code": "work_permit_equals_residence_permit_and_visa_is_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit substitutes for a residence permit; the work-annotated visa is entry-only, 90 days maximum",
+      "description": "Three fees are named in the same sentence — entry visa, work permit certificate and residence — and the 90-day ceiling applies to the visa, not to the permit.",
+      "source_role": "requirements",
+      "source_excerpt": "work permit applications are concluded positively or negatively by the ministry of labor and social security. work permits have equivalence to residence permits. thus, should a working permit is approved by the ministry, the foreigner is charged an entry visa fee, work permit certificate fee and residence fee by the turkish consular offices. since work permit card substitute residence permit in türkiye, \"work annotated visa\" issued by these offices can only be used for entrance and for 90 days at maximum.",
+      "parameters": {
+        "work_annotated_visa_max_days": 90,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Work Permit Applications are concluded positively or negatively by the Ministry of Labor and Social Security. Work Permits have equivalence to residence permits. Thus, should a working permit is approved by the Ministry, the foreigner is charged an Entry Visa Fee, Work Permit Certificate Fee and Residence Fee by the Turkish consular offices. Since Work Permit Card substitute residence permit in Türkiye, \"Work Annotated Visa\" issued by these offices can only be used for entrance and for 90 days at maximum."
+    },
+    {
+      "requirement_code": "other_authorities_grant_some_work_permits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Free zones, culture and tourism, and universities are decided by other ministries",
+      "description": "Whose desk the file lands on depends on the employer, and getting it wrong costs the whole application.",
+      "source_role": "requirements",
+      "source_excerpt": "work permit is granted to foreigners who will work in free zones in our country by the ministry of economy, to those to work in units under ministry of culture and tourism by the mentioned ministry and to foreign national personnel to work in universities by the higher education board.",
+      "display_order": 130,
+      "source_excerpt_display": "Work permit is granted to foreigners who will work in Free Zones in our country by the Ministry of Economy, to those to work in units under Ministry of Culture and Tourism by the mentioned Ministry and to foreign national personnel to work in universities by the Higher Education Board."
+    },
+    {
+      "requirement_code": "non_tourist_purposes_go_through_missions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work and study applications go through a Turkish mission abroad",
+      "description": "The authority’s general rule for everything that is not tourism or trade.",
+      "source_role": "requirements",
+      "source_excerpt": "visa applications for travels except for touristic or trade purposes (work or study etc.) will need to obtain visa through turkish representations in the abroad.",
+      "display_order": 140,
+      "source_excerpt_display": "Visa applications for travels except for touristic or trade purposes (work or study etc.) will need to obtain visa through Turkish Representations in the abroad."
+    }
+  ]
+}

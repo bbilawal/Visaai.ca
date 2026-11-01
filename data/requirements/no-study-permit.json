@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "no-study-permit",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official UDI page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.udi.no/en/want-to-apply/studies/studietillatelse/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The application fee amount. UDI states the obligation here and publishes the figure elsewhere.",
+    "The NOKUT accreditation list for study programmes. UDI links the agency's register rather than reproducing it.",
+    "Requirements that differ for folk high schools and other non-university institutions, which UDI splits behind a 'where will you be studying' selector.",
+    "The document checklist, which UDI serves per-embassy behind the 'how to apply' flow.",
+    "Rules for renewing a study permit or switching after graduation, which are separate permits."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "study_longer_than_3_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study or attend school for more than three months",
+      "source_role": "requirements",
+      "source_excerpt": "if you wish to study or go to school in norway for more than three months, you must apply for a study permit.",
+      "display_order": 10,
+      "source_excerpt_display": "If you wish to study or go to school in Norway for more than three months, you must apply for a study permit."
+    },
+    {
+      "requirement_code": "work_rights",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Work up to 20 hours a week during term, full-time in holidays",
+      "description": "A right the permit grants, not an obligation. Recorded because students routinely need to know it before choosing a route.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are granted a study permit, you will also be able to work for up to 20 hours a week while you are studying and full-time during holidays.",
+      "display_order": 20,
+      "source_excerpt_display": "If you are granted a study permit, you will also be able to work for up to 20 hours a week while you are studying and full-time during holidays."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Pay an application fee",
+      "description": "No amount recorded: UDI states the obligation here and publishes the figure elsewhere, on a page that is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you must pay an application fee.",
+      "display_order": 30,
+      "source_excerpt_display": "You must pay an application fee."
+    },
+    {
+      "requirement_code": "admission_to_institution",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be admitted to a university college or university",
+      "source_role": "requirements",
+      "source_excerpt": "you must have been admitted to a university college or university.",
+      "display_order": 40,
+      "source_excerpt_display": "You must have been admitted to a university college or university."
+    },
+    {
+      "requirement_code": "full_time_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study full-time",
+      "source_role": "requirements",
+      "source_excerpt": "you must study full-time.",
+      "display_order": 50,
+      "source_excerpt_display": "You must study full-time."
+    },
+    {
+      "requirement_code": "maintenance_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "NOK 15,488 per month, or NOK 170,368 for the academic year",
+      "description": "UDI writes the amounts with a space as the thousands separator (nok 15 488); the excerpt preserves that.",
+      "parameters": {
+        "per_month_nok": 15488,
+        "per_year_nok": 170368,
+        "currency": "NOK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "you must have enough money to live on during the period you are going to study in norway. this means at least nok 15 488 per month, or nok 170 368 per year for the entire academic year.",
+      "display_order": 60,
+      "source_excerpt_display": "You must have enough money to live on during the period you are going to study in Norway. This means at least NOK 15 488 per month, or NOK 170 368 per year for the entire academic year."
+    },
+    {
+      "requirement_code": "maintenance_single_semester",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Single-semester amounts: NOK 77,440 autumn, NOK 92,928 spring",
+      "description": "The two semesters differ, and the spring figure is the higher one. Showing a single 'per semester' number would understate spring by NOK 15,488.",
+      "parameters": {
+        "autumn_semester_nok": 77440,
+        "spring_semester_nok": 92928,
+        "currency": "NOK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "if you are going to be a student for only one semester in norway, you must document nok 77 440 for the autumn semester and nok 92 928 for the spring semester.",
+      "display_order": 70,
+      "source_excerpt_display": "If you are going to be a student for only one semester in Norway, you must document NOK 77 440 for the autumn semester and NOK 92 928 for the spring semester."
+    },
+    {
+      "requirement_code": "acceptable_fund_sources",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Funds may be loans, grants, own money, or an offered part-time job",
+      "source_role": "requirements",
+      "source_excerpt": "this amount of money may consist of student loans, grants, own funds that you have in a norwegian bank account or the deposit account of the educational institution, or a combination of the above. if you have already been offered a part-time job in norway, the income from this work may be included.",
+      "display_order": 80,
+      "source_excerpt_display": "This amount of money may consist of student loans, grants, own funds that you have in a Norwegian bank account or the deposit account of the educational institution, or a combination of the above. If you have already been offered a part-time job in Norway, the income from this work may be included."
+    },
+    {
+      "requirement_code": "funds_location",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The money must be in a Norwegian bank account or the institution's deposit account",
+      "description": "UDI notes that a student without a Norwegian account may use the institution's, arranged with the institution directly.",
+      "source_role": "requirements",
+      "source_excerpt": "the money must be in a norwegian bank account or the deposit account of the educational institution.",
+      "display_order": 90,
+      "source_excerpt_display": "The money must be in a Norwegian bank account or the deposit account of the educational institution."
+    },
+    {
+      "requirement_code": "tuition_fees_covered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cover tuition fees as well, or document that they are already paid",
+      "description": "Note the academic year named in UDI's own text. It will date, and the daily monitor will raise the change when UDI updates it.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have to pay tuition fees, you must also have money to cover this or document in your application that your tuition fees for the academic year 2025/2026 have already been paid. if you have paid for one semester, you must provide documentation in your application showing that you have enough money to pay for the second semester.",
+      "display_order": 100,
+      "source_excerpt_display": "If you have to pay tuition fees, you must also have money to cover this or document in your application that your tuition fees for the academic year 2025/2026 have already been paid. If you have paid for one semester, you must provide documentation in your application showing that you have enough money to pay for the second semester."
+    },
+    {
+      "requirement_code": "tuition_exemption_confirmed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An exemption from tuition fees must be confirmed by the institution",
+      "source_role": "requirements",
+      "source_excerpt": "if you have an exemption from paying tuition fees this must be confirmed by your educational institution.",
+      "display_order": 110,
+      "source_excerpt_display": "If you have an exemption from paying tuition fees this must be confirmed by your educational institution."
+    },
+    {
+      "requirement_code": "accommodation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have somewhere to live",
+      "source_role": "requirements",
+      "source_excerpt": "you must have somewhere to live.",
+      "display_order": 120,
+      "source_excerpt_display": "You must have somewhere to live."
+    },
+    {
+      "requirement_code": "likelihood_of_return",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your circumstances must indicate you are likely to return home after your studies",
+      "description": "A decision criterion rather than a document. Recorded so it is visible rather than a surprise at refusal.",
+      "source_role": "requirements",
+      "source_excerpt": "the circumstances in your home country must indicate that it is likely that you can return home when you have completed your studies.",
+      "display_order": 130,
+      "source_excerpt_display": "The circumstances in your home country must indicate that it is likely that you can return home when you have completed your studies."
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fi-specialist",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two official Migri pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE SECOND WORK PERMIT FOR FINLAND, AND THE PAGES TELL YOU WHEN YOU ARE ON THE WRONG ONE. Migri writes, on this page: 'if your salary is less than eur 3,937, you should apply for a residence permit for an employed person'. That makes the pair fi-specialist and fi-employed-person a threshold split rather than two unrelated routes, and the registry now holds both sides of it. The redirect sentence is stored as a requirement of its own, because the most useful thing this page can tell someone earning EUR 3,000 is that they are reading the wrong page.\n\nWHAT THE HIGHER BAR BUYS: no labour market test, no supply contract, a two-year first permit rather than one tied to the contract, two-week fast-track eligibility, a lower fee than the employed-person permit (EUR 530 against EUR 750), and a 90-day exemption from needing the permit at all. Those are not decoration; they are why the split exists, and several are recorded as requirements so the difference is visible on the page.\n\nFRINGE BENEFITS ARE EXCLUDED HERE AND CAPPED AT 50% THERE. The employed-person permit lets fringe benefits make up half the salary; this one excludes them from the threshold entirely. Same authority, same concept, opposite rules — a figure or a rule carried across from the sibling page would verify against nothing.\n\nNO BOUNDS NEEDED, CHECKED. One route per page; the numbered requirement headings occur once each.",
+  "source_roles": {
+    "requirements": "https://migri.fi/en/specialist",
+    "eligibility": "https://migri.fi/en/first-residence-permit"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null
+  },
+  "freshness_note": "No dateModified, so 'unknown' rather than 'fresh'. The salary threshold names its own year — 'at least eur 3,937 per month in 2026' — and is stored with stated_for_year, the same shape as the employed-person figure and Sweden's Blue Card threshold.",
+  "not_extracted": [
+    "The fast-track service's own conditions. This page states only that the permit can be applied for through it and links to a separate page; the eligibility rules for fast track live there.",
+    "The D visa. A separate travel authorisation with its own page, and it would be a visa type rather than a requirement of this one.",
+    "The 90-day work-without-a-permit exemption's detail. The exemption is recorded because it can make an application unnecessary, but its conditions are on Migri's 'working without a residence permit' page.",
+    "The EU Blue Card, ICT and top-management routes. Finland issues each separately, and each would be its own visa type.",
+    "The terms-of-employment form's contents, on Migri's 'filling in the terms of employment' page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "special_expertise_duties",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duties requiring special expertise — a highly skilled role, not a senior one",
+      "description": "Migri's examples are IT experts and degree-holding specialists. The test is what the work demands, not the job title or seniority.",
+      "source_role": "requirements",
+      "source_excerpt": "2. your duties must require special expertise. specialists include, among others: it experts; experts in some field of specialisation who have a higher education degree; other persons with a higher education degree whose work requires special expertise.",
+      "display_order": 10,
+      "source_excerpt_display": "2. Your duties must require special expertise. Specialists include, among others: IT experts; experts in some field of specialisation who have a higher education degree; other persons with a higher education degree whose work requires special expertise."
+    },
+    {
+      "requirement_code": "salary_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Gross salary at least EUR 3,937 per month (2026 figure), fringe benefits excluded",
+      "description": "A SNAPSHOT THAT NAMES ITS YEAR, and the opposite rule to the employed-person permit: there fringe benefits may make up half the salary, here they do not count toward the threshold at all.",
+      "source_role": "requirements",
+      "source_excerpt": "3. your gross salary must be at least eur 3,937 per month in 2026. fringe benefits are not counted towards this sum.",
+      "parameters": {
+        "per_month_gross_eur": 3937,
+        "currency": "EUR",
+        "stated_for_year": 2026
+      },
+      "display_order": 20,
+      "source_excerpt_display": "3. Your gross salary must be at least EUR 3,937 per month in 2026. Fringe benefits are not counted towards this sum."
+    },
+    {
+      "requirement_code": "below_threshold_apply_as_employed_person",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Below EUR 3,937, Migri directs you to the employed-person permit instead",
+      "description": "Not a requirement so much as the authority naming the other side of its own threshold. Recorded because the most useful thing this page can tell someone earning less is that they are on the wrong page — and VisaAI holds that page too.",
+      "source_role": "requirements",
+      "source_excerpt": "if your salary is less than eur 3,937, you should apply for a residence permit for an employed person .",
+      "display_order": 30,
+      "source_excerpt_display": "If your salary is less than EUR 3,937, you should apply for a residence permit for an employed person."
+    },
+    {
+      "requirement_code": "higher_education_or_acquired_expertise",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A higher education degree as a rule — or expertise acquired through experience, verified by your employer",
+      "description": "The alternative route is real: experience or other education can substitute for the degree, and the employer carries the burden of verifying it.",
+      "source_role": "requirements",
+      "source_excerpt": "4. as a rule, you must have a higher education degree. if you have not completed a higher education degree, you need to have acquired the special expertise required in your work through work experience or other education. your employer must verify that you have the special expertise required in your work.",
+      "display_order": 40,
+      "source_excerpt_display": "4. As a rule, you must have a higher education degree. If you have not completed a higher education degree, you need to have acquired the special expertise required in your work through work experience or other education. Your employer must verify that you have the special expertise required in your work."
+    },
+    {
+      "requirement_code": "confirmed_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have confirmed employment before you apply",
+      "source_role": "requirements",
+      "source_excerpt": "you must have confirmed employment before you apply.",
+      "display_order": 50,
+      "source_excerpt_display": "You must have confirmed employment before you apply."
+    },
+    {
+      "requirement_code": "employer_terms_of_employment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your employer must submit your terms of employment",
+      "source_role": "requirements",
+      "source_excerpt": "1. you must have a job in finland. your employer must supplement your application by filling in your terms of employment either online in enter finland for employers or by using a paper form.",
+      "display_order": 60,
+      "source_excerpt_display": "1. You must have a job in Finland. Your employer must supplement your application by filling in your terms of employment either online in Enter Finland for Employers or by using a paper form."
+    },
+    {
+      "requirement_code": "permit_duration_two_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A first permit runs up to 2 years, or the length of the employment if shorter",
+      "description": "An outcome, and one of the concrete gains over the employed-person permit, whose duration tracks the contract.",
+      "source_role": "requirements",
+      "source_excerpt": "a first residence permit for a specialist is granted for a maximum of 2 years. if your employment lasts for less than 2 years, the permit will be valid for the duration of your employment relationship.",
+      "parameters": {
+        "maximum_first_permit_years": 2
+      },
+      "display_order": 70,
+      "source_excerpt_display": "A first residence permit for a specialist is granted for a maximum of 2 years. If your employment lasts for less than 2 years, the permit will be valid for the duration of your employment relationship."
+    },
+    {
+      "requirement_code": "fast_track_available",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Eligible for the two-week fast-track service",
+      "description": "Recorded because it changes the plan rather than the paperwork: Migri states a two-week decision is available on this route. Its own conditions are on the fast-track page and are not invented here.",
+      "source_role": "requirements",
+      "source_excerpt": "you can apply for this residence permit via the fast-track service and get the permit in two weeks.",
+      "display_order": 80,
+      "source_excerpt_display": "You can apply for this residence permit via the fast-track service and get the permit in two weeks."
+    },
+    {
+      "requirement_code": "apply_abroad_for_first_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first permit is applied for abroad; only extensions are applied for in Finland",
+      "source_role": "requirements",
+      "source_excerpt": "apply for a first residence permit abroad. you can only apply for an extended permit in finland.",
+      "display_order": 90,
+      "source_excerpt_display": "Apply for a first residence permit abroad. You can only apply for an extended permit in Finland."
+    },
+    {
+      "requirement_code": "application_fee_electronic",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic application fee: EUR 530 first permit (EUR 230 extended)",
+      "description": "Lower than the employed-person permit's EUR 750 — the higher-skilled route is also the cheaper one.",
+      "source_role": "requirements",
+      "source_excerpt": "electronic application fee first permit 530 € / extended permit 230 €",
+      "parameters": {
+        "first_permit_eur": 530,
+        "extended_permit_eur": 230,
+        "currency": "EUR"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "Electronic application fee First permit 530 € / extended permit 230 €"
+    },
+    {
+      "requirement_code": "application_fee_paper",
+      "kind": "fee",
+      "officially_required": false,
+      "label": "Paper application fee: EUR 630 first permit (EUR 430 extended)",
+      "description": "Not officially required: Migri states the online fee is the lower one, so this is the cost of a channel the applicant chooses.",
+      "source_role": "requirements",
+      "source_excerpt": "paper application fee first permit 630 € / extended permit 430 €",
+      "parameters": {
+        "first_permit_eur": 630,
+        "extended_permit_eur": 430,
+        "currency": "EUR"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Paper application fee First permit 630 € / extended permit 430 €"
+    },
+    {
+      "requirement_code": "passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport issued by your country of nationality",
+      "source_role": "requirements",
+      "source_excerpt": "a valid passport issued by your country of nationality. for more information, see the page passports and other travel documents . show the passport when you visit a service point to prove your identity.",
+      "display_order": 120,
+      "source_excerpt_display": "A valid passport issued by your country of nationality. For more information, see the page Passports and other travel documents. Show the passport when you visit a service point to prove your identity."
+    },
+    {
+      "requirement_code": "passport_photo",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport photo to police specification, no more than 6 months old",
+      "source_role": "requirements",
+      "source_excerpt": "a passport photo complying with the photo guidelines issued by the police (poliisi.fi) , or a photograph retrieval code you received from a photo shop the passport photo must be no more than 6 months old.",
+      "parameters": {
+        "max_photo_age_months": 6
+      },
+      "display_order": 130,
+      "source_excerpt_display": "A passport photo complying with the photo guidelines issued by the police (poliisi.fi), or a photograph retrieval code you received from a photo shop The passport photo must be no more than 6 months old."
+    },
+    {
+      "requirement_code": "passport_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Colour copies of the data page and every page carrying notes",
+      "source_role": "requirements",
+      "source_excerpt": "colour copies of the passport page containing personal data and of all passport pages that contain notes",
+      "display_order": 140,
+      "source_excerpt_display": "Colour copies of the passport page containing personal data and of all passport pages that contain notes"
+    },
+    {
+      "requirement_code": "proof_of_legal_stay_where_applying",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof you are legally in the country where you submit the application",
+      "source_role": "requirements",
+      "source_excerpt": "document showing that you are legally staying in the country where you submit the application this document is not needed if you apply for an extended permit.",
+      "display_order": 150,
+      "source_excerpt_display": "Document showing that you are legally staying in the country where you submit the application This document is not needed if you apply for an extended permit."
+    },
+    {
+      "requirement_code": "form_mp1",
+      "kind": "form",
+      "officially_required": false,
+      "label": "Form MP_1 — only if you submit the application inside Finland",
+      "official_form_code": "MP_1",
+      "source_role": "requirements",
+      "source_excerpt": "response to possible denial of admittance or stay and to entry ban (the form mp_1 ) this form is needed only if you, for some reason, submit your residence permit application in finland.",
+      "display_order": 160,
+      "source_excerpt_display": "Response to possible denial of admittance or stay and to entry ban (the form MP_1) This form is needed only if you, for some reason, submit your residence permit application in Finland."
+    },
+    {
+      "requirement_code": "prove_identity_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Prove your identity at a Finnish mission abroad",
+      "source_role": "requirements",
+      "source_excerpt": "4 prove your identity if you applied for your residence permit abroad, book an appointment to visit a finnish mission (finlandabroad.fi) .",
+      "display_order": 170,
+      "source_excerpt_display": "4 Prove your identity If you applied for your residence permit abroad, book an appointment to visit a Finnish mission (finlandabroad.fi)."
+    },
+    {
+      "requirement_code": "right_to_work_and_90_day_exemption",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The right to work starts when the permit is issued — but work up to 90 days needs no permit",
+      "description": "Two facts that belong together. The exemption can make the whole application unnecessary for a short assignment, and it is the sort of thing an applicant learns only after paying a fee. Changing jobs requires re-checking the right to work.",
+      "source_role": "requirements",
+      "source_excerpt": "right to work you have the right to work as a specialist. check your right to work if you wish to change jobs. the right to work begins once a residence permit has been issued. specialists may work without a residence permit if the work lasts for a maximum of 90 days.",
+      "parameters": {
+        "permit_free_work_days": 90
+      },
+      "display_order": 180,
+      "source_excerpt_display": "Right to work You have the right to work as a specialist. Check your right to work if you wish to change jobs. The right to work begins once a residence permit has been issued. Specialists may work without a residence permit if the work lasts for a maximum of 90 days."
+    },
+    {
+      "requirement_code": "general_valid_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: hold a valid national passport",
+      "source_role": "eligibility",
+      "source_excerpt": "you have a valid passport. when you apply for a residence permit, you must usually have a valid national passport.",
+      "display_order": 190,
+      "source_excerpt_display": "You have a valid passport. When you apply for a residence permit, you must usually have a valid national passport."
+    },
+    {
+      "requirement_code": "general_no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: no prohibition of entry against you",
+      "source_role": "eligibility",
+      "source_excerpt": "you have not been prescribed a prohibition of entry.",
+      "display_order": 200,
+      "source_excerpt_display": "You have not been prescribed a prohibition of entry."
+    },
+    {
+      "requirement_code": "general_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public order or security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public order or security.",
+      "display_order": 210,
+      "source_excerpt_display": "You are not a danger to public order or security."
+    },
+    {
+      "requirement_code": "general_national_security",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to national security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to national security.",
+      "display_order": 220,
+      "source_excerpt_display": "You are not a danger to national security."
+    },
+    {
+      "requirement_code": "general_public_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public health",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public health.",
+      "display_order": 230,
+      "source_excerpt_display": "You are not a danger to public health."
+    },
+    {
+      "requirement_code": "general_international_relations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to Finland's international relations",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to finland’s international relations.",
+      "display_order": 240,
+      "source_excerpt_display": "You are not a danger to Finland’s international relations."
+    }
+  ]
+}

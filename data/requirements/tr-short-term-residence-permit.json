@@ -1,0 +1,623 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-short-term-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "other",
+    "official_name": "Short-Term Residence Permit",
+    "slug": "short-term-residence-permit",
+    "purpose": "Türkiye's general-purpose residence permit, issued for up to two years at a time across fourteen distinct grounds — from scientific research and property ownership to medical treatment, Turkish language courses and post-graduation job search — each with its own qualifying conditions.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The authority numbers FOURTEEN separate grounds for this one permit, and they are not variants of each other: a property owner, a medical patient and a language student qualify for different reasons and are told different things. Every label below carries its ground number, because flattening them would tell a tourist they need a licence from the Ministry of Culture.\n\nTwo grounds carry a longer maximum than the rest. The permit runs to two years at a time EXCEPT for investors (ground 13) and Turkish Republic of Northern Cyprus citizens (ground 14), who get five. That exception is quoted in the same sentence as the rule.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 31-33 of Law 6458",
+      "description": "The authority cites its own instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "short term residence permit shall be regulated by articles 31-33 of the law on foreigners and international protection no. 6458.",
+      "display_order": 10,
+      "source_excerpt_display": "Short term residence permit shall be regulated by Articles 31-33 of the Law on Foreigners and International Protection No. 6458."
+    },
+    {
+      "requirement_code": "legal_basis_regulation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And Articles 28-29 of the implementing regulation",
+      "description": "The second instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "additionally, short term residence permit shall be regulated by articles 28 and 29 of the regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 20,
+      "source_excerpt_display": "Additionally, short term residence permit shall be regulated by Articles 28 and 29 of the Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "ground_1_scientific_research",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 1: to conduct scientific research",
+      "description": "First of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "1-foreigners who will arrive to conduct scientific research;",
+      "display_order": 30,
+      "source_excerpt_display": "1-Foreigners who will arrive to conduct scientific research;"
+    },
+    {
+      "requirement_code": "ground_1_licence_or_statement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Ground 1: a licence where the research needs permission, otherwise a statement of the subject",
+      "description": "The authority names the Ministry of Culture and Tourism, the Ministry of Energy and universities as examples of the licensing bodies.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners applying for a residence permit for this purpose are required to obtain a license from relevant institutions and organizations (the ministry of culture and tourism, ministry of energy, universities etc.) if the scientific research is subject to permission. if it is not subject to a permission, it is required to present a statement concerning to the research subject.",
+      "display_order": 40,
+      "source_excerpt_display": "Foreigners applying for a residence permit for this purpose are required to obtain a license from relevant institutions and organizations (The Ministry of Culture and Tourism, Ministry of Energy, universities etc.) if the scientific research is subject to permission. If it is not subject to a permission, it is required to present a statement concerning to the research subject."
+    },
+    {
+      "requirement_code": "ground_2_immovable_property",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 2: owning immovable property in Turkey",
+      "description": "Second of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "2-foreigners who will own immovable property in turkey;",
+      "display_order": 50,
+      "source_excerpt_display": "2-Foreigners who will own immovable property in Turkey;"
+    },
+    {
+      "requirement_code": "ground_2_must_be_a_house",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 2: the property must be a HOUSE and used as one — and shared family ownership extends the right",
+      "description": "Both halves matter: land or commercial property does not qualify, and co-owning family members gain the same right.",
+      "source_role": "requirements",
+      "source_excerpt": "if foreigners who own immovable property demand residence permit, the immovable property must be house and used for this purpose. moreover, immovable property used as house in shared or cooperated property covering family members gives residence permit application right also to the family members.",
+      "display_order": 60,
+      "source_excerpt_display": "If foreigners who own immovable property demand residence permit, the immovable property must be house and used for this purpose. Moreover, immovable property used as house in shared or cooperated property covering family members gives residence permit application right also to the family members."
+    },
+    {
+      "requirement_code": "ground_3_business_connections",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 3: establishing business or commercial connections",
+      "description": "Third of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "3-foreigners who will establish business or commercial connections;",
+      "display_order": 70,
+      "source_excerpt_display": "3-Foreigners who will establish business or commercial connections;"
+    },
+    {
+      "requirement_code": "ground_3_invitation_over_three_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Ground 3: for stays over three months, an invitation letter from the people or companies concerned",
+      "description": "The three-month threshold is what triggers the document.",
+      "source_role": "requirements",
+      "source_excerpt": "if the foreigners demand residence permit more than three months for this purpose, invitation letter or similar documents will be requested from the persons or companies to be contacted.",
+      "parameters": {
+        "threshold_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80,
+      "source_excerpt_display": "If the foreigners demand residence permit more than three months for this purpose, invitation letter or similar documents will be requested from the persons or companies to be contacted."
+    },
+    {
+      "requirement_code": "ground_4_on_the_job_training",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 4: on-the-job training programmes",
+      "description": "Fourth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "4-foreigners who will participate in on-the-job training programmes;",
+      "display_order": 90,
+      "source_excerpt_display": "4-Foreigners who will participate in on-the-job training programmes;"
+    },
+    {
+      "requirement_code": "ground_5_exchange_programmes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 5: student exchange programmes or agreements Türkiye is party to",
+      "description": "Fifth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "5-foreigners who will arrive to attend educational or similar programmes as part of student exchange programmes or agreements to which the republic of turkey is a party;",
+      "display_order": 100,
+      "source_excerpt_display": "5-Foreigners who will arrive to attend educational or similar programmes as part of student exchange programmes or agreements to which the Republic of Turkey is a party;"
+    },
+    {
+      "requirement_code": "ground_5_health_insurance_rule",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Ground 5: exchange students registered with SGK within three months need no extra health insurance — otherwise a private policy is required",
+      "description": "The authority names Erasmus, Mevlana and Farabi itself. The three-month registration window is what decides which half applies.",
+      "source_role": "requirements",
+      "source_excerpt": "students in the scope of exchange programs (erasmus, mevlana, farabi vb.) will not be required to submit an additional health insurance as long as they are registered to the social security institution (sgk), general health insurance within three months from the date of enrollment. however, they are required to take out a private health policy unless they are registered to the social security institution (sgk) and fail to take advantage of being covered by the social security institution (sgk) general health insurance.",
+      "parameters": {
+        "sgk_registration_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Students in the scope of exchange programs (Erasmus, Mevlana, Farabi vb.) will not be required to submit an additional health insurance as long as they are registered to the Social Security Institution (SGK), general health insurance within three months from the date of enrollment. However, they are required to take out a private health policy unless they are registered to the Social Security Institution (SGK) and fail to take advantage of being covered by the Social Security Institution (SGK) general health insurance."
+    },
+    {
+      "requirement_code": "ground_6_tourism",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 6: staying for tourism purposes",
+      "description": "Sixth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "6-foreigners who wish to stay for tourism purposes;",
+      "display_order": 120,
+      "source_excerpt_display": "6-Foreigners who wish to stay for tourism purposes;"
+    },
+    {
+      "requirement_code": "ground_6_travel_plan_statement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Ground 6: a statement of travel plans — where, when and how long",
+      "description": "Further documents may be required if necessary, which the authority states.",
+      "source_role": "requirements",
+      "source_excerpt": "the statement on matters concerning travel plans (where, when and how long to stay, etc.) of the foreigners who wish to stay for tourism purpose will be taken into consideration. the documents and information may be required to submit if it is necessary.",
+      "display_order": 130,
+      "source_excerpt_display": "The statement on matters concerning travel plans (where, when and how long to stay, etc.) of the foreigners who wish to stay for tourism purpose will be taken into consideration. The documents and information may be required to submit if it is necessary."
+    },
+    {
+      "requirement_code": "ground_7_medical_treatment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 7: receiving medical treatment, absent a disease posing a public health threat",
+      "description": "Seventh of fourteen grounds, and the public-health carve-out is part of the ground itself.",
+      "source_role": "requirements",
+      "source_excerpt": "7-foreigners who intend to receive medical treatment, provided that they do not have a disease posing a public health threat;",
+      "display_order": 140,
+      "source_excerpt_display": "7-Foreigners who intend to receive medical treatment, provided that they do not have a disease posing a public health threat;"
+    },
+    {
+      "requirement_code": "ground_7_hospital_admission",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Ground 7: admission to a public or private hospital — and no health insurance needed if treatment costs are certified as paid",
+      "description": "The insurance waiver is conditional on certifying payment.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners coming in order to receive treatment must be admitted to public or private hospitals. valid health insurance condition is not required for foreigners who certify that treatment expenses are paid.",
+      "display_order": 150,
+      "source_excerpt_display": "Foreigners coming in order to receive treatment must be admitted to public or private hospitals. Valid health insurance condition is not required for foreigners who certify that treatment expenses are paid."
+    },
+    {
+      "requirement_code": "ground_7_carers_insurance_waiver",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 7: no health insurance required for up to TWO carers",
+      "description": "Under additional article 14 of Health Services Fundamental Law 3359, and capped at two people.",
+      "source_role": "requirements",
+      "source_excerpt": "furthermore, valid health insurance is not required for residence permit applications of care takers of the foreigners not exceeding two persons, according to the additional article 14 of health services fundamental law no 3359.",
+      "parameters": {
+        "max_carers": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "Furthermore, valid health insurance is not required for residence permit applications of care takers of the foreigners not exceeding two persons, according to the additional Article 14 of Health Services Fundamental Law No 3359."
+    },
+    {
+      "requirement_code": "ground_8_judicial_or_administrative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 8: required to stay by a judicial or administrative decision",
+      "description": "Eighth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "8-foreigners who are required to stay in turkey pursuant to a request or a decision of judicial or administrative authorities;",
+      "display_order": 170,
+      "source_excerpt_display": "8-Foreigners who are required to stay in Turkey pursuant to a request or a decision of judicial or administrative authorities;"
+    },
+    {
+      "requirement_code": "ground_9_transfer_from_family_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 9: transferring from a family residence permit",
+      "description": "Ninth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "9-foreigners who transfer from a family residence permit;",
+      "display_order": 180,
+      "source_excerpt_display": "9-Foreigners who transfer from a family residence permit;"
+    },
+    {
+      "requirement_code": "ground_10_turkish_language_course",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 10: attending a Turkish language course",
+      "description": "Tenth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "10-foreigners who will attend a turkish language course;",
+      "display_order": 190,
+      "source_excerpt_display": "10-Foreigners who will attend a Turkish language course;"
+    },
+    {
+      "requirement_code": "ground_10_maximum_twice",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 10: issued a MAXIMUM OF TWICE, at a Ministry of National Education authorised institution",
+      "description": "A hard cap on repeat use, which nothing else on this page carries.",
+      "source_role": "requirements",
+      "source_excerpt": "residence permit can be issued maximum twice for this purpose to the foreigners who enroll to institution authorized to provide language course (must have permission by ministry of national education) in turkish.",
+      "parameters": {
+        "max_issuances": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "Residence permit can be issued maximum twice for this purpose to the foreigners who enroll to institution authorized to provide language course (must have permission by Ministry of National Education) in Turkish."
+    },
+    {
+      "requirement_code": "ground_11_public_agency_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 11: an education programme, research, internship or course via a public agency",
+      "description": "Eleventh of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "11-foreigners who will attend an education programme, research, internship or, a course by way of a public agency;",
+      "display_order": 210,
+      "source_excerpt_display": "11-Foreigners who will attend an education programme, research, internship or, a course by way of a public agency;"
+    },
+    {
+      "requirement_code": "ground_11_one_year_cap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 11: capped at one year, with insurance and means waived where a public institution covers costs",
+      "description": "Both the cap and the waiver are in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit duration cannot be longer than a year for this purpose. the valid health insurance and determination of financial possibility are not required from the foreigners whose expenses of accommodation, subsistence and health are covered by public institutions. documents and information might be required from the relevant institutions.",
+      "parameters": {
+        "max_years": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "The residence permit duration cannot be longer than a year for this purpose. The valid health insurance and determination of financial possibility are not required from the foreigners whose expenses of accommodation, subsistence and health are covered by public institutions. Documents and information might be required from the relevant institutions."
+    },
+    {
+      "requirement_code": "ground_12_post_graduation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 12: applying within six months of graduating from a Turkish higher education programme",
+      "description": "Twelfth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "12-foreigners who will apply within six months upon graduation from a higher education programme in turkey;",
+      "parameters": {
+        "window_months": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230,
+      "source_excerpt_display": "12-Foreigners who will apply within six months upon graduation from a higher education programme in Turkey;"
+    },
+    {
+      "requirement_code": "ground_12_once_only_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 12: issued ONCE ONLY, for a maximum of one year",
+      "description": "A one-shot entitlement, quoted as the authority states it.",
+      "source_role": "requirements",
+      "source_excerpt": "if the foreigners apply within six months upon graduation for this purpose, the residence permit is issued only once. it can be issued maximum for one year",
+      "parameters": {
+        "max_issuances": 1,
+        "max_years": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240,
+      "source_excerpt_display": "If the foreigners apply within six months upon graduation for this purpose, the residence permit is issued only once. It can be issued maximum for one year"
+    },
+    {
+      "requirement_code": "ground_13_investors",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 13: investors within a scope and amount set by the Council of Ministers, and their family",
+      "description": "Extends to the foreign spouse and foreign minor or dependent children.",
+      "source_role": "requirements",
+      "source_excerpt": "13-foreigners who do not work in turkey but will make an investment within the scope and amount that shall be determined by the council of ministers, and their foreign spouses, his and her foreign minor children or foreign dependent children;",
+      "display_order": 250,
+      "source_excerpt_display": "13-Foreigners who do not work in Turkey but will make an investment within the scope and amount that shall be determined by the Council of Ministers, and their foreign spouses, his and her foreign minor children or foreign dependent children;"
+    },
+    {
+      "requirement_code": "ground_13_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 13: issued for up to FIVE years",
+      "description": "One of only two grounds exceeding the two-year default.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit based on this purpose is issued five years at most.",
+      "parameters": {
+        "max_years": 5,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 260,
+      "source_excerpt_display": "The residence permit based on this purpose is issued five years at most."
+    },
+    {
+      "requirement_code": "ground_14_trnc_citizens",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 14: citizens of the Turkish Republic of Northern Cyprus",
+      "description": "Fourteenth of fourteen grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "14-citizens of turkish republic of northern cyprus;",
+      "display_order": 270,
+      "source_excerpt_display": "14-Citizens of Turkish Republic of Northern Cyprus;"
+    },
+    {
+      "requirement_code": "ground_14_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground 14: issued for up to FIVE years",
+      "description": "The second exception to the two-year default.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit based on this purpose is issued for five-year period at most.",
+      "parameters": {
+        "max_years": 5,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt_display": "The residence permit based on this purpose is issued for five-year period at most."
+    },
+    {
+      "requirement_code": "duration_two_years_default",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Default duration: a maximum of two years at a time, except grounds 13 and 14",
+      "description": "The rule and its two exceptions are one sentence and are quoted together.",
+      "source_role": "requirements",
+      "source_excerpt": "short-term residence permit is issued maximum for a two-year period each time except the foreigners mentioned in 13th and 14th items above.",
+      "parameters": {
+        "max_years": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 290,
+      "source_excerpt_display": "Short-term residence permit is issued maximum for a two-year period each time except the foreigners mentioned in 13th and 14th items above."
+    },
+    {
+      "requirement_code": "condition_supporting_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition: supporting information and documents for the reason of stay",
+      "description": "First of five conditions under Article 32.",
+      "source_role": "requirements",
+      "source_excerpt": "- to submit supporting information and documents regarding the reason of stay in turkey,",
+      "display_order": 300,
+      "source_excerpt_display": "- To submit supporting information and documents regarding the reason of stay in Turkey,"
+    },
+    {
+      "requirement_code": "condition_not_article_7",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: not falling within the scope of Article 7",
+      "description": "The entry-ban provision, cited rather than restated.",
+      "source_role": "requirements",
+      "source_excerpt": "- not to fall within the scope of article 7 of the relevant law,",
+      "display_order": 310,
+      "source_excerpt_display": "- Not to fall within the scope of Article 7 of the relevant law,"
+    },
+    {
+      "requirement_code": "condition_accommodation_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: accommodation conforming to general health and safety standards",
+      "description": "Third of five conditions.",
+      "source_role": "requirements",
+      "source_excerpt": "- to live in accommodation conditions that conform to general health and safety standards,",
+      "display_order": 320,
+      "source_excerpt_display": "- To live in accommodation conditions that conform to general health and safety standards,"
+    },
+    {
+      "requirement_code": "condition_criminal_record",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition: on request, a criminal record certificate from the country of citizenship or legal residence",
+      "description": "Conditional on being asked, which the authority states.",
+      "source_role": "requirements",
+      "source_excerpt": "- upon request, to present criminal record certificate issued by the competent authorities in their country of citizenship or legal residence,",
+      "display_order": 330,
+      "source_excerpt_display": "- Upon request, to present criminal record certificate issued by the competent authorities in their country of citizenship or legal residence,"
+    },
+    {
+      "requirement_code": "condition_address",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition: information on the address of stay in Turkey",
+      "description": "Fifth of five conditions.",
+      "source_role": "requirements",
+      "source_excerpt": "- to submit information on their address of stay in turkey.",
+      "display_order": 340,
+      "source_excerpt_display": "- To submit information on their address of stay in Turkey."
+    },
+    {
+      "requirement_code": "cancellation_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Refusal, cancellation and non-renewal apply on the same four grounds",
+      "description": "The authority treats all three outcomes identically, which is why they are quoted as one rule.",
+      "source_role": "requirements",
+      "source_excerpt": "under the following cases a short-term residence permit shall not be granted, shall be cancelled if has been issued, and shall not be renewed when:",
+      "display_order": 350,
+      "source_excerpt_display": "Under the following cases a short-term residence permit shall not be granted, shall be cancelled if has been issued, and shall not be renewed when:"
+    },
+    {
+      "requirement_code": "cancellation_conditions_lapsed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if a condition is not met or no longer applies",
+      "description": "First of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- one or more of the conditions provided for short-term residence permit are not met or no longer apply,",
+      "display_order": 360,
+      "source_excerpt_display": "- one or more of the conditions provided for short-term residence permit are not met or no longer apply,"
+    },
+    {
+      "requirement_code": "cancellation_used_outside_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if used outside the purpose it was issued for",
+      "description": "Second of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- it is established that the residence permit is used outside the purposes of those it is issued for,",
+      "display_order": 370,
+      "source_excerpt_display": "- it is established that the residence permit is used outside the purposes of those it is issued for,"
+    },
+    {
+      "requirement_code": "cancellation_removal_or_entry_ban",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on a current removal decision or entry ban",
+      "description": "Third of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- there is a current removal decision or an entry ban to turkey in respect to the foreigner,",
+      "display_order": 380,
+      "source_excerpt_display": "- there is a current removal decision or an entry ban to Turkey in respect to the foreigner,"
+    },
+    {
+      "requirement_code": "cancellation_time_outside_turkey",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on violating the permitted time spent outside Turkey",
+      "description": "Fourth of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- upon violation regarding the period which is lived outside of turkey",
+      "display_order": 390,
+      "source_excerpt_display": "- upon violation regarding the period which is lived outside of Turkey"
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 400,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 410,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 420,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 430,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 440,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 450,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 460,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 470,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 480,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

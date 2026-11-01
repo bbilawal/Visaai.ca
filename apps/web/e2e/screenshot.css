@@ -1,0 +1,10 @@
+/*
+ * Applied only while Playwright takes a toHaveScreenshot() image (see
+ * playwright.config.ts). The suite runs on `next dev`, whose indicator badge
+ * ("N", sometimes "1 Issue"/"2 Issues") sits on top of the page and its count
+ * varies run to run. It is not part of the product, so keep it out of the
+ * baselines.
+ */
+nextjs-portal {
+  display: none !important;
+}

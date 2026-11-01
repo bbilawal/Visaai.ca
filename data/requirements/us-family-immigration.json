@@ -1,0 +1,303 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-family-immigration-immediate-relative-and-family-preference-immigrant-visas",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two USCIS form pages listed in source_roles. The five travel.state.gov sources registered for this visa type could not be read — see not_extracted.",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Where USCIS states a condition it does not define (\"if applicable\", \"if required\"), the condition is repeated in the description rather than guessed at in a rule.",
+  "source_roles": {
+    "forms_i130": "https://www.uscis.gov/i-130",
+    "forms_i485": "https://www.uscis.gov/i-485"
+  },
+  "page_dates": {
+    "forms_i130": "form edition 04/01/24; page read 2026-08-21",
+    "forms_i485": "form edition 01/20/25, superseded by 09/18/26 on 2026-09-18; page read 2026-08-21"
+  },
+  "not_extracted": [
+    "The whole consular immigrant-visa half of this visa type. Five of the seven registered sources are on travel.state.gov and ALL of them returned HTTP 403 from Cloudflare on 2026-08-21, to both curl with the VisaAI-SourceMonitor user agent and to WebFetch: https://travel.state.gov/content/travel/en/us-visas/immigrate/family-immigration.html (landing), .../the-immigrant-visa-process/step-1-submit-a-petition.html (eligibility), .../step-1-submit-a-petition/step-2-begin-nvc-processing.html (application), .../forms/online-immigrant-visa-forms/ds-260-faqs.html (forms), .../fees/fees-visa-services.html (fees). Nothing about DS-260, NVC processing, civil documents, the affidavit of support, the consular interview or State Department fees could be read, so none of it appears below.",
+    "Every fee amount. Both USCIS pages state only 'you can find the filing fee for form i-1xx by visiting our fee schedule page'. The fee schedule page is not a registered source for this visa type and was not read, so the fee requirements below carry no amount and no currency.",
+    "Form I-864, Affidavit of Support Under Section 213A of the INA. It appears on the I-485 page ONLY inside the list of forms that may be uploaded when filing online. That page never states that it is required, so it is not recorded as a requirement here even though it is widely known to be one. It belongs to the blocked travel.state.gov / fee-schedule material.",
+    "The trigger for Form I-130A, Supplemental Information for a Spouse Beneficiary. USCIS writes 'form i-130 (and form i-130a, if required)' and lists the form under downloads, but never states on this page when it is required.",
+    "The USCIS 'checklist of required initial evidence' for Form I-485. Unlike the I-130 page, the I-485 page does not inline it — it links out with 'view the checklist of required initial evidence' to a page that is not a registered source, so it was not followed.",
+    "Filing addresses and lockbox routing for both forms. Both pages defer to separate 'direct filing addresses' pages that are not registered sources.",
+    "The I-130 page's I-824 / change-of-processing-route table, the marriage-fraud reporting notice, and the VAWA self-petition (Form I-360) route. These are branches of the page addressed to petitioners in specific situations, not requirements of this visa type.",
+    "The I-485 page's list of forms that can be concurrently uploaded when filing online (G-28, I-130, I-131, I-140, Supplement A, Supplement J, I-693, I-765, I-864). That list states what MAY be uploaded together, not what is required.",
+    "Adoption requirements beyond the four items USCIS lists verbatim. The page defers to the USCIS Policy Manual and to Hague Convention guidance that were not read.",
+    "Processing times — not stated on either page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "i130_petition",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-130, Petition for Alien Relative",
+      "official_form_code": "I-130",
+      "official_form_url": "https://www.uscis.gov/i-130",
+      "description": "Filed by the petitioner — the U.S. citizen, lawful permanent resident or U.S. national relative — not by the person immigrating. USCIS states the edition date is 04/01/24 and that pages from a different edition may cause the form to be rejected.",
+      "parameters": {
+        "edition_date": "04/01/24",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "use this form if you (the petitioner) are a u.s. citizen, lawful permanent resident, or u.s. national (who is not a u.s. citizen) and you need to establish your qualifying relationship with an eligible alien relative (the beneficiary) who wishes to come to or stay in the united states permanently and apply for the permanent resident card (also called a green card).",
+      "display_order": 100,
+      "source_excerpt_display": "Use this form if you (the petitioner) are a U.S. citizen, lawful permanent resident, or U.S. national (who is not a U.S. citizen) and you need to establish your qualifying relationship with an eligible alien relative (the beneficiary) who wishes to come to or stay in the United States permanently and apply for the Permanent Resident Card (also called a Green Card)."
+    },
+    {
+      "requirement_code": "i130_part4_route_selection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Select exactly one processing route in Part 4 of Form I-130",
+      "description": "Adjustment of status inside the United States, or consular processing abroad — one or the other. USCIS states that leaving it blank or answering both is wrong, and that if it is left incomplete USCIS decides the route itself based on the beneficiary's address on the petition.",
+      "source_role": "forms_i130",
+      "source_excerpt": "you must select only 1 option for part 4 (question 61 or 62) to indicate whether the beneficiary will seek adjustment of status inside the united states or consular processing abroad. do not complete both questions, and do not leave this section blank.",
+      "display_order": 110,
+      "source_excerpt_display": "You must select only 1 option for Part 4 (Question 61 or 62) to indicate whether the beneficiary will seek adjustment of status inside the United States or consular processing abroad. Do not complete both questions, and do not leave this section blank."
+    },
+    {
+      "requirement_code": "immigrant_visa_number_available",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An immigrant visa number must be available before the relative can proceed",
+      "description": "USCIS states this does not apply to immediate relatives, for whom an immigrant visa is always available. The page does not define which relationships count as immediate relatives, so VisaAI does not gate this requirement on a relationship.",
+      "source_role": "forms_i130",
+      "source_excerpt": "certain relatives must wait until an immigrant visa number is available before they can file form i-485 (to adjust their status if they are in the united states) or request an immigrant visa at an embassy or consulate through consular processing (if they are outside the united states). however, if your relative qualifies as an immediate relative, an immigrant visa is always available.",
+      "display_order": 120,
+      "source_excerpt_display": "Certain relatives must wait until an immigrant visa number is available before they can file Form I-485 (to adjust their status if they are in the United States) or request an immigrant visa at an embassy or consulate through consular processing (if they are outside the United States). However, if your relative qualifies as an immediate relative, an immigrant visa is always available."
+    },
+    {
+      "requirement_code": "i130a_spouse_supplement",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-130A, Supplemental Information for a Spouse Beneficiary",
+      "official_form_code": "I-130A",
+      "description": "USCIS publishes this form alongside Form I-130 and refers to it as required in some cases, but does not state on this page when it is required. Its title names a spouse beneficiary, which is why VisaAI shows it for spouse petitions; if you have not told VisaAI your relationship to the petitioner it will render as \"may be required\".",
+      "rule": {
+        "fact": "sponsor_relationship",
+        "op": "in",
+        "value": [
+          "spouse",
+          "husband",
+          "wife"
+        ]
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "form i-130a, supplemental information for a spouse beneficiary (pdf, 454.67 kb) ... please do not submit this checklist with your form i-130 (and form i-130a, if required).",
+      "display_order": 130,
+      "source_excerpt_display": "Form I-130A, Supplemental Information for a Spouse Beneficiary (PDF, 454.67 KB) ... Please do not submit this checklist with your Form I-130 (and Form I-130A, if required)."
+    },
+    {
+      "requirement_code": "evidence_petitioner_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of the petitioner's U.S. citizenship, lawful permanent residence, or U.S. national status",
+      "description": "Any one of the documents USCIS lists. It appears under the heading \"checklist of required initial evidence\", which USCIS itself labels informational: \"the checklist is an optional tool to use as you prepare your form, but does not replace statutory, regulatory, and form instruction requirements.\" USCIS also states: \"do not send original documents unless specifically requested in the form instructions or applicable regulations.\"",
+      "source_role": "forms_i130",
+      "source_excerpt": "evidence of u.s. citizenship, lawful permanent residence, or u.s. national status: a copy of your birth certificate, issued by a civil registrar, vital statistics office, or other civil authority showing you were born in the united states; a copy of your naturalization or citizenship certificate issued by uscis or the former immigration and naturalization service (ins); a copy of form fs-240, consular report of birth abroad (crba), issued by a u.s. embassy or u.s. consulate; a copy of your unexpired u.s. passport; an original statement from a u.s. consular officer verifying you are a u.s. citizen with a valid passport; or a copy of the front and back of your permanent resident card (also known as a green card or a form i-551).",
+      "display_order": 200,
+      "source_excerpt_display": "Evidence of U.S. citizenship, lawful permanent residence, or U.S. national status: A copy of your birth certificate, issued by a civil registrar, vital statistics office, or other civil authority showing you were born in the United States; A copy of your naturalization or citizenship certificate issued by USCIS or the former Immigration and Naturalization Service (INS); A copy of Form FS-240, Consular Report of Birth Abroad (CRBA), issued by a U.S. Embassy or U.S. Consulate; A copy of your unexpired U.S. passport; An original statement from a U.S. consular officer verifying you are a U.S. citizen with a valid passport; or A copy of the front and back of your Permanent Resident Card (also known as a Green Card or a Form I-551)."
+    },
+    {
+      "requirement_code": "evidence_family_relationship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of the family relationship between petitioner and beneficiary",
+      "description": "Which document depends on the relationship being petitioned for. USCIS refers to the form instructions for more detailed guidance.",
+      "source_role": "forms_i130",
+      "source_excerpt": "evidence of family relationship with 1 of the following (see form instructions for more detailed guidance): spouse: a copy of your marriage certificate ... child: a copy of your child’s birth certificate(s). parent: a copy of your birth certificate. brother/sister: a copy of the birth certificate for you and your sibling.",
+      "display_order": 210,
+      "source_excerpt_display": "Evidence of family relationship with 1 of the following (see form instructions for more detailed guidance): Spouse: A copy of your marriage certificate ... Child: A copy of your child’s birth certificate(s). Parent: A copy of your birth certificate. Brother/Sister: A copy of the birth certificate for you and your sibling."
+    },
+    {
+      "requirement_code": "evidence_prior_marriages_terminated",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence that you or your spouse terminated any prior marriages",
+      "description": "USCIS lists this under the spouse branch of the relationship evidence and marks it \"(if applicable)\" without defining when it applies.",
+      "rule": {
+        "fact": "sponsor_relationship",
+        "op": "in",
+        "value": [
+          "spouse",
+          "husband",
+          "wife"
+        ]
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "evidence you or your spouse terminated any prior marriages (if applicable)",
+      "display_order": 220,
+      "source_excerpt_display": "Evidence you or your spouse terminated any prior marriages (if applicable)"
+    },
+    {
+      "requirement_code": "evidence_bona_fide_marriage",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of the bona fides of the marriage",
+      "description": "Required only where the petition is for a spouse. USCIS names examples rather than a fixed list, and closes with \"any other relevant documentation to establish that there is an ongoing marital union\".",
+      "rule": {
+        "fact": "sponsor_relationship",
+        "op": "in",
+        "value": [
+          "spouse",
+          "husband",
+          "wife"
+        ]
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "evidence of the bona fides of the marriage, if petitioning for a spouse: documentation showing joint ownership of property; a lease showing joint tenancy of a common residence, meaning you both live at the same address together; documentation showing that you and your spouse have combined your financial resources; birth certificates of children born to you and your spouse together; affidavits sworn to or affirmed by third parties having personal knowledge of the bona fides of the marital relationship. each affidavit must contain the full name and address of the person making the affidavit; date and place of birth of the person making the affidavit; and complete information and details explaining how the person acquired their knowledge of your marriage; and any other relevant documentation to establish that there is an ongoing marital union.",
+      "display_order": 230,
+      "source_excerpt_display": "Evidence of the bona fides of the marriage, if petitioning for a spouse: Documentation showing joint ownership of property; A lease showing joint tenancy of a common residence, meaning you both live at the same address together; Documentation showing that you and your spouse have combined your financial resources; Birth certificates of children born to you and your spouse together; Affidavits sworn to or affirmed by third parties having personal knowledge of the bona fides of the marital relationship. Each affidavit must contain the full name and address of the person making the affidavit; date and place of birth of the person making the affidavit; and complete information and details explaining how the person acquired their knowledge of your marriage; and Any other relevant documentation to establish that there is an ongoing marital union."
+    },
+    {
+      "requirement_code": "proof_of_legal_name_change",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of legal name change",
+      "description": "USCIS marks this \"(if applicable)\" and does not state when it applies. VisaAI does not collect a name-change fact, so no rule is attached and the item is shown to everyone with the condition stated here.",
+      "source_role": "forms_i130",
+      "source_excerpt": "proof of legal name change (if applicable)",
+      "display_order": 240,
+      "source_excerpt_display": "Proof of legal name change (if applicable)"
+    },
+    {
+      "requirement_code": "passport_style_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "2 passport-style photographs",
+      "description": "USCIS marks this \"(if applicable)\" on the I-130 initial-evidence checklist and does not state when it applies.",
+      "parameters": {
+        "count": 2,
+        "style": "passport-style"
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "2 passport-style photographs (if applicable).",
+      "display_order": 250,
+      "source_excerpt_display": "2 passport-style photographs (if applicable)."
+    },
+    {
+      "requirement_code": "certified_english_translations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Full English translation and translator's certification for any foreign-language document",
+      "source_role": "forms_i130",
+      "source_excerpt": "if you submit any documents (copies or original documents, if requested) in a foreign language, you must include a full english translation along with a certification from the translator verifying that the translation is complete and accurate, and that they are competent to translate from the foreign language into english.",
+      "display_order": 260,
+      "source_excerpt_display": "If you submit any documents (copies or original documents, if requested) in a foreign language, you must include a full English translation along with a certification from the translator verifying that the translation is complete and accurate, and that they are competent to translate from the foreign language into English."
+    },
+    {
+      "requirement_code": "adopted_child_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Adoption evidence, where the petition is for an adopted child",
+      "description": "Applies only where Form I-130 is filed for an adopted child. VisaAI does not collect a fact that distinguishes an adopted-child petition, so no rule is attached and the condition is stated here instead. USCIS defers to its Policy Manual and to Hague Adoption Convention guidance for the rest.",
+      "source_role": "forms_i130",
+      "source_excerpt": "if you are filing form i-130 for your adopted child evidence you meet requirements for the family-based petition process , including: a copy of the adoption decree showing the adoption took place before the child turned 16 (or 18 if the sibling exception applies); evidence you have had legal custody of the adopted child for 2 years; evidence you have had joint residence with the adopted child for 2 years; and evidence the hague adoption convention process does not apply, if you or your spouse is a u.s. citizen and the child is from a hague adoption convention country .",
+      "display_order": 270,
+      "source_excerpt_display": "If you are filing Form I-130 for your adopted child Evidence you meet requirements for the family-based petition process, including: A copy of the adoption decree showing the adoption took place before the child turned 16 (or 18 if the sibling exception applies); Evidence you have had legal custody of the adopted child for 2 years; Evidence you have had joint residence with the adopted child for 2 years; and Evidence the Hague Adoption Convention process does not apply, if you or your spouse is a U.S. citizen and the child is from a Hague Adoption Convention country."
+    },
+    {
+      "requirement_code": "sign_form_i130",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sign Form I-130 before filing",
+      "description": "USCIS also states it will reject the form outright if any of these fields are missing: Part 1 relationship; Part 2 your full name, date of birth, mailing address and marital information; Part 4 beneficiary full name, date of birth, physical address and marital information.",
+      "source_role": "forms_i130",
+      "source_excerpt": "don’t forget to sign your form! we will reject any unsigned form.",
+      "display_order": 280,
+      "source_excerpt_display": "Don’t forget to sign your form! We will reject any unsigned form."
+    },
+    {
+      "requirement_code": "i130_filing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Form I-130 filing fee",
+      "description": "USCIS does not state the amount on this page — it points to its fee schedule, which is not a registered source for this visa type and was not read. No amount and no currency are recorded here, deliberately.",
+      "parameters": {
+        "amount_stated_on_page": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i130",
+      "source_excerpt": "you can find the filing fee for form i-130 by visiting our fee schedule page.",
+      "display_order": 400,
+      "source_excerpt_display": "You can find the filing fee for Form I-130 by visiting our Fee Schedule page."
+    },
+    {
+      "requirement_code": "i485_adjustment_application",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-485, Application to Register Permanent Residence or Adjust Status",
+      "official_form_code": "I-485",
+      "official_form_url": "https://www.uscis.gov/i-485",
+      "description": "This is the adjustment-of-status route, for a relative who is already in the United States. A relative outside the United States goes through consular processing instead, which is documented on travel.state.gov pages VisaAI could not read (see not_extracted). VisaAI collects no fact that distinguishes the two routes, so no rule is attached. USCIS accepts the 01/20/25 edition only if postmarked or submitted before 2026-09-18, and only the 09/18/26 edition on or after that date — there is no grace period.",
+      "parameters": {
+        "edition_date": "01/20/25",
+        "next_edition_date": "09/18/26",
+        "next_edition_effective": "2026-09-18",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i485",
+      "source_excerpt": "use this form to apply for lawful permanent resident status if you are in the united states.",
+      "display_order": 300,
+      "source_excerpt_display": "Use this form to apply for lawful permanent resident status if you are in the United States."
+    },
+    {
+      "requirement_code": "i693_medical_examination",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-693, Report of Immigration Medical Examination and Vaccination Record",
+      "official_form_code": "I-693",
+      "description": "Completed and sealed by a civil surgeon. Filing by mail: submit it in the civil surgeon's original sealed envelope. Filing online: open the envelope, upload the completed form, and keep the original and the envelope until USCIS makes a final decision. USCIS states it may reject Form I-485 if a required Form I-693 (or partial I-693, such as the vaccination record) is not submitted with it. Applies to the adjustment-of-status route only.",
+      "source_role": "forms_i485",
+      "source_excerpt": "when you file form i-485, you must also submit form i-693, report of immigration medical examination and vaccination record . a civil surgeon is responsible for providing you with a completed form i-693 that is signed and placed in a sealed envelope. ... if you are required to submit form i-693, report of immigration medical examination and vaccination record , or a partial form i-693 (such as the vaccination record), you must submit it with your form i-485. otherwise, we may reject your form i-485.",
+      "display_order": 310,
+      "source_excerpt_display": "When you file Form I-485, you must also submit Form I-693, Report of Immigration Medical Examination and Vaccination Record. A civil surgeon is responsible for providing you with a completed Form I-693 that is signed and placed in a sealed envelope. ... If you are required to submit Form I-693, Report of Immigration Medical Examination and Vaccination Record, or a partial Form I-693 (such as the Vaccination Record), you must submit it with your Form I-485. Otherwise, we may reject your Form I-485."
+    },
+    {
+      "requirement_code": "i485_visa_immediately_available",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An immigrant visa must be immediately available in your category before you file Form I-485",
+      "description": "USCIS points to its visa availability and priority dates pages and to the adjustment of status filing charts from the Visa Bulletin, and notes that exceptions exist per immigrant category in the Form I-485 instructions. Neither the charts nor the instructions are registered sources and neither was read.",
+      "source_role": "forms_i485",
+      "source_excerpt": "in general, you may not file your form i-485 until an immigrant visa is immediately available in your category.",
+      "display_order": 320,
+      "source_excerpt_display": "In general, you may not file your Form I-485 until an immigrant visa is immediately available in your category."
+    },
+    {
+      "requirement_code": "sign_form_i485",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sign Form I-485 before filing",
+      "source_role": "forms_i485",
+      "source_excerpt": "don’t forget to sign your form. we will reject any unsigned form.",
+      "display_order": 330,
+      "source_excerpt_display": "Don’t forget to sign your form. We will reject any unsigned form."
+    },
+    {
+      "requirement_code": "i485_filing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Form I-485 filing fee",
+      "description": "USCIS does not state the amount on this page — it points to its fee schedule, which is not a registered source for this visa type and was not read. No amount and no currency are recorded here, deliberately.",
+      "parameters": {
+        "amount_stated_on_page": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i485",
+      "source_excerpt": "you can find the filing fee for form i-485 by visiting our fee schedule page.",
+      "display_order": 410,
+      "source_excerpt_display": "You can find the filing fee for Form I-485 by visiting our Fee Schedule page."
+    },
+    {
+      "requirement_code": "submit_all_initial_evidence_together",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Submit all required initial evidence at the same time you file",
+      "description": "USCIS frames this as a time-saver rather than a rule: doing so may avoid a request for evidence and may avoid an interview. Recorded as VisaAI advice, not as a government requirement.",
+      "source_role": "forms_i485",
+      "source_excerpt": "save time by submitting all required initial evidence and supporting documentation at the same time you file form i-485. ... submitting all required initial evidence and supporting documentation at the same time you file form i-485 may eliminate the need for us to issue a request for evidence to get additional documentation and evidence. this may also help avoid adjudication delays if we decide that you do not need to be interviewed.",
+      "display_order": 500,
+      "source_excerpt_display": "Save time by submitting all required initial evidence and supporting documentation at the same time you file Form I-485. ... Submitting all required initial evidence and supporting documentation at the same time you file Form I-485 may eliminate the need for us to issue a Request for Evidence to get additional documentation and evidence. This may also help avoid adjudication delays if we decide that you do not need to be interviewed."
+    }
+  ]
+}

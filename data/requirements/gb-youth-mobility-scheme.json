@@ -1,0 +1,278 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "gb-youth-mobility-scheme",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the three official GOV.UK pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE FIRST YOUTH-MOBILITY ROUTE IN THE REGISTRY, and the first where NATIONALITY changes the rule rather than only the paperwork. The age band is 18-35 for Australia, Canada, New Zealand and South Korea and 18-30 for everyone else; Hong Kong SAR and Taiwan applicants must first win a BALLOT; India has a different scheme entirely; and five nationalities each owe a specific criminal-records document from their own state. A single flattened checklist would be wrong for almost every applicant, so each of those is stored as its own conditional requirement naming the nationalities it binds.\n\nTHE AGE RULE IS NOT THE ONE PEOPLE ASSUME. GOV.UK states it twice, once per band: you must be 18 or over when the visa STARTS, or at or under the ceiling when you APPLY. Both halves matter and they point in opposite directions — you may apply before turning 18, and you may be over the ceiling by the time the visa begins. The overview page adds the consequence: turning 31 after issue does not shorten the visa.\n\nTHE SAVINGS RULE HAS A HOLDING PERIOD AND A DEADLINE. GBP 2,530 is the easy half; the money must have been available for 28 consecutive days, and day 28 must fall within 31 days of applying. That is a three-day window between satisfying the rule and it going stale, and it is the single most missable thing on the page.\n\nNO BOUNDS NEEDED, CHECKED. Three separate GOV.UK guide pages, one section each, no sibling route concatenated into any of them.",
+  "source_roles": {
+    "landing": "https://www.gov.uk/youth-mobility",
+    "requirements": "https://www.gov.uk/youth-mobility/eligibility",
+    "documents": "https://www.gov.uk/youth-mobility/documents-you-must-provide"
+  },
+  "page_dates": {
+    "landing": "2024-10-31T17:00:15+00:00",
+    "requirements": "2024-10-31T17:00:15+00:00",
+    "documents": "2024-10-31T17:00:15+00:00"
+  },
+  "freshness_note": "All three carry the SAME dateline to the second — 2024-10-31T17:00:15 — which is the GOV.UK platform-wide republish already identified by check-source-freshness.ts, not three unrelated visa pages last edited at the same instant. Reported as a site-wide republish and excluded from the stale count; it is not evidence of freshness either way.",
+  "not_extracted": [
+    "The India Young Professionals Scheme. GOV.UK routes Indian nationals to a different scheme with its own page; it would be its own visa type.",
+    "The ballot process for Hong Kong and Taiwan. The requirement to have won it is recorded; how and when the ballot runs is on a separate page and changes each cycle.",
+    "The full financial-evidence guidance. The threshold, the 28-day holding period and the 31-day deadline are recorded; the acceptable-account rules are a separate document.",
+    "The ATAS certificate rules for study, and the tuberculosis-testing country list. Both are separate GOV.UK systems that apply across many routes.",
+    "The extension route for Australian, Canadian and New Zealand nationals. It is recorded as an outcome, but the extension is a separate application with its own page.",
+    "The immigration health surcharge's own rules and exemptions; only the figure GOV.UK states on this route is stored."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "age_band_18_to_35",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Aged 18 to 35 if you are from Australia, Canada, New Zealand or South Korea",
+      "description": "Read the two halves separately: 18 or over when the visa STARTS, 35 or under when you APPLY. You may therefore apply before turning 18, and be over 35 by the time it begins.",
+      "source_role": "requirements",
+      "source_excerpt": "you can apply for the visa if you’re aged 18 to 35 and from: australia canada new zealand south korea you must be aged 18 or over when your visa starts, or 35 or under when you apply for it. you can apply for your visa before you turn 18 and you can be over 35 when it starts.",
+      "parameters": {
+        "minimum_age_at_start": 18,
+        "maximum_age_at_application": 35
+      },
+      "display_order": 10,
+      "source_excerpt_display": "You can apply for the visa if you’re aged 18 to 35 and from: Australia Canada New Zealand South Korea You must be aged 18 or over when your visa starts, or 35 or under when you apply for it. You can apply for your visa before you turn 18 and you can be over 35 when it starts."
+    },
+    {
+      "requirement_code": "age_band_18_to_30",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Aged 18 to 30 if you are from Andorra, Iceland, Japan, Monaco, San Marino or Uruguay",
+      "description": "The same two-part age test, five years lower. British overseas citizens, British overseas territories citizens and British nationals (overseas) fall in this band too.",
+      "source_role": "requirements",
+      "source_excerpt": "you can apply for the visa if you’re aged 18 to 30 and from: andorra iceland japan monaco san marino uruguay",
+      "parameters": {
+        "minimum_age_at_start": 18,
+        "maximum_age_at_application": 30
+      },
+      "display_order": 20,
+      "source_excerpt_display": "You can apply for the visa if you’re aged 18 to 30 and from: Andorra Iceland Japan Monaco San Marino Uruguay"
+    },
+    {
+      "requirement_code": "british_national_categories",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Certain British nationalities qualify in the 18-to-30 band",
+      "source_role": "requirements",
+      "source_excerpt": "you can also apply if you’re aged 18 to 30 and you’re a: british overseas citizen british overseas territories citizen british national (overseas) you must be aged 18 or over when your visa starts, or 30 or under when you apply for it.",
+      "display_order": 30,
+      "source_excerpt_display": "You can also apply if you’re aged 18 to 30 and you’re a: British overseas citizen British overseas territories citizen British national (overseas) You must be aged 18 or over when your visa starts, or 30 or under when you apply for it."
+    },
+    {
+      "requirement_code": "ballot_required_hong_kong_taiwan",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Hong Kong (SAR passport) and Taiwan applicants must first win the ballot",
+      "description": "A gate before the application exists, not a document within it. Someone who has not entered the ballot cannot apply at all, whatever else they satisfy.",
+      "source_role": "requirements",
+      "source_excerpt": "you must be selected in the youth mobility scheme ballot before you can apply for your visa if you’re from: hong kong, if you have an sar passport taiwan",
+      "display_order": 40,
+      "source_excerpt_display": "You must be selected in the Youth Mobility Scheme ballot before you can apply for your visa if you’re from: Hong Kong, if you have an SAR passport Taiwan"
+    },
+    {
+      "requirement_code": "children_bar",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You cannot apply if you have children living with you, or children you support financially",
+      "description": "An outright bar, and the financial-responsibility limb catches people whose children do not live with them.",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot apply if you have: children under the age of 18 who live with you children you’re financially responsible for already been in the uk under the scheme",
+      "display_order": 50,
+      "source_excerpt_display": "You cannot apply if you have: children under the age of 18 who live with you children you’re financially responsible for already been in the UK under the scheme"
+    },
+    {
+      "requirement_code": "india_different_scheme",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Indian nationals use a different scheme",
+      "source_role": "requirements",
+      "source_excerpt": "if you’re from india there’s a different scheme for indian nationals. check if you’re eligible for the india young professionals scheme visa .",
+      "display_order": 60,
+      "source_excerpt_display": "If you’re from India There’s a different scheme for Indian nationals. Check if you’re eligible for the India Young Professionals Scheme visa."
+    },
+    {
+      "requirement_code": "savings_2530_held_28_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "GBP 2,530 in your account, held 28 consecutive days, with day 28 within 31 days of applying",
+      "description": "THE MOST MISSABLE RULE ON THIS ROUTE. The amount is the easy half. The 28-day holding period and the 31-day deadline leave a three-day window between satisfying the rule and the evidence going stale.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have at least £2,530 in your bank account to show you can support yourself in the uk. you will need to have had the money available for at least 28 days in a row. day 28 must be within 31 days of applying for this visa.",
+      "parameters": {
+        "savings_gbp": 2530,
+        "currency": "GBP",
+        "held_for_days": 28,
+        "day_28_within_days_of_applying": 31
+      },
+      "display_order": 70,
+      "source_excerpt_display": "You must have at least £2,530 in your bank account to show you can support yourself in the UK. You will need to have had the money available for at least 28 days in a row. Day 28 must be within 31 days of applying for this visa."
+    },
+    {
+      "requirement_code": "passport_or_identity_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport or other document showing identity and nationality",
+      "source_role": "documents",
+      "source_excerpt": "when you apply you’ll need to provide: a valid passport or other document that shows your identity and nationality a bank statement showing you have at least £2,530 in savings",
+      "display_order": 80,
+      "source_excerpt_display": "When you apply you’ll need to provide: a valid passport or other document that shows your identity and nationality a bank statement showing you have at least £2,530 in savings"
+    },
+    {
+      "requirement_code": "tuberculosis_test",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Tuberculosis test results, if you are from a country where the test is required",
+      "source_role": "documents",
+      "source_excerpt": "your tuberculosis ( tb ) test results if you’re from a country where you have to take the test",
+      "display_order": 90,
+      "source_excerpt_display": "your tuberculosis (TB) test results if you’re from a country where you have to take the test"
+    },
+    {
+      "requirement_code": "certified_translations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Certified translations for anything not in English or Welsh",
+      "source_role": "documents",
+      "source_excerpt": "you’ll need to provide a certified translation of any documents that are not in english or welsh.",
+      "display_order": 100,
+      "source_excerpt_display": "You’ll need to provide a certified translation of any documents that are not in English or Welsh."
+    },
+    {
+      "requirement_code": "criminal_record_certificate_by_nationality",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Andorra, Iceland and Uruguay: a criminal-records certificate less than 6 months old",
+      "description": "Each state's own document, named by GOV.UK in its own language — the Icelandic sakavottorð, the Uruguayan certificado de antecedentes judiciales. All three carry the same six-month freshness limit, which is short enough to expire during a slow application.",
+      "source_role": "documents",
+      "source_excerpt": "if you’re from andorra you must provide an andorran certificate of criminal records . it must have been issued less than 6 months before you apply for the youth mobility scheme visa.",
+      "parameters": {
+        "maximum_certificate_age_months": 6
+      },
+      "display_order": 110,
+      "source_excerpt_display": "If you’re from Andorra You must provide an Andorran certificate of criminal records. It must have been issued less than 6 months before you apply for the Youth Mobility Scheme visa."
+    },
+    {
+      "requirement_code": "san_marino_suitability_letter",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "San Marino: a suitability letter from the Department of Foreign Affairs, under 6 months old",
+      "source_role": "documents",
+      "source_excerpt": "if you’re from san marino you must provide a letter from the directorate of political and diplomatic affairs of the republic of san marino department of foreign affairs. the letter must: confirm that you’re suitable for the youth mobility scheme have been issued less than 6 months before you apply for the youth mobility scheme visa",
+      "parameters": {
+        "maximum_certificate_age_months": 6
+      },
+      "display_order": 120,
+      "source_excerpt_display": "If you’re from San Marino You must provide a letter from the Directorate of Political and Diplomatic Affairs of the Republic of San Marino Department of Foreign Affairs. The letter must: confirm that you’re suitable for the Youth Mobility Scheme have been issued less than 6 months before you apply for the Youth Mobility Scheme visa"
+    },
+    {
+      "requirement_code": "ballot_confirmation_email",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Hong Kong and Taiwan: the Home Office email confirming you won the ballot",
+      "source_role": "documents",
+      "source_excerpt": "if you’re from hong kong or taiwan you must provide a valid email from the home office confirming you were successful in the youth mobility scheme ballot .",
+      "display_order": 130,
+      "source_excerpt_display": "If you’re from Hong Kong or Taiwan You must provide a valid email from the Home Office confirming you were successful in the Youth Mobility Scheme ballot."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee: GBP 340",
+      "source_role": "landing",
+      "source_excerpt": "application fee the application fee is £340.",
+      "parameters": {
+        "amount": 340,
+        "currency": "GBP"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "Application fee The application fee is £340."
+    },
+    {
+      "requirement_code": "healthcare_surcharge",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Immigration health surcharge: usually GBP 776 per year",
+      "description": "Payable on top of the fee and for the whole visa length, so a two-year visa carries roughly GBP 1,552 of surcharge against a GBP 340 fee. GOV.UK writes 'usually', so the figure is stored as the stated one rather than as a certainty.",
+      "source_role": "landing",
+      "source_excerpt": "pay the healthcare surcharge , which is usually £776 per year",
+      "parameters": {
+        "per_year_gbp": 776,
+        "currency": "GBP"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "pay the healthcare surcharge, which is usually £776 per year"
+    },
+    {
+      "requirement_code": "apply_no_earlier_than_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You can apply at most 6 months before you travel",
+      "description": "A ceiling, not a lead time. Combined with the 31-day savings deadline it defines a fairly narrow window in which an application can be both early enough and evidenced.",
+      "source_role": "landing",
+      "source_excerpt": "the earliest you can apply for a visa is 6 months before you travel.",
+      "parameters": {
+        "earliest_application_months_before_travel": 6
+      },
+      "display_order": 160,
+      "source_excerpt_display": "The earliest you can apply for a visa is 6 months before you travel."
+    },
+    {
+      "requirement_code": "decision_time",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A decision usually comes within 3 weeks of applying, proving identity and providing documents",
+      "source_role": "landing",
+      "source_excerpt": "once you’ve applied online, proved your identity and provided your documents, you’ll usually get a decision on your visa within 3 weeks.",
+      "display_order": 170,
+      "source_excerpt_display": "Once you’ve applied online, proved your identity and provided your documents, you’ll usually get a decision on your visa within 3 weeks."
+    },
+    {
+      "requirement_code": "stay_24_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Up to 24 months, and turning 31 after issue does not shorten it",
+      "description": "Australian, Canadian and New Zealand nationals can extend by a further year; nobody else can.",
+      "source_role": "landing",
+      "source_excerpt": "you’ll be given a visa to live and work in the uk for up to 24 months. you can enter the uk at any time while your visa is valid, and leave and come back at any time during your stay. if you turn 31 after your visa is issued, you can stay in the uk for as long as your visa is valid.",
+      "parameters": {
+        "maximum_stay_months": 24
+      },
+      "display_order": 180,
+      "source_excerpt_display": "You’ll be given a visa to live and work in the UK for up to 24 months. You can enter the UK at any time while your visa is valid, and leave and come back at any time during your stay. If you turn 31 after your visa is issued, you can stay in the UK for as long as your visa is valid."
+    },
+    {
+      "requirement_code": "self_employment_limits",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Self-employment is allowed within three specific limits",
+      "description": "Rented premises, equipment worth no more than GBP 5,000, and no employees. Unusually permissive for a temporary route, and unusually specific — worth storing because it is a real business plan constraint rather than a formality.",
+      "source_role": "landing",
+      "source_excerpt": "be self-employed and set up a company - as long as your premises are rented, your equipment is not worth more than £5,000 and you do not have any employees",
+      "parameters": {
+        "maximum_equipment_value_gbp": 5000,
+        "currency": "GBP"
+      },
+      "display_order": 190,
+      "source_excerpt_display": "be self-employed and set up a company - as long as your premises are rented, your equipment is not worth more than £5,000 and you do not have any employees"
+    },
+    {
+      "requirement_code": "prohibited_activities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No professional sport, no public funds, and family must apply separately",
+      "source_role": "landing",
+      "source_excerpt": "you cannot: work as a professional sportsperson (for example as a coach) extend your stay unless you’re from australia, canada or new zealand get public funds bring in family members on your application - they must apply separately",
+      "display_order": 200,
+      "source_excerpt_display": "You cannot: work as a professional sportsperson (for example as a coach) extend your stay unless you’re from Australia, Canada or New Zealand get public funds bring in family members on your application - they must apply separately"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+# Security overrides (Task 14 supply-chain audit).
+#
+# DUPLICATED, DELIBERATELY, in package.json -> pnpm.overrides. Keep the two
+# lists identical.
+#
+# Neither location alone works across both environments, which was verified
+# rather than assumed:
+#   * `overrides` here is a pnpm 10+ feature. Production pins pnpm 9.15.9
+#     (pnpm 11 was reported to break on its Node 20), and pnpm 9 silently
+#     IGNORES this key — so every pin below was inert on the deployed host, and
+#     `pnpm install` there regenerated the lockfile without them.
+#   * Moving them to package.json alone was tested with pnpm 11: it does not
+#     read `pnpm.overrides` from package.json either, and produced a lockfile
+#     with ZERO overrides.
+#
+# So both files carry the list until production's pnpm is raised to 10+, at
+# which point the package.json copy can go. A CI check that diffs the two would
+# be worth having; the failure mode is silent.
+#
+# Each entry pins a TRANSITIVE dependency that a direct dependency still
+# resolves to a vulnerable range. Each is pinned to the lowest patched version
+# inside the SAME major, so the parent's peer expectations are preserved and no
+# behavioural break is introduced by the fix itself.
+#
+# The advisory behind each line is recorded in
+# docs/security/supply-chain-security-report.md. Re-check on every `pnpm audit`;
+# delete a line once the parent ships a fixed range of its own.
+overrides:
+  'axios@>=1.0.0 <1.18.0': '^1.19.0'
+  'brace-expansion@1': '^1.1.18'
+  'brace-expansion@2': '^2.1.4'
+  'brace-expansion@>=4': '^5.0.9'
+  'fast-uri@3': '^3.1.5'
+  'form-data@4': '^4.0.6'
+  'js-yaml@3': '^3.15.0'
+  'js-yaml@4': '^4.3.0'
+  'multer@>=1.0.0 <2.2.0': '^2.2.0'
+  'postcss@8': '^8.5.26'
+  sharp: '^0.35.3'
+  shell-quote: '^1.8.5'
+  'socket.io-parser@4': '^4.2.7'
+  tmp: '^0.2.6'
+  'uuid@11': '^11.1.1'
+  'ws@8': '^8.21.2'
+allowBuilds:
+  '@nestjs/core': true
+  esbuild: true
+  electron: true
+  msgpackr-extract: false
+  playwright: true
+  sharp: true
+  unrs-resolver: true
+  '@parcel/watcher': true
+  '@swc/core': true
+  # Downloads a prebuilt binary on install; needed only for sourcemap upload
+  # during EAS builds, which run their own install. Off locally and in CI.
+  '@sentry/cli': false
+minimumReleaseAgeExclude:
+  - postcss@8.5.26

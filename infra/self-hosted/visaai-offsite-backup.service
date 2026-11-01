@@ -1,0 +1,26 @@
+# SEC-7009: off-host encrypted backup shipping (oneshot; paired with the .timer).
+# Install: copy both units to /etc/systemd/system/, put env in the EnvironmentFile,
+# then: systemctl daemon-reload && systemctl enable --now visaai-offsite-backup.timer
+[Unit]
+Description=VisaAI off-host encrypted DB backup (restic)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Secrets live here, NOT in the unit (mode 0600, root-only):
+#   RESTIC_REPOSITORY=, RESTIC_PASSWORD=, backend creds, BACKUP_DIR=
+EnvironmentFile=/etc/visaai/offsite-backup.env
+# Reuse the loop body as a single shot: set a 0 interval is not needed — the
+# script runs one push then would loop, so invoke the one-shot path via `timeout`
+# is avoided by calling restic directly here instead:
+ExecStart=/bin/sh -c 'set -eu; \
+  restic snapshots >/dev/null 2>&1 || restic init; \
+  restic backup "$BACKUP_DIR" --host "${OFFSITE_HOST_TAG:-visaai-selfhosted}" --tag visaai --tag db-dump; \
+  restic forget --host "${OFFSITE_HOST_TAG:-visaai-selfhosted}" --keep-daily "${OFFSITE_KEEP_DAILY:-7}" --keep-weekly "${OFFSITE_KEEP_WEEKLY:-4}" --keep-monthly "${OFFSITE_KEEP_MONTHLY:-6}" --prune; \
+  restic check'
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target

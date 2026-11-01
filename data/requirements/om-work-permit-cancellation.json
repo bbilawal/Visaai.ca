@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-work-permit-cancellation",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "WHAT HAPPENS NEXT DEPENDS ENTIRELY ON WHY YOU CANCELLED, and the page publishes three different outcomes. Death of the worker or acquisition of Omani nationality completes automatically. A change of visa type waits for proof of the change, which must be issued by the Royal Oman Police — an authority whose own pages we cannot read. End of service or a failed medical waits for ROP departure confirmation and then cancels itself when the worker completes exit formalities.\n\nFIVE VISA-CHANGE REASONS ARE NAMED, and they are the only route on this destination that touches the ROP visa system at all.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Cancellation-of-Work-Permit-individuals-285"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "what_the_service_covers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The service cancels work permits for non-Omani workers, whether at end of service or for any other reason",
+      "source_role": "requirements",
+      "source_excerpt": "تتيح خدمة \" إلغاء تصريح مزاولة العمل\" لأصحاب العمل (الأفراد) إلغاء تصاريح مزاولة العمل للقوى العاملة غير العما",
+      "display_order": 10,
+      "source_excerpt_display": "تتيح خدمة \" إلغاء تصريح مزاولة العمل\" لأصحاب العمل (الأفراد) إلغاء تصاريح مزاولة العمل للقوى العاملة غير العما"
+    },
+    {
+      "requirement_code": "five_visa_change_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five visa-change reasons are named: family residence visa, multiple-entry visa for property owners, spouse-of-a-citizen visa, transfer to government sector work, and student visa",
+      "source_role": "requirements",
+      "source_excerpt": "- تغيير تأشيرة العامل إلى تأشيرة الإقامة العائلية",
+      "display_order": 20,
+      "source_excerpt_display": "- تغيير تأشيرة العامل إلى تأشيرة الإقامة العائلية"
+    },
+    {
+      "requirement_code": "rop_proof_required_for_visa_changes",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For a visa change, proof of visa cancellation issued by the Royal Oman Police must be submitted to complete the cancellation",
+      "description": "The only point where this destination depends on the ROP, and the proof must come from them.",
+      "source_role": "requirements",
+      "source_excerpt": "يجب تقديم إثبات لإلغاء التأشيرة صادر عن شرطة عمان السلطانية ، من أجل الانتهاء من عملية الإلغاء.",
+      "display_order": 30,
+      "source_excerpt_display": "يجب تقديم إثبات لإلغاء التأشيرة صادر عن شرطة عمان السلطانية ، من أجل الانتهاء من عملية الإلغاء."
+    },
+    {
+      "requirement_code": "fees_and_fines_collected_on_submission",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Any fees and fines are collected after the cancellation request is submitted",
+      "description": "No amount is published — the charge depends on the case.",
+      "source_role": "requirements",
+      "source_excerpt": "4- في حالة وجود أي رسوم وغرامات ، سيتم تحصيل هذه الرسوم والغرامات بعد تقديم طلب إلغاء تصريح مزاولة العمل.",
+      "display_order": 40,
+      "source_excerpt_display": "4- في حالة وجود أي رسوم وغرامات ، سيتم تحصيل هذه الرسوم والغرامات بعد تقديم طلب إلغاء تصريح مزاولة العمل."
+    },
+    {
+      "requirement_code": "automatic_completion_for_death_or_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The request completes automatically where the reason is the worker's death or their acquisition of Omani nationality",
+      "source_role": "requirements",
+      "source_excerpt": "- أن يتم الانتهاء من تقديم الطلب تلقائيًا، مما يؤدي إلى إلغاء تصريح العمل (إذا كان سبب الإلغاء هو \"وفاة العامل\" أو \"الحصول على الجنسية العمانية\").",
+      "display_order": 50,
+      "source_excerpt_display": "- أن يتم الانتهاء من تقديم الطلب تلقائيًا، مما يؤدي إلى إلغاء تصريح العمل (إذا كان سبب الإلغاء هو \"وفاة العامل\" أو \"الحصول على الجنسية العمانية\")."
+    },
+    {
+      "requirement_code": "end_of_service_waits_for_rop_departure_confirmation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "End of service or a failed medical examination waits for ROP departure confirmation, and cancels automatically once the worker completes exit formalities",
+      "source_role": "requirements",
+      "source_excerpt": "- في حالة نهاية الخدمة أو وجود فشل الفحص الطبي، سيتم إلغاء تصريح العمل تلقائيًا عندما يقوم العامل بإنهاء إجراءات المغادرة.",
+      "display_order": 60,
+      "source_excerpt_display": "- في حالة نهاية الخدمة أو وجود فشل الفحص الطبي، سيتم إلغاء تصريح العمل تلقائيًا عندما يقوم العامل بإنهاء إجراءات المغادرة."
+    }
+  ]
+}

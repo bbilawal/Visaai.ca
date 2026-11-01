@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-work-permit-transfer",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "THE NEW EMPLOYER APPLIES, NOT THE WORKER AND NOT THE OLD EMPLOYER. The transfer request is started by the incoming employer from the work-permit list page, and it requires the worker's civil number together with their date of birth. Neither the worker nor their current employer initiates anything.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Transfer-individuals-286"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "what_the_service_covers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The service transfers a non-Omani worker's services to another employer, for individual employers",
+      "source_role": "requirements",
+      "source_excerpt": "تتيح خدمة \"نقل خدمات القوى العاملة غير العمانية\" لأصاحب العمل (الأفراد) نقل خدمات العامل إلى صاحب عمل آخر.",
+      "display_order": 10,
+      "source_excerpt_display": "تتيح خدمة \"نقل خدمات القوى العاملة غير العمانية\" لأصاحب العمل (الأفراد) نقل خدمات العامل إلى صاحب عمل آخر."
+    },
+    {
+      "requirement_code": "the_new_employer_initiates",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The NEW employer starts the transfer request from the work permit list page",
+      "source_role": "requirements",
+      "source_excerpt": "2- من صفحة قائمة طلبات تصريح العمل، يبدأ صاحب العمل الجديد في تقديم طلب نقل خدمات القوى العاملة غير العمانية.",
+      "display_order": 20,
+      "source_excerpt_display": "2- من صفحة قائمة طلبات تصريح العمل، يبدأ صاحب العمل الجديد في تقديم طلب نقل خدمات القوى العاملة غير العمانية."
+    },
+    {
+      "requirement_code": "login_by_civil_card_or_pki_mobile",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The employer logs in with a civil card or an e-authentication (PKI) enabled mobile",
+      "source_role": "requirements",
+      "source_excerpt": "1- الدخول على الخدمة من قبل أصحاب العمل (الأفراد) من خلال البطاقة المدنية أو بطاقة الهاتف الداعمة لنظام التصدي",
+      "display_order": 30,
+      "source_excerpt_display": "1- الدخول على الخدمة من قبل أصحاب العمل (الأفراد) من خلال البطاقة المدنية أو بطاقة الهاتف الداعمة لنظام التصدي"
+    }
+  ]
+}

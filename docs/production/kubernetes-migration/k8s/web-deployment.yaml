@@ -1,0 +1,53 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Web (Next.js standalone) Deployment.
+# =============================================================================
+# Next.js is stateless → replicas>1 is safe from day one (unlike the api).
+# The web IMAGE is environment-specific because NEXT_PUBLIC_* is baked at build
+# time (see Dockerfile.web) — this manifest references the prod-built image.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visaai-web
+  namespace: visaai
+  labels: { app: visaai-web }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: visaai-web }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  template:
+    metadata:
+      labels: { app: visaai-web }
+    spec:
+      terminationGracePeriodSeconds: 20
+      containers:
+        - name: web
+          image: registry.example.com/visaai/web:GIT_SHA   # env-specific build
+          imagePullPolicy: IfNotPresent
+          ports:
+            - { name: http, containerPort: 3000 }
+          env:
+            - { name: NODE_ENV, value: "production" }
+            - { name: PORT, value: "3000" }
+          # Recommended: add apps/web/app/api/health/route.ts and probe it.
+          # Root "/" works but renders the app; a dedicated route is cheaper.
+          livenessProbe:
+            httpGet: { path: /api/health, port: http }   # or "/" if the route isn't added yet
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests: { cpu: "100m", memory: "256Mi" }
+            limits:   { cpu: "500m", memory: "512Mi" }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }

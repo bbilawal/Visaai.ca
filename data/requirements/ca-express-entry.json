@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-express-entry",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html",
+    "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/works.html",
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+  },
+  "page_dates": {
+    "landing": "2026-06-22",
+    "eligibility": "2026-06-22"
+  },
+  "not_extracted": [
+    "Express Entry is not one program. It is an application-management system for three: the Canadian Experience Class, the Federal Skilled Worker Program and the Federal Skilled Trades Program, each with its own criteria. IRCC publishes those criteria as a side-by-side comparison, so each eligibility requirement below quotes all three columns and names the program each rule belongs to in its own text. None carries a machine rule: VisaAI has no fact for which of the three programs an applicant is pursuing, and gating on a guess would silently hide the criteria that actually apply to them.",
+    "The Comprehensive Ranking System points formula. Meeting the minimum criteria only puts a candidate in the pool; IRCC selects by score, and the scoring tables are on a separate 'check your score' page that is not a registered source.",
+    "The cut-off score for any round of invitations. IRCC publishes those per round on a separate page.",
+    "Full eligibility detail for each of the three programs. Each has its own page (canadian experience class, federal skilled worker program, federal skilled trades program) linked from the navigation but not registered as a source. Only the comparison table on works.html was read.",
+    "The Federal Skilled Trades Program's full NOC group list beyond the lead-in. IRCC names major groups 72, 73, 82, 83, 92 and 93, minor group 6320 and unit group 62200, with exclusions for sub-major groups 726 and 932; those are recorded in the requirement description rather than turned into rules, because VisaAI has no NOC fact.",
+    "Settlement-funds amounts. IRCC's landing page names 'funds' among the documents to get ready but publishes no threshold on either page read; the amounts live on the get-your-documents-ready page, which is not a registered source.",
+    "Language test, education assessment, job offer and police certificate specifics. Same reason — the landing page names the categories, the detail is on a page that is not a registered source.",
+    "Provincial Nominee Program eligibility. IRCC states a nomination gives extra points, but PNP criteria are set by each province and published elsewhere.",
+    "Fees as shown on the Express Entry landing page. Its fee widget failed server-side at read time — it renders 'your application: [error loading fee. check the fee list .]' — so all amounts below come from the fee list instead.",
+    "A biometrics fee for Express Entry. The landing page states biometrics are part of the after-you-apply stage, but the fee list's biometrics section qualifies the requirement as applying when you apply for 'a visitor visa, study permit or work permit'. That sentence does not cover a permanent residence application, so no biometrics fee is claimed here.",
+    "Processing times. The landing page says only 'varies by program'."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "three_express_entry_programs",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must qualify for one of the three programs Express Entry manages",
+      "description": "Canadian Experience Class — for skilled workers with eligible Canadian work experience. Federal Skilled Worker Program — for skilled workers with eligible foreign or Canadian work experience. Federal Skilled Trades Program — for skilled workers qualified in a skilled trade.",
+      "source_role": "eligibility",
+      "source_excerpt": "express entry is an online system that we use to manage immigration applications for 3 programs: canadian experience class for skilled workers with eligible canadian work experience federal skilled worker program for skilled workers with eligible foreign or canadian work experience federal skilled trades program for skilled workers who are qualified in a skilled trade",
+      "display_order": 10,
+      "source_excerpt_display": "Express Entry is an online system that we use to manage immigration applications for 3 programs: Canadian Experience Class For skilled workers with eligible Canadian work experience Federal Skilled Worker Program For skilled workers with eligible foreign or Canadian work experience Federal Skilled Trades Program For skilled workers who are qualified in a skilled trade"
+    },
+    {
+      "requirement_code": "language_ability",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the language ability threshold for your program",
+      "description": "Measured on the Canadian Language Benchmark (CLB), the Canadian standard for measuring an immigrant's English language ability. Canadian Experience Class: CLB 7 for TEER 0 or TEER 1 occupations, CLB 5 for TEER 2 or TEER 3. Federal Skilled Worker Program: CLB 7. Federal Skilled Trades Program: CLB 5 for speaking and listening, CLB 4 for reading and writing.",
+      "source_role": "eligibility",
+      "source_excerpt": "language skills canadian experience class clb 7 for teer 0 or teer 1 occupations clb 5 for teer 2 or teer 3 occupations federal skilled worker program clb 7 federal skilled trades program clb 5 for speaking and listening clb 4 for reading and writing",
+      "display_order": 20,
+      "source_excerpt_display": "Language skills Canadian Experience Class CLB 7 for TEER 0 or TEER 1 occupations CLB 5 for TEER 2 or TEER 3 occupations Federal Skilled Worker Program CLB 7 Federal Skilled Trades Program CLB 5 for speaking and listening CLB 4 for reading and writing"
+    },
+    {
+      "requirement_code": "type_of_work_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold the type of work experience your program requires",
+      "description": "Occupations are classified by the National Occupational Classification (NOC), whose six TEER categories are based on the education and training an occupation needs. Canadian Experience Class: Canadian work experience in an occupation in TEER 0, 1, 2 or 3. Federal Skilled Worker Program: work experience in an occupation in one of TEER 0, 1, 2 or 3. Federal Skilled Trades Program: work experience in a skilled trade under key groups of TEER 2 or 3 — major group 72 (technical trades and transportation officers and controllers, excluding sub-major group 726), major group 73 (general trades), major group 82, major group 83, major group 92, major group 93 (excluding sub-major group 932), minor group 6320 (cooks, butchers and bakers) and unit group 62200 (chefs).",
+      "source_role": "eligibility",
+      "source_excerpt": "type of work experience canadian experience class canadian work experience in an occupation listed in 1 or more of these noc teer categories: teer 0 teer 1 teer 2 teer 3 federal skilled worker program work experience in an occupation listed in 1 of these noc teer categories: teer 0 teer 1 teer 2 teer 3 federal skilled trades program work experience in a skilled trade under key groups of teer 2 or teer 3:",
+      "display_order": 30,
+      "source_excerpt_display": "Type of work experience Canadian Experience Class Canadian work experience in an occupation listed in 1 or more of these NOC TEER Categories: TEER 0 TEER 1 TEER 2 TEER 3 Federal Skilled Worker Program Work experience in an occupation listed in 1 of these NOC TEER Categories: TEER 0 TEER 1 TEER 2 TEER 3 Federal Skilled Trades Program Work experience in a skilled trade under key groups of TEER 2 or TEER 3:"
+    },
+    {
+      "requirement_code": "amount_of_work_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold the amount of work experience your program requires",
+      "description": "Canadian Experience Class: 1 year in Canada in the last 3 years, in any combination of full-time or part-time work. Federal Skilled Worker Program: 1 year continuous within the last 10 years, which may combine part-time, full-time or more than one job in your primary occupation. Federal Skilled Trades Program: 2 years within the last 5 years, in any combination of full-time or part-time work.",
+      "source_role": "eligibility",
+      "source_excerpt": "amount of work experience canadian experience class 1 year in canada in the last 3 years (either combination of full-time or part-time work) federal skilled worker program 1 year continuous within the last 10 years (combination of part-time, full-time or more than 1 job in your primary occupation ) federal skilled trades program 2 years within the last 5 years (either combination of full-time or part-time work)",
+      "display_order": 40,
+      "source_excerpt_display": "Amount of work experience Canadian Experience Class 1 year in Canada in the last 3 years (either combination of full-time or part-time work) Federal Skilled Worker Program 1 year continuous within the last 10 years (combination of part-time, full-time or more than 1 job in your primary occupation) Federal Skilled Trades Program 2 years within the last 5 years (either combination of full-time or part-time work)"
+    },
+    {
+      "requirement_code": "job_offer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Job offer — required only for the Federal Skilled Trades Program",
+      "description": "Canadian Experience Class: not required. Federal Skilled Worker Program: not required, but a valid job offer earns selection criteria points. Federal Skilled Trades Program: required — either a valid job offer of full-time employment for a total period of at least 1 year, or a certificate of qualification in the skilled trade issued by a Canadian provincial, territorial or federal authority.",
+      "source_role": "eligibility",
+      "source_excerpt": "job offer canadian experience class not required. federal skilled worker program not required, but you can get selection criteria points for having a valid job offer. federal skilled trades program required: a valid job offer of full-time employment for a total period of at least 1 year, or a certificate of qualification in the above skilled trade issued by a canadian provincial, territorial or federal authority",
+      "display_order": 50,
+      "source_excerpt_display": "Job offer Canadian Experience Class Not required. Federal Skilled Worker Program Not required, but you can get selection criteria points for having a valid job offer. Federal Skilled Trades Program Required: a valid job offer of full-time employment for a total period of at least 1 year, or a certificate of qualification in the above skilled trade issued by a Canadian provincial, territorial or federal authority"
+    },
+    {
+      "requirement_code": "education",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Education — required only for the Federal Skilled Worker Program",
+      "description": "Canadian Experience Class: not required. Federal Skilled Worker Program: secondary education required, with more selection criteria points available for post-secondary education. Federal Skilled Trades Program: not required.",
+      "source_role": "eligibility",
+      "source_excerpt": "education canadian experience class not required. federal skilled worker program secondary education required. you can get more selection criteria points for your post-secondary education. federal skilled trades program not required.",
+      "display_order": 60,
+      "source_excerpt_display": "Education Canadian Experience Class Not required. Federal Skilled Worker Program Secondary education required. You can get more selection criteria points for your post-secondary education. Federal Skilled Trades Program Not required."
+    },
+    {
+      "requirement_code": "documents_to_get_ready",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Get your documents ready",
+      "description": "IRCC names five document categories for an Express Entry application: language test, education, job offer, funds and police certificates. The requirements and thresholds for each are on a separate get-your-documents-ready page that is not a registered source, so nothing further is claimed about them here.",
+      "source_role": "landing",
+      "source_excerpt": "get your documents ready language test, education, job offer, funds, police certificates",
+      "display_order": 100,
+      "source_excerpt_display": "Get your documents ready Language test, education, job offer, funds, police certificates"
+    },
+    {
+      "requirement_code": "eligibility_questionnaire",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Answer the eligibility questionnaire",
+      "description": "IRCC offers two routes: the Come to Canada tool, which ends in a personal reference code used to move your information into your Express Entry profile, or the questionnaire inside your IRCC secure account.",
+      "source_role": "eligibility",
+      "source_excerpt": "answer a questionnaire to check if you’re eligible for the minimum requirements of express entry. to answer the questionnaire, you have 2 options: option 1: come to canada tool answer a few questions using the come to canada tool to assess your eligibility. the tool gives you a number at the end (a personal reference code).",
+      "display_order": 300,
+      "source_excerpt_display": "Answer a questionnaire to check if you’re eligible for the minimum requirements of Express Entry. To answer the questionnaire, you have 2 options: Option 1: Come to Canada tool Answer a few questions using the Come to Canada tool to assess your eligibility. The tool gives you a number at the end (a personal reference code)."
+    },
+    {
+      "requirement_code": "create_profile_and_enter_pool",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create a profile and enter the pool",
+      "description": "IRCC invites the candidates with the most points in rounds; only an invited candidate fills out the application.",
+      "source_role": "landing",
+      "source_excerpt": "how the express entry process works: create a profile and enter the pool. we'll invite the candidates with the most points in rounds. if you're invited to apply, fill out the application. we'll review your application and make a decision.",
+      "display_order": 310,
+      "source_excerpt_display": "How the Express Entry process works: Create a profile and enter the pool. We'll invite the candidates with the most points in rounds. If you're invited to apply, fill out the application. We'll review your application and make a decision."
+    },
+    {
+      "requirement_code": "crs_score",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Calculate your Comprehensive Ranking System (CRS) score",
+      "description": "The CRS score decides which candidates in the pool are invited. IRCC publishes the scoring tables and the cut-off for each round on separate pages that were not read.",
+      "source_role": "landing",
+      "source_excerpt": "check your score calculate your comprehensive ranking system (crs) score",
+      "display_order": 320,
+      "source_excerpt_display": "Check your score Calculate your Comprehensive Ranking System (CRS) score"
+    },
+    {
+      "requirement_code": "apply_for_permanent_residence",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Submit the online permanent residence application",
+      "description": "Available only after an invitation to apply. IRCC describes the step as submitting the online form, uploading documents and paying the fees.",
+      "source_role": "landing",
+      "source_excerpt": "apply for permanent residence submit the online form, upload documents, pay your fees",
+      "display_order": 330,
+      "source_excerpt_display": "Apply for permanent residence Submit the online form, upload documents, pay your fees"
+    },
+    {
+      "requirement_code": "biometrics",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Give your biometrics after you apply",
+      "description": "IRCC lists biometrics as part of the after-you-apply stage. Neither page read states who must give them or what they cost for a permanent residence application, so no fee is recorded for this step.",
+      "source_role": "landing",
+      "source_excerpt": "after you apply biometrics, processing, application status",
+      "display_order": 340,
+      "source_excerpt_display": "After you apply Biometrics, processing, application status"
+    },
+    {
+      "requirement_code": "economic_immigration_application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Permanent residence application fee (economic immigration, including Express Entry)",
+      "description": "CAD 1,590.00, which IRCC states includes the processing fee and the right of permanent residence fee. CAD 990.00 is the same application without the right of permanent residence fee. IRCC lists this fee band for the Canadian Experience Class, federal skilled workers and federal skilled trades, alongside several other economic programs.",
+      "parameters": {
+        "amount": 1590,
+        "currency": "CAD",
+        "unit": "per principal applicant",
+        "amount_without_rprf": 990,
+        "includes": [
+          "processing fee",
+          "right of permanent residence fee"
+        ],
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "economic immigration (including express entry) these fees apply to: atlantic immigration program canadian experience class federal skilled workers federal skilled trades provincial nominee rural or francophone community immigration pilots quebec-selected skilled workers fees $can your application this amount includes the processing fee and the right of permanent residence fee. 1,590.00 your application (without right of permanent residence fee) 990.00",
+      "display_order": 400,
+      "source_excerpt_display": "Economic immigration (including Express Entry) These fees apply to: Atlantic immigration program Canadian experience class Federal skilled workers Federal skilled trades Provincial nominee Rural or francophone community immigration pilots Quebec-selected skilled workers Fees $CAN Your application This amount includes the processing fee and the right of permanent residence fee. 1,590.00 Your application (without right of permanent residence fee) 990.00"
+    },
+    {
+      "requirement_code": "spouse_or_partner_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee to include your spouse or partner",
+      "description": "CAD 1,590.00 including the right of permanent residence fee, or CAD 990.00 without it.",
+      "parameters": {
+        "amount": 1590,
+        "currency": "CAD",
+        "unit": "per spouse or partner included",
+        "amount_without_rprf": 990,
+        "read_at": "2026-08-21"
+      },
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "married",
+          "common_law",
+          "de_facto",
+          "partnered"
+        ]
+      },
+      "source_role": "fees",
+      "source_excerpt": "include your spouse or partner this amount includes the processing fee and the right of permanent residence fee. 1,590.00 include your spouse or partner (without right of permanent residence fee) 990.00",
+      "display_order": 410,
+      "source_excerpt_display": "Include your spouse or partner This amount includes the processing fee and the right of permanent residence fee. 1,590.00 Include your spouse or partner (without right of permanent residence fee) 990.00"
+    },
+    {
+      "requirement_code": "dependent_child_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee to include a dependent child",
+      "description": "CAD 270.00 per child.",
+      "parameters": {
+        "amount": 270,
+        "currency": "CAD",
+        "unit": "per child",
+        "read_at": "2026-08-21"
+      },
+      "rule": {
+        "fact": "has_dependants",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "fees",
+      "source_excerpt": "include a dependent child 270.00 (per child)",
+      "display_order": 420,
+      "source_excerpt_display": "Include a dependent child 270.00 (per child)"
+    },
+    {
+      "requirement_code": "right_of_permanent_residence_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Right of permanent residence fee",
+      "description": "CAD 600.00. It is already inside the CAD 1,590.00 amounts above — the CAD 990.00 variants are those amounts with this fee removed. IRCC states it is payable before you become a permanent resident, that paying it with the application fees avoids delays, that it is refunded if you withdraw or IRCC refuses the application, and that it does not apply to the dependent children of a principal applicant.",
+      "parameters": {
+        "amount": 600,
+        "currency": "CAD",
+        "unit": "per person",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "right of permanent residence fee fees $can right of permanent residence fee 600.00 for most permanent residence applications, you need to pay the right of permanent residence fee (rprf) when your application is approved. you will have to pay it before you can become a permanent resident.",
+      "display_order": 430,
+      "source_excerpt_display": "Right of permanent residence fee Fees $CAN Right of permanent residence fee 600.00 For most permanent residence applications, you need to pay the right of permanent residence fee (RPRF) when your application is approved. You will have to pay it before you can become a permanent resident."
+    },
+    {
+      "requirement_code": "provincial_nominee_program",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Consider applying through the Provincial Nominee Program",
+      "description": "IRCC presents this as an option, not a requirement: a candidate eligible for one of the three Express Entry programs may also apply through Express Entry for the Provincial Nominee Program, and a nomination earns extra points. PNP criteria are set by each province and were not read.",
+      "source_role": "eligibility",
+      "source_excerpt": "if you’re eligible for one of these programs, you can also apply through express entry for the provincial nominee program. if you’re nominated, you’ll get extra points so you can be invited to apply quickly.",
+      "display_order": 500,
+      "source_excerpt_display": "If you’re eligible for one of these programs, you can also apply through Express Entry for the Provincial Nominee Program. If you’re nominated, you’ll get extra points so you can be invited to apply quickly."
+    }
+  ]
+}

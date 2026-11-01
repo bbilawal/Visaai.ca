@@ -1,0 +1,68 @@
+# gitleaks — reviewed historical findings.
+#
+# Every fingerprint below was triaged during the Task 14 security audit
+# (2026-08-06). Full write-up: docs/security/supply-chain-security-report.md
+# §"Secret scanning".
+#
+# The rule for this file: a line may only be added after someone has looked at
+# the actual value and established that it is either not a credential, or a
+# credential that can no longer authenticate anything. "It's old" is not a
+# reason. Nothing here suppresses a rule wholesale — each entry is one exact
+# commit:file:rule:line, so a NEW leak in the same file still fails the build.
+#
+# ── Group 1: test fixtures and documentation ────────────────────────────────
+# Literal strings in *.spec.ts and a QA checklist that exist to be asserted
+# against or to warn readers. Not credentials; never were.
+14506c891bb069157cede575ba5e6caec04e08bc:apps/api/src/config/environment-isolation.spec.ts:generic-api-key:53
+14506c891bb069157cede575ba5e6caec04e08bc:apps/api/src/config/environment-isolation.spec.ts:generic-api-key:96
+f5bb3ba00edc574923e743d32727466c422a4552:apps/api/src/modules/partner/partner-credentials.spec.ts:generic-api-key:70
+f5bb3ba00edc574923e743d32727466c422a4552:packages/partner-sdk/src/client.spec.ts:generic-api-key:36
+ca863599ceef55d0af28ef73ce707ebe8dcee6a2:docs/release-planning/QA-CHECKLIST.md:generic-api-key:24
+
+# ── Group 2: placeholder values ─────────────────────────────────────────────
+# `apps/api/.env` at b15c7701 and the later .env.example files hold nothing but
+# the word "placeholder", the Stripe test/webhook prefixes followed by that same
+# word, and `<your-...>` angle-bracket stubs. Verified by reading the blobs: no
+# real value was ever present on these lines.
+#
+# The literal strings are deliberately NOT reproduced here. Quoting them made
+# gitleaks flag this file — the ignore list tripping its own scanner — and a
+# control that fires on its own documentation gets switched off rather than
+# obeyed. Read the blobs if you need to re-verify.
+b15c770106f4a8617b6b533a27d484de63dfa082:apps/api/.env:generic-api-key:3
+b15c770106f4a8617b6b533a27d484de63dfa082:apps/api/.env:stripe-access-token:4
+1f7739129d19914992416a23167bea35b87e7bc3:.env.example:jwt:30
+1f7739129d19914992416a23167bea35b87e7bc3:.env.example:jwt:33
+b25f6e85d41e1818d82b9533f9c1b61da7735e81:apps/api/.env.example:openai-api-key:23
+e1ca7824f6fcda86fe9bc0754fadb8fba0d18e01:apps/web/.env.local.example:jwt:12
+e1ca7824f6fcda86fe9bc0754fadb8fba0d18e01:apps/api/.env.example:jwt:18
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/web/.env.local.example:generic-api-key:13
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/web/.env.local.example:jwt:12
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/web/.env.local.example:openai-api-key:16
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/api/.env.example:generic-api-key:19
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/api/.env.example:jwt:18
+0f6d37a97e59c9c6e9926675fd1d609153815926:apps/api/.env.example:openai-api-key:22
+
+# ── Group 3: upstream boilerplate ───────────────────────────────────────────
+# The stock NestJS README's CircleCI status-badge URL, which carries a dummy
+# query parameter in upstream's own boilerplate. Not reproduced here, for the
+# reason given in Group 2.
+b15c770106f4a8617b6b533a27d484de63dfa082:apps/api/README.md:generic-api-key:5
+
+# ── Group 4: REAL credentials, for a project that no longer exists ──────────
+# f98e4f17 (2026-05-31) committed apps/api/.env.example holding a genuine
+# 219-char Supabase service_role JWT and the 88-char SUPABASE_JWT_SECRET for
+# project ref xaemxugqnxoxlqnboxyb — enough to bypass RLS and to MINT a valid
+# token for any user of that project.
+#
+# Why these are suppressed rather than purged from history:
+#   - That project is DELETED. `xaemxugqnxoxlqnboxyb.supabase.co` returns
+#     NXDOMAIN; the credentials authenticate against nothing.
+#   - The repository is private (unauthenticated GitHub API returns 404).
+#   - The current production ref is different and has never appeared in git.
+#
+# A history rewrite would invalidate every existing clone and open PR to
+# revoke credentials that are already void. If this repository is ever made
+# public, revisit that trade — the values are still readable in history.
+f98e4f177a73b04ac93c3899841b41e31c556d69:apps/api/.env.example:jwt:2
+f98e4f177a73b04ac93c3899841b41e31c556d69:apps/api/.env.example:generic-api-key:3

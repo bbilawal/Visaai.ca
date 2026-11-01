@@ -1,0 +1,1184 @@
+@import "tailwindcss";
+
+/* =============================================================
+   VisaAI — Monad Design System
+   Light theme: Paper Canvas base, IBM Plex Mono UI font,
+   Noto Serif display headings, Atmosphere Wash card accents.
+   Adapted from the goqa/QALabs Monad system.
+   ============================================================= */
+
+@theme {
+  /* Monad palette */
+  --color-ink: #000000;
+  --color-paper-canvas: #f6f3f1;
+  --color-off-black: #242424;
+  --color-pale-stone: #4e4d4d;
+  --color-whisper-gray: #3d3d3d;
+  --color-atmosphere-wash: #cfdaf5;
+  --color-subtle-link: #333333;
+  /* Was #797776 (4.03:1 on paper-canvas) — below the 4.5:1 AA minimum for body
+     text (WCAG 2.2 §1.4.3). Darkened to the nearest visually-equivalent value
+     that passes on EVERY surface it is used on, not just the page canvas:
+     4.94:1 on paper-canvas, 4.52:1 on the sunken surface, 5.46:1 on white.
+     The first attempt (#6f6d6c) passed on the canvas and failed at 4.26:1 on
+     the sunken surface — a token has to clear the bar on every background it
+     legitimately appears against, which is why the contrast test now checks
+     all three. apps/mobile made a partial version of this fix in Task 9. */
+  --color-faint-text: #6b6968;
+  --color-hairline-1: rgba(0, 0, 0, 0.08);
+  --color-hairline-2: rgba(0, 0, 0, 0.15);
+  /* The only edge a text input has. WCAG 2.2 §1.4.11 wants 3:1 for the visual
+     boundary of a control; hairline-1/2 are 1.19:1 and 1.41:1, fine for a card
+     edge and not for this. 4.54:1 on both #ffffff and paper-canvas. */
+  --color-field-border: #767676;
+  --color-bg-2: #ede9e6;
+  --color-surface-3: #bfcaed;
+
+  --color-emerald: #1a6b40;
+  /* Was #9a6800 (4.37:1). Same finding as --color-faint-text; now 4.97:1 on
+     the canvas and 4.55:1 on the sunken surface. */
+  --color-amber: #8e6000;
+  --color-rose: #b53030;
+  --color-violet: #6040a0;
+  --color-cyan: #a0b5eb;
+  --color-teal: #a7fccd;
+
+  /* Legacy token aliases — pages/components were authored against the
+     pre-Monad palette (canvas-white, deep-black, etc.). Those utilities
+     emitted no CSS under Tailwind v4 @theme, leaving surfaces unstyled.
+     Mapped onto the Monad palette so the whole app renders on ONE system. */
+  --color-canvas-white: #f6f3f1;   /* → paper-canvas */
+  --color-ghost-gray: #ede9e6;     /* → bg-2 (hover/active fills) */
+  --color-subtle-ash: #e5e5e5;     /* borders */
+  --color-midtone-gray: #6b6968;   /* → faint-text (secondary text) */
+  --color-rich-black: #242424;     /* → off-black (primary text) */
+  --color-deep-black: #000000;     /* → ink (headings/buttons) */
+  --color-callout-red: #b53030;    /* → rose (errors) */
+  --color-success-green: #1a6b40;  /* → emerald (success) */
+
+  /* Typography — next/font vars first (see app/layout.tsx), literal + system fallbacks after */
+  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: var(--font-noto-serif), 'Noto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Type scale. Before this, sizes were written as arbitrary values
+     (`text-[13px]` appeared 105 times, `text-[12px]` 104 times) with no name
+     and no way to change one globally. These are the sizes already in use,
+     given names; the arbitrary values remain valid so migration is incremental
+     rather than a 200-file rewrite. */
+  --text-micro: 11px;
+  --text-caption: 12px;
+  --text-body: 13px;
+  --text-body-lg: 14px;
+  --text-subhead: 18px;
+  --text-title: 24px;
+  --text-display: 32px;
+
+  /* Motion. Durations and easings were previously inlined per animation. */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slow: 550ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-index. Stacking was ad-hoc; these are the only layers that exist. */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-drawer: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+
+  /* Border radii — Monad system */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 40px;
+  --radius-btn: 100px;
+  --radius-card: 40px;
+  --radius-tag: 2000px;
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  --shadow-md: rgba(0, 0, 0, 0.10) 0px 0px 10px 0px;
+  --shadow-lg: rgba(0, 0, 0, 0.14) 0px 8px 32px 0px;
+  --shadow-glow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ── Semantic layer ─────────────────────────────────────────
+   Dark mode is implemented HERE and nowhere else.
+
+   The primitives above are the palette: fixed values with names describing
+   what they look like (`ink`, `paper-canvas`). The semantic tokens below name
+   what a colour is FOR (`surface`, `text-secondary`, `border-strong`), and are
+   the only ones that change between themes. A component that reads
+   `--color-surface` is theme-correct for free; one that reads `--color-ink`
+   directly is hard-coded to light mode.
+
+   This is why the task's rule — "dark mode only through semantic tokens, not
+   page-specific overrides" — is enforceable: there is exactly one place where
+   a theme decision can be made.
+
+   Resolution order, both directions, deliberately:
+     1. :root                      → light defaults
+     2. @media (prefers-color-scheme: dark) → follow the OS
+     3. [data-theme="dark"|"light"]         → an explicit user choice wins
+   Step 3 must be able to override step 2 in BOTH directions, or a user on a
+   dark OS could never choose light. */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --color-surface: var(--color-paper-canvas);
+  --color-surface-sunken: var(--color-bg-2);
+  --color-surface-raised: #ffffff;
+  --color-surface-inverse: var(--color-ink);
+  --color-overlay: rgba(0, 0, 0, 0.45);
+
+  /* Text */
+  --color-text: var(--color-ink);
+  --color-text-secondary: var(--color-pale-stone);
+  --color-text-muted: var(--color-faint-text);
+  --color-text-inverse: var(--color-paper-canvas);
+
+  /* Lines */
+  --color-border: var(--color-hairline-2);
+  --color-border-subtle: var(--color-hairline-1);
+  --color-border-strong: var(--color-field-border);
+
+  /* Interaction */
+  --color-accent: var(--color-atmosphere-wash);
+  --color-focus-ring: var(--color-off-black);
+  --color-action: var(--color-ink);
+  --color-action-text: var(--color-paper-canvas);
+  --color-action-hover: var(--color-off-black);
+
+  /* Status. `-fg` is the text colour, `-bg` the tint behind it. Both are
+     defined per status so a status is never signalled by colour alone
+     without an accessible text pairing available. */
+  --color-danger-fg: var(--color-rose);
+  --color-danger-bg: #fbeaea;
+  --color-success-fg: var(--color-emerald);
+  --color-success-bg: #e7f2eb;
+  --color-warning-fg: var(--color-amber);
+  --color-warning-bg: #fbf1de;
+  --color-info-fg: #2c4a8f;
+  --color-info-bg: #e8edfa;
+
+  /* Disabled is a pair, not an opacity: opacity on a container also fades any
+     nested focus ring, which is how disabled states become invisible to
+     keyboard users. */
+  --color-disabled-bg: #e6e2df;
+  --color-disabled-text: #6b6866;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --color-surface: #16151a;
+    --color-surface-sunken: #100f13;
+    --color-surface-raised: #1e1d23;
+    --color-surface-inverse: #f2efec;
+    --color-overlay: rgba(0, 0, 0, 0.65);
+
+    /* Not #ffffff: pure white on a near-black surface produces halation that
+       makes long-form text physically harder to read. */
+    --color-text: #ece9e6;
+    --color-text-secondary: #b8b4b0;
+    --color-text-muted: #99948f;
+    --color-text-inverse: #16151a;
+
+    --color-border: rgba(255, 255, 255, 0.14);
+    --color-border-subtle: rgba(255, 255, 255, 0.08);
+    --color-border-strong: #8c8781;
+
+    --color-accent: #2a3552;
+    --color-focus-ring: #cfdaf5;
+    --color-action: #ece9e6;
+    --color-action-text: #16151a;
+    --color-action-hover: #ffffff;
+
+    /* Status hues are LIGHTENED for dark surfaces. The light-mode values are
+       chosen for contrast against a near-white canvas and score ~2:1 against a
+       dark one — reusing them would fail exactly where the text matters most. */
+    --color-danger-fg: #ff9a94;
+    --color-danger-bg: #3a1d1d;
+    --color-success-fg: #6fd39b;
+    --color-success-bg: #14301f;
+    --color-warning-fg: #e8b552;
+    --color-warning-bg: #33270f;
+    --color-info-fg: #a8c0f5;
+    --color-info-bg: #1b2440;
+
+    --color-disabled-bg: #26252b;
+    --color-disabled-text: #8e8a86;
+    /* ── Palette overrides for utility classes ──────────────────
+       Tailwind generates a utility per `@theme` colour, so `text-rich-black`
+       emits `color: var(--color-rich-black)` — bypassing the semantic layer
+       entirely and pinning a light-mode value. ~100 files use these utilities
+       (`text-midtone-gray` in 43, `text-rich-black` in 34, `text-deep-black` in
+       33), and axe found `#242424` on a `#16151a` surface at 1.16:1.
+
+       Redefining the palette names here re-points every one of those utilities
+       at the themed value without editing a single component. The `@theme`
+       block keeps its literals — those are the light palette, and the light
+       theme still reads them.
+
+       New code should use the semantic tokens. These exist so the existing app
+       is theme-correct today rather than after a 100-file migration. */
+    --color-ink: #ece9e6;
+    --color-deep-black: #ece9e6;
+    --color-rich-black: #ece9e6;
+    --color-off-black: #d5d1cd;
+    --color-pale-stone: #b8b4b0;
+    --color-midtone-gray: #99948f;
+    --color-faint-text: #99948f;
+    --color-paper-canvas: #16151a;
+    --color-canvas-white: #16151a;
+    --color-bg-2: #100f13;
+    --color-ghost-gray: #1e1d23;
+    --color-subtle-ash: rgba(255, 255, 255, 0.14);
+    --color-hairline-1: rgba(255, 255, 255, 0.08);
+    --color-hairline-2: rgba(255, 255, 255, 0.14);
+    --color-field-border: #8c8781;
+    --color-atmosphere-wash: #2a3552;
+    /* Status hues lightened for dark surfaces, matching the semantic values. */
+    --color-rose: #ff9a94;
+    --color-callout-red: #ff9a94;
+    --color-emerald: #6fd39b;
+    --color-success-green: #6fd39b;
+    --color-amber: #e8b552;
+  }
+}
+
+/* Explicit choice. Duplicated rather than shared with the media query because
+   a user selecting dark on a light OS must get dark, and the media query will
+   not fire for them. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-surface: #16151a;
+  --color-surface-sunken: #100f13;
+  --color-surface-raised: #1e1d23;
+  --color-surface-inverse: #f2efec;
+  --color-overlay: rgba(0, 0, 0, 0.65);
+
+  --color-text: #ece9e6;
+  --color-text-secondary: #b8b4b0;
+  --color-text-muted: #99948f;
+  --color-text-inverse: #16151a;
+
+  --color-border: rgba(255, 255, 255, 0.14);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: #8c8781;
+
+  --color-accent: #2a3552;
+  --color-focus-ring: #cfdaf5;
+  --color-action: #ece9e6;
+  --color-action-text: #16151a;
+  --color-action-hover: #ffffff;
+
+  --color-danger-fg: #ff9a94;
+  --color-danger-bg: #3a1d1d;
+  --color-success-fg: #6fd39b;
+  --color-success-bg: #14301f;
+  --color-warning-fg: #e8b552;
+  --color-warning-bg: #33270f;
+  --color-info-fg: #a8c0f5;
+  --color-info-bg: #1b2440;
+
+  --color-disabled-bg: #26252b;
+  --color-disabled-text: #8e8a86;
+
+  /* ── Palette overrides for utility classes ──────────────────
+     Tailwind generates a utility per `@theme` colour, so `text-rich-black`
+     emits `color: var(--color-rich-black)` — bypassing the semantic layer
+     entirely and pinning a light-mode value. ~100 files use these utilities
+     (`text-midtone-gray` in 43, `text-rich-black` in 34, `text-deep-black` in
+     33), and axe found `#242424` on a `#16151a` surface at 1.16:1.
+
+     Redefining the palette names here re-points every one of those utilities
+     at the themed value without editing a single component. The `@theme`
+     block keeps its literals — those are the light palette, and the light
+     theme still reads them.
+
+     New code should use the semantic tokens. These exist so the existing app
+     is theme-correct today rather than after a 100-file migration. */
+  --color-ink: #ece9e6;
+  --color-deep-black: #ece9e6;
+  --color-rich-black: #ece9e6;
+  --color-off-black: #d5d1cd;
+  --color-pale-stone: #b8b4b0;
+  --color-midtone-gray: #99948f;
+  --color-faint-text: #99948f;
+  --color-paper-canvas: #16151a;
+  --color-canvas-white: #16151a;
+  --color-bg-2: #100f13;
+  --color-ghost-gray: #1e1d23;
+  --color-subtle-ash: rgba(255, 255, 255, 0.14);
+  --color-hairline-1: rgba(255, 255, 255, 0.08);
+  --color-hairline-2: rgba(255, 255, 255, 0.14);
+  --color-field-border: #8c8781;
+  --color-atmosphere-wash: #2a3552;
+  /* Status hues lightened for dark surfaces, matching the semantic values. */
+  --color-rose: #ff9a94;
+  --color-callout-red: #ff9a94;
+  --color-emerald: #6fd39b;
+  --color-success-green: #6fd39b;
+  --color-amber: #e8b552;
+}
+
+/* Windows High Contrast / forced-colors. The OS replaces our palette entirely;
+   the job here is to stop fighting it and to restore the borders that convey
+   structure, since our hairlines are removed. */
+@media (forced-colors: active) {
+  * {
+    forced-color-adjust: auto;
+  }
+  .card,
+  .input,
+  .textarea,
+  button,
+  [role='button'] {
+    border: 1px solid CanvasText;
+  }
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+:root {
+  --card-padding: 40px;
+}
+
+/* 40px of padding either side leaves 240px of content on a 320px screen, which
+   is where the smallest phones and 200%-zoomed desktops land. */
+@media (max-width: 480px) {
+  :root {
+    --card-padding: 20px;
+  }
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+html {
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  line-height: 1.55;
+  font-feature-settings: "ss01", "cv11";
+  min-height: 100vh;
+}
+
+::selection { background: var(--color-action); color: var(--color-action-text); }
+::-moz-selection { background: var(--color-action); color: var(--color-action-text); }
+
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, textarea, select { font: inherit; color: inherit; }
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-page-enter {
+  animation: page-enter 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.58s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.58s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.anim-fade-up.anim-visible { opacity: 1; transform: translateY(0); }
+/* One-shot "this just became available" nudge — finite on purpose, so it draws
+   the eye once and then leaves the user alone. Used by the documents page when
+   the Generate button unlocks. */
+@keyframes attention {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.anim-attention {
+  animation: attention 0.9s cubic-bezier(0.16, 1, 0.3, 1) 2;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-page-enter, .anim-fade-up, .anim-attention { animation: none; opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+/* WEB-004: these were named .h-1/.h-2/.h-3, which collide with Tailwind's
+   height scale (h-1 = 0.25rem). Tailwind won the cascade, so every heading
+   using them got a collapsed box and its text overflowed onto its neighbours —
+   visible on /pricing once that page became publicly reachable. The collision
+   ran both ways: skeletons written as `h-3 w-32` were picking up heading
+   typography instead of a height. Renamed to .type-h* so the two vocabularies
+   cannot alias each other. Do NOT reintroduce a bare .h-N class here. */
+.type-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  margin: 0;
+  color: var(--color-text);
+}
+.type-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 1.8vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  margin: 0;
+  color: var(--color-text);
+}
+.type-h3 {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+.lede {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 64ch;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+.mono { font-family: var(--font-mono); }
+.sans { font-family: var(--font-sans); }
+
+/* ── Layout helpers ─────────────────────────────────────── */
+.divider { height: 1px; background: var(--color-border-subtle); border: 0; margin: 0; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: 8px; top: -100px; z-index: 100;
+  padding: 10px 16px;
+  background: var(--color-text); color: var(--color-surface);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono); font-size: 0.85rem;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 8px; outline: 2px solid var(--color-surface); outline-offset: 2px; }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: -0.014em;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:active { transform: translateY(1px); }
+.btn[disabled], .btn[aria-disabled="true"] {
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-text);
+  color: var(--color-surface);
+  border-color: var(--color-text);
+}
+.btn-primary:hover:not([disabled]) {
+  background: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+.btn-secondary:hover:not([disabled]) { background: var(--color-atmosphere-wash); }
+
+.btn-ghost {
+  color: var(--color-text);
+  background: transparent;
+}
+.btn-ghost:hover:not([disabled]) { background: var(--color-atmosphere-wash); }
+
+.btn-outline {
+  border-color: var(--color-border);
+  color: var(--color-text);
+  background: transparent;
+}
+.btn-outline:hover:not([disabled]) {
+  border-color: var(--color-text);
+  background: var(--color-atmosphere-wash);
+}
+
+.btn-danger { background: var(--color-danger-fg); color: var(--color-surface); border-color: var(--color-danger-fg); }
+.btn-danger:hover:not([disabled]) { background: #9a2020; border-color: #9a2020; }
+.btn-success { background: var(--color-success-fg); color: var(--color-surface); border-color: var(--color-success-fg); }
+.btn-success:hover:not([disabled]) { filter: brightness(1.1); }
+
+.btn-lg { padding: 14px 24px; font-size: 1rem; }
+.btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+.btn-xs { padding: 6px 12px; font-size: 0.75rem; }
+.btn-block { width: 100%; }
+.btn-icon { width: 40px; padding: 0; border-radius: var(--radius-btn); }
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--card-padding);
+}
+.card-tight { padding: 24px; border-radius: var(--radius-xl); }
+.card-snug { padding: 20px; border-radius: var(--radius-lg); }
+.card-hover { transition: border-color 0.15s, transform 0.18s, box-shadow 0.18s; cursor: pointer; }
+.card-hover:hover {
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+/* Secondary-text tokens are tuned for the page canvas, not for the accent wash.
+   On `atmosphere-wash` the two faint greys fall under the WCAG AA 4.5:1 floor
+   for body text — axe measured 3.9:1 light (#6b6968 on #cfdaf5) and 4.03:1 dark
+   (#99948f on #2a3552) on the recommended pricing card. Re-pointing the custom
+   property on the surface itself fixes every descendant using
+   `text-midtone-gray` / `text-faint-text`, present and future, without touching
+   a component — the same mechanism the dark-theme block above uses.
+
+   This escaped the a11y suite until now because the pricing page only renders
+   these nodes when the plans API answers; with it unreachable the page falls
+   back to "Live pricing is briefly unavailable" and axe never saw the card. */
+.card-feature,
+.card-glow {
+  --color-midtone-gray: var(--color-pale-stone);
+  --color-faint-text: var(--color-pale-stone);
+}
+.card-feature {
+  background: var(--color-atmosphere-wash);
+  border: 1px solid transparent;
+}
+.card-glow {
+  box-shadow: var(--shadow-glow);
+  border-color: var(--color-border);
+  background: var(--color-atmosphere-wash);
+}
+
+/* ── Badges / Pills ─────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-tag);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  white-space: nowrap;
+}
+.badge-inverse { background: var(--color-text); color: var(--color-surface); border-color: var(--color-text); }
+.badge-accent { background: var(--color-atmosphere-wash); color: var(--color-text); border-color: var(--color-text); }
+.badge-neutral { background: var(--color-surface-sunken); color: var(--color-text); border-color: var(--color-border); }
+.badge-cyan { background: rgba(160, 181, 235, 0.2); color: #2a4080; border-color: rgba(160, 181, 235, 0.6); }
+.badge-emerald { background: rgba(26, 107, 64, 0.08); color: var(--color-success-fg); border-color: rgba(26, 107, 64, 0.3); }
+.badge-amber { background: rgba(154, 104, 0, 0.08); color: var(--color-warning-fg); border-color: rgba(154, 104, 0, 0.3); }
+.badge-rose { background: rgba(181, 48, 48, 0.08); color: var(--color-danger-fg); border-color: rgba(181, 48, 48, 0.3); }
+.badge-violet { background: rgba(96, 64, 160, 0.08); color: var(--color-violet); border-color: rgba(96, 64, 160, 0.3); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-tag);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+.pill svg { width: 14px; height: 14px; color: var(--color-text-secondary); }
+
+/* ── Forms ──────────────────────────────────────────────── */
+.field { display: block; }
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  letter-spacing: -0.014em;
+}
+.field-help { color: var(--color-text-muted); font-size: 0.78rem; margin-top: 6px; }
+
+.input, .textarea, .select {
+  width: 100%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: -0.014em;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder, .textarea::placeholder { color: var(--color-text-muted); }
+.input:hover, .textarea:hover, .select:hover { border-color: var(--color-text-secondary); }
+.input:focus, .textarea:focus, .select:focus {
+  outline: 0;
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px var(--color-atmosphere-wash);
+}
+.textarea { resize: vertical; min-height: 120px; }
+
+/* ── Country flag ───────────────────────────────────────── */
+/* Intrinsic-sized (width/height always set inline → no layout shift). The inset
+   hairline ring keeps white-heavy flags (JP, FI) defined on the paper-canvas
+   surface and light flags readable on dark surfaces. light-dark() flips the ring
+   weight automatically if/when a dark color-scheme is introduced; today the page
+   is color-scheme: light, so the light value applies. */
+.country-flag {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: inset 0 0 0 1px light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.18));
+  background: var(--color-surface-sunken);
+}
+/* Neutral placeholder for an unknown/empty code or a failed load — same
+   footprint as a real flag so nothing reflows, but no broken-image glyph. */
+.country-flag--empty {
+  display: inline-block;
+  border-radius: 2px;
+  background: var(--color-surface-sunken);
+  box-shadow: inset 0 0 0 1px var(--color-border-subtle);
+}
+
+/* ── Combobox (searchable country picker) ───────────────── */
+.combobox { position: relative; }
+
+/* The text input that doubles as the combobox control. Reuses .input visuals;
+   extra right padding leaves room for the chevron/spinner affordance. */
+.combobox__input { padding-right: 40px; }
+/* When a selected-country flag adornment is present, reserve logical
+   inline-start room so the input text never overlaps the flag (mirrors in RTL). */
+.combobox[data-has-flag] .combobox__input { padding-inline-start: 36px; }
+
+/* Left flag adornment for the committed selection (mirrors the right chevron).
+   Logical inset-inline-start keeps it on the leading edge in both LTR and RTL.
+   Non-interactive so a tap/click still lands on the input. */
+.combobox__flag {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 12px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Flag + name pairing inside a dropdown option (leading flag, logical gap). */
+.combobox__option-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Trailing affordance (chevron when idle, spinner when loading). Non-interactive
+   so a tap/click still lands on the input — no hover-only affordance. */
+.combobox__affordance {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+.combobox__chevron { transition: transform 0.15s ease; }
+.combobox[data-open='true'] .combobox__chevron { transform: rotate(180deg); }
+
+/* Loading affordance — matches the Spinner component's border-spin technique. */
+.combobox__spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 9999px;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Invalid state mirrors the rose error token without removing the focus ring. */
+.combobox__input[aria-invalid='true'] { border-color: var(--color-danger-fg); }
+.combobox__input[aria-invalid='true']:focus {
+  border-color: var(--color-danger-fg);
+  /* Token-derived (not a raw rgba of #b53030) so the invalid focus glow stays
+     in lockstep with --color-rose and would inherit any future theme change. */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger-fg) 18%, transparent);
+}
+
+.combobox__listbox {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Group section header inside the listbox (e.g. "Schengen Countries").
+   Presentational only — not a selectable option. */
+.combobox__group-label {
+  padding: 10px 12px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+.combobox__group-label:first-child { padding-top: 4px; }
+
+/* Language selector (mounted in the sidebar + auth layout). */
+.lang-selector select {
+  /* Must be allowed to shrink inside a flex row; without this the select keeps
+     its widest option's width and pushes the row past the viewport. */
+  max-width: 100%;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  cursor: pointer;
+  max-width: 150px;
+}
+.lang-selector select:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+.lang-selector select:focus-visible {
+  outline: none;
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-atmosphere-wash);
+}
+
+.combobox__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  /* >=44px touch target (12px*2 + ~20px line) for mobile a11y. */
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: -0.014em;
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+}
+.combobox__option[aria-selected='true'] { font-weight: 600; }
+/* Keyboard-active (aria-activedescendant) AND pointer hover share one visual. */
+.combobox__option--active,
+.combobox__option:hover {
+  background: var(--color-atmosphere-wash);
+  color: var(--color-text);
+}
+.combobox__option-code {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+.combobox__option--active .combobox__option-code { color: var(--color-text); }
+
+.combobox__empty {
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: inline-grid;
+  place-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  flex: none;
+}
+.checkbox:checked { background: var(--color-text); border-color: var(--color-text); }
+.checkbox:checked::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='3'><polyline points='3,8 7,12 13,4'/></svg>") center/contain no-repeat;
+}
+
+/* ── Alerts ─────────────────────────────────────────────── */
+.alert {
+  border: 1px solid;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.alert svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+/* These three carried hardcoded hex text on a 6%-alpha tint, so they never
+   followed the theme: in dark mode the tint resolved against a near-black
+   surface while the text stayed a light-mode hue, and axe measured
+   `.alert-error` at 2.16:1 (#9a2020 on #20171b) — an error message the user
+   cannot read. The `-fg`/`-bg` pairs above are defined per status in BOTH
+   themes for exactly this, and `.alert-info` already used them. */
+.alert-error { background: var(--color-danger-bg); color: var(--color-danger-fg); border-color: rgba(181, 48, 48, 0.25); }
+.alert-success { background: var(--color-success-bg); color: var(--color-success-fg); border-color: rgba(26, 107, 64, 0.25); }
+.alert-warning { background: var(--color-warning-bg); color: var(--color-warning-fg); border-color: rgba(154, 104, 0, 0.25); }
+.alert-info { background: var(--color-atmosphere-wash); color: var(--color-text); border-color: var(--color-text); }
+
+/* ── Progress ───────────────────────────────────────────── */
+.progress { height: 4px; background: var(--color-border); border-radius: var(--radius-tag); overflow: hidden; }
+.progress > span {
+  display: block;
+  height: 100%;
+  background: var(--color-text);
+  transition: width 0.3s ease;
+}
+
+/* ── Skeleton ───────────────────────────────────────────── */
+@keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+.skel {
+  background: linear-gradient(90deg, var(--color-border-subtle) 0%, var(--color-atmosphere-wash) 50%, var(--color-border-subtle) 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ── Page heading block ─────────────────────────────────── */
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.page-head__intro .eyebrow { margin-bottom: 6px; display: block; }
+.page-head__intro h1 { margin: 0; }
+.page-head__intro .lede { margin-top: 8px; }
+
+/* ── Stage stepper ──────────────────────────────────────── */
+.stage-nav { margin-bottom: 32px; }
+.stage-nav__back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+  letter-spacing: -0.014em;
+  transition: color 0.15s;
+}
+.stage-nav__back:hover { color: var(--color-text); }
+.stage-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-tag);
+  width: fit-content;
+  max-width: 100%;
+}
+.stage-nav__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-tag);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  letter-spacing: -0.014em;
+}
+.stage-nav__step:hover { color: var(--color-text); }
+.stage-nav__step[aria-current="step"] {
+  background: var(--color-text);
+  color: var(--color-surface);
+  font-weight: 500;
+}
+.stage-nav__index {
+  display: inline-grid;
+  place-content: center;
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  background: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+}
+.stage-nav__step[aria-current="step"] .stage-nav__index {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.stage-nav__step.is-done .stage-nav__index {
+  background: var(--color-text);
+  color: var(--color-surface);
+}
+.stage-nav__divider {
+  width: 8px; height: 1px;
+  background: var(--color-border);
+  margin: 0 2px;
+  flex: none;
+}
+
+/* ── Application list rows ──────────────────────────────── */
+.app-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: border-color 0.15s, transform 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+}
+.app-row:hover {
+  border-color: var(--color-text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.app-row__title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.app-row__meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+.app-row__right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+
+/* ── Utility colors ─────────────────────────────────────── */
+.text-muted { color: var(--color-text-secondary); }
+
+/* ── Progress ring ──────────────────────────────────────── */
+.progress-ring { position: relative; display: inline-grid; place-items: center; }
+.progress-ring__track { stroke: var(--color-border); }
+.progress-ring__fill { stroke: var(--color-text); transition: stroke-dashoffset .4s ease; }
+.progress-ring__label {
+  position: absolute; font-family: var(--font-mono, monospace);
+  font-size: 10px; font-weight: 600; color: var(--color-text);
+}
+
+/* ── Resume banner / Next-action card ───────────────────── */
+.resume-banner {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 24px; margin-bottom: 24px;
+  border: 1px solid var(--color-border); border-radius: 14px;
+  background: var(--color-surface-sunken);
+}
+.resume-banner__body { flex: 1; }
+.resume-banner__title { font-weight: 600; color: var(--color-text); }
+.next-action {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 20px; border: 1px solid var(--color-border); border-radius: 12px;
+}
+.next-action__label { font-weight: 600; }
+@media (max-width: 640px) {
+  .resume-banner, .next-action { flex-direction: column; align-items: stretch; text-align: left; }
+}
+
+.stage-nav__step.is-locked { opacity: .5; pointer-events: none; }
+/* Auth-gated step: looks locked but stays clickable (opens the auth modal). */
+.stage-nav__step--gate {
+  opacity: .6; cursor: pointer;
+  background: transparent; border: 0;
+  font-family: var(--font-mono);
+}
+.stage-nav__step--gate:hover { opacity: .9; color: var(--color-text); }
+.stage-nav__step--gate:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .stage-nav__list {
+    display: flex; flex-wrap: nowrap; overflow-x: auto;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    gap: 4px; padding-bottom: 4px;
+  }
+  .stage-nav__list > li { scroll-snap-align: start; flex: 0 0 auto; }
+}
+
+/* ── Auth gating: premium blur over locked features ─────────────────────────
+   Content stays visible (guests see the feature exists) but is non-interactive;
+   a focusable overlay opens the auth modal. */
+.gated { position: relative; display: block; }
+.gated__content {
+  filter: blur(5px);
+  opacity: .5;
+  pointer-events: none;
+  user-select: none;
+  transition: filter .2s ease, opacity .2s ease;
+}
+.gated__overlay {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px; width: 100%;
+  font: inherit; font-size: 13px; font-weight: 500;
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-surface) 55%, transparent);
+  border: 0; border-radius: inherit; cursor: pointer;
+  transition: background .15s ease;
+}
+.gated__overlay:hover { background: color-mix(in srgb, var(--color-surface) 35%, transparent); }
+.gated__overlay:focus-visible {
+  outline: 2px solid var(--color-text); outline-offset: -2px;
+}
+.gated__lock {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 999px;
+  background: var(--color-text); color: var(--color-surface);
+}
+
+/* ── Auth modal ─────────────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  background: rgba(0, 0, 0, .42);
+  backdrop-filter: blur(2px);
+  animation: modal-fade .15s ease;
+}
+.modal-panel {
+  position: relative;
+  width: 100%; max-width: 420px;
+  max-height: calc(100dvh - 32px); overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
+  padding: 24px;
+  animation: modal-pop .18s cubic-bezier(.2, .8, .2, 1);
+}
+.modal-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted); background: transparent; border: 0; cursor: pointer;
+}
+.modal-close:hover { background: var(--color-surface-sunken); color: var(--color-text); }
+.modal-close:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gated__content { transition: none; }
+  .modal-backdrop, .modal-panel { animation: none; }
+}
+
+/* ── Brand lockup on dark surfaces ──────────────────────────────────────────
+   The logo's "AI" is near-black navy and the swoosh is a dark blue, so on the
+   dark canvas they drop to almost no contrast. Recolouring the artwork was
+   tried and rejected: the saturated purples and blues of the "Visa" gradient
+   sit below any luminance threshold that catches the navy, so the recolour
+   bleached the gradient that IS the brand.
+
+   Instead the artwork is left byte-identical and given a light plate, which is
+   how the master itself presents it. Follows the same three-state cascade as
+   the tokens above — media query for `system`, attribute selectors so an
+   explicit choice wins in either direction. */
+.brand-plate {
+  border-radius: 10px;
+  transition: background-color 120ms ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .brand-plate {
+    background-color: #f6f3f1;
+    padding: 5px 9px;
+  }
+}
+:root[data-theme='dark'] .brand-plate {
+  background-color: #f6f3f1;
+  padding: 5px 9px;
+}
+:root[data-theme='light'] .brand-plate {
+  background-color: transparent;
+  padding: 0;
+}

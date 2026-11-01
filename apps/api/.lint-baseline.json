@@ -1,0 +1,7 @@
+{
+ "errors": 1031,
+ "warnings": 65,
+ "baseline_taken": "2026-08-09 (DEBT-001)",
+ "was_before_debt001": 1865,
+ "note": "This number may only go DOWN. Lower it with: npx eslint \"{src,apps,libs,test}/**/*.ts\" -f json | node ../../scripts/lint-ratchet.mjs --write"
+}

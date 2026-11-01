@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-passport-renewal-temporary-residence",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "other",
+    "official_name": "Temporary Residence Permit Pending Passport Renewal",
+    "slug": "passport-renewal-temporary-residence",
+    "purpose": "A bridging permit for residents whose passport has expired or is close to expiring while a replacement is being issued by their embassy — a free two-month permit for employment residents, or a renewal on the previous permit without late fees for the other categories.",
+    "source_titles": {
+      "requirements_68": "Temporary Residence Permit for Passport Renewal"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The two branches are the whole point and they are NOT interchangeable. Annual EMPLOYMENT residence gets a free two-month temporary permit, retained at the regional office until the new passport arrives. Annual, permanent and courtesy residence WITHOUT employment instead get a permit issued on the previous one's validity, without late fees. Both are capped at three months from the expiry of the previous permit.\n\nEvery threshold on this page is a deadline somebody can miss: the passport must have under eight months left, the embassy receipt must predate the permit expiry by at least fifteen days, and the travel receipt runs three months.",
+  "source_roles": {
+    "requirements_68": "https://www.general-security.gov.lb/en/posts/68"
+  },
+  "page_dates": {
+    "requirements_68": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who this covers: residents renewing a passport through their embassy",
+      "description": "The permit bridges the gap until the new passport is issued.",
+      "source_role": "requirements_68",
+      "source_excerpt": "arab and foreign nationals wishing to renew their residence permits who have applied for the renewal of their passports through their respective embassies may be granted a temporary residence permit pending the issuance of their new passports, provided that they meet the following conditions:",
+      "display_order": 10,
+      "source_excerpt_display": "Arab and foreign nationals wishing to renew their residence permits who have applied for the renewal of their passports through their respective embassies may be granted a temporary residence permit pending the issuance of their new passports, provided that they meet the following conditions:"
+    },
+    {
+      "requirement_code": "passport_under_eight_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An expired passport, or one with less than 8 months’ validity",
+      "description": "The eligibility threshold.",
+      "source_role": "requirements_68",
+      "source_excerpt": "an expired foreign passport or a passport valid for less than eight months.",
+      "parameters": {
+        "maximum_remaining_months": 8,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "An expired foreign passport or a passport valid for less than eight months."
+    },
+    {
+      "requirement_code": "embassy_receipt_fifteen_days",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An embassy receipt or postal notification, dated at least 15 days before the permit expires",
+      "description": "The dispatch must have been approved by General Security, and the fifteen-day lead is a hard date.",
+      "source_role": "requirements_68",
+      "source_excerpt": "a receipt issued by the relevant embassy or a postal notification confirming the dispatch of the new passport (provided that the dispatch was approved by the general security). the date of the receipt or notification must be at least 15 days before the expiry of the annual, permanent, or courtesy residence permit.",
+      "parameters": {
+        "minimum_days_before_expiry": 15,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 30,
+      "source_excerpt_display": "A receipt issued by the relevant embassy or a postal notification confirming the dispatch of the new passport (provided that the dispatch was approved by the General Security). The date of the receipt or notification must be at least 15 days before the expiry of the annual, permanent, or courtesy residence permit."
+    },
+    {
+      "requirement_code": "valid_permit_at_application",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A valid annual, permanent or courtesy residence permit on the application date",
+      "description": "The bridge cannot be built after the permit has lapsed.",
+      "source_role": "requirements_68",
+      "source_excerpt": "a valid annual, permanent, or courtesy residence permit on the date the application is submitted.",
+      "display_order": 40,
+      "source_excerpt_display": "A valid annual, permanent, or courtesy residence permit on the date the application is submitted."
+    },
+    {
+      "requirement_code": "receipt_three_months_travel",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A receipt valid up to 3 months, allowing travel and free movement",
+      "description": "What the applicant receives while waiting.",
+      "source_role": "requirements_68",
+      "source_excerpt": "the applicant shall be issued a receipt valid for a maximum period of three months , allowing him/her to travel and move freely during this period. applications shall be processed as follows:",
+      "parameters": {
+        "max_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "The applicant shall be issued a receipt valid for a maximum period of three months, allowing him/her to travel and move freely during this period. Applications shall be processed as follows:"
+    },
+    {
+      "requirement_code": "employment_free_two_month_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Annual EMPLOYMENT residence: a FREE two-month permit, retained at the regional office",
+      "description": "Capped at three months from the previous permit's expiry.",
+      "source_role": "requirements_68",
+      "source_excerpt": "approval shall be granted by the directorate general of general security to issue a free two-month temporary residence permit , which shall be retained at the regional office until the applicant obtains a new passport. the retention period shall not exceed three months from the expiry date of the previous residence permit.",
+      "parameters": {
+        "months": 2,
+        "amount": 0,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "Approval shall be granted by the Directorate General of General Security to issue a free two-month temporary residence permit, which shall be retained at the regional office until the applicant obtains a new passport. The retention period shall not exceed three months from the expiry date of the previous residence permit."
+    },
+    {
+      "requirement_code": "non_employment_no_late_fees",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Annual, permanent or courtesy WITHOUT employment: a permit on the previous validity, without late fees",
+      "description": "The other branch, with the same three-month cap.",
+      "source_role": "requirements_68",
+      "source_excerpt": "approval shall be granted by the directorate general of general security to issue a residence permit based on the validity of the previous residence permit, without late fees , upon submission of the required documents, provided that the retention period does not exceed three months from the expiry date of the previous residence permit.",
+      "display_order": 70,
+      "source_excerpt_display": "Approval shall be granted by the Directorate General of General Security to issue a residence permit based on the validity of the previous residence permit, without late fees, upon submission of the required documents, provided that the retention period does not exceed three months from the expiry date of the previous residence permit."
+    },
+    {
+      "requirement_code": "permit_issued_on_new_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The residence permit is issued on the NEW passport",
+      "description": "Stated by the authority in its own sentence.",
+      "source_role": "requirements_68",
+      "source_excerpt": "the residence permit shall be issued on the new passport.",
+      "display_order": 80,
+      "source_excerpt_display": "The residence permit shall be issued on the new passport."
+    },
+    {
+      "requirement_code": "new_passport_six_to_twelve_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the new passport has 6–12 months’ validity, a one-year permit is granted after paying the fees",
+      "description": "A band, not a threshold, and the fee is not waived here.",
+      "source_role": "requirements_68",
+      "source_excerpt": "if the new passport is valid for more than six months but less than one year , a one-year residence permit shall be granted after payment of the applicable fees.",
+      "display_order": 90,
+      "source_excerpt_display": "If the new passport is valid for more than six months but less than one year, a one-year residence permit shall be granted after payment of the applicable fees."
+    },
+    {
+      "requirement_code": "employment_permit_follows_previous",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An annual employment permit on the new passport follows the PREVIOUS permit’s validity",
+      "description": "The bridge does not extend the entitlement.",
+      "source_role": "requirements_68",
+      "source_excerpt": "when applying for an annual employment residence permit using the new passport, the residence permit shall be granted based on the validity of the previous annual residence permit, after submission of the required documents.",
+      "display_order": 100,
+      "source_excerpt_display": "When applying for an annual employment residence permit using the new passport, the residence permit shall be granted based on the validity of the previous annual residence permit, after submission of the required documents."
+    }
+  ]
+}

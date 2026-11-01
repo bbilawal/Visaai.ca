@@ -1,0 +1,286 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "my-long-term-social-visit-pass",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department of Malaysia's Long Term Social Visit Pass page",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "A FAMILY PASS THAT LETS YOU WORK WITHOUT CONVERTING. 'the pass holder is permitted to work, engage in business, or undertake professional employment without the need to convert to an employment pass or visit pass (temporary employment).' Every other family route in this registry either bars work or routes the holder to a separate work pass — Singapore's Dependant's Pass most sharply, where getting an Employment Pass ends the dependency itself. Malaysia endorses the permission onto the pass the spouse already holds.\n\nIT IS STILL A SEPARATE ENDORSEMENT. A job offer, an employment contract stamped with an RM10 revenue stamp, an information form signed by applicant, spouse and employer, and an application lodged BY THE APPLICANT IN PERSON WITH THE MALAYSIAN SPOUSE.\n\nNAZIRAN. The Department publishes its own post-grant inspection regime on the route page: visits to the registered address or premises, observation, interviews with relevant parties, review of submitted documents — and the findings feed back into approval and extension decisions. No other authority here does that, and it is stored as a condition rather than as background because it is a thing that will happen to the holder.\n\nTHE PAGE STATES ITS WORK RULES TWICE. Two blocks, 'conditions and regulations for permission to work' and 'terms and conditions of work permit for a citizen spouse', cover the same subject in different words — almost certainly an English rendering beside a translated one. The registry's method for a doubled page applies: the blocks were diffed first, they are near-duplicates with no selector between them, so NO BOUND is declared and each requirement quotes the block its own wording comes from rather than mixing the two.",
+  "source_roles": {
+    "requirements": "https://www.imi.gov.my/index.php/en/main-services/pass/visitor-pass/social-visit-pass/long-term-social-visit-pass/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateModified and no dateline; freshness reads as UNKNOWN, never fresh. The page's own currency markers are the MyData SSM system for company registration extracts and the naziran regime, both current practice, and it renders a live server clock in its header. Corroboration, not a dateline.",
+  "not_extracted": [
+    "The full per-category document checklists for children and stepchildren of citizens, parents of citizens, and the other long-stay categories. The page lists them inline and they run to dozens of items with Sabah and Sarawak variants; what is stored is the category rule that decides whether a person qualifies at all.",
+    "The Short-Term Social Visit Pass. A separate page, and one whose content is 13 unique lines out of 184 against its siblings — the site menu again.",
+    "The Malaysia My Second Home programme and the Residence Pass, which are separate long-stay routes.",
+    "The security bond amounts. The page names a stamped RM10 personal or security bond and notes a security bond specifically for Chinese and Nigerian citizens, without publishing the sums.",
+    "Conversion to permanent residence or citizenship, which the Department does not address on this page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "minimum_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass is for temporary residence of at least six months",
+      "description": "A floor, not a ceiling — this is not a route for a long holiday.",
+      "source_role": "requirements",
+      "source_excerpt": "the long-term social visit pass (ltsvp) is issued by the jabatan imigresen malaysia to foreign nationals for temporary residence in malaysia for a minimum period of six (6) months.",
+      "display_order": 10,
+      "parameters": {
+        "minimum_months": 6
+      },
+      "source_excerpt_display": "The Long-Term Social Visit Pass (LTSVP) is issued by the Jabatan Imigresen Malaysia to foreign nationals for temporary residence in Malaysia for a minimum period of six (6) months."
+    },
+    {
+      "requirement_code": "spouse_up_to_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Malaysian citizen's foreign spouse may be granted up to five years",
+      "description": "Subject to approval and to compliance with the conditions — the Department attaches both qualifiers in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "the pass may be granted for up to five (5) years, subject to approval and compliance with the prescribed conditions.",
+      "display_order": 20,
+      "parameters": {
+        "max_years": 5
+      },
+      "source_excerpt_display": "The pass may be granted for up to five (5) years, subject to approval and compliance with the prescribed conditions."
+    },
+    {
+      "requirement_code": "work_without_converting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may work or run a business on this pass, without converting to an employment pass",
+      "description": "The unusual part. Elsewhere in this registry a family pass either bars work or sends the holder to a separate work pass — Singapore's Dependant's Pass being the sharpest comparison, where obtaining an Employment Pass ends the dependency. Here the permission is endorsed onto the pass already held.",
+      "source_role": "requirements",
+      "source_excerpt": "the pass holder is permitted to work, engage in business, or undertake professional employment without the need to convert to an employment pass or visit pass (temporary employment).",
+      "display_order": 30,
+      "source_excerpt_display": "The pass holder is permitted to work, engage in business, or undertake professional employment without the need to convert to an Employment Pass or Visit Pass (Temporary Employment)."
+    },
+    {
+      "requirement_code": "naziran_inspection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Expect naziran: address visits, observation, interviews and document review",
+      "description": "The Department publishes its own post-grant inspection regime, and says the findings are used when it considers approval or extension. Holding the pass is not the end of the process.",
+      "source_role": "requirements",
+      "source_excerpt": "naziran is carried out as a verification activity to ensure that holders of immigration facilities comply with the prescribed conditions. the implementation of naziran may involve visits to the registered address or premises, observation, interviews with relevant parties and review of documents submitted to the department.",
+      "display_order": 40,
+      "source_excerpt_display": "Naziran is carried out as a verification activity to ensure that holders of immigration facilities comply with the prescribed conditions. The implementation of Naziran may involve visits to the registered address or premises, observation, interviews with relevant parties and review of documents submitted to the Department."
+    },
+    {
+      "requirement_code": "apply_with_spouse_in_person",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The application must be lodged by you together with your Malaysian spouse",
+      "description": "Both people, in person. Stated twice on the page, once in each of the two work-permission blocks.",
+      "source_role": "requirements",
+      "source_excerpt": "the application must be submitted by the applicant together with his or her malaysian citizen spouse.",
+      "display_order": 50,
+      "source_excerpt_display": "The application must be submitted by the applicant together with his or her Malaysian citizen spouse."
+    },
+    {
+      "requirement_code": "marriage_legally_registered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The marriage must be legally registered under Malaysian law, and you must already hold the spouse-facility pass",
+      "description": "Two conditions in one sentence: the marriage's legal standing, and an existing Social Visit Pass under the spouse facility. Work permission is an addition to a pass you already have, not a way to get one.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must be legally married to a malaysian citizen and holding a social visit pass under the spouse facility of a malaysian citizen.",
+      "display_order": 60,
+      "source_excerpt_display": "The applicant must be legally married to a Malaysian citizen and holding a Social Visit Pass under the spouse facility of a Malaysian citizen."
+    },
+    {
+      "requirement_code": "employment_must_be_lawful",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work or business must be lawful under Malaysian law",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "the employment or business undertaken must be lawful under the laws of malaysia.",
+      "display_order": 70,
+      "source_excerpt_display": "The employment or business undertaken must be lawful under the laws of Malaysia."
+    },
+    {
+      "requirement_code": "work_permission_endorsed_in_passport",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Permission to work is endorsed in your passport",
+      "description": "Not a separate document. Until the endorsement is made, the permission does not exist.",
+      "source_role": "requirements",
+      "source_excerpt": "approval to work or conduct business will be endorsed in the applicant’s passport.",
+      "display_order": 80,
+      "source_excerpt_display": "Approval to work or conduct business will be endorsed in the applicant’s passport."
+    },
+    {
+      "requirement_code": "comply_with_director_general_rules",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Once permitted to work you must comply with the Director General's regulations",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "applicants who have been granted permission to work must comply with all regulations set by the director general of immigration malaysia.",
+      "display_order": 90,
+      "source_excerpt_display": "Applicants who have been granted permission to work must comply with all regulations set by the Director General of Immigration Malaysia."
+    },
+    {
+      "requirement_code": "children_of_citizens_under_seven",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A child or stepchild of a citizen must be under 7 years old",
+      "description": "A hard ceiling with no counterpart in the other family routes in this registry — Singapore's Dependant's Pass runs to 21, Ireland's and Norway's to 18. The citizen parent must lodge the application.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants must be under 7 years old.",
+      "display_order": 100,
+      "parameters": {
+        "max_age_years": 7
+      },
+      "source_excerpt_display": "Applicants must be under 7 years old."
+    },
+    {
+      "requirement_code": "child_application_by_citizen_parent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For a child, the citizen parent submits the application",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "the application must be submitted by the citizen’s parents.",
+      "display_order": 110,
+      "source_excerpt_display": "The application must be submitted by the citizen’s parents."
+    },
+    {
+      "requirement_code": "spouse_identity_card",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of your Malaysian spouse's identity card (MyKad)",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "copy of the malaysian citizen spouse’s identity card (mykad).",
+      "display_order": 120,
+      "source_excerpt_display": "Copy of the Malaysian citizen spouse’s Identity Card (MyKad)."
+    },
+    {
+      "requirement_code": "applicant_passport_and_pass",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of your passport and current pass",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "copy of the applicant’s passport and current pass.",
+      "display_order": 130,
+      "source_excerpt_display": "Copy of the applicant’s passport and current pass."
+    },
+    {
+      "requirement_code": "statutory_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A statutory declaration with photograph, affirmed before a Commissioner for Oaths",
+      "description": "The second work block calls it an affidavit of oath stamped by the Commissioner of Oaths from the government court; the requirement is the same instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "completed statutory declaration form with photograph, duly affirmed before a commissioner for oaths.",
+      "display_order": 140,
+      "source_excerpt_display": "Completed Statutory Declaration Form with photograph, duly affirmed before a Commissioner for Oaths."
+    },
+    {
+      "requirement_code": "marriage_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the marriage certificate or marriage registration certificate",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "copy of marriage certificate or marriage registration certificate.",
+      "display_order": 150,
+      "source_excerpt_display": "Copy of Marriage Certificate or Marriage Registration Certificate."
+    },
+    {
+      "requirement_code": "employer_offer_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A letter of offer from the employer, on official company letterhead",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "letter of offer from the employer (on official company letterhead).",
+      "display_order": 160,
+      "source_excerpt_display": "Letter of Offer from the employer (on official company letterhead)."
+    },
+    {
+      "requirement_code": "stamped_employment_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An employment contract stamped with an RM10 revenue stamp, stating four specific things",
+      "description": "Position, duration of employment, monthly salary, and the signatures of both employer and employee. A contract missing any of the four is incomplete for this purpose.",
+      "source_role": "requirements",
+      "source_excerpt": "employment contract duly stamped with rm10 revenue stamp and containing the following details:",
+      "display_order": 170,
+      "parameters": {
+        "currency": "MYR",
+        "revenue_stamp": 10,
+        "must_state": [
+          "position",
+          "duration of employment",
+          "monthly salary",
+          "signatures of employer and employee"
+        ]
+      },
+      "source_excerpt_display": "Employment Contract duly stamped with RM10 revenue stamp and containing the following details:"
+    },
+    {
+      "requirement_code": "tripartite_information_form",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An information form covering the applicant, the Malaysian spouse and the employer",
+      "description": "One form binding all three parties.",
+      "source_role": "requirements",
+      "source_excerpt": "applicant, malaysian spouse and employer information form.",
+      "display_order": 180,
+      "source_excerpt_display": "Applicant, Malaysian Spouse and Employer Information Form."
+    },
+    {
+      "requirement_code": "ssm_company_registration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The employer's company registration form, printed directly from the MyData SSM system",
+      "description": "The Department specifies the source system, not just the document — a scan of an older extract is not the same thing.",
+      "source_role": "requirements",
+      "source_excerpt": "latest copy of the company registration form printed directly from the mydata ssm system.",
+      "display_order": 190,
+      "source_excerpt_display": "Latest copy of the Company Registration Form printed directly from the MyData SSM system."
+    },
+    {
+      "requirement_code": "apply_in_state_of_employment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply at the Visa, Pass and Permit Division in the state where you are employed",
+      "description": "The state where the job is, not where you live. Alternatively the headquarters in Putrajaya or the nearest state office, per the second block.",
+      "source_role": "requirements",
+      "source_excerpt": "the application must be submitted at the visa, pass and permit division in the state where the applicant is employed.",
+      "display_order": 200,
+      "source_excerpt_display": "The application must be submitted at the Visa, Pass and Permit Division in the state where the applicant is employed."
+    },
+    {
+      "requirement_code": "apply_with_pass_or_after_offer",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply either alongside the pass application, or at any time after a job offer",
+      "description": "There is no window to miss — but there is also no way to be endorsed before an offer exists.",
+      "source_role": "requirements",
+      "source_excerpt": "at the time of applying for the long-term social visit pass; or ... at any time after receiving a job offer.",
+      "display_order": 210,
+      "source_excerpt_display": "At the time of applying for the Long-Term Social Visit Pass; or ... At any time after receiving a job offer."
+    },
+    {
+      "requirement_code": "originals_required_incomplete_rejected",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Bring every original for verification — incomplete applications are not processed",
+      "description": "Stated in both work blocks. Not 'delayed': not processed.",
+      "source_role": "requirements",
+      "source_excerpt": "all original documents must be presented for verification. incomplete applications will not be processed.",
+      "display_order": 220,
+      "source_excerpt_display": "All original documents must be presented for verification. Incomplete applications will not be processed."
+    }
+  ]
+}

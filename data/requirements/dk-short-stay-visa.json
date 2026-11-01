@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-short-stay-visa",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Danish Immigration Service page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "DENMARK DOES NOT APPLY ONE TEST TO ALL NATIONALITIES, AND FLATTENING THAT WOULD BE THE WORST ERROR AVAILABLE ON THIS PAGE.\n\nVisa-required countries are sorted into five groups by assessed risk, and the group decides what relationship to a host is needed before a visa is granted at all. Group 1 can travel as a pure tourist with no host. Group 3 normally needs a spouse, partner, child, parent or sibling in Denmark. Group 4 is narrowed to spouse, partner, minor child or parent. Group 5 qualifies only where there are extenuating circumstances. A single 'you need a host' or 'tourists are welcome' statement would be false for four of the five groups, and false in the direction that costs someone a refused application and a fee.\n\nThis is the same shape as Singapore's ICA nationality grouping, where 19 nationalities need a local sponsor's form V39A and 14 do not — see scripts/visa-registry/sg-entry-visa-groups.mjs. Each group's rule is therefore registered as its own requirement, quoted from the paragraph the authority wrote for it.\n\nThe authority also states plainly that the grouping 'serves only as a rough guideline' and every application is decided case by case. That sentence is registered too, because publishing the groups without it would present a schedule of entitlements the authority explicitly declined to give.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Short-stay-visa/Private-visits-and-tourist-visits-"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The page references 2026 and names a temporary rule currently applying to Gambian nationals, which is the kind of detail that moves; the daily sync is what will notice it.",
+  "not_extracted": [
+    "The membership lists of the five country groups — roughly 130 country names with lettered footnotes for biometric-passport exemptions. They are data rather than requirement, they move whenever Denmark reassesses a country, and a copy here would be stale while looking authoritative. Each group's RULE is extracted and links to the authority's own list.",
+    "The Schengen member-state list, for the same reason.",
+    "The step-by-step application walkthrough, the VAC/outsourcing arrangements, and the biometrics appointment procedure.",
+    "The travel agency and tourist arrangements for China, Ukraine and India (the ADS arrangement), which the authority describes on a separate linked page and which it states do not remove the general requirements.",
+    "The separate short-stay routes the catalogue enumerates alongside this one — business visits, cultural visits, visa under EU rules, visa-free visits, prior approval for companies, and entry to the Faroe Islands or Greenland."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "visa_required_for_listed_nationalities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa is required for citizens of countries with a visa requirement",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "if you wish to visit denmark for a short period of time and you are a citizen of a country with a visa requirement, you must have a visa.",
+      "source_excerpt_display": "If you wish to visit Denmark for a short period of time and you are a citizen of a country with a visa requirement, you must have a visa."
+    },
+    {
+      "requirement_code": "grouping_is_a_guideline_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The five-group division is a rough guideline; every application is decided case by case",
+      "description": "Registered before the groups themselves, because the groups without it read as a schedule of entitlements.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "the division of countries into 5 main groups serves only as a rough guideline. all applications are reviewed on a case-by-case basis. for instance, it will be taken into consideration whether you have previously been issued a schengen visa and you have complied with the terms of the visa. other special situations that may be considered include: whether you are seeking to visit an individual suffering from a terminal illness, or if the purpose of the trip is to attend the funeral of a close friend or relative.",
+      "source_excerpt_display": "The division of countries into 5 main groups serves only as a rough guideline. All applications are reviewed on a case-by-case basis. For instance, it will be taken into consideration whether you have previously been issued a Schengen visa and you have complied with the terms of the visa. Other special situations that may be considered include: whether you are seeking to visit an individual suffering from a terminal illness, or if the purpose of the trip is to attend the funeral of a close friend or relative."
+    },
+    {
+      "requirement_code": "refusal_grounds_all_groups",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa is refused for any group where there is a risk of settling or a security risk",
+      "description": "Quoted with both limbs, which the authority lists together.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "regardless of which group of countries you belong to, the immigration authorities will refuse a visa if there is a risk that you:\n\nwill seek to reside in denmark or another schengen country permanently or for an extended period, or\n\npose a security risk.",
+      "source_excerpt_display": "Regardless of which group of countries you belong to, the immigration authorities will refuse a visa if there is a risk that you:\n\nwill seek to reside in Denmark or another Schengen country permanently or for an extended period, or\n\npose a security risk."
+    },
+    {
+      "requirement_code": "group_1_rule",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 1: eligible for purely tourist visits with no host in Denmark",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "as a citizen of a country in group 1, you are as a starting point eligible for visas for purely tourist-related visits even if the visits will not be hosted by anyone in denmark.",
+      "source_excerpt_display": "As a citizen of a country in Group 1, you are as a starting point eligible for visas for purely tourist-related visits even if the visits will not be hosted by anyone in Denmark."
+    },
+    {
+      "requirement_code": "group_2_rule",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 2: a visa may be issued regardless of the relationship to the host, but the visit must be hosted",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "as a citizen of a country in group 2, you can as a starting point be issued a visa, regardless of the nature of the relationship with your host. your visit must be hosted by someone in denmark, but there is no particular form of relationship that is required in order to be a host. spouses, cohabiting partners and boy/girlfriends as well as minor children of danish citizens who live abroad also qualify for visas.",
+      "source_excerpt_display": "As a citizen of a country in group 2, you can as a starting point be issued a visa, regardless of the nature of the relationship with your host. Your visit must be hosted by someone in Denmark, but there is no particular form of relationship that is required in order to be a host. Spouses, cohabiting partners and boy/girlfriends as well as minor children of Danish citizens who live abroad also qualify for visas."
+    },
+    {
+      "requirement_code": "group_3_rule",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 3: a certain relationship with the host is required",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "as a citizen of one of the countries in group 3, you must as a starting point have a certain relationship with your host.",
+      "source_excerpt_display": "As a citizen of one of the countries in Group 3, you must as a starting point have a certain relationship with your host."
+    },
+    {
+      "requirement_code": "group_3_relationships_normally_granted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 3: the relationships a visa is normally granted to",
+      "description": "Spouses, partners, children, parents and siblings, quoted as the authority lists them.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "visa will normally be granted to:\n\nspouses\n\ncohabiting partners or boy/girlfriends\n\nchildren (regardless of age) and their accompanying spouse\n\nparents and their accompanying spouse\n\nsiblings and their accompanying spouse.",
+      "source_excerpt_display": "Visa will normally be granted to:\n\nSpouses\n\nCohabiting partners or boy/girlfriends\n\nChildren (regardless of age) and their accompanying spouse\n\nParents and their accompanying spouse\n\nSiblings and their accompanying spouse."
+    },
+    {
+      "requirement_code": "group_3_relationships_also_possible",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Group 3: the further relationships a visa can also be granted to",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "visas can also be granted to:\n\nnieces, nephews and grandchildren under the age of 18 seeking to travel to denmark on holiday unaccompanied by an adult\n\nclose acquaintances of a danish citizen who previously worked abroad for a danish company\n\nsponsor children under the age of 18\n\nindividuals accompanying an elderly weak family member.",
+      "source_excerpt_display": "Visas can also be granted to:\n\nNieces, nephews and grandchildren under the age of 18 seeking to travel to Denmark on holiday unaccompanied by an adult\n\nClose acquaintances of a Danish citizen who previously worked abroad for a Danish company\n\nSponsor children under the age of 18\n\nIndividuals accompanying an elderly weak family member."
+    },
+    {
+      "requirement_code": "group_4_rule",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 4: normally only a spouse, cohabiting partner, minor child or parent of someone living in Denmark",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "as a citizens of a country in group 4 you can as a starting point be issued a visa if you are the spouse, cohabiting partner, minor child or a parent of an individual living in denmark. you will be considered to be a ‘cohabiting partner’ if it can be documented that you have lived together for at least 18 months.",
+      "source_excerpt_display": "As a citizens of a country in Group 4 you can as a starting point be issued a visa if you are the spouse, cohabiting partner, minor child or a parent of an individual living in Denmark. You will be considered to be a ‘cohabiting partner’ if it can be documented that you have lived together for at least 18 months."
+    },
+    {
+      "requirement_code": "group_5_rule",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Group 5: restrictions apply and a visa normally requires extenuating circumstances",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "as a citizen of a country in group 5, you are subject to a number of restrictions and as a starting point you only qualify for visas if there are extenuating circumstances, such as the death or terminal illness of a family member living in denmark.",
+      "source_excerpt_display": "As a citizen of a country in Group 5, you are subject to a number of restrictions and as a starting point you only qualify for visas if there are extenuating circumstances, such as the death or terminal illness of a family member living in Denmark."
+    },
+    {
+      "requirement_code": "passport_validity_three_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport must be valid for three months past the visa expiry date",
+      "source_role": "requirements",
+      "parameters": {
+        "months_validity_past_visa_expiry": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt": "your passport or other form of valid travel document must be valid for three months past the visa expiration date .",
+      "source_excerpt_display": "Your passport or other form of valid travel document must be valid for three months past the visa expiration date ."
+    },
+    {
+      "requirement_code": "passport_issued_within_ten_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The passport must have been issued within the past 10 years",
+      "source_role": "requirements",
+      "parameters": {
+        "max_passport_age_years": 10,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 120,
+      "source_excerpt": "your passport or travel document must have been issued within the past 10 years .",
+      "source_excerpt_display": "Your passport or travel document must have been issued within the past 10 years ."
+    },
+    {
+      "requirement_code": "sufficient_means",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must have the means to pay for the stay and the return trip",
+      "description": "The authority sets no figure and states that the mission or the Immigration Service determines it.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "you must have the necessary means to pay for your stay and return trip. what will be considered as necessary funds will be determined by the danish diplomatic mission and depends on the length of your stay, and whether you will stay at a hotel or with friends or family. as a general rule, you must have at your disposal approx. dkk 350 per day. if you are staying at a hotel, the amount must be greater, approx. dkk 500 per day.",
+      "source_excerpt_display": "You must have the necessary means to pay for your stay and return trip. What will be considered as necessary funds will be determined by the Danish diplomatic mission and depends on the length of your stay, and whether you will stay at a hotel or with friends or family. As a general rule, you must have at your disposal approx. DKK 350 per day. If you are staying at a hotel, the amount must be greater, approx. DKK 500 per day."
+    },
+    {
+      "requirement_code": "travel_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Travel insurance covering repatriation, medical treatment and acute hospitalisation",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "you must hold a travel insurance policy to cover possible expenses in connection with a return for health reasons or death, indispensable medical treatment or acute hospitalisation during your stay. the insurance policy must cover all schengen countries, and the minimum policy coverage is € 30,000. the insurance policy must be valid for the same period as the visa. the validity of the visa may be shortened if the insurance policy does not cover the entire period.",
+      "source_excerpt_display": "You must hold a travel insurance policy to cover possible expenses in connection with a return for health reasons or death, indispensable medical treatment or acute hospitalisation during your stay. The insurance policy must cover all Schengen countries, and the minimum policy coverage is € 30,000. The insurance policy must be valid for the same period as the visa. The validity of the visa may be shortened if the insurance policy does not cover the entire period."
+    },
+    {
+      "requirement_code": "not_registered_in_sis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not be registered as undesirable in the Schengen Information System (SIS II)",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "you may not be registered as an undesirable in the schengen information system (sis ii).",
+      "source_excerpt_display": "You may not be registered as an undesirable in the Schengen Information System (SIS II)."
+    },
+    {
+      "requirement_code": "no_deportation_entry_ban",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not have been deported from Denmark and given an entry ban",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "you may not have been deported from denmark and given an entry ban.",
+      "source_excerpt_display": "You may not have been deported from Denmark and given an entry ban."
+    },
+    {
+      "requirement_code": "not_on_sanction_lists",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not be listed on UN or EU sanction lists",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "you may not be listed on un or eu sanction lists.",
+      "source_excerpt_display": "You may not be listed on UN or EU sanction lists."
+    },
+    {
+      "requirement_code": "not_on_national_preacher_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not be on the national sanction list of religious preachers with an entry ban",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "you may not be listed on the national sanction list of religious preachers with entry ban.",
+      "source_excerpt_display": "You may not be listed on the national sanction list of religious preachers with entry ban."
+    },
+    {
+      "requirement_code": "conditions_apply_throughout_the_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The conditions apply at issue, at entry and throughout the stay",
+      "description": "Not a one-time check at the counter.",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "these conditions apply at the time your visa is issued, as well as when you enter and stay in the schengen region. it is therefore important that you are able to document at all times that you have the necessary funds to pay for your stay and return trip, and that you hold a valid travel insurance policy. if you do not meet these conditions, your visa can be confiscated and revoked, in which case you will be required to leave the schengen region immediately.",
+      "source_excerpt_display": "These conditions apply at the time your visa is issued, as well as when you enter and stay in the Schengen region. It is therefore important that you are able to document at all times that you have the necessary funds to pay for your stay and return trip, and that you hold a valid travel insurance policy. If you do not meet these conditions, your visa can be confiscated and revoked, in which case you will be required to leave the Schengen region immediately."
+    },
+    {
+      "requirement_code": "host_required_groups_2_to_5",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Groups 2 to 5 normally require a host in Denmark who meets conditions of their own",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "if you are a citizen of a country places in group 2, 3, 4 or 5, you can normally only be granted a visa, if you have a host in denmark. the host in denmark must meet certain requirements:",
+      "source_excerpt_display": "If you are a citizen of a country places in group 2, 3, 4 or 5, you can normally only be granted a visa, if you have a host in Denmark. The host in Denmark must meet certain requirements:"
+    },
+    {
+      "requirement_code": "host_must_confirm_visit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The host must confirm the visit — form VU2 is recommended but not required",
+      "description": "Quoted whole, because the recommendation and the fact it is not mandatory sit in the same sentence.",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "the host must confirm that your visit is expected. the danish immigration service recommends using invitation form vu2, but this it is not a requirement. read more about invitation of a visa applicant",
+      "source_excerpt_display": "The host must confirm that your visit is expected. The Danish Immigration Service recommends using invitation form VU2, but this it is not a requirement. Read more about invitation of a visa applicant"
+    },
+    {
+      "requirement_code": "host_permanent_home",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The host must have a permanent place to live in Denmark, subject to a waiver",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "the host must have a permanent place to live in denmark. this requirement can be waived in certain cases, such as if you are a spouse, a cohabiting partner, a boyfriend or girlfriend or minor child of a danish national who has settled down permanently abroad and if the danish national wishes to spend a vacation in denmark with his immediate family.",
+      "source_excerpt_display": "The host must have a permanent place to live in Denmark. This requirement can be waived in certain cases, such as if you are a spouse, a cohabiting partner, a boyfriend or girlfriend or minor child of a Danish national who has settled down permanently abroad and if the Danish national wishes to spend a vacation in Denmark with his immediate family."
+    },
+    {
+      "requirement_code": "host_citizen_or_resident",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The host must normally be a citizen or resident of Denmark",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "the host must normally be either a citizen or resident of denmark. if the host holds an expired residence permit, but has applied for renewal, the danish immigration service will make a decision based on the specific details of the situation. one of the danish immigration service’s considerations will be whether the host will be permitted to apply for permanent residence at some point.",
+      "source_excerpt_display": "The host must normally be either a citizen or resident of Denmark. If the host holds an expired residence permit, but has applied for renewal, the Danish Immigration Service will make a decision based on the specific details of the situation. One of the Danish Immigration Service’s considerations will be whether the host will be permitted to apply for permanent residence at some point."
+    },
+    {
+      "requirement_code": "maximum_90_days_in_180",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Maximum stay of 90 days in any 180-day period",
+      "source_role": "requirements",
+      "parameters": {
+        "max_days": 90,
+        "per_days": 180,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240,
+      "source_excerpt": "you may be granted a visa in the schengen region for a maximum stay of 90 days in any 180-day period . read more about the duration of the visa stay",
+      "source_excerpt_display": "You may be granted a visa in the Schengen region for a maximum stay of 90 days in any 180-day period . Read more about the duration of the visa stay"
+    },
+    {
+      "requirement_code": "overstay_penalty_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Overstaying, or using a visa stay to obtain residence, can carry a penalty period",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "if you remain in denmark after your visa expires or if you attempt to use your visa stay to obtain permanent or long-term residency in denmark, you can be given a penalty period of 3 or 5 years. in the penalty period you will generally not be able to get a visa to visit denmark. read more about misuse of a visa",
+      "source_excerpt_display": "If you remain in Denmark after your visa expires or if you attempt to use your visa stay to obtain permanent or long-term residency in Denmark, you can be given a penalty period of 3 or 5 years. In the penalty period you will generally not be able to get a visa to visit Denmark. Read more about misuse of a visa"
+    },
+    {
+      "requirement_code": "visa_does_not_allow_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa does not allow you to work in Denmark",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "a visa does not allow you to work in denmark unless the immigration service has explicitly granted you this right.",
+      "source_excerpt_display": "A visa does not allow you to work in Denmark unless the Immigration Service has explicitly granted you this right."
+    },
+    {
+      "requirement_code": "some_work_activities_under_90_days",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Certain work-related activities are allowed during visits of under 90 days without a work permit",
+      "description": "Registered because publishing the prohibition alone would overstate it.",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "however, during visits of less than 90 days you may carry out certain work-related activities without holding a work permit . read more about visa and work permit",
+      "source_excerpt_display": "However, during visits of less than 90 days you may carry out certain work-related activities without holding a work permit . Read more about visa and work permit"
+    },
+    {
+      "requirement_code": "visa_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa fee, with the reduced rate for children aged 6 to 11",
+      "description": "Quoted whole, including the separate service fee payable to the outsourcing company, which the authority does not quantify.",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "EUR",
+        "amount": 90,
+        "eur_6_to_11": 45,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt": "normally you have to pay a fee in order to submit an application. the visa fee is normally 90 euro and for children from the age of six years and below the age of 12 years 45 euro. furthermore you have to pay a service fee to the outsourcing company (vac).",
+      "source_excerpt_display": "Normally you have to pay a fee in order to submit an application. The visa fee is normally 90 euro and for children from the age of six years and below the age of 12 years 45 euro. Furthermore you have to pay a service fee to the outsourcing company (VAC)."
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "$schema_version": 1,
+  "generated_at": "2026-08-24T19:44:27.122Z",
+  "generated_by": "scripts/execution/generate-master-state.mjs",
+  "how_to_read": {
+    "measured": "Read from git, the database and (when --run-tests is passed) the test suites at generation time. Not typed by anyone. A field carrying {\"ok\": false} means the measurement FAILED — that is not the same as a zero.",
+    "asserted": "Judgement from docs/execution/execution-assertions.json that no command can produce. Re-verify these against the measured half before acting on them."
+  },
+  "specification": {
+    "ok": true,
+    "value": {
+      "path": "../VisaAI_Claude_Master_Execution_Spec.md",
+      "sha256": "52e2e93c9299efa48d8647233f1ded5a529974305c4bedd0e0db0db8bb26fc3b",
+      "bytes": 85693
+    }
+  },
+  "measured": {
+    "git": {
+      "branch": {
+        "ok": true,
+        "value": "main"
+      },
+      "commit": {
+        "ok": true,
+        "value": "9454af1986b65b183fe67cdf5a7662a744cb1dfa"
+      },
+      "commit_subject": {
+        "ok": true,
+        "value": "Türkiye finished: fees on every residence route, and the seventh route"
+      },
+      "commit_authored_at": {
+        "ok": true,
+        "value": "2026-08-24T15:42:57-04:00"
+      },
+      "worktree": {
+        "ok": true,
+        "value": {
+          "clean": false,
+          "entries": [
+            "M artifacts/visa-data/global-country-registry.json",
+            " M artifacts/visa-data/global-official-source-ledger.csv",
+            " M artifacts/visa-data/global-visa-catalog.csv",
+            " M artifacts/visa-data/global-visa-catalog.json",
+            " M docs/testing/COUNTRY_VISA_COVERAGE.md",
+            " M docs/visa-data/GLOBAL_COUNTRY_SCOPE.md",
+            " M docs/visa-data/GLOBAL_COVERAGE_EXCEPTIONS.md",
+            " M docs/visa-data/GLOBAL_VISA_CATALOG.md"
+          ]
+        }
+      },
+      "unpushed_commits": {
+        "ok": true,
+        "value": {
+          "upstream": "origin/main",
+          "count": 0
+        }
+      },
+      "repository_path": "/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI"
+    },
+    "data": {
+      "ok": true,
+      "value": {
+        "target": "docker container supabase_db_VisaAI",
+        "is_production": false,
+        "counts": {
+          "countries_total": 196,
+          "countries_publishable": 19,
+          "countries_baseline_only": 177,
+          "visa_types_active": 124,
+          "requirements_active": 1863,
+          "requirements_without_provenance": 0,
+          "publishable_pages": 108,
+          "sources_total": 301,
+          "sources_blocked": 67,
+          "last_source_check_at": "2026-08-24T19:44:26.26658+00:00"
+        }
+      }
+    },
+    "tests": {
+      "executed": false,
+      "carried_forward": true,
+      "measured_at_commit": "18fac55735d6e51efa5563786c1fbf3138e0658c",
+      "suites": {
+        "api": {
+          "ok": true,
+          "value": {
+            "runner": "jest",
+            "passed": true,
+            "passed_count": 3051,
+            "failed_count": 0,
+            "exit_code": 0,
+            "summary": "Tests: 43 skipped, 3051 passed, 3094 total"
+          }
+        },
+        "web": {
+          "ok": true,
+          "value": {
+            "runner": "vitest",
+            "passed": true,
+            "passed_count": 415,
+            "failed_count": 0,
+            "exit_code": 0,
+            "summary": "Tests 415 passed (415)"
+          }
+        }
+      },
+      "note": "NOT run during this generation — carried forward from an earlier run. Compare measured_at_commit against the current commit before treating it as current."
+    }
+  },
+  "asserted": {
+    "_comment": [
+      "The JUDGEMENT half of MASTER_EXECUTION_STATE.json. Everything here is an",
+      "assertion: a claim about what remains, what blocks it and what to do next.",
+      "No command produces these, so nothing here carries the authority of the",
+      "measured half. A resuming session should re-verify each item against the",
+      "measured half and against docs/exec/EXECUTION_STATUS.md before acting.",
+      "",
+      "Rule for editing: an item leaves this file when its ACCEPTANCE EVIDENCE",
+      "exists, not when the work feels finished. Every backlog entry therefore",
+      "carries a verification command, and an entry whose verification command",
+      "cannot be written is not yet understood well enough to be worked."
+    ],
+    "program": "VisaAI Claude Master Execution Spec",
+    "spec_checklist": "§84 Definition of Done, 68 items, tracked in docs/exec/EXECUTION_STATUS.md",
+    "current_phase": "Destination expansion — every in-scope country now researched or evidenced; extending route depth within the admitted ones",
+    "in_progress": {
+      "item": "None. The last atomic slice (Türkiye, Egypt, Lebanon and China admitted; 16 routes; 303 verbatim requirements) is committed and deployed, and its evidence is recorded in EXECUTION_LEDGER entries 31-37.",
+      "safe_recovery": "Nothing to roll back. Working tree state is in the measured half; if it is dirty, inspect before assuming it is this program’s work."
+    },
+    "ordered_backlog": [
+      {
+        "id": "DOD-65",
+        "title": "Extend route depth inside the admitted destinations",
+        "spec_item": 65,
+        "status": "PARTIAL",
+        "why_it_ranks_here": "The BREADTH half is closed: 37 in scope = 19 researched + 18 assessed with evidence + 0 unexamined, and the coverage matrix now reports those two states separately instead of collapsing them. What is left is DEPTH, and it is named rather than estimated: Lebanon’s index enumerates roughly a dozen further readable routes (artist visas and artist residency, the domestic-worker entry visa, the six-month bank-statement residence visa, foreign expert at a port, religious students, Iraqi nationals, temporary residence for passport renewal); China’s guide index enumerates two more (exit-entry permits, travel permits); Türkiye enumerates subtypes its own pages do not describe.",
+        "actionable_now": true,
+        "next_action": "Lebanon first — more readable routes than anywhere else in the corpus, one authority, one already-proven extraction method (by line offset out of the fetcher’s output, diffed against the mega-menu).",
+        "verify": "node scripts/visa-registry/coverage-matrix.mjs --docker <container>"
+      },
+      {
+        "id": "DOD-11",
+        "title": "Triage the 238 open form-sweep findings",
+        "spec_item": 11,
+        "status": "PARTIAL",
+        "why_it_ranks_here": "Re-measured 2026-08-24: 0 of 238 findings are cited by any of the 157 pages we can read, after discarding 36 site-navigation matches. The citation basis is exhausted and that is a measurement, not an inference. The four destinations added on 2026-08-26 widen the readable corpus for the first time since that measurement, so the number is worth re-running before the queue is written off — but nothing about triage effort moves it.",
+        "actionable_now": true,
+        "next_action": "Re-run triage-sweep-findings.ts now that Türkiye, Egypt, Lebanon and China are live: 27 new sources is the first material change to the citation basis since the measurement that closed this. If it still reads 0, the queue is dead on evidence and can be retired rather than carried.",
+        "verify": "see docs/operations/FORM_SWEEP_TRIAGE.md"
+      },
+      {
+        "id": "RAW-22",
+        "title": "Check the 22 quotations the raw-quote check could not read",
+        "spec_item": 9,
+        "status": "PARTIAL",
+        "why_it_ranks_here": "1,127 of 1,149 published quotations were verified verbatim against raw HTML, and the four destinations added on 2026-08-26 contributed 172 more with 0 not found. The outstanding 22 still sit on sources that could not be fetched, so their published text rests on the extraction alone.",
+        "actionable_now": false,
+        "blocked_by": "BL-3",
+        "next_action": "Re-run from the VPS, where egress differs; the script now names every source it had to skip.",
+        "verify": "npx ts-node -P tsconfig.json scripts/verify-quotes-against-raw.ts ../../data/requirements/*.json"
+      },
+      {
+        "id": "DOD-52",
+        "title": "Backend load testing",
+        "spec_item": 52,
+        "status": "BLOCKED",
+        "blocked_by": "BL-4",
+        "actionable_now": false,
+        "next_action": "None safely. There is no staging environment and load-testing production is not on the table."
+      },
+      {
+        "id": "DOD-26",
+        "title": "Run the AI eval harness against a funded key",
+        "spec_item": 26,
+        "status": "BLOCKED",
+        "blocked_by": "BL-1",
+        "actionable_now": false,
+        "next_action": "None in-repo. Until then every model-tier assignment is a reasoned choice labelled as such, and the cost report is projected rather than billed."
+      },
+      {
+        "id": "ALERT-RECIPIENTS",
+        "title": "Decide who the registry alerts page",
+        "spec_item": 71,
+        "status": "PARTIAL",
+        "why_it_ranks_here": "The four registry rules evaluate correctly in production and record events, but recipients and notify_user_ids are empty — a breach is recorded and logged and nobody is told. That is better than the previous state (nothing watched at all) and it is not alerting.",
+        "actionable_now": false,
+        "next_action": "A person decision, not an engineering one: who should receive a registry breach, and by what channel.",
+        "verify": "select recipients, notify_user_ids from analytics_alert_rule where metric_key='registry';"
+      },
+      {
+        "id": "FI-PROD",
+        "title": "Finland is live locally and ABSENT from production, and nothing said so",
+        "spec_item": 65,
+        "status": "BLOCKED",
+        "why_it_ranks_here": "Production publishes 13 destinations and 72 pages; the local database publishes 14 and 77. The whole difference is Finland: migri.fi challenges the VPS (BL-3), so Finland’s requirements have no source version in production and its five pages do not exist there. This was not recorded anywhere — ledger entry 30 said \"87 pages in production\", which was a LOCAL figure captioned as production, and the live sitemap is what settled it at 72.",
+        "actionable_now": false,
+        "blocked_by": "BL-3",
+        "next_action": "Nothing in-repo. When the egress is fixed, run the sync from the VPS and Finland promotes with no new extraction work — the requirements files already exist and are already verified.",
+        "verify": "curl -s https://visaai.co/sitemap.xml | grep -c finland"
+      }
+    ],
+    "blockers": [
+      {
+        "id": "BL-1",
+        "blocker": "No funded OpenAI key for the eval harness",
+        "external_input_required": "Fund a key",
+        "affects": [
+          "DOD-26",
+          "DOD-28"
+        ]
+      },
+      {
+        "id": "BL-2",
+        "blocker": "No Search Console ownership",
+        "external_input_required": "Claim the property",
+        "affects": [
+          "DOD-42"
+        ]
+      },
+      {
+        "id": "BL-3",
+        "blocker": "Two distinct classes, and separating them matters. (a) AUTHORITY REFUSES OUR BOT: immi.homeaffairs.gov.au, www.mofa.go.jp and france-visas.gouv.fr return 403 on robots.txt from BOTH our egress paths — policy, not IP reputation, and not fixable by engineering. (b) OUR EGRESS IS DROPPED: migri.fi challenges the VPS, and Portugal's vistos.mne.gov.pt and aima.gov.pt reset the TLS handshake from the VPS in 0.22s while answering 200 elsewhere. Class (b) is OUR infrastructure fault and is fixable.",
+        "external_input_required": "For (a), nothing — the spec forbids working around bot protection. For (b), an egress those authorities do not drop: a different IP, or an allowlist via the outreach process.",
+        "affects": [
+          "RAW-22",
+          "Finland publication",
+          "16 AU/US routes",
+          "Portugal research",
+          "DOD-65 verdicts generally"
+        ]
+      },
+      {
+        "id": "BL-4",
+        "blocker": "No staging environment",
+        "external_input_required": "Provision one",
+        "affects": [
+          "DOD-52"
+        ]
+      },
+      {
+        "id": "BL-6",
+        "blocker": "11 legal items need counsel",
+        "external_input_required": "Legal review",
+        "affects": [
+          "DOD-30"
+        ]
+      }
+    ],
+    "next_exact_action": {
+      "action": "Pick the highest-ranked backlog entry whose actionable_now is true and whose verify command is defined — currently DOD-65 (route depth, Lebanon first), then DOD-11’s re-measurement against the widened corpus.",
+      "verification_command": "node scripts/execution/generate-master-state.mjs --docker supabase_db_VisaAI",
+      "do_not": [
+        "Do not rerun the whole program. Spec §0.2: resume from the first non-complete item unless evidence shows prior work is invalid.",
+        "Do not probe an authority from a laptop and treat the result as production truth. Finland passed locally and failed from the VPS.",
+        "Do not read a count out of the LOCAL database and caption it \"in production\". Ledger entry 30 did, and production was 15 pages and one whole country short of what it claimed.",
+        "Do not mark a backlog item complete before its acceptance evidence exists.",
+        "Do not treat a low uniqueness percentage as a verdict. It is a ratio, and a large shared menu moves the denominator — Lebanon scored in Japan’s range and is now four live routes."
+      ]
+    },
+    "standing_constraints": [
+      "Never invent government data. A requirement without an official-source excerpt does not ship.",
+      "Never launder a local fetch into production. Probe from the host that will do the syncing.",
+      "A check built from the same assumption as the thing it checks will confirm it. Verify with a DIFFERENT question (B-25, B-26).",
+      "An unchecked item is not a passing one. State denominators, not just failure counts.",
+      "A landing page that fails is not a country that fails. Enumerate the site and follow the links OFF it before recording a verdict — four destinations were sitting two clicks past a page already marked `needs_deeper_research`.",
+      "Read source URLs off the site; never construct them. Kuwait 404’d a constructed URL, and its correctly-read one turned out to be empty — reading the link is what made that a finding rather than a mistake.",
+      "Do not collapse distinct failure modes into one word. An IP-level block, a client-rendered page, an unresolvable robots.txt redirect and an outright refusal are four different facts with four different futures."
+    ]
+  }
+}

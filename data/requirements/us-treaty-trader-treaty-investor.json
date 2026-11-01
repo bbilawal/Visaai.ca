@@ -1,0 +1,325 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-treaty-trader-treaty-investor",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the two USCIS classification pages registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim. Previously registered against travel.state.gov alone, which refuses the monitor at robots.txt; USCIS publishes both classifications and permits us to read them.",
+  "structure_note": "ONE registered route, TWO classifications, TWO pages — and they are not variants of each other. The pages share their employee tests, their period of stay and most of their family provisions almost word for word, which is exactly the shape that invites treating one as a copy of the other. They differ where it matters most: E-1 turns on TRADE that is substantial and principally between the two countries; E-2 turns on CAPITAL that is substantial and at risk, plus a marginality test E-1 has no equivalent of. Every requirement below names which classification it belongs to, and the shared ones are recorded once with both pages' agreement noted rather than duplicated.",
+  "source_roles": {
+    "requirements": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/e-1-treaty-traders",
+    "requirements_e2": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/e-2-treaty-investors"
+  },
+  "page_dates": {
+    "requirements": null,
+    "requirements_e2": null
+  },
+  "freshness_note": "Neither page publishes a Last Reviewed/Updated date in its served markup. Reported as unknown, never as fresh. The E-2 page's own body carries the most recent datable content: Executive Order 14286 of 28 April 2025 and a Department of State screening change effective 15 June 2026.",
+  "not_extracted": [
+    "The list of treaty countries. Both pages state the nationality requirement and then defer the list itself to the Department of State ('see u.s. department of state's treaty countries for a current list'), whose host returns HTTP 403 to the monitor. Nationality is the FIRST test of both classifications, so this omission is material and is stated on the route rather than hidden: we can tell a reader that their country must have a qualifying treaty, and we cannot tell them whether it does.",
+    "The Form I-129 filing fee. Both pages say 'with fee' repeatedly and neither states an amount. No figure is recorded.",
+    "How to apply for the visa abroad. Both pages state explicitly that Form I-129 may NOT be used from outside the United States and refer the applicant to the Department of State. That referral is recorded as a requirement; the procedure behind it is not, because we cannot read it.",
+    "The 8 CFR definitions the pages cite (214.2(e)(9) through (e)(22)). The pages summarise them and point to the regulation for the complete text. The summaries are quoted; the regulation is not fetched and its content is not paraphrased.",
+    "Processing times. Not stated on either page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "e1_nationality_of_treaty_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-1: be a national of a country with a qualifying treaty, agreement, or legislative designation",
+      "description": "The page gives three separate ways a country can qualify — a treaty of commerce and navigation, a qualifying international agreement, or designation by legislation — which is wider than 'treaty country' alone suggests. The list of countries is held by the Department of State and is not readable from production; see not_extracted.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "be a national of a country with which the united states maintains a treaty of commerce and navigation or with which the united states maintains a qualifying international agreement, or which has been deemed a qualifying country by legislation;",
+      "source_excerpt_display": "Be a national of a country with which the United States maintains a treaty of commerce and navigation or with which the United States maintains a qualifying international agreement, or which has been deemed a qualifying country by legislation;"
+    },
+    {
+      "requirement_code": "e1_carry_on_substantial_trade",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-1: carry on substantial trade",
+      "description": "The authority states there is NO monetary threshold, and that numerous transactions count for more than a few large ones. That is the opposite of what an applicant tends to assume about a trade test, so it is recorded in the authority's own words rather than summarised.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "substantial trade generally refers to an amount of trade sufficient to ensure a continuous flow of international trade items between the united states and the treaty country. the continuous flow contemplates numerous transactions over time. there is no minimum requirement regarding the monetary value or volume of each transaction. while monetary value of transactions is a relevant factor in considering substantiality, greater weight is given to more numerous exchanges of greater value.",
+      "source_excerpt_display": "Substantial trade generally refers to an amount of trade sufficient to ensure a continuous flow of international trade items between the United States and the treaty country. The continuous flow contemplates numerous transactions over time. There is no minimum requirement regarding the monetary value or volume of each transaction. While monetary value of transactions is a relevant factor in considering substantiality, greater weight is given to more numerous exchanges of greater value."
+    },
+    {
+      "requirement_code": "e1_principal_trade_over_50_percent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-1: over 50% of your international trade must be between the US and the treaty country",
+      "description": "The one hard numeric threshold either page states.",
+      "parameters": {
+        "principal_trade_share_minimum_percent": 50
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "principal trade between the united states and the treaty country exists when over 50% of the volume of international trade of the treaty trader is between the united states and the treaty country of the treaty trader’s nationality.",
+      "source_excerpt_display": "Principal trade between the United States and the treaty country exists when over 50% of the volume of international trade of the treaty trader is between the United States and the treaty country of the treaty trader’s nationality."
+    },
+    {
+      "requirement_code": "e1_what_counts_as_trade",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-1: what counts as trade",
+      "description": "An open list — 'include but are not limited to' — and notably not confined to goods.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "trade is the existing international exchange of items of trade for consideration between the united states and the treaty country. items of trade include but are not limited to: goods services international banking insurance transportation tourism technology and its transfer some news-gathering activities.",
+      "source_excerpt_display": "Trade is the existing international exchange of items of trade for consideration between the United States and the treaty country. Items of trade include but are not limited to: Goods Services International banking Insurance Transportation Tourism Technology and its transfer Some news-gathering activities."
+    },
+    {
+      "requirement_code": "e2_nationality_of_treaty_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: be a national of a country with which the US maintains a treaty of commerce and navigation",
+      "description": "Note the difference from E-1, which is stated on its own page in wider terms. The E-2 qualification list quoted here names only the treaty; the E-2 page's opening paragraph names the same three routes as E-1. Both are quoted rather than reconciled, because reconciling them would be our judgement rather than the authority's.",
+      "source_role": "requirements_e2",
+      "display_order": 50,
+      "source_excerpt": "be a national of a country with which the united states maintains a treaty of commerce and navigation;",
+      "source_excerpt_display": "Be a national of a country with which the United States maintains a treaty of commerce and navigation;"
+    },
+    {
+      "requirement_code": "e2_substantial_capital_at_risk",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: have invested, or be actively investing, a substantial amount of capital in a bona fide US enterprise",
+      "source_role": "requirements_e2",
+      "display_order": 60,
+      "source_excerpt": "have invested, or be actively in the process of investing, a substantial amount of capital in a bona fide enterprise in the united states; and",
+      "source_excerpt_display": "Have invested, or be actively in the process of investing, a substantial amount of capital in a bona fide enterprise in the United States; and"
+    },
+    {
+      "requirement_code": "e2_investment_must_be_at_risk_and_lawful",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: the capital must be genuinely at risk and must not derive from criminal activity",
+      "description": "Two conditions in one paragraph and both are dispositive: money that cannot be lost is not an investment for this purpose, and the burden of showing lawful origin sits with the applicant.",
+      "source_role": "requirements_e2",
+      "display_order": 70,
+      "source_excerpt": "investment is the treaty investor’s placing of capital, including funds and/or other assets, at risk in the commercial sense with the objective of generating a profit. the capital must be subject to partial or total loss if the investment fails. the treaty investor must show that the funds have not been obtained, directly or indirectly, from criminal activity.",
+      "source_excerpt_display": "investment is the treaty investor’s placing of capital, including funds and/or other assets, at risk in the commercial sense with the objective of generating a profit. The capital must be subject to partial or total loss if the investment fails. The treaty investor must show that the funds have not been obtained, directly or indirectly, from criminal activity."
+    },
+    {
+      "requirement_code": "e2_substantial_is_proportionate_not_absolute",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: 'substantial' is proportionate to the cost of the enterprise, not a fixed sum",
+      "description": "No amount is stated and the test is inverse — a cheaper business needs a proportionately HIGHER share invested. Publishing a dollar figure here is the single most tempting fabrication on this route and there is none on the page.",
+      "source_role": "requirements_e2",
+      "display_order": 80,
+      "source_excerpt": "a substantial amount of capital is: substantial in relationship to the total cost of either purchasing an established enterprise or establishing a new one sufficient to ensure the treaty investor’s financial commitment to the successful operation of the enterprise of a magnitude to support the likelihood that the treaty investor will successfully develop and direct the enterprise. the lower the cost of the enterprise, the higher, proportionately, the investment must be to be considered substantial.",
+      "source_excerpt_display": "A substantial amount of capital is: Substantial in relationship to the total cost of either purchasing an established enterprise or establishing a new one Sufficient to ensure the treaty investor’s financial commitment to the successful operation of the enterprise Of a magnitude to support the likelihood that the treaty investor will successfully develop and direct the enterprise. The lower the cost of the enterprise, the higher, proportionately, the investment must be to be considered substantial."
+    },
+    {
+      "requirement_code": "e2_enterprise_must_not_be_marginal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: the enterprise may not be marginal",
+      "description": "E-1 has no equivalent of this test. A business that will only ever support the investor and their family does not qualify; a new business gets five years to reach that capacity.",
+      "parameters": {
+        "new_enterprise_capacity_horizon_years": 5
+      },
+      "source_role": "requirements_e2",
+      "display_order": 90,
+      "source_excerpt": "the investment enterprise may not be marginal. a marginal enterprise is one that does not have the present or future capacity to generate more than enough income to provide a minimal living for the treaty investor and his or her family. depending on the facts, a new enterprise might not be considered marginal even if it lacks the current capacity to generate such income. in such cases, however, the enterprise should have the capacity to generate such income within five years from the date that the treaty investor’s e-2 classification begins.",
+      "source_excerpt_display": "The investment enterprise may not be marginal. A marginal enterprise is one that does not have the present or future capacity to generate more than enough income to provide a minimal living for the treaty investor and his or her family. Depending on the facts, a new enterprise might not be considered marginal even if it lacks the current capacity to generate such income. In such cases, however, the enterprise should have the capacity to generate such income within five years from the date that the treaty investor’s E-2 classification begins."
+    },
+    {
+      "requirement_code": "e2_develop_and_direct_the_enterprise",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: enter solely to develop and direct the enterprise, shown by 50% ownership or operational control",
+      "source_role": "requirements_e2",
+      "display_order": 100,
+      "source_excerpt": "be seeking to enter the united states solely to develop and direct the investment enterprise. this is established by showing at least 50% ownership of the enterprise or possession of operational control through a managerial position or other corporate device.",
+      "source_excerpt_display": "Be seeking to enter the United States solely to develop and direct the investment enterprise. This is established by showing at least 50% ownership of the enterprise or possession of operational control through a managerial position or other corporate device."
+    },
+    {
+      "requirement_code": "e2_bona_fide_enterprise",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2: the enterprise must be real, active and operating",
+      "source_role": "requirements_e2",
+      "display_order": 110,
+      "source_excerpt": "a bona fide enterprise refers to a real, active, and operating commercial or entrepreneurial undertaking which produces services or goods for profit. it must meet applicable legal requirements for doing business within its jurisdiction.",
+      "source_excerpt_display": "A bona fide enterprise refers to a real, active, and operating commercial or entrepreneurial undertaking which produces services or goods for profit. It must meet applicable legal requirements for doing business within its jurisdiction."
+    },
+    {
+      "requirement_code": "employee_same_nationality_and_role",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employees: same nationality as the principal employer, and either executive/supervisory duties or special qualifications",
+      "description": "Stated in near-identical terms on both pages; quoted from the E-1 page. The nationality test binds the EMPLOYEE to the employer's treaty country, which rules out hiring a third-country national into an E position.",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "be the same nationality of the principal alien employer (who must have the nationality of the treaty country) meet the definition of “employee” under relevant law either be engaging in duties of an executive or supervisory character, or if employed in a lesser capacity, have special qualifications that make the employee’s services essential to the efficient operation of the treaty enterprise.",
+      "source_excerpt_display": "Be the same nationality of the principal alien employer (who must have the nationality of the treaty country) Meet the definition of “employee” under relevant law Either be engaging in duties of an executive or supervisory character, or if employed in a lesser capacity, have special qualifications that make the employee’s services essential to the efficient operation of the treaty enterprise."
+    },
+    {
+      "requirement_code": "corporate_employer_50_percent_treaty_ownership",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A corporate employer must be at least 50% owned by treaty-country nationals who hold or could hold E status",
+      "description": "The ownership test is two-part and the second half is easy to miss: the owners must themselves be maintaining E status, or be classifiable as such if they applied.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "if the principal alien employer is not an individual, it must be an enterprise or organization at least 50% owned by persons in the united states who have the nationality of the treaty country. these owners must either: (a) be maintaining nonimmigrant treaty trader status or (b) if the owners are not in the united states, they must be, if they were to seek admission to this country, classifiable as nonimmigrant treaty traders.",
+      "source_excerpt_display": "If the principal alien employer is not an individual, it must be an enterprise or organization at least 50% owned by persons in the United States who have the nationality of the treaty country. These owners must either: (a) be maintaining nonimmigrant treaty trader status or (b) if the owners are not in the United States, they must be, if they were to seek admission to this country, classifiable as nonimmigrant treaty traders."
+    },
+    {
+      "requirement_code": "special_qualifications_test",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Special qualifications' is judged on expertise, scarcity and salary — and language and culture alone do not count",
+      "description": "The final sentence is the operative exclusion, and it is the one applicants most often rely on.",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "special qualifications are skills and/or aptitudes which make the employee’s services essential to the efficient operation of the treaty enterprise. there are several qualities or circumstances that could, depending on the facts, meet this requirement. these include, but are not limited to: the degree of proven expertise in the employee’s area of operations whether others possess the employee’s specific skills the salary that the special qualifications can command whether the skills and qualifications are readily available in the united states knowledge of a foreign language and culture does not, by itself, meet this requirement.",
+      "source_excerpt_display": "Special qualifications are skills and/or aptitudes which make the employee’s services essential to the efficient operation of the treaty enterprise. There are several qualities or circumstances that could, depending on the facts, meet this requirement. These include, but are not limited to: The degree of proven expertise in the employee’s area of operations Whether others possess the employee’s specific skills The salary that the special qualifications can command Whether the skills and qualifications are readily available in the United States Knowledge of a foreign language and culture does not, by itself, meet this requirement."
+    },
+    {
+      "requirement_code": "cannot_file_i129_from_outside_the_us",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Form I-129 may not be used from outside the United States — apply for the visa through the Department of State",
+      "official_form_code": "I-129",
+      "official_form_url": "https://www.uscis.gov/i-129",
+      "description": "The ordering matters and is easy to get wrong: an applicant abroad cannot start with USCIS at all. Quoted from the E-1 page; the E-2 page states the same in the same words.",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "a request for e-1 classification may not be made on form i-129 if you are physically outside the united states. interested parties should refer to the u.s. department of state website for further information about applying for an e-1 nonimmigrant visa abroad. upon issuance of a visa, the person may seek admission at a united states port of entry as an e-1 nonimmigrant.",
+      "source_excerpt_display": "A request for E-1 classification may not be made on Form I-129 if you are physically outside the United States. Interested parties should refer to the U.S. Department of State website for further information about applying for an E-1 nonimmigrant visa abroad. Upon issuance of a visa, the person may seek admission at a United States port of entry as an E-1 nonimmigrant."
+    },
+    {
+      "requirement_code": "form_i129_change_of_status_from_inside_the_us",
+      "kind": "form",
+      "officially_required": true,
+      "label": "If already in the US in a lawful nonimmigrant status, file Form I-129 to change to E status",
+      "official_form_code": "I-129",
+      "official_form_url": "https://www.uscis.gov/i-129",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "if the treaty trader is currently in the united states in a lawful nonimmigrant status, they may file form i-129 to request a change of status to e-1 classification. if the desired employee is currently in the united states in a lawful nonimmigrant status, the qualifying employer may file form i-129 on the employee’s behalf.",
+      "source_excerpt_display": "If the treaty trader is currently in the United States in a lawful nonimmigrant status, they may file Form I-129 to request a change of status to E-1 classification. If the desired employee is currently in the United States in a lawful nonimmigrant status, the qualifying employer may file Form I-129 on the employee’s behalf."
+    },
+    {
+      "requirement_code": "period_of_stay_two_years_unlimited_extensions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Two-year initial stay, extensions in two-year increments with no limit on the number",
+      "description": "Identical on both pages. The intention-to-depart requirement in the last sentence is a continuing condition, not a one-off declaration.",
+      "parameters": {
+        "initial_stay_years": 2,
+        "extension_increment_years": 2
+      },
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "qualified treaty traders and employees will be allowed a maximum initial stay of two years. requests for extension of stay in, or changes of status to, e-1 classification may be granted in increments of up to two years each. there is no limit to the number of extensions an e-1 nonimmigrant may be granted. all e-1 nonimmigrants, however, must maintain an intention to depart the united states when their status expires or is terminated.",
+      "source_excerpt_display": "Qualified treaty traders and employees will be allowed a maximum initial stay of two years. Requests for extension of stay in, or changes of status to, E-1 classification may be granted in increments of up to two years each. There is no limit to the number of extensions an E-1 nonimmigrant may be granted. All E-1 nonimmigrants, however, must maintain an intention to depart the United States when their status expires or is terminated."
+    },
+    {
+      "requirement_code": "work_confined_to_approved_activity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may only work in the activity approved when the classification was granted",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "a treaty trader or employee may only work in the activity for which he or she was approved at the time the classification was granted.",
+      "source_excerpt_display": "A treaty trader or employee may only work in the activity for which he or she was approved at the time the classification was granted."
+    },
+    {
+      "requirement_code": "substantive_change_requires_new_i129",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A substantive change in the employer — merger, acquisition, sale of the division — requires a new Form I-129",
+      "official_form_code": "I-129",
+      "official_form_url": "https://www.uscis.gov/i-129",
+      "description": "A continuing obligation on the employer, not a step in the original application. The status can lapse through an event the visa holder had no part in.",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "where there has been such a substantive change, the treaty trader or enterprise, if it wishes to continue to employ the alien in e-1 status, must notify uscis by filing a new form i-129 with fee, and may simultaneously request an extension of stay for the treaty trader or affected employee.",
+      "source_excerpt_display": "Where there has been such a substantive change, the treaty trader or enterprise, if it wishes to continue to employ the alien in E-1 status, must notify USCIS by filing a new Form I-129 with fee, and may simultaneously request an extension of stay for the treaty trader or affected employee."
+    },
+    {
+      "requirement_code": "family_spouse_and_children_under_21",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Spouse and unmarried children under 21 may accompany you, and their nationality need not match yours",
+      "description": "The nationality carve-out is the notable part — every other nationality test on this route is strict.",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "treaty traders and employees may be accompanied or followed by spouses and unmarried children who are under 21 years of age. their nationalities need not be the same as the treaty trader or employee. spouses and children may seek e-1 nonimmigrant classification as dependents and, if approved, generally will be granted the same period of stay as the employee.",
+      "source_excerpt_display": "Treaty traders and employees may be accompanied or followed by spouses and unmarried children who are under 21 years of age. Their nationalities need not be the same as the treaty trader or employee. Spouses and children may seek E-1 nonimmigrant classification as dependents and, if approved, generally will be granted the same period of stay as the employee."
+    },
+    {
+      "requirement_code": "e1_spouse_work_authorised_incident_to_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-1 spouses may work without applying for authorisation — except TECRO and TECO employees' spouses",
+      "description": "Recorded separately from the E-2 equivalent because the EXCEPTION differs between the two classifications, which is exactly the kind of detail a merged 'E visa' summary loses.",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "spouses of e-1 workers in valid e-1 or e-1s status are considered employment authorized incident to status, except for spouses of employees of the taipei economic and cultural representative office (tecro) and taipei economic and cultural offices (teco), who continue to be required to apply for employment authorization",
+      "source_excerpt_display": "Spouses of E-1 workers in valid E-1 or E-1S status are considered employment authorized incident to status, except for spouses of employees of the Taipei Economic and Cultural Representative Office (TECRO) and Taipei Economic and Cultural Offices (TECO), who continue to be required to apply for employment authorization"
+    },
+    {
+      "requirement_code": "e2_spouse_work_authorised_incident_to_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "E-2 spouses may work without applying for authorisation — except spouses of E-2 CNMI long-term investors",
+      "source_role": "requirements_e2",
+      "display_order": 220,
+      "source_excerpt": "spouses of e-2 workers in valid e-2 or e-2s status are considered employment authorized incident to status, except for spouses of long-term investors in the commonwealth of the northern mariana islands (e-2 cnmi investors) who are required to apply for employment authorization",
+      "source_excerpt_display": "Spouses of E-2 workers in valid E-2 or E-2S status are considered employment authorized incident to status, except for spouses of long-term investors in the Commonwealth of the Northern Mariana Islands (E-2 CNMI Investors) who are required to apply for employment authorization"
+    },
+    {
+      "requirement_code": "family_readmission_period_not_automatic",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The automatic two-year readmission does NOT extend to family members who were not travelling with you",
+      "description": "A trap the page states plainly and applicants routinely miss: the principal's re-entry silently resets their own clock and not the family's.",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "unless the family members are accompanying the e-1 treaty trader or employee at the time the latter seeks admission to the united states, or the family members separately travel abroad and return to the united states within the new readmission period, the new readmission period will not apply to the family members. to remain lawfully in the united states, family members must carefully note the period of stay they have been granted in e status and apply for an extension of stay before their own validity expires.",
+      "source_excerpt_display": "Unless the family members are accompanying the E-1 treaty trader or employee at the time the latter seeks admission to the United States, or the family members separately travel abroad and return to the United States within the new readmission period, the new readmission period will not apply to the family members. To remain lawfully in the United States, family members must carefully note the period of stay they have been granted in E status and apply for an extension of stay before their own validity expires."
+    },
+    {
+      "requirement_code": "e2_commercial_vehicle_english_proficiency",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "E-2 applications for jobs operating a commercial motor vehicle must evidence English language proficiency",
+      "description": "A 2025 Executive Order requirement that appears on the E-2 page and not on the E-1 page. Recorded because it is a live condition on a specific class of E-2 job, and because its acceptance rule turns on a visa issuance date.",
+      "source_role": "requirements_e2",
+      "display_order": 240,
+      "source_excerpt": "e-2 treaty investor applications for jobs requiring operation of a commercial motor vehicle must be supported by evidence that the alien meets the english language proficiency standard. evidence of english language proficiency may include: documentation that the alien has passed a standardized english language examination; or a signed statement from the alien stating that they have the required level of english language proficiency.",
+      "source_excerpt_display": "E-2 Treaty Investor applications for jobs requiring operation of a commercial motor vehicle must be supported by evidence that the alien meets the English language proficiency standard. Evidence of English language proficiency may include: Documentation that the alien has passed a standardized English language examination; or A signed statement from the alien stating that they have the required level of English language proficiency."
+    },
+    {
+      "requirement_code": "e2_visas_issued_after_15_june_2026_accepted_as_proof",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Visas issued after 15 June 2026 for commercial motor vehicle positions are generally accepted as proof of English proficiency",
+      "description": "A dated rule that changes what evidence is needed depending on when the visa was issued. Recorded with officially_required false because it relieves a requirement rather than imposing one — and dropping it would leave a reader gathering evidence the authority no longer asks them for.",
+      "parameters": {
+        "visas_issued_after": "2026-06-15"
+      },
+      "source_role": "requirements_e2",
+      "display_order": 250,
+      "source_excerpt": "following the department of state’s increased screening and vetting, uscis will generally accept visas issued after june 15, 2026, for positions requiring operation of a commercial motor vehicle as proof of english language proficiency.",
+      "source_excerpt_display": "Following the Department of State’s increased screening and vetting, USCIS will generally accept visas issued after June 15, 2026, for positions requiring operation of a commercial motor vehicle as proof of English language proficiency."
+    },
+    {
+      "requirement_code": "labor_dispute_may_affect_canadian_or_mexican_applicants",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A strike or work stoppage at the intended workplace may affect a Canadian or Mexican applicant's ability to obtain E status",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "a strike or other labor dispute involving a work stoppage at the intended place of employment may affect a canadian or mexican treaty trader or employee’s ability to obtain e-1 status.",
+      "source_excerpt_display": "A strike or other labor dispute involving a work stoppage at the intended place of employment may affect a Canadian or Mexican treaty trader or employee’s ability to obtain E-1 status."
+    }
+  ]
+}

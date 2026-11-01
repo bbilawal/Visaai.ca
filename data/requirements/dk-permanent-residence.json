@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-permanent-residence",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Danish Immigration Service page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "THIS ROUTE HAS TWO TIERS AND THE SECOND ONE IS NOT OPTIONAL. Denmark publishes basic requirements AND four supplementary requirements, and at least TWO of the four must be met — meeting the basic requirements alone does not qualify anyone. Meeting all four instead reduces the residence requirement from eight years to four. So the supplementary tier is simultaneously a floor and an accelerator, and publishing the basic list on its own would tell a reader they qualify when they do not.\n\nThe four supplementary requirements are: Danish language test 3, four years' employment in the last four years and six months, the active citizen exam or documented active citizenship, and an average annual taxable income of DKK 346,155.57 at 2026 level.\n\nTHE EMPLOYMENT REQUIREMENT IS A RATIO, NOT A DURATION. Three years and six months of regular full-time work WITHIN THE PAST FOUR YEARS. Quoting the 3.5-year figure without its four-year window would let someone count work from a decade ago.\n\nAND 'FULL-TIME' HAS A NUMBER. Thirty hours a week, or 120 a month, combinable across jobs — and the authority publishes an explicit list of what does NOT count, including wage-subsidised positions, unpaid work, job rotation, and any period below the 30-hour line.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Permanent-residence-permit/Permanent-residence"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The income threshold carries its own year in the text ('DKK 346,155.57 (2026 level)') and the page's worked example runs to 2028, so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The full sentencing table — roughly twenty categories of sentence each with its own exclusion period, at lines 100 to 132. The general rules ARE extracted; the table is a schedule of criminal-law consequences that would need a lawyer's reading of any individual case, and publishing it as a checklist would invite exactly that misuse.",
+    "The full list of qualifying and disqualifying social benefits, which the authority publishes on a separate linked page.",
+    "The registration procedure and dates for the active citizen exam.",
+    "The step-by-step application walkthrough and document checklists.",
+    "The separate permanent-residence routes the catalogue enumerates alongside this one — for 18-to-19-year-olds, on strong attachment to Denmark, for retired employees of international organisations, and for Greenland and the Faroe Islands."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eight_years_temporary_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eight years of legal residence — four in certain cases",
+      "description": "Quoted with the four-year alternative, which the authority states in the same sentence.",
+      "source_role": "requirements",
+      "parameters": {
+        "years_required": 8,
+        "reduced_years": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 10,
+      "source_excerpt": "you can be granted a permanent residence permit in denmark once you have had a temporary residence permit for eight years. in some cases the requirement is four years.",
+      "source_excerpt_display": "You can be granted a permanent residence permit in Denmark once you have had a temporary residence permit for eight years. In some cases the requirement is four years."
+    },
+    {
+      "requirement_code": "eight_years_uninterrupted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The eight years must be uninterrupted legal residence under the Aliens Act",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "you must have resided in denmark legally for 8 years or more uninterrupted . during the entire period, you must have had a residence permit issued under the terms of aliens act sections 7-9 f, sections 9 i-9 n, section 9 p or section 9 q (1) or (2) (residence permit granted on the grounds of family reunification, asylum, studies or work etc.).",
+      "source_excerpt_display": "You must have resided in Denmark legally for 8 years or more uninterrupted . During the entire period, you must have had a residence permit issued under the terms of Aliens Act sections 7-9 f, sections 9 i-9 n, section 9 p or section 9 q (1) or (2) (residence permit granted on the grounds of family reunification, asylum, studies or work etc.)."
+    },
+    {
+      "requirement_code": "four_years_requires_all_four_supplementary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The four-year route requires ALL FOUR supplementary requirements",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "if, in addition to the basic requirements for a permanent residence permit, you also meet all 4 supplementary requirements, you can qualify for a permanent residence permit after having lived legally in denmark for 4 years uninterrupted at the time the immigration service reaches a decision about your application for permanent residence.",
+      "source_excerpt_display": "If, in addition to the basic requirements for a permanent residence permit, you also meet all 4 supplementary requirements, you can qualify for a permanent residence permit after having lived legally in Denmark for 4 years uninterrupted at the time the Immigration Service reaches a decision about your application for permanent residence."
+    },
+    {
+      "requirement_code": "two_of_four_supplementary_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "At least 2 of the 4 supplementary requirements must be met",
+      "description": "The condition that makes the basic list insufficient on its own.",
+      "source_role": "requirements",
+      "parameters": {
+        "supplementary_required": 2,
+        "supplementary_total": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40,
+      "source_excerpt": "in order to qualify for a permanent residence permit, you need to meet at least 2 of 4 supplementary requirements. if you meet all 4 supplementary requirements, you will qualify for a permanent residence permit after 4 years of legal residence in denmark, instead of the normal 8.",
+      "source_excerpt_display": "In order to qualify for a permanent residence permit, you need to meet at least 2 of 4 supplementary requirements. If you meet all 4 supplementary requirements, you will qualify for a permanent residence permit after 4 years of legal residence in Denmark, instead of the normal 8."
+    },
+    {
+      "requirement_code": "over_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be over the age of 18",
+      "source_role": "requirements",
+      "parameters": {
+        "minimum_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt": "you must be over the age of 18 to qualify for a permanent residence permit.",
+      "source_excerpt_display": "You must be over the age of 18 to qualify for a permanent residence permit."
+    },
+    {
+      "requirement_code": "still_meet_current_permit_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must still meet the continuous requirements of your current residence permit",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "you must still meet the continuous requirements for your current residence permit.",
+      "source_excerpt_display": "You must still meet the continuous requirements for your current residence permit."
+    },
+    {
+      "requirement_code": "must_reside_in_denmark_at_decision",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must normally be residing in Denmark when the decision is made",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "you must be aware that normally it is a condition in order to get a permanent residence permit that you reside in denmark, when the immigration service makes a decision in your case.",
+      "source_excerpt_display": "You must be aware that normally it is a condition in order to get a permanent residence permit that you reside in Denmark, when the Immigration Service makes a decision in your case."
+    },
+    {
+      "requirement_code": "late_application_can_interrupt_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Applying after your previous permit expired can break the continuity of legal residence",
+      "description": "A procedural slip that resets the eight-year clock.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "if you apply for a residence permit after your previous residence permit has expired, you risk that the calculation of your stay in relation to the rules on permanent residence permits will start over. it is your responsibility to apply in time.",
+      "source_excerpt_display": "If you apply for a residence permit after your previous residence permit has expired, you risk that the calculation of your stay in relation to the rules on permanent residence permits will start over. It is your responsibility to apply in time."
+    },
+    {
+      "requirement_code": "multiple_grounds_may_be_combined",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Periods under different residence permits can be combined",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "you can also meet the requirement if you have had multiple residence permits during your period of residence. this would be the case if you were initially granted a residence permit as an au pair, and then as a family-reunified spouse.",
+      "source_excerpt_display": "You can also meet the requirement if you have had multiple residence permits during your period of residence. This would be the case if you were initially granted a residence permit as an au pair, and then as a family-reunified spouse."
+    },
+    {
+      "requirement_code": "relationships_may_not_be_combined",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Periods based on DIFFERENT spouses or partners may NOT be combined",
+      "description": "The exception to the combining rule, and the one that costs people years.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "however, you are not permitted to combine periods of residence based on multiple relationships (spouses and/or cohabiting partners). if you have had multiple spouses or cohabiting partners, you will need to live with your current spouse/partner for 8 years (in some cases 4 years) before you qualify for permanent residence.",
+      "source_excerpt_display": "However, you are not permitted to combine periods of residence based on multiple relationships (spouses and/or cohabiting partners). If you have had multiple spouses or cohabiting partners, you will need to live with your current spouse/partner for 8 years (in some cases 4 years) before you qualify for permanent residence."
+    },
+    {
+      "requirement_code": "criminal_conviction_bars",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sentence of more than six months makes you permanently ineligible",
+      "description": "Quoted with the under-six-months rule that precedes it, because the two together are the actual test.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "if you have been sentenced to less than six months of incarceration or a suspended prison sentence, you will be temporarily ineligible for a permanent residence permit.\n\nhowever, if you have been sentenced to more than six months of incarceration, you are permanently ineligible for a permanent residence permit.",
+      "source_excerpt_display": "If you have been sentenced to less than six months of incarceration or a suspended prison sentence, you will be temporarily ineligible for a permanent residence permit.\n\nHowever, if you have been sentenced to more than six months of incarceration, you are permanently ineligible for a permanent residence permit."
+    },
+    {
+      "requirement_code": "charge_or_indictment_bars",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A pending charge or indictment also bars a permit",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "you are also not eligible for a permanent residence permit if you are charged with or indicted for a crime that may result in either a mandatory og suspended prison sentence.",
+      "source_excerpt_display": "You are also not eligible for a permanent residence permit if you are charged with or indicted for a crime that may result in either a mandatory og suspended prison sentence."
+    },
+    {
+      "requirement_code": "no_overdue_public_debt",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not have any overdue public debts",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "you may not have any overdue public debts. a debt is considered overdue if the public is entitled to payment of the debt, or if the amount due has not been repaid by the due date.",
+      "source_excerpt_display": "You may not have any overdue public debts. A debt is considered overdue if the public is entitled to payment of the debt, or if the amount due has not been repaid by the due date."
+    },
+    {
+      "requirement_code": "public_debt_types",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as public debt",
+      "description": "Quoted whole; day-care payments and overpaid housing benefit are not obviously 'public debt' to a reader.",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "the following types of debt are those that are considered public debt. if you have overdue payments for any of the types of debt below, you cannot qualify for a permanent residence permit (conlusive list):\n\nsocial service act or active social policy act benefits that you are required by law to repay (such as overpaid social benefits)\n\nchild support paid in advance\n\nday-care payment\n\noverpaid housing benefits\n\nhousing-subsidy loan (boligindskudslån/beboerindskudslån)\n\ntaxes and levies, unless the amount in arrears is due to circumstances beyond your control",
+      "source_excerpt_display": "The following types of debt are those that are considered public debt. If you have overdue payments for any of the types of debt below, you cannot qualify for a permanent residence permit (conlusive list):\n\nSocial Service Act or Active Social Policy Act benefits that you are required by law to repay (such as overpaid social benefits)\n\nChild support paid in advance\n\nDay-care payment\n\nOverpaid housing benefits\n\nHousing-subsidy loan (boligindskudslån/beboerindskudslån)\n\nTaxes and levies, unless the amount in arrears is due to circumstances beyond your control"
+    },
+    {
+      "requirement_code": "repaid_debt_needs_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Debt repaid after applying must be documented before the decision",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "if you repay an overdue public debt after you submit your application, but before the immigration service issues reaches a decision, you need to provide documentation showing you no longer have any public debt.",
+      "source_excerpt_display": "If you repay an overdue public debt after you submit your application, but before the Immigration Service issues reaches a decision, you need to provide documentation showing you no longer have any public debt."
+    },
+    {
+      "requirement_code": "no_social_benefits_four_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No certain social benefits within four years of applying",
+      "source_role": "requirements",
+      "parameters": {
+        "years_without_benefits": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt": "in order to qualify for a permanent residence permit you may not have received certain social benefits within four years of applying for a permanent residence permit. nor may you receive them until the time when the permanent residence permit is granted.",
+      "source_excerpt_display": "In order to qualify for a permanent residence permit you may not have received certain social benefits within four years of applying for a permanent residence permit. Nor may you receive them until the time when the permanent residence permit is granted."
+    },
+    {
+      "requirement_code": "benefits_worked_example",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The authority's own worked example of when the four years run from",
+      "description": "Registered because the four-year rule is routinely read as four years before the permit rather than before the application.",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "example: if you received cash benefits until 1 july 2024, you would first meet this requirement on 1 july 2028. however, some benefits do not affect your eligibility for permanent residence.",
+      "source_excerpt_display": "Example: if you received cash benefits until 1 July 2024, you would first meet this requirement on 1 July 2028. However, some benefits do not affect your eligibility for permanent residence."
+    },
+    {
+      "requirement_code": "supplementary_cash_benefits_via_partner",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary benefits received because a partner claimed cash benefits can also bar a permit",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "if your spouse/partner received cash benefits, you may have received supplementary social security during the same period. this could result in your application being refused. if you are uncertain whether you have received, or will receive, supplementary cash benefits, contact your municipality.",
+      "source_excerpt_display": "If your spouse/partner received cash benefits, you may have received supplementary social security during the same period. This could result in your application being refused. If you are uncertain whether you have received, or will receive, supplementary cash benefits, contact your municipality."
+    },
+    {
+      "requirement_code": "danish_language_test_2",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must pass Danish language test 2 (Prøve i Dansk 2) or an equivalent",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "you must pass the danish language test 2 (prøve i dansk 2), or a danish exam of an equivalent or higher level.",
+      "source_excerpt_display": "You must pass the Danish language test 2 (Prøve i Dansk 2), or a Danish exam of an equivalent or higher level."
+    },
+    {
+      "requirement_code": "declaration_of_residence_and_self_support",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "You must accept a declaration of residence and self-support",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "the declaration is included in the online application and in the printable application form.",
+      "source_excerpt_display": "The declaration is included in the online application and in the printable application form."
+    },
+    {
+      "requirement_code": "employment_three_years_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Regular full-time employment for at least 3 years and 6 months in the past 4 years",
+      "description": "Quoted with the window, because the duration alone omits the test.",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "in order to qualify for a permanent residence permit, you must have had regular, full-time employment or been self-employed in denmark for at least 3 years and 6 months during the 4 years prior to the date the immigration service reaches a decision about your application for permanent residence.\n\nthis means that during the past 4 years you must have had regular, full-time employment for at least 3 years and 6 months in total.",
+      "source_excerpt_display": "In order to qualify for a permanent residence permit, you must have had regular, full-time employment or been self-employed in Denmark for at least 3 years and 6 months during the 4 years prior to the date the Immigration Service reaches a decision about your application for permanent residence.\n\nThis means that during the past 4 years you must have had regular, full-time employment for at least 3 years and 6 months in total."
+    },
+    {
+      "requirement_code": "employment_need_not_be_continuous",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The 3 years and 6 months need not be continuous",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "it is not necessary to have been employed continuously for 3 years and 6 months. you could, for example, have worked full-time for a year, been unemployed for 6 months, and then have worked full-time again for 2 years and 6 months.",
+      "source_excerpt_display": "It is not necessary to have been employed continuously for 3 years and 6 months. You could, for example, have worked full-time for a year, been unemployed for 6 months, and then have worked full-time again for 2 years and 6 months."
+    },
+    {
+      "requirement_code": "full_time_means_30_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time means at least 30 hours a week, or 120 hours a month",
+      "source_role": "requirements",
+      "parameters": {
+        "minimum_hours_per_week": 30,
+        "minimum_hours_per_month": 120,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230,
+      "source_excerpt": "full-time employment is work in denmark with an average hours of minimum 30 hours per week. this corressponds to at least 120 hours per month.",
+      "source_excerpt_display": "Full-time employment is work in Denmark with an average hours of minimum 30 hours per week. This corressponds to at least 120 hours per month."
+    },
+    {
+      "requirement_code": "hours_combinable_across_jobs",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Hours from more than one job can be combined to reach 30 a week",
+      "source_role": "requirements",
+      "display_order": 240,
+      "source_excerpt": "if you have worked more than one job at a time, you meet the regular, full-time employment requirement if your combined total number of hours is 30 hours per week or 120 hours per month. the 30 hours per week or 120 hours per month are calculated as a result for each month and not as an average calculation over an entire year. therefore, you cannot calculate a total number of hours for a year and distribute the hours to each month.",
+      "source_excerpt_display": "If you have worked more than one job at a time, you meet the regular, full-time employment requirement if your combined total number of hours is 30 hours per week or 120 hours per month. The 30 hours per week or 120 hours per month are calculated as a result for each month and not as an average calculation over an entire year. Therefore, you cannot calculate a total number of hours for a year and distribute the hours to each month."
+    },
+    {
+      "requirement_code": "regular_employment_includes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as regular, full-time employment",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "the following types of employment are considered regular employment:\n\npaid employment, minimum 30 hours per week, or 120 hours per month\n\nwork as self-employed if the work carries the same weight as a regular full-time employment, and the work can be characterized as main occupation in order to become self-sufficient. read more about work as self-employed\n\nworking for a business owned by your spouse, if the work is taxable and can be considered regular, full-time employment\n\nsick leave, holiday, absence to care for family members and parental leave etc, within the terms and conditions of your employment\n\nperiods where you are covered by a contractual strike or lockout within the terms of the conditions of your employment\n\nflexjob – if it meets the terms established by the active employment policy act (lov om en aktiv beskæftigelsesindsats), a flexjob is considered regular employment, even though the employer may have received a subsidy to pay your wages. a flexjob counts as full-time employment regardless of the number of hours you worked\n\nthe basic integration education (igu), as far as the part of the igu program that is a traineeship, provided that the specific igu agreement states that the traineeship consists of at least 30 hours per week.",
+      "source_excerpt_display": "The following types of employment are considered regular employment:\n\nPaid employment, minimum 30 hours per week, or 120 hours per month\n\nWork as self-employed if the work carries the same weight as a regular full-time employment, and the work can be characterized as main occupation in order to become self-sufficient. Read more about work as self-employed\n\nWorking for a business owned by your spouse, if the work is taxable and can be considered regular, full-time employment\n\nSick leave, holiday, absence to care for family members and parental leave etc, within the terms and conditions of your employment\n\nPeriods where you are covered by a contractual strike or lockout within the terms of the conditions of your employment\n\nFlexjob – If it meets the terms established by the Active Employment Policy Act (lov om en aktiv beskæftigelsesindsats), a flexjob is considered regular employment, even though the employer may have received a subsidy to pay your wages. A flexjob counts as full-time employment regardless of the number of hours you worked\n\nThe Basic Integration Education (IGU), as far as the part of the IGU program that is a traineeship, provided that the specific IGU agreement states that the traineeship consists of at least 30 hours per week."
+    },
+    {
+      "requirement_code": "regular_employment_excludes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What does NOT count as regular employment",
+      "description": "Wage-subsidised work, unpaid work, job rotation, study placements and any period under 30 hours.",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "the following types of employment are not considered regular employment:\n\nbenefits paid during periods of unemployment (including arbejdsløshedsdagpenge)\n\nunpaid work\n\npositions for which your employer received public funding, such as wage subsidies (løntilskud)\n\nemployment in job rotation\n\neducation, including internships or other forms of work that are a part of the programme\n\nperiods of employment during which you worked for less than 30 hours per week or less than 120 hours per month",
+      "source_excerpt_display": "The following types of employment are not considered regular employment:\n\nBenefits paid during periods of unemployment (including arbejdsløshedsdagpenge)\n\nUnpaid Work\n\nPositions for which your employer received public funding, such as wage subsidies (løntilskud)\n\nEmployment in job rotation\n\nEducation, including internships or other forms of work that are a part of the programme\n\nPeriods of employment during which you worked for less than 30 hours per week or less than 120 hours per month"
+    },
+    {
+      "requirement_code": "must_be_employed_at_decision",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be employed when the Immigration Service decides the application",
+      "description": "A separate condition from the 3-year-6-month history, and one that can fail at the last moment.",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "you must be employed at the time the immigration service reaches a decision about your application for a permanent residence permit.",
+      "source_excerpt_display": "You must be employed at the time the Immigration Service reaches a decision about your application for a permanent residence permit."
+    },
+    {
+      "requirement_code": "supplementary_danish_test_3",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: Danish language test 3",
+      "source_role": "requirements",
+      "display_order": 280,
+      "source_excerpt": "you can meet one of the supplementary requirements by passing the danish language test 3 (prøve i dansk 3), or a danish exam of an equivalent or higher level.",
+      "source_excerpt_display": "You can meet one of the supplementary requirements by passing the Danish language test 3 (Prøve i Dansk 3), or a Danish exam of an equivalent or higher level."
+    },
+    {
+      "requirement_code": "supplementary_four_years_employment",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: 4 years' employment in the past 4 years and 6 months",
+      "source_role": "requirements",
+      "display_order": 290,
+      "source_excerpt": "you can meet one of the 4 supplementary requirements by having regular, full-time employment or being self-employed in denmark for at least 4 years during the 4 years and 6 months prior to the date the immigration service reaches a decision about your application for a permanent residence permit.",
+      "source_excerpt_display": "You can meet one of the 4 supplementary requirements by having regular, full-time employment or being self-employed in Denmark for at least 4 years during the 4 years and 6 months prior to the date the Immigration Service reaches a decision about your application for a permanent residence permit."
+    },
+    {
+      "requirement_code": "supplementary_active_citizenship",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: the active citizen exam, or a year of documented active citizenship",
+      "source_role": "requirements",
+      "display_order": 300,
+      "source_excerpt": "you can meet 1 of the 4 supplementary requirements by passing the active citizen exam or having displayed active citizenship in denmark for at least a year by doing things like serving on a board or being a member of an association.",
+      "source_excerpt_display": "You can meet 1 of the 4 supplementary requirements by passing the active citizen exam or having displayed active citizenship in Denmark for at least a year by doing things like serving on a board or being a member of an association."
+    },
+    {
+      "requirement_code": "supplementary_income_threshold",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Supplementary requirement: average annual taxable income of DKK 346,155.57 (2026 level)",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "average_annual_taxable_income": 346155.57,
+        "stated_for_year": 2026,
+        "years_averaged": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 310,
+      "source_excerpt": "you can meet 1 of the 4 supplementary requirements by having an annual taxable income of dkk 346,155.57 (2026 level) or more for the 2 years prior to the immigration service reaching a decision about your application for a permanent residence permit.",
+      "source_excerpt_display": "You can meet 1 of the 4 supplementary requirements by having an annual taxable income of DKK 346,155.57 (2026 level) or more for the 2 years prior to the Immigration Service reaching a decision about your application for a permanent residence permit."
+    },
+    {
+      "requirement_code": "supplementary_income_countable_types",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Which taxable income counts towards the income threshold",
+      "source_role": "requirements",
+      "display_order": 320,
+      "source_excerpt": "the types of taxable income listed below can be included when calculating whether your annual taxable income has averaged dkk 346,155.57 (2026 level) or more.\n\nincome taxed at source (a-indkomst)\n\nincome not taxed at source (b-indkomst)\n\nwages paid as subsistence allowance, including food and lodging\n\npayment of labour-market pension (arbejdsmarkedspension)\n\nwages paid abroad, if the wage would have been taxable in denmark",
+      "source_excerpt_display": "The types of taxable income listed below can be included when calculating whether your annual taxable income has averaged DKK 346,155.57 (2026 level) or more.\n\nIncome taxed at source (A-indkomst)\n\nIncome not taxed at source (B-indkomst)\n\nWages paid as subsistence allowance, including food and lodging\n\nPayment of labour-market pension (arbejdsmarkedspension)\n\nWages paid abroad, if the wage would have been taxable in Denmark"
+    },
+    {
+      "requirement_code": "fee_work_or_study",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee — applicants holding a work or study permit",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 7570,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 330,
+      "source_excerpt": "the fee (work or study) is:\ndkk 7,570,-",
+      "source_excerpt_display": "The fee (work or study) is:\nDKK 7,570,-"
+    },
+    {
+      "requirement_code": "fee_family_or_asylum",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee — applicants holding a family reunification or asylum permit",
+      "description": "A second, lower fee. Publishing only the first would overstate the cost for family and asylum applicants by DKK 2,600.",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 4970,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 340,
+      "source_excerpt": "the fee (family reunification or asylum) is:\ndkk 4,970,-",
+      "source_excerpt_display": "The fee (family reunification or asylum) is:\nDKK 4,970,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Expected maximum processing time",
+      "source_role": "requirements",
+      "display_order": 350,
+      "source_excerpt": "the expected maximum processing time is\n12 months",
+      "source_excerpt_display": "The expected maximum processing time is\n12 months"
+    }
+  ]
+}

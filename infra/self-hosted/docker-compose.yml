@@ -1,0 +1,270 @@
+# Self-hosted Supabase — the full stack, in containers you own.
+#
+# WHY THIS EXISTS
+# The hosted project sits on the free plan: no PITR, no backups (BLK-1). This
+# stack removes the plan limits without changing a single line of application
+# code, because it runs the SAME components the hosted product runs — GoTrue
+# for auth, PostgREST for the data API, storage-api for the documents bucket.
+# `auth.uid()`, all 140 RLS policies, signed URLs and the 214 files importing
+# @supabase/* keep working untouched.
+#
+# That is the whole point of choosing this over bare Postgres: bare Postgres has
+# no auth.uid(), so every RLS policy protecting a user's passport would have to
+# be rewritten.
+#
+# IMAGE VERSIONS are pinned to what the Supabase CLI already pulled locally, and
+# postgres is pinned to 17.6.1.127 — the exact version the hosted project runs
+# (verified against the Management API). Same major AND patch means a dump from
+# the hosted project restores without version-skew surprises.
+#
+# USAGE
+#   cp .env.example .env      # then fill in EVERY value — see the runbook
+#   docker compose up -d
+#   ./verify.sh
+#
+# Ports are offset by +100 from the CLI dev stack (54321…) so this can run
+# alongside it without collisions.
+
+name: visaai-selfhosted
+
+services:
+  db:
+    image: public.ecr.aws/supabase/postgres:17.6.1.127
+    container_name: selfhosted_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      JWT_EXP: ${JWT_EXPIRY:-3600}
+    ports:
+      # SEC-7002: loopback ONLY. `'54422:5432'` binds 0.0.0.0 and publishes the
+      # primary Postgres — holding every applicant's immigration PII — to the
+      # internet on any host without a strict firewall. Nothing off-host needs
+      # it: containers reach the DB over the internal network as `db:5432`, and
+      # host-side migrations use `127.0.0.1:54422`. Mirrors the Kong bind below.
+      - '127.0.0.1:${POSTGRES_PORT:-54422}:5432'
+    volumes:
+      # Named volume, NOT a bind mount: a bind mount on macOS is both slow and a
+      # common source of permission failures for the postgres uid.
+      - db_data:/var/lib/postgresql/data
+      # Stage 1 of the service-role bootstrap. Mount the FILE, not the
+      # directory: the image ships its own scripts in that path and a directory
+      # mount wipes them.
+      - ./db-init/99-supabase-admin-password.sh:/docker-entrypoint-initdb.d/99-supabase-admin-password.sh:ro
+      # supabase/postgres creates the service roles WITHOUT passwords —
+      # POSTGRES_PASSWORD only covers the `postgres` superuser. Without this,
+      # auth/rest/storage cannot log in and restart-loop on 28P01 while the db
+      # itself reports healthy. Runs only on an empty data directory.
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # One-shot: give the Supabase service roles a password once the db is up.
+  # POSTGRES_PASSWORD covers only the `postgres` superuser; every other role is
+  # created passwordless, so auth/rest/storage restart-loop on 28P01 while the
+  # db reports healthy. Must run AFTER the image's migration phase creates the
+  # roles, which is why this is a sidecar and not an initdb.d script.
+  db-bootstrap:
+    image: public.ecr.aws/supabase/postgres:17.6.1.127
+    container_name: selfhosted_db_bootstrap
+    restart: 'no'
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_HOST: db
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    volumes:
+      - ./bootstrap/set-service-role-passwords.sh:/bootstrap.sh:ro
+    entrypoint: ['bash', '/bootstrap.sh']
+
+  auth:
+    image: public.ecr.aws/supabase/gotrue:v2.195.0
+    container_name: selfhosted_auth
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL:?}
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-postgres}
+      GOTRUE_SITE_URL: ${SITE_URL:?}
+      GOTRUE_URI_ALLOW_LIST: ${ADDITIONAL_REDIRECT_URLS:-}
+      # Hosts GoTrue will honour from Host / X-Forwarded-Host when building
+      # links. Unset, it logged "external host ... will not be used" on every
+      # request and fell back to API_EXTERNAL_URL.
+      GOTRUE_MAILER_EXTERNAL_HOSTS: ${MAILER_EXTERNAL_HOSTS:-}
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+      GOTRUE_JWT_EXP: ${JWT_EXPIRY:-3600}
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      # Parity with the hosted project's audited configuration:
+      GOTRUE_DISABLE_SIGNUP: 'false'
+      GOTRUE_MAILER_AUTOCONFIRM: ${MAILER_AUTOCONFIRM:-false}
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: 'true'   # the guest intake funnel
+      GOTRUE_SECURITY_MANUAL_LINKING_ENABLED: 'true'    # guest -> permanent upgrade
+      GOTRUE_REFRESH_TOKEN_ROTATION_ENABLED: 'true'
+      # AUTH-001: the audited fix. 12, not the platform default of 8.
+      GOTRUE_PASSWORD_MIN_LENGTH: ${PASSWORD_MIN_LENGTH:-12}
+      GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION: 'true'
+      GOTRUE_SMTP_HOST: ${SMTP_HOST:-}
+      GOTRUE_SMTP_PORT: ${SMTP_PORT:-587}
+      GOTRUE_SMTP_USER: ${SMTP_USER:-}
+      GOTRUE_SMTP_PASS: ${SMTP_PASS:-}
+      GOTRUE_SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL:-no-reply@visaai.co}
+      GOTRUE_EXTERNAL_GOOGLE_ENABLED: ${GOOGLE_ENABLED:-false}
+      GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOTRUE_EXTERNAL_GOOGLE_SECRET: ${GOOGLE_SECRET:-}
+      GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI: ${API_EXTERNAL_URL}/auth/v1/callback
+      GOTRUE_EXTERNAL_AZURE_ENABLED: ${AZURE_ENABLED:-false}
+      GOTRUE_EXTERNAL_AZURE_CLIENT_ID: ${AZURE_CLIENT_ID:-}
+      GOTRUE_EXTERNAL_AZURE_SECRET: ${AZURE_SECRET:-}
+      GOTRUE_EXTERNAL_AZURE_URL: ${AZURE_URL:-https://login.microsoftonline.com/common}
+      GOTRUE_EXTERNAL_AZURE_REDIRECT_URI: ${API_EXTERNAL_URL}/auth/v1/callback
+
+  rest:
+    image: ghcr.io/supabase/postgrest:v14.5
+    container_name: selfhosted_rest
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-postgres}
+      PGRST_DB_SCHEMAS: ${PGRST_DB_SCHEMAS:-public,graphql_public}
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      PGRST_DB_USE_LEGACY_GUCS: 'false'
+      # Bounds every unfiltered list response. The audit found 239 repository
+      # selects with no explicit .limit(); this is the backstop for them.
+      PGRST_DB_MAX_ROWS: ${PGRST_DB_MAX_ROWS:-1000}
+
+  storage:
+    image: public.ecr.aws/supabase/storage-api:v1.60.10
+    container_name: selfhosted_storage
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
+      rest: { condition: service_started }
+    environment:
+      ANON_KEY: ${ANON_KEY:?}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY:?}
+      POSTGREST_URL: http://rest:3000
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-postgres}
+      FILE_SIZE_LIMIT: ${STORAGE_FILE_SIZE_LIMIT:-26214400}   # DB-004: 25MB, matches the app's MAX_BYTES
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      REGION: stub
+      GLOBAL_S3_BUCKET: stub
+    volumes:
+      - storage_data:/var/lib/storage
+
+  meta:
+    image: ghcr.io/supabase/postgres-meta:v0.96.6
+    container_name: selfhosted_meta
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: ${POSTGRES_DB:-postgres}
+      PG_META_DB_USER: supabase_admin
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+  kong:
+    image: public.ecr.aws/supabase/kong:2.8.1
+    container_name: selfhosted_kong
+    restart: unless-stopped
+    depends_on: [auth, rest, storage]
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl
+      # Kong rewrites X-Forwarded-* from its OWN view of the connection unless
+      # the peer is trusted, and nginx reaches it over plain HTTP on loopback.
+      # So GoTrue saw `X-Forwarded-Proto: http` on requests that arrived at
+      # nginx over TLS, and logged the external host as unusable on every
+      # single request. Trusting the peer is only safe because the port is
+      # bound to loopback below — do not widen one without the other.
+      KONG_TRUSTED_IPS: 127.0.0.1,::1
+      KONG_REAL_IP_HEADER: X-Forwarded-For
+      KONG_REAL_IP_RECURSIVE: 'on'
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+    # Kong's declarative config does NO variable substitution, so mounting
+    # kong.yml directly makes it register the LITERAL string
+    # "$SUPABASE_ANON_KEY" as the API key — every request then fails
+    # `key-auth` with 401 "Invalid authentication credentials", which reads
+    # exactly like a JWT-secret mismatch and is not one.
+    #
+    # Render the template first, same as the upstream Supabase compose does.
+    entrypoint: >-
+      bash -c 'eval "echo \"$$(cat /home/kong/kong.template.yml)\"" >
+      /home/kong/kong.yml && /docker-entrypoint.sh kong docker-start'
+    volumes:
+      - ./kong.yml:/home/kong/kong.template.yml:ro
+    ports:
+      # Loopback ONLY. `'54421:8000'` binds 0.0.0.0, which published the whole
+      # Supabase API — including /auth/v1/token and /auth/v1/signup — on plain
+      # HTTP at the box's public IP, bypassing nginx and TLS. Verified reachable
+      # from the internet before this change. nginx (`location /sbkong/`) is the
+      # only intended entry point; apps/api talks to 127.0.0.1:54421 directly,
+      # and both still work with a loopback bind.
+      - '127.0.0.1:${KONG_HTTP_PORT:-54421}:8000'
+
+  # BLK-1: the stack backs itself up. Without this the self-hosted move removes
+  # the free-plan limits AND the (absent) hosted backups, leaving the same hole
+  # with more moving parts — which is exactly what runbook §9 warns about.
+  #
+  # Same postgres image as `db`, so pg_dump is guaranteed version-compatible; a
+  # client older than the server refuses to dump at all.
+  backup:
+    image: public.ecr.aws/supabase/postgres:17.6.1.127
+    container_name: selfhosted_backup
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      DB_HOST: db
+      BACKUP_DIR: /backups
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-14}
+      BACKUP_INTERVAL_SECONDS: ${BACKUP_INTERVAL_SECONDS:-86400}
+      BACKUP_INITIAL_RETRY_SECONDS: ${BACKUP_INITIAL_RETRY_SECONDS:-60}
+      BACKUP_INITIAL_RETRIES: ${BACKUP_INITIAL_RETRIES:-30}
+    volumes:
+      - ./backup.sh:/usr/local/bin/backup.sh:ro
+      - ./backup-health.sh:/usr/local/bin/backup-health.sh:ro
+      - backups:/backups
+    entrypoint: ['/bin/sh', '/usr/local/bin/backup.sh']
+    # Override the image's pg_isready check: nothing listens on this
+    # container's 5432, so the inherited check is permanently unhealthy and
+    # hides a real backup failure. Unhealthy now means "no fresh dump".
+    healthcheck:
+      test: ['CMD', '/bin/sh', '/usr/local/bin/backup-health.sh']
+      interval: 5m
+      timeout: 10s
+      retries: 1
+      start_period: 15m
+
+volumes:
+  db_data:
+  storage_data:
+  # Keep backups on a NAMED volume, never a bind mount into the repo: a dump
+  # of this database contains passports and bank statements and must not be one
+  # `git add -A` away from a commit.
+  backups:

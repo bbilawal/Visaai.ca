@@ -1,0 +1,284 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-etudiant",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French. Where the authority publishes an amount, the amount is recorded with the wording that introduces it; where it does not, none is supplied.",
+  "structure_note": "THE ROUTE HAS TWO STAGES AND THE PAGE IS ORGANISED AROUND THEM: a VLS-TS for the first year, then a temporary or multi-year student card. Requirements are ordered to follow that, because the deadlines and the money differ between them and a reader in year two who follows the year-one instructions misses a two-month filing window. Algerians are governed by a separate bilateral regime the page routes away to; nothing here is extracted for them.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2231"
+  },
+  "page_dates": {
+    "requirements": "2026-08-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 août 2026'. Self-declared; evidence, not truth. Note that the €877.50 resource figure is quoted here WITHOUT a stated reference year — the page gives the amount and not the year it was set for, so no stated_for_year is recorded and none is inferred.",
+  "not_extracted": [
+    "The list of the 72 countries whose nationals must apply through the 'Études en France' platform rather than France-Visas. The page publishes it as a regional table and it is a genuine nationality split — the procedure differs, not merely the paperwork. It is not reproduced here because a partial list of countries reads as a complete one, and the table is long enough that quoting part of it would mislead. The SPLIT itself is recorded as a requirement so a reader knows to check which side they are on.",
+    "The Algerian regime. The page carries a separate 'pour un algérien' route governed by a bilateral agreement. Nothing on this route is extracted for Algerian nationals.",
+    "The first-application document list. The page sends first-time applicants to France-Visas for it, and that host refuses our monitor. The RENEWAL document list IS published on this page and is recorded.",
+    "The reference year for the €877.50 monthly resource figure. The page states the amount and not the year. See freshness_note.",
+    "Processing times. The page states only that a 90-day silence is an implicit refusal, which is a deadline rather than a processing time."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_the_student_route_is_for",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For higher education, and only if you hold no personal or family residence permit",
+      "description": "The exclusion matters: a holder of a carte de résident or a 'vie privée et familiale' card studies on that permit and does not need this route at all.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous êtes concerné si vous venez en france pour suivre des études supérieures sans avoir de titre de séjour pour motifs personnels ou familiaux (par exemple, carte de résident , carte de séjour vie privée et familiale ).",
+      "source_excerpt_display": "Vous êtes concerné si vous venez en France pour suivre des études supérieures sans avoir de titre de séjour pour motifs personnels ou familiaux (par exemple, carte de résident, carte de séjour vie privée et familiale)."
+    },
+    {
+      "requirement_code": "enrolment_or_pre_enrolment_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Be enrolled, or pre-enrolled, at a higher education institution or a higher vocational training body",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous devez être inscrit (ou préinscrit) : dans un établissement public ou privé d'enseignement supérieur ou de formation initiale (université, grande école, etc.) ou dans un organisme de formation professionnelle supérieure.",
+      "source_excerpt_display": "Vous devez être inscrit (ou préinscrit): Dans un établissement public ou privé d'enseignement supérieur ou de formation initiale (université, grande école, etc.) Ou dans un organisme de formation professionnelle supérieure."
+    },
+    {
+      "requirement_code": "monthly_resources_of_877_50_euros",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show monthly resources of at least €877.50",
+      "description": "A published figure, quoted with the sentence that states it. The authority publishes no reference year for it.",
+      "parameters": {
+        "monthly_resources_eur": 877.5
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "vous devez pouvoir justifier de ressources au moins égales à 877,5 € par mois.",
+      "source_excerpt_display": "Vous devez pouvoir justifier de ressources au moins égales à 877,5 € par mois."
+    },
+    {
+      "requirement_code": "resources_condition_waived_after_competitive_entry",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The resource condition does not apply if you passed the entrance exam of an institution that has an agreement with the State",
+      "description": "Relieves the requirement above rather than adding one. Dropping it would send a qualifying student looking for money they do not need to show.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "mais cette condition de ressources ne s'applique pas si vous avez réussi le concours d'entrée dans un établissement d'enseignement supérieur ayant signé une convention avec l'état.",
+      "source_excerpt_display": "Mais cette condition de ressources ne s'applique pas si vous avez réussi le concours d'entrée dans un établissement d'enseignement supérieur ayant signé une convention avec l'État."
+    },
+    {
+      "requirement_code": "underfunded_researcher_gets_student_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A research-training agreement whose funding falls below the 'talent-chercheur' threshold yields a student permit instead",
+      "description": "A route boundary, not a paperwork detail: the same person qualifies for a different permit depending on the amount of their funding.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "l’étranger qui a signé une convention de séjour de recherche pour se former à la recherche mais dont le financement n’atteint pas le seuil pour prétendre à un titre de séjour « talent-chercheur » obtient un titre de séjour « étudiant ».",
+      "source_excerpt_display": "L’étranger qui a signé une convention de séjour de recherche pour se former à la recherche mais dont le financement n’atteint pas le seuil pour prétendre à un titre de séjour «talent-chercheur» obtient un titre de séjour «étudiant»."
+    },
+    {
+      "requirement_code": "entrance_exam_needs_a_short_stay_student_concours_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Coming to sit an entrance exam requires the separate short-stay 'étudiant-concours' visa",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "si vous venez en france pour passer un concours ou un examen d'entrée dans l'enseignement supérieur, vous devez demander un visa de court séjour étudiant-concours .",
+      "source_excerpt_display": "Si vous venez en France pour passer un concours ou un examen d'entrée dans l'enseignement supérieur, vous devez demander un visa de court séjour étudiant-concours."
+    },
+    {
+      "requirement_code": "seventy_two_countries_apply_through_etudes_en_france",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Nationals of 72 countries must apply through 'Études en France' at the moment of online pre-enrolment; everyone else uses France-Visas",
+      "description": "A nationality split in the PROCEDURE, not merely in the paperwork — and it is tied to the pre-enrolment moment, so applying the wrong way is not easily undone. The country list is on the page and is deliberately not reproduced here; see not_extracted.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "les étrangers de 72 pays doivent demander leur visa sur le site études en france au moment de la préinscription en ligne dans l'enseignement supérieur français. les étrangers des autres pays doivent passer par la procédure de demande de visa par france-visas .",
+      "source_excerpt_display": "Les étrangers de 72 pays doivent demander leur visa sur le site Études en France au moment de la préinscription en ligne dans l'enseignement supérieur français. Les étrangers des autres pays doivent passer par la procédure de demande de visa par France-Visas."
+    },
+    {
+      "requirement_code": "exempt_from_vls_ts_after_passing_a_concours_in_france",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "If you entered on an 'étudiant-concours' visa and passed, you skip the VLS-TS and apply to the préfecture directly",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "vous êtes dispensé de vls-ts si vous êtes entré régulièrement en france avec un visa de court séjour étudiant-concours . vous devez directement demander un titre de séjour étudiant en préfecture.",
+      "source_excerpt_display": "Vous êtes dispensé de VLS-TS si vous êtes entré régulièrement en France avec un visa de court séjour étudiant-concours. Vous devez directement demander un titre de séjour étudiant en préfecture."
+    },
+    {
+      "requirement_code": "exempt_from_vls_ts_if_schooled_in_france_since_16",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "If you have been schooled in France since at least age 16 and entered lawfully, you skip the VLS-TS",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "vous êtes dispensé du vls-ts si vous êtes entré régulièrement en france (sous visa de court séjour par exemple). vous devez directement demander un titre de séjour étudiant en préfecture .",
+      "source_excerpt_display": "Vous êtes dispensé du VLS-TS si vous êtes entré régulièrement en France (sous visa de court séjour par exemple). Vous devez directement demander un titre de séjour étudiant en préfecture."
+    },
+    {
+      "requirement_code": "vls_ts_validity_four_months_to_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The student VLS-TS is issued for 4 months to 1 year",
+      "parameters": {
+        "vls_ts_validity_months_min": 4,
+        "vls_ts_validity_months_max": 12
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "le vls-ts est délivré pour une durée de 4 mois à 1 an .",
+      "source_excerpt_display": "Le VLS-TS est délivré pour une durée de 4 mois à 1 an."
+    },
+    {
+      "requirement_code": "validate_vls_ts_within_three_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Validate the VLS-TS online within 3 months of arriving and pay the tax",
+      "parameters": {
+        "validation_deadline_months_after_arrival": 3
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "dans les 3 mois suivant votre arrivée en france, vous devez valider votre vls-ts et payer une taxe qui s'ajoute aux droits de visa.",
+      "source_excerpt_display": "Dans les 3 mois suivant votre arrivée en France, vous devez valider votre VLS-TS et payer une taxe qui s'ajoute aux droits de visa."
+    },
+    {
+      "requirement_code": "vls_ts_validation_tax_100_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The VLS-TS validation tax is €100",
+      "parameters": {
+        "vls_ts_validation_tax_eur": 100
+      },
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "il faut payer 100 € . le paiement se fait lors de la validation de votre visa de long séjour valant titre de séjour.",
+      "source_excerpt_display": "Il faut payer 100 €. Le paiement se fait lors de la validation de votre visa de long séjour valant titre de séjour."
+    },
+    {
+      "requirement_code": "renewal_filing_window_four_to_two_months_before_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "File for the residence card at the earliest 4 months and at the latest 2 months before your current document expires",
+      "description": "A window with both ends closed. Filing too early is refused as well as too late, and filing late triggers a separate €180 charge.",
+      "parameters": {
+        "earliest_months_before_expiry": 4,
+        "latest_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "vous devez demander votre titre de séjour au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, vls-ts ou titre).",
+      "source_excerpt_display": "Vous devez demander votre titre de séjour au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, VLS-TS ou titre)."
+    },
+    {
+      "requirement_code": "renewal_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required to renew a student residence permit",
+      "description": "The authority's own published list. Note two items applicants rarely anticipate: a proof of address less than six months old, and a signed copy of the undertaking to respect the principles of the Republic.",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "visa de long séjour en cours de validité ou un titre de séjour justificatif de domicile datant de moins de 6 mois ... inscription produite par l'établissement d'enseignement (qui peut être un établissement public ou privé d'enseignement supérieur) ou préinscription ... relevés de notes de l'année écoulée dernier diplôme obtenu en france attestation de réussite délivrée par l'établissement exemplaire signé de l'engagement à respecter les principes de la république",
+      "source_excerpt_display": "Visa de long séjour en cours de validité ou un titre de séjour Justificatif de domicile datant de moins de 6 mois ... Inscription produite par l'établissement d'enseignement (qui peut être un établissement public ou privé d'enseignement supérieur) ou préinscription ... Relevés de notes de l'année écoulée Dernier diplôme obtenu en France Attestation de réussite délivrée par l'établissement Exemplaire signé de l'engagement à respecter les principes de la République"
+    },
+    {
+      "requirement_code": "proof_of_resources_varies_by_source",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "How to evidence the €877.50 depends on where the money comes from",
+      "description": "Four named situations with four different documents. A reader shown only 'proof of resources' brings the wrong one.",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "si vous êtes boursier dans votre pays d'origine : attestation de bourse de l'organisme payeur du pays d'origine précisant le montant et la durée de la bourse si vous travaillez : vos 3 dernières fiches de paie si vous êtes pris en charge par un tiers : justificatif d'identité du tiers + attestations bancaires de la programmation de virements réguliers",
+      "source_excerpt_display": "Si vous êtes boursier dans votre pays d'origine: attestation de bourse de l'organisme payeur du pays d'origine précisant le montant et la durée de la bourse Si vous travaillez: vos 3 dernières fiches de paie Si vous êtes pris en charge par un tiers: justificatif d'identité du tiers + attestations bancaires de la programmation de virements réguliers"
+    },
+    {
+      "requirement_code": "residence_permit_tax_and_stamp_duty_100_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The student residence permit tax and stamp duty is €100, paid by timbres fiscaux",
+      "parameters": {
+        "permit_tax_eur": 100
+      },
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "vous devez régler une taxe et un droit de timbre de 100 € par timbres fiscaux .",
+      "source_excerpt_display": "Vous devez régler une taxe et un droit de timbre de 100 € par timbres fiscaux."
+    },
+    {
+      "requirement_code": "late_renewal_costs_an_extra_180_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Filing the renewal late adds a €180 regularisation visa charge",
+      "parameters": {
+        "late_renewal_charge_eur": 180
+      },
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "si vous présentez votre demande de renouvellement de titre hors délai, vous devrez aussi payer un droit de visa de régularisation de 180 € (sauf cas de force majeure ou présentation d'un visa valide).",
+      "source_excerpt_display": "Si vous présentez votre demande de renouvellement de titre hors délai, vous devrez aussi payer un droit de visa de régularisation de 180 € (sauf cas de force majeure ou présentation d'un visa valide)."
+    },
+    {
+      "requirement_code": "multi_year_card_length_matches_remaining_study_cycle",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "After one year, the multi-year student card runs for the years remaining in your study cycle",
+      "description": "Not a fixed term — the length is derived from where the student is in their programme, with the authority's own worked example.",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "après 1 an de présence en france sous visa de long séjour valant titre de séjour (vls-ts) ou titre de séjour temporaire étudiant , vous pouvez bénéficier d'un titre de séjour pluriannuel étudiant . sa durée est égale au nombre d'années restant à courir dans le cycle d'études dans lequel vous êtes inscrit.",
+      "source_excerpt_display": "Après 1 an de présence en France sous visa de long séjour valant titre de séjour (VLS-TS) ou titre de séjour temporaire étudiant, vous pouvez bénéficier d'un titre de séjour pluriannuel étudiant. Sa durée est égale au nombre d'années restant à courir dans le cycle d'études dans lequel vous êtes inscrit."
+    },
+    {
+      "requirement_code": "studies_must_be_real_and_serious",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must show your studies are genuine and serious, assessed over your whole time in France",
+      "description": "A discretionary test with four published criteria, applied to the entire record rather than the last year alone.",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "vous devez également justifier du caractère réel et sérieux de vos études. l'ensemble de votre cursus depuis votre entrée en france est pris en compte. pour évaluer le caractère réel et sérieux de vos études, les critères suivants seront notamment vérifiés : assiduité résultats aux examens diplômes obtenus explications fournies en cas de changement de cursus.",
+      "source_excerpt_display": "Vous devez également justifier du caractère réel et sérieux de vos études. L'ensemble de votre cursus depuis votre entrée en France est pris en compte. Pour évaluer le caractère réel et sérieux de vos études, les critères suivants seront notamment vérifiés: Assiduité Résultats aux examens Diplômes obtenus Explications fournies en cas de changement de cursus."
+    },
+    {
+      "requirement_code": "repeating_a_year_is_not_by_itself_disqualifying",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Repeating one year per study cycle does not, by itself, undermine the seriousness of your studies",
+      "description": "Relieves the test above. Recorded because a student who has repeated a year will otherwise assume the route is closed.",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "un redoublement par cycle d'études ne remet pas en cause, par lui-même, le caractère sérieux des études.",
+      "source_excerpt_display": "Un redoublement par cycle d'études ne remet pas en cause, par lui-même, le caractère sérieux des études."
+    },
+    {
+      "requirement_code": "ninety_day_silence_is_an_implicit_refusal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No answer from the préfecture within 90 days is an implicit refusal, and starts a 2-month appeal clock",
+      "parameters": {
+        "implicit_refusal_after_days": 90,
+        "appeal_window_months": 2
+      },
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "si la préfecture n'a pas répondu dans un délai de 90 jours, il s'agit d'un refus implicite. vous pouvez alors former dans un délai de 2 mois à compter de ce refus :",
+      "source_excerpt_display": "Si la préfecture n'a pas répondu dans un délai de 90 jours, il s'agit d'un refus implicite. Vous pouvez alors former dans un délai de 2 mois à compter de ce refus:"
+    },
+    {
+      "requirement_code": "refusal_may_carry_an_oqtf_with_a_short_appeal_clock",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An explicit refusal may carry an obligation to leave French territory, with an appeal deadline as short as 48 hours",
+      "description": "The most time-critical clause on the route. Three possible deadlines depending on the type of OQTF, and the shortest is 48 hours.",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "sauf exception, ce refus peut être assorti d'une obligation de quitter le territoire français (oqtf) fixant le pays où vous serez renvoyé. vous pouvez former un recours contentieux devant le tribunal administratif (dans un délai de 48 heures, 15 jours ou 30 jours selon le type d'oqtf). faire appel à un avocat n'est pas obligatoire.",
+      "source_excerpt_display": "Sauf exception, ce refus peut être assorti d'une obligation de quitter le territoire français (OQTF) fixant le pays où vous serez renvoyé. Vous pouvez former un recours contentieux devant le tribunal administratif (dans un délai de 48 heures, 15 jours ou 30 jours selon le type d'OQTF). Faire appel à un avocat n'est pas obligatoire."
+    }
+  ]
+}

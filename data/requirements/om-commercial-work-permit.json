@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-commercial-work-permit",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "THE FEE DEPENDS ON THE OCCUPATION CATEGORY, NOT THE WORKER. Ministerial Decision 340/2016 sets three bands — 301, 251 and 201 rial — and which band applies is decided by the occupation classification file the ministry publishes separately. An employer cannot price a hire from this page alone, and the page says so.\n\nTWO VERIFICATIONS HAPPEN AUTOMATICALLY and remove documents from the file: the civil number is checked against the Civil Status Directorate, and the commercial register against the Ministry of Commerce and Industry, so registry documents need not be attached.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Commercial-Work-Permit-establishments-284"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "what_the_service_covers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The service issues commercial work permits for non-Omani workers and investors, and also covers replacement-for-departed permits, early-departure permits, and electronic fee payment",
+      "source_role": "requirements",
+      "source_excerpt": "تسمح خدمة \"إصدار تصاريح مزاولة العمل التجاري\" لأصحاب العمل تقديم طلب الحصول على تصاريح العمل للقوى العاملة والمستثمرين، كما تسمح ب:",
+      "display_order": 10,
+      "source_excerpt_display": "تسمح خدمة \"إصدار تصاريح مزاولة العمل التجاري\" لأصحاب العمل تقديم طلب الحصول على تصاريح العمل للقوى العاملة والمستثمرين، كما تسمح ب:"
+    },
+    {
+      "requirement_code": "automatic_verification_removes_documents",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The applicant's civil number and the commercial register are verified automatically, so registry documents need not be attached",
+      "description": "A relief rather than a requirement, and it is the kind of thing an employer will otherwise prepare needlessly.",
+      "source_role": "requirements",
+      "source_excerpt": "مع العلم: يتم التحقق من بيانات مقدم الطلب بشكل الي من خلال الرقم المدني وذلك بحكم الربط مع الإدارة العامة للأحوال المدنية،كذلك يتم التحقق من بيانات السجل التجاري اليا من نظام وزارة التجارة والصناعة دون الحاجة إلى إرفاق مستندات السجل عند تقديم الطلب.",
+      "display_order": 20,
+      "source_excerpt_display": "مع العلم: يتم التحقق من بيانات مقدم الطلب بشكل الي من خلال الرقم المدني وذلك بحكم الربط مع الإدارة العامة للأحوال المدنية،كذلك يتم التحقق من بيانات السجل التجاري اليا من نظام وزارة التجارة والصناعة دون الحاجة إلى إرفاق مستندات السجل عند تقديم الطلب."
+    },
+    {
+      "requirement_code": "processing_one_to_two_weeks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Processing and approval takes one to two weeks, depending on what the application requires",
+      "description": "The page names the causes of delay: Omanisation analysis for establishments not meeting their quota, other conditions, document review, and activities requiring an inspection visit before authorisation.",
+      "parameters": {
+        "processing_weeks_min": 1,
+        "processing_weeks_max": 2
+      },
+      "source_role": "requirements",
+      "source_excerpt": "تتفاوت مدة معالجة و اعتماد الطلبات المقدمة من أسبوع الى أسبوعين بناء على الطلب وما يتطلبه من إجراءات مثل تحليل التعمين بالنسبة للمنشآت غيرالمحققة لنسبة التعمين ، و استيفاء الاشتراطات الأخرى و مراجعة الوثائق ، و الأنشطة التي تتطلب زيارة تفتيشية قبل التصريح لها .",
+      "display_order": 30,
+      "source_excerpt_display": "تتفاوت مدة معالجة و اعتماد الطلبات المقدمة من أسبوع الى أسبوعين بناء على الطلب وما يتطلبه من إجراءات مثل تحليل التعمين بالنسبة للمنشآت غيرالمحققة لنسبة التعمين ، و استيفاء الاشتراطات الأخرى و مراجعة الوثائق ، و الأنشطة التي تتطلب زيارة تفتيشية قبل التصريح لها."
+    },
+    {
+      "requirement_code": "documents_depend_on_activity_and_occupation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The documents depend on the economic activity and the occupations being authorised, and are listed in the separate services guide",
+      "description": "Three named categories: the municipal licence and lease contracts, documents by activity and occupation determined during the application, and approvals from competent bodies for specialised occupations in health, education and elsewhere.",
+      "source_role": "requirements",
+      "source_excerpt": "الاطلاع على دليل الخدمات للتعرف على المستندات المتعلقة بالأنشطة الاقتصادية و المهن المراد التصريح لها منها:",
+      "display_order": 40,
+      "source_excerpt_display": "الاطلاع على دليل الخدمات للتعرف على المستندات المتعلقة بالأنشطة الاقتصادية و المهن المراد التصريح لها منها:"
+    },
+    {
+      "requirement_code": "municipal_licence_and_leases",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The municipal licence and lease contracts, attached through the establishment document management service",
+      "source_role": "requirements",
+      "source_excerpt": "- الترخيص البلدي و عقود الإيجار - ترفق من خلال إدارة وثائق المنشأة (المنشآت)",
+      "display_order": 50,
+      "source_excerpt_display": "- الترخيص البلدي و عقود الإيجار - ترفق من خلال إدارة وثائق المنشأة (المنشآت)"
+    },
+    {
+      "requirement_code": "specialist_occupations_need_sector_approval",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Specialised occupations in health, education and similar sectors need approval from the competent authority",
+      "source_role": "requirements",
+      "source_excerpt": "- موافقات جهات الاختصاص للمهن الاختصاصية في الأنشطة الصحية و التعليمية و غيرها.",
+      "display_order": 60,
+      "source_excerpt_display": "- موافقات جهات الاختصاص للمهن الاختصاصية في الأنشطة الصحية و التعليمية و غيرها."
+    },
+    {
+      "requirement_code": "fee_bands_by_occupation_category",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fees are set by occupation category and licence duration under Ministerial Decision 340/2016: 301 for the first category, 251 for the second, 201 for the third",
+      "description": "Rial Omani. The category is decided by the ministry's separately published occupation classification file, so the fee cannot be determined from this page alone.",
+      "parameters": {
+        "legal_basis": "Ministerial Decision 340/2016",
+        "category_1_omr": 301,
+        "category_2_omr": 251,
+        "category_3_omr": 201
+      },
+      "source_role": "requirements",
+      "source_excerpt": "وفق القرار الوزاري (340/2016 ) وتعديلاته و تحتسب رسوم تراخيص استقدام قوى عاملة غير عمانية و تسجيل بيانات العامل حسب فئات المهن ومدة الترخيص :",
+      "display_order": 70,
+      "source_excerpt_display": "وفق القرار الوزاري (340/2016) وتعديلاته و تحتسب رسوم تراخيص استقدام قوى عاملة غير عمانية و تسجيل بيانات العامل حسب فئات المهن ومدة الترخيص:"
+    },
+    {
+      "requirement_code": "application_steps",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Three steps: log in with a national ID card reader or an e-authentication-enabled mobile, enter the recruitment data, and upload the required documents",
+      "description": "The data required includes the labour office, the activity, the workplace, the number of workers and the occupation — and personal data for specialised occupations.",
+      "source_role": "requirements",
+      "source_excerpt": "1. الدخول على بوابة الخدمات الإلكترونية لأصحاب العمل واختيار خدمة إصدار تصاريح العمل التجارية وذلك باستخدام قاريء البطاقة الشخصية أو الهاتف النقال المدعمة بخاصية التصديق الإلكتروني.",
+      "display_order": 80,
+      "source_excerpt_display": "1. الدخول على بوابة الخدمات الإلكترونية لأصحاب العمل واختيار خدمة إصدار تصاريح العمل التجارية وذلك باستخدام قاريء البطاقة الشخصية أو الهاتف النقال المدعمة بخاصية التصديق الإلكتروني."
+    }
+  ]
+}

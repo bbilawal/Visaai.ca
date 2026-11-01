@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-vie-privee-familiale",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "ONE PAGE, AT LEAST SEVEN CATEGORIES, 192,000 CHARACTERS. The 'vie privée et familiale' card is issued on grounds as different as marriage to a French national, being the parent of a French child, serious illness, being a victim of domestic violence or trafficking, and having personal and family ties in France. They share a card name and nothing else — the conditions, the evidence and the durations all differ.\n\nTHE EXTRACTION IS BOUNDED to the 'époux de français' category, declared in source_bounds as text anchors rather than character offsets, because offsets slide onto a neighbouring category the moment the authority edits anything above. Everything below is a spouse-of-a-French-national requirement. The other categories are named in not_extracted and nothing is quoted from them: on a page this size, an excerpt lifted from the illness category would verify perfectly and be false for the reader looking at a marriage page.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2209"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "époux de français la carte de séjour vie privée et familiale vous autorise à séjourner en france",
+      "ends_before": "parent d'enfant français",
+      "note": "The 'époux de français' category ONLY. The page continues into parent of a French child, young adults, seriously ill applicants, victims of named offences, and personal-and-family-ties — each with its own conditions. Verify this bound by pointing it at a sibling category: it should fail."
+    }
+  },
+  "page_dates": {
+    "requirements": "2026-05-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 mai 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "Six further categories on the same page: parent d'enfant français, jeune majeur entré par regroupement familial, jeune majeur né en France ou entré mineur, étranger malade, victime d'infraction (domestic violence, forced marriage, trafficking, proxénétisme, indigne housing), and liens personnels et familiaux en France. Each has its own conditions and documents. None is quoted or summarised; the bound above excludes them.",
+    "The European, Algerian, and migration-flows-agreement regimes. The page states different rules apply and routes away without stating them.",
+    "The renewal branch. The page carries a separate 'renouvellement' tab; only the first-application branch is within the bound.",
+    "The document list. It branches per category and is not quoted here.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "spouse_card_permits_work_without_employer_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Spouse of a French national: the card permits work and the employer needs no authorisation",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "la carte de séjour vie privée et familiale vous autorise à séjourner en france. elle vous autorise à travailler. votre employeur n'a pas à demander d'autorisation de travail.",
+      "source_excerpt_display": "La carte de séjour vie privée et familiale vous autorise à séjourner en France. Elle vous autorise à travailler. Votre employeur n'a pas à demander d'autorisation de travail."
+    },
+    {
+      "requirement_code": "vls_ts_holders_apply_in_the_second_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Spouse of a French national on a VLS-TS: apply for the multi-year card in your second year, as a renewal of the one-year VLS-TS",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous pouvez demander la carte de séjour pluriannuelle vie privée et familiale la 2 e année de votre séjour en france, en renouvellement de votre vls-ts (valable 1 an).",
+      "source_excerpt_display": "Vous pouvez demander la carte de séjour pluriannuelle vie privée et familiale la 2 e année de votre séjour en France, en renouvellement de votre VLS-TS (valable 1 an)."
+    },
+    {
+      "requirement_code": "effective_community_of_life",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your community of life must be effective — with an exception for death or domestic violence",
+      "description": "The exception is load-bearing: a spouse who has left a violent marriage does not automatically lose the route, and a reader shown only the rule would conclude otherwise.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "votre communauté de vie ... est effective (elle peut avoir cessé en cas de décès ou de violences conjugales)",
+      "source_excerpt_display": "Votre communauté de vie ... est effective (elle peut avoir cessé en cas de décès ou de violences conjugales)"
+    },
+    {
+      "requirement_code": "spouse_french_at_marriage_and_still_french",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your spouse must have been French on the day of the marriage AND must have kept French nationality",
+      "description": "Two points in time, both tested. Acquiring French nationality after the wedding does not satisfy the first.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "votre époux doit être français au jour du mariage et doit avoir conservé la nationalité française",
+      "source_excerpt_display": "Votre époux doit être français au jour du mariage et doit avoir conservé la nationalité française"
+    },
+    {
+      "requirement_code": "no_polygamy",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must not be living in a polygamous situation",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous ne devez pas vivre en situation de polygamie",
+      "source_excerpt_display": "Vous ne devez pas vivre en situation de polygamie"
+    },
+    {
+      "requirement_code": "foreign_marriage_must_be_transcribed",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A marriage celebrated abroad must be transcribed onto the French consular civil register to be recognised",
+      "description": "A step that happens before the immigration application and often takes months. An untranscribed foreign marriage is not a marriage for this purpose.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "si votre mariage a été célébré à l'étranger , il doit faire l'objet d'une transcription sur les registres de l'état civil du consulat de france pour être reconnu en france.",
+      "source_excerpt_display": "Si votre mariage a été célébré à l'étranger, il doit faire l'objet d'une transcription sur les registres de l'état civil du consulat de France pour être reconnu en France."
+    },
+    {
+      "requirement_code": "short_stay_entry_needs_six_months_of_life_together_in_france",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you entered on a short-stay visa: married in France, with six months of genuine shared life in France, and the card issued is valid 1 year",
+      "description": "A different and stricter route than the VLS-TS one — the marriage must have taken place in France and the six months must have been lived there.",
+      "parameters": {
+        "shared_life_months_in_france": 6,
+        "card_validity_years": 1
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "vous êtes marié en france avec un ressortissant français avec lequel vous justifiez d'une vie commune et effective de 6 mois en france . la carte de séjour qui vous est délivrée est valide 1 an .",
+      "source_excerpt_display": "Vous êtes marié en France avec un ressortissant français avec lequel vous justifiez d'une vie commune et effective de 6 mois en France. La carte de séjour qui vous est délivrée est valide 1 an."
+    },
+    {
+      "requirement_code": "change_of_status_from_another_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The card may be granted as a change of status at the end of another permit, such as student or salarié",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "la carte de séjour temporaire vie privée et familiale peut vous être accordée dans le cadre d'un changement de statut à la fin d'une autre carte (comme étudiant , salarié , etc.).",
+      "source_excerpt_display": "La carte de séjour temporaire vie privée et familiale peut vous être accordée dans le cadre d'un changement de statut à la fin d'une autre carte (comme étudiant, salarié, etc.)."
+    },
+    {
+      "requirement_code": "prefecture_may_refuse_on_conduct_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The préfecture may refuse the card for an unfulfilled removal order or for named offences",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "la préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (oqtf) ou si vous avez commis l'un des faits suivants : faux et usage de faux documents",
+      "source_excerpt_display": "La préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (OQTF) ou si vous avez commis l'un des faits suivants: Faux et usage de faux documents"
+    },
+    {
+      "requirement_code": "filing_window_four_to_two_months_before_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "File online at the earliest 4 months and at the latest 2 months before your current document expires",
+      "parameters": {
+        "earliest_months_before_expiry": 4,
+        "latest_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "vous devez déposer votre demande sur internet au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, vls-ts ou titre).",
+      "source_excerpt_display": "Vous devez déposer votre demande sur internet au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, VLS-TS ou titre)."
+    },
+    {
+      "requirement_code": "cost_350_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The card costs €350 — a €50 stamp duty plus a €300 tax",
+      "parameters": {
+        "total_eur": 350,
+        "stamp_duty_eur": 50,
+        "tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "vous devez payer 350 € (droit de timbre de 50 € et taxe de 300 € ) par timbres fiscaux.",
+      "source_excerpt_display": "Vous devez payer 350 € (droit de timbre de 50 € et taxe de 300 €) par timbres fiscaux."
+    }
+  ]
+}

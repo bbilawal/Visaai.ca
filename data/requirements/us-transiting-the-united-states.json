@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-transiting-the-united-states",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the USCIS and CBP pages registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim. This route previously had ONE registered source, travel.state.gov, which refuses the monitor at robots.txt — so it published nothing at all.",
+  "structure_note": "THIS ROUTE IS DELIBERATELY THIN AND THE THINNESS IS THE FINDING. The C-1 transit visa is issued by the Department of State and no Department of Homeland Security host publishes a page about transit as its own subject. What DHS does state, on pages about other things, is three facts that bear directly on a transit traveller: that transit is one of the activities B-1 permits, that everyone arriving is inspected by CBP, and that people admitted in transit may not extend their stay. Those three are recorded. Nothing is added from a page that is about something else, and the C-1 criteria themselves are named in not_extracted rather than reconstructed from the B-1 list they sit beside.",
+  "source_roles": {
+    "requirements": "https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business/b-1-temporary-business-visitor",
+    "policy": "https://www.cbp.gov/travel/international-visitors",
+    "application": "https://www.uscis.gov/visit-the-united-states/extend-your-stay"
+  },
+  "page_dates": {
+    "requirements": "2025-01-25",
+    "policy": null,
+    "application": "2024-01-24"
+  },
+  "freshness_note": "The two USCIS pages publish Last Reviewed/Updated dates; the CBP page does not and is reported as unknown.",
+  "not_extracted": [
+    "The C-1 transit visa's own eligibility criteria, application procedure and fee. These are published by the Department of State on travel.state.gov, which returns HTTP 403 on robots.txt to the monitor from production egress. We cannot read what that host permits, so we do not read it. The criteria are NOT inferred from the B-1 page that sits next to them.",
+    "Transit Without Visa (TWOV). Named on the USCIS extension page only as a category that cannot extend. No readable DHS page states who qualifies for it.",
+    "The C-1/D crew-member combination. Crew members appear on the extension page as a separate excluded category; no readable page states the requirements.",
+    "Airside versus landside transit rules, and whether a transit passenger clears immigration. Not stated on any page read."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "transit_is_a_permitted_b1_activity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Certain people may transit the United States on a B-1 visa",
+      "description": "USCIS lists transit among the activities the B-1 classification permits. Note the qualifier the authority uses — 'certain persons' — and that it names no criterion for who those persons are. That gap is real and is not filled here.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "transiting through the united states: certain persons may transit the united states with a b-1 visa",
+      "source_excerpt_display": "Transiting through the United States: certain persons may transit the United States with a B-1 visa"
+    },
+    {
+      "requirement_code": "deadhead_crew_may_enter_on_b1",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Certain air crew may enter as deadhead crew on a B-1 visa",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "deadheading: certain air crewmen may enter the united states as deadhead crew with a b-1 visa",
+      "source_excerpt_display": "Deadheading: certain air crewmen may enter the United States as deadhead crew with a B-1 visa"
+    },
+    {
+      "requirement_code": "every_arrival_is_inspected_by_cbp",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Everyone arriving at a port of entry is inspected by CBP officers, including in transit",
+      "source_role": "policy",
+      "display_order": 30,
+      "source_excerpt": "all persons arriving at a port-of-entry to the united states are subject to inspection by cbp officers. cbp officers will conduct the immigration, customs, and agriculture components of the inspections process.",
+      "source_excerpt_display": "All persons arriving at a port-of-entry to the United States are subject to inspection by CBP officers. CBP officers will conduct the Immigration, Customs, and Agriculture components of the Inspections process."
+    },
+    {
+      "requirement_code": "transit_admission_cannot_be_extended",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A person admitted in transit — on a C visa or without a visa — may not apply to extend their stay",
+      "description": "The most consequential fact a transit traveller can be told, and the only one about transit that a readable DHS page states as a rule rather than as an example. A missed connection or a cancelled onward flight cannot be regularised by filing for an extension.",
+      "source_role": "application",
+      "display_order": 40,
+      "source_excerpt": "you may not apply to extend your stay if you were admitted to the united states in the following categories: visa waiver program; crew member (d nonimmigrant visa); in transit through the united states (c nonimmigrant visa); in transit through the united states without a visa (twov);",
+      "source_excerpt_display": "You may not apply to extend your stay if you were admitted to the United States in the following categories: Visa Waiver Program; Crew member (D nonimmigrant visa); In transit through the United States (C nonimmigrant visa); In transit through the United States without a visa (TWOV);"
+    },
+    {
+      "requirement_code": "i94_is_the_proof_of_legal_visitor_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The Form I-94 admission record is the proof of legal visitor status",
+      "source_role": "policy",
+      "display_order": 50,
+      "source_excerpt": "international travelers visiting the united states can apply for a provisional i-94 or retrieve their i-94/i-95 admission number/record (which is proof of legal visitor status) as well as retrieve a limited travel history of their u.s. arrivals and departures.",
+      "source_excerpt_display": "International travelers visiting the United States can apply for a provisional I-94 or retrieve their I-94/I-95 admission number/record (which is proof of legal visitor status) as well as retrieve a limited travel history of their U.S. arrivals and departures."
+    },
+    {
+      "requirement_code": "overstay_bars_return",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Remaining longer than authorised may bar you from returning and may lead to removal",
+      "source_role": "application",
+      "display_order": 60,
+      "source_excerpt": "if you remain in the united states longer than authorized, you may be barred from returning and/or you may be removed (deported) from the united states.",
+      "source_excerpt_display": "If you remain in the United States longer than authorized, you may be barred from returning and/or you may be removed (deported) from the United States."
+    }
+  ]
+}

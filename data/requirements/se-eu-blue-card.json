@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "visaai_id": "se-eu-blue-card",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "SAME EU INSTRUMENT AS nl-european-blue-card, DIFFERENT NATIONAL IMPLEMENTATION. The EU Blue Card comes from an EU directive, but each member state sets its own salary threshold, contract length and process, so the two files are not variants of one another and their figures must never be crossed.\n\nA DISCREPANCY IN MIGRATIONSVERKET'S OWN FIGURES, RECORDED RATHER THAN SMOOTHED. This page introduces the maintenance amounts with 'for 2025, the amount you must have left after paying your rent is:' and then lists SEK 6,243 / 10,314 / 3,336 / 4,004 / 4,672 / 5,339. Migrationsverket's maintenance word-explanation page — a registered source of se-family-partner — introduces the IDENTICAL six figures with 'in 2026, the amount you must have left over after tax and the rent is paid is:'. Same authority, same numbers, two different years. One page is stale and I cannot tell which from the pages alone, so this file quotes what THIS page says, keeps stated_for_year: 2025 to match its own wording, and flags the conflict here. Copying the figures across without reading the introducing sentence would have hidden it entirely.\n\nTHE MAINTENANCE REQUIREMENT HERE IS ABOUT FAMILY, NOT THE CARDHOLDER. It applies only if family apply together with the applicant. Recorded with that condition in the label rather than as a general eligibility bar, because reading this page quickly leaves the impression that every Blue Card applicant faces a residual-income test on top of the salary threshold. They do not.\n\nNO BOUNDS: single route, checked — the requirement headings occur once each and no sibling permit's rules appear on the page.",
+  "source_roles": {
+    "requirements": "https://www.migrationsverket.se/en/you-want-to-apply/work/employee-or-self-employed/eu-blue-cards.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The full rules on what income counts toward the family maintenance requirement, and the detailed housing-cost calculation by tenure type. The page states them at length; they are a calculation method rather than a checklist item.",
+    "The list of income types that do NOT count — family members' income, unemployment benefit, grants and scholarships, subsidised employment, undeclared work. Recorded as existing in the maintenance entry, not enumerated as separate requirements.",
+    "The country-to-embassy mapping for passport presentation and interviews. The page renders it as a selector; it is a lookup table that changes.",
+    "The National Mediation Office's average-salary series, which drives the threshold. A different authority's statistic, revised annually.",
+    "Extension rules and the route to permanent residence.",
+    "The procedure for reporting a change of employer or profession, which the page links separately.",
+    "Rules for family members' own permits beyond the fee and the shared validity period — their eligibility is a separate route.",
+    "The Swedish maintenance amounts' year discrepancy is flagged in structure_note but not resolved; resolving it needs a source Migrationsverket has not published on either page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport",
+      "source_role": "requirements",
+      "source_excerpt": "you must have a valid passport",
+      "display_order": 10,
+      "source_excerpt_display": "You must have a valid passport"
+    },
+    {
+      "requirement_code": "higher_education_or_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Higher education of at least 180 credits, OR at least five years of relevant professional experience",
+      "description": "ALTERNATIVES, not a joint test — Migrationsverket writes 'alternatively'. The experience route matters: it opens the Blue Card to people without a degree, which is not how the card is usually described.",
+      "source_role": "requirements",
+      "source_excerpt": "your higher education must correspond to at least 180 higher education credits. alternatively, you can have at least five years of relevant professional experience.",
+      "parameters": {
+        "higher_education_credits": 180,
+        "alternative_experience_years": 5
+      },
+      "display_order": 20,
+      "source_excerpt_display": "Your higher education must correspond to at least 180 higher education credits. Alternatively, you can have at least five years of relevant professional experience."
+    },
+    {
+      "requirement_code": "employment_contract_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A signed contract for highly qualified employment lasting at least six months",
+      "description": "Two conditions in one sentence: the employment must be highly qualified AND at least six months long, and the contract must be signed by both parties.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have a highly qualified employment for a period of at least six months. the employment contract must be signed by both you and your employer.",
+      "parameters": {
+        "minimum_employment_months": 6
+      },
+      "display_order": 30,
+      "source_excerpt_display": "You must have a highly qualified employment for a period of at least six months. The employment contract must be signed by both you and your employer."
+    },
+    {
+      "requirement_code": "salary_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary of at least SEK 53,625 per month — 1.25 times the Swedish average",
+      "description": "A FORMULA WITH A DATED VALUE, not a fixed figure. Migrationsverket sets the threshold annually at 1.25 times the average gross salary published by the National Mediation Office, and states the current value applies 'since 15 july 2026'. The formula is the durable fact; the amount is a snapshot. Sweden's threshold is set nationally, so it must never be crossed with the Dutch Blue Card's.",
+      "source_role": "requirements",
+      "source_excerpt": "every year, the swedish migration agency determines the salary threshold that you need to exceed in order to be able to get an eu blue card. the salary threshold corresponds to 1.25 times the average gross salary in sweden published by the national mediation office. since 15 july 2026, the salary threshold is sek 53,625 per month.",
+      "parameters": {
+        "per_month_sek": 53625,
+        "currency": "SEK",
+        "multiplier_of_average_salary": 1.25,
+        "in_force_since": "2026-07-15"
+      },
+      "display_order": 40,
+      "source_excerpt_display": "Every year, the Swedish Migration Agency determines the salary threshold that you need to exceed in order to be able to get an EU Blue Card. The salary threshold corresponds to 1.25 times the average gross salary in Sweden published by the National Mediation Office. Since 15 July 2026, the salary threshold is SEK 53,625 per month."
+    },
+    {
+      "requirement_code": "comprehensive_health_insurance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Comprehensive health insurance, held or applied for",
+      "description": "The cover is prescribed, not generic: urgent and other medical care, hospitalisation, emergency dental care, and medical repatriation. One trap — for a stay under a year in total, the insurance must run three months BEYOND the employment period.",
+      "source_role": "requirements",
+      "source_excerpt": "the insurance must be valid for the entire time you will be in sweden and cover the cost of urgent and other medical care, hospitalisation, and emergency dental care. it must also cover the cost of medical repatriation, if you need to return to your country of origin for health reasons. if you are going to be in sweden for a period shorter than a total of one year, health insurance must be taken out for an additional three months in addition to the period of employment.",
+      "parameters": {
+        "extra_insurance_months_if_under_one_year": 3
+      },
+      "display_order": 50,
+      "source_excerpt_display": "The insurance must be valid for the entire time you will be in Sweden and cover the cost of urgent and other medical care, hospitalisation, and emergency dental care. It must also cover the cost of medical repatriation, if you need to return to your country of origin for health reasons. If you are going to be in Sweden for a period shorter than a total of one year, health insurance must be taken out for an additional three months in addition to the period of employment."
+    },
+    {
+      "requirement_code": "employer_starts_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your employer starts the application — give them your details and keep that email address working",
+      "description": "The applicant does not open this application; the employer does, using the applicant's name, date of birth, citizenship and email. Migrationsverket then contacts the applicant at that address, so losing access to it during processing breaks the channel the decision arrives on.",
+      "source_role": "requirements",
+      "source_excerpt": "your employer needs information about your name, date of birth, citizenship and email address. they will use this information when they start your application for an eu blue card.",
+      "display_order": 60,
+      "source_excerpt_display": "Your employer needs information about your name, date of birth, citizenship and email address. They will use this information when they start your application for an EU Blue Card."
+    },
+    {
+      "requirement_code": "translate_documents",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Documents in Swedish or English, with certified translations and the original attached",
+      "source_role": "requirements",
+      "source_excerpt": "all submitted documents should be in swedish or english. if you have translated your documents, the translation should be certified. you must also include a copy of the document in its original language.",
+      "display_order": 70,
+      "source_excerpt_display": "All submitted documents should be in Swedish or English. If you have translated your documents, the translation should be certified. You must also include a copy of the document in its original language."
+    },
+    {
+      "requirement_code": "nominate_embassy",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Name the embassy where you would present your passport or be interviewed",
+      "description": "Stated in the application. Not every Swedish mission handles migration cases, and the one you visit may not be the one deciding — some interviews run by video link with a different embassy responsible.",
+      "source_role": "requirements",
+      "source_excerpt": "you may need to present your passport or be interviewed at an embassy or a consulate-general before you can receive a decision. in the application, you must therefore state which embassy you want to visit.",
+      "display_order": 80,
+      "source_excerpt_display": "You may need to present your passport or be interviewed at an embassy or a consulate-general before you can receive a decision. In the application, you must therefore state which embassy you want to visit."
+    },
+    {
+      "requirement_code": "family_maintenance_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If your family applies with you: you must be able to support them financially",
+      "description": "APPLIES ONLY WHEN FAMILY APPLY TOGETHER WITH YOU — it is not a second income bar on every Blue Card applicant, which is the impression a quick read of this page leaves. It is a residual-income test: enough left after rent to cover living costs for the whole household, so a high salary with a high rent can still fail it.",
+      "source_role": "requirements",
+      "source_excerpt": "if your family applies together with you, you are subject to a maintenance requirement.",
+      "display_order": 90,
+      "source_excerpt_display": "If your family applies together with you, you are subject to a maintenance requirement."
+    },
+    {
+      "requirement_code": "family_maintenance_amounts",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If your family applies with you: SEK 10,314 per month must remain after rent for cohabiting partners",
+      "description": "THIS PAGE DATES THESE FIGURES TO 2025. Migrationsverket's own maintenance page gives the identical six amounts as 2026 (see se-family-partner). Same authority, same numbers, two different years — one page is stale and the pages alone do not say which. The quote and stated_for_year here match THIS page; the conflict is recorded rather than silently resolved. Child amounts are reduced by any child allowance.",
+      "source_role": "requirements",
+      "source_excerpt": "for 2025, the amount you must have left after paying your rent is: sek 6,243 for a single adult sek 10,314 for cohabiting spouses or cohabiting partners sek 3,336 for children 0–6 years of age sek 4,004 for children 7–10 years of age sek 4,672 for children 11–14 years of age sek 5,339 for children 15 years of age or older.",
+      "parameters": {
+        "per_month_single_adult_sek": 6243,
+        "per_month_cohabiting_partners_sek": 10314,
+        "per_month_child_0_6_sek": 3336,
+        "per_month_child_7_10_sek": 4004,
+        "per_month_child_11_14_sek": 4672,
+        "per_month_child_15_plus_sek": 5339,
+        "currency": "SEK",
+        "stated_for_year": 2025
+      },
+      "display_order": 100,
+      "source_excerpt_display": "For 2025, the amount you must have left after paying your rent is: SEK 6,243 for a single adult SEK 10,314 for cohabiting spouses or cohabiting partners SEK 3,336 for children 0–6 years of age SEK 4,004 for children 7–10 years of age SEK 4,672 for children 11–14 years of age SEK 5,339 for children 15 years of age or older."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee: SEK 2,000 for the employee, SEK 1,500 per adult family member, SEK 750 per child",
+      "description": "Citizens of Japan pay no application fee — an exemption from a bilateral agreement that appears nowhere else in this registry. No refund if the application is rejected.",
+      "source_role": "requirements",
+      "source_excerpt": "employees/self-employed people: sek 2,000. adult family members: sek 1,500 children: sek 750 citizens of japan do not pay an application fee.",
+      "parameters": {
+        "employee_sek": 2000,
+        "adult_family_member_sek": 1500,
+        "child_sek": 750,
+        "currency": "SEK"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Employees/self-employed people: SEK 2,000. Adult family members: SEK 1,500 Children: SEK 750 Citizens of Japan do not pay an application fee."
+    },
+    {
+      "requirement_code": "work_limited_to_employer_and_profession",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card only permits work for the employer and in the profession named in your application",
+      "description": "A live restriction, not a formality: changing job, changing profession, or the employment ending must all be reported to Migrationsverket.",
+      "source_role": "requirements",
+      "source_excerpt": "the card entitles you to work in sweden for the employer and within the profession specified in your application.",
+      "display_order": 120,
+      "source_excerpt_display": "The card entitles you to work in Sweden for the employer and within the profession specified in your application."
+    },
+    {
+      "requirement_code": "report_changes",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Report to Migrationsverket if your employment ends, you change jobs, or permit conditions change",
+      "source_role": "requirements",
+      "source_excerpt": "if you already have an eu blue card, but your employment ceases, you change jobs, or if something that affects the conditions for the permit changes, you need to report this to the swedish migration agency.",
+      "display_order": 130,
+      "source_excerpt_display": "If you already have an EU Blue Card, but your employment ceases, you change jobs, or if something that affects the conditions for the permit changes, you need to report this to the Swedish Migration Agency."
+    },
+    {
+      "requirement_code": "permit_validity",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "First card runs at least nine months and at most four years",
+      "description": "What the permit grants rather than what it demands. Accompanying family can be granted the same period but never longer than the cardholder's.",
+      "source_role": "requirements",
+      "source_excerpt": "the first time you are granted an eu blue card, it is valid for at least nine months and a maximum of four years.",
+      "parameters": {
+        "minimum_validity_months": 9,
+        "maximum_validity_years": 4
+      },
+      "display_order": 140,
+      "source_excerpt_display": "The first time you are granted an EU Blue Card, it is valid for at least nine months and a maximum of four years."
+    },
+    {
+      "requirement_code": "register_population_register",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "If granted a permit of at least a year, register in Sweden's population register",
+      "description": "Not a condition of the card — Migrationsverket's own advice, and the practical gateway to health, medical and dental care. Done at the Swedish Tax Agency, not at Migrationsverket.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are granted a permit for at least one year, you should register in sweden’s population register. this will give you access to health and medical care and dental care.",
+      "display_order": 150,
+      "source_excerpt_display": "If you are granted a permit for at least one year, you should register in Sweden’s population register. This will give you access to health and medical care and dental care."
+    }
+  ]
+}

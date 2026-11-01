@@ -1,0 +1,58 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. ingress-nginx + cert-manager TLS.
+# =============================================================================
+# Assumes ingress-nginx controller + cert-manager (with a ClusterIssuer named
+# `letsencrypt-prod`) are installed. Routes:
+#   visaai.co / www.visaai.co  -> visaai-web:80
+#   api.visaai.co              -> visaai-api:80
+#
+# Two app-specific behaviours are preserved via annotations (they map the same
+# concerns the hardened nginx VPS config handles):
+#   - WebSocket upgrade for /intake, /automation, /socket.io (ingress-nginx
+#     upgrades automatically, but the long read/send timeouts below keep sockets
+#     alive).
+#   - Large body for the Stripe raw-body webhook (proxy-body-size 25m).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: visaai
+  namespace: visaai
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "25m"        # Stripe webhook raw body
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"    # keep WS open
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"          # 80 -> 443
+    # HSTS + basic hardening (controller-level config also possible):
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+    # Basic per-IP rate limit on the API host (tune to real traffic).
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [visaai.co, www.visaai.co]
+      secretName: visaai-web-tls          # cert-manager fills this
+    - hosts: [api.visaai.co]
+      secretName: visaai-api-tls
+  rules:
+    - host: visaai.co
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: visaai-web, port: { number: 80 } } }
+    - host: www.visaai.co
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: visaai-web, port: { number: 80 } } }
+    - host: api.visaai.co
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: visaai-api, port: { number: 80 } } }

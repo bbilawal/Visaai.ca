@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-heat-work-permit",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "A PROHIBITION WITH A PERMIT ATTACHED. Oman bans work in the midday hours across the summer, and this service is how an establishment applies to work anyway. The window is exact — 1 June to 31 August, 12:30 to 15:30 — and the permit is granted against occupational safety conditions, of which the page names cold drinking water proportionate to the number of workers.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Heat-WorkPermit-Application-348"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "window_and_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The prohibited period runs 1 June to 31 August, from 12:30 to 15:30, and this service applies for permission to work within it",
+      "description": "Exact dates and exact hours. An establishment outside the window needs no permit; one inside it needs this one.",
+      "parameters": {
+        "from": "06-01",
+        "to": "08-31",
+        "start_time": "12:30",
+        "end_time": "15:30"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "خدمة إلكترونية تتيح للمنشآت التقدم بطلب تصريح للعمل خلال فترة الظهيرة الممتدة من 1 يونيو إلى 31 أغسطس بين 12:30 ظهرًا و3:30 عصرًا، وذلك وفق ضوابط ومعايير السلامة والصحة المهنية المعتمدة لضمان حماية العمال من مخاطر التعرض لدرجات الحرارة المرتفعة.",
+      "display_order": 10,
+      "source_excerpt_display": "خدمة إلكترونية تتيح للمنشآت التقدم بطلب تصريح للعمل خلال فترة الظهيرة الممتدة من 1 يونيو إلى 31 أغسطس بين 12:30 ظهرًا و3:30 عصرًا، وذلك وفق ضوابط ومعايير السلامة والصحة المهنية المعتمدة لضمان حماية العمال من مخاطر التعرض لدرجات الحرارة المرتفعة."
+    },
+    {
+      "requirement_code": "mandatory_documents_follow_the_controls_chosen",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The mandatory documents follow from the safety controls the applicant selects",
+      "source_role": "requirements",
+      "source_excerpt": "بناءاً على الضوابط التي يقوم المستخدم باختيارها مرتبطة بمستندات إلزامية مثل:",
+      "display_order": 20,
+      "source_excerpt_display": "بناءاً على الضوابط التي يقوم المستخدم باختيارها مرتبطة بمستندات إلزامية مثل:"
+    },
+    {
+      "requirement_code": "cold_drinking_water_proportionate_to_workers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Provide cold drinking water proportionate to the number of workers",
+      "source_role": "requirements",
+      "source_excerpt": "- توفير مياه شرب باردة تتناسب مع عدد العاملين",
+      "display_order": 30,
+      "source_excerpt_display": "- توفير مياه شرب باردة تتناسب مع عدد العاملين"
+    }
+  ]
+}

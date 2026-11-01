@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-student-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "student",
+    "official_name": "Student Residence Permit",
+    "slug": "student-residence-permit",
+    "purpose": "Türkiye's residence permit for foreign students in primary, secondary and higher education — including the health-insurance window, the rules for changing university or province, and the right to work that begins only after the first year of an undergraduate programme.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "Two things on this page decide real outcomes and are easy to lose. The health-insurance window is three months from admission: request general health insurance inside it and no other policy is needed; miss it and private insurance becomes mandatory. And the right to work exists but is DELAYED — associate and undergraduate students may not work until after their first year, and a work permit is required in every case.\n\nChanging institution is treated differently depending on whether the new one is in the same province. Same province keeps the permit; a different province cancels it and requires a new one.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 38-41 of Law 6458 and Articles 35-39 of the implementing regulation",
+      "description": "Both instruments in one sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "student residence permit is regulated in articles 38-41 of the law on foreigners and international protection no. 6458. additionally, student residence permit is issued in articles 35-39 of regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 10,
+      "source_excerpt_display": "Student residence permit is regulated in Articles 38-41 of the Law on Foreigners and International Protection No. 6458. Additionally, student residence permit is issued in Articles 35-39 of Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "who_primary_secondary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: primary and secondary students without a family permit — required only once over 18",
+      "description": "Under-18s may study without a permit; the requirement starts at 18, which the authority states in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "- foreigners who shall receive primary or secondary education and who do not hold a family residence permit (without taking residence permit, foreigners can continue studying until they are 18 (for primary and secondary education). however, when they are over 18 and still go on taking secondary education, those students are required to take residence permit.),",
+      "parameters": {
+        "required_from_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "- Foreigners who shall receive primary or secondary education and who do not hold a family residence permit (Without taking residence permit, foreigners can continue studying until they are 18 (for primary and secondary education). However, when they are over 18 and still go on taking secondary education, those students are required to take residence permit.),"
+    },
+    {
+      "requirement_code": "who_higher_education",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: associate, undergraduate, graduate, postgraduate, TUS and DUS students",
+      "description": "The authority names the medical and dental specialty examinations itself.",
+      "source_role": "requirements",
+      "source_excerpt": "- foreigners who shall attend an associate, undergraduate, graduate or postgraduate programme or receive education for speciality in medicine (tus) or in dentistry (dus) are issued residence permits.",
+      "display_order": 30,
+      "source_excerpt_display": "- Foreigners who shall attend an associate, undergraduate, graduate or postgraduate programme or receive education for speciality in medicine (TUS) or in dentistry (DUS) are issued residence permits."
+    },
+    {
+      "requirement_code": "sponsorship_limited",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A student permit sponsors only a spouse and children — no other relatives",
+      "description": "A limit on what the permit is worth to a wider family.",
+      "source_role": "requirements",
+      "source_excerpt": "student residence permit ensures the student to be only the supporter of spouse and children in family residence permit applications. it does not provide any right to the other relatives about residence permit.",
+      "display_order": 40,
+      "source_excerpt_display": "Student residence permit ensures the student to be only the supporter of spouse and children in family residence permit applications. It does not provide any right to the other relatives about residence permit."
+    },
+    {
+      "requirement_code": "duration_matches_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duration: not exceeding the period of study where that is under a year",
+      "description": "The permit follows the course, not the calendar.",
+      "source_role": "requirements",
+      "source_excerpt": "if the period of study is less than a year, the duration of the residence permit shall not exceed the period of study.",
+      "display_order": 50,
+      "source_excerpt_display": "If the period of study is less than a year, the duration of the residence permit shall not exceed the period of study."
+    },
+    {
+      "requirement_code": "duration_state_institutions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study through state institutions: issued for the period of study",
+      "description": "A separate rule for state-sponsored study.",
+      "source_role": "requirements",
+      "source_excerpt": "residence permit may be issued for the period of study to the foreigners who shall receive education in turkey through state institutions and organizations.",
+      "display_order": 60,
+      "source_excerpt_display": "Residence permit may be issued for the period of study to the foreigners who shall receive education in Turkey through state institutions and organizations."
+    },
+    {
+      "requirement_code": "duration_primary_secondary_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Primary and secondary: one year at a time with parental or guardian consent, renewable throughout",
+      "description": "Consent is part of the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners who shall receive primary and secondary education, subject to the consent of their parents or legal guardian a one year student residence permit may be granted and renewed throughout the course of their study.",
+      "parameters": {
+        "years": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "Foreigners who shall receive primary and secondary education, subject to the consent of their parents or legal guardian a one year student residence permit may be granted and renewed throughout the course of their study."
+    },
+    {
+      "requirement_code": "condition_supporting_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition: supporting information and documents for the aim of stay",
+      "description": "First of three conditions under Article 39.",
+      "source_role": "requirements",
+      "source_excerpt": "-to submit supporting information and documents related to aim of stay in turkey (article 38);",
+      "display_order": 80,
+      "source_excerpt_display": "-to submit supporting information and documents related to aim of stay in Turkey (Article 38);"
+    },
+    {
+      "requirement_code": "condition_not_article_7",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition: not falling within the scope of Article 7",
+      "description": "Second of three.",
+      "source_role": "requirements",
+      "source_excerpt": "-not to fall within the scope of article 7;",
+      "display_order": 90,
+      "source_excerpt_display": "-not to fall within the scope of Article 7;"
+    },
+    {
+      "requirement_code": "condition_address",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition: information on the address of stay in Turkey",
+      "description": "Third of three.",
+      "source_role": "requirements",
+      "source_excerpt": "-submit information on their address of stay in turkey.",
+      "display_order": 100,
+      "source_excerpt_display": "-submit information on their address of stay in Turkey."
+    },
+    {
+      "requirement_code": "health_insurance_three_month_window",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance: request general health insurance within THREE MONTHS of admission, or private insurance becomes mandatory",
+      "description": "A deadline that silently converts into a cost. Quoted whole.",
+      "source_role": "requirements",
+      "source_excerpt": "another health insurance is not required if the students request the general health insurance within three months from the date of admission according to the rules of social insurances and general health insurance law. however, if they lose the right of carrying insurance by not requesting within three months, private health insurance is required.",
+      "parameters": {
+        "window_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Another health insurance is not required if the students request the general health insurance within three months from the date of admission according to the rules of Social Insurances and General Health Insurance Law. However, if they lose the right of carrying insurance by not requesting within three months, private health insurance is required."
+    },
+    {
+      "requirement_code": "change_same_province",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Changing faculty, department or institution within the same province keeps the permit",
+      "description": "Conditional on not breaking studentship and announcing in time; the permit is extended if shorter than the study period.",
+      "source_role": "requirements",
+      "source_excerpt": "a) in case of a faculty or department change in the same educational institution or change in educational institution in the same province, on the condition of not taking a break in studentship and announcing in time, current residence permit is preserved. if the residence permit period is shorter than period of study, it is extended as much as period of study from the expiration.",
+      "display_order": 120,
+      "source_excerpt_display": "a) In case of a faculty or department change in the same educational institution or change in educational institution in the same province, on the condition of not taking a break in studentship and announcing in time, current residence permit is preserved. If the residence permit period is shorter than period of study, it is extended as much as period of study from the expiration."
+    },
+    {
+      "requirement_code": "change_different_province",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Moving to a different province CANCELS the permit and a new one is issued by the governorate",
+      "description": "The opposite outcome from a same-province move.",
+      "source_role": "requirements",
+      "source_excerpt": "b) in cases where the foreign continue his education in a different province, current residence permit shall be cancelled and a new residence permit valid for the duration of the education shall be issued by the governorate.",
+      "display_order": 130,
+      "source_excerpt_display": "b) In cases where the foreign continue his education in a different province, current residence permit shall be cancelled and a new residence permit valid for the duration of the education shall be issued by the governorate."
+    },
+    {
+      "requirement_code": "right_to_work_delayed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Students may work with a work permit — but associate and undergraduate students only AFTER their first year",
+      "description": "The delay is the part most easily lost, and applications go to the Ministry of Labour and Social Security.",
+      "source_role": "requirements",
+      "source_excerpt": "foreign students attending an associate, undergraduate, graduate or postgraduate programme in turkey may work, provided that they obtain a work permit. however the right of work for associate or undergraduate students starts after the first year (of their study). work permit applications shall be made to the ministry of labour and social security.",
+      "display_order": 140,
+      "source_excerpt_display": "Foreign students attending an associate, undergraduate, graduate or postgraduate programme in Turkey may work, provided that they obtain a work permit. However the right of work for associate or undergraduate students starts after the first year (of their study). Work permit applications shall be made to the Ministry of Labour and Social Security."
+    },
+    {
+      "requirement_code": "cancellation_requirements_lapsed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if the requirements are not met or no longer apply",
+      "description": "First of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- the requirements for issuing a student residence permit are not met or no longer apply;",
+      "display_order": 150,
+      "source_excerpt_display": "- The requirements for issuing a student residence permit are not met or no longer apply;"
+    },
+    {
+      "requirement_code": "cancellation_studies_not_continuing",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on evidence the studies are possibly not to be continued",
+      "description": "Second of four, and it turns on evidence rather than a formal withdrawal.",
+      "source_role": "requirements",
+      "source_excerpt": "- evidence exists that the studies are possibly not to be continued;",
+      "display_order": 160,
+      "source_excerpt_display": "- Evidence exists that the studies are possibly not to be continued;"
+    },
+    {
+      "requirement_code": "cancellation_used_outside_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled if used for a purpose other than it was issued for",
+      "description": "Third of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- it is determined that the student residence permit has been used for a purpose other than it is issued for;",
+      "display_order": 170,
+      "source_excerpt_display": "- It is determined that the student residence permit has been used for a purpose other than it is issued for;"
+    },
+    {
+      "requirement_code": "cancellation_removal_or_entry_ban",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled on a current removal decision or entry ban",
+      "description": "Fourth of four.",
+      "source_role": "requirements",
+      "source_excerpt": "- there is a current removal decision or an entry ban to turkey with respect to the foreigner",
+      "display_order": 180,
+      "source_excerpt_display": "- There is a current removal decision or an entry ban to Turkey with respect to the foreigner"
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 190,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 200,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 210,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 220,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 250,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 260,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 270,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

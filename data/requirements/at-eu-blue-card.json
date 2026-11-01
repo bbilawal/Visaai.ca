@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-eu-blue-card",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "Two conditions decide this route — a three-year tertiary qualification and an income floor — and the income floor is stated WITH its year, so it is quoted with the year attached. A figure quoted without its year would look permanent.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/eubluecard/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published. This route is one of the few whose BODY carries a year, and where it does that figure is quoted with the year attached rather than stripped of it.",
+  "not_extracted": [
+    "Fees. The page names none.",
+    "The family-status documents (marriage, divorce, partnership, adoption, death certificates) which the page lists as 'as applicable' rather than required, so recording them as requirements would overstate them."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualification_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A three-year tertiary qualification, or ICT experience instead",
+      "description": "The exception matters: ICT professionals and service managers may substitute three years of relevant experience acquired within the previous seven years.",
+      "source_role": "requirements",
+      "source_excerpt": "have completed a course of study at a university or other tertiary educational institution with a minimum duration of three years (exception: for information and communications technology professionals and service managers, proof of at least three years of relevant professional experience is sufficient, if it is comparable to a university degree with at least three years of study and has been acquired within the last seven years prior to the application),",
+      "display_order": 10,
+      "source_excerpt_display": "have completed a course of study at a university or other tertiary educational institution with a minimum duration of three years (exception: for Information and communications technology professionals and service managers, proof of at least three years of relevant professional experience is sufficient, if it is comparable to a university degree with at least three years of study and has been acquired within the last seven years prior to the application),"
+    },
+    {
+      "requirement_code": "income_floor_2026",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Income at least the national full-time average (2026: €55,678)",
+      "description": "Quoted with its year, because the figure is indexed and a bare amount would read as permanent. The page includes special payments in the calculation.",
+      "source_role": "requirements",
+      "source_excerpt": "will earn at least the average gross annual income of full-time employees (in 2026: at least € 55,678; annual salery plus special payments),",
+      "display_order": 20,
+      "source_excerpt_display": "will earn at least the average gross annual income of full-time employees (in 2026: at least € 55,678; annual salery plus special payments),"
+    },
+    {
+      "requirement_code": "travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document",
+      "description": "A passport or equivalent.",
+      "source_role": "requirements",
+      "source_excerpt": "a valid travel document (e.g. passport)",
+      "display_order": 30,
+      "source_excerpt_display": "a valid travel document (e.g. passport)"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, taken within six months",
+      "description": "The authority states both dimensions and recency.",
+      "source_role": "requirements",
+      "source_excerpt": "a photo (dimensions: 45x35mm) of the applicant, taken recently (six months ago or less)",
+      "display_order": 40,
+      "source_excerpt_display": "a photo (dimensions: 45x35mm) of the applicant, taken recently (six months ago or less)"
+    },
+    {
+      "requirement_code": "health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of health insurance",
+      "description": "Compulsory insurance or a corresponding policy.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of health insurance (compulsory insurance or a corresponding insurance policy)",
+      "display_order": 50,
+      "source_excerpt_display": "evidence of health insurance (compulsory insurance or a corresponding insurance policy)"
+    },
+    {
+      "requirement_code": "originals_and_translations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Originals plus copies, and German or English translations",
+      "description": "A procedural obligation that catches applicants late: documents in another language must be translated, and the authority may additionally require legalised versions.",
+      "source_role": "requirements",
+      "source_excerpt": "you have to submit originals and copies of the above-mentioned documents. if the documents are not available in german or english, translations into german or english must be provided. for review purposes, the authority may eventually require legalized versions of the documents.",
+      "display_order": 60,
+      "source_excerpt_display": "You have to submit originals and copies of the above-mentioned documents. If the documents are not available in German or English, translations into German or English must be provided. For review purposes, the authority may eventually require legalized versions of the documents."
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nz-working-holiday-visa",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the three official Immigration New Zealand pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THIS IS NOT ONE VISA, IT IS ~45 BILATERAL SCHEMES BEHIND ONE PAGE, AND INZ SAYS SO: 'the visa requirements for each country will tell you: how old you have to be how long you can stay how much money you need to bring with you any specific criteria and conditions.' So the four numbers a person most wants — age ceiling, duration, funds, whether they can apply at all — are per-scheme and NOT on this page.\n\nWhat IS on this page is stored: the general age band with its named exception, the three durations INZ states explicitly (12 months normally, 23 for Canada, 36 for the UK), the work and study limits, the medical rules, and the traps. What is NOT stored is any funds figure or any per-country age, because this page publishes none — see not_extracted.\n\nAND THE COUNTRY LIST ITSELF IS UNREADABLE TO US. INZ renders 'list of countries with a working holiday visa agreement' client-side; server-side it is an empty heading. So VisaAI cannot tell an applicant whether their nationality qualifies, and this extraction does not pretend to. That is recorded here rather than papered over with a list from memory, which is exactly the failure the whole registry exists to prevent.\n\nNO BOUNDS NEEDED, CHECKED. Three pages, one subject each.",
+  "source_roles": {
+    "requirements": "https://www.immigration.govt.nz/work/working-holiday-visas/who-can-apply-for-a-working-holiday-visa/",
+    "policy": "https://www.immigration.govt.nz/work/working-holiday-visas/working-holiday-visa-medical-requirements/",
+    "landing": "https://www.immigration.govt.nz/work/working-holiday-visas/"
+  },
+  "page_dates": {
+    "requirements": null,
+    "policy": null,
+    "landing": null
+  },
+  "freshness_note": "INZ publishes no dateModified on any of its pages — 'unknown', never 'fresh', the same standing as UDI and IRCC. The pages carry a 2026 crown-copyright line, which is a template value and not a dateline; it is not treated as evidence.",
+  "not_extracted": [
+    "The list of countries with a working holiday agreement. INZ renders it client-side and it is absent server-side. Supplying one from memory would be the exact fabrication the registry forbids, and a wrong entry here decides whether someone can apply at all.",
+    "Per-scheme age ceilings, durations, funds requirements and quotas. INZ states plainly that each country's own visa page carries them; this page publishes none of them and inventing a general figure would be false for most schemes.",
+    "The English language requirement's substance. INZ says 'for some working holiday visas' and routes to a lookup tool; the requirement to check is recorded, the thresholds are not published on any of these pages.",
+    "The low-TB-incidence country list, and the x-ray/examination procedure. Both are separate INZ pages serving many routes.",
+    "The subsequent work visa for UK and Canadian holders. A separate application with its own page.",
+    "Application fees. Not stated on any of the three pages registered here; INZ publishes them per scheme."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "citizen_of_agreement_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be a citizen of a country with a working holiday agreement with New Zealand",
+      "description": "The gate before everything else. VisaAI cannot check it for you: INZ renders the country list client-side and publishes nothing server-side, so the list is not in this registry and no list is offered here.",
+      "source_role": "requirements",
+      "source_excerpt": "to apply, you must be a citizen of a country that has a working holiday agreement with new zealand.",
+      "display_order": 10,
+      "source_excerpt_display": "To apply, you must be a citizen of a country that has a working holiday agreement with New Zealand."
+    },
+    {
+      "requirement_code": "age_band",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Normally aged 18 to 30 — 18 to 35 in a few schemes",
+      "description": "INZ states the band as a general rule and puts the exact ceiling on each country's own page. The figure that applies to you is the one on your scheme's page, not this one.",
+      "source_role": "requirements",
+      "source_excerpt": "working holiday visas are available to young people — normally aged 18 to 30, but 18 to 35 in a select few countries.",
+      "parameters": {
+        "usual_minimum_age": 18,
+        "usual_maximum_age": 30,
+        "maximum_age_in_some_schemes": 35
+      },
+      "display_order": 20,
+      "source_excerpt_display": "Working holiday visas are available to young people — normally aged 18 to 30, but 18 to 35 in a select few countries."
+    },
+    {
+      "requirement_code": "per_scheme_rules_govern",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your own country's scheme sets the age, duration, funds and any extra criteria",
+      "description": "THE MOST IMPORTANT SENTENCE ON THE PAGE. It is the authority telling you that the four numbers you most need are somewhere else, which is why none of them is stored as a general figure here.",
+      "source_role": "requirements",
+      "source_excerpt": "the visa requirements for each country will tell you: how old you have to be how long you can stay how much money you need to bring with you any specific criteria and conditions.",
+      "display_order": 30,
+      "source_excerpt_display": "The visa requirements for each country will tell you: how old you have to be how long you can stay how much money you need to bring with you any specific criteria and conditions."
+    },
+    {
+      "requirement_code": "duration_by_scheme",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Normally 12 months — 23 months from Canada, 36 months from the United Kingdom",
+      "description": "The three durations INZ states outright. Everything else is on the per-country page.",
+      "source_role": "requirements",
+      "source_excerpt": "note if you are from canada, you can stay for up to 23 months on a working holiday visa. if you are from the united kingdom you can stay up to 36 months.",
+      "parameters": {
+        "usual_months": 12,
+        "canada_months": 23,
+        "united_kingdom_months": 36
+      },
+      "display_order": 40,
+      "source_excerpt_display": "Note If you are from Canada, you can stay for up to 23 months on a working holiday visa. If you are from the United Kingdom you can stay up to 36 months."
+    },
+    {
+      "requirement_code": "holiday_must_be_the_main_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be coming mainly to holiday, with a return ticket or the means to buy one",
+      "description": "An intention test, and it is the one that makes this a holiday visa rather than a work visa: INZ says work and study 'should be secondary intentions'.",
+      "source_role": "requirements",
+      "source_excerpt": "on a working holiday visa, you need to: have a return ticket, or be able to pay for one, and be coming mainly to holiday — work or study should be secondary intentions.",
+      "display_order": 50,
+      "source_excerpt_display": "On a working holiday visa, you need to: have a return ticket, or be able to pay for one, and be coming mainly to holiday — work or study should be secondary intentions."
+    },
+    {
+      "requirement_code": "employment_limits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employment or contract for services only — no business ownership, no permanent job",
+      "description": "Narrower than most working-holiday schemes are assumed to be. Someone planning to freelance through their own company is outside this visa.",
+      "source_role": "requirements",
+      "source_excerpt": "you must work for an employer under an employment contract or a contract for services. you cannot operate a business as an owner. you also cannot take a permanent job while you are in new zealand on a working holiday visa.",
+      "display_order": 60,
+      "source_excerpt_display": "You must work for an employer under an employment contract or a contract for services. You cannot operate a business as an owner. You also cannot take a permanent job while you are in New Zealand on a working holiday visa."
+    },
+    {
+      "requirement_code": "study_limit_six_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Study is allowed, up to 6 months across one or more courses",
+      "source_role": "requirements",
+      "source_excerpt": "on a working holiday visa, you can study 1 or more courses for up to 6 months in new zealand.",
+      "parameters": {
+        "maximum_study_months": 6
+      },
+      "display_order": 70,
+      "source_excerpt_display": "On a working holiday visa, you can study 1 or more courses for up to 6 months in New Zealand."
+    },
+    {
+      "requirement_code": "valid_physical_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid PHYSICAL passport at the time you apply",
+      "description": "INZ's own emphasis, and the consequence it states is refusal rather than delay.",
+      "source_role": "requirements",
+      "source_excerpt": "note you must have a valid physical passport when you apply. if you do not have one, your application may be declined.",
+      "display_order": 80,
+      "source_excerpt_display": "Note You must have a valid physical passport when you apply. If you do not have one, your application may be declined."
+    },
+    {
+      "requirement_code": "apply_online_only_when_open",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online, in English, and only while your scheme is open",
+      "description": "Applying before the opening date is not queued — INZ deletes the application automatically, and says so.",
+      "source_role": "requirements",
+      "source_excerpt": "you can only apply when the working holiday visa for your country is open for applications. check the website for this information. if you apply before the opening date, your application will be automatically deleted.",
+      "display_order": 90,
+      "source_excerpt_display": "You can only apply when the working holiday visa for your country is open for applications. Check the website for this information. If you apply before the opening date, your application will be automatically deleted."
+    },
+    {
+      "requirement_code": "some_schemes_require_home_country",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Some schemes require you to be in your home country when you apply",
+      "description": "China is INZ's named example. Most schemes allow applying from anywhere, including from inside New Zealand.",
+      "source_role": "requirements",
+      "source_excerpt": "in most cases, you can apply from any country, including from within new zealand. however, some schemes require you to be in your home country when you apply. for example, you must be in china when you apply for the china working holiday visa.",
+      "display_order": 100,
+      "source_excerpt_display": "In most cases, you can apply from any country, including from within New Zealand. However, some schemes require you to be in your home country when you apply. For example, you must be in China when you apply for the China Working Holiday Visa."
+    },
+    {
+      "requirement_code": "one_working_holiday_visa_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You can get a working holiday visa once — even if you never use it",
+      "description": "One of two ways this visa is spent without being used. See the twelve-month arrival deadline and the traveller-declaration trap.",
+      "source_role": "requirements",
+      "source_excerpt": "warning make sure you are applying for the right visa for your visit. you can only get a working holiday visa once to work in new zealand, even if you do not use it.",
+      "display_order": 110,
+      "source_excerpt_display": "Warning Make sure you are applying for the right visa for your visit. You can only get a working holiday visa once to work in New Zealand, even if you do not use it."
+    },
+    {
+      "requirement_code": "arrive_within_twelve_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must arrive within 12 months of issue — the visa cannot be delayed or cancelled",
+      "description": "Miss it and the visa expires AND you cannot apply for another, because the one-visa rule has already been spent.",
+      "source_role": "requirements",
+      "source_excerpt": "when you are given a working holiday visa, you must come to new zealand within 12 months of the date your visa is issued. you cannot delay or cancel a working holiday visa. if you do not arrive in new zealand within 12 months, the visa will expire, and you will not be able to apply for another working holiday visa.",
+      "parameters": {
+        "arrive_within_months": 12
+      },
+      "display_order": 120,
+      "source_excerpt_display": "When you are given a working holiday visa, you must come to New Zealand within 12 months of the date your visa is issued. You cannot delay or cancel a working holiday visa. If you do not arrive in New Zealand within 12 months, the visa will expire, and you will not be able to apply for another working holiday visa."
+    },
+    {
+      "requirement_code": "traveller_declaration_trap",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Visa-waiver nationals must tick 'I hold a temporary entry class visa' on the NZTD",
+      "description": "THE SHARPEST TRAP ON THIS ROUTE, and it costs the whole visa. Get it wrong and the border issues a visitor visa, the working holiday visa is CANCELLED, and the one-visa rule means there is no second attempt. A form field on arrival, not a document at application.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are from a visa waiver country and coming to new zealand on a working holiday visa, make sure you tick the option 'i hold a temporary entry class visa' when completing your new zealand traveller declaration (nztd). if you do not do this, we may give you a visitor visa at the border, and your working holiday visa will be cancelled. you will not be able to apply for another working holiday visa.",
+      "display_order": 130,
+      "source_excerpt_display": "If you are from a visa waiver country and coming to New Zealand on a working holiday visa, make sure you tick the option 'I hold a temporary entry class visa' when completing your New Zealand Traveller Declaration (NZTD). If you do not do this, we may give you a visitor visa at the border, and your working holiday visa will be cancelled. You will not be able to apply for another working holiday visa."
+    },
+    {
+      "requirement_code": "chest_xray_if_tb_exposure",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Chest x-ray if you have spent over 3 months in the last 5 years in a higher-TB country",
+      "description": "For applicants outside New Zealand on a 12-month scheme. Someone who has only been in low-incidence countries needs neither x-ray nor examination.",
+      "source_role": "policy",
+      "source_excerpt": "if you are outside new zealand and your country’s working holiday scheme allows you to stay up to 12 months, you: must have a chest x-ray if you have spent more than 3 months in the last 5 years in a country that does not have a low incidence of tb do not need to have a chest x-ray or general medical examination if you have only spent time in countries with a low incidence of tb.",
+      "parameters": {
+        "exposure_months": 3,
+        "lookback_years": 5
+      },
+      "display_order": 140,
+      "source_excerpt_display": "If you are outside New Zealand and your country’s working holiday scheme allows you to stay up to 12 months, you: must have a chest X-ray if you have spent more than 3 months in the last 5 years in a country that does not have a low incidence of TB do not need to have a chest X-ray or general medical examination if you have only spent time in countries with a low incidence of TB."
+    },
+    {
+      "requirement_code": "full_medical_if_over_twelve_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Over 12 months in New Zealand: both a chest x-ray and a general medical examination",
+      "description": "The threshold counts time on OTHER visas too, so a previous stay can push a working holiday over the line.",
+      "source_role": "policy",
+      "source_excerpt": "if you plan to stay in new zealand for more than 12 months (including time on visas other than a working holiday visa), you must have a chest x-ray and a general medical examination.",
+      "display_order": 150,
+      "source_excerpt_display": "If you plan to stay in New Zealand for more than 12 months (including time on visas other than a Working Holiday Visa), you must have a chest X-ray and a general medical examination."
+    },
+    {
+      "requirement_code": "austria_malaysia_no_medical",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Austria and Malaysia schemes: no x-ray or examination when applying from outside New Zealand",
+      "source_role": "policy",
+      "source_excerpt": "malaysia and austria if you are outside new zealand and applying for an austria or malaysia working holiday visa you do not need to have a chest x-ray or a general medical examination.",
+      "display_order": 160,
+      "source_excerpt_display": "Malaysia and Austria If you are outside New Zealand and applying for an Austria or Malaysia Working Holiday Visa you do not need to have a chest X-ray or a general medical examination."
+    },
+    {
+      "requirement_code": "medical_if_applying_inside_nz",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Applying from inside New Zealand: in most situations both an x-ray and an examination",
+      "source_role": "policy",
+      "source_excerpt": "if you are in new zealand and applying for a working holiday visa, in most situations you must have a: chest x-ray, and general medical examination.",
+      "display_order": 170,
+      "source_excerpt_display": "If you are in New Zealand and applying for a working holiday visa, in most situations you must have a: chest X-ray, and general medical examination."
+    },
+    {
+      "requirement_code": "english_language_some_schemes",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Some schemes require proof of English language skills",
+      "description": "INZ publishes the thresholds through a lookup tool rather than on this page, so the obligation to check is recorded and no score is stated.",
+      "source_role": "landing",
+      "source_excerpt": "english language skills for working holiday visas for some working holiday visas, you will need proof of your english language skills. check what you will need for the visa you are applying for.",
+      "display_order": 180,
+      "source_excerpt_display": "English language skills for working holiday visas For some working holiday visas, you will need proof of your English language skills. Check what you will need for the visa you are applying for."
+    }
+  ]
+}

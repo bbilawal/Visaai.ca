@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-temporary-worker-visas",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two USCIS form pages listed in source_roles. The four travel.state.gov / ceac.state.gov sources registered for this visa type could not be read — see not_extracted.",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Both source pages cover many nonimmigrant classifications at once; a requirement stated for one classification is either gated on visa_subclass or left out entirely rather than attributed to all of them.",
+  "source_roles": {
+    "forms_i129": "https://www.uscis.gov/i-129",
+    "forms_i765": "https://www.uscis.gov/i-765"
+  },
+  "page_dates": {
+    "forms_i129": "form edition 02/27/26; page read 2026-08-21",
+    "forms_i765": "form edition 08/21/25, superseded by 09/15/26 on 2026-09-15; page read 2026-08-21"
+  },
+  "not_extracted": [
+    "The entire consular half of this visa type — everything the applicant does after the employer's petition is approved. All four remaining registered sources were unreadable on 2026-08-21: https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html (landing), .../forms/ds-160-online-nonimmigrant-visa-application.html (forms) and .../fees/fees-visa-services.html (fees) each returned HTTP 403 from Cloudflare to both curl with the VisaAI-SourceMonitor user agent and to WebFetch; https://ceac.state.gov/genniv/ (application) reset the TLS connection to curl and to WebFetch. Nothing about the DS-160, the photograph specification, the visa interview, the reciprocity/issuance fee or the MRV fee could be read, so none of it appears below.",
+    "Every fee amount. Both USCIS pages state only 'you can find the filing fee for form i-1xx by visiting our fee schedule page'. The fee schedule page is not a registered source and was not read, so the fee requirements below carry no amount and no currency.",
+    "The $100,000 H-1B payment. The I-129 page carries it only as an alert reporting that a court vacated the guidance implementing it and that DHS is complying with that order while it considers next steps. That is litigation status, not a fee a petitioner is currently told to pay, so it is not recorded as a fee requirement. The page's own words: 'on june 8, 2026, the u.s. district court for the district of massachusetts issued an order that vacated agency guidance implementing the $100,000 payment requirement for certain h-1b petitions ... if this order is later lifted, dhs still plans to collect the payment.'",
+    "The I-129 'checklist of required initial evidence'. The page does not inline it — it links out with 'view the checklist of required initial evidence' to a page that is not a registered source. The four optional classification checklists (H-1B, H-2A, H-2B, R-1) are PDF downloads and were not parsed. This is why no classification-specific evidence appears below.",
+    "Labor Condition Application / temporary labor certification, prevailing wage, and cap-registration requirements. None of them are stated on either registered page.",
+    "Most of the I-765 'filing category / when to file' table. It covers categories (a)(20), (c)(3)(a), (c)(3)(b), (c)(3)(c), (c)(6), (c)(8), (c)(9), (c)(10), (c)(11), (c)(36) and (c)(37) — F-1 practical training, asylum, adjustment of status, parole, NACARA, CNMI. Those belong to other visa types, not to temporary worker visas, and attributing them here would be a mis-branch. Only (c)(26), the H-4 spouse of an H-1B worker, is kept.",
+    "The I-765 Afghan-parolee Social Security Number instruction, and the replacement-card and non-delivered-card branches. Same reason.",
+    "Filing addresses for both forms. Both pages defer to separate 'direct filing addresses' / 'filing locations' pages that are not registered sources.",
+    "Form I-94 validity mechanics on the I-129 page. That is what happens after admission, not a requirement of the application.",
+    "Processing times — not stated on either page.",
+    "The H-2B duplicate-petition alert, RETIRED 2026-08-25. USCIS published an alert on the Form I-129 page telling H-2B filers to send only one petition and warning that duplicates may be treated as separate petitions. It was extracted and published. On 2026-08-25 verify-excerpts found it no longer on the page, and a re-fetch confirms it: the current I-129 page mentions H-2B only in the classification list and in a link to an optional filing checklist PDF. The authority withdrew a transient alert. The requirement is retired rather than rewritten, because there is no replacement text to quote — and a published requirement that misquotes its authority is worse than one that is absent."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "i129_petition",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-129, Petition for a Nonimmigrant Worker",
+      "official_form_code": "I-129",
+      "official_form_url": "https://www.uscis.gov/i-129",
+      "description": "Filed by the petitioner — the U.S. employer or agent — on the worker's behalf, not by the worker. USCIS states the edition date is 02/27/26 and that pages from a different edition may cause the form to be rejected. USCIS also notes that only certain classifications may currently be filed online.",
+      "parameters": {
+        "edition_date": "02/27/26",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i129",
+      "source_excerpt": "petitioners use this form to file on behalf of a nonimmigrant worker to come to the united states temporarily to perform services or labor, or to receive training, as an h-1b, h-2a, h-2b, h-3, l-1, o-1, o-2, p-1, p-1s, p-2, p-2s, p-3, p-3s, q-1 or r-1 nonimmigrant worker. petitioners may also use this form to request an extension of stay in or change of status to e-1, e-2, e-3, h-1b1 or tn, or one of the above classifications for an alien.",
+      "display_order": 100,
+      "source_excerpt_display": "Petitioners use this form to file on behalf of a nonimmigrant worker to come to the United States temporarily to perform services or labor, or to receive training, as an H-1B, H-2A, H-2B, H-3, L-1, O-1, O-2, P-1, P-1S, P-2, P-2S, P-3, P-3S, Q-1 or R-1 nonimmigrant worker. Petitioners may also use this form to request an extension of stay in or change of status to E-1, E-2, E-3, H-1B1 or TN, or one of the above classifications for an alien."
+    },
+    {
+      "requirement_code": "sign_form_i129",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sign Form I-129 with a valid handwritten signature",
+      "description": "USCIS rejects or denies improperly signed forms. It will not accept a typed name, a signature by an attorney, representative or family member signing for the requestor, a signature made by typewriter, word processor, stamp, autopen or similar device, an electronic signature rendered outside the USCIS online account, or a picture of a signature pasted onto the form. A photocopy, scan or fax of an original wet-signed form is acceptable.",
+      "source_role": "forms_i129",
+      "source_excerpt": "don’t forget to sign your form . we will reject or deny any improperly signed forms. forms must include a valid signature as provided in the form instructions. uscis will not accept: a typed name on the signature line; a signature by an attorney, representative, or family member signing for the requestor; a signature created by a typewriter, word processor, stamp (manual or electronic), autopen, or similar device; an electronic signature rendered external to the uscis online account, signatures created using commercial signature software, and signatures that do not comply with signature guidance in the uscis policy manual and the dhs electronic signature guidance ; or an image of a handwritten signature that is subsequently and separately affixed to the benefit request by either physical or electronic methods.",
+      "display_order": 110,
+      "source_excerpt_display": "Don’t forget to sign your form. We will reject or deny any improperly signed forms. Forms must include a valid signature as provided in the form instructions. USCIS will not accept: A typed name on the signature line; A signature by an attorney, representative, or family member signing for the requestor; A signature created by a typewriter, word processor, stamp (manual or electronic), autopen, or similar device; An electronic signature rendered external to the USCIS online account, signatures created using commercial signature software, and signatures that do not comply with signature guidance in the USCIS Policy Manual and the DHS Electronic Signature Guidance; or An image of a handwritten signature that is subsequently and separately affixed to the benefit request by either physical or electronic methods."
+    },
+    {
+      "requirement_code": "i129s_blanket_l",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-129S, Nonimmigrant Petition Based on Blanket L Petition",
+      "official_form_code": "I-129S",
+      "description": "Required only where the beneficiary entered, or is in, the United States on an approved blanket L petition. For an extension of stay a copy of the previously approved Form I-129S must also be filed; for a change of status to L-1 it need not. USCIS states it may reject a Form I-129 for either request that does not include Form I-129S.",
+      "rule": {
+        "fact": "visa_subclass",
+        "op": "in",
+        "value": [
+          "L-1",
+          "L1",
+          "L-1A",
+          "L-1B",
+          "L1A",
+          "L1B"
+        ]
+      },
+      "source_role": "forms_i129",
+      "source_excerpt": "all petitioners requesting an extension of stay for a beneficiary who entered the united states based on an approved blanket l petition must file the following: form i-129, petition for a nonimmigrant worker; form i-129s, nonimmigrant petition based on blanket l petition; and a copy of their previously approved form i-129s. we may reject any form i-129 for an l-1 blanket extension of stay request that does not also include form i-129s.",
+      "display_order": 120,
+      "source_excerpt_display": "All petitioners requesting an extension of stay for a beneficiary who entered the United States based on an approved blanket L petition must file the following: Form I-129, Petition for a Nonimmigrant Worker; Form I-129S, Nonimmigrant Petition Based on Blanket L Petition; and A copy of their previously approved Form I-129S. We may reject any Form I-129 for an L-1 blanket extension of stay request that does not also include Form I-129S."
+    },
+    {
+      "requirement_code": "nonimmigrant_visa_still_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An approved petition is not a visa — you must still hold the appropriate nonimmigrant visa",
+      "description": "The visa itself is issued by the U.S. Department of State, whose pages VisaAI could not read for this visa type (see not_extracted), so nothing about applying for it appears in this checklist.",
+      "source_role": "forms_i129",
+      "source_excerpt": "evidence of a petition approval is not a visa, and the beneficiary must possess the appropriate nonimmigrant visa (if one is required) before applying for admission into the united states.",
+      "display_order": 140,
+      "source_excerpt_display": "Evidence of a petition approval is not a visa, and the beneficiary must possess the appropriate nonimmigrant visa (if one is required) before applying for admission into the United States."
+    },
+    {
+      "requirement_code": "carry_petition_approval_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Carry evidence of the approved petition when travelling to the United States",
+      "description": "Form I-797, Notice of Action showing the petition was approved, or a copy of the approved Form I-129S where one applies. USCIS states the beneficiary should present it to U.S. Customs and Border Protection when seeking entry or re-entry.",
+      "source_role": "forms_i129",
+      "source_excerpt": "along with a valid passport and visa (if applicable), the beneficiary should carry the following documents when traveling to the united states: form i-797, notice of action, stating we approved the petition; or a copy of the approved form i-129s (if applicable). the beneficiary should present this documentation to u.s. customs and border protection when seeking entry or re-entry into the united states in the approved form i-129 employment classification.",
+      "display_order": 200,
+      "source_excerpt_display": "Along with a valid passport and visa (if applicable), the beneficiary should carry the following documents when traveling to the United States: Form I-797, Notice of Action, stating we approved the petition; or A copy of the approved Form I-129S (if applicable). The beneficiary should present this documentation to U.S. Customs and Border Protection when seeking entry or re-entry into the United States in the approved Form I-129 employment classification."
+    },
+    {
+      "requirement_code": "i129_filing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Form I-129 filing fee",
+      "description": "USCIS does not state the amount on this page — it points to its fee schedule, which is not a registered source for this visa type and was not read. No amount and no currency are recorded here, deliberately.",
+      "parameters": {
+        "amount_stated_on_page": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i129",
+      "source_excerpt": "you can find the filing fee for form i-129 by visiting our fee schedule page.",
+      "display_order": 400,
+      "source_excerpt_display": "You can find the filing fee for Form I-129 by visiting our Fee Schedule page."
+    },
+    {
+      "requirement_code": "i765_employment_authorization",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form I-765, Application for Employment Authorization",
+      "official_form_code": "I-765",
+      "official_form_url": "https://www.uscis.gov/i-765",
+      "description": "Needed only where the worker or a dependant must separately request an Employment Authorization Document; a worker whose classification is authorised through the approved Form I-129 petition does not file it. USCIS states there is no grace period at the 2026-09-15 edition change: the 08/21/25 edition is accepted only if postmarked or electronically submitted before that date, and only the 09/15/26 edition on or after it.",
+      "parameters": {
+        "edition_date": "08/21/25",
+        "next_edition_date": "09/15/26",
+        "next_edition_effective": "2026-09-15",
+        "grace_period": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i765",
+      "source_excerpt": "certain aliens who are in the united states may file form i-765, application for employment authorization, to request an employment authorization document (ead). other aliens whose immigration status authorizes them to work in the united states without restrictions may also use form i-765 to apply for an ead that shows such authorization.",
+      "display_order": 300,
+      "source_excerpt_display": "Certain aliens who are in the United States may file Form I-765, Application for Employment Authorization, to request an Employment Authorization Document (EAD). Other aliens whose immigration status authorizes them to work in the United States without restrictions may also use Form I-765 to apply for an EAD that shows such authorization."
+    },
+    {
+      "requirement_code": "ead_photos_unmounted_unretouched",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photographs must be unmounted and unretouched",
+      "description": "USCIS states a mounted or retouched image will delay processing and may require you to appear at an applicant support center to verify your identity. The page does not state how many photographs are required or their dimensions, so no count or size is recorded here.",
+      "source_role": "forms_i765",
+      "source_excerpt": "alert: please remember that photos submitted to uscis must be unmounted and unretouched. unretouched means the photos must not be edited or digitally enhanced. the submission of any mounted or retouched images will delay the processing of your application and may prompt uscis to require that you appear at an applicant support center to verify your identity.",
+      "display_order": 310,
+      "source_excerpt_display": "ALERT: Please remember that photos submitted to USCIS must be unmounted and unretouched. Unretouched means the photos must not be edited or digitally enhanced. The submission of any mounted or retouched images will delay the processing of your application and may prompt USCIS to require that you appear at an Applicant Support Center to verify your identity."
+    },
+    {
+      "requirement_code": "h4_spouse_concurrent_i765",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An H-4 spouse may file Form I-765 at the same time as Form I-539 and the H-1B spouse's Form I-129",
+      "description": "USCIS states this for eligibility category (c)(26) only — the spouse of an H-1B worker. It is a permission, not an obligation: the page says \"may file\".",
+      "rule": {
+        "fact": "visa_subclass",
+        "op": "in",
+        "value": [
+          "H-4",
+          "H4"
+        ]
+      },
+      "source_role": "forms_i765",
+      "source_excerpt": "(c)(26) you may file form i-765 at the same time as your form i-539 and your h1-b spouse’s form i-129, petition for a nonimmigrant worker.",
+      "display_order": 320,
+      "source_excerpt_display": "(c)(26) You may file Form I-765 at the same time as your Form I-539 and your H1-B spouse’s Form I-129, Petition for a Nonimmigrant Worker."
+    },
+    {
+      "requirement_code": "ead_renewal_timing",
+      "kind": "step",
+      "officially_required": false,
+      "label": "File a renewal Form I-765 before your current EAD expires",
+      "description": "USCIS states two different windows on the same page and does not reconcile them: it \"generally recommend[s]\" filing up to 180 days before expiry, and separately instructs filing \"at least 90 days before the expiration\". Recorded as not officially required because USCIS's leading verb is \"recommend\"; both windows are quoted so a reviewer can see the discrepancy. USCIS adds that it generally does not backdate or postdate a renewal EAD.",
+      "parameters": {
+        "recommended_days_before_expiry": 180,
+        "minimum_days_before_expiry": 90,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i765",
+      "source_excerpt": "we generally recommend you file a form i-765 to request a renewal employment authorization document (ead) up to 180 days before your current ead expires. we generally do not backdate or postdate a renewal ead to the end of your current ead’s validity period. ... to renew your employment authorization document, file form i-765 at least 90 days before the expiration.",
+      "display_order": 330,
+      "source_excerpt_display": "We generally recommend you file a Form I-765 to request a renewal Employment Authorization Document (EAD) up to 180 days before your current EAD expires. We generally do not backdate or postdate a renewal EAD to the end of your current EAD’s validity period. ... To renew your Employment Authorization Document, file Form I-765 at least 90 days before the expiration."
+    },
+    {
+      "requirement_code": "sign_form_i765",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sign Form I-765 before filing",
+      "source_role": "forms_i765",
+      "source_excerpt": "don’t forget to sign your form. we will reject any unsigned form.",
+      "display_order": 340,
+      "source_excerpt_display": "Don’t forget to sign your form. We will reject any unsigned form."
+    },
+    {
+      "requirement_code": "i765_filing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Form I-765 filing fee",
+      "description": "USCIS does not state the amount on this page — it points to its fee schedule, which is not a registered source for this visa type and was not read. No amount and no currency are recorded here, deliberately.",
+      "parameters": {
+        "amount_stated_on_page": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "forms_i765",
+      "source_excerpt": "you can find the filing fee for form i-765 by visiting our fee schedule page.",
+      "display_order": 410,
+      "source_excerpt_display": "You can find the filing fee for Form I-765 by visiting our Fee Schedule page."
+    },
+    {
+      "requirement_code": "keep_uscis_address_current",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Keep your mailing address current with USCIS and USPS",
+      "description": "USCIS states an EAD card is mailed to the address on the application and that a stale address can delay the case, lose the document, and force you to reapply and pay the fee again. Recorded as VisaAI advice because the page frames it as a consequence rather than as a filing requirement.",
+      "source_role": "forms_i765",
+      "source_excerpt": "please ensure you have the correct mailing address on file with uscis. if your mailing address changes after you file your application, you must update your address with uscis and usps as soon as possible. if you don’t update your address promptly, your case could be delayed, your document(s) could get lost, and you may need to reapply and pay the fee again.",
+      "display_order": 500,
+      "source_excerpt_display": "Please ensure you have the correct mailing address on file with USCIS. If your mailing address changes after you file your application, you must update your address with USCIS and USPS as soon as possible. If you don’t update your address promptly, your case could be delayed, your document(s) could get lost, and you may need to reapply and pay the fee again."
+    }
+  ]
+}

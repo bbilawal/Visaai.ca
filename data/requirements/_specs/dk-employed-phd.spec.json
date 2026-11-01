@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-employed-phd",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "A PhD in Denmark may be SALARIED OR UNSALARIED, and almost every other condition follows from which. A salaried PhD's self-support is secured by the salary and needs no bank statement at all. An unsalaried PhD must show DKK 7,426 a month, capped at one year. The two are not variants of one rule and are registered separately.\n\nTHE PUBLIC-BENEFIT PROHIBITION ALSO SPLITS. A salaried PhD may not receive benefits under the Active Social Policy Act. An unsalaried PhD may not receive public assistance at all, and the authority names maternity and paternity benefits specifically — a materially wider prohibition that would be invisible if the two were merged.\n\nAND THE PERMIT DOES NOT LAPSE. Six months abroad lapses almost every other Danish permit in this registry. A full-degree PhD's does not, and the authority says so outright.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/PhD/Phd-studies"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The self-support figure carries its own year in the text ('DKK 7,426 (2026 level)'), so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The rules for EU/EEA and Swiss citizens, whom the page routes to the EU residence document instead.",
+    "Guest PhD, which the catalogue enumerates as its own route.",
+    "The step-by-step portal walkthrough and the document checklists."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_can_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enrolled as a PhD student, salaried or unsalaried",
+      "description": "Both branches quoted together, because the rest of the page divides on them.",
+      "source_role": "requirements",
+      "lines": [
+        26,
+        30
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "must_be_enrolled",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be enrolled in a PhD programme in Denmark",
+      "source_role": "requirements",
+      "lines": [
+        46
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "must_be_full_time_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The programme must be full-time study",
+      "source_role": "requirements",
+      "lines": [
+        48
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "flexible_phd_model_choice",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "On the 3+5 or 4+4 flexible models you must choose the permit's span when applying",
+      "source_role": "requirements",
+      "lines": [
+        38
+      ],
+      "display_order": 40
+    },
+    {
+      "requirement_code": "language_of_instruction",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be able to speak and understand the language of instruction",
+      "source_role": "requirements",
+      "lines": [
+        52
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "second_language_proficiency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must also understand Danish, Swedish, Norwegian, English or German reasonably well",
+      "description": "A second, separate language condition beyond the language of instruction.",
+      "source_role": "requirements",
+      "lines": [
+        54
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "salaried_self_support_by_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A salaried PhD's self-support is secured by the salary",
+      "source_role": "requirements",
+      "lines": [
+        62
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "unsalaried_self_support_amount",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An unsalaried PhD must show DKK 7,426 (2026 level) per month, capped at 12 months",
+      "source_role": "requirements",
+      "lines": [
+        66
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "per_month": 7426,
+        "stated_for_year": 2026,
+        "max_months_counted": 12,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80
+    },
+    {
+      "requirement_code": "self_support_worked_example",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The authority's own worked example of the twelve-month cap",
+      "source_role": "requirements",
+      "lines": [
+        68
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "self_support_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A bank statement showing date, name, balance and currency, no more than 30 days old",
+      "source_role": "requirements",
+      "lines": [
+        72,
+        74
+      ],
+      "parameters": {
+        "max_statement_age_days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "lines": [
+        21,
+        22
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 3060,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        19
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "permit_does_not_lapse",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A full PhD programme's permit does NOT lapse after six months abroad",
+      "description": "The reverse of the rule on nearly every other Danish permit in this registry.",
+      "source_role": "requirements",
+      "lines": [
+        88
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "full_time_work_at_the_institution",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Full-time work is allowed at the enrolling university or the affiliated company",
+      "source_role": "requirements",
+      "lines": [
+        94
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "limited_work_permit_alongside",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A limited work permit is also granted for employment elsewhere",
+      "source_role": "requirements",
+      "lines": [
+        96
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "work_hours_allowed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "90 hours a month September to May, full time in June, July and August",
+      "source_role": "requirements",
+      "lines": [
+        98,
+        102
+      ],
+      "parameters": {
+        "hours_per_month_in_term": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160
+    },
+    {
+      "requirement_code": "unlimited_sideline_hours_full_degree",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A full-degree PhD may work unlimited additional hours beyond the institution employment",
+      "source_role": "requirements",
+      "lines": [
+        110
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "illegal_work_consequences",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working more hours than allowed is illegal work — warning, fine, or revocation",
+      "source_role": "requirements",
+      "lines": [
+        106
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "three_year_job_seeking_period",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The limited work permit stays valid through the 3-year job-seeking period after completion",
+      "source_role": "requirements",
+      "lines": [
+        104
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "no_public_benefits_salaried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A salaried PhD may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "lines": [
+        124
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "no_public_assistance_unsalaried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An unsalaried PhD may not receive public assistance, including maternity and paternity benefits",
+      "description": "A wider prohibition than the salaried one, and it would be invisible if the two were merged.",
+      "source_role": "requirements",
+      "lines": [
+        126
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "family_also_barred_from_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Accompanying family members are also barred from Active Social Policy Act benefits",
+      "source_role": "requirements",
+      "lines": [
+        128
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "no_work_in_other_schengen_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit does not allow work in other Schengen countries",
+      "source_role": "requirements",
+      "lines": [
+        116
+      ],
+      "display_order": 230
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-long-term-visit-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the three official Immigration & Checkpoints Authority pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "TWO DIFFERENT PASSES SHARE THIS NAME. MOM issues a Long-Term Visit Pass to family members of WORK PASS holders who do not qualify for a Dependant's Pass. ICA issues this one to family members of CITIZENS AND PERMANENT RESIDENTS. Different authority, different eligibility, same three letters — and a reader who lands on the wrong one gets a plausible, wrong answer. This route is ICA's and says so.\n\nTHE PRE-MARRIAGE ASSESSMENT IS THE FINDING. Six weeks instead of six months, decided by whether a free assessment was completed BEFORE the wedding — by people who have no reason yet to be reading immigration pages. Nothing done after the marriage recovers those four and a half months. It is the clearest case in this registry of a deadline that expires before the applicant knows the process exists.\n\nICA SAYS THE QUIET PART: 'marriage does not guarantee ltvp approval.' Stored verbatim, because the assumption it corrects is close to universal.\n\nA MOM TRAP ON AN ICA PAGE. Existing AND FORMER Work Permit holders must get the Controller of Work Passes' approval before marrying a citizen or PR, in any marriage form, in Singapore or overseas — and the penalty is losing the right to work and possibly to enter. It is stored here because this is where ICA publishes it.\n\nBOUNDS CHECKED. Three pages. The S$45/S$60/S$30 fees appear on both the hub and the spouse page; each is quoted from the hub, where the submission-versus-formalities split is set out.",
+  "source_roles": {
+    "requirements": "https://www.ica.gov.sg/reside/LTVP/apply",
+    "eligibility": "https://www.ica.gov.sg/reside/LTVP/apply/spouse-of-a-singapore-citizen-(sc)",
+    "application": "https://www.ica.gov.sg/reside/LTVP/cof-and-issue-new"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "application": null
+  },
+  "freshness_note": "No dateline on these three pages, so freshness reads as unknown rather than fresh. The corroborating signal is that ICA maintains two parallel formalities pages split at 26 June 2024 — one for applications submitted on or after that date and one for before — which is a live procedural transition rather than an archived page.",
+  "not_extracted": [
+    "The six eligibility categories other than spouse-of-a-citizen, each of which has its own ICA page: spouse of a PR, child under 21, parent of a citizen or PR, IHL graduate seeking employment, parent or grandparent of a Student's Pass child, and visitor seeking permission to give birth. The hub's summary of each is stored; their own conditions are not, and this route does not claim to cover them.",
+    "MOM's Long-Term Visit Pass for family members of work pass holders. A different pass with the same name, issued by a different authority.",
+    "The per-category document checklists. ICA points at a checklist rather than listing documents inline on the pages registered here.",
+    "The Pre-Marriage LTVP Assessment's own questions and scoring. ICA states what it does and what it produces — a Letter of LTVP Eligibility valid one year — not how it decides.",
+    "The Controller of Work Passes approval process itself. ICA states the obligation and its penalty and refers to MOM for the process.",
+    "The formalities route for applications submitted BEFORE 26 June 2024, which ICA keeps on a separate page.",
+    "Renewal. It is stored only as its three-month lead time, because the rule that remaining validity is not carried forward decides when to file."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eligible_categories",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Seven categories qualify, and each has its own conditions",
+      "description": "Spouse of a citizen; spouse of a PR; unmarried child under 21 born in or adopted into a legal marriage to a citizen or PR; parent of a citizen or PR; graduate of a Singapore institute of higher learning seeking employment; parent or grandparent of a child studying here on a Student's Pass; and a visitor seeking permission to give birth in Singapore.",
+      "source_role": "requirements",
+      "source_excerpt": "as a foreigner, you are eligible to apply for a long-term visit pass if you are a/ an: ... spouse of a singapore citizen ... spouse of a singapore permanent resident (pr) ... parent of a singapore citizen or singapore permanent resident (pr)",
+      "display_order": 10,
+      "source_excerpt_display": "As a foreigner, you are eligible to apply for a Long-Term Visit Pass if you are a/ an: ... Spouse of a Singapore citizen ... Spouse of a Singapore Permanent Resident (PR) ... Parent of a Singapore citizen or Singapore Permanent Resident (PR)"
+    },
+    {
+      "requirement_code": "parents_in_law_not_eligible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Parents-in-law are not eligible",
+      "description": "The only category ICA states as an exclusion. A parent qualifies through their own child, never through a child's spouse.",
+      "source_role": "requirements",
+      "source_excerpt": "note : parent(s)-in-law are not eligible .",
+      "display_order": 20,
+      "source_excerpt_display": "Note: Parent(s)-in-law are not eligible."
+    },
+    {
+      "requirement_code": "marriage_does_not_guarantee_approval",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Marriage does not guarantee approval",
+      "description": "ICA's own words, on the page it matters most. The assessment weighs family ties, economic contribution, qualifications, age, family profile and length of residency.",
+      "source_role": "eligibility",
+      "source_excerpt": "check the intended spouse’s chances of getting a long-term visit pass (ltvp) (as marriage does not guarantee ltvp approval).",
+      "display_order": 30,
+      "source_excerpt_display": "Check the intended spouse’s chances of getting a Long-Term Visit Pass (LTVP) (as marriage does not guarantee LTVP approval)."
+    },
+    {
+      "requirement_code": "pmla_before_marriage",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Do the free Pre-Marriage LTVP Assessment BEFORE marrying: six weeks instead of six months",
+      "description": "The single highest-value action on this route, and it is only available before the wedding. It costs nothing, and completing it afterwards is impossible. A couple who did it receives a Letter of LTVP Eligibility valid one year, used in the application after marriage.",
+      "source_role": "eligibility",
+      "source_excerpt": "this free online assessment helps the couple: ... speed up the ltvp application process: 6 weeks instead of 6 months.",
+      "display_order": 40,
+      "parameters": {
+        "cost": 0,
+        "timing": "before marriage",
+        "processing_with_pmla_weeks": 6,
+        "processing_without_pmla_months": 6,
+        "letter_validity_years": 1
+      },
+      "source_excerpt_display": "This free online assessment helps the couple: ... Speed up the LTVP application process: 6 weeks instead of 6 months."
+    },
+    {
+      "requirement_code": "pmla_processing_time_rule",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Without the assessment, a citizen's foreign spouse waits up to six months",
+      "description": "ICA states both figures in one sentence so the comparison cannot be missed. Nothing done after the marriage shortens it.",
+      "source_role": "requirements",
+      "source_excerpt": "an ltvp application by a foreign spouse of a singapore citizen will take up to 6 months to be processed. if you and your spouse had completed the pmla before your marriage, the ltvp application processing time will be shortened to 6 weeks .",
+      "display_order": 50,
+      "source_excerpt_display": "An LTVP application by a foreign spouse of a Singapore citizen will take up to 6 months to be processed. If you and your spouse had completed the PMLA before your marriage, the LTVP application processing time will be shortened to 6 weeks."
+    },
+    {
+      "requirement_code": "work_permit_holders_need_controller_approval",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work Permit holders — current AND former — must get the Controller of Work Passes' approval before marrying a citizen or PR",
+      "description": "Any marriage form, civil, religious or customary, in Singapore or overseas. The penalty is not a refused application: it is losing the right to work in Singapore, and possibly being barred from entering for a period.",
+      "source_role": "eligibility",
+      "source_excerpt": "existing and former work permit holders (including training work permit) who wish to marry singapore citizens or permanent residents in singapore or overseas, regardless the type of marriage (civil, religious or customary), must first seek approval from the controller of work passes. if they fail to do so, their privileges to work in singapore could be withdrawn. they may also be prevented from entering singapore for a period of time.",
+      "display_order": 60,
+      "source_excerpt_display": "Existing and former Work Permit holders (including Training Work Permit) who wish to marry Singapore citizens or Permanent Residents in Singapore or overseas, regardless the type of marriage (civil, religious or customary), must first seek approval from the Controller of Work Passes. If they fail to do so, their privileges to work in Singapore could be withdrawn. They may also be prevented from entering Singapore for a period of time."
+    },
+    {
+      "requirement_code": "sponsor_must_hold_singpass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Singapore sponsor lodges the application with their Singpass",
+      "description": "For a spouse it is the citizen or PR spouse. For a parent of a citizen or PR aged under 21, or a Student's Pass child's parent or grandparent, or a birth visitor, it is any citizen or PR aged 21 or over.",
+      "source_role": "eligibility",
+      "source_excerpt": "after marriage, you may apply for the ltvp. your singaporean spouse must sponsor your application via ica e-service using singpass.",
+      "display_order": 70,
+      "source_excerpt_display": "After marriage, you may apply for the LTVP. Your Singaporean spouse must sponsor your application via ICA e-Service using Singpass."
+    },
+    {
+      "requirement_code": "all_applicants_need_singpass_2_to_5_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Every applicant must declare in the e-Service, and a Singpass account takes 2 to 5 working days",
+      "description": "A queue before the queue. ICA advises not starting an application until everyone who must declare already has an account.",
+      "source_role": "requirements",
+      "source_excerpt": "please note that the approval for a singpass account application may take 2 to 5 working days. sponsors/ applicants are recommended to start an application only after all applicants have successfully registered for a singpass account , where eligible.",
+      "display_order": 80,
+      "parameters": {
+        "singpass_approval_working_days_min": 2,
+        "singpass_approval_working_days_max": 5
+      },
+      "source_excerpt_display": "Please note that the approval for a Singpass account application may take 2 to 5 working days. Sponsors/ Applicants are recommended to start an application only after all applicants have successfully registered for a Singpass account, where eligible."
+    },
+    {
+      "requirement_code": "originals_and_official_translations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Originals plus official translations, and copies for ICA to keep",
+      "description": "ICA names who may translate — the issuing country's embassy, a notary public, or a private translation attested or notarised — and endorses no translation company. Insufficient documentation may mean the application is not accepted.",
+      "source_role": "eligibility",
+      "source_excerpt": "you will need to provide original documents and official translations (for documents in languages other than english), as well as copies of the documents for ica to retain.",
+      "display_order": 90,
+      "source_excerpt_display": "You will need to provide original documents and official translations (for documents in languages other than English), as well as copies of the documents for ICA to retain."
+    },
+    {
+      "requirement_code": "submission_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "S$45 per application at submission, non-refundable",
+      "description": "Paid whether or not the pass is granted.",
+      "source_role": "requirements",
+      "source_excerpt": "s$45 for each application ... all fees are non-refundable.",
+      "display_order": 100,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 45,
+        "refundable": false,
+        "stage": "submission"
+      },
+      "source_excerpt_display": "S$45 for each application ... All fees are non-refundable."
+    },
+    {
+      "requirement_code": "issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "S$60 to issue the pass, plus S$30 for a multiple journey visa",
+      "description": "Due at completion of formalities, and ICA warns that further fees may follow.",
+      "source_role": "requirements",
+      "source_excerpt": "s$60 for issuance of ltvp ... s$30 for a multiple journey visa (if applicable)",
+      "display_order": 110,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 60,
+        "multiple_journey_visa": 30,
+        "stage": "formalities"
+      },
+      "source_excerpt_display": "S$60 for issuance of LTVP ... S$30 for a Multiple Journey Visa (if applicable)"
+    },
+    {
+      "requirement_code": "standard_processing_six_weeks",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Most applications take six weeks, if the documents are in order",
+      "description": "The six-month figure applies to a citizen's foreign spouse without the pre-marriage assessment; six weeks is the general case.",
+      "source_role": "requirements",
+      "source_excerpt": "most applications will be processed within 6 weeks, provided all the required documents are submitted and in order.",
+      "display_order": 120,
+      "parameters": {
+        "weeks": 6
+      },
+      "source_excerpt_display": "Most applications will be processed within 6 weeks, provided all the required documents are submitted and in order."
+    },
+    {
+      "requirement_code": "ipa_is_not_an_immigration_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The in-principle approval is not an immigration pass and confers no right to stay",
+      "description": "ICA states it as its own numbered point. An applicant holding one still needs a valid immigration pass to be in Singapore.",
+      "source_role": "application",
+      "source_excerpt": "do note that the in-principle approval of the ltvp application is not an immigration pass and does not confer any valid stay to the applicant.",
+      "display_order": 130,
+      "source_excerpt_display": "Do note that the in-principle approval of the LTVP application is not an immigration pass and does not confer any valid stay to the applicant."
+    },
+    {
+      "requirement_code": "formalities_before_ipa_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Complete the required tasks before the approval expires, or the application is treated as withdrawn",
+      "description": "The tasks may include a medical check-up. Missing the expiry is not a delay; it ends the application.",
+      "source_role": "application",
+      "source_excerpt": "upon in-principle approval of the ltvp application, you will be informed of the tasks required to complete the formalities. this may include completing a medical check-up. these tasks have to be completed before the expiry of the in-principle approval, otherwise the application will be considered withdrawn.",
+      "display_order": 140,
+      "source_excerpt_display": "Upon in-principle approval of the LTVP application, you will be informed of the tasks required to complete the formalities. This may include completing a medical check-up. These tasks have to be completed before the expiry of the in-principle approval, otherwise the application will be considered withdrawn."
+    },
+    {
+      "requirement_code": "pay_within_14_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Pay within 14 days of being notified, or the application is withdrawn",
+      "description": "A second, shorter clock that starts only after ICA has verified the uploaded documents.",
+      "source_role": "application",
+      "source_excerpt": "once the uploaded document(s) are verified by ica, the applicant will be notified to make payment online. payment must be made within 14 days, otherwise the application will be withdrawn.",
+      "display_order": 150,
+      "parameters": {
+        "payment_window_days": 14
+      },
+      "source_excerpt_display": "Once the uploaded document(s) are verified by ICA, the applicant will be notified to make payment online. Payment must be made within 14 days, otherwise the application will be withdrawn."
+    },
+    {
+      "requirement_code": "digital_pass_via_filesg",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass is digital, retrieved through FileSG",
+      "description": "Viewable in FileSG the next working day, or in the Singpass app after three working days. IHL graduates seeking employment and birth-permission applicants can only access theirs through FileSG.",
+      "source_role": "application",
+      "source_excerpt": "ltvp holders will receive an email from ica (via filesg) on how to retrieve the digital pass.",
+      "display_order": 160,
+      "source_excerpt_display": "LTVP holders will receive an email from ICA (via FileSG) on how to retrieve the digital pass."
+    },
+    {
+      "requirement_code": "renewal_three_months_no_carry_forward",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Renew at least three months early — leftover validity is not carried forward",
+      "description": "The renewed pass runs from the date of issuance, so renewing very early forfeits the remainder of the current one. Three months before expiry is ICA's own figure.",
+      "source_role": "requirements",
+      "source_excerpt": "please submit your long-term visit pass (ltvp) renewal application at least 3 months before the expiry of your current ltvp. the validity of the renewed ltvp will be from the date of issuance (upon payment of the issuance fee). the remaining validity from the current ltvp will not be carried forward to the renewed ltvp.",
+      "display_order": 170,
+      "parameters": {
+        "submit_months_before_expiry": 3,
+        "carry_forward_remaining_validity": false
+      },
+      "source_excerpt_display": "Please submit your Long-Term Visit Pass (LTVP) renewal application at least 3 months before the expiry of your current LTVP. The validity of the renewed LTVP will be from the date of issuance (upon payment of the issuance fee). The remaining validity from the current LTVP will not be carried forward to the renewed LTVP."
+    }
+  ]
+}

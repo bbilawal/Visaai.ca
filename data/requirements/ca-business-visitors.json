@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-business-visitors",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/business/visitors-events-conferences.html",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/business/bring-business-guests/letter-invitation.html"
+  },
+  "page_dates": {
+    "application": "2026-07-19",
+    "documents": "2026-07-19"
+  },
+  "not_extracted": [
+    "No fee. IRCC charges nothing for business visitor status itself; any fee arises from the visitor visa or eTA the person may separately need, and those are their own visa types in this registry. Inventing a fee here would double-charge them on screen.",
+    "No form. The page routes to the visitor visa or eTA application rather than publishing a business-visitor form.",
+    "The list of activities permitted as a business visitor (buying goods, taking orders, after-sales service, training) describes what the status allows, not what an applicant must supply, so it is not a requirement.",
+    "The CUSMA provision for US and Mexican nationals is stated on the page but defers to Global Affairs Canada for its content, which is not a registered source.",
+    "The required CONTENTS of the letter of invitation are obligations on the Canadian host company, not documents the applicant supplies, so they are not applicant requirements."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "stay_less_than_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Plan to stay in Canada for less than 6 months",
+      "source_role": "application",
+      "source_excerpt": "you plan to stay for less than 6 months",
+      "display_order": 10,
+      "source_excerpt_display": "you plan to stay for less than 6 months"
+    },
+    {
+      "requirement_code": "not_entering_canadian_labour_market",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Do not plan to enter the Canadian labour market",
+      "source_role": "application",
+      "source_excerpt": "you don’t plan to enter the canadian labour market",
+      "display_order": 20,
+      "source_excerpt_display": "you don’t plan to enter the Canadian labour market"
+    },
+    {
+      "requirement_code": "business_and_income_outside_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Main place of business, and source of income and profits, is outside Canada",
+      "source_role": "application",
+      "source_excerpt": "your main place of business, and source of income and profits is outside canada",
+      "display_order": 30,
+      "source_excerpt_display": "your main place of business, and source of income and profits is outside Canada"
+    },
+    {
+      "requirement_code": "supporting_documents_held",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold documents that support the application",
+      "source_role": "application",
+      "source_excerpt": "you have documents that support your application",
+      "display_order": 40,
+      "source_excerpt_display": "you have documents that support your application"
+    },
+    {
+      "requirement_code": "valid_travel_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a valid travel document, such as a passport",
+      "source_role": "application",
+      "source_excerpt": "have a valid travel document, such as a passport",
+      "display_order": 50,
+      "source_excerpt_display": "have a valid travel document, such as a passport"
+    },
+    {
+      "requirement_code": "sufficient_funds_for_stay_and_return",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for the stay and to return home",
+      "source_role": "application",
+      "source_excerpt": "have enough money for your stay and to return home",
+      "display_order": 60,
+      "source_excerpt_display": "have enough money for your stay and to return home"
+    },
+    {
+      "requirement_code": "intent_to_leave_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Plan to leave Canada at the end of the visit",
+      "source_role": "application",
+      "source_excerpt": "plan to leave canada at the end of your visit",
+      "display_order": 70,
+      "source_excerpt_display": "plan to leave Canada at the end of your visit"
+    },
+    {
+      "requirement_code": "not_a_criminal_security_or_health_risk",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not a criminal, security or health risk to Canadians",
+      "source_role": "application",
+      "source_excerpt": "are not a criminal, security or health risk to canadians",
+      "display_order": 80,
+      "source_excerpt_display": "are not a criminal, security or health risk to Canadians"
+    },
+    {
+      "requirement_code": "work_permit_instead_if_longer_or_working",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A stay over 6 months or an intention to work requires a work permit instead",
+      "description": "IRCC frames this as the boundary of the business visitor category rather than a requirement of it. Recorded because an applicant who crosses it is applying for the wrong thing.",
+      "source_role": "application",
+      "source_excerpt": "if you plan to stay for more than 6 months or plan to work in canada, you may be considered a temporary worker and have to apply for a work permit",
+      "display_order": 90,
+      "source_excerpt_display": "If you plan to stay for more than 6 months or plan to work in Canada, you may be considered a temporary worker and have to apply for a work permit"
+    },
+    {
+      "requirement_code": "ebola_residence_restriction",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Foreign nationals living in the DRC, South Sudan or Uganda cannot travel to Canada",
+      "description": "A public-health measure IRCC publishes on this page, not a permanent feature of the category. The daily source monitor will raise a change for review if IRCC lifts it.",
+      "rule": {
+        "fact": "residence_country",
+        "op": "in",
+        "value": [
+          "CD",
+          "SS",
+          "UG"
+        ]
+      },
+      "source_role": "application",
+      "source_excerpt": "foreign nationals living in the democratic republic of the congo, south sudan and uganda can’t travel to canada as of may 27, 2026.",
+      "display_order": 100,
+      "source_excerpt_display": "Foreign nationals living in the Democratic Republic of the Congo, South Sudan and Uganda can’t travel to Canada as of May 27, 2026."
+    },
+    {
+      "requirement_code": "ebola_recent_travel_restriction",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Anyone who has visited the DRC within the past 21 days cannot travel to Canada",
+      "description": "No rule: VisaAI has no fact recording recent country visits, and inventing one to gate this would risk hiding a hard travel bar from the person it applies to.",
+      "source_role": "application",
+      "source_excerpt": "as of july 20, 2026, foreign nationals who have visited the democratic republic of the congo within the past 21 days can’t travel to canada.",
+      "display_order": 110,
+      "source_excerpt_display": "As of July 20, 2026, foreign nationals who have visited the Democratic Republic of the Congo within the past 21 days can’t travel to Canada."
+    },
+    {
+      "requirement_code": "determine_visa_or_eta",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Find out whether you need a visitor visa or an eTA",
+      "source_role": "application",
+      "source_excerpt": "if you qualify as a business visitor, answer a few questions to find out what you may need to apply for, and which documents you’ll need to come to canada.",
+      "display_order": 200,
+      "source_excerpt_display": "If you qualify as a business visitor, answer a few questions to find out what you may need to apply for, and which documents you’ll need to come to Canada."
+    },
+    {
+      "requirement_code": "obtain_event_code",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Get an event code from the organizer, if the event is registered with IRCC",
+      "description": "Applies only when a visitor visa is needed and the event is registered with IRCC. Left unruled because neither condition is a fact VisaAI holds.",
+      "source_role": "application",
+      "source_excerpt": "if you need a visitor visa to travel to canada and your meeting, event or conference is registered with immigration, refugees and citizenship canada (ircc), your organizer will provide you with an event code and instructions about how to apply for a visa.",
+      "display_order": 210,
+      "source_excerpt_display": "If you need a visitor visa to travel to Canada and your meeting, event or conference is registered with Immigration, Refugees and Citizenship Canada (IRCC), your organizer will provide you with an event code and instructions about how to apply for a visa."
+    },
+    {
+      "requirement_code": "passport_valid_entire_stay",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport or travel document valid for your entire stay",
+      "source_role": "application",
+      "source_excerpt": "a passport or travel document that is valid for your entire stay",
+      "display_order": 300,
+      "source_excerpt_display": "a passport or travel document that is valid for your entire stay"
+    },
+    {
+      "requirement_code": "visitor_visa_if_applicable",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid visitor visa, if one is required",
+      "source_role": "application",
+      "source_excerpt": "a valid visitor visa, if applicable",
+      "display_order": 310,
+      "source_excerpt_display": "a valid visitor visa, if applicable"
+    },
+    {
+      "requirement_code": "same_passport_used_for_eta",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The same passport used in the eTA application",
+      "source_role": "application",
+      "source_excerpt": "if you need an eta, the same passport you used in your application",
+      "display_order": 320,
+      "source_excerpt_display": "if you need an eTA, the same passport you used in your application"
+    },
+    {
+      "requirement_code": "us_green_card_and_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "US green card and a valid passport, for lawful permanent residents of the United States",
+      "description": "Left unruled on purpose. VisaAI records a residence country, which is not the same thing as lawful permanent residence — someone can live in the US without a green card. Showing this item to everyone is the safe error; hiding it from a green-card holder is not.",
+      "source_role": "application",
+      "source_excerpt": "if you’re a lawful permanent resident of the united states (us), a valid green card (or equivalent official proof of status in the u s ) and a valid passport from your country of nationality (or an equivalent document)",
+      "display_order": 330,
+      "source_excerpt_display": "if you’re a lawful permanent resident of the United States (US), a valid green card (or equivalent official proof of status in the U S) and a valid passport from your country of nationality (or an equivalent document)"
+    },
+    {
+      "requirement_code": "letters_of_support_and_invitation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letters of support from your parent company and a letter of invitation from the Canadian host",
+      "source_role": "application",
+      "source_excerpt": "letters of support from your parent company, and a letter of invitation from the canadian host business or a letter of recognition from the canada border services agency",
+      "display_order": 340,
+      "source_excerpt_display": "letters of support from your parent company, and a letter of invitation from the Canadian host business or a letter of recognition from the Canada Border Services Agency"
+    },
+    {
+      "requirement_code": "warranty_service_or_contract_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Warranty or service agreements, or contracts, if relevant to the visit",
+      "source_role": "application",
+      "source_excerpt": "other documents such as warranty or service agreements, or contracts, if relevant to your visit",
+      "display_order": 350,
+      "source_excerpt_display": "other documents such as warranty or service agreements, or contracts, if relevant to your visit"
+    },
+    {
+      "requirement_code": "host_24_hour_contact_details",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "24-hour contact details for your business host in Canada",
+      "source_role": "application",
+      "source_excerpt": "24-hour contact details of your business host in canada",
+      "display_order": 360,
+      "source_excerpt_display": "24-hour contact details of your business host in Canada"
+    },
+    {
+      "requirement_code": "proof_of_funds_at_border",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of funds covering the stay in Canada and the return home",
+      "source_role": "application",
+      "source_excerpt": "proof that you have enough money to cover both your stay in canada and your return home",
+      "display_order": 370,
+      "source_excerpt_display": "proof that you have enough money to cover both your stay in Canada and your return home"
+    },
+    {
+      "requirement_code": "minor_entry_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Check the entry requirements for minors when travelling with a child",
+      "rule": {
+        "fact": "travelling_with_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "application",
+      "source_excerpt": "delegates who plan to travel with a child (17 years of age or younger) should consult the entry requirements for minors .",
+      "display_order": 400,
+      "source_excerpt_display": "Delegates who plan to travel with a child (17 years of age or younger) should consult the entry requirements for minors."
+    },
+    {
+      "requirement_code": "two_original_invitation_letters",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two originals of the letter of invitation — one to submit, one to present at entry",
+      "description": "IRCC addresses this page to the Canadian host company. Only the parts that change what the visitor must carry are recorded here; the letter's required contents are the host's obligation, not an applicant upload.",
+      "source_role": "documents",
+      "source_excerpt": "your company should send each visitor two originals of the letter of invitation, one for them to submit when applying for their visa and one to present when they enter canada.",
+      "display_order": 500,
+      "source_excerpt_display": "Your company should send each visitor two originals of the letter of invitation, one for them to submit when applying for their visa and one to present when they enter Canada."
+    },
+    {
+      "requirement_code": "invitation_letter_notarization",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Some visa offices require the letter of invitation to be notarized",
+      "description": "Office-specific, so IRCC states it as a possibility rather than a rule. Recorded as not officially required because it is not universally imposed.",
+      "source_role": "documents",
+      "source_excerpt": "some visa offices may need these letters to be notarized. contact the canadian visa office of your visitor’s country to find out if this is required.",
+      "display_order": 510,
+      "source_excerpt_display": "Some visa offices may need these letters to be notarized. Contact the Canadian visa office of your visitor’s country to find out if this is required."
+    },
+    {
+      "requirement_code": "invitation_letter_no_guarantee",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A letter of invitation does not guarantee a visa will be issued",
+      "description": "Recorded so the letter is never presented to a user as an approval signal.",
+      "source_role": "documents",
+      "source_excerpt": "if you need a visa, a letter of invitation does not guarantee that a visa will be issued. visa officers assess applicants to find out if they are eligible to visit canada.",
+      "display_order": 520,
+      "source_excerpt_display": "If you need a visa, a letter of invitation does not guarantee that a visa will be issued. Visa officers assess applicants to find out if they are eligible to visit Canada."
+    }
+  ]
+}

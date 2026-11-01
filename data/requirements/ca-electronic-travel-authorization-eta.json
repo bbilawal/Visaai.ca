@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-electronic-travel-authorization-eta",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html",
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+  },
+  "page_dates": {
+    "eligibility": "2026-08-06",
+    "application": "2026-08-11"
+  },
+  "not_extracted": [
+    "The registered 'landing' source (eta.html) is a link hub. Its only substantive line, 'to apply, you must have a valid passport, a credit or debit card and an email address', restates the apply page, so the role is left out of source_roles rather than cited for a duplicate claim.",
+    "The list of eTA-required countries and territories, and the list of select visa-required countries whose citizens may apply for an eTA instead of a visitor visa. IRCC keeps both behind separate pages and a checker tool. Without them VisaAI cannot tell an applicant which side of the line they fall on, so the nationality-dependent conditions below carry no rule and say so.",
+    "eTA exemptions: U.S. citizens, lawful permanent residents of the United States (exempt since April 26, 2022), Canadian permanent residents, and visa-required travellers who need a visitor visa instead. These are exemptions from the requirement, not requirements, and IRCC publishes the full list on a separate page.",
+    "The complete list of acceptable U.S. lawful-permanent-resident status documents (I-551, temporary I-551 stamp, I-327, I-94 and the rest). It belongs to an exemption branch, not to the eTA application.",
+    "Land and sea travel rules. IRCC states that in most cases an eTA is not needed when arriving by car, bus, train or boat, with a stated exception for travel by sea from Saint-Pierre-et-Miquelon excluding cruise ships. VisaAI has no fact for mode of arrival, so these branches are described rather than encoded.",
+    "The May 26, 2026 Indonesia and Malaysia eligibility change, and the Ebola-related travel restrictions on the Democratic Republic of the Congo, South Sudan and Uganda. Both are nationality- or location-specific branches announced on the apply page and gated behind further pages.",
+    "Processing times. The apply page says only 'most applications are approved within minutes' and gives 72 hours as the window for a document request, which is a service statement rather than a published processing time."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eta_or_visitor_visa_not_both",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You need either an eTA or a visitor visa, not both",
+      "source_role": "eligibility",
+      "source_excerpt": "you either need a visitor visa or an electronic travel authorization (eta) to travel to canada. you only need one or the other, not both.",
+      "display_order": 10,
+      "source_excerpt_display": "You either need a visitor visa or an electronic travel authorization (eTA) to travel to Canada. You only need one or the other, not both."
+    },
+    {
+      "requirement_code": "eta_required_country_air_travel",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a citizen of an eTA-required country or territory and be travelling to Canada by air",
+      "description": "IRCC also states that citizens of select visa-required countries may be eligible to apply for an eTA instead of a visitor visa when travelling to Canada by air, but that they still need a visitor visa when arriving by car, bus, train or boat including a cruise ship. Neither country list has been extracted, so this condition carries no rule.",
+      "source_role": "eligibility",
+      "source_excerpt": "you need an electronic travel authorization (eta) and a valid passport to board your flight to canada if you’re a citizen of any of the eta-required countries or territories. you don’t need a visitor visa.",
+      "display_order": 20,
+      "source_excerpt_display": "You need an electronic travel authorization (eTA) and a valid passport to board your flight to Canada if you’re a citizen of any of the eTA-required countries or territories. You don’t need a visitor visa."
+    },
+    {
+      "requirement_code": "valid_travel_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have a valid travel document, such as a passport",
+      "source_role": "eligibility",
+      "source_excerpt": "to visit canada, you’ll need to meet some basic requirements, such as: have a valid travel document, such as a passport",
+      "display_order": 30,
+      "source_excerpt_display": "To visit Canada, you’ll need to meet some basic requirements, such as: have a valid travel document, such as a passport"
+    },
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "source_role": "eligibility",
+      "source_excerpt": "be in good health",
+      "display_order": 40,
+      "source_excerpt_display": "be in good health"
+    },
+    {
+      "requirement_code": "no_convictions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have no criminal or immigration-related convictions",
+      "description": "IRCC lists separate grounds of inadmissibility, including criminal activity, human rights violations, organized crime, and security, health or financial reasons.",
+      "source_role": "eligibility",
+      "source_excerpt": "have no criminal or immigration-related convictions",
+      "display_order": 50,
+      "source_excerpt_display": "have no criminal or immigration-related convictions"
+    },
+    {
+      "requirement_code": "ties_to_home_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Convince a border services officer that you have ties to your home country or territory",
+      "description": "IRCC names a job, a home, financial assets or family as examples of ties.",
+      "source_role": "eligibility",
+      "source_excerpt": "convince a border services officer that you have ties—such as a job, home, financial assets or family—that will take you back to your home country or territory",
+      "display_order": 60,
+      "source_excerpt_display": "convince a border services officer that you have ties—such as a job, home, financial assets or family—that will take you back to your home country or territory"
+    },
+    {
+      "requirement_code": "will_leave_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Convince a border services officer that you will leave Canada at the end of your visit",
+      "source_role": "eligibility",
+      "source_excerpt": "convince a border services officer that you will leave canada at the end of your visit",
+      "display_order": 70,
+      "source_excerpt_display": "convince a border services officer that you will leave Canada at the end of your visit"
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for your stay",
+      "description": "IRCC publishes no fixed threshold: the amount depends on how long you stay and whether you stay in a hotel or with friends or relatives.",
+      "source_role": "eligibility",
+      "source_excerpt": "have enough money for your stay. (the amount of money you will need can vary. it depends on things such as how long you will stay, and whether you will stay in a hotel, or with friends or relatives.)",
+      "display_order": 80,
+      "source_excerpt_display": "have enough money for your stay. (The amount of money you will need can vary. It depends on things such as how long you will stay, and whether you will stay in a hotel, or with friends or relatives.)"
+    },
+    {
+      "requirement_code": "eta_does_not_guarantee_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An eTA does not guarantee entry to Canada",
+      "description": "On arrival a border services officer asks to see your passport and other documents, and you must satisfy the officer that you are eligible to enter.",
+      "source_role": "eligibility",
+      "source_excerpt": "an eta doesn’t guarantee entry to canada. when you arrive, a border services officer will ask to see your passport and other documents. you must convince the officer that you’re eligible for entry to canada.",
+      "display_order": 90,
+      "source_excerpt_display": "An eTA doesn’t guarantee entry to Canada. When you arrive, a border services officer will ask to see your passport and other documents. You must convince the officer that you’re eligible for entry to Canada."
+    },
+    {
+      "requirement_code": "dual_canadian_citizen_canadian_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A dual Canadian citizen must travel with a valid Canadian passport",
+      "description": "IRCC states American-Canadians can travel with a valid Canadian or U.S. passport.",
+      "rule": {
+        "any": [
+          {
+            "fact": "nationality",
+            "op": "eq",
+            "value": "CA"
+          },
+          {
+            "fact": "second_nationality",
+            "op": "eq",
+            "value": "CA"
+          }
+        ]
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "if you’re a dual canadian citizen, you must travel with a valid canadian passport . american-canadians can travel with a valid canadian or u.s. passport.",
+      "display_order": 100,
+      "source_excerpt_display": "If you’re a dual Canadian citizen, you must travel with a valid Canadian passport. American-Canadians can travel with a valid Canadian or U.S. passport."
+    },
+    {
+      "requirement_code": "passport_from_visa_exempt_country",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport from a visa-exempt country or territory",
+      "source_role": "application",
+      "source_excerpt": "you will need a valid passport from a visa-exempt country or territory",
+      "display_order": 110,
+      "source_excerpt_display": "You will need a valid passport from a visa-exempt country or territory"
+    },
+    {
+      "requirement_code": "valid_email_address",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid email address",
+      "description": "IRCC sends the decision on the eTA application by email.",
+      "source_role": "application",
+      "source_excerpt": "a valid email address, and",
+      "display_order": 120,
+      "source_excerpt_display": "a valid email address, and"
+    },
+    {
+      "requirement_code": "accepted_payment_method",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An accepted credit or debit card to pay the eTA fee",
+      "description": "IRCC accepts Visa, Mastercard, American Express, pre-paid Visa, Mastercard or American Express, Visa Debit or Debit Mastercard, UnionPay and JCB. It states the fee is non-refundable.",
+      "source_role": "application",
+      "source_excerpt": "one of the following acceptable methods of payment to pay the $7 cad fee (non-refundable): visa ® , mastercard ® , american express ® , a pre-paid visa ® , mastercard ® or american express ® , visa debit, or debit mastercard, unionpay ® , or jcb card ® .",
+      "display_order": 130,
+      "source_excerpt_display": "one of the following acceptable methods of payment to pay the $7 CAD fee (non-refundable): Visa ®, Mastercard ®, American Express ®, a pre-paid Visa ®, Mastercard ® or American Express ®, Visa Debit, or Debit Mastercard, UnionPay ®, or JCB Card ®."
+    },
+    {
+      "requirement_code": "complete_online_form",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Complete the online eTA form in one sitting",
+      "description": "IRCC warns the form cannot be saved. It is available in English and French only, though field descriptions are published in other languages.",
+      "source_role": "application",
+      "source_excerpt": "use the online form to apply. the form cannot be saved. so have your information ready.",
+      "display_order": 300,
+      "source_excerpt_display": "Use the online form to apply. The form cannot be saved. So have your information ready."
+    },
+    {
+      "requirement_code": "pay_immediately_after_form",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Pay the eTA fee immediately after completing the form",
+      "source_role": "application",
+      "source_excerpt": "pay $7 cad for your eta right after you complete the form.",
+      "display_order": 310,
+      "source_excerpt_display": "Pay $7 CAD for your eTA right after you complete the form."
+    },
+    {
+      "requirement_code": "submit_documents_if_requested",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Submit further documents if IRCC asks for them",
+      "description": "IRCC states most applications are approved within minutes, but that some applicants must submit documents before approval, and that instructions arrive by email within 72 hours if so.",
+      "source_role": "application",
+      "source_excerpt": "you may need to submit documents before your application can be approved. if this happens to you, an email will be sent with instructions within 72 hours.",
+      "display_order": 320,
+      "source_excerpt_display": "You may need to submit documents before your application can be approved. If this happens to you, an email will be sent with instructions within 72 hours."
+    },
+    {
+      "requirement_code": "eta_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic travel authorization fee",
+      "description": "CAD 7.00. The apply page states the same amount and adds that it is non-refundable.",
+      "parameters": {
+        "amount": 7,
+        "currency": "CAD",
+        "unit": "per person",
+        "refundable": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "electronic travel authorization (eta) fees $can electronic travel authorization 7.00",
+      "display_order": 400,
+      "source_excerpt_display": "Electronic Travel Authorization (eTA) Fees $CAN Electronic Travel Authorization 7.00"
+    }
+  ]
+}

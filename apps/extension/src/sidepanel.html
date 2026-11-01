@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 16px; font-size: 14px; color: #0a0a0a; background: #ffffff; }
+    h1 { font-size: 16px; font-weight: 600; margin: 0 0 4px; }
+    p.sub { color: #737373; font-size: 12px; margin: 0 0 16px; }
+    input { width: 100%; box-sizing: border-box; border: 1px solid #e5e5e5; border-radius: 10px; padding: 8px 10px; font-size: 13px; margin-bottom: 8px; }
+    button { background: #000; color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer; width: 100%; }
+    button:disabled { opacity: 0.5; cursor: default; }
+    .step { border: 1px solid #e5e5e5; border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; }
+    .step.done { border-color: #10c22b; }
+    .step.fail { border-color: #c22b10; }
+    .pause { background: #f2f2f2; border-radius: 10px; padding: 12px; font-size: 13px; margin-top: 8px; }
+    .err { color: #c22b10; font-size: 12px; margin-top: 8px; }
+    .tips { background: #f2f2f2; border-radius: 10px; padding: 10px 12px; font-size: 12px; margin: 0 0 16px; }
+    .tips p { margin: 0 0 4px; font-weight: 600; }
+    .tips ul { margin: 0; padding-left: 16px; line-height: 1.5; }
+    .next { border: 1px solid #10c22b; border-radius: 10px; padding: 8px 10px; font-size: 13px; margin-top: 8px; display: none; }
+  </style>
+</head>
+<body>
+  <h1>VisaAI Portal Assistant</h1>
+  <p class="sub">Open the portal in your current tab and sign in, then paste the session token from your VisaAI dashboard. You always complete payment &amp; submission.</p>
+  <div class="tips" id="ircc-tips" role="note" aria-label="IRCC portal tips">
+    <p>On the IRCC portal</p>
+    <ul>
+      <li>IRCC signs you out after about 20 minutes without activity, and anything not saved on that page is lost. Save each IRCC page before you switch to VisaAI or another tab.</li>
+      <li>If your session expired, sign in again and open your application from your IRCC account with <strong>Continue</strong> on the draft. Bookmarked or deep links to a form page go to an error page.</li>
+      <li>The assistant fills the IRCC page that is open. Launch it again on each page you want filled; you press <strong>Save and continue</strong> yourself.</li>
+    </ul>
+  </div>
+  <div id="connect">
+    <input id="apiUrl" placeholder="API URL (e.g. https://api.visaai.co)" />
+    <input id="token" type="password" placeholder="Session token" />
+    <button id="connectBtn">Connect</button>
+  </div>
+  <div id="session" style="display:none">
+    <div id="status"></div>
+    <div id="steps"></div>
+    <div id="next" class="next" role="status"></div>
+  </div>
+  <div id="error" class="err"></div>
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>

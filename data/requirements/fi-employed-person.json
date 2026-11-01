@@ -1,0 +1,361 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fi-employed-person",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two official Migri pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "FINLAND'S FIRST EXTRACTION, AND THE FIRST TIME TWO PAGES CARRY ONE PERMIT'S RULES BY DESIGN. Migri states the permit-specific conditions on the TTOL page and then says, in its own words, 'in addition, you must meet the general requirements for obtaining a residence permit'. Those general requirements are on /en/first-residence-permit and are stated NOWHERE on the TTOL page. Extracting only the TTOL page would have produced a checklist an applicant could satisfy completely and still be refused on a ground the authority publishes plainly. So the general entry conditions are extracted from their own page, under their own source role, and every one of them carries an excerpt from that page rather than from the permit page.\n\nFIRST PERMIT vs EXTENDED PERMIT ARE INTERLEAVED ON THE PAGE, and this is the trap here. Migri writes both permits' rules in one flow: the fee line reads 'first permit 750 € / extended permit 230 €', two attachments carry 'this document is not needed if you apply for an extended permit', and the income rule adds a retrospective check that applies only at extension. This visa type is the FIRST permit. Extended-permit figures are recorded inside the same excerpts where Migri states them together -- removing half a sentence would misquote -- but the labels and parameters name which permit each figure belongs to. The extension route itself is not extracted; it is a different application with its own page.\n\nNO BOUNDS NEEDED, CHECKED. The TTOL page describes one permit. The requirement headings ('1. you have found a job', '2. you have sufficient qualifications', '3. you have sufficient income') occur once each, and no sibling permit's conditions appear on the page -- unlike UDI's work page, which concatenates five worker categories behind one URL.",
+  "source_roles": {
+    "requirements": "https://migri.fi/en/residence-permit-for-an-employed-person",
+    "eligibility": "https://migri.fi/en/first-residence-permit"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null
+  },
+  "freshness_note": "Migri publishes no dateModified on either page, so by the rule established for Germany these are 'unknown', never 'fresh'. The TTOL page carries a better signal than a dateline: a processing-situation block updated monthly, currently stating 'in july 2026, the average processing time ... was 17 days' and counting applications 'since the beginning of 2026'. A page carrying last month's statistics is not a five-year-old page. The income figure names its own year ('eur 1,600 per month in 2026'), which is the same shape as Sweden's Blue Card threshold: a snapshot that dates itself.",
+  "not_extracted": [
+    "The monthly processing-time statistics. They are current facts about Migri's queue, not requirements on an applicant, and they change every month; storing them would make the registry stale by design.",
+    "The D visa. It is a separate travel authorisation available only when the EMPLOYER holds employer certification, and Migri documents it on its own page. It would be a visa type, not a requirement of this one.",
+    "The labour market test's substance. This page states only that the permit 'may be subject to' it and links to a separate page for when and how. Recording the condition without its trigger would leave an applicant unable to tell whether it applies to them, so the condition is stored as stated and its detail is left on Migri's page.",
+    "The income-requirement calculation method for part-time work, and the taxable values of fringe benefits (the Finnish Tax Administration's figures, on vero.fi). Both are calculation methods on external pages.",
+    "The national labour shortage sector list (tyovoimabarometri.fi). External, and Migri states it is updated yearly.",
+    "The extended-permit route as an application in its own right. Its fees and its retrospective income check appear here only inside excerpts where Migri states them in the same sentence as the first-permit rule.",
+    "Finland's short-stay Schengen visa. It belongs to the Ministry for Foreign Affairs, and um.fi returns 403 to an identified agent. See the registration migration."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "confirmed_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have confirmed employment before you apply",
+      "description": "Not a job search route: the job must already be agreed. Migri's separate 'residence permit to look for work' exists precisely because this permit does not cover job-seeking.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have confirmed employment before you can apply for this permit.",
+      "display_order": 10,
+      "source_excerpt_display": "You must have confirmed employment before you can apply for this permit."
+    },
+    {
+      "requirement_code": "field_of_employment_scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit is granted for one field of employment, not for one job",
+      "description": "Broader than it first reads. Within the granted field the holder may hold several jobs and change employer; outside it they may not work at all.",
+      "source_role": "requirements",
+      "source_excerpt": "a residence permit for an employed person is granted for the field of employment to which your job belongs.",
+      "display_order": 20,
+      "source_excerpt_display": "A residence permit for an employed person is granted for the field of employment to which your job belongs."
+    },
+    {
+      "requirement_code": "found_a_job_terms_of_employment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your employer must submit your terms of employment",
+      "description": "The application is not complete on the applicant's side alone. Migri states elsewhere on the page that an employer using Enter Finland for Employers lets it automate more of the processing.",
+      "source_role": "requirements",
+      "source_excerpt": "your employer must supplement your application by filling in and submitting your terms of employment. the employer can do it either online in enter finland or by using a paper form.",
+      "display_order": 30,
+      "source_excerpt_display": "Your employer must supplement your application by filling in and submitting your terms of employment. The employer can do it either online in Enter Finland or by using a paper form."
+    },
+    {
+      "requirement_code": "qualifications_verified_by_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sufficient qualifications and education for the job, documented by your employer",
+      "description": "The evidence obligation falls on the employer, not the applicant, and is discharged inside the terms of employment.",
+      "source_role": "requirements",
+      "source_excerpt": "2. you have sufficient qualifications and education for the job in question. your employer must verify that you have the professional skills required for the job. your employer must document this when they fill in the terms of employment for your application.",
+      "display_order": 40,
+      "source_excerpt_display": "2. You have sufficient qualifications and education for the job in question. Your employer must verify that you have the professional skills required for the job. Your employer must document this when they fill in the terms of employment for your application."
+    },
+    {
+      "requirement_code": "regulated_profession_authorisation",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Regulated professions need a permission to practise from Valvira",
+      "description": "Conditional, and Migri gives health care as its example rather than publishing the full list. Recorded as guidance because it binds only those professions, and the permission comes from another authority.",
+      "source_role": "requirements",
+      "source_excerpt": "health care professionals, for example, need a permission to practise their profession from the finnish supervisory agency (lvv.fi) , the national supervisory authority for welfare and health.",
+      "display_order": 50,
+      "source_excerpt_display": "Health care professionals, for example, need a permission to practise their profession from the Finnish Supervisory Agency (lvv.fi), the National Supervisory Authority for Welfare and Health."
+    },
+    {
+      "requirement_code": "income_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Gross salary of at least EUR 1,600 per month (2026 figure), for the whole permit period",
+      "description": "A SNAPSHOT THAT NAMES ITS YEAR. Migri writes 'in 2026', so the figure is stored with stated_for_year rather than as a timeless threshold. Income may come from several part-time jobs; what it may not come from is a zero-hours contract (see the next entry).",
+      "source_role": "requirements",
+      "source_excerpt": "your total gross salary must be at least eur 1,600 per month in 2026. you may earn your income from several employment relationships. the employment relationship or employment relationships may be part-time.",
+      "parameters": {
+        "per_month_eur": 1600,
+        "currency": "EUR",
+        "stated_for_year": 2026
+      },
+      "display_order": 60,
+      "source_excerpt_display": "Your total gross salary must be at least EUR 1,600 per month in 2026. You may earn your income from several employment relationships. The employment relationship or employment relationships may be part-time."
+    },
+    {
+      "requirement_code": "zero_hours_contracts_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A zero-hours or on-demand contract cannot support this permit",
+      "description": "An outright bar, not a weighting. Migri gives its reason: no agreed minimum hours means no assured income. Worth stating separately because someone reading only the EUR 1,600 line may believe a variable-hours job qualifies whenever it happens to pay enough.",
+      "source_role": "requirements",
+      "source_excerpt": "however, a zero-hours contract or an on-demand contract of employment do not meet the requirements for granting a residence permit for an employed person because your employer has not agreed on regular minimum working hours with you.",
+      "display_order": 70,
+      "source_excerpt_display": "However, a zero-hours contract or an on-demand contract of employment do not meet the requirements for granting a residence permit for an employed person because your employer has not agreed on regular minimum working hours with you."
+    },
+    {
+      "requirement_code": "salary_supplements_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Evening and night supplements do not count toward the salary figure",
+      "source_role": "requirements",
+      "source_excerpt": "salary supplements, such as evening work or night work supplements, are excluded from the total salary.",
+      "display_order": 80,
+      "source_excerpt_display": "Salary supplements, such as evening work or night work supplements, are excluded from the total salary."
+    },
+    {
+      "requirement_code": "fringe_benefits_cap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "At most half the salary may be fringe benefits, counted at their taxable value",
+      "description": "Stored as a percentage and deliberately WITHOUT a currency, so the renderer cannot print it as a price. Fifty is a share of salary, not fifty euros.",
+      "source_role": "requirements",
+      "source_excerpt": "some of your salary may consist of fringe benefits, such as company car or employer-provided accommodation. a maximum of 50% of your salary may consist of fringe benefits. when your salary is assessed, the taxable value of your fringe benefits will be taken into account in the calculation.",
+      "parameters": {
+        "max_fringe_benefit_share_percent": 50
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Some of your salary may consist of fringe benefits, such as company car or employer-provided accommodation. A maximum of 50% of your salary may consist of fringe benefits. When your salary is assessed, the taxable value of your fringe benefits will be taken into account in the calculation."
+    },
+    {
+      "requirement_code": "labour_market_test",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The permit may be subject to a labour market test",
+      "description": "Migri states 'may be' and documents when it applies on a separate page. Recorded because an applicant who does not know this exists cannot understand why an otherwise complete application is refused; the trigger is deliberately not invented here.",
+      "source_role": "requirements",
+      "source_excerpt": "a residence permit for an employed person may be subject to labour market testing, which means that the employer must establish if there is available labour force within a reasonable time in finland or within the eu/eea for the work in question.",
+      "display_order": 100,
+      "source_excerpt_display": "A residence permit for an employed person may be subject to labour market testing, which means that the employer must establish if there is available labour force within a reasonable time in Finland or within the EU/EEA for the work in question."
+    },
+    {
+      "requirement_code": "light_entrepreneurs_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not available to light entrepreneurs invoicing through a service company",
+      "description": "An exclusion, and a common misreading: invoicing-service work looks like employment to the person doing it. Migri routes those applicants to the entrepreneur permit instead.",
+      "source_role": "requirements",
+      "source_excerpt": "a residence permit for an employed person is not granted to so called light entrepreneurs (who work through an invoicing service company).",
+      "display_order": 110,
+      "source_excerpt_display": "A residence permit for an employed person is not granted to so called light entrepreneurs (who work through an invoicing service company)."
+    },
+    {
+      "requirement_code": "supply_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Attach the supply contract showing the work it covers",
+      "source_role": "requirements",
+      "source_excerpt": "you must also attach a supply contract to your residence permit application, indicating the work covered by the contract.",
+      "display_order": 120,
+      "source_excerpt_display": "You must also attach a supply contract to your residence permit application, indicating the work covered by the contract."
+    },
+    {
+      "requirement_code": "apply_abroad_for_first_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first permit is applied for abroad; only extensions are applied for in Finland",
+      "description": "Where the application is submitted is itself a condition here, and getting it wrong is not a delay but a refusal: Migri's general page states an application submitted in Finland when it should have been submitted abroad 'will usually get a negative decision'.",
+      "source_role": "requirements",
+      "source_excerpt": "if you apply for this permit as a first residence permit, you must submit the application abroad. applications for an extended permit can only be submitted in finland.",
+      "display_order": 130,
+      "source_excerpt_display": "If you apply for this permit as a first residence permit, you must submit the application abroad. Applications for an extended permit can only be submitted in Finland."
+    },
+    {
+      "requirement_code": "application_fee_electronic",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic application fee: EUR 750 first permit (EUR 230 extended)",
+      "description": "Migri states both permits' fees in one line, so the excerpt carries both. The extended figure is stored under its own key rather than dropped, because quoting half the sentence would misrepresent the page.",
+      "source_role": "requirements",
+      "source_excerpt": "electronic application fee first permit 750 € / extended permit 230 €",
+      "parameters": {
+        "first_permit_eur": 750,
+        "extended_permit_eur": 230,
+        "currency": "EUR"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "Electronic application fee First permit 750 € / extended permit 230 €"
+    },
+    {
+      "requirement_code": "application_fee_paper",
+      "kind": "fee",
+      "officially_required": false,
+      "label": "Paper application fee: EUR 950 first permit (EUR 430 extended)",
+      "description": "Recorded as not officially required because the applicant chooses the channel: Migri states the online fee is the lower one, so the paper fee is the cost of a choice rather than an unavoidable charge.",
+      "source_role": "requirements",
+      "source_excerpt": "paper application fee first permit 950 € / extended permit 430 €",
+      "parameters": {
+        "first_permit_eur": 950,
+        "extended_permit_eur": 430,
+        "currency": "EUR"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "Paper application fee First permit 950 € / extended permit 430 €"
+    },
+    {
+      "requirement_code": "passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport issued by your country of nationality",
+      "source_role": "requirements",
+      "source_excerpt": "a valid passport issued by your country of nationality. for more information, see the page passports and other travel documents . show the passport when you visit a service point to prove your identity.",
+      "display_order": 160,
+      "source_excerpt_display": "A valid passport issued by your country of nationality. For more information, see the page Passports and other travel documents. Show the passport when you visit a service point to prove your identity."
+    },
+    {
+      "requirement_code": "passport_photo",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport photo to police specification, no more than 6 months old",
+      "description": "A photograph retrieval code from a photo shop is accepted in place of the image itself.",
+      "source_role": "requirements",
+      "source_excerpt": "a passport photo complying with the photo guidelines issued by the police , or a photograph retrieval code you received from a photo shop the passport photo must be no more than 6 months old.",
+      "parameters": {
+        "max_photo_age_months": 6
+      },
+      "display_order": 170,
+      "source_excerpt_display": "A passport photo complying with the photo guidelines issued by the police, or a photograph retrieval code you received from a photo shop The passport photo must be no more than 6 months old."
+    },
+    {
+      "requirement_code": "passport_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Colour copies of the data page and every page carrying notes",
+      "description": "Every annotated page, not only the data page — a wider ask than most authorities in this registry make.",
+      "source_role": "requirements",
+      "source_excerpt": "colour copies of the passport page containing personal data and of all passport pages that contain notes",
+      "display_order": 180,
+      "source_excerpt_display": "Colour copies of the passport page containing personal data and of all passport pages that contain notes"
+    },
+    {
+      "requirement_code": "proof_of_legal_stay_where_applying",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof you are legally in the country where you submit the application",
+      "description": "Not needed for an extended permit; Migri says so in the same block.",
+      "source_role": "requirements",
+      "source_excerpt": "document showing that you are legally staying in the country where you submit the application this document is not needed if you apply for an extended permit.",
+      "display_order": 190,
+      "source_excerpt_display": "Document showing that you are legally staying in the country where you submit the application This document is not needed if you apply for an extended permit."
+    },
+    {
+      "requirement_code": "form_mp1",
+      "kind": "form",
+      "officially_required": false,
+      "label": "Form MP_1 — only if you submit the application inside Finland",
+      "description": "Conditional by construction: a first permit is normally applied for abroad, and this form exists for the exception. Marked not officially required because it binds only that case.",
+      "official_form_code": "MP_1",
+      "source_role": "requirements",
+      "source_excerpt": "response to possible denial of admittance or stay and to entry ban (the form mp_1 ) this form is needed only if you, for some reason, submit your residence permit application in finland.",
+      "display_order": 200,
+      "source_excerpt_display": "Response to possible denial of admittance or stay and to entry ban (the form MP_1) This form is needed only if you, for some reason, submit your residence permit application in Finland."
+    },
+    {
+      "requirement_code": "prove_identity_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Prove your identity in person at a Finnish mission abroad",
+      "description": "Migri can begin processing before this, but the permit is not decided without it.",
+      "source_role": "requirements",
+      "source_excerpt": "if you applied for your residence permit abroad, book an appointment to visit a finnish mission (finlandabroad.fi) .",
+      "display_order": 210,
+      "source_excerpt_display": "If you applied for your residence permit abroad, book an appointment to visit a Finnish mission (finlandabroad.fi)."
+    },
+    {
+      "requirement_code": "no_work_before_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You cannot start work before the permit is granted",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot start working before you get a residence permit for an employed person.",
+      "display_order": 220,
+      "source_excerpt_display": "You cannot start working before you get a residence permit for an employed person."
+    },
+    {
+      "requirement_code": "work_confined_to_granted_field",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work only in the field of employment the permit was granted for",
+      "description": "The other half of the field-of-employment rule, stated where it bites: after the permit is issued. Several jobs within the field are allowed.",
+      "source_role": "requirements",
+      "source_excerpt": "you can only work in the field of employment to which your job belongs and for which you have been granted a residence permit. you may have several jobs in the same field of employment.",
+      "display_order": 230,
+      "source_excerpt_display": "You can only work in the field of employment to which your job belongs and for which you have been granted a residence permit. You may have several jobs in the same field of employment."
+    },
+    {
+      "requirement_code": "general_valid_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: hold a valid national passport",
+      "description": "From Migri's general page, which the permit page defers to by name. The exception is narrow and stated there: someone granted international protection needs a valid alien's passport or refugee travel document instead.",
+      "source_role": "eligibility",
+      "source_excerpt": "you have a valid passport. when you apply for a residence permit, you must usually have a valid national passport.",
+      "display_order": 240,
+      "source_excerpt_display": "You have a valid passport. When you apply for a residence permit, you must usually have a valid national passport."
+    },
+    {
+      "requirement_code": "general_no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: no prohibition of entry against you",
+      "source_role": "eligibility",
+      "source_excerpt": "you have not been prescribed a prohibition of entry.",
+      "display_order": 250,
+      "source_excerpt_display": "You have not been prescribed a prohibition of entry."
+    },
+    {
+      "requirement_code": "general_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public order or security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public order or security.",
+      "display_order": 260,
+      "source_excerpt_display": "You are not a danger to public order or security."
+    },
+    {
+      "requirement_code": "general_national_security",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to national security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to national security.",
+      "display_order": 270,
+      "source_excerpt_display": "You are not a danger to national security."
+    },
+    {
+      "requirement_code": "general_public_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public health",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public health.",
+      "display_order": 280,
+      "source_excerpt_display": "You are not a danger to public health."
+    },
+    {
+      "requirement_code": "general_international_relations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to Finland's international relations",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to finland’s international relations.",
+      "display_order": 290,
+      "source_excerpt_display": "You are not a danger to Finland’s international relations."
+    }
+  ]
+}

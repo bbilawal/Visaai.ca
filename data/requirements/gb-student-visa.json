@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "gb-student-visa",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official GOV.UK pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. The UK publishes no application form identifier for this route, so official_form_code is null everywhere and the online route is recorded as a step.",
+  "source_roles": {
+    "landing": "https://www.gov.uk/student-visa",
+    "eligibility": "https://www.gov.uk/student-visa/course",
+    "documents": "https://www.gov.uk/student-visa/documents-you-must-provide",
+    "application": "https://www.gov.uk/student-visa/apply-online"
+  },
+  "page_dates": {},
+  "not_extracted": [
+    "The registered 'fees' source https://www.gov.uk/government/publications/visa-regulations-revised-table states NO fee amount in its HTML — it is an attachment wrapper listing ODS/HTML fee tables (latest: 'home office immigration and nationality fees, 8 april 2026'; page last updated 18 march 2026). Because it publishes no amount in-page it is absent from source_roles and no requirement cites it. The GBP 558 application fee below is quoted from the registered landing page, which does state it.",
+    "The immigration health surcharge amount. The landing page says it is payable and that the amount depends on visa length, but states no figure for this route, so the fee entry below carries no amount.",
+    "The amount of money a Student visa applicant must show. GOV.UK puts the maintenance figures on the unregistered sub-page /student-visa/money.",
+    "The English language requirement level and how to prove it — unregistered sub-page /student-visa/knowledge-of-english.",
+    "Dependant (partner and children) requirements — unregistered sub-page /student-visa/family-members.",
+    "Which courses require an ATAS certificate, and which nationalities. GOV.UK links out to a separate ATAS service; the documents page only says a certificate is needed 'if your course and nationality require it'.",
+    "The list of licensed student sponsors, and the list of countries whose nationals must take a tuberculosis test. Both are separate GOV.UK services, not registered sources.",
+    "Priority / faster-decision service fees — mentioned but with no amount stated on any registered page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "age_16_or_over",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be 16 or over",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 16
+      },
+      "source_role": "landing",
+      "source_excerpt": "you can apply for a student visa to study in the uk if you’re 16 or over and you:",
+      "display_order": 10,
+      "source_excerpt_display": "You can apply for a Student visa to study in the UK if you’re 16 or over and you:"
+    },
+    {
+      "requirement_code": "offer_from_licensed_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have an unconditional offer of a place with a licensed student sponsor",
+      "description": "The landing page states the offer requirement; the course page adds that the offer must be unconditional.",
+      "source_role": "eligibility",
+      "source_excerpt": "you must have an unconditional offer of a place on a course with a licensed student sponsor .",
+      "display_order": 20,
+      "source_excerpt_display": "You must have an unconditional offer of a place on a course with a licensed student sponsor."
+    },
+    {
+      "requirement_code": "enough_money",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money to support yourself and pay for your course",
+      "description": "GOV.UK states the amount varies by circumstance and publishes the figures on a sub-page that is not a registered source, so no threshold is recorded here.",
+      "source_role": "landing",
+      "source_excerpt": "have enough money to support yourself and pay for your course - the amount will vary depending on your circumstances",
+      "display_order": 30,
+      "source_excerpt_display": "have enough money to support yourself and pay for your course - the amount will vary depending on your circumstances"
+    },
+    {
+      "requirement_code": "knowledge_of_english",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be able to speak, read, write and understand English",
+      "source_role": "landing",
+      "source_excerpt": "can speak, read, write and understand english",
+      "display_order": 40,
+      "source_excerpt_display": "can speak, read, write and understand English"
+    },
+    {
+      "requirement_code": "parental_consent_16_or_17",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have your parents' consent if you are 16 or 17",
+      "description": "GOV.UK states this applies at ages 16 and 17 specifically, and that you need evidence of the consent when you apply.",
+      "rule": {
+        "fact": "age",
+        "op": "lt",
+        "value": 18
+      },
+      "source_role": "landing",
+      "source_excerpt": "have consent from your parents if you’re 16 or 17 - you’ll need evidence of this when you apply",
+      "display_order": 50,
+      "source_excerpt_display": "have consent from your parents if you’re 16 or 17 - you’ll need evidence of this when you apply"
+    },
+    {
+      "requirement_code": "eligible_course_type",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study a course eligible for the Student visa",
+      "description": "GOV.UK lists: a full-time course below degree level (RQF level 3, 4 or 5) with at least 15 hours a week of organised daytime study; a full-time course at degree level or above (RQF level 6, 7 or 8); a full-time degree-level course equivalent to a UK higher education course delivered as part of a longer overseas course; a part-time course above degree level (RQF level 7 or above); an English language course at CEFR level B2 or above. A full-time elected student union sabbatical officer post also qualifies. Qualification levels differ in Scotland.",
+      "source_role": "eligibility",
+      "source_excerpt": "you can do one of the following courses: a full-time course leading to a qualification that’s below degree level ( rqf level 3, 4 or 5) with at least 15 hours a week of organised daytime study",
+      "display_order": 60,
+      "source_excerpt_display": "You can do one of the following courses: a full-time course leading to a qualification that’s below degree level (RQF level 3, 4 or 5) with at least 15 hours a week of organised daytime study"
+    },
+    {
+      "requirement_code": "apply_within_6_months_of_cas",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply within 6 months of receiving your CAS",
+      "source_role": "eligibility",
+      "source_excerpt": "you must apply for your visa within 6 months of receiving your cas .",
+      "display_order": 70,
+      "source_excerpt_display": "You must apply for your visa within 6 months of receiving your CAS."
+    },
+    {
+      "requirement_code": "application_timing",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply no earlier than 6 months before your course starts (outside the UK)",
+      "description": "GOV.UK gives a different window for applications made inside the UK: the earliest is 3 months before the course starts, you must apply before your current visa expires, and the new course must begin within 28 days of that expiry.",
+      "source_role": "landing",
+      "source_excerpt": "applying from outside the uk the earliest you can apply for a visa is 6 months before you start your course.",
+      "display_order": 80,
+      "source_excerpt_display": "Applying from outside the UK The earliest you can apply for a visa is 6 months before you start your course."
+    },
+    {
+      "requirement_code": "passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Current passport or other valid travel documentation",
+      "source_role": "documents",
+      "source_excerpt": "when you apply for your student visa you must provide: a current passport or other valid travel documentation",
+      "display_order": 100,
+      "source_excerpt_display": "When you apply for your Student visa you must provide: a current passport or other valid travel documentation"
+    },
+    {
+      "requirement_code": "confirmation_of_acceptance_for_studies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Confirmation of Acceptance for Studies (CAS) from your course provider",
+      "description": "The CAS is an electronic reference number your education provider sends you after offering a place; you must enter it on your visa application. It is not a physical document.",
+      "source_role": "documents",
+      "source_excerpt": "a confirmation of acceptance for studies ( cas ) from your course provider",
+      "display_order": 110,
+      "source_excerpt_display": "a Confirmation of Acceptance for Studies (CAS) from your course provider"
+    },
+    {
+      "requirement_code": "proof_of_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof you have enough money to support yourself and pay for your course",
+      "description": "GOV.UK lists this under \"you may also need to provide\" and states the amount varies by circumstance.",
+      "source_role": "documents",
+      "source_excerpt": "you may also need to provide: proof you have enough money to support yourself and pay for your course - this will vary depending on your circumstances",
+      "display_order": 120,
+      "source_excerpt_display": "You may also need to provide: proof you have enough money to support yourself and pay for your course - this will vary depending on your circumstances"
+    },
+    {
+      "requirement_code": "atas_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid ATAS certificate, if your course and nationality require it",
+      "description": "The course page adds that an Academic Technology Approval Scheme certificate may be needed if you are studying or researching sensitive topics at RQF level 7 or above.",
+      "source_role": "documents",
+      "source_excerpt": "a valid atas certificate if your course and nationality require it",
+      "display_order": 130,
+      "source_excerpt_display": "a valid ATAS certificate if your course and nationality require it"
+    },
+    {
+      "requirement_code": "parental_consent_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Written consent from both parents or legal guardians if you are under 18",
+      "description": "GOV.UK requires consent from both parents or legal guardians (or one parent with sole responsibility), covering the visa application, your living and care arrangements in the UK, and your travel to the UK.",
+      "rule": {
+        "fact": "age",
+        "op": "lt",
+        "value": 18
+      },
+      "source_role": "documents",
+      "source_excerpt": "if you’re under 18 you’ll need written consent from both parents or legal guardians (or one parent if they have sole responsibility).",
+      "display_order": 140,
+      "source_excerpt_display": "If you’re under 18 you’ll need written consent from both parents or legal guardians (or one parent if they have sole responsibility)."
+    },
+    {
+      "requirement_code": "proof_of_relationship_to_parent",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of your relationship to your parent or guardian if you are under 18",
+      "description": "GOV.UK also asks for a copy of your birth certificate, or another government-issued document showing the names of your parents.",
+      "rule": {
+        "fact": "age",
+        "op": "lt",
+        "value": 18
+      },
+      "source_role": "documents",
+      "source_excerpt": "proof of your relationship to your parent or guardian if you’re under 18",
+      "display_order": 150,
+      "source_excerpt_display": "proof of your relationship to your parent or guardian if you’re under 18"
+    },
+    {
+      "requirement_code": "tb_test_results",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Tuberculosis test results",
+      "description": "Listed by GOV.UK among documents you may also need. The page does not state which nationalities must test; that list is a separate GOV.UK service.",
+      "source_role": "documents",
+      "source_excerpt": "your tuberculosis test results",
+      "display_order": 160,
+      "source_excerpt_display": "your tuberculosis test results"
+    },
+    {
+      "requirement_code": "financial_sponsor_consent",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Written consent from your financial sponsor",
+      "description": "Required where a sponsor has covered your course fees and living costs in the last 12 months.",
+      "rule": {
+        "fact": "has_sponsor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "documents",
+      "source_excerpt": "written consent for your application from your financial sponsor if you’ve received sponsorship for your course fees and living costs in the last 12 months",
+      "display_order": 170,
+      "source_excerpt_display": "written consent for your application from your financial sponsor if you’ve received sponsorship for your course fees and living costs in the last 12 months"
+    },
+    {
+      "requirement_code": "apply_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online for the Student visa",
+      "description": "The UK publishes no application form number for this route — the application exists only as an online service. GOV.UK states you can save the form and complete it later.",
+      "source_role": "application",
+      "source_excerpt": "you must apply online for a student visa.",
+      "display_order": 200,
+      "source_excerpt_display": "You must apply online for a Student visa."
+    },
+    {
+      "requirement_code": "prove_your_identity",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Prove your identity, by app or at a visa application centre",
+      "description": "GOV.UK states you will either use the 'UK Immigration: ID Check' app to scan your identity document (creating or signing into a UKVI account), or have your fingerprints and photo taken at a visa application centre. Which one applies depends on where you are from and what type of passport you have; you are told when you apply. If you need an appointment you must take your passport, and the centre may be in another country.",
+      "source_role": "application",
+      "source_excerpt": "as part of your application, you’ll need to prove your identity. how you do this depends on where you’re from and what type of passport you have.",
+      "display_order": 210,
+      "source_excerpt_display": "As part of your application, you’ll need to prove your identity. How you do this depends on where you’re from and what type of passport you have."
+    },
+    {
+      "requirement_code": "student_visa_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Student visa application fee",
+      "description": "GBP 558 whether you apply from outside the UK or extend or switch from inside the UK. The fee is payable for each person that joins you.",
+      "parameters": {
+        "currency": "GBP",
+        "unit": "per person",
+        "read_at": "2026-08-21",
+        "tiers": [
+          {
+            "tier": "apply from outside the uk",
+            "amount": 558
+          },
+          {
+            "tier": "extend or switch from inside the uk",
+            "amount": 558
+          }
+        ]
+      },
+      "source_role": "landing",
+      "source_excerpt": "it costs: £558 to apply for a student visa from outside the uk ... £558 to extend or switch to a student visa from inside the uk ... you must pay the visa fee for each person that joins you.",
+      "display_order": 400,
+      "source_excerpt_display": "It costs: £558 to apply for a Student visa from outside the UK ... £558 to extend or switch to a Student visa from inside the UK ... You must pay the visa fee for each person that joins you."
+    },
+    {
+      "requirement_code": "healthcare_surcharge",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Immigration healthcare surcharge",
+      "description": "Payable as part of the application. GOV.UK states the amount depends on how long your visa lasts but publishes no figure on any registered source for this route, so no amount is recorded.",
+      "parameters": {
+        "currency": "GBP",
+        "read_at": "2026-08-21",
+        "amount_stated_on_page": false
+      },
+      "source_role": "landing",
+      "source_excerpt": "you’ll also have to pay the healthcare surcharge as part of your application. how much you pay depends on how long your visa lasts.",
+      "display_order": 410,
+      "source_excerpt_display": "You’ll also have to pay the healthcare surcharge as part of your application. How much you pay depends on how long your visa lasts."
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "no-visitor-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official UDI page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.udi.no/en/want-to-apply/visit-and-holiday/visitors-visa-to-norway/?c=ind"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The application fee amount. UDI states the obligation on this page but publishes the figure elsewhere; that page is not a registered source.",
+    "The embassy document checklist. Per-embassy and behind a country selector, so there is no single list to quote — the obligation to supply it is recorded instead.",
+    "Which nationalities need a visitor visa at all. UDI resolves this through the nationality selector rather than publishing a list here.",
+    "The Schengen 90/180 calculation. UDI links the European Commission's visa calculator rather than stating the rule.",
+    "Purpose-specific guidance (visiting parents or children is 'normally' granted). Stated, but it qualifies a discretionary decision rather than setting a requirement."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "schengen_wide_validity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Up to 90 days, valid for entry to all Schengen countries",
+      "source_role": "requirements",
+      "source_excerpt": "if you plan to visit norway for up to 90 days, you can apply for a visitor visa. this visa is valid for entry to all schengen countries.",
+      "display_order": 5,
+      "source_excerpt_display": "If you plan to visit Norway for up to 90 days, you can apply for a visitor visa. This visa is valid for entry to all Schengen countries."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Pay an application fee",
+      "description": "No amount recorded: UDI states the obligation here but publishes the figure elsewhere, and that page is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you must pay an application fee.",
+      "display_order": 10,
+      "source_excerpt_display": "You must pay an application fee."
+    },
+    {
+      "requirement_code": "embassy_checklist_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All documents on the embassy's checklist",
+      "description": "The list is per-embassy and behind a country selector, so UDI publishes no single list. The obligation is the requirement; its contents are not extractable from this page.",
+      "source_role": "requirements",
+      "source_excerpt": "you must hand in all the documents on the embassy’s checklist. you will find the checklist by clicking on the “how to apply”-button below and choosing the country you live in.",
+      "display_order": 20,
+      "source_excerpt_display": "You must hand in all the documents on the embassy’s checklist. You will find the checklist by clicking on the “How to apply”-button below and choosing the country you live in."
+    },
+    {
+      "requirement_code": "passport_validity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 3 months after your visit, issued within the last 10 years",
+      "source_role": "requirements",
+      "source_excerpt": "you must have a passport that is valid for at least three months after the end of your visit. the passport must be issued within the last ten years.",
+      "display_order": 30,
+      "source_excerpt_display": "You must have a passport that is valid for at least three months after the end of your visit. The passport must be issued within the last ten years."
+    },
+    {
+      "requirement_code": "travel_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel insurance",
+      "source_role": "requirements",
+      "source_excerpt": "you must have valid travel insurance .",
+      "display_order": 40,
+      "source_excerpt_display": "You must have valid travel insurance."
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enough money to finance your stay and return journey",
+      "source_role": "requirements",
+      "source_excerpt": "you must have enough money to finance your stay in norway and your return journey. you must be able to document that you have sufficient means to support yourself during your stay in norway and the schengen area. whether your funds are considered sufficient will be assessed individually in each case.",
+      "display_order": 50,
+      "source_excerpt_display": "You must have enough money to finance your stay in Norway and your return journey. You must be able to document that you have sufficient means to support yourself during your stay in Norway and the Schengen area. Whether your funds are considered sufficient will be assessed individually in each case."
+    },
+    {
+      "requirement_code": "funds_guideline_amounts",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Guideline minimums: NOK 300/day with paid accommodation, NOK 1,300/day without",
+      "description": "UDI calls these GUIDELINES and says sufficiency is assessed individually, so they are guidance rather than a hard threshold. The typo 'sufficent' is UDI's own and is preserved — the excerpt is a quote, not a correction.",
+      "parameters": {
+        "per_day_nok_accommodation_paid": 300,
+        "per_day_nok_no_accommodation": 1300,
+        "per_day_nok_per_person_group": 1000,
+        "currency": "NOK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "the following amounts serve as general guidelines for what is regarded as a sufficient minimum: nok 300 per day is regarded as a sufficent minimum if you will be staying with family or friends, or in accommodation that has been paid for in advance. nok 1,300 per day is regarded as sufficient if you have not documented pre-booked or pre-paid accommodation for the entire duration of your stay. if several people are travelling together, the amount should be at least nok 1,000 per person per day.",
+      "display_order": 60,
+      "source_excerpt_display": "The following amounts serve as general guidelines for what is regarded as a sufficient minimum: NOK 300 per day is regarded as a sufficent minimum if you will be staying with family or friends, or in accommodation that has been paid for in advance. NOK 1,300 per day is regarded as sufficient if you have not documented pre-booked or pre-paid accommodation for the entire duration of your stay. If several people are travelling together, the amount should be at least NOK 1,000 per person per day."
+    },
+    {
+      "requirement_code": "sponsor_if_insufficient_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A financial guarantee via a sponsorship form, only if you lack sufficient funds yourself",
+      "description": "Conditional on the applicant's own funds against an individually-judged standard VisaAI cannot assess, so no rule is attached.",
+      "source_role": "requirements",
+      "source_excerpt": "if you do not have enough money yourself, you must have a financial guarantee: the person or company you are visiting must fill out a sponsorship form, which can be either electronic or on a paper form . remember to have the four-word sponsor code ready when you apply for a visitor visa (if your sponsor uses the electronic form). you only need a sponsor for the visit if you do not have enough money yourself.",
+      "display_order": 70,
+      "source_excerpt_display": "If you do not have enough money yourself, you must have a financial guarantee: The person or company you are visiting must fill out a sponsorship form, which can be either electronic or on a paper form. Remember to have the four-word sponsor code ready when you apply for a visitor visa (if your sponsor uses the electronic form). You only need a sponsor for the visit if you do not have enough money yourself."
+    },
+    {
+      "requirement_code": "no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not be subject to a prohibition against entry to Norway or Schengen",
+      "source_role": "requirements",
+      "source_excerpt": "you must not be subject to a prohibition against entry to norway or schengen .",
+      "display_order": 80,
+      "source_excerpt_display": "You must not be subject to a prohibition against entry to Norway or Schengen."
+    },
+    {
+      "requirement_code": "schengen_90_180_check",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Check your remaining Schengen days if you have been in the area in the last 90 days",
+      "description": "No rule: VisaAI holds no record of prior Schengen days, and gating on a fact we do not have would hide the check from the person who needs it.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have been in the schengen area in the last 90 days, you must check when it is possible for you to re-enter, and how many days you can stay in schengen.",
+      "display_order": 90,
+      "source_excerpt_display": "If you have been in the Schengen area in the last 90 days, you must check when it is possible for you to re-enter, and how many days you can stay in Schengen."
+    },
+    {
+      "requirement_code": "fingerprints",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Register your fingerprints",
+      "source_role": "requirements",
+      "source_excerpt": "you must register your fingerprints .",
+      "display_order": 100,
+      "source_excerpt_display": "You must register your fingerprints."
+    },
+    {
+      "requirement_code": "minor_parental_signature",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Applicants under 18 need both parents or guardians to sign the application",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "requirements",
+      "source_excerpt": "if you are under the age of 18, both your parents, or other persons responsible for you, must sign your application.",
+      "display_order": 110,
+      "source_excerpt_display": "If you are under the age of 18, both your parents, or other persons responsible for you, must sign your application."
+    },
+    {
+      "requirement_code": "invitation_from_host",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An invitation from the person you are visiting",
+      "source_role": "requirements",
+      "source_excerpt": "you must have an invitation from the person you are going to visit .",
+      "display_order": 120,
+      "source_excerpt_display": "You must have an invitation from the person you are going to visit."
+    },
+    {
+      "requirement_code": "likelihood_of_return_assessed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "UDI assesses how likely you are to return home; weak ties normally mean refusal",
+      "description": "Recorded so the assessment is visible rather than a surprise. A decision criterion, not a document, and stated as 'normally' rather than automatic.",
+      "source_role": "requirements",
+      "source_excerpt": "when we process your application, we consider how probable it is that you will return to your home country or the country you live in when the visit is over. we consider the situation in your country and your own situation. we will focus on whether you have anything that ties you to your home country, for example work, property, a spouse or family members who you are supporting. if we believe that it is unlikely that you will return, your application will normally be rejected.",
+      "display_order": 130,
+      "source_excerpt_display": "When we process your application, we consider how probable it is that you will return to your home country or the country you live in when the visit is over. We consider the situation in your country and your own situation. We will focus on whether you have anything that ties you to your home country, for example work, property, a spouse or family members who you are supporting. If we believe that it is unlikely that you will return, your application will normally be rejected."
+    }
+  ]
+}

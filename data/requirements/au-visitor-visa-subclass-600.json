@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-visitor-visa-subclass-600",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
+    "eligibility": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/tourist-stream-overseas"
+  },
+  "not_extracted": [
+    "STREAM SCOPE. Subclass 600 has several streams - Tourist, Business visitor, Sponsored family and Frequent traveller - with different requirements, and the Business visitor stream is a separate VisaAI registry entry (au-visitor-visa-subclass-600-business-visitor-stream). The registered 'eligibility' source for this entry is the Tourist stream (apply outside Australia) page, and that page states its own scope: 'You must meet all of these criteria to be eligible for the Visitor visa Tourist stream (apply overseas).' Every requirement below sourced to 'eligibility' is therefore a TOURIST STREAM, APPLY-OUTSIDE-AUSTRALIA requirement and says so in its description. Nothing from the Business visitor, Sponsored family or Frequent traveller streams is recorded here, and no requirement from the tourist-stream page has been generalised to the subclass as a whole.",
+    "Tourist stream requirements for applicants applying IN Australia. That is a different page and was not read.",
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains the column headings and no amounts. The tourist-stream page likewise says only 'This visa costs from <placeholder> for each applicant (concessions apply in limited circumstances).' No amount and no currency was stated, so no fee is recorded.",
+    "The registered 'forms' source (https://online.immi.gov.au/lusc/login) is disallowed by that host's robots.txt ('User-agent: * / Disallow: /'). It was not fetched and nothing is quoted from it.",
+    "Length of stay granted. The page states 3, 6 or 12 months are possible and that the Department decides case by case; it states no rule that would let VisaAI predict which applies.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "genuine_visitor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a genuine visitor",
+      "description": "The subclass 600 landing page states this for the subclass as a whole.",
+      "source_role": "landing",
+      "source_excerpt": "be a genuine visitor",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough funds to support your stay and to leave Australia",
+      "description": "The subclass 600 landing page states this for the subclass as a whole.",
+      "source_role": "landing",
+      "source_excerpt": "have enough funds to support your stay and leave",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "genuine_visitor_intent_tourist_stream",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Intend only to stay temporarily and obey your visa conditions",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "You must only intend to: stay temporarily in Australia, obey any condition and stay period attached to your visa",
+      "display_order": 30
+    },
+    {
+      "requirement_code": "outside_australia_when_applying_and_decided",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be outside Australia when you apply and when the visa is decided",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "To be eligible for this visa, you must be outside Australia when you apply and when we decide your application.",
+      "display_order": 40
+    },
+    {
+      "requirement_code": "visit_only_and_not_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Intend to come to Australia to visit only, and not to work",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "intend to come to Australia to visit only, have enough money for your stay in Australia, not work in Australia, you must be outside Australia when you apply and when we decide your visa",
+      "display_order": 50
+    },
+    {
+      "requirement_code": "sufficient_money_tourist_stream",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have, or have access to, enough money to support yourself in Australia",
+      "description": "Tourist stream, applying outside Australia. The Department states no fixed threshold on this page.",
+      "source_role": "eligibility",
+      "source_excerpt": "You must have, or have access to, enough money to support yourself while you are in Australia.",
+      "display_order": 60
+    },
+    {
+      "requirement_code": "health_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the health requirement",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "You must meet our health requirement.",
+      "display_order": 70
+    },
+    {
+      "requirement_code": "character_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the character requirement",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "You must meet our character requirement.",
+      "display_order": 80
+    },
+    {
+      "requirement_code": "no_debt_to_australian_government",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have repaid, or arranged to repay, any debt to the Australian Government",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "If you owe the Australian government money, you must have paid it back, or have arranged to pay it back.",
+      "display_order": 90
+    },
+    {
+      "requirement_code": "best_interests_of_the_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Grant must be in the best interests of an applicant under 18",
+      "description": "Tourist stream, applying outside Australia.",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "We might not grant this visa if it is not in the best interests of an applicant under 18.",
+      "display_order": 100
+    },
+    {
+      "requirement_code": "separate_application_per_family_member",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Each family member must lodge a separate application",
+      "description": "Tourist stream, applying outside Australia.",
+      "rule": {
+        "fact": "has_dependants",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "You can't include family members in your application. Each family member, including those listed on your passport, must submit a separate application.",
+      "display_order": 110
+    },
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport or other travel document",
+      "description": "Tourist stream, applying outside Australia. The Department advises getting a new passport before applying if you plan to renew.",
+      "source_role": "eligibility",
+      "source_excerpt": "You need a valid passport or other travel document for this visa. If you plan to get a new passport, do this before you apply.",
+      "display_order": 200
+    },
+    {
+      "requirement_code": "identity_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Identity documents - passport pages, national identity card, proof of change of name",
+      "description": "Tourist stream, applying outside Australia. Proof of change of name may be a marriage or divorce certificate, change of name documents from an Australian Registry of Births, Deaths and Marriages or the relevant overseas authority, or documents showing other names you have been known by.",
+      "source_role": "eligibility",
+      "source_excerpt": "Provide the pages of your current passport showing your photo, personal details and passport issue and expiry dates. Also provide: a national identity card, if you have one, proof of change of name, if applicable",
+      "display_order": 210
+    },
+    {
+      "requirement_code": "genuine_visitor_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Genuine visitor documents - proof of funds, plans in Australia, and reasons to return home",
+      "description": "Tourist stream, applying outside Australia. The Department's examples of proof of funds are itemised personal bank statements for a 3 month period, pay slips, audited accounts, tax records, term deposits and credit card statements. Its examples of reasons to return home are a letter from your employer stating you plan to return to your job, proof you study at a school, college or university in your home country, proof you have immediate family members in your home country, proof you can return home, and proof you own a house or other major assets in your home country.",
+      "source_role": "eligibility",
+      "source_excerpt": "Provide as much proof as you can to show you are visiting Australia as a temporary visitor only. This could include: proof you have enough money for your stay and to leave Australia, such as: itemised personal bank statements for a 3 month period, pay slips, audited accounts, tax records, term deposits, credit card statements",
+      "display_order": 220
+    },
+    {
+      "requirement_code": "invitation_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter of invitation from a relative or friend in Australia",
+      "description": "Tourist stream, applying outside Australia. The Department lists this among genuine visitor documents. It states that if the person will be paying for your stay you must provide proof of their funds.",
+      "rule": {
+        "fact": "purpose",
+        "op": "in",
+        "value": [
+          "family",
+          "visit_family",
+          "visit_friends"
+        ]
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "a letter from your relative or friend in Australia, inviting you to visit. The letter could state: their relationship to you, the purpose of your visit and length of stay, if you will be staying with them. If this person will be paying for your stay, provide proof of their funds.",
+      "display_order": 230
+    },
+    {
+      "requirement_code": "character_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Military service record or discharge papers, and a police certificate if asked",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "Provide any military service record or discharge papers, if applicable. We may ask you to provide a police certificate.",
+      "display_order": 240
+    },
+    {
+      "requirement_code": "longer_visa_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Supporting information if you request a longer visa",
+      "description": "Tourist stream, applying outside Australia. The Department names parents and step-parents of Australian citizens or permanent residents as a case in point, and gives proof that your child is an Australian citizen or permanent resident as an example.",
+      "source_role": "eligibility",
+      "source_excerpt": "If you are requesting a longer visa, tell us in your application. This includes parents and step-parents of Australian citizens or permanent residents. Provide us with further information about the reason for your request.",
+      "display_order": 250
+    },
+    {
+      "requirement_code": "under_18_birth_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Birth certificate showing both parents, for applicants under 18",
+      "description": "Tourist stream, applying outside Australia. Where a birth certificate cannot be provided the Department accepts identification pages of a family book showing both parents, a government-issued identification document, a court-issued document proving identity, or a family census register. Proof of legal guardianship, adoption papers or parental court orders are required where applicable.",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "If you are under the age of 18, you should provide a copy of your birth certificate showing the names of both parents.",
+      "display_order": 260
+    },
+    {
+      "requirement_code": "under_18_consent_and_undertaking",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Consent to grant a visa to a child, and an undertaking declaration",
+      "description": "Tourist stream, applying outside Australia. The page names Form 1229 'Consent form to grant an Australian visa to a child under the age of 18 years' and Form 1257 'Undertaking declaration'. official_form_code is left null: Australia publishes no application form identifier for the visa itself, and these are the Department's own auxiliary form numbers quoted from the page. The Department also asks for a document carrying the signature and photo of the person who completed the form or declaration, such as a passport or driver's licence.",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "Anyone with a legal right to decide where you live, and who is not travelling in Australia with you, must complete either: Form 1229 - Consent form to grant an Australian visa to a child under the age of 18 years, a statutory declaration giving their consent for the child to visit Australia on this visa. In addition to consent information, if you're not staying with a relative or legal guardian, provide Form 1257 - Undertaking declaration. The person you're staying with must sign the form.",
+      "display_order": 270
+    },
+    {
+      "requirement_code": "authorised_recipient_or_agent_notification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Notification that someone is helping with your application",
+      "description": "Tourist stream, applying outside Australia. The page names Form 956A 'Appointment or withdrawal of an authorised recipient' and Form 956 'Appointment of a registered migration agent, legal practitioner or exempt person'. official_form_code is left null for the reason given on the under-18 consent requirement.",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "To nominate someone to: receive your correspondence, use Form 956A Appointment or withdrawal of an authorised recipient, provide immigration assistance, use Form 956 Appointment of a registered migration agent, legal practitioner or exempt person. Upload your written notification or your forms to ImmiAccount.",
+      "display_order": 280
+    },
+    {
+      "requirement_code": "apply_online_immiaccount",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online in ImmiAccount and pay the application fee",
+      "description": "Tourist stream, applying outside Australia. Australia publishes no paper application form number for this visa; the application is made online.",
+      "source_role": "eligibility",
+      "source_excerpt": "Log in or create an ImmiAccount. Attach documents. Submit family applications together. Pay the application fee. We will not process your application until you pay the fee.",
+      "display_order": 400
+    },
+    {
+      "requirement_code": "health_examinations",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Health examinations",
+      "description": "Tourist stream, applying outside Australia. They may be completed before applying, or after if the Department asks.",
+      "source_role": "eligibility",
+      "source_excerpt": "You can complete your health examinations before you apply or you can wait until we tell you to have them. Find out the examinations you might need and how to arrange them.",
+      "display_order": 410
+    },
+    {
+      "requirement_code": "biometrics",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Provide biometrics if asked",
+      "description": "Tourist stream, applying outside Australia. The page states only that the Department will let you know; it states no trigger.",
+      "source_role": "eligibility",
+      "source_excerpt": "We will let you know if you need to provide biometrics.",
+      "display_order": 420
+    },
+    {
+      "requirement_code": "do_not_travel_until_granted",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Do not arrange travel until the visa is granted in writing",
+      "description": "Tourist stream, applying outside Australia.",
+      "source_role": "eligibility",
+      "source_excerpt": "If you applied from outside Australia you must be outside Australia when we decide your visa. Do not arrange to travel to Australia until we let you know, in writing, that we have granted you the visa.",
+      "display_order": 430
+    }
+  ]
+}

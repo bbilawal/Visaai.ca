@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-reagrupamento-familiar-em-territorio",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address and is neither registered nor read.",
+  "structure_note": "THE FAMILY MEMBER MUST ATTEND IN PERSON EVEN IF SOMEONE ELSE FILES. Either the family member or the resident may lodge the application, but the family member always has to attend an AIMA branch for biometrics at the time of the request. This route also requires proof of LEGAL ENTRY, which the out-of-country route does not — because the family member is already here and how they arrived is now a question.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/reagrupamento-familiar-com-familiar-em-territorio-nacional-art-98-o-n-o-2"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several routes require. Published on vistos.mne.gov.pt, which resets our connection from the production address and answers 200 from a second egress. Not registered, not read.",
+    "The fees. Every page links a single fee schedule rather than stating amounts.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "either_party_may_file_but_biometrics_are_personal",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Either the family member or the holder of the reunification right may lodge the application, but the family member must always attend an AIMA branch for biometrics at the time of the request",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "o pedido de concessão de autorização de residência é formulado mediante agendamento, é entregue presencialmente pelo membro da família a reagrupar ou pelo titular do direito ao reagrupamento familiar (tendo no entanto o membro da família de se deslocar sempre a uma loja aima para recolha de dados biométricos aquando do pedido)",
+      "source_excerpt_display": "O pedido de concessão de autorização de residência é formulado mediante agendamento, é entregue presencialmente pelo membro da família a reagrupar ou pelo titular do direito ao reagrupamento familiar (tendo no entanto o membro da família de se deslocar sempre a uma Loja AIMA para recolha de dados biométricos aquando do pedido)"
+    },
+    {
+      "requirement_code": "proof_of_legal_entry_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of legal entry into Portugal",
+      "description": "Required on this route and absent from the out-of-country one, because the family member is already in the country.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "comprovativo de entrada legal em portugal;",
+      "source_excerpt_display": "Comprovativo de entrada legal em Portugal;"
+    },
+    {
+      "requirement_code": "residents_permit",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The residence permit of the person residing in national territory",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "autorização de residência do cidadão que se encontra a residir em território nacional;",
+      "source_excerpt_display": "Autorização de Residência do cidadão que se encontra a residir em território nacional;"
+    },
+    {
+      "requirement_code": "relationship_evidence_authenticated",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Duly authenticated proof of the family ties relied on",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "comprovativos devidamente autenticados dos vínculos familiares invocados (ver documentos específicos);",
+      "source_excerpt_display": "Comprovativos devidamente autenticados dos vínculos familiares invocados (ver documentos específicos);"
+    },
+    {
+      "requirement_code": "criminal_record_of_the_family_member",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A duly authenticated criminal record of the family member, from their country of nationality or where they lived for more than a year",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "registo criminal do país da nacionalidade do familiar a reagrupar ou registo criminal do país onde este residia há mais de um ano, antes de residir em portugal, devidamente autenticado .",
+      "source_excerpt_display": "Registo Criminal do país da nacionalidade do familiar a reagrupar ou registo criminal do país onde este residia há mais de um ano, antes de residir em Portugal, devidamente autenticado."
+    },
+    {
+      "requirement_code": "specific_documents_branch_by_relationship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The specific document depends on the relationship: an authenticated marriage certificate, a medical report or judicial declaration of incapacity, an adoption decision, or an authenticated birth certificate",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "certidão de casamento devidamente autenticada ; ou relatório médico a atestar a incapacidade, ou a declaração judicial da interdição/inabilitação, devidamente autenticada ; ou decisão que decretou a adoção, devidamente autenticada ; ou certidão de nascimento devidamente autenticada",
+      "source_excerpt_display": "Certidão de casamento devidamente autenticada; ou Relatório médico a atestar a incapacidade, ou a declaração judicial da interdição/inabilitação, devidamente autenticada; ou Decisão que decretou a adoção, devidamente autenticada; ou Certidão de nascimento devidamente autenticada"
+    },
+    {
+      "requirement_code": "means_of_subsistence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of means of subsistence",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "comprovativo de meios de subsistência ;",
+      "source_excerpt_display": "Comprovativo de meios de subsistência;"
+    }
+  ]
+}

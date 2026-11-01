@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-temporary-visitor",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "THIS ROUTE IS THIN AND THE THINNESS IS THE FINDING. Short-term stay is the status most people arrive on, and almost everything an applicant needs — whether they need a visa at all, how to apply, what to bring — is published by the Ministry of Foreign Affairs, which returns 403 to our monitor. ISA publishes what the STATUS is and how long it lasts, and that is what is recorded. Note also what is absent from the procedure list: there is no 在留資格認定証明書交付申請 for this status, because a Certificate of Eligibility is not used for short stays.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/temporaryvisitor.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page.",
+    "Whether a visa is required, and how to apply for one. Both are MOFA's to publish and MOFA refuses our monitor. This is the largest gap on any registered Japanese route and it is named rather than filled.",
+    "Whether the applicant qualifies for visa exemption. Not stated by ISA."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: a short stay in Japan for sightseeing, recreation, sports, visiting relatives, inspection tours, attending lectures or meetings, business liaison, or similar activities",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "本邦に短期間滞在して行う観光、保養、スポーツ、親族の訪問、見学、講習又は会合への参加、業務連絡その他これらに類似する活動",
+      "source_excerpt_display": "本邦に短期間滞在して行う観光、保養、スポーツ、親族の訪問、見学、講習又は会合への参加、業務連絡その他これらに類似する活動"
+    },
+    {
+      "requirement_code": "examples",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: tourists and conference attendees",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、観光客、会議参加者等。",
+      "source_excerpt_display": "該当例としては、観光客、会議参加者等。"
+    },
+    {
+      "requirement_code": "period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: 90 days, 30 days, or a period counted in days up to 15",
+      "description": "Three bands rather than a single limit, and the shortest is counted in individual days.",
+      "parameters": {
+        "period_options": [
+          "90 days",
+          "30 days",
+          "up to 15 days"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "在留期間 ９０日若しくは３０日又は１５日以内の日を単位とする期間",
+      "source_excerpt_display": "在留期間 ９０日若しくは３０日又は１５日以内の日を単位とする期間"
+    }
+  ]
+}

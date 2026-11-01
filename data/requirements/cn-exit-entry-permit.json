@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "visaai_id": "cn-exit-entry-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "other",
+    "official_name": "Issuance of Exit-Entry Permits for Foreigners",
+    "slug": "exit-entry-permit",
+    "purpose": "The document China issues to a foreigner in the country who has no valid passport — lost, damaged, stolen or robbed — and cannot obtain a replacement from their own embassy. Decided within 30 working days, CNY 100, collected in person.",
+    "source_titles": {
+      "requirements": "Service Guide on Issuance of Exit-Entry Permits for Foreigners"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the National Immigration Administration service guide named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "This route exists for one predicament: being in China with no usable travel document and no embassy able to replace it. The application CONDITION and the application MATERIALS restate the same three alternatives — a passport-loss certification, a note from the embassy or consulate, or invalidated/expired documents plus any temporary identity document in use — and both are published, because one is what makes you eligible and the other is what you hand over.\n\nThe verification section is unusually explicit that an interview is part of the process and that missing it without justifiable reason is itself grounds for refusal. That is quoted rather than summarised.",
+  "source_roles": {
+    "requirements": "https://en.nia.gov.cn/n147423/n147478/n147715/c158281/content.html"
+  },
+  "page_dates": {
+    "requirements": "2021-04-01"
+  },
+  "freshness_note": "The page publishes its own dateline in the body: 2021-04-01. That is a REAL publication date — more than Austria's migration.gv.at, Singapore's MOM pages or the US ESTA pages carry — and it is also evidence of AGE: this guide has stood unrevised since 2021-04-01. Both halves are recorded, because a dateline is only useful if the number on it is read rather than noted as present.",
+  "not_extracted": [
+    "The visa CATEGORIES themselves (C, F, G, J1, J2, L, M, Q1, Q2, R, S1, S2, X1, X2, Z). These guides use the letters and define none of them: the definitions live in the Regulations on Administration of the Entry and Exit of Foreigners, a separate instrument. Every requirement quotes the letter as the authority uses it and glosses none.",
+    "The \"rights and obligations of administrative counterpart\" section. It restates general administrative-law rights — to equal treatment, to be informed, to appeal — rather than anything specific to this permit, and publishing it as a visa requirement would misrepresent what it is.",
+    "Ordinary visa ISSUANCE outside China, which is done by embassies and consulates. These guides cover what happens after entry."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scope: foreigners applying for exit-entry permits",
+      "description": "The guide states its own scope.",
+      "source_role": "requirements",
+      "source_excerpt": "this service guide is applicable to foreigners applying for exit-entry permits.",
+      "display_order": 10,
+      "source_excerpt_display": "This service guide is applicable to foreigners applying for exit-entry permits."
+    },
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: the Exit and Entry Administration Law and the Exit-Entry Regulations",
+      "description": "The two instruments this guide is written under.",
+      "source_role": "requirements",
+      "source_excerpt": "exit and entry administration law of the people's republic of china, regulations of the people's republic of china on administration of the exit and entry of foreigners.",
+      "display_order": 20,
+      "source_excerpt_display": "Exit and Entry Administration Law of the People's Republic of China, Regulations of the People's Republic of China on Administration of the Exit and Entry of Foreigners."
+    },
+    {
+      "requirement_code": "competent_authorities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Where it is accepted: prefecture-level and above public security exit-entry authorities",
+      "description": "The NIA entrusts acceptance rather than accepting directly.",
+      "source_role": "requirements",
+      "source_excerpt": "the national immigration administration (nia) has entrusted the exit-entry administration authorities of public security organs at the prefecture-level (including districts and counties under the administration of municipalities directly under the central government) and above to accept applications for exit-entry permits of foreigners.",
+      "display_order": 30,
+      "source_excerpt_display": "The National Immigration Administration (NIA) has entrusted the exit-entry administration authorities of public security organs at the prefecture-level (including districts and counties under the administration of municipalities directly under the central government) and above to accept applications for exit-entry permits of foreigners."
+    },
+    {
+      "requirement_code": "county_level_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "County-level authorities may be authorised by the NIA to accept applications",
+      "description": "A second channel, on provincial request and NIA approval.",
+      "source_role": "requirements",
+      "source_excerpt": "with the approval of nia at the request of exit-entry administration authorities under provincial public security organs, exit-entry administration authorities of county-level public security organs may be authorized by nia to accept applications for exit-entry permits of foreigners.",
+      "display_order": 40,
+      "source_excerpt_display": "With the approval of NIA at the request of exit-entry administration authorities under provincial public security organs, exit-entry administration authorities of county-level public security organs may be authorized by NIA to accept applications for exit-entry permits of foreigners."
+    },
+    {
+      "requirement_code": "condition_no_valid_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eligibility: no valid passport through loss, damage, theft or robbery, and no replacement obtainable from your own embassy",
+      "description": "The predicament and the three documentary alternatives are one sentence and are quoted whole.",
+      "source_role": "requirements",
+      "source_excerpt": "1. where a foreigner in china has no valid passport or other international travel document due to loss, damage, theft and robbery and is not able to obtain reissued documents from the embassy or consulate of his/her country in china, he/she shall submit a certification of passport loss report or a note from the embassy or consulate of his/her country in china or present invalidated or expired documents and any temporary identity document in use instead of a passport.",
+      "display_order": 50,
+      "source_excerpt_display": "1. Where a foreigner in China has no valid passport or other international travel document due to loss, damage, theft and robbery and is not able to obtain reissued documents from the embassy or consulate of his/her country in China, he/she shall submit a certification of passport loss report or a note from the embassy or consulate of his/her country in China or present invalidated or expired documents and any temporary identity document in use instead of a passport."
+    },
+    {
+      "requirement_code": "condition_other_circumstances",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Other circumstances the NIA considers necessary are governed by the relevant provisions",
+      "description": "The authority does not enumerate them and none is invented.",
+      "source_role": "requirements",
+      "source_excerpt": "2. for other circumstances where nia considers it necessary to issue exit-entry permits for foreigners., relevant provisions shall prevail.",
+      "display_order": 60,
+      "source_excerpt_display": "2. For other circumstances where NIA considers it necessary to issue exit-entry permits for foreigners., relevant provisions shall prevail."
+    },
+    {
+      "requirement_code": "prohibitive_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Refused if the conditions are not met, or under Article 28 of the Exit and Entry Administration Law",
+      "description": "The guide names the article rather than restating it, and so does this.",
+      "source_role": "requirements",
+      "source_excerpt": "where an applicant does not comply with the aforementioned conditions for application or falls within the circumstances stipulated in article 28 of the exit and entry administration law of the people's republic of china, the exit-entry permits for foreigners shall not be issued.",
+      "display_order": 70,
+      "source_excerpt_display": "Where an applicant does not comply with the aforementioned conditions for application or falls within the circumstances stipulated in Article 28 of the Exit and Entry Administration Law of the People's Republic of China, the exit-entry permits for foreigners shall not be issued."
+    },
+    {
+      "requirement_code": "materials_form_and_photo",
+      "kind": "form",
+      "officially_required": true,
+      "label": "The visa/stay permit/residence permit application form and a compliant photo",
+      "description": "The photo must comply with the exit-entry document photograph guidelines.",
+      "source_role": "requirements",
+      "source_excerpt": "1. applicants shall fill in the visa/stay permit/residence permit application form and submit a photo that complies with the guidelines for exit and entry documents photographs.",
+      "display_order": 80,
+      "source_excerpt_display": "1. Applicants shall fill in the Visa/Stay Permit/Residence Permit Application Form and submit a photo that complies with the Guidelines for Exit and Entry Documents Photographs."
+    },
+    {
+      "requirement_code": "materials_loss_certification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport-loss certification, an embassy note, or invalidated documents plus a temporary identity document",
+      "description": "The three alternatives, quoted as alternatives rather than as a checklist.",
+      "source_role": "requirements",
+      "source_excerpt": "2. applicants shall submit a certification for passport loss report or a note from the embassy or consulate of his/her country of residence in china, or present invalidated or expired document and any temporary identity document in use instead of a passport.",
+      "display_order": 90,
+      "source_excerpt_display": "2. Applicants shall submit a certification for passport loss report or a note from the embassy or consulate of his/her country of residence in China, or present invalidated or expired document and any temporary identity document in use instead of a passport."
+    },
+    {
+      "requirement_code": "materials_other",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Other supporting materials the NIA deems necessary",
+      "description": "Stated by the authority without enumeration.",
+      "source_role": "requirements",
+      "source_excerpt": "3. other supporting materials deemed necessary by nia.",
+      "display_order": 100,
+      "source_excerpt_display": "3. Other supporting materials deemed necessary by NIA."
+    },
+    {
+      "requirement_code": "apply_in_person_with_interview",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply IN PERSON and accept an interview at the public security exit-entry authority",
+      "description": "Both the personal attendance and the interview are stated in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "1. application . to apply for foreigners' exit-entry permit, foreigners shall complete relevant procedures and accept interview in person at the exit-entry administration authority of public security organs.",
+      "display_order": 110,
+      "source_excerpt_display": "1. Application. To apply for foreigners' exit-entry permit, foreigners shall complete relevant procedures and accept interview in person at the exit-entry administration authority of public security organs."
+    },
+    {
+      "requirement_code": "acceptance_and_one_time_notice",
+      "kind": "step",
+      "officially_required": true,
+      "label": "On acceptance a receipt is issued; missing items must be notified to you AT ONE TIME",
+      "description": "The one-time rule is a protection: the authority may not send an applicant away twice for different omissions.",
+      "source_role": "requirements",
+      "source_excerpt": "2. acceptance . the competent authority shall review and decide whether or not to accept an application. where the application falls within the scope of the administrative authority, and the application materials are complete and comply with the requirements, the application shall be accepted on the spot and an acceptance receipt shall be issued. where the formalities and materials required for the application for exit-entry permit are incomplete, the competent authority shall inform the applicant of the formalities to be completed and the materials to be supplemented at one time.",
+      "display_order": 120,
+      "source_excerpt_display": "2. Acceptance. The competent authority shall review and decide whether or not to accept an application. Where the application falls within the scope of the administrative authority, and the application materials are complete and comply with the requirements, the application shall be accepted on the spot and an acceptance receipt shall be issued. Where the formalities and materials required for the application for exit-entry permit are incomplete, the competent authority shall inform the applicant of the formalities to be completed and the materials to be supplemented at one time."
+    },
+    {
+      "requirement_code": "verification_interview_failure_refusal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Failing to attend an interview without justifiable reason may itself defeat the application",
+      "description": "The authority names interviews, telephone inquiries and field investigation as its verification means.",
+      "source_role": "requirements",
+      "source_excerpt": "3. review and verification . the public security organs shall strengthen the verification process to ensure authenticity of the application reasons through interviews, telephone inquiries, field investigations and other means, and confirm whether the applicant is of foreign nationality. where an applicant or relevant entity/individual is notified to take an interview but fails to do that at the agreed time without justifiable reasons, the application may be denied by law.",
+      "display_order": 130,
+      "source_excerpt_display": "3. Review and Verification. The public security organs shall strengthen the verification process to ensure authenticity of the application reasons through interviews, telephone inquiries, field investigations and other means, and confirm whether the applicant is of foreign nationality. Where an applicant or relevant entity/individual is notified to take an interview but fails to do that at the agreed time without justifiable reasons, the application may be denied by law."
+    },
+    {
+      "requirement_code": "time_limit_30_working_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A decision within 30 WORKING days of acceptance",
+      "description": "Working days, not calendar days, and measured from acceptance rather than submission.",
+      "source_role": "requirements",
+      "source_excerpt": "a decision shall be made within 30 working days from the date of accepting the application for exit-entry permit for foreigners.",
+      "parameters": {
+        "decision_working_days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "A decision shall be made within 30 working days from the date of accepting the application for exit-entry permit for foreigners."
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Exit-entry permit for foreigners: CNY 100",
+      "description": "From the guide's own charging-standards section.",
+      "source_role": "requirements",
+      "source_excerpt": "exit-entry permit for foreigners: cny 100",
+      "parameters": {
+        "amount": 100,
+        "currency": "CNY",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "Exit-entry permit for foreigners: CNY 100"
+    },
+    {
+      "requirement_code": "collect_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Collected IN PERSON with the acceptance receipt",
+      "description": "The receipt issued at acceptance is what the permit is exchanged for.",
+      "source_role": "requirements",
+      "source_excerpt": "approved and issued exit-entry permit for foreigners shall be collected by the applicant in person at the relevant exit-entry administration authority of public security organs with the acceptance receipt.",
+      "display_order": 160,
+      "source_excerpt_display": "Approved and issued exit-entry permit for foreigners shall be collected by the applicant in person at the relevant exit-entry administration authority of public security organs with the acceptance receipt."
+    }
+  ]
+}

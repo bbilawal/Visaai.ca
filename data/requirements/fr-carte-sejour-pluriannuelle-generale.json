@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-pluriannuelle-generale",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THIS IS THE STEP THAT ADDS A LANGUAGE TEST AND A CIVIC EXAM. Everything else in the French residence system tests circumstances — work, family, study. The first multi-year card tests the person: French at A2 and a pass in the 'carte de séjour pluriannuelle' civic examination, both waived only for the over-65s. A holder renewing what they think is the same permit meets two new conditions that did not exist on their temporary card. FIVE CARDS ARE EXCLUDED FROM THIS ROUTE ENTIRELY and the exclusion list is recorded before the conditions, because a reader who fails to notice they are on it will prepare for a card they cannot have.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F35799"
+  },
+  "page_dates": {
+    "requirements": "2026-05-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 mai 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The per-card branches for changing motive. The page publishes separate blocks for the general case, for salarié/entrepreneur, and for others. The general case and the salarié/entrepreneur case are recorded; the remaining branches are not enumerated.",
+    "The content and format of the civic examination. Named as a condition; the exam itself is not described on this page.",
+    "The tax and stamp duty amounts. Not stated on this page.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "only_after_a_temporary_card_or_vls_ts",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Issued only after a temporary residence card or a VLS-TS",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "la carte de séjour pluriannuelle est délivrée uniquement après une carte de séjour temporaire ou un visa de long séjour valant titre de séjour (vls-ts).",
+      "source_excerpt_display": "La carte de séjour pluriannuelle est délivrée uniquement après une carte de séjour temporaire ou un visa de long séjour valant titre de séjour (VLS-TS)."
+    },
+    {
+      "requirement_code": "five_cards_excluded_from_same_motive_renewal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five temporary cards cannot lead to a multi-year card on the same ground",
+      "description": "A closed list, and it includes the visitor, au pair, intern and temporary-worker cards — routes whose holders are most likely to assume renewal is automatic.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous ne pouvez pas demander une carte de séjour pluriannuelle pour le même motif si vous avez une des cartes de séjour suivantes : carte de séjour temporaire \"travailleur temporaire\" carte de séjour temporaire vie privée et familiale délivrée aux victimes de la traite des êtres humains ou du proxénétisme , ou bénéficiaires d'une ordonnance de protection carte de séjour temporaire visiteur carte de séjour temporaire jeune au pair carte de séjour temporaire stagiaire .",
+      "source_excerpt_display": "Vous ne pouvez pas demander une carte de séjour pluriannuelle pour le même motif si vous avez une des cartes de séjour suivantes: Carte de séjour temporaire \"travailleur temporaire\" Carte de séjour temporaire vie privée et familiale délivrée aux victimes de la traite des êtres humains ou du proxénétisme, ou bénéficiaires d'une ordonnance de protection Carte de séjour temporaire visiteur Carte de séjour temporaire jeune au pair Carte de séjour temporaire stagiaire."
+    },
+    {
+      "requirement_code": "must_still_meet_the_temporary_card_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must still meet the conditions of the temporary card you hold",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "pour pouvoir demander une carte de séjour pluriannuelle pour le même motif, vous devez continuer à remplir les conditions de délivrance de la carte de séjour temporaire que vous avez.",
+      "source_excerpt_display": "Pour pouvoir demander une carte de séjour pluriannuelle pour le même motif, vous devez continuer à remplir les conditions de délivrance de la carte de séjour temporaire que vous avez."
+    },
+    {
+      "requirement_code": "integration_contract_attendance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show diligent and serious participation in the contrat d'intégration républicaine training, if you are subject to it",
+      "description": "Attendance is not enough — the authority tests seriousness as well.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "respecter la condition d'intégration en prouvant votre assiduité et le sérieux de votre participation aux formations prévues par le contrat d'intégration républicaine , si vous y êtes soumis",
+      "source_excerpt_display": "Respecter la condition d'intégration en prouvant votre assiduité et le sérieux de votre participation aux formations prévues par le contrat d'intégration républicaine, si vous y êtes soumis"
+    },
+    {
+      "requirement_code": "sign_republican_principles_undertaking",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Sign the undertaking to respect the principles of the Republic when you file",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous engager à respecter les principes de la république en signant le contrat d'engagement prévu à cet effet lors du dépôt de votre dossier",
+      "source_excerpt_display": "Vous engager à respecter les principes de la République en signant le contrat d'engagement prévu à cet effet lors du dépôt de votre dossier"
+    },
+    {
+      "requirement_code": "french_at_a2_for_the_first_multi_year_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Prove French at A2 level for a FIRST multi-year card, unless you are over 65",
+      "description": "Applies only to the first multi-year card, and the age exemption is absolute.",
+      "parameters": {
+        "language_level": "A2",
+        "exempt_if_older_than": 65
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "attester de votre connaissance de la langue française à un niveau a2 pour la délivrance d’une 1 re carte de séjour pluriannuelle , sauf si vous avez plus de 65 ans",
+      "source_excerpt_display": "Attester de votre connaissance de la langue française à un niveau A2 pour la délivrance d’une 1 re carte de séjour pluriannuelle, sauf si vous avez plus de 65 ans"
+    },
+    {
+      "requirement_code": "civic_examination_for_the_first_multi_year_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pass the 'carte de séjour pluriannuelle' civic examination for a FIRST multi-year card, unless you are over 65",
+      "parameters": {
+        "exempt_if_older_than": 65
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "attester de votre réussite à l’examen civique mention « carte de séjour pluriannuelle » pour la délivrance d’une 1 re carte de séjour pluriannuelle , sauf si vous avez plus de 65 ans.",
+      "source_excerpt_display": "Attester de votre réussite à l’examen civique mention «carte de séjour pluriannuelle» pour la délivrance d’une 1 re carte de séjour pluriannuelle, sauf si vous avez plus de 65 ans."
+    },
+    {
+      "requirement_code": "presence_must_not_threaten_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your presence must not constitute a threat to public order",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "par ailleurs, votre présence ne doit pas constituer une menace pour l'ordre public",
+      "source_excerpt_display": "Par ailleurs, votre présence ne doit pas constituer une menace pour l'ordre public"
+    },
+    {
+      "requirement_code": "prefecture_may_refuse_on_conduct_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The préfecture may refuse for an unfulfilled removal order or for named offences",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "la préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (oqtf) ou si vous avez commis l'un des faits suivants : faux et usage de faux documents",
+      "source_excerpt_display": "La préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (OQTF) ou si vous avez commis l'un des faits suivants: Faux et usage de faux documents"
+    },
+    {
+      "requirement_code": "changing_motive_is_possible_on_the_new_cards_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may switch to a different ground, but must then meet that ground's own temporary-card conditions",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "vous pouvez demander une carte de séjour pluriannuelle pour un autre motif que celui qui a justifié la délivrance de votre carte actuelle. vous devez alors remplir les conditions de délivrance de la carte de séjour temporaire correspondant au motif invoqué.",
+      "source_excerpt_display": "Vous pouvez demander une carte de séjour pluriannuelle pour un autre motif que celui qui a justifié la délivrance de votre carte actuelle. Vous devez alors remplir les conditions de délivrance de la carte de séjour temporaire correspondant au motif invoqué."
+    },
+    {
+      "requirement_code": "salarie_and_entrepreneur_require_the_matching_temporary_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The salarié and entrepreneur multi-year cards require that you already hold the matching temporary card",
+      "description": "A closed door rather than a condition: you cannot arrive at these multi-year cards from another ground.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "pour pouvoir demander une carte de séjour pluriannuelle salarié ou entrepreneur/profession libérale , vous devez déjà avoir une carte de séjour temporaire pour l'un de ces motifs.",
+      "source_excerpt_display": "Pour pouvoir demander une carte de séjour pluriannuelle salarié ou entrepreneur/profession libérale, vous devez déjà avoir une carte de séjour temporaire pour l'un de ces motifs."
+    }
+  ]
+}

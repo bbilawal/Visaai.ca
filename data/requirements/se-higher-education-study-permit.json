@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "se-higher-education-study-permit",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Migrationsverket page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "translation_note": "THE SOURCE IS SWEDISH, as with se-schengen-visa and se-work-permit-employed. Every source_excerpt is verbatim Swedish and scripts/verify-excerpts.ts proves that — the check is language-agnostic. label and description are ENGLISH RENDERINGS produced during extraction, and each description states its translation explicitly so quote and rendering sit side by side. A reviewer who does not read Swedish can verify the quote is on the page but cannot independently verify the translation.",
+  "source_roles": {
+    "requirements": "https://www.migrationsverket.se/du-vill-ansoka/studera/studier-vid-hogre-utbildning.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The 2025 deduction amounts for free food and housing (SEK 2,940 and SEK 4,704). Only the 2026 figures are recorded, because an applicant reading this now is applying in 2026; both years appear on the page and the 2025 pair can be added if back-dated applications ever matter.",
+    "The list of qualifying post-secondary institutions and folk high school courses. Migrationsverket links external registers.",
+    "The application fee amount, on a separate fees page.",
+    "Documentation requirements for accompanying children, including custody consent form 216011, which belong with a family permit rather than this one.",
+    "The tabbed sub-pages (ansok / sa-gar-det-till / viktigt-att-veta), which cover the application mechanics rather than the requirements."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport",
+      "description": "Translation: you must have a valid passport.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska ha ett giltigt pass",
+      "display_order": 10,
+      "source_excerpt_display": "Du ska ha ett giltigt pass"
+    },
+    {
+      "requirement_code": "finally_admitted_full_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be finally admitted to full-time studies",
+      "description": "Translation: you must be finally admitted to full-time studies in Sweden. 'Finally admitted' is the operative word — see tuition_paid_for_final_admission.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska vara slutligt antagen till studier på heltid i sverige.",
+      "display_order": 20,
+      "source_excerpt_display": "Du ska vara slutligt antagen till studier på heltid i Sverige."
+    },
+    {
+      "requirement_code": "no_distance_learning",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Distance learning does not qualify",
+      "description": "Translation: you cannot get a residence permit for studies conducted as distance learning.",
+      "source_role": "requirements",
+      "source_excerpt": "du kan inte få uppehållstillstånd för studier med distansundervisning som studieform.",
+      "display_order": 30,
+      "source_excerpt_display": "Du kan inte få uppehållstillstånd för studier med distansundervisning som studieform."
+    },
+    {
+      "requirement_code": "full_time_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time means 30 higher education credits per semester, or 20 teaching hours a week elsewhere",
+      "description": "Translation: for university studies, 30 higher education credits per semester counts as full-time; for other education, such as folk high school, studies must comprise at least 20 teaching hours per week on average.",
+      "source_role": "requirements",
+      "source_excerpt": "för studier på universitet och högskola räknas 30 högskolepoäng per termin som heltidsstudier. för studier vid övriga utbildningar, till exempel studier vid en folkhögskoleutbildning, behöver studierna omfatta planerat studiearbete om minst 20 undervisningstimmar per vecka i genomsnitt.",
+      "display_order": 40,
+      "source_excerpt_display": "För studier på universitet och högskola räknas 30 högskolepoäng per termin som heltidsstudier. För studier vid övriga utbildningar, till exempel studier vid en folkhögskoleutbildning, behöver studierna omfatta planerat studiearbete om minst 20 undervisningstimmar per vecka i genomsnitt."
+    },
+    {
+      "requirement_code": "tuition_paid_for_final_admission",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Any tuition fees must be paid before you apply — that is what makes admission final",
+      "description": "Translation: you must have paid any tuition fees before you apply; only once the fee is paid are you counted as finally admitted. The institution notifies Migrationsverket when it is paid.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska ha betalat eventuella studieavgifter innan du ansöker det är först när du har betalat din studieavgift som du räknas som slutligt antagen.",
+      "display_order": 50,
+      "source_excerpt_display": "Du ska ha betalat eventuella studieavgifter innan du ansöker Det är först när du har betalat din studieavgift som du räknas som slutligt antagen."
+    },
+    {
+      "requirement_code": "comprehensive_health_insurance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Studies under one year require comprehensive health insurance for the whole stay",
+      "description": "Translation: if admitted to studies lasting less than a year you need comprehensive health insurance; if not covered by the institution you must hold or have applied for your own, valid for your whole stay and covering emergency and other medical care, hospital stays, emergency dental care and medical repatriation.",
+      "source_role": "requirements",
+      "source_excerpt": "om du är antagen till studier som ska pågå kortare tid än ett år behöver du en heltäckande sjukförsäkring. om du inte har en försäkring via lärosätet, måste du ha eller ha ansökt om en egen försäkring. försäkringen ska gälla för hela den tid som du ska vara i sverige och täcka kostnader för akut och annan sjukvård, sjukhusvistelse och akut tandvård. den ska också täcka kostnader för hemtransport av medicinska skäl.",
+      "display_order": 60,
+      "source_excerpt_display": "Om du är antagen till studier som ska pågå kortare tid än ett år behöver du en heltäckande sjukförsäkring. Om du inte har en försäkring via lärosätet, måste du ha eller ha ansökt om en egen försäkring. Försäkringen ska gälla för hela den tid som du ska vara i Sverige och täcka kostnader för akut och annan sjukvård, sjukhusvistelse och akut tandvård. Den ska också täcka kostnader för hemtransport av medicinska skäl."
+    },
+    {
+      "requirement_code": "registration_for_long_studies",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Studies of a year or more: register in the population register for healthcare access",
+      "description": "Translation: if your studies will last at least a year you SHOULD register in the Swedish population register, which gives access to health and dental care. Migrationsverket writes 'bör' (should), not 'måste'.",
+      "source_role": "requirements",
+      "source_excerpt": "om dina studier ska pågå i minst ett år bör du folkbokföra dig i sverige och får då tillgång till hälso- och sjukvård och tandvård.",
+      "display_order": 70,
+      "source_excerpt_display": "Om dina studier ska pågå i minst ett år bör du folkbokföra dig i Sverige och får då tillgång till hälso- och sjukvård och tandvård."
+    },
+    {
+      "requirement_code": "maintenance_whole_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Support yourself for the whole permit period, and your family if they apply with you",
+      "description": "Translation: your means must cover the entire period you apply for; if your family applies with you, you must support them too unless they have their own means.",
+      "source_role": "requirements",
+      "source_excerpt": "din försörjning ska räcka under hela den tid som du ansöker om uppehållstillstånd för. om din familj ansöker tillsammans med dig ska du kunna försörja dem också, om de inte har en egen försörjning.",
+      "display_order": 80,
+      "source_excerpt_display": "Din försörjning ska räcka under hela den tid som du ansöker om uppehållstillstånd för. Om din familj ansöker tillsammans med dig ska du kunna försörja dem också, om de inte har en egen försörjning."
+    },
+    {
+      "requirement_code": "maintenance_amounts",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "SEK 10,656 per month for 2026 applications; SEK 10,584 for 2025",
+      "description": "Translation: the maintenance requirement is at least SEK 10,656 per month if you applied in 2026, at least SEK 10,584 if you applied in 2025. Two years are published side by side, and the amount depends on the year of APPLICATION, not of study.",
+      "parameters": {
+        "per_month_sek_2026": 10656,
+        "per_month_sek_2025": 10584,
+        "currency": "SEK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "försörjningskravet är minst 10 656 kronor per månad, om du har ansökt 2026 minst 10 584 kronor per månad, om du har ansökt 2025.",
+      "display_order": 90,
+      "source_excerpt_display": "Försörjningskravet är minst 10 656 kronor per månad, om du har ansökt 2026 minst 10 584 kronor per månad, om du har ansökt 2025."
+    },
+    {
+      "requirement_code": "maintenance_reductions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reduced by SEK 2,960 for free food and SEK 4,736 for free housing (2026 applications)",
+      "description": "Translation: the monthly amount can be reduced by SEK 2,960 for free food and SEK 4,736 for free housing if you applied during 2026. Applies where the institution or an international exchange organisation provides them.",
+      "parameters": {
+        "food_deduction_sek_2026": 2960,
+        "housing_deduction_sek_2026": 4736,
+        "currency": "SEK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "månadsbeloppet kan minskas med 2 960 kronor per månad för fri mat och 4 736 kronor per månad för fri bostad, om du har ansökt under 2026.",
+      "display_order": 100,
+      "source_excerpt_display": "Månadsbeloppet kan minskas med 2 960 kronor per månad för fri mat och 4 736 kronor per månad för fri bostad, om du har ansökt under 2026."
+    },
+    {
+      "requirement_code": "maintenance_family_additions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Add SEK 4,440 a month for a spouse or partner and SEK 2,664 for each child",
+      "description": "Translation: then SEK 4,440 per month is added for a spouse or cohabiting partner and SEK 2,664 per month for each child. Migrationsverket assesses the family's combined capacity.",
+      "parameters": {
+        "spouse_partner_per_month_sek": 4440,
+        "per_child_per_month_sek": 2664,
+        "currency": "SEK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "då tillkommer 4 440 kronor per månad för make, maka eller sambo 2 664 kronor per månad för varje barn.",
+      "display_order": 110,
+      "source_excerpt_display": "Då tillkommer 4 440 kronor per månad för make, maka eller sambo 2 664 kronor per månad för varje barn."
+    },
+    {
+      "requirement_code": "acceptable_means",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Means may be own savings, scholarship, study grant or loan, sponsor, or employment income",
+      "description": "Translation: you must show money available through your own bank assets, a scholarship, a study grant or student loan from your home country, a sponsor, or employment income. Forms may be combined.",
+      "source_role": "requirements",
+      "source_excerpt": "försörjningskravet innebär att du måste visa att du har pengar tillgängliga genom egna banktillgångar, stipendium, studiebidrag eller studielån från hemlandet, sponsor eller inkomst från anställning. du kan kombinera olika försörjningsformer.",
+      "display_order": 120,
+      "source_excerpt_display": "Försörjningskravet innebär att du måste visa att du har pengar tillgängliga genom egna banktillgångar, stipendium, studiebidrag eller studielån från hemlandet, sponsor eller inkomst från anställning. Du kan kombinera olika försörjningsformer."
+    },
+    {
+      "requirement_code": "documents_language",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Documents should be in Swedish or English",
+      "description": "Translation: all documents you enclose should be in Swedish or English. Migrationsverket writes 'bör' (should), not 'måste'.",
+      "source_role": "requirements",
+      "source_excerpt": "alla dokument som du skickar med bör vara på svenska eller engelska.",
+      "display_order": 130,
+      "source_excerpt_display": "Alla dokument som du skickar med bör vara på svenska eller engelska."
+    }
+  ]
+}

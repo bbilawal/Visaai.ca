@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-highly-skilled-professional",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "TWO SEPARATE STATUSES ON ONE PAGE, AND THE SECOND IS INDEFINITE. 高度専門職１号 is a points-scored working status with relaxed activity limits. 高度専門職２号 is granted to people who have held 1号 for a period, and its residence period is UNLIMITED — the only status in this registry's Japanese set with no expiry. Both are recorded, each labelled.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/designatedactivities02_00004.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page.",
+    "The points table itself and the pass mark. The page states that points are scored on education, career and income and links the points-system material separately. No threshold is published here and none is supplied.",
+    "The definitions of 高度専門職１号 イ, ロ and ハ. Named as the qualifying activities and defined in the Immigration Control Act rather than on this page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "purpose_of_the_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Type 1: a status created for highly skilled foreign nationals expected to contribute to Japanese academic research and economic development, with activity restrictions relaxed compared with ordinary working statuses",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "「高度専門職１号」の在留資格は、我が国の学術研究や経済の発展に寄与することが見込まれる高度の専門的な能力を持つ外国人の受入れをより一層促進するため、他の一般的な就労資格よりも活動制限を緩和した在留資格として設けられたものです。",
+      "source_excerpt_display": "「高度専門職１号」の在留資格は、我が国の学術研究や経済の発展に寄与することが見込まれる高度の専門的な能力を持つ外国人の受入れをより一層促進するため、他の一般的な就労資格よりも活動制限を緩和した在留資格として設けられたものです。"
+    },
+    {
+      "requirement_code": "points_system_decides_eligibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Type 1: points are scored on education, career history and annual income, and the status is granted where the total reaches a set threshold",
+      "description": "The threshold itself is not stated on this page — it is held in the separate points-system material the page links. No number is supplied from elsewhere.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "「高度専門職１号」の在留資格は、高度人材ポイント制において、 学歴・ 職歴・年収等の項目毎にポイントを付け、その合計が一定点数以上に達した人に許可されます 。",
+      "source_excerpt_display": "「高度専門職１号」の在留資格は、高度人材ポイント制において、 学歴・ 職歴・年収等の項目毎にポイントを付け、その合計が一定点数以上に達した人に許可されます 。"
+    },
+    {
+      "requirement_code": "type_two_is_indefinite",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Type 2: for those who have held Type 1 for a period, with an UNLIMITED period of residence and greatly relaxed activity restrictions",
+      "description": "The only status in the registered Japanese set with no expiry date.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "「高度専門職２号」の在留資格は、我が国の学術研究や経済の発展に寄与することが見込まれる高度の専門的な能力を持つ外国人の受入れをより一層促進するため、「高度専門職１号」の在留資格をもって一定期間在留した者を対象に、在留期限を無期限とし、活動制限を大きく緩和した在留資格として設けられたものです。",
+      "source_excerpt_display": "「高度専門職２号」の在留資格は、我が国の学術研究や経済の発展に寄与することが見込まれる高度の専門的な能力を持つ外国人の受入れをより一層促進するため、「高度専門職１号」の在留資格をもって一定期間在留した者を対象に、在留期限を無期限とし、活動制限を大きく緩和した在留資格として設けられたものです。"
+    },
+    {
+      "requirement_code": "two_cumulative_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Two requirements, both of which must hold: the intended activity must fall within 高度専門職１号 イ, ロ or ハ, and the applicant must meet every criterion of the ministerial ordinance",
+      "description": "The three sub-types イ/ロ/ハ divide advanced academic research, advanced specialised/technical work, and advanced business management. The page states the requirement without defining them here.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "申請人が行おうとする活動について、出入国管理及び難民認定法（以下「入管法」といいます。）別表第１の２の表の「高度専門職１号イ」、「高度専門職１号ロ」、「高度専門職１号ハ」の活動のいずれかに該当すること。",
+      "source_excerpt_display": "申請人が行おうとする活動について、出入国管理及び難民認定法（以下「入管法」といいます。）別表第１の２の表の「高度専門職１号イ」、「高度専門職１号ロ」、「高度専門職１号ハ」の活動のいずれかに該当すること。"
+    },
+    {
+      "requirement_code": "change_of_activity_needs_a_new_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Even a Type 1 holder must file a change-of-status application when the activity changes, including a change of employing organisation",
+      "description": "A trap specific to this status: the relaxed activity limits do not extend to changing employer without filing.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "（注）「高度専門職１号」の在留資格をもって在留中の方が、活動内容を変更する場合（所属機関の変更を含む。）についても、在留資格変更許可申請が必要です。",
+      "source_excerpt_display": "（注）「高度専門職１号」の在留資格をもって在留中の方が、活動内容を変更する場合（所属機関の変更を含む。）についても、在留資格変更許可申請が必要です。"
+    },
+    {
+      "requirement_code": "not_performing_the_activity_can_revoke_the_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Failing to carry on the activity the status was granted for can result in the status being revoked",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "本来の在留資格に基づく活動を行っていない場合には、在留資格を取り消される場合があります 。",
+      "source_excerpt_display": "本来の在留資格に基づく活動を行っていない場合には、在留資格を取り消される場合があります 。"
+    }
+  ]
+}

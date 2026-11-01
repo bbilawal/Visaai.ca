@@ -1,0 +1,327 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-entry-visa",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the three official Immigration & Checkpoints Authority pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "ONE VISA, 33 PAGES, TWO REGIMES. ICA publishes one entry visa and a per-nationality detail page for each of the 33 travel documents that need one. The pages are NOT one template: 19 nationalities must submit a completed Form V39A letter of introduction issued by a Singapore citizen or PR aged 21+ with a Singpass account, and 14 are told only that additional documents may be required case-by-case. Same visa, same S$30 fee, same three-working-day processing — and one group needs a Singaporean sponsor before it can apply.\n\nWHY THIS IS NOT TWO VISA TYPES. Because ICA does not publish it as two. Inventing sg-entry-visa-loi would put a distinction in the registry that no authority has made. The split is stored as a requirement instead, with its nationality lists in parameters.\n\nTHE LIMITATION, AND WHAT ANSWERS IT. Three sources are registered — the hub plus one representative page per group — so the daily monitor watches 2 of 33 detail pages and a change to a page outside those two is invisible to it. scripts/visa-registry/sg-entry-visa-groups.mjs re-derives the grouping from all 33 and exits non-zero if the membership moved. Run 2026-08-23: 19 and 14, as recorded.\n\nBOUNDS CHECKED. Three pages. The two detail pages share almost all of their text, so every excerpt taken from one is quoted from ITS OWN page rather than from whichever happened to be open.",
+  "source_roles": {
+    "requirements": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements",
+    "documents": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/india",
+    "forms": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/pakistan"
+  },
+  "page_dates": {
+    "requirements": "2026-06-25",
+    "documents": null,
+    "forms": null
+  },
+  "freshness_note": "ICA prints its own dateline in the hub's page body — 'last updated on 25 june 2026' — rather than in the document head, so the head reads as unknown while the body carries a genuine editorial record. The two detail pages carry no dateline of their own; they are held current by the hub they hang off and by the group-membership script, which would fail if either page's substantive block changed shape.",
+  "not_extracted": [
+    "The 33 per-nationality detail pages individually. Two are registered as representatives of the two regimes, and scripts/visa-registry/sg-entry-visa-groups.mjs re-proves that grouping over all 33. Registering all 33 would put 33 near-identical sources in the daily monitor for two distinct documents.",
+    "The Democratic People's Republic of Korea's detail page. It is on ICA's list, but the site emits its slug with an HTML-escaped apostrophe and the group script excludes it rather than guessing the URL. Its regime is therefore unverified here, which is why the counts say 33 and not 34.",
+    "The six categories of non-passport travel document that also need a visa — refugee travel document, alien's passport, Palestinian Authority passport, UAE temporary passport, Hong Kong document of identity, Macao travel permit and PRC travel document. ICA states two of them are 'subject to assessment of recognition for entry into singapore', which is a discretion rather than a rule, and each has its own page.",
+    "The SG Arrival Card. ICA is explicit that it is not a visa; it is a separate arrival obligation that also binds visa-exempt travellers, and it belongs to its own route rather than to this one.",
+    "The Visa-Free Transit Facility for nationals of the CIS, Georgia, India, Turkmenistan, Ukraine and selected PRC travel-document holders. A different permission with its own conditions on its own page.",
+    "Short-term visit pass extension, and the period of stay itself. ICA states plainly that the period of stay is decided at the checkpoint and is not tied to the visa; extension is a separate application.",
+    "Whether a visa holder may WORK. That is the Ministry of Manpower's question — see sg-employment-pass."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "visa_required_by_travel_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your travel document, not your citizenship, decides whether you need a visa",
+      "description": "ICA's list is a list of issuing countries and places for TRAVEL DOCUMENTS. A person holding a document issued by one of them needs a visa regardless of any other nationality they hold.",
+      "source_role": "requirements",
+      "source_excerpt": "if you hold a travel document 1 issued by one of the countries or places listed below, you will require a valid singapore entry visa to travel to, and seek entry, into singapore.",
+      "display_order": 10,
+      "source_excerpt_display": "If you hold a travel document 1 issued by one of the countries or places listed below, you will require a valid Singapore entry visa to travel to, and seek entry, into Singapore."
+    },
+    {
+      "requirement_code": "individually_issued_travel_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Every traveller needs their own travel document, at any age",
+      "description": "Collective travel documents are not accepted, so a child cannot travel on a parent's document.",
+      "source_role": "requirements",
+      "source_excerpt": "1 all travellers, regardless of age, must hold a valid individually-issued travel document as collective travel documents are not accepted.",
+      "display_order": 20,
+      "source_excerpt_display": "1 All travellers, regardless of age, must hold a valid individually-issued travel document as collective travel documents are not accepted."
+    },
+    {
+      "requirement_code": "visa_is_not_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The visa is permission to travel and ask, not permission to enter",
+      "description": "ICA states this twice on the same page, in two different forms. The decision to admit is taken by an officer at the checkpoint, after the visa is granted.",
+      "source_role": "requirements",
+      "source_excerpt": "a singapore entry visa is not an immigration pass. it is a pre-entry permission for the holder of a valid visa to travel to, and seek entry, into singapore.",
+      "display_order": 30,
+      "source_excerpt_display": "A Singapore entry visa is not an immigration pass. It is a pre-entry permission for the holder of a valid visa to travel to, and seek entry, into Singapore."
+    },
+    {
+      "requirement_code": "visa_does_not_guarantee_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A valid visa does not guarantee entry",
+      "description": "The plainest sentence on the page, and the one most often assumed away.",
+      "source_role": "requirements",
+      "source_excerpt": "possession of a valid visa does not guarantee entry into singapore.",
+      "display_order": 40,
+      "source_excerpt_display": "Possession of a valid visa does not guarantee entry into Singapore."
+    },
+    {
+      "requirement_code": "stay_length_decided_at_checkpoint",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "How long you may stay is decided at the checkpoint, not by the visa",
+      "description": "The period of stay comes from the electronic visit pass issued on arrival. A visa valid for two years does not mean two years of stay, and extending the stay is a separate application.",
+      "source_role": "requirements",
+      "source_excerpt": "the period of stay in singapore is not tied to the validity of your visa. the period of stay is determined by the duration of the visit pass issued to you in the form of electronic visit pass (e-pass) at the checkpoint upon entry.",
+      "display_order": 50,
+      "source_excerpt_display": "The period of stay in Singapore is not tied to the validity of your visa. The period of stay is determined by the duration of the Visit Pass issued to you in the form of electronic visit pass (e-Pass) at the checkpoint upon entry."
+    },
+    {
+      "requirement_code": "epass_notified_by_email",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your visit pass arrives by email, and nothing is stamped in your passport",
+      "description": "Since 11 March 2022 the pass is digital. The email address given on the SG Arrival Card is where the period of stay and last day of stay are stated, so a wrong address means not knowing when you must leave.",
+      "source_role": "requirements",
+      "source_excerpt": "from 11 march 2022, all foreign visitors arriving in singapore will be notified digitally of their visit pass (e-pass) through email. there will not be any endorsement on your passport. the e-pass notification will indicate the period of stay granted and last day of stay allowed.",
+      "display_order": 60,
+      "source_excerpt_display": "From 11 March 2022, all foreign visitors arriving in Singapore will be notified digitally of their Visit Pass (e-Pass) through email. There will not be any endorsement on your passport. The e-Pass notification will indicate the period of stay granted and last day of stay allowed."
+    },
+    {
+      "requirement_code": "sg_arrival_card_is_not_a_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The SG Arrival Card is not a visa",
+      "description": "ICA says so on the visa page itself, because the two are routinely confused. Submitting an arrival card does not obtain a visa, and a visa does not remove the arrival-card obligation.",
+      "source_role": "requirements",
+      "source_excerpt": "sg arrival card is not a visa .",
+      "display_order": 70,
+      "source_excerpt_display": "SG Arrival Card is not a visa."
+    },
+    {
+      "requirement_code": "no_counter_submission",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The application cannot be handed in at an immigration counter",
+      "description": "There is no over-the-counter route at the border.",
+      "source_role": "requirements",
+      "source_excerpt": "ica does not accept submission of visa application over the immigration counters.",
+      "display_order": 80,
+      "source_excerpt_display": "ICA does not accept submission of visa application over the immigration counters."
+    },
+    {
+      "requirement_code": "submit_online_via_local_contact_or_partner",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Submit online through a Singapore local contact or a strategic partner",
+      "description": "The e-Service is not opened to the applicant directly. Somebody in Singapore with a Singpass or Corppass account submits on your behalf.",
+      "source_role": "documents",
+      "source_excerpt": "your visa application can be submitted online using the e-service through a strategic partner or a local contact in singapore.",
+      "display_order": 90,
+      "source_excerpt_display": "Your visa application can be submitted online using the e-Service through a strategic partner or a local contact in Singapore."
+    },
+    {
+      "requirement_code": "no_local_contact_route",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Without a local contact, apply through an authorised visa agent or a Singapore overseas mission",
+      "description": "ICA names the alternative rather than leaving the applicant stuck, and directs the detail question to the mission rather than answering it centrally.",
+      "source_role": "requirements",
+      "source_excerpt": "if you do not have a local contact with a singpass/corppass account, you may submit the visa application: ... through an authorised visa agent appointed by the singapore overseas missions; or ... at the nearest singapore overseas mission .",
+      "display_order": 100,
+      "source_excerpt_display": "If you do not have a Local Contact with a Singpass/Corppass account, you may submit the visa application: ... Through an authorised visa agent appointed by the Singapore Overseas Missions; or ... At the nearest Singapore Overseas Mission."
+    },
+    {
+      "requirement_code": "apply_within_30_days_of_arrival",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply within 30 days before arrival",
+      "description": "ICA's own advice, on both regimes' pages, and it cuts both ways: too early is as much a problem as too late.",
+      "source_role": "documents",
+      "source_excerpt": "you are advised to apply for an entry visa within 30 days prior to arrival in singapore.",
+      "display_order": 110,
+      "parameters": {
+        "apply_within_days_before_arrival": 30
+      },
+      "source_excerpt_display": "You are advised to apply for an entry visa within 30 days prior to arrival in Singapore."
+    },
+    {
+      "requirement_code": "form_14a",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form 14A, completed and signed by you",
+      "description": "The application form itself. ICA states that the application is decided on what this form declares, and that it may ask for the form to be produced.",
+      "source_role": "documents",
+      "source_excerpt": "duly completed form 14a (pdf, 202kb) signed by you. your visa application shall be made based on the information declared in this form. ica may request for the form to be submitted.",
+      "display_order": 120,
+      "official_form_code": "14A",
+      "official_form_url": "https://www.ica.gov.sg/docs/default-source/ica/forms/form14a.pdf",
+      "source_excerpt_display": "Duly completed Form 14A (PDF, 202KB) signed by you. Your visa application shall be made based on the information declared in this form. ICA may request for the form to be submitted."
+    },
+    {
+      "requirement_code": "passport_photograph_three_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport-sized colour photograph taken within the last three months",
+      "description": "Three months, not the usual six.",
+      "source_role": "documents",
+      "source_excerpt": "your recent passport-sized colour photograph taken within the last three months.",
+      "display_order": 130,
+      "source_excerpt_display": "Your recent passport-sized colour photograph taken within the last three months."
+    },
+    {
+      "requirement_code": "passport_biodata_six_months_validity",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A photocopy of your passport biodata page, valid at least six months from entry",
+      "description": "The six months runs from the date you enter Singapore, not from the date you apply.",
+      "source_role": "documents",
+      "source_excerpt": "a photocopy of your passport biodata page (valid for at least six months from the date of your entry into singapore)",
+      "display_order": 140,
+      "parameters": {
+        "passport_validity_months_from_entry": 6
+      },
+      "source_excerpt_display": "A photocopy of your passport biodata page (valid for at least six months from the date of your entry into Singapore)"
+    },
+    {
+      "requirement_code": "originals_and_official_translations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Originals plus official translations, and copies for ICA to keep",
+      "description": "ICA names who may translate — the issuing country's embassy, a notary public, or a private translation attested or notarised — and says plainly that it endorses no translation company and that insufficient documentation may mean the application is not accepted.",
+      "source_role": "documents",
+      "source_excerpt": "you will need to provide original documents and official translations (for documents in languages other than english), as well as copies of the documents for ica to retain.",
+      "display_order": 150,
+      "source_excerpt_display": "You will need to provide original documents and official translations (for documents in languages other than English), as well as copies of the documents for ICA to retain."
+    },
+    {
+      "requirement_code": "loi_case_by_case_group",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For 14 nationalities a letter of introduction is only case-by-case",
+      "description": "Armenia, Azerbaijan, Belarus, Georgia, India, Jordan, Kazakhstan, Kyrgyzstan, Moldova, Russia, Tajikistan, Turkmenistan, Ukraine and Uzbekistan. Read from ICA's own detail pages and re-provable with scripts/visa-registry/sg-entry-visa-groups.mjs.",
+      "source_role": "documents",
+      "source_excerpt": "additional supporting documents (e.g., form v39a (pdf, 192kb) (letter of introduction for visa application (loi)) may be required on a case-by-case basis.",
+      "display_order": 160,
+      "parameters": {
+        "applies_to_travel_documents_issued_by": [
+          "armenia",
+          "azerbaijan",
+          "belarus",
+          "georgia",
+          "india",
+          "jordan",
+          "kazakhstan",
+          "kyrgyzstan",
+          "moldova",
+          "russia",
+          "tajikistan",
+          "turkmenistan",
+          "ukraine",
+          "uzbekistan"
+        ],
+        "verified_by": "scripts/visa-registry/sg-entry-visa-groups.mjs",
+        "verified_at": "2026-08-23"
+      },
+      "source_excerpt_display": "Additional supporting documents (e.g., Form V39A (PDF, 192KB) (Letter of Introduction for Visa Application (LOI)) may be required on a case-by-case basis."
+    },
+    {
+      "requirement_code": "loi_required_group",
+      "kind": "form",
+      "officially_required": true,
+      "label": "For 19 nationalities a completed Form V39A letter of introduction is required",
+      "description": "Afghanistan, Algeria, Bangladesh, Egypt, Iran, Iraq, Kosovo, Lebanon, Libya, Mali, Morocco, Nigeria, Pakistan, Somalia, South Sudan, Sudan, Syria, Tunisia and Yemen. Not case-by-case: the form is on the required-documents list. Same visa, same fee, same processing time as the other 14 — and a Singaporean sponsor is needed before the application can be made at all.",
+      "source_role": "forms",
+      "source_excerpt": "a completed form v39a (pdf, 192kb)(letter of introduction for visa application (loi)), which may be issued by a local contact* in singapore.",
+      "display_order": 170,
+      "official_form_code": "V39A",
+      "official_form_url": "https://www.ica.gov.sg/docs/default-source/ica/forms/formv39a.pdf",
+      "parameters": {
+        "applies_to_travel_documents_issued_by": [
+          "afghanistan",
+          "algeria",
+          "bangladesh",
+          "egypt",
+          "iran",
+          "iraq",
+          "kosovo",
+          "lebanon",
+          "libya",
+          "mali",
+          "morocco",
+          "nigeria",
+          "pakistan",
+          "somalia",
+          "south sudan",
+          "sudan",
+          "syria",
+          "tunisia",
+          "yemen"
+        ],
+        "verified_by": "scripts/visa-registry/sg-entry-visa-groups.mjs",
+        "verified_at": "2026-08-23"
+      },
+      "source_excerpt_display": "A completed Form V39A (PDF, 192KB)(Letter of Introduction for Visa Application (LOI)), which may be issued by a local contact* in Singapore."
+    },
+    {
+      "requirement_code": "loi_local_contact_qualifications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who may issue that letter of introduction",
+      "description": "A Singapore citizen or permanent resident, at least 21, with a Singpass account. For a business visit the contact must act for the Singapore-registered business. ICA also allows the applicant's own embassy to issue the letter where no local contact can be secured — the escape hatch that keeps this from being a hard sponsor requirement.",
+      "source_role": "forms",
+      "source_excerpt": "*the local contact must be either a singapore citizen (sc) or a singapore permanent resident (pr) who is at least 21 years old with a singpass account. if you are applying for an entry visa for business visit (attending business negotiations or discussions), the local contact must be acting on behalf of the singapore-registered business entity. lois issued by your embassy can also be accepted, if you are unable to secure an loi from a local contact to support your visa application for social and business visits.",
+      "display_order": 180,
+      "parameters": {
+        "local_contact_min_age": 21,
+        "local_contact_status": [
+          "singapore_citizen",
+          "permanent_resident"
+        ],
+        "embassy_issued_loi_accepted": true
+      },
+      "source_excerpt_display": "*The local contact must be either a Singapore citizen (SC) or a Singapore permanent resident (PR) who is at least 21 years old with a Singpass account. If you are applying for an entry visa for business visit (attending business negotiations or discussions), the local contact must be acting on behalf of the Singapore-registered business entity. LOIs issued by your Embassy can also be accepted, if you are unable to secure an LOI from a local contact to support your visa application for social and business visits."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "S$30, non-refundable, paid online by Visa or Mastercard",
+      "description": "Non-refundable means it is spent whether or not the visa is granted, and ICA names the only two card networks it takes.",
+      "source_role": "documents",
+      "source_excerpt": "a s$30 non-refundable processing fee is payable online using a visa or mastercard credit/debit card.",
+      "display_order": 190,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 30,
+        "refundable": false,
+        "payment_methods": [
+          "visa",
+          "mastercard"
+        ]
+      },
+      "source_excerpt_display": "A S$30 non-refundable processing fee is payable online using a Visa or MasterCard credit/debit card."
+    },
+    {
+      "requirement_code": "processing_time_three_working_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Processed within three working days, excluding the day you submit",
+      "description": "ICA qualifies its own figure twice: the submission day does not count, and some applications take longer.",
+      "source_role": "documents",
+      "source_excerpt": "your visa application will be processed within three working days (excluding the day of submission). some applications may take longer to process.",
+      "display_order": 200,
+      "parameters": {
+        "working_days": 3,
+        "excludes_submission_day": true
+      },
+      "source_excerpt_display": "Your visa application will be processed within three working days (excluding the day of submission). Some applications may take longer to process."
+    }
+  ]
+}

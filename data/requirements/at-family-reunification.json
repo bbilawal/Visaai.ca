@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-family-reunification",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "Family reunification turns on the SPONSOR as much as the applicant: subsistence, insurance and accommodation are assessed against the family, and holders of a Red-White-Red Card or EU Blue Card usually cover their family through co-insurance. One requirement carries an explicit waiver for newborns.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/family-reunification/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as sources already live in this registry.",
+  "not_extracted": [
+    "Fees. The page names none.",
+    "The 'German prior to immigration' exemption list. The page enumerates who need not prove German, and those exemptions are conditions on other people's circumstances rather than requirements on this applicant."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "health_insurance_all_risks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Health insurance covering all risks, with benefits in Austria",
+      "description": "The insurance must pay out in Austria, not merely exist.",
+      "source_role": "requirements",
+      "source_excerpt": "the third-country national must have health insurance coverage, providing benefits in austria and covering all risks.",
+      "display_order": 10,
+      "source_excerpt_display": "The third-country national must have health insurance coverage, providing benefits in Austria and covering all risks."
+    },
+    {
+      "requirement_code": "co_insurance_via_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Family of card holders are usually co-insured by the sponsor",
+      "description": "Stated by the authority as the usual position, which is why the insurance requirement is often satisfied by the sponsor rather than the applicant.",
+      "source_role": "requirements",
+      "source_excerpt": "family members of “red-white-red card” holders, “eu blue card” holders or family members of austrian citizens are usually covered by their sponsors’ health insurance (co-insurance).",
+      "display_order": 20,
+      "source_excerpt_display": "Family members of “Red-White-Red Card” holders, “EU Blue Card” holders or family members of Austrian citizens are usually covered by their sponsors’ health insurance (co-insurance)."
+    },
+    {
+      "requirement_code": "accommodation_family_size",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Accommodation adequate for the family size by local standards",
+      "description": "The test is relative to family size, so what suffices for one applicant may not for another.",
+      "source_role": "requirements",
+      "source_excerpt": "the third-country national must provide evidence of a legal title to an accommodation (e.g. by providing a lease contract), considered adequate for his/her family size according to local standards.",
+      "display_order": 30,
+      "source_excerpt_display": "The third-country national must provide evidence of a legal title to an accommodation (e.g. by providing a lease contract), considered adequate for his/her family size according to local standards."
+    },
+    {
+      "requirement_code": "travel_document_newborn_waiver",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document, waived for a newborn's first application",
+      "description": "The waiver is narrow and time-bound: a first application for a child within six months of birth, where the child has no travel document yet.",
+      "source_role": "requirements",
+      "source_excerpt": "valid travel document. this requirement is waived in the case of first application of a child within six months after birth, if the child does not yet have a valid travel document.",
+      "display_order": 40,
+      "source_excerpt_display": "Valid travel document. This requirement is waived in the case of first application of a child within six months after birth, if the child does not yet have a valid travel document."
+    },
+    {
+      "requirement_code": "family_relationship_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence or certificate of the family relationship",
+      "description": "The document the whole route rests on.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence or certificate concerning the family relationship",
+      "display_order": 50,
+      "source_excerpt_display": "Evidence or certificate concerning the family relationship"
+    }
+  ]
+}

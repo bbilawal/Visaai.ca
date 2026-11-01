@@ -1,0 +1,31 @@
+{
+  "name": "@visaai/partner-sdk",
+  "version": "0.1.0",
+  "description": "Official TypeScript client for the VisaAI Partner API",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "prepare": "tsc -p tsconfig.json",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@visaai/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.2",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testRegex": ".*\\.spec\\.ts$"
+  }
+}

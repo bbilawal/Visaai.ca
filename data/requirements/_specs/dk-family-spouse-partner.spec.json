@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-family-spouse-partner",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Danish Immigration Service page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "THE INTEGRATION REQUIREMENT IS A JOINT SCORE, NOT A CHECKLIST FOR EITHER PERSON. The couple must COLLECTIVELY meet 4 of 6 integration conditions — three apply to the applicant and three to the sponsor in Denmark — and the authority states the trade explicitly: if the applicant meets all three of theirs, the sponsor need meet only one. Registering these as six independent requirements on one person would misstate the test for both people.\n\nON TOP OF THAT, ONE SPONSOR CONDITION IS MANDATORY REGARDLESS OF THE SCORE: Prøve i Dansk 3, or five years of employment involving significant communication in Danish. A couple can satisfy four of six and still be refused on this.\n\nTHE OBLIGATIONS DO NOT END AT APPROVAL. The applicant must pass a Danish test at A1 within six months of being granted the permit and A2 later, and the permit can be revoked if they do not. A page that stops at 'approved' would omit the condition that takes it away again.\n\nAND THE HOUSING REQUIREMENT HAS A GEOGRAPHY. The sponsor's home must not be in an area on the housing requirement list. That is a condition about an address, not about the people, and it is invisible unless stated.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Family/Family-reunification/Spouse-or-cohabiting-partner"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The collateral figure carries its own year in the text ('DKK 61,709.34 (2026 level)'), so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The housing requirement list of areas and its detailed address overview, which the authority publishes separately, states can change as roads are renamed, and describes as a guide only — the regulation is what is in force.",
+    "The full lists of Danish and English tests that can substitute for Prøve i Dansk 1, 3 and the B1 English level, which the authority publishes on separate linked pages.",
+    "The detailed rules for the exemptions, each of which links to its own page: minor children with attachment to Denmark, serious illness or disability, and the special position of economically active Turkish nationals.",
+    "The step-by-step application walkthrough and the document checklists.",
+    "The separate family routes the catalogue enumerates alongside this one — children, adopted and foster children, parents of unaccompanied minors, parents of minor Danish citizens, other family members, and accompanying family of work and study permit holders."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_marriage_or_cohabitation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The marriage must be legally valid under Danish law, or you must be permanent cohabitants",
+      "source_role": "requirements",
+      "lines": [
+        49
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "marriage_validity_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What makes a marriage valid: both present, no proxy, both 18 at the ceremony",
+      "source_role": "requirements",
+      "lines": [
+        51,
+        57
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "sponsor_assumes_financial_responsibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The partner in Denmark must assume responsibility for supporting the applicant",
+      "source_role": "requirements",
+      "lines": [
+        67
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "both_at_least_24",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Both partners normally need to be at least 24 years old",
+      "source_role": "requirements",
+      "lines": [
+        123
+      ],
+      "parameters": {
+        "minimum_age": 24,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40
+    },
+    {
+      "requirement_code": "may_apply_at_23_years_6_months",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The application may be submitted when the younger partner is 23 years and 6 months",
+      "description": "Registered because the 24-year rule alone would make people wait six months longer than they must.",
+      "source_role": "requirements",
+      "lines": [
+        125
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "twenty_four_year_exceptions",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "When the 24-year requirement can be suspended",
+      "source_role": "requirements",
+      "lines": [
+        129,
+        137
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "integration_requirement_four_of_six",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The couple must COLLECTIVELY meet 4 of 6 integration conditions",
+      "description": "Quoted with the split — three conditions on each person — because the number alone does not convey that it is a joint score.",
+      "source_role": "requirements",
+      "lines": [
+        179
+      ],
+      "parameters": {
+        "conditions_required": 4,
+        "conditions_total": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70
+    },
+    {
+      "requirement_code": "integration_conditions_are_tradeable",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Conditions trade between the partners — the authority's own worked example",
+      "source_role": "requirements",
+      "lines": [
+        373
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "applicant_language_test_or_english_b1",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: Prøve i Dansk 1 or an English test at B1 level",
+      "source_role": "requirements",
+      "lines": [
+        185
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "applicant_worked_three_of_five_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: full-time work for at least 3 of the last 5 years",
+      "source_role": "requirements",
+      "lines": [
+        195
+      ],
+      "display_order": 100
+    },
+    {
+      "requirement_code": "full_time_means_30_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time means an average work week of at least 30 hours",
+      "source_role": "requirements",
+      "lines": [
+        201
+      ],
+      "parameters": {
+        "minimum_hours_per_week": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110
+    },
+    {
+      "requirement_code": "applicant_one_year_education",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Integration condition: at least 1 year of completed education",
+      "source_role": "requirements",
+      "lines": [
+        209
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "education_must_be_accredited",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The educational programme must be from an accredited organisation",
+      "source_role": "requirements",
+      "lines": [
+        211
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "education_failed_exam_does_not_count",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A programme completed without passing the final exam does not count",
+      "source_role": "requirements",
+      "lines": [
+        215
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "applicant_visited_denmark_once",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The applicant normally needs to have visited Denmark at least once",
+      "source_role": "requirements",
+      "lines": [
+        163
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "visit_must_have_been_legal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No minimum length, but the visit must have been legal",
+      "source_role": "requirements",
+      "lines": [
+        165
+      ],
+      "display_order": 160
+    },
+    {
+      "requirement_code": "asylum_entry_does_not_satisfy_visit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Entering Denmark as an asylum seeker does not satisfy the visit requirement",
+      "source_role": "requirements",
+      "lines": [
+        167
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "both_declare_active_participation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Both partners must sign a declaration of active participation in language learning and integration",
+      "source_role": "requirements",
+      "lines": [
+        155
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "danish_tests_after_arrival",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "After approval: a Danish test at A1, then at A2",
+      "description": "An obligation that begins when the permit is granted, not before.",
+      "source_role": "requirements",
+      "lines": [
+        231
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "danish_test_deadlines",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A1 normally within 6 months of the permit being granted",
+      "source_role": "requirements",
+      "lines": [
+        233
+      ],
+      "parameters": {
+        "months_to_a1_test": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200
+    },
+    {
+      "requirement_code": "permit_revoked_if_tests_missed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The residence permit can be revoked if the tests are not passed in time",
+      "source_role": "requirements",
+      "lines": [
+        235
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "sponsor_independent_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must have an independent, reasonably sized residence in Denmark",
+      "source_role": "requirements",
+      "lines": [
+        253
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "housing_size_standard",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reasonably sized: no more than two people per room, or at least 20 sq m each",
+      "source_role": "requirements",
+      "lines": [
+        261,
+        263
+      ],
+      "parameters": {
+        "square_metres_per_person": 20,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 230
+    },
+    {
+      "requirement_code": "housing_requirement_list_area",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor's residence must not be in an area on the housing requirement list",
+      "description": "A condition about the address rather than the people, and invisible unless stated.",
+      "source_role": "requirements",
+      "lines": [
+        281
+      ],
+      "display_order": 240
+    },
+    {
+      "requirement_code": "housing_list_assessed_at_submission",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The area is assessed when the application is submitted; moving there later does not disqualify",
+      "source_role": "requirements",
+      "lines": [
+        291,
+        293
+      ],
+      "display_order": 250
+    },
+    {
+      "requirement_code": "sponsor_self_supporting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must be self-supporting",
+      "source_role": "requirements",
+      "lines": [
+        305
+      ],
+      "display_order": 260
+    },
+    {
+      "requirement_code": "short_benefit_periods_can_disqualify",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Even short periods on cash benefits in the past three years can defeat the self-support requirement",
+      "source_role": "requirements",
+      "lines": [
+        309
+      ],
+      "display_order": 270
+    },
+    {
+      "requirement_code": "collateral_financial_guarantee",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must post collateral of DKK 61,709.34 (2026 level)",
+      "source_role": "requirements",
+      "lines": [
+        325
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "collateral": 61709.34,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280
+    },
+    {
+      "requirement_code": "collateral_form",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The collateral must be a demand guarantee or an escrow account",
+      "source_role": "requirements",
+      "lines": [
+        327
+      ],
+      "display_order": 290
+    },
+    {
+      "requirement_code": "collateral_can_be_reduced",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The collateral can be reduced if the applicant passes two Danish tests",
+      "source_role": "requirements",
+      "lines": [
+        329
+      ],
+      "display_order": 300
+    },
+    {
+      "requirement_code": "sponsor_mandatory_danish_condition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "MANDATORY for the sponsor: Prøve i Dansk 3, or 5 years' employment with significant Danish communication",
+      "description": "Required regardless of the 4-of-6 score. Quoted with both branches, because either alone is not the condition.",
+      "source_role": "requirements",
+      "lines": [
+        375,
+        379
+      ],
+      "display_order": 310
+    },
+    {
+      "requirement_code": "sponsor_five_years_danish_communication",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "What the five-year employment branch requires",
+      "source_role": "requirements",
+      "lines": [
+        401
+      ],
+      "display_order": 320
+    },
+    {
+      "requirement_code": "non_nordic_sponsor_permanent_residence_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sponsor who is not a Danish or Nordic citizen must have held permanent residence for at least three years",
+      "source_role": "requirements",
+      "lines": [
+        471
+      ],
+      "parameters": {
+        "years_of_permanent_residence": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 330
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "source_role": "requirements",
+      "lines": [
+        20,
+        21
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 8490,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 340
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Expected maximum processing time",
+      "source_role": "requirements",
+      "lines": [
+        17,
+        18
+      ],
+      "display_order": 350
+    }
+  ]
+}

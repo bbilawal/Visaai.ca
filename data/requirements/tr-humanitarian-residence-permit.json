@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-humanitarian-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "humanitarian",
+    "official_name": "Humanitarian Residence Permit",
+    "slug": "humanitarian-residence-permit",
+    "purpose": "A discretionary Türkiye residence permit for people who cannot be removed, whose departure is not reasonable or possible, or whose circumstances are extraordinary — issued without the conditions attached to any other permit type.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "This permit is defined by what it does NOT require: the authority states plainly that the conditions attached to other residence permit types are not sought. That single sentence is the most important thing on the page and is published as its own requirement.\n\nThree consequences travel with it and are published too: registration with the address system within twenty working days, the ability to move to any other permit EXCEPT the long-term one, and the fact that time on this permit does not count toward the durations the law calculates elsewhere. The last is what makes the long-term exclusion bite.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 46 and 47 of Law 6458",
+      "description": "The authority cites its own instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "humanitarian residence permit shall be regulated by articles 46 and 47 of the law on foreigners and international protection no. 6458.",
+      "display_order": 10,
+      "source_excerpt_display": "Humanitarian residence permit shall be regulated by Articles 46 and 47 of the Law on Foreigners and International Protection No. 6458."
+    },
+    {
+      "requirement_code": "legal_basis_regulation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And Article 44 of the implementing regulation",
+      "description": "The second instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "besides, humanitarian residence permit shall be regulated by article 44 of the regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 20,
+      "source_excerpt_display": "Besides, humanitarian residence permit shall be regulated by Article 44 of the Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "ground_best_interest_of_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: where the best interest of the child is of concern",
+      "description": "First of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- where the best interest of the child is of concern;",
+      "display_order": 30,
+      "source_excerpt_display": "- Where the best interest of the child is of concern;"
+    },
+    {
+      "requirement_code": "ground_cannot_be_removed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: cannot be removed, or departure is not reasonable or possible, despite a removal decision or entry ban",
+      "description": "Second of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- where, notwithstanding a removal decision or ban on entering turkey, foreigners cannot be removed from turkey or their departure from turkey is not reasonable or possible,",
+      "display_order": 40,
+      "source_excerpt_display": "- Where, notwithstanding a removal decision or ban on entering Turkey, foreigners cannot be removed from Turkey or their departure from Turkey is not reasonable or possible,"
+    },
+    {
+      "requirement_code": "ground_no_removal_decision",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: no removal decision under Article 55",
+      "description": "Third of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- in the absence of a removal decision in respect of the foreigner pursuant to article 55,",
+      "display_order": 50,
+      "source_excerpt_display": "- In the absence of a removal decision in respect of the foreigner pursuant to Article 55,"
+    },
+    {
+      "requirement_code": "ground_judicial_appeal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: a judicial appeal against actions under Articles 53, 72 and 77",
+      "description": "Fourth of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- where there is a judicial appeal against the actions carried out pursuant to articles 53,72 and 77;",
+      "display_order": 60,
+      "source_excerpt_display": "- Where there is a judicial appeal against the actions carried out pursuant to Articles 53,72 and 77;"
+    },
+    {
+      "requirement_code": "ground_during_removal_to_third_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: throughout removal to a first country of asylum or safe third country",
+      "description": "Fifth of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- throughout the removal actions of the applicant to the first country of asylum or a safe third country;",
+      "display_order": 70,
+      "source_excerpt_display": "- Throughout the removal actions of the applicant to the first country of asylum or a safe third country;"
+    },
+    {
+      "requirement_code": "ground_emergency_or_national_interest",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: emergency, national interest, public order or security — where no other permit is possible",
+      "description": "Sixth of seven grounds, quoted whole because the \"no other permit possible\" clause is the limiting one.",
+      "source_role": "requirements",
+      "source_excerpt": "- in cases when foreigners should be allowed to enter into and stay in turkey, due to emergency or in view of the protection of the national interests as well as reasons of public order and security, in the absence of the possibility to obtain one of the other types of residence permits due to their situation that precludes granting a residence permit;",
+      "display_order": 80,
+      "source_excerpt_display": "- In cases when foreigners should be allowed to enter into and stay in Turkey, due to emergency or in view of the protection of the national interests as well as reasons of public order and security, in the absence of the possibility to obtain one of the other types of residence permits due to their situation that precludes granting a residence permit;"
+    },
+    {
+      "requirement_code": "ground_extraordinary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ground: extraordinary circumstances",
+      "description": "Seventh of seven grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- in extraordinary circumstances",
+      "display_order": 90,
+      "source_excerpt_display": "- In extraordinary circumstances"
+    },
+    {
+      "requirement_code": "duration_by_ministry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duration: granted or renewed by governorates on presidency approval, limited to times set by the ministry",
+      "description": "No fixed period is published and none is invented.",
+      "source_role": "requirements",
+      "source_excerpt": "humanitarian residence permit shall be granted or renewed by the governorates subject to the approval of the presidency, provided that they are limited to the specified times by the ministry .",
+      "display_order": 100,
+      "source_excerpt_display": "Humanitarian residence permit shall be granted or renewed by the governorates subject to the approval of the Presidency, provided that they are limited to the specified times by the Ministry."
+    },
+    {
+      "requirement_code": "no_other_conditions_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The conditions attached to OTHER residence permit types are NOT sought",
+      "description": "The defining feature of this permit, stated by the authority in one sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "conditions attached to other types of residence permits shall not be sought while issuing humanitarian residence permit.",
+      "display_order": 110,
+      "source_excerpt_display": "Conditions attached to other types of residence permits shall not be sought while issuing humanitarian residence permit."
+    },
+    {
+      "requirement_code": "cancellation_conditions_lapsed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled and not renewed once the compelling conditions no longer apply, on ministry approval",
+      "description": "The single cancellation rule.",
+      "source_role": "requirements",
+      "source_excerpt": "the humanitarian residence permit shall be cancelled and shall not be renewed by the governorates in cases where the compelling conditions no longer apply, subject to the approval of the ministry.",
+      "display_order": 120,
+      "source_excerpt_display": "The humanitarian residence permit shall be cancelled and shall not be renewed by the governorates in cases where the compelling conditions no longer apply, subject to the approval of the Ministry."
+    },
+    {
+      "requirement_code": "register_within_twenty_working_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Register with the address-based system within TWENTY WORKING DAYS of issuance",
+      "description": "Working days, and a short window.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners that are granted humanitarian residence permit should get registered with the address based registration system no later than twenty working days as of the issuance date.",
+      "parameters": {
+        "working_days": 20,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "Foreigners that are granted humanitarian residence permit should get registered with the address based registration system no later than twenty working days as of the issuance date."
+    },
+    {
+      "requirement_code": "may_transfer_except_long_term",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "May apply for any other permit EXCEPT the long-term one, if the requirements are met",
+      "description": "The exclusion mirrors the long-term permit's own bar.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners holding humanitarian residence permit, within the duration of this permit, may apply for one of the other residence permits, except for the long term residence permit, as long as they meet the requirements.",
+      "display_order": 140,
+      "source_excerpt_display": "Foreigners holding humanitarian residence permit, within the duration of this permit, may apply for one of the other residence permits, except for the long term residence permit, as long as they meet the requirements."
+    },
+    {
+      "requirement_code": "duration_not_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Time on this permit does NOT count toward the durations the law calculates",
+      "description": "What makes the long-term exclusion bite in practice.",
+      "source_role": "requirements",
+      "source_excerpt": "durations of humanitarian residence permits shall not be added to the total duration in calculation of residence permit durations determined by the law.",
+      "display_order": 150,
+      "source_excerpt_display": "Durations of humanitarian residence permits shall not be added to the total duration in calculation of residence permit durations determined by the Law."
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 160,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 170,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 180,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 190,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 210,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 220,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 230,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 240,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

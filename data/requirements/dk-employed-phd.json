@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-employed-phd",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "A PhD in Denmark may be SALARIED OR UNSALARIED, and almost every other condition follows from which. A salaried PhD's self-support is secured by the salary and needs no bank statement at all. An unsalaried PhD must show DKK 7,426 a month, capped at one year. The two are not variants of one rule and are registered separately.\n\nTHE PUBLIC-BENEFIT PROHIBITION ALSO SPLITS. A salaried PhD may not receive benefits under the Active Social Policy Act. An unsalaried PhD may not receive public assistance at all, and the authority names maternity and paternity benefits specifically — a materially wider prohibition that would be invisible if the two were merged.\n\nAND THE PERMIT DOES NOT LAPSE. Six months abroad lapses almost every other Danish permit in this registry. A full-degree PhD's does not, and the authority says so outright.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/PhD/Phd-studies"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The self-support figure carries its own year in the text ('DKK 7,426 (2026 level)'), so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The rules for EU/EEA and Swiss citizens, whom the page routes to the EU residence document instead.",
+    "Guest PhD, which the catalogue enumerates as its own route.",
+    "The step-by-step portal walkthrough and the document checklists."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_can_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enrolled as a PhD student, salaried or unsalaried",
+      "description": "Both branches quoted together, because the rest of the page divides on them.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "you can be granted a danish residence permit as a full degree phd if\n\nyou are enrolled as a phd student at a danish university and receive a salary from the university or a company affiliated with the phd programme, or\n\nyou are enrolled in a phd programme without receiving a salary",
+      "source_excerpt_display": "You can be granted a Danish residence permit as a full degree PhD if\n\nyou are enrolled as a PhD student at a Danish university and receive a salary from the university or a company affiliated with the PhD programme, or\n\nyou are enrolled in a PhD programme without receiving a salary"
+    },
+    {
+      "requirement_code": "must_be_enrolled",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be enrolled in a PhD programme in Denmark",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "it is a requirement that you have been enrolled in a phd programme in denmark.",
+      "source_excerpt_display": "It is a requirement that you have been enrolled in a PhD programme in Denmark."
+    },
+    {
+      "requirement_code": "must_be_full_time_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The programme must be full-time study",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "the educational programme must be a full-time study.",
+      "source_excerpt_display": "The educational programme must be a full-time study."
+    },
+    {
+      "requirement_code": "flexible_phd_model_choice",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "On the 3+5 or 4+4 flexible models you must choose the permit's span when applying",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "if you are enrolled in a phd programme on one of the flexible phd models (3+5 or 4+4), you must choose whether you want to apply for a residence permit to complete your master's degree and, subsequently, apply a second time to complete your phd programme, or whether you want to apply for a residence permit valid for the full duration of your education (4 or 5 years).",
+      "source_excerpt_display": "If you are enrolled in a PhD programme on one of the flexible PhD models (3+5 or 4+4), you must choose whether you want to apply for a residence permit to complete your master's degree and, subsequently, apply a second time to complete your PhD programme, or whether you want to apply for a residence permit valid for the full duration of your education (4 or 5 years)."
+    },
+    {
+      "requirement_code": "language_of_instruction",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be able to speak and understand the language of instruction",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "you must be able to speak and understand the language of instruction.",
+      "source_excerpt_display": "You must be able to speak and understand the language of instruction."
+    },
+    {
+      "requirement_code": "second_language_proficiency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must also understand Danish, Swedish, Norwegian, English or German reasonably well",
+      "description": "A second, separate language condition beyond the language of instruction.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "you must also be able to understand either danish, swedish, norwegian, english or german with a reasonable level of proficiency.",
+      "source_excerpt_display": "You must also be able to understand either Danish, Swedish, Norwegian, English or German with a reasonable level of proficiency."
+    },
+    {
+      "requirement_code": "salaried_self_support_by_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A salaried PhD's self-support is secured by the salary",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "if you are employed by a university or by a company, your self-support is secured by your salary.",
+      "source_excerpt_display": "If you are employed by a university or by a company, your self-support is secured by your salary."
+    },
+    {
+      "requirement_code": "unsalaried_self_support_amount",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An unsalaried PhD must show DKK 7,426 (2026 level) per month, capped at 12 months",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "per_month": 7426,
+        "stated_for_year": 2026,
+        "max_months_counted": 12,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80,
+      "source_excerpt": "you have sufficient funds if your disposable amount corresponds to dkk 7,426 (2026 level) for each month you will be a phd student in denmark - only for a maximum of 12 months, however.",
+      "source_excerpt_display": "You have sufficient funds if your disposable amount corresponds to DKK 7,426 (2026 level) for each month you will be a PhD student in Denmark - only for a maximum of 12 months, however."
+    },
+    {
+      "requirement_code": "self_support_worked_example",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The authority's own worked example of the twelve-month cap",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "for example, if you wish to stay in denmark for 1 year or longer, you must have a disposable amount corresponding to 12 times dkk 7,426 (2026 level). that means a maximum of dkk 89,112 (2026 level).",
+      "source_excerpt_display": "For example, if you wish to stay in Denmark for 1 year or longer, you must have a disposable amount corresponding to 12 times DKK 7,426 (2026 level). That means a maximum of DKK 89,112 (2026 level)."
+    },
+    {
+      "requirement_code": "self_support_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A bank statement showing date, name, balance and currency, no more than 30 days old",
+      "source_role": "requirements",
+      "parameters": {
+        "max_statement_age_days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100,
+      "source_excerpt": "it is required that the documentation for your support shows the date of the statement and your name.\n\na bank statement must also show the balance of the account and must not be more than 30 days old. if it is not evident what currency the account is in, the currency must also appear of the statement. should you choose to enclose more than one bank statement, all statements must be issued on the same day.",
+      "source_excerpt_display": "It is required that the documentation for your support shows the date of the statement and your name.\n\nA bank statement must also show the balance of the account and must not be more than 30 days old. If it is not evident what currency the account is in, the currency must also appear of the statement. Should you choose to enclose more than one bank statement, all statements must be issued on the same day."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 3060,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt": "processing fee\ndkk 3,060,-",
+      "source_excerpt_display": "Processing fee\nDKK 3,060,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "normal processing time\n1 month\n\nif further information is needed, the processing time can be up to\n2 months",
+      "source_excerpt_display": "Normal processing time\n1 month\n\nIf further information is needed, the processing time can be up to\n2 months"
+    },
+    {
+      "requirement_code": "permit_does_not_lapse",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A full PhD programme's permit does NOT lapse after six months abroad",
+      "description": "The reverse of the rule on nearly every other Danish permit in this registry.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "if you are enrolled in a full phd programme in denmark your residence permit will not lapse, even if you give up your danish address or stay abroad for more than 6 successive months.",
+      "source_excerpt_display": "If you are enrolled in a full PhD programme in Denmark your residence permit will not lapse, even if you give up your Danish address or stay abroad for more than 6 successive months."
+    },
+    {
+      "requirement_code": "full_time_work_at_the_institution",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Full-time work is allowed at the enrolling university or the affiliated company",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "you are allowed to work full-time at the university in which you have been enrolled or in the company affiliated to your phd programme. this only applies to work tasks that are part of your phd programme and only for the period while you study.",
+      "source_excerpt_display": "You are allowed to work full-time at the university in which you have been enrolled or in the company affiliated to your PhD programme. This only applies to work tasks that are part of your PhD programme and only for the period while you study."
+    },
+    {
+      "requirement_code": "limited_work_permit_alongside",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A limited work permit is also granted for employment elsewhere",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "in addition to your residence and work permit as a phd student, you are also granted a limited work permit allowing you to take up additional employment besides your full-time job as a phd student",
+      "source_excerpt_display": "In addition to your residence and work permit as a PhD student, you are also granted a limited work permit allowing you to take up additional employment besides your full-time job as a PhD student"
+    },
+    {
+      "requirement_code": "work_hours_allowed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "90 hours a month September to May, full time in June, July and August",
+      "source_role": "requirements",
+      "parameters": {
+        "hours_per_month_in_term": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt": "the limited work permit allows you to work:\n\nfor up to 90 hours per month during the normal period of study from september to may, and\n\nfull-time through june, july and august",
+      "source_excerpt_display": "The limited work permit allows you to work:\n\nfor up to 90 hours per month during the normal period of study from September to May, and\n\nfull-time through June, July and August"
+    },
+    {
+      "requirement_code": "unlimited_sideline_hours_full_degree",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A full-degree PhD may work unlimited additional hours beyond the institution employment",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "if you are enrolled in a full phd programme in denmark, you also have the right to work an unlimited number of hours in addition to your employment at the university in which you are enrolled as phd student if the employment is naturally related to your phd studies.",
+      "source_excerpt_display": "If you are enrolled in a full PhD programme in Denmark, you also have the right to work an unlimited number of hours in addition to your employment at the university in which you are enrolled as PhD student if the employment is naturally related to your PhD studies."
+    },
+    {
+      "requirement_code": "illegal_work_consequences",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working more hours than allowed is illegal work — warning, fine, or revocation",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "it will be regarded as illegal work, if you work more hours than you are allowed to. if you work illegally you can receive a warning, a fine or your residence permit as a student can be revoked. you can read more about that here .",
+      "source_excerpt_display": "It will be regarded as illegal work, if you work more hours than you are allowed to. If you work illegally you can receive a warning, a fine or your residence permit as a student can be revoked. You can read more about that here ."
+    },
+    {
+      "requirement_code": "three_year_job_seeking_period",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The limited work permit stays valid through the 3-year job-seeking period after completion",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "the limited work permit is also valid during the 3-year job seeking period granted to you after you have completed your education in denmark.",
+      "source_excerpt_display": "The limited work permit is also valid during the 3-year job seeking period granted to you after you have completed your education in Denmark."
+    },
+    {
+      "requirement_code": "no_public_benefits_salaried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A salaried PhD may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "as an employed and salaried phd, you are not allowed to receive benefits under the terms of the active social policy act, e.g. social security benefits. this also applies to any family members accompanying you to denmark.",
+      "source_excerpt_display": "As an employed and salaried PhD, you are not allowed to receive benefits under the terms of the Active Social Policy Act, e.g. social security benefits. This also applies to any family members accompanying you to Denmark."
+    },
+    {
+      "requirement_code": "no_public_assistance_unsalaried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An unsalaried PhD may not receive public assistance, including maternity and paternity benefits",
+      "description": "A wider prohibition than the salaried one, and it would be invisible if the two were merged.",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "as an unpaid phd student, you are not allowed to receive public assistance. for example, you are not allowed to receive maternity or paternity benefits, housing benefits or state educational grants (su), and there might be other benefits that you are not allowed to receive.",
+      "source_excerpt_display": "As an unpaid PhD student, you are not allowed to receive public assistance. For example, you are not allowed to receive maternity or paternity benefits, housing benefits or State Educational Grants (SU), and there might be other benefits that you are not allowed to receive."
+    },
+    {
+      "requirement_code": "family_also_barred_from_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Accompanying family members are also barred from Active Social Policy Act benefits",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "any family members accompanying you are also not allowed to receive benefits under the terms of the active social policy act, e.g. social security benefits.",
+      "source_excerpt_display": "Any family members accompanying you are also not allowed to receive benefits under the terms of the Active Social Policy Act, e.g. social security benefits."
+    },
+    {
+      "requirement_code": "no_work_in_other_schengen_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit does not allow work in other Schengen countries",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "a danish residence and work permit does not allow you to work in other schengen countries .",
+      "source_excerpt_display": "A Danish residence and work permit does not allow you to work in other Schengen countries ."
+    }
+  ]
+}

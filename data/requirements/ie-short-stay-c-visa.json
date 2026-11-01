@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ie-short-stay-c-visa",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official ISD page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.irishimmigration.ie/how-to-apply-for-a-short-stay-c-visit-tourist-visa/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The visa fee amount. ISD links a separate fees page rather than stating a figure, and that page is not a registered source. It also notes some applicants are exempt, so a single number would be wrong even if one were available.",
+    "The list of countries whose citizens need an Irish visa. Linked, not stated.",
+    "The three visa-waiver routes named on the page (school group trips from the EU/EEA and Switzerland, the Short Stay Visa Waiver Programme via a UK visa, and the British-Irish Visa Scheme). Each defers to a separate page with its own eligibility, none registered.",
+    "The invitation letter, holiday/vacation plan and study plan contents. Stated on the page but conditional on the specific visit type, and each expands into a list better handled once those visit types are modelled.",
+    "Document submission addresses and packaging instructions. Operational, and office-specific."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "stay_90_days_max",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stay of up to 90 days",
+      "source_role": "requirements",
+      "source_excerpt": "a short stay or ‘c’ visa allows you travel to ireland for up to 90 days",
+      "display_order": 10,
+      "source_excerpt_display": "A short stay or ‘C’ visa allows you travel to Ireland for up to 90 days"
+    },
+    {
+      "requirement_code": "no_work_permitted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No paid or unpaid work of any kind",
+      "source_role": "requirements",
+      "source_excerpt": "this visa does not allow you to: do paid or unpaid work of any kind",
+      "display_order": 20,
+      "source_excerpt_display": "This visa does not allow you to: Do paid or unpaid work of any kind"
+    },
+    {
+      "requirement_code": "no_publicly_funded_services",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No use of publicly funded services",
+      "source_role": "requirements",
+      "source_excerpt": "use any publicly funded services, such as a public hospital.",
+      "display_order": 30,
+      "source_excerpt_display": "Use any publicly funded services, such as a public hospital."
+    },
+    {
+      "requirement_code": "apply_from_home_or_residence_country",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply from your home country or country of legal residence, before travelling",
+      "source_role": "requirements",
+      "source_excerpt": "apply for a visa before travelling. you must do this from your home country or the country where you are a legal resident.",
+      "display_order": 40,
+      "source_excerpt_display": "Apply for a visa before travelling. You must do this from your home country or the country where you are a legal resident."
+    },
+    {
+      "requirement_code": "one_application_per_person",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "One application per traveller; no family visas or e-visas",
+      "source_role": "requirements",
+      "source_excerpt": "apply for a visa for each person travelling . ireland do not issue family visas or e-visas",
+      "display_order": 50,
+      "source_excerpt_display": "Apply for a visa for each person travelling. Ireland do not issue Family visas or E-visas"
+    },
+    {
+      "requirement_code": "do_not_book_before_approval",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Do not buy travel tickets before approval",
+      "description": "ISD states this as instruction rather than an eligibility condition, so it is recorded as not officially required.",
+      "source_role": "requirements",
+      "source_excerpt": "wait for approval before you buy any travel tickets.",
+      "display_order": 60,
+      "source_excerpt_display": "Wait for approval before you buy any travel tickets."
+    },
+    {
+      "requirement_code": "visa_is_not_permission_to_enter",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa permits travel to Ireland, not entry — an immigration officer may still refuse",
+      "description": "Recorded so an approved visa is never presented to a user as guaranteed entry.",
+      "source_role": "requirements",
+      "source_excerpt": "a visa allows you to travel to ireland only. it does not give you permission to enter the country or to stay here. an immigration officer at border control can refuse entry even if you have a visa.",
+      "display_order": 70,
+      "source_excerpt_display": "A visa allows you to travel to Ireland only. It does not give you permission to enter the country or to stay here. An immigration officer at border control can refuse entry even if you have a visa."
+    },
+    {
+      "requirement_code": "avats_online_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create the application online in AVATS",
+      "source_role": "requirements",
+      "source_excerpt": "use the automated visa application and tracking system (avats) to apply for your visa online",
+      "display_order": 100,
+      "source_excerpt_display": "Use the Automated Visa Application and Tracking System (AVATS) to apply for your visa online"
+    },
+    {
+      "requirement_code": "visa_application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa application fee",
+      "description": "No amount recorded on purpose: ISD links a separate fee page rather than stating a figure here, and that page is not a registered source. It also notes some applicants are exempt.",
+      "source_role": "requirements",
+      "source_excerpt": "pay the visa application fee details of the current visa fees are available here . the fee covers the administrative cost of processing your application. this will not be refunded if you withdraw your application or if we refuse your application.",
+      "display_order": 110,
+      "source_excerpt_display": "Pay the visa application fee Details of the current visa fees are available here. The fee covers the administrative cost of processing your application. This will not be refunded if you withdraw your application or if we refuse your application."
+    },
+    {
+      "requirement_code": "submit_hardcopy_documents",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Documents must be submitted in hardcopy",
+      "description": "ISD explicitly rejects USB sticks, memory cards, CD-ROMs and file-sharing links.",
+      "source_role": "requirements",
+      "source_excerpt": "documents in hardcopy format only will be accepted",
+      "display_order": 120,
+      "source_excerpt_display": "Documents in hardcopy format only will be accepted"
+    },
+    {
+      "requirement_code": "passport_valid_6_months_after_departure",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Current passport, valid for at least 6 months after your planned departure from Ireland",
+      "source_role": "requirements",
+      "source_excerpt": "your current passport – your current passport must be valid for at least 6 months after the date you plan to leave ireland",
+      "display_order": 200,
+      "source_excerpt_display": "Your current passport – your current passport must be valid for at least 6 months after the date you plan to leave Ireland"
+    },
+    {
+      "requirement_code": "previous_passports_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of every page of all previous passports",
+      "source_role": "requirements",
+      "source_excerpt": "a photocopy of each page from all previous passports you have (where available). your application will be delayed if you do not provide copies of all previous passports you have",
+      "display_order": 210,
+      "source_excerpt_display": "A photocopy of each page from all previous passports you have (where available). Your application will be delayed if you do not provide copies of all previous passports you have"
+    },
+    {
+      "requirement_code": "passport_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two passport-sized colour photographs, signed and numbered on the back",
+      "source_role": "requirements",
+      "source_excerpt": "include 2 passport-sized colour photographs of the visa applicant. on the back of each photo: sign your name (in your native script and language) write your visa application transaction number from avats",
+      "display_order": 220,
+      "source_excerpt_display": "Include 2 passport-sized colour photographs of the visa applicant. On the back of each photo: Sign your name (in your native script and language) Write your Visa Application Transaction Number from AVATS"
+    },
+    {
+      "requirement_code": "application_summary_sheets",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Printed, signed and dated AVATS application summary sheets",
+      "source_role": "requirements",
+      "source_excerpt": "print, sign and date the application summary sheets (from avats).",
+      "display_order": 230,
+      "source_excerpt_display": "Print, sign and date the application summary sheets (from AVATS)."
+    },
+    {
+      "requirement_code": "application_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A signed application letter explaining the visit",
+      "source_role": "requirements",
+      "source_excerpt": "type or write a letter explaining why you want to come to ireland. sign and date the letter and submit it with your documents.",
+      "display_order": 240,
+      "source_excerpt_display": "Type or write a letter explaining why you want to come to Ireland. Sign and date the letter and submit it with your documents."
+    },
+    {
+      "requirement_code": "commitments_in_application_letter",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The application letter must commit you to obey visa conditions, not burden the state, and leave on time",
+      "source_role": "requirements",
+      "source_excerpt": "your letter must also include a commitment from you that you will: obey the conditions of your visa in full not rely on public services (for example public hospitals) or become a burden on the state leave ireland before your immigration permission expires.",
+      "display_order": 250,
+      "source_excerpt_display": "Your letter must also include a commitment from you that you will: Obey the conditions of your visa in full Not rely on public services (for example public hospitals) or become a burden on the State Leave Ireland before your immigration permission expires."
+    },
+    {
+      "requirement_code": "evidence_of_ties_to_home_country",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of strong family, social or economic ties to your country of residence",
+      "source_role": "requirements",
+      "source_excerpt": "it is important that you provide evidence that you have strong family, social or economic ties to your country of residence. this is necessary in order to satisfy the visa officer that you will leave ireland on, or before, your intended date of departure from ireland.",
+      "display_order": 260,
+      "source_excerpt_display": "it is important that you provide evidence that you have strong family, social or economic ties to your country of residence. This is necessary in order to satisfy the Visa Officer that you will leave Ireland on, or before, your intended date of departure from Ireland."
+    },
+    {
+      "requirement_code": "proof_of_finances",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence you can support yourself in Ireland",
+      "description": "See finances_no_minimum: ISD sets no threshold, so none is shown to the applicant.",
+      "source_role": "requirements",
+      "source_excerpt": "you must show that you have enough finance (money) to support yourself in ireland.",
+      "display_order": 270,
+      "source_excerpt_display": "You must show that you have enough finance (money) to support yourself in Ireland."
+    },
+    {
+      "requirement_code": "finances_no_minimum",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "There is no minimum amount of money required",
+      "description": "Recorded explicitly because the absence of a figure is itself the rule. Every other destination in this registry publishes a threshold; inventing one for Ireland, or carrying one across from a neighbour, would be a fabricated requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "note : there is no minimum amount of finance for approving or refusing a visa application. the visa officer will decide if you have enough based on your own circumstances.",
+      "display_order": 280,
+      "source_excerpt_display": "Note: There is no minimum amount of finance for approving or refusing a visa application. The visa officer will decide if you have enough based on your own circumstances."
+    },
+    {
+      "requirement_code": "previous_visa_refusals_disclosure",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Disclose every previous visa or preclearance refusal, from any country",
+      "rule": {
+        "fact": "has_prior_refusal",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "requirements",
+      "source_excerpt": "for all visa or preclearance applications, if you have been refused a visa or preclearance in the past for any country, you must provide details to us. the original letter issued to you by the authorities of that country must be provided with your application. not disclosing any previous visa refusals will result in your application being refused.",
+      "display_order": 290,
+      "source_excerpt_display": "For all visa or preclearance applications, if you have been refused a visa or preclearance in the past for any country, you must provide details to us. The original letter issued to you by the authorities of that country must be provided with your application. Not disclosing any previous visa refusals will result in your application being refused."
+    },
+    {
+      "requirement_code": "medical_or_travel_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Medical or travel insurance — not required with the application, required at the border",
+      "description": "Deliberately kept as one requirement rather than split: the point is the timing. Listing it as an application document would be wrong, and omitting it would leave someone arriving without it.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of medical or travel insurance does not need to be provided with your application. however, the visa officer may request it before they make a decision on your application. if your visa is approved, you must have evidence of medical or travel insurance when you arrive at the port of entry (airport or seaport) and must present it to the immigration officer on request.",
+      "display_order": 300,
+      "source_excerpt_display": "Evidence of medical or travel insurance does not need to be provided with your application. However, the Visa Officer may request it before they make a decision on your application. If your visa is approved, you must have evidence of medical or travel insurance when you arrive at the port of entry (airport or seaport) and must present it to the Immigration Officer on request."
+    }
+  ]
+}

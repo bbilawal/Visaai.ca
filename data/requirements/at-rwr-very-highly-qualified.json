@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-very-highly-qualified",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "This route is scored, not simply met: admission depends on reaching a points total across qualifications, salary, research, awards, work experience, language, age and study in Austria. The requirements below are the DOCUMENTARY and PROCEDURAL ones stated in prose. The points table itself is not extracted — see not_extracted for why.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/very-highly-qualified-workers/"
+  },
+  "page_dates": {},
+  "freshness_note": "The page publishes NO dateline and its body mentions no year. That is a real limitation and it is not unique to Austria — many sources already in this registry publish no date either (Singapore's MOM pages, the US ESTA pages), and check-source-freshness.ts lists them as '[none published]'. It is tracked, not hidden: nothing here can be dated from the page, so a stale page would look current.",
+  "not_extracted": [
+    "THE POINTS TABLE. The page scores eight criteria and states a required minimum, and the criterion-to-points mapping is not recoverable from the page text after normalization. The table's rows flatten into consecutive lines — the three age brackets appear as 'under 35 years of age', 'under 40 years of age', 'under 45 years of age' followed by '20', '15', '10' — so the association between a criterion and its score exists only in the visual layout. Asserting 'under 35 = 20 points' would be inferring from position, which is exactly the invention this project forbids. The scoring is therefore described as existing and not quantified.",
+    "The required minimum total. It appears as a bare number on its own line after 'required minimum:', and quoting a bare '70' is not a quotation of anything a reader could check.",
+    "Fees. The page names none."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "points_confirmed_by_ams",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The AMS must confirm you reached the points total",
+      "description": "Admission is not decided by the consulate on the papers alone: the Public Employment Service confirms the points score to the representative authority before the visa is granted.",
+      "source_role": "requirements",
+      "source_excerpt": "the job-seeker visa is granted once the public employment service (ams) confirms to the representative authority that you have reached the required number of points for admission.",
+      "display_order": 10,
+      "source_excerpt_display": "The job-seeker visa is granted once the Public Employment Service (AMS) confirms to the representative authority that you have reached the required number of points for admission."
+    },
+    {
+      "requirement_code": "visa_free_alternative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No job-seeker visa if you may enter visa-free",
+      "description": "Nationals who can enter without a visa apply for the card during a legal visa-free stay instead.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are permitted to enter austria without a visa , you won't need a job-seeker visa.",
+      "display_order": 20,
+      "source_excerpt_display": "If you are permitted to enter Austria without a visa, you won't need a job-seeker visa."
+    },
+    {
+      "requirement_code": "employer_declaration",
+      "kind": "form",
+      "officially_required": true,
+      "label": "An employer's declaration must accompany the application",
+      "description": "A statement from the company describing the future position — the employer's document, not the applicant's.",
+      "source_role": "requirements",
+      "source_excerpt": "the application must be accompanied by an employer's declaration - a statement from the company providing detailed information about the future position.",
+      "display_order": 30,
+      "source_excerpt_display": "The application must be accompanied by an employer's declaration - a statement from the company providing detailed information about the future position."
+    },
+    {
+      "requirement_code": "travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document",
+      "description": "A passport or equivalent.",
+      "source_role": "requirements",
+      "source_excerpt": "valid travel document (e.g. passport)",
+      "display_order": 40,
+      "source_excerpt_display": "Valid travel document (e.g. passport)"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, under six months old",
+      "description": "The authority states both the dimensions and the age limit.",
+      "source_role": "requirements",
+      "source_excerpt": "photo (dimensions: 45x35mm) which is not older than six months",
+      "display_order": 50,
+      "source_excerpt_display": "Photo (dimensions: 45x35mm) which is not older than six months"
+    },
+    {
+      "requirement_code": "accommodation_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of locally customary accommodation",
+      "description": "A lease, a preliminary tenancy agreement or evidence of ownership.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of locally customary accommodation (e.g. lease contracts, preliminary agreement on tenancy rights or ownership evidence)",
+      "display_order": 60,
+      "source_excerpt_display": "Proof of locally customary accommodation (e.g. lease contracts, preliminary agreement on tenancy rights or ownership evidence)"
+    },
+    {
+      "requirement_code": "health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance covering all risks",
+      "description": "Compulsory insurance or an equivalent policy.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)",
+      "display_order": 70,
+      "source_excerpt_display": "Proof of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)"
+    },
+    {
+      "requirement_code": "means_of_subsistence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of adequate means of subsistence",
+      "description": "The authority lists a wide range of acceptable evidence, including assets rather than income alone.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of adequate means of subsistence (payslips, pay certificates, employment contracts, insurance benefit certificates, evidence of retirement or other pension or insurance benefits, investment capital or sufficient own assets)",
+      "display_order": 80,
+      "source_excerpt_display": "Proof of adequate means of subsistence (payslips, pay certificates, employment contracts, insurance benefit certificates, evidence of retirement or other pension or insurance benefits, investment capital or sufficient own assets)"
+    },
+    {
+      "requirement_code": "language_certificate_age",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Language certificate at A1 or A2, under five years old",
+      "description": "The certificate has its own expiry rule, separate from the photo's.",
+      "source_role": "requirements",
+      "source_excerpt": "language diploma or language course certificate at the a1 or a2 levels of the common european framework of reference for languages . the certificate should not be older than five years.",
+      "display_order": 90,
+      "source_excerpt_display": "Language diploma or language course certificate at the A1 or A2 levels of the Common European Framework of Reference for Languages. The certificate should not be older than five years."
+    }
+  ]
+}

@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-researcher",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "The researcher permit is the most PERMISSIVE Danish work route, and every one of its exemptions is the reverse of a rule that holds elsewhere. Publishing it from the shape of the other schemes would get four things backwards:\n\n  * Sideline employment needs a separate permit on the Pay Limit and Positive List routes. A researcher is EXEMPT from a work permit for it.\n  * Full-time work is expected elsewhere. The authority states outright that full-time employment is not a requirement here.\n  * Six months abroad lapses a permit elsewhere. A researcher is exempt from the lapsing rules, and so is the accompanying family.\n  * Changing position needs a new permit on the Positive Lists. A researcher may change job content within the same university or company.\n\nAND THE PASSPORT RULE IS WORDED DIFFERENTLY HERE. This page says a permit can only be valid until '90 days' before the passport expires; the Pay Limit and Positive List pages say '3 months'. They are not the same span, and neither is quoted in place of the other.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Researcher"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline; the body references 2026. The daily sync is what will notice a change.",
+  "not_extracted": [
+    "Guest researchers and PhD students, which the page explicitly routes to separate pages with separate regulations. Guest PhD and employed PhD are separate enumerated routes.",
+    "The Fast-Track Scheme researcher track, which is a separate registered route.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "The rules for accompanying family members beyond the lapsing exemption, which are a separate route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "paid_research_position_offered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A paid position as a researcher must have been offered",
+      "source_role": "requirements",
+      "lines": [
+        26
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "research_related_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "There must be particular research-related reasons for the position",
+      "source_role": "requirements",
+      "lines": [
+        40
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "job_linked_to_the_individual",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must be closely linked to you as an individual, with research as the main purpose of the stay",
+      "source_role": "requirements",
+      "lines": [
+        42
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "salary_and_terms_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary and terms of employment must correspond to Danish standards",
+      "source_role": "requirements",
+      "lines": [
+        46
+      ],
+      "display_order": 40
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only liquid assets and labour-market pension payments count towards the wage level",
+      "source_role": "requirements",
+      "lines": [
+        48,
+        50
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Housing, per diems, car, phone, internet, benefits in kind and subscriptions are excluded",
+      "source_role": "requirements",
+      "lines": [
+        52,
+        68
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "excluded_components_may_still_be_received",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "You may receive the excluded components; they simply do not count towards the assessment",
+      "description": "Registered because the exclusion list alone reads as a prohibition.",
+      "source_role": "requirements",
+      "lines": [
+        70
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "full_time_not_required",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Full-time employment as a researcher is NOT a requirement",
+      "description": "The opposite of the hours conditions on the Pay Limit and Positive List routes.",
+      "source_role": "requirements",
+      "lines": [
+        74
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "employment_contract_must_be_attached",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the employment contract or job offer must be attached, stating all terms",
+      "source_role": "requirements",
+      "lines": [
+        76
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "short_stay_under_90_days_may_not_need_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A stay of 90 days or less may not need a residence and work permit",
+      "source_role": "requirements",
+      "lines": [
+        86
+      ],
+      "display_order": 100
+    },
+    {
+      "requirement_code": "visa_still_required_for_short_stays",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa-required national must still obtain a visa covering the full stay before travelling",
+      "description": "Registered next to the permit exemption, because the exemption alone reads as needing no document at all.",
+      "source_role": "requirements",
+      "lines": [
+        88
+      ],
+      "display_order": 110
+    },
+    {
+      "requirement_code": "over_90_days_permit_covers_first_90",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the stay will exceed 90 days, the residence permit must cover the first 90 days too",
+      "source_role": "requirements",
+      "lines": [
+        92
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "lines": [
+        21,
+        22
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        19
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "sideline_employment_exempt_from_work_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A researcher is EXEMPT from needing a work permit for sideline employment",
+      "description": "The reverse of the Pay Limit and Positive List rule, which requires a separate permit.",
+      "source_role": "requirements",
+      "lines": [
+        114
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "external_examiner_without_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examination work at another university needs no separate work permit",
+      "source_role": "requirements",
+      "lines": [
+        128
+      ],
+      "display_order": 160
+    },
+    {
+      "requirement_code": "change_of_job_content_allowed",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Job position may change within the same university or company without a new work permit",
+      "source_role": "requirements",
+      "lines": [
+        136
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "change_of_workplace_needs_new_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Changing your place of work requires a new permit",
+      "description": "Registered alongside the job-content allowance, which it bounds.",
+      "source_role": "requirements",
+      "lines": [
+        112
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "must_inform_siri_of_worsened_terms",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "SIRI must be informed if salary or employment conditions are affected negatively",
+      "source_role": "requirements",
+      "lines": [
+        110
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "exempt_from_lapse_rules",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A researcher is exempt from the rules on a permit lapsing after six months abroad",
+      "description": "Quoted with the sentence stating the ordinary rule, so the exemption is legible as an exemption.",
+      "source_role": "requirements",
+      "lines": [
+        150,
+        152
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "documentation_when_residing_abroad",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Residing abroad without the stated salary requires documentation from you and your employer",
+      "source_role": "requirements",
+      "lines": [
+        154
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "family_exempt_from_lapse_rules",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Accompanying family are also exempt from the lapsing rules",
+      "source_role": "requirements",
+      "lines": [
+        291
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "lines": [
+        171
+      ],
+      "display_order": 230
+    },
+    {
+      "requirement_code": "no_work_in_other_schengen_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit does not allow work in other Schengen countries",
+      "source_role": "requirements",
+      "lines": [
+        146
+      ],
+      "display_order": 240
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "source_role": "requirements",
+      "lines": [
+        217
+      ],
+      "display_order": 250
+    },
+    {
+      "requirement_code": "duration_employment_four_years_or_more",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Four-year permit where the employment is four years or longer",
+      "source_role": "requirements",
+      "lines": [
+        223
+      ],
+      "display_order": 260
+    },
+    {
+      "requirement_code": "duration_under_four_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Shorter employment gives a permit for the period of the employment",
+      "source_role": "requirements",
+      "lines": [
+        233
+      ],
+      "display_order": 270
+    },
+    {
+      "requirement_code": "passport_shortens_permit_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 90 days before the passport expires",
+      "description": "This page says 90 days where the Pay Limit and Positive List pages say 3 months. Quoted as written.",
+      "source_role": "requirements",
+      "lines": [
+        245
+      ],
+      "parameters": {
+        "days_before_passport_expiry": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280
+    },
+    {
+      "requirement_code": "work_limited_to_the_named_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is limited to the employment it was granted for",
+      "source_role": "requirements",
+      "lines": [
+        257
+      ],
+      "display_order": 290
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "source_role": "requirements",
+      "lines": [
+        261
+      ],
+      "display_order": 300
+    },
+    {
+      "requirement_code": "sideline_job_can_become_the_basis",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "An existing sideline job can be applied for as the new basis of a permit",
+      "source_role": "requirements",
+      "lines": [
+        263
+      ],
+      "display_order": 310
+    },
+    {
+      "requirement_code": "job_seeking_permit_two_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply for a job-seeking permit no later than two days after employment ends",
+      "source_role": "requirements",
+      "lines": [
+        267
+      ],
+      "parameters": {
+        "days_after_employment_ends": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 320
+    },
+    {
+      "requirement_code": "no_work_during_job_seeking_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are not allowed to work while you have a job-seeking permit",
+      "source_role": "requirements",
+      "lines": [
+        269
+      ],
+      "display_order": 330
+    }
+  ]
+}

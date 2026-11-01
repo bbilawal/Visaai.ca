@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ie-short-stay-business-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official ISD page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-options-for-working-in-ireland/coming-to-work-for-less-than-90-days/short-stay-business-visa/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The visa fee amount. ISD links a separate fees page and notes exemptions, as on the visit visa.",
+    "The atypical working scheme and the short stay employment visa, which ISD names as the correct route when the 14-day rule is not met. Each is a separate process on its own page.",
+    "The list of visa-required countries and convention travel documents. Linked, not stated.",
+    "Business letter and host letter contents, which expand into their own lists and depend on who is paying for the trip.",
+    "Rules for applicants under 18, which ISD handles in a separate section."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "stay_90_days_business",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Up to 90 days for business activities — meetings, negotiating or signing agreements",
+      "source_role": "requirements",
+      "source_excerpt": "a short stay ‘c’ business visa allows you to travel to ireland for up to 90 days for activities related to your job, including to: attend meetings negotiate or sign agreements or contracts work for 14 days or less.",
+      "display_order": 10,
+      "source_excerpt_display": "A short stay ‘C’ business visa allows you to travel to Ireland for up to 90 days for activities related to your job, including to: Attend meetings Negotiate or sign agreements or contracts Work for 14 days or less."
+    },
+    {
+      "requirement_code": "no_work_15_days_or_longer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No work of any kind, paid or unpaid, for 15 days or longer",
+      "source_role": "requirements",
+      "source_excerpt": "work in any way (paid or unpaid) for 15 days or longer",
+      "display_order": 20,
+      "source_excerpt_display": "Work in any way (paid or unpaid) for 15 days or longer"
+    },
+    {
+      "requirement_code": "no_public_services",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No reliance on Irish public services",
+      "source_role": "requirements",
+      "source_excerpt": "rely on irish public services, for example public hospitals.",
+      "display_order": 30,
+      "source_excerpt_display": "Rely on Irish public services, for example public hospitals."
+    },
+    {
+      "requirement_code": "work_within_single_14_day_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Any work must start and end within a single 14-day period",
+      "description": "ISD's worked example: 7 days of work, a 10-day gap, then 7 more does NOT qualify — that needs the atypical working scheme and a short stay employment visa instead.",
+      "source_role": "requirements",
+      "source_excerpt": "you should apply for a business visa if your work in ireland starts and ends within a single 14 day period (2 calendar weeks).",
+      "display_order": 40,
+      "source_excerpt_display": "You should apply for a business visa if your work in Ireland starts and ends within a single 14 day period (2 calendar weeks)."
+    },
+    {
+      "requirement_code": "cannot_work_more_than_once_in_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You cannot work more than once during the 90-day period",
+      "description": "ISD's worked example: 14 days of work, leaving Ireland for a month, then returning for another 14 is NOT permitted on this visa even though each block is under 14 days.",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot work more than once during the 90 day period",
+      "display_order": 50,
+      "source_excerpt_display": "You cannot work more than once during the 90 day period"
+    },
+    {
+      "requirement_code": "visa_is_not_permission_to_enter",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa permits travel to Ireland, not entry — an officer may still refuse",
+      "description": "Recorded so an approved visa is never presented as guaranteed entry.",
+      "source_role": "requirements",
+      "source_excerpt": "a visa allows you to travel to ireland only. it does not give you permission to enter the country or to stay here. an immigration officer at border control can refuse you entry even if you have a visa.",
+      "display_order": 60,
+      "source_excerpt_display": "A visa allows you to travel to Ireland only. It does not give you permission to enter the country or to stay here. An immigration officer at border control can refuse you entry even if you have a visa."
+    },
+    {
+      "requirement_code": "one_application_per_traveller",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Each traveller must apply separately",
+      "source_role": "requirements",
+      "source_excerpt": "each traveller must apply for a separate visa.",
+      "display_order": 70,
+      "source_excerpt_display": "Each traveller must apply for a separate visa."
+    },
+    {
+      "requirement_code": "avats_online_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create the application online in AVATS",
+      "source_role": "requirements",
+      "source_excerpt": "create your visa application online",
+      "display_order": 80,
+      "source_excerpt_display": "Create your visa application online"
+    },
+    {
+      "requirement_code": "passport_valid_6_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Current passport valid at least 6 months after you plan to leave Ireland",
+      "description": "Six months here, against twelve on Ireland's long term study visa. Quoted from each page rather than assumed to match.",
+      "source_role": "requirements",
+      "source_excerpt": "your current passport must be valid for at least 6 months after the date you plan to leave ireland.",
+      "display_order": 90,
+      "source_excerpt_display": "Your current passport must be valid for at least 6 months after the date you plan to leave Ireland."
+    },
+    {
+      "requirement_code": "previous_passports",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of every page of all previous passports",
+      "source_role": "requirements",
+      "source_excerpt": "a photocopy of each page from all previous passports you have (where available).",
+      "display_order": 100,
+      "source_excerpt_display": "A photocopy of each page from all previous passports you have (where available)."
+    },
+    {
+      "requirement_code": "passport_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two passport-sized colour photographs, signed and numbered on the back",
+      "source_role": "requirements",
+      "source_excerpt": "include 2 passport-sized colour photographs of the visa applicant. on the back of each photo: sign your name (in your native script and language) write your visa application transaction number from avats",
+      "display_order": 110,
+      "source_excerpt_display": "Include 2 passport-sized colour photographs of the visa applicant. On the back of each photo: Sign your name (in your native script and language) Write your Visa Application Transaction Number from AVATS"
+    },
+    {
+      "requirement_code": "third_country_travel_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A letter describing your travel plan if you route through a third country",
+      "description": "ISD warns the Irish application may be refused if the passport does not contain the visas expected for those countries.",
+      "source_role": "requirements",
+      "source_excerpt": "include a letter that describes your travel plan to-or-from ireland if you intend to: travel to ireland directly from a country that is not your home country, or a country where you are a legal resident or travel from ireland directly to a different country",
+      "display_order": 120,
+      "source_excerpt_display": "Include a letter that describes your travel plan to-or-from Ireland if you intend to: Travel to Ireland directly from a country that is not your home country, or a country where you are a legal resident Or travel from Ireland directly to a different country"
+    },
+    {
+      "requirement_code": "residence_permission_if_not_citizen",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of permission to be in the country you apply from, valid 3 months beyond your departure",
+      "source_role": "requirements",
+      "source_excerpt": "if you are not a citizen of the country you are applying from you must submit proof that you have permission to be in that country, for example a photocopy of your residence card. you must also show you have at least 3 months’ permission to remain in that country after the date you plan to leave ireland.",
+      "display_order": 130,
+      "source_excerpt_display": "If you are not a citizen of the country you are applying from you must submit proof that you have permission to be in that country, for example a photocopy of your residence card. You must also show you have at least 3 months’ permission to remain in that country after the date you plan to leave Ireland."
+    },
+    {
+      "requirement_code": "finances_no_minimum",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "There is no minimum amount of money required",
+      "description": "Same as Ireland's visit visa: the absence of a threshold is itself the rule, and recording it explicitly stops a figure being borrowed from another destination.",
+      "source_role": "requirements",
+      "source_excerpt": "there is no minimum amount of finance for approving or refusing a visa application. the visa officer will decide if you have enough based on your own circumstances.",
+      "display_order": 140,
+      "source_excerpt_display": "There is no minimum amount of finance for approving or refusing a visa application. The visa officer will decide if you have enough based on your own circumstances."
+    },
+    {
+      "requirement_code": "bank_statement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An original bank statement on headed paper covering the last 6 months",
+      "description": "ISD requires it to show your name and address, account number and type, and money in and out over the last 6 months.",
+      "source_role": "requirements",
+      "source_excerpt": "an up-to-date bank statement, it must be original and on headed bank paper. note: you may use a printed internet statement but it must be officially certified by your bank. we will not accept uncertified internet statements",
+      "display_order": 150,
+      "source_excerpt_display": "An up-to-date bank statement, it must be original and on headed bank paper. Note: You may use a printed internet statement but it must be officially certified by your bank. We will not accept uncertified internet statements"
+    },
+    {
+      "requirement_code": "no_employer_bank_statements",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Do not submit your employer's bank statements unless asked",
+      "description": "An instruction rather than an eligibility condition, recorded because sending unrequested third-party financials is a common and avoidable mistake.",
+      "source_role": "requirements",
+      "source_excerpt": "do not submit your employer’s bank statements unless requested to do so.",
+      "display_order": 160,
+      "source_excerpt_display": "Do not submit your employer’s bank statements unless requested to do so."
+    }
+  ]
+}

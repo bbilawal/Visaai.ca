@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-work-permit-renewal",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "THE RENEWAL FEES SIT UNDER A DIFFERENT LEGAL INSTRUMENT FROM THE ISSUANCE FEES — Ministerial Decision 602/2025 as amended, where commercial issuance runs under 340/2016. Same ministry, same worker, two decisions, and the amounts are calculated the same way: by occupation category and licence duration.\n\nNOTE ALSO that this page's 101 and 141 figures match the private issuance page exactly. They are the same amounts for two different services, published on two pages, and neither is derived from the other.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-individuals-288"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "what_the_service_covers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The service renews work permits that have expired or are about to expire, for individual employers",
+      "source_role": "requirements",
+      "source_excerpt": "تتيح خدمة \" تجديد بيانات القوى العاملة غير العمانية \" لأصحاب العمل (الأفراد)، تجديد تصاريح العمل التي انتهت أو",
+      "display_order": 10,
+      "source_excerpt_display": "تتيح خدمة \" تجديد بيانات القوى العاملة غير العمانية \" لأصحاب العمل (الأفراد)، تجديد تصاريح العمل التي انتهت أو"
+    },
+    {
+      "requirement_code": "renewal_is_immediate_on_submission",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is renewed immediately after the request is sent",
+      "description": "No processing window at all, unlike issuance which takes one to ten days.",
+      "source_role": "requirements",
+      "source_excerpt": "3- سيتم تجديد تصريح العمل مباشرة بعد ارسال الطلب.",
+      "display_order": 20,
+      "source_excerpt_display": "3- سيتم تجديد تصريح العمل مباشرة بعد ارسال الطلب."
+    },
+    {
+      "requirement_code": "renewal_fee_101_for_one_to_three",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Renewal for 1–3 domestic workers costs 101 rial",
+      "parameters": {
+        "omr": 101
+      },
+      "source_role": "requirements",
+      "source_excerpt": "-رسوم تجديد بيانات عمال المنازل (1-3) هي 101 ر.ع .",
+      "display_order": 30,
+      "source_excerpt_display": "-رسوم تجديد بيانات عمال المنازل (1-3) هي 101 ر.ع."
+    },
+    {
+      "requirement_code": "renewal_fee_141_for_four_or_more",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Renewal for 4 or more domestic workers costs 141 rial",
+      "parameters": {
+        "omr": 141
+      },
+      "source_role": "requirements",
+      "source_excerpt": "-رسوم تجديد بيانات عمال المنازل (4 فأكثر) هي 141ر.ع .",
+      "display_order": 40,
+      "source_excerpt_display": "-رسوم تجديد بيانات عمال المنازل (4 فأكثر) هي 141ر.ع."
+    }
+  ]
+}

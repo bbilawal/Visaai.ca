@@ -1,0 +1,68 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. HorizontalPodAutoscalers.
+# =============================================================================
+# Requires metrics-server installed (CPU/memory metrics).
+#
+# ⚠️ The API HPA maxReplicas is capped at 1 ON PURPOSE until the horizontal-
+# scaling blockers are fixed (README §5): socket.io needs a Redis adapter and
+# progress dedup must move to the DB, or a 2nd api pod drops WS events and
+# double-emits analytics. Raise maxReplicas ONLY after those land. It is included
+# here so the scaling story is explicit, not so you enable it blindly.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: visaai-api
+  namespace: visaai
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: visaai-api
+  minReplicas: 1
+  maxReplicas: 1          # <-- keep at 1 until §5 blockers fixed, then raise
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }
+---
+# Web is stateless — safe to autoscale freely.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: visaai-web
+  namespace: visaai
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: visaai-web
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }
+---
+# Worker can scale freely (BullMQ distributes jobs; processors are idempotent).
+# CPU is a weak proxy for "queue backlog" — the RIGHT signal is queue depth.
+# Prefer KEDA (kedacore) with a Redis/BullMQ scaler to scale on waiting-job count.
+# CPU HPA below is the no-extra-operator fallback.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: visaai-worker
+  namespace: visaai
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: visaai-worker
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 75 }

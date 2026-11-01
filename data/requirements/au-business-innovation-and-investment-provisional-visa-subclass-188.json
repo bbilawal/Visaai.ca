@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-business-innovation-and-investment-provisional-visa-subclass-188",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188"
+  },
+  "not_extracted": [
+    "THIN SOURCE. The subclass 188 landing page carries a short summary of the entry pathway rather than the full criteria, and it is the only non-fees source registered for this visa type. Points test, business or investment thresholds, asset requirements, age limits, English requirements, health, character and the per-stream criteria are not stated on it. This file is a floor, not a complete picture of the subclass 188 requirements.",
+    "Stream-specific requirements. Subclass 188 has several streams (Business Innovation, Investor, Entrepreneur and others). The page read does not attribute any requirement to a stream, so none is recorded per stream.",
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains only the column headings ('Base application charge', 'Additional applicant charge 18 and over', 'Additional applicant charge under 18', 'Non-internet application charge', 'Subsequent temporary application charge') and no amounts. No amount and no currency was stated, so no fee is recorded.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "expression_of_interest_skillselect",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Submit an expression of interest (EOI) in SkillSelect",
+      "source_role": "landing",
+      "source_excerpt": "Submit expression of interest (EOI) in SkillSelect",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "nominated_by_state_territory_or_austrade",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be nominated by a state or territory government agency or Austrade",
+      "source_role": "landing",
+      "source_excerpt": "Nominated by a state or territory government agency or Austrade",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "invited_to_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be invited to apply for the visa",
+      "description": "The Department describes the visa as one that allows you to own and manage a business in Australia, conduct business and investment activity in Australia, or undertake an entrepreneurial activity in Australia.",
+      "source_role": "landing",
+      "source_excerpt": "Invited to apply for the visa",
+      "display_order": 30
+    }
+  ]
+}

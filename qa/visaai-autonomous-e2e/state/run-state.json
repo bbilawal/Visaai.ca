@@ -1,0 +1,24 @@
+{
+  "run_id": "visaai-e2e-20260812",
+  "started_at": "2026-08-12T13:33:03.127410+00:00",
+  "git_head": "9ae7a99 + uncommitted fixes",
+  "git_branch": "main",
+  "controller": "../../visaai-e2e-controller.json",
+  "phase": "complete",
+  "target_base_url": "http://localhost:3100",
+  "browser_tool": "Chromium via @playwright/test (resolved from apps/web)",
+  "inventory": {
+    "selectable_countries": 33,
+    "matrix_rows": 71
+  },
+  "matrix_completed": 71,
+  "scenarios_completed": 1015,
+  "pass_count": 1086,
+  "fail_count": 0,
+  "blocked_count": 0,
+  "bugs_open": 0,
+  "bugs_fixed": 6,
+  "bugs_blocked": 0,
+  "next_action": "Human decision only: commit/push the uncommitted fixes (see state/NEXT_ACTION.md). Definition of Done is met; lint and formatter gates were never run.",
+  "updated_at": "2026-08-12T23:19:40.170843+00:00"
+}

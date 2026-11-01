@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-resident",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "ONE PAGE, MANY GROUNDS, 120,000 CHARACTERS. The ten-year resident card is issued on grounds as different as marriage to a French national, service to France including the Foreign Legion, and international protection. The EXTRACTION IS BOUNDED to the 'époux de français' ground, declared as text anchors, and every requirement below is a spouse-of-a-French-national requirement.\n\nNOTE THE LANGUAGE LEVEL. This card requires French at B1 and a pass in the 'carte de résident' civic examination — one level and one exam above the multi-year card's A2. Both are waived over 65. A reader who cleared the multi-year card's tests meets harder ones here.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2208"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "époux de français la carte de résident vous autorise à séjourner en france",
+      "ends_before": "parent d'enfant français",
+      "note": "The 'époux de français' ground ONLY. The page continues into other family grounds, services rendered to France, and international protection, each with its own conditions and durations."
+    }
+  },
+  "page_dates": {
+    "requirements": "2026-07-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juillet 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "Every ground other than spouse of a French national — including parent of a French child, services rendered to France such as service in the Foreign Legion, and international protection. Each has its own qualifying period and conditions on the same page. None is quoted; the bound excludes them.",
+    "The European, Algerian, and migration-flows-agreement regimes. The page states different rules apply and routes away without stating them.",
+    "The document list. The page states plainly that the documents vary by situation and then branches; nothing is quoted from it.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "resident_card_permits_work_without_employer_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Spouse of a French national: the card permits work and the employer needs no authorisation",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "la carte de résident vous autorise à séjourner en france. elle vous autorise à travailler. votre employeur n'a pas à demander une autorisation de travail.",
+      "source_excerpt_display": "La carte de résident vous autorise à séjourner en France. Elle vous autorise à travailler. Votre employeur n'a pas à demander une autorisation de travail."
+    },
+    {
+      "requirement_code": "three_years_of_marriage_one_for_tunisians",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Married to a French national for at least 3 years — or at least 1 year if you are Tunisian",
+      "description": "A nationality-specific qualifying period sitting inside an otherwise uniform rule. Applying the three-year figure to a Tunisian applicant delays them by two years for no reason.",
+      "parameters": {
+        "marriage_years": 3,
+        "marriage_years_tunisian": 1
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous êtes marié(e) avec un(e) français(e) depuis au moins 3 ans (ou au moins 1 an si vous êtes tunisien)",
+      "source_excerpt_display": "Vous êtes marié(e) avec un(e) Français(e) depuis au moins 3 ans (ou au moins 1 an si vous êtes tunisien)"
+    },
+    {
+      "requirement_code": "effective_community_of_life_and_retained_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your community of life must be effective and your spouse must have kept French nationality",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "votre communauté de vie ... est effective votre époux(se) a conservé la nationalité française",
+      "source_excerpt_display": "Votre communauté de vie ... est effective Votre époux(se) a conservé la nationalité française"
+    },
+    {
+      "requirement_code": "foreign_marriage_must_be_transcribed_first",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A marriage celebrated abroad must already have been transcribed onto the French civil register",
+      "description": "'Auparavant' — beforehand. The transcription cannot run in parallel with this application.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "si votre mariage a été célébré à l'étranger, il doit avoir été transcrit auparavant sur les registres de l'état civil français.",
+      "source_excerpt_display": "Si votre mariage a été célébré à l'étranger, il doit avoir été transcrit auparavant sur les registres de l'état civil français."
+    },
+    {
+      "requirement_code": "french_at_b1_for_a_first_resident_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Prove French at B1 level for a FIRST resident card, unless you are over 65",
+      "description": "One level above the A2 required for a first multi-year card.",
+      "parameters": {
+        "language_level": "B1",
+        "exempt_if_older_than": 65
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "connaissance de la langue française à un niveau b1 pour la délivrance d’une 1 re carte de résident. vous n’êtes pas concerné si vous avez plus de 65 ans.",
+      "source_excerpt_display": "Connaissance de la langue française à un niveau B1 pour la délivrance d’une 1 re carte de résident. Vous n’êtes pas concerné si vous avez plus de 65 ans."
+    },
+    {
+      "requirement_code": "civic_examination_carte_de_resident",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pass the 'carte de résident' civic examination for a FIRST resident card, unless you are over 65",
+      "description": "A different examination from the multi-year card's, and passing that one does not satisfy this.",
+      "parameters": {
+        "exempt_if_older_than": 65
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "réussite à l’examen civique mention « carte de résident » pour la délivrance d’une 1 re carte de résident. vous n’êtes pas concerné si vous avez plus de 65 ans.",
+      "source_excerpt_display": "Réussite à l’examen civique mention «carte de résident» pour la délivrance d’une 1 re carte de résident. Vous n’êtes pas concerné si vous avez plus de 65 ans."
+    },
+    {
+      "requirement_code": "prefect_consults_the_mayor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The prefect assesses integration against your contrat d'intégration républicaine and seeks the opinion of your local mayor",
+      "description": "A third party with a view on the application whom the applicant never deals with directly.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "pour examiner votre intégration dans la société française, le préfet tient compte de la conclusion et du suivi de votre contrat d'intégration républicaine. dans ce cadre, il saisit pour avis le maire de votre domicile.",
+      "source_excerpt_display": "Pour examiner votre intégration dans la société française, le préfet tient compte de la conclusion et du suivi de votre contrat d'intégration républicaine. Dans ce cadre, il saisit pour avis le maire de votre domicile."
+    },
+    {
+      "requirement_code": "three_further_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three further conditions: no threat to public order, no polygamy in France, and no conviction for violence against a minor causing mutilation or permanent disability",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "ne pas représenter une menace pour l'ordre public ... ne pas vivre en état de polygamie ... en france ne pas avoir été condamné pour violence sur mineur ayant entraîné une mutilation ou une infirmité permanente.",
+      "source_excerpt_display": "Ne pas représenter une menace pour l'ordre public ... Ne pas vivre en état de polygamie ... en France Ne pas avoir été condamné pour violence sur mineur ayant entraîné une mutilation ou une infirmité permanente."
+    },
+    {
+      "requirement_code": "filing_window_four_to_two_months_before_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "File online at the earliest 4 months and at the latest 2 months before your current document expires",
+      "parameters": {
+        "earliest_months_before_expiry": 4,
+        "latest_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "vous devez déposer votre demande sur internet, au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, vls-ts ou titre).",
+      "source_excerpt_display": "Vous devez déposer votre demande sur internet, au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour (visa, VLS-TS ou titre)."
+    },
+    {
+      "requirement_code": "cost_350_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The card costs €350 — a €50 stamp duty plus a €300 tax",
+      "parameters": {
+        "total_eur": 350,
+        "stamp_duty_eur": 50,
+        "tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "vous devez payer 350 € (droit de timbre de 50 € et taxe de 300 € ) par timbres fiscaux .",
+      "source_excerpt_display": "Vous devez payer 350 € (droit de timbre de 50 € et taxe de 300 €) par timbres fiscaux."
+    },
+    {
+      "requirement_code": "extra_300_euros_if_you_entered_without_a_long_stay_visa",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Entering without a long-stay visa adds €300, of which €100 is payable on filing and is NOT refunded if the card is refused",
+      "description": "The only non-refundable payment on the route, and it is due before any decision is made.",
+      "parameters": {
+        "regularisation_visa_fee_eur": 300,
+        "non_refundable_on_filing_eur": 100
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "si vous êtes entré sans visa de long séjour , vous devez payer en plus 300 € de droit de visa de régularisation par timbres fiscaux (dont 100 € à régler lors du dépôt de la demande et non remboursables en cas de refus de délivrance du titre).",
+      "source_excerpt_display": "Si vous êtes entré sans visa de long séjour, vous devez payer en plus 300 € de droit de visa de régularisation par timbres fiscaux (dont 100 € à régler lors du dépôt de la demande et non remboursables en cas de refus de délivrance du titre)."
+    },
+    {
+      "requirement_code": "late_filing_costs_an_extra_180_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Filing outside the window adds €180, save force majeure or a valid visa",
+      "parameters": {
+        "late_filing_charge_eur": 180
+      },
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "si vous déposez votre demande hors délai, sauf cas de force majeure ... ou présentation d'un visa valide, vous devrez payer, en plus du coût de la carte, un droit de visa de régularisation de 180 € .",
+      "source_excerpt_display": "Si vous déposez votre demande hors délai, sauf cas de force majeure ... ou présentation d'un visa valide, vous devrez payer, en plus du coût de la carte, un droit de visa de régularisation de 180 €."
+    }
+  ]
+}

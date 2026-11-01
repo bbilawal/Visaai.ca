@@ -1,0 +1,16 @@
+{
+  "schema": {
+    "source_path": "string",
+    "destination_path": "string",
+    "checksum_before": "sha256",
+    "checksum_after": "sha256",
+    "action": "MOVE|RETAIN|POINTER|DELETE_DUPLICATE",
+    "duplicate_group": "string|null",
+    "canonical": "bool",
+    "links_updated": [],
+    "verified": "bool",
+    "source_last_commit": "string|null",
+    "notes": "string"
+  },
+  "movements": []
+}

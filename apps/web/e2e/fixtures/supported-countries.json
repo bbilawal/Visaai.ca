@@ -1,0 +1,292 @@
+{
+  "countries": [
+    {
+      "code": "AU",
+      "name": "Australia",
+      "assistedFill": false,
+      "group": "priority"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "assistedFill": false,
+      "group": "priority"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "assistedFill": true,
+      "group": "priority"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "assistedFill": false,
+      "group": "priority"
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "BG",
+      "name": "Bulgaria",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "CZ",
+      "name": "Czech Republic",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "HU",
+      "name": "Hungary",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "IS",
+      "name": "Iceland",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "LI",
+      "name": "Liechtenstein",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "LU",
+      "name": "Luxembourg",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "MT",
+      "name": "Malta",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "RO",
+      "name": "Romania",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "SI",
+      "name": "Slovenia",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "assistedFill": false,
+      "group": "schengen"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "EG",
+      "name": "Egypt",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "HK",
+      "name": "Hong Kong SAR",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "JO",
+      "name": "Jordan",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "LB",
+      "name": "Lebanon",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "MY",
+      "name": "Malaysia",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "OM",
+      "name": "Oman",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "QA",
+      "name": "Qatar",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "assistedFill": false,
+      "group": "other"
+    },
+    {
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "assistedFill": false,
+      "group": "other"
+    }
+  ]
+}

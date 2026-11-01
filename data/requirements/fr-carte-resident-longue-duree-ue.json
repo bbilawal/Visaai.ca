@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-resident-longue-duree-ue",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "TWO ROUTES IN, WITH DIFFERENT CLOCKS AND DIFFERENT ABSENCE LIMITS. The general route needs five years in France and allows absences of at most six consecutive months, ten in total. The EU Blue Card route needs two years in France plus three years elsewhere in the EU, and allows twelve consecutive months and eighteen in total. Quoting either absence rule as 'the' rule would disqualify people who qualify, or qualify people who do not. Both are recorded, each attached to its own route.\n\nAND NOT EVERY PERMIT COUNTS TOWARD THE FIVE YEARS. The page publishes a closed list of qualifying permits with two carve-outs inside it — 'talent' excludes salarié en mission and their family, and 'vie privée et familiale' excludes subsidiary protection and certain criminal-complaint and witness cases. Someone reading only 'five years of legal residence' can be years further from this card than they think.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17359"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth. The SMIC figure of €1,867.02 gross monthly is quoted as the page states it, with no reference year published.",
+  "not_extracted": [
+    "The European and Algerian regimes. The page states different rules apply and routes away without stating them.",
+    "The document list. The page's list continues beyond the section read here into per-situation branches; nothing is quoted from it.",
+    "The tax and stamp duty amounts. Not stated in the section read.",
+    "The full definition of républicain integration. The page names the elements it is assessed on and defers the detail.",
+    "The reference year for the SMIC figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_years_legal_uninterrupted_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General route: at least 5 years of lawful, uninterrupted residence in France",
+      "parameters": {
+        "residence_years": 5
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "si vous résidez de façon légale et ininterrompue depuis au moins 5 ans en france ou si vous avez une carte bleue européenne ... vous pouvez obtenir une carte de résident mention résident de longue durée - ue sous certaines conditions.",
+      "source_excerpt_display": "Si vous résidez de façon légale et ininterrompue depuis au moins 5 ans en France ou si vous avez une carte bleue européenne ... vous pouvez obtenir une carte de résident mention résident de longue durée - UE sous certaines conditions."
+    },
+    {
+      "requirement_code": "qualifying_permits_for_the_five_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only seven permit types count toward the five years, and two of them carry carve-outs",
+      "description": "A closed list. The 'talent' entry excludes salarié en mission and their family; the 'vie privée et familiale' entry excludes subsidiary protection and certain complaint and witness cases.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous devez avoir séjourné au moins 5 ans en france avec un ou plusieurs des titres de séjour suivants : visa de long séjour valant titre de séjour carte de séjour temporaire visiteur carte de séjour temporaire/pluriannuelle vie privée et familiale (hors protection subsidiaire, dépôt de plainte pour certaines infractions et témoignage dans une procédure pénale) carte de séjour temporaire/pluriannuelle salarié carte de séjour temporaire/pluriannuelle entrepreneur/profession libérale carte de séjour pluriannuelle talent (sauf salarié en mission et leur famille) carte de résident.",
+      "source_excerpt_display": "Vous devez avoir séjourné au moins 5 ans en France avec un ou plusieurs des titres de séjour suivants: Visa de long séjour valant titre de séjour Carte de séjour temporaire visiteur Carte de séjour temporaire/pluriannuelle vie privée et familiale (hors protection subsidiaire, dépôt de plainte pour certaines infractions et témoignage dans une procédure pénale) Carte de séjour temporaire/pluriannuelle salarié Carte de séjour temporaire/pluriannuelle entrepreneur/profession libérale Carte de séjour pluriannuelle talent (sauf salarié en mission et leur famille) Carte de résident."
+    },
+    {
+      "requirement_code": "absence_limits_general_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General route: absences of at most 6 consecutive months, and 10 months in total",
+      "parameters": {
+        "max_consecutive_absence_months": 6,
+        "max_total_absence_months": 10
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "votre séjour en france doit avoir été ininterrompu . toutefois, certaines absences sont autorisées (absence maximum de 6 mois consécutifs pour un total d'absences de 10 mois) et sont prises en compte dans le calcul des 5 ans.",
+      "source_excerpt_display": "Votre séjour en France doit avoir été ininterrompu. Toutefois, certaines absences sont autorisées (absence maximum de 6 mois consécutifs pour un total d'absences de 10 mois) et sont prises en compte dans le calcul des 5 ans."
+    },
+    {
+      "requirement_code": "refugees_count_from_the_asylum_application_date",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Refugees and beneficiaries of subsidiary protection count the five years from the date the asylum claim was lodged",
+      "description": "Relieves the clock rather than tightening it, often by years, and it is easy to miss because it sits in a side note.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "si vous êtes réfugié ou bénéficiaire de la protection subsidiaire, les 5 ans de séjour régulier ... sont comptabilisés à partir de la date de dépôt de votre demande d'asile.",
+      "source_excerpt_display": "Si vous êtes réfugié ou bénéficiaire de la protection subsidiaire, les 5 ans de séjour régulier ... sont comptabilisés à partir de la date de dépôt de votre demande d'asile."
+    },
+    {
+      "requirement_code": "blue_card_route_two_years_plus_three",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "EU Blue Card route: 2 years holding the card in France, after at least 3 years on one of three named permits in France or another EU state",
+      "parameters": {
+        "blue_card_years_in_france": 2,
+        "prior_years_in_eu": 3
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "si vous détenez une carte bleue européenne , depuis au moins 2 ans en france, vous pouvez demander une carte de résident longue durée-ue, à condition d'avoir séjourné régulièrement ... avant cette période pendant au moins 3 ans avec une des cartes de séjour suivantes : carte bleue européenne carte de séjour nationale délivrée aux étrangers occupant un emploi hautement qualifié carte de séjour « chercheur »",
+      "source_excerpt_display": "Si vous détenez une carte bleue européenne, depuis au moins 2 ans en France, vous pouvez demander une carte de résident longue durée-UE, à condition d'avoir séjourné régulièrement ... avant cette période pendant au moins 3 ans avec une des cartes de séjour suivantes: Carte bleue européenne Carte de séjour nationale délivrée aux étrangers occupant un emploi hautement qualifié Carte de séjour «chercheur»"
+    },
+    {
+      "requirement_code": "absence_limits_blue_card_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "EU Blue Card route: absences of at most 12 consecutive months, and 18 months in total over the 5 years",
+      "description": "Twice the general route's allowance, in both dimensions. Applying the general limits to a Blue Card holder refuses someone who qualifies.",
+      "parameters": {
+        "max_consecutive_absence_months": 12,
+        "max_total_absence_months": 18
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "le séjour dans l'ue doit avoir été ininterrompu . des périodes d'absence sur les 5 ans sont toutefois autorisées. elles ne doivent pas durer plus de 12 mois consécutifs et dépasser 18 mois au total sur la période de 5 ans.",
+      "source_excerpt_display": "Le séjour dans l'UE doit avoir été ininterrompu. Des périodes d'absence sur les 5 ans sont toutefois autorisées. Elles ne doivent pas durer plus de 12 mois consécutifs et dépasser 18 mois au total sur la période de 5 ans."
+    },
+    {
+      "requirement_code": "health_insurance_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must have health insurance",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "vous devez avoir une assurance maladie.",
+      "source_excerpt_display": "Vous devez avoir une assurance maladie."
+    },
+    {
+      "requirement_code": "resources_at_least_the_smic",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stable, sufficient and regular resources of at least the SMIC — €1,867.02 gross a month",
+      "description": "The threshold is expressed as the SMIC, which moves; the page publishes the amount alongside it.",
+      "parameters": {
+        "threshold_basis": "SMIC",
+        "monthly_gross_eur": 1867.02
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "vous devez avoir des ressources stables, suffisantes et régulières pour subvenir à vos besoins. vos revenus doivent atteindre au moins le montant du smic ... ( 1 867,02 € bruts mensuels). toutes vos ressources propres sont prises en compte.",
+      "source_excerpt_display": "Vous devez avoir des ressources stables, suffisantes et régulières pour subvenir à vos besoins. Vos revenus doivent atteindre au moins le montant du Smic ... (1 867,02 € bruts mensuels). Toutes vos ressources propres sont prises en compte."
+    },
+    {
+      "requirement_code": "excluded_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten named family and social benefits are excluded from the resource calculation",
+      "description": "Includes RSA and the housing allowance. A household living on these does not reach the threshold however large the total.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "en revanche, les prestations familiales et les allocations suivantes sont exclues : paje , allocations familiales , complément familial , allocation de logement , aeeh , asf , ars , ajpp , rsa , ass .",
+      "source_excerpt_display": "En revanche, les prestations familiales et les allocations suivantes sont exclues: Paje, allocations familiales, complément familial, allocation de logement, AEEH, ASF, ARS, AJPP, RSA, ASS."
+    },
+    {
+      "requirement_code": "aah_or_asi_recipients_need_no_resource_proof",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "No resource proof is needed if you receive AAH at 80% permanent incapacity, or ASI",
+      "description": "A full waiver of the threshold, conditional on a stated incapacity rate.",
+      "parameters": {
+        "aah_incapacity_rate_minimum_percent": 80
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "vous n’avez pas à justifier de vos ressources si vous bénéficiez de l'allocation aux adultes handicapés (aah) pour un taux d’incapacité permanente d’au moins 80 % , ou de l'allocation supplémentaire invalidité (asi) .",
+      "source_excerpt_display": "Vous n’avez pas à justifier de vos ressources si vous bénéficiez de l'allocation aux adultes handicapés (AAH) pour un taux d’incapacité permanente d’au moins 80 %, ou de l'allocation supplémentaire invalidité (Asi)."
+    },
+    {
+      "requirement_code": "republican_integration_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must show républicain integration into French society",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "pour obtenir la carte de résident longue durée - ue , vous devez justifier de votre intégration républicaine dans la société française.",
+      "source_excerpt_display": "Pour obtenir la carte de résident longue durée - UE, vous devez justifier de votre intégration républicaine dans la société française."
+    },
+    {
+      "requirement_code": "card_valid_ten_years_and_allows_eu_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card is valid 10 years, renewable, and allows you to reside in other EU countries",
+      "parameters": {
+        "validity_years": 10
+      },
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "cette carte vous autorise à séjourner dans d'autres pays de l'union européenne. elle est valable 10 ans et est renouvelable.",
+      "source_excerpt_display": "Cette carte vous autorise à séjourner dans d'autres pays de l'Union européenne. Elle est valable 10 ans et est renouvelable."
+    }
+  ]
+}

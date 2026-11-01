@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-artist-visa",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "performer",
+    "official_name": "Artist Entry Visa and Residency",
+    "slug": "artist-visa",
+    "purpose": "Lebanese entry visas for artists engaged by touristic enterprises: the documents and monthly fees by venue class, the Unified Mutual Fund contract endorsement and 10% levy required before any other step, and the six-month residency available to artists who do not work in nightclubs.",
+    "source_titles": {
+      "requirements_526": "Amendment of Required Documents for Obtaining an Artist Visa",
+      "requirements_48": "Entry visa of an artist to touristic enterprises",
+      "requirements_413": "Residency of foreign artists"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "Three pages, and the ORDER between them is the requirement. `posts/526` is an instruction issued under the 2008 law on artistic professions: the contract must be endorsed by the Unified Mutual Fund and the 10% fee paid to the Ministry of Finance BEFORE any other procedure, on pain of rejection and legal action. `posts/48` is the visa document list and the monthly fees, which differ by venue class — LBP 15,000,000 for a class B venue and LBP 30,000,000 for class A. `posts/413` is the separate six-month residency, available only to artists who do NOT work in nightclubs.\n\nThe fees are per artist per month, not per application, and both are quoted with the venue class that earns them.",
+  "source_roles": {
+    "requirements_526": "https://www.general-security.gov.lb/en/posts/526",
+    "requirements_48": "https://www.general-security.gov.lb/en/posts/48",
+    "requirements_413": "https://www.general-security.gov.lb/en/posts/413"
+  },
+  "page_dates": {
+    "requirements_526": null,
+    "requirements_48": null,
+    "requirements_413": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "endorsement_legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Issued under the 2008 law on the regulation of artistic professions, article 16",
+      "description": "The authority cites its own instrument.",
+      "source_role": "requirements_526",
+      "source_excerpt": "based on law no. /56/ dated 27/12/2008 (law on the regulation of artistic professions), particularly article /16/ thereof,",
+      "display_order": 10,
+      "source_excerpt_display": "Based on Law No. /56/ dated 27/12/2008 (Law on the Regulation of Artistic Professions), particularly Article /16/ thereof,"
+    },
+    {
+      "requirement_code": "endorsement_decree_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And under decree 3705/2016 as amended by decree 13043/2024",
+      "description": "The amending decree is recent and is quoted with its date.",
+      "source_role": "requirements_526",
+      "source_excerpt": "and based on decree no. /3705/ dated 22/06/2016 as amended by decree no. /13043/ dated 29/04/2024,",
+      "display_order": 20,
+      "source_excerpt_display": "and based on Decree No. /3705/ dated 22/06/2016 as amended by Decree No. /13043/ dated 29/04/2024,"
+    },
+    {
+      "requirement_code": "endorsement_penalty",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Non-compliance means rejection and legal action",
+      "description": "Addressed to all individuals or companies recruiting Arab and foreign artists.",
+      "source_role": "requirements_526",
+      "source_excerpt": "all individuals or companies recruiting arab and foreign artists are required to strictly comply with the following procedures, under penalty of having their applications rejected and facing legal action:",
+      "display_order": 30,
+      "source_excerpt_display": "all individuals or companies recruiting Arab and foreign artists are required to strictly comply with the following procedures, under penalty of having their applications rejected and facing legal action:"
+    },
+    {
+      "requirement_code": "endorsement_contract_first",
+      "kind": "step",
+      "officially_required": true,
+      "label": "FIRST: the contract must be endorsed by the Unified Mutual Fund before any other step",
+      "description": "The original signed contract must carry the Fund's official stamp before anything else proceeds.",
+      "source_role": "requirements_526",
+      "source_excerpt": "the original contract signed with the foreign artist must be presented in advance to the unified mutual fund for artists, and the official endorsement stamp of the fund must be obtained on the contract before proceeding with any other procedures.",
+      "display_order": 40,
+      "source_excerpt_display": "The original contract signed with the foreign artist must be presented in advance to the Unified Mutual Fund for Artists, and the official endorsement stamp of the Fund must be obtained on the contract before proceeding with any other procedures."
+    },
+    {
+      "requirement_code": "endorsement_ten_percent_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "SECOND: 10% of the contract value paid to the Ministry of Finance",
+      "description": "In favour of the Unified Mutual Fund for Artists, with an official receipt.",
+      "source_role": "requirements_526",
+      "source_excerpt": "a fee of 10% of the contract value must be paid to the ministry of finance in favor of the unified mutual fund for artists, and an official receipt proving payment must be obtained according to the proper procedures.",
+      "parameters": {
+        "percent_of_contract": 10,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "A fee of 10% of the contract value must be paid to the Ministry of Finance in favor of the Unified Mutual Fund for Artists, and an official receipt proving payment must be obtained according to the proper procedures."
+    },
+    {
+      "requirement_code": "endorsement_visa_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "THIRD: what the entry-visa application must include",
+      "description": "The two items below are the authority's own list.",
+      "source_role": "requirements_526",
+      "source_excerpt": "applications for entry visas submitted to the competent general security departments must include:",
+      "display_order": 60,
+      "source_excerpt_display": "Applications for entry visas submitted to the competent General Security departments must include:"
+    },
+    {
+      "requirement_code": "endorsement_stamped_contract_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the original contract stamped by the Unified Mutual Fund",
+      "description": "The output of step one becomes an input to the visa.",
+      "source_role": "requirements_526",
+      "source_excerpt": "• a copy of the original contract stamped by the unified mutual fund for artists.",
+      "display_order": 70,
+      "source_excerpt_display": "• A copy of the original contract stamped by the Unified Mutual Fund for Artists."
+    },
+    {
+      "requirement_code": "endorsement_fee_receipt_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the Ministry of Finance receipt for the 10% fee",
+      "description": "The output of step two becomes an input to the visa.",
+      "source_role": "requirements_526",
+      "source_excerpt": "• a copy of the receipt of payment of the 10% fee issued by the ministry of finance.",
+      "display_order": 80,
+      "source_excerpt_display": "• A copy of the receipt of payment of the 10% fee issued by the Ministry of Finance."
+    },
+    {
+      "requirement_code": "visa_application_form",
+      "kind": "form",
+      "officially_required": true,
+      "label": "A filled-out application",
+      "description": "First of the artist-visa document list.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a filled out application.",
+      "display_order": 90,
+      "source_excerpt_display": "A filled out application."
+    },
+    {
+      "requirement_code": "visa_guarantee_engagement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An engagement of guarantee",
+      "description": "From the artist-visa document list.",
+      "source_role": "requirements_48",
+      "source_excerpt": "an engagement of guarantee.",
+      "display_order": 100,
+      "source_excerpt_display": "An engagement of guarantee."
+    },
+    {
+      "requirement_code": "visa_work_contract_terms",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A work contract stating the dates, the duration of the shows and the artist’s remuneration",
+      "description": "Signed and dated by both parties; the three stated terms are what make it acceptable.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a work contract dated and signed by the 2 interested parties, in which the date and the duration of the shows are mentioned as well as the remuneration granted to the artist.",
+      "display_order": 110,
+      "source_excerpt_display": "A work contract dated and signed by the 2 interested parties, in which the date and the duration of the shows are mentioned as well as the remuneration granted to the artist."
+    },
+    {
+      "requirement_code": "visa_venue_agreement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An agreement between the convener and the owner of the venue",
+      "description": "From the artist-visa document list.",
+      "source_role": "requirements_48",
+      "source_excerpt": "an agreement between convener and the owner of the location where the show is held.",
+      "display_order": 120,
+      "source_excerpt_display": "An agreement between convener and the owner of the location where the show is held."
+    },
+    {
+      "requirement_code": "visa_financial_guarantee",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A financial guarantee for EACH artist",
+      "description": "Per artist, not per engagement.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a financial guarantee for each artist.",
+      "display_order": 130,
+      "source_excerpt_display": "A financial guarantee for each artist."
+    },
+    {
+      "requirement_code": "visa_enterprise_registers",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An investment permit and the enterprise’s financial and commercial register",
+      "description": "From the artist-visa document list.",
+      "source_role": "requirements_48",
+      "source_excerpt": "an investment permit, a financial and commercial register of the concerned enterprise.",
+      "display_order": 140,
+      "source_excerpt_display": "An investment permit, a financial and commercial register of the concerned enterprise."
+    },
+    {
+      "requirement_code": "visa_convener_id",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A certified copy of the convener’s ID, and of any representative and proxy used",
+      "description": "From the artist-visa document list.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a certified copy of the id card held by convener (as well as a copy of the id card held by the representative and the proxy used).",
+      "display_order": 150,
+      "source_excerpt_display": "A certified copy of the ID card held by convener (as well as a copy of the ID card held by the representative and the proxy used)."
+    },
+    {
+      "requirement_code": "visa_artist_passport_three_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A certified copy of the artist’s passport, in 3 clear copies",
+      "description": "Quantity stated by the authority.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a certified copy of the passport held by the artist in 3 clear copies.",
+      "parameters": {
+        "copies": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "A certified copy of the passport held by the artist in 3 clear copies."
+    },
+    {
+      "requirement_code": "visa_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two 4×4 photos",
+      "description": "Dimensions are part of the requirement.",
+      "source_role": "requirements_48",
+      "source_excerpt": "2 photos 4x4.",
+      "parameters": {
+        "quantity": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "2 photos 4x4."
+    },
+    {
+      "requirement_code": "visa_fiscal_stamps",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Four fiscal stamps of LBP 20,000",
+      "description": "Quoted as the authority writes it (`l.l`).",
+      "source_role": "requirements_48",
+      "source_excerpt": "4 fiscal stamps of 20,000 l.l.",
+      "parameters": {
+        "quantity": 4,
+        "amount_each": 20000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 180,
+      "source_excerpt_display": "4 fiscal stamps of 20,000 L.L."
+    },
+    {
+      "requirement_code": "visa_mutual_fund_receipt",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A receipt for the 10% artists’ mutual fund fee, with the exceptions named",
+      "description": "Modelling, massage and nightclub workers are excepted, and the exception travels with the requirement.",
+      "source_role": "requirements_48",
+      "source_excerpt": "a receipt showing that a 10% fee has been paid to the artists’ mutual fund, as well as a certified copy of the work contract approved by the ministry of finance (except for the workers employed in modeling, massaging, and nightclubs).",
+      "display_order": 190,
+      "source_excerpt_display": "A receipt showing that a 10% fee has been paid to the Artists’ Mutual Fund, as well as a certified copy of the work contract approved by the ministry of finance (except for the workers employed in modeling, massaging, and nightclubs)."
+    },
+    {
+      "requirement_code": "fee_class_b_venue",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "LBP 15,000,000 per month per artist — class B venue (1 or 2 stars)",
+      "description": "Per artist per month, and the venue class is what sets it.",
+      "source_role": "requirements_48",
+      "source_excerpt": "15.000.000 l.b.p – every month for each artist if the location of the show is class b (1 or 2 stars).",
+      "parameters": {
+        "amount": 15000000,
+        "currency": "LBP",
+        "unit": "per artist per month",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "15.000.000 L.B.P – every month for each artist if the location of the show is class B (1 or 2 stars)."
+    },
+    {
+      "requirement_code": "fee_class_a_venue",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "LBP 30,000,000 per month per artist — class A venue (3 stars or more)",
+      "description": "Double the class B fee, quoted separately so the two cannot merge.",
+      "source_role": "requirements_48",
+      "source_excerpt": "30.000.000 l.b.p – every month for each artist if the location of the show is class a (3 stars or more).",
+      "parameters": {
+        "amount": 30000000,
+        "currency": "LBP",
+        "unit": "per artist per month",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 210,
+      "source_excerpt_display": "30.000.000 L.B.P – every month for each artist if the location of the show is class A (3 stars or more)."
+    },
+    {
+      "requirement_code": "financial_register_before_departure",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A financial register must be delivered to General Security before the artist departs",
+      "description": "An exit obligation, published as a note on the entry requirements.",
+      "source_role": "requirements_48",
+      "source_excerpt": "nb: before the departure of the artist, a financial register has to be delivered to the general security.",
+      "display_order": 220,
+      "source_excerpt_display": "NB: Before the departure of the artist, a financial register has to be delivered to the general security."
+    },
+    {
+      "requirement_code": "residency_six_months_not_nightclubs",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Six-month residency, for artists who do NOT work in nightclubs",
+      "description": "The exclusion is the eligibility test.",
+      "source_role": "requirements_413",
+      "source_excerpt": "first: foreign artists, who do not work in nightclubs, can obtain temporary residency for a period of six months at once, on the condition that:",
+      "display_order": 230,
+      "source_excerpt_display": "First: Foreign artists, who do not work in Nightclubs, can obtain temporary residency for a period of six months at once, on the condition that:"
+    },
+    {
+      "requirement_code": "residency_valid_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Six-month residency: an employment contract valid for the whole residence",
+      "description": "First of three conditions.",
+      "source_role": "requirements_413",
+      "source_excerpt": "• possession of a valid employment contract for the duration of residence.",
+      "display_order": 240,
+      "source_excerpt_display": "• Possession of a valid employment contract for the duration of residence."
+    },
+    {
+      "requirement_code": "residency_fees",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Six-month residency: payment of the fees under the rules",
+      "description": "No amount is stated on this page and none is invented.",
+      "source_role": "requirements_413",
+      "source_excerpt": "• payment of the fees in accordance with the rules.",
+      "display_order": 250,
+      "source_excerpt_display": "• Payment of the fees in accordance with the rules."
+    },
+    {
+      "requirement_code": "residency_double_service_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Six-month residency: DOUBLE fees for the service",
+      "description": "Stated by the authority as a doubling rather than as an amount.",
+      "source_role": "requirements_413",
+      "source_excerpt": "• payment of double fees for the service.",
+      "display_order": 260,
+      "source_excerpt_display": "• Payment of double fees for the service."
+    }
+  ]
+}

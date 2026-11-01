@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "visaai_id": "eg-tourism-evisa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Egypt e-Visa portal page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Where the authority states a figure, the figure is quoted rather than restated.",
+  "structure_note": "Egypt's e-Visa portal enumerates its catalogue under the heading 'types of visa and fees' and that catalogue has exactly ONE entry: the tourism visa, issued for single or multiple entries. Two fee lines follow it. That is a catalogue with one route and two price points, not two routes — registering 'single entry' and 'multiple entries' as separate visa types would invent a distinction the authority draws as a fee, not as a category.\n\nThe second structural fact matters more. The document list on this page sits under the heading 'entry requirements (on arrival)'. Those five items are what a traveller must be able to produce AT THE EGYPTIAN PORT, not what the e-Visa application asks for. Every label below says so. Presenting them as application requirements would tell somebody to upload a hotel booking to a portal that never asks for one, and — worse — would let them arrive without the printout the port does ask for.",
+  "source_roles": {
+    "requirements": "https://visa2egypt.gov.eg/eVisa/FAQ"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateline, no Last-Modified header and no year anywhere in its body, so its age is UNKNOWN rather than current. That is a real limitation and it is recorded rather than hidden: it is the same state `check-source-freshness` already reports as '[none published]' for Singapore's MOM pages, the US ESTA pages and every page on Austria's migration.gv.at. Egypt is no worse than the corpus it joins, and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The nationality list. The page lists roughly 100 country names eligible for the e-Visa, but normalization flattens the four-column table into lines like 'qatar republic of kosovo romania russian federation', so which names belong to which row survives only in the visual layout. The names themselves are unambiguous, but publishing a machine-read eligibility list assembled from a flattened table is exactly the inference this registry refuses. The general rule that eligibility is by nationality IS extracted; the roster is not.",
+    "Any visa type other than tourism. The catalogue on this page enumerates one, and the portal is the Ministry of Interior's e-Visa system rather than the whole of Egyptian entry policy — work, study and residence routes are administered elsewhere and no official index for them was found from this authority.",
+    "Visa-on-arrival rules. The page mentions arrival at Egyptian ports but publishes no on-arrival visa procedure, so none is recorded."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "evisa_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The e-Visa is the official entry document",
+      "description": "What the authority says the document is and does.",
+      "source_role": "requirements",
+      "source_excerpt": "an e-visa is an official document permitting entry into and travel from egypt.",
+      "display_order": 10,
+      "source_excerpt_display": "An e-Visa is an official document permitting entry into and travel from Egypt."
+    },
+    {
+      "requirement_code": "eligibility_by_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eligibility is by nationality",
+      "description": "The e-Visa is open to nationals of the countries the portal lists. The roster itself is not reproduced here — see not_extracted.",
+      "source_role": "requirements",
+      "source_excerpt": "nationals of the countries listed below may be issued with an e-visa upon application on the egypt e-visa portal.",
+      "display_order": 20,
+      "source_excerpt_display": "Nationals of the countries listed below may be issued with an e-Visa upon application on the Egypt e-Visa Portal."
+    },
+    {
+      "requirement_code": "visa_required_before_travel",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa must generally be obtained before entering Egypt",
+      "description": "The authority's own statement of the default rule.",
+      "source_role": "requirements",
+      "source_excerpt": "a citizen of a foreign country, wishing to enter the arab republic of egypt, generally must first obtain an e-visa via the egypt e-visa portal.",
+      "display_order": 30,
+      "source_excerpt_display": "A citizen of a foreign country, wishing to enter The Arab Republic of Egypt, generally must first obtain an e-Visa via the Egypt e-Visa Portal."
+    },
+    {
+      "requirement_code": "tourism_single_or_multiple_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Issued for single or multiple entries",
+      "description": "The one catalogue entry the portal publishes, and the two forms it takes.",
+      "source_role": "requirements",
+      "source_excerpt": "1. tourism visa: issued for single or multiple entries to persons whose nationalities require visas to enter egypt.",
+      "display_order": 40,
+      "source_excerpt_display": "1. Tourism Visa: Issued for single or multiple entries to persons whose nationalities require visas to enter Egypt."
+    },
+    {
+      "requirement_code": "fee_single_entry",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Single entry (tourism): 30 USD",
+      "description": "Stated by the authority as `30$`. The portal is a US-dollar tariff, not an Egyptian-pound one.",
+      "source_role": "requirements",
+      "source_excerpt": "single entry visa (tourism) 30$",
+      "parameters": {
+        "amount": 30,
+        "currency": "USD",
+        "unit": "per application, single entry",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "Single entry visa (Tourism) 30$"
+    },
+    {
+      "requirement_code": "fee_multiple_entries",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Multiple entries (tourism): 65 USD",
+      "description": "Stated by the authority as `65$`.",
+      "source_role": "requirements",
+      "source_excerpt": "multiple entries visa (tourism) 65$",
+      "parameters": {
+        "amount": 65,
+        "currency": "USD",
+        "unit": "per application, multiple entries",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "Multiple entries visa (Tourism) 65$"
+    },
+    {
+      "requirement_code": "fee_paid_by_card_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The fee is paid by card on the portal, after registering",
+      "description": "Payment is part of the online application; there is no offline route described.",
+      "source_role": "requirements",
+      "source_excerpt": "the visa fee is collected through the website using a credit card, after registering the foreigner's data.",
+      "display_order": 70,
+      "source_excerpt_display": "The visa fee is collected through the website using a credit card, after registering the foreigner's data."
+    },
+    {
+      "requirement_code": "evisa_delivered_by_download_link",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The e-Visa arrives as a download link and is checked at the port",
+      "description": "How the document reaches the applicant, and how it is verified on arrival.",
+      "source_role": "requirements",
+      "source_excerpt": "a link to download your e-visa will be sent to you. passport authorities at ports of arrival can check the validity of your e-visa on their system.",
+      "display_order": 80,
+      "source_excerpt_display": "A link to download your e-visa will be sent to you. Passport authorities at ports of arrival can check the validity of your e-Visa on their system."
+    },
+    {
+      "requirement_code": "arrival_passport_validity_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "On arrival: passport valid at least 6 months from the arrival date",
+      "description": "Listed by the authority under `entry requirements (on arrival)` — this is checked at the Egyptian port, not by the online application.",
+      "source_role": "requirements",
+      "source_excerpt": "passport valid for at least 6 months from arrival date.",
+      "parameters": {
+        "minimum_validity_months": 6,
+        "measured_from": "arrival date"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Passport valid for at least 6 months from arrival date."
+    },
+    {
+      "requirement_code": "arrival_evisa_printout",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "On arrival: a printout of the e-Visa",
+      "description": "Listed under `entry requirements (on arrival)`. The e-Visa is issued electronically and the authority still asks for it on paper at the port.",
+      "source_role": "requirements",
+      "source_excerpt": "e-visa printout",
+      "display_order": 100,
+      "source_excerpt_display": "e-Visa printout"
+    },
+    {
+      "requirement_code": "arrival_travel_itinerary",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "On arrival: a travel itinerary",
+      "description": "Listed under `entry requirements (on arrival)`.",
+      "source_role": "requirements",
+      "source_excerpt": "travel itinerary",
+      "display_order": 110,
+      "source_excerpt_display": "Travel itinerary"
+    },
+    {
+      "requirement_code": "arrival_supporting_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "On arrival: a supporting letter for business or family visits",
+      "description": "Listed under `entry requirements (on arrival)`. The authority gives the company letter and the invitation letter as its own examples.",
+      "source_role": "requirements",
+      "source_excerpt": "supporting letter e.g. letter from company or invitation letter for business/family visits.",
+      "display_order": 120,
+      "source_excerpt_display": "Supporting letter e.g. letter from company or invitation letter for business/family visits."
+    },
+    {
+      "requirement_code": "arrival_hotel_or_itinerary_details",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "On arrival: hotel bookings or details of places to visit, for tourists",
+      "description": "Listed under `entry requirements (on arrival)`, and scoped by the authority to tourist travel.",
+      "source_role": "requirements",
+      "source_excerpt": "hotel bookings/details about places to visit if going as tourist.",
+      "display_order": 130,
+      "source_excerpt_display": "Hotel bookings/details about places to visit if going as tourist."
+    },
+    {
+      "requirement_code": "entry_may_be_refused",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Holding an e-Visa does not guarantee entry",
+      "description": "The authority states the discretion explicitly, and states that no explanation is owed.",
+      "source_role": "requirements",
+      "source_excerpt": "as is the case with other visas, egyptian port authorities have the right to refuse entry to egypt for an e-visa holder without any explanation.",
+      "display_order": 140,
+      "source_excerpt_display": "As is the case with other visas, Egyptian port authorities have the right to refuse entry to Egypt for an e-visa holder without any explanation."
+    }
+  ]
+}

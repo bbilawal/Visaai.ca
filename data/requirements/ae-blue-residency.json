@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "visaai_id": "ae-blue-residency",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the ICP page named in source_roles. Figures are quoted, never restated.",
+  "structure_note": "Blue Residence has three eligibility categories — environmental and sustainability influencers, scientists and researchers, and investors and entrepreneurs. Labels scope every rule to its category. Two different AED 1 million figures appear on this page for different things (financial support given by an influencer; annual revenues achieved by an investor's project) and a flattened list would make them look like one requirement.",
+  "source_roles": {
+    "landing": "https://icp.gov.ae/en/services/uae-blue-residency/"
+  },
+  "page_dates": {
+    "landing": "2026-08-20"
+  },
+  "freshness_note": "The page publishes a dateline of 2026-08-20.",
+  "not_extracted": [
+    "Fees. The page names no amounts.",
+    "The Golden-to-Blue conversion route. The page states it is possible 'upon meeting the eligibility requirements' without stating a separate procedure, so nothing is recorded as a requirement."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "purpose_environmental",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Granted for exceptional environmental contribution",
+      "description": "Blue Residence is scoped by the nature of the applicant's contribution rather than by employment or investment alone, and the authority counts contributions made outside the UAE.",
+      "source_role": "landing",
+      "source_excerpt": "this residence is granted to individuals who make exceptional contributions to environmental protection and sustainability, whether within the uae or internationally.",
+      "display_order": 10,
+      "source_excerpt_display": "This residence is granted to individuals who make exceptional contributions to environmental protection and sustainability, whether within the UAE or internationally."
+    },
+    {
+      "requirement_code": "ten_years_no_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten years, renewable, no sponsor",
+      "description": "Twice the Green Residence term, and like it requires no sponsoring employer.",
+      "source_role": "landing",
+      "source_excerpt": "residence duration: 10 years, renewable, without the need for a sponsor within the uae.",
+      "display_order": 20,
+      "source_excerpt_display": "Residence duration: 10 years, renewable, without the need for a sponsor within the UAE."
+    },
+    {
+      "requirement_code": "influencer_membership",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Influencers: proof of membership in environmental initiatives",
+      "description": "Participation as well as membership.",
+      "source_role": "landing",
+      "source_excerpt": "provide proof of membership and participation in environmental initiatives.",
+      "display_order": 30,
+      "source_excerpt_display": "Provide proof of membership and participation in environmental initiatives."
+    },
+    {
+      "requirement_code": "influencer_recommendations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Influencers: recommendation letters and certificates of recognition",
+      "description": "Alongside accreditation and award evidence the page also lists.",
+      "source_role": "landing",
+      "source_excerpt": "submit recommendation letters and certificates of recognition.",
+      "display_order": 40,
+      "source_excerpt_display": "Submit recommendation letters and certificates of recognition."
+    },
+    {
+      "requirement_code": "influencer_financial_support",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Influencers: financial support of at least AED 1 million",
+      "description": "Support GIVEN by the applicant. Not to be confused with the AED 1 million annual REVENUE figure the page sets for investors — same number, different party, different meaning.",
+      "source_role": "landing",
+      "source_excerpt": "provide proof of financial support (of no less than aed 1 million).",
+      "display_order": 50,
+      "source_excerpt_display": "Provide proof of financial support (of no less than AED 1 million)."
+    },
+    {
+      "requirement_code": "scientist_nomination",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scientists: nomination from the UAE Council of Scientists",
+      "description": "A nomination the applicant cannot self-issue.",
+      "source_role": "landing",
+      "source_excerpt": "obtain a nomination from the uae council of scientists.",
+      "display_order": 60,
+      "source_excerpt_display": "Obtain a nomination from the UAE Council of Scientists."
+    },
+    {
+      "requirement_code": "scientist_qualification",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scientists: master's or PhD in environmental or energy fields",
+      "description": "The field is constrained, not only the level.",
+      "source_role": "landing",
+      "source_excerpt": "hold a master's degree or phd in environmental or energy-related fields.",
+      "display_order": 70,
+      "source_excerpt_display": "Hold a master's degree or PhD in environmental or energy-related fields."
+    },
+    {
+      "requirement_code": "scientist_university_ranking",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scientists: qualifications from internationally ranked universities",
+      "description": "An additional constraint on the same qualification.",
+      "source_role": "landing",
+      "source_excerpt": "the qualifications must be from internationally ranked universities.",
+      "display_order": 80,
+      "source_excerpt_display": "The qualifications must be from internationally ranked universities."
+    },
+    {
+      "requirement_code": "scientist_indicators",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scientists: recognised scientific indicators (FWCI or h-index)",
+      "description": "The authority names the specific metrics it will accept.",
+      "source_role": "landing",
+      "source_excerpt": "achieve recognised scientific indicators such as fwci or h-index.",
+      "display_order": 90,
+      "source_excerpt_display": "Achieve recognised scientific indicators such as FWCI or h-index."
+    },
+    {
+      "requirement_code": "scientist_scopus",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Scientists: Scopus reports or evidence of research achievements",
+      "description": "Documentary proof of the indicators above.",
+      "source_role": "landing",
+      "source_excerpt": "submit scopus reports or evidence of research achievements.",
+      "display_order": 100,
+      "source_excerpt_display": "Submit Scopus reports or evidence of research achievements."
+    },
+    {
+      "requirement_code": "investor_environmental_project",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: invest in high-value environmental projects",
+      "description": "The sector is constrained, unlike the Golden Residency's investor route.",
+      "source_role": "landing",
+      "source_excerpt": "invest in high-value environmental projects.",
+      "display_order": 110,
+      "source_excerpt_display": "Invest in high-value environmental projects."
+    },
+    {
+      "requirement_code": "investor_capital",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: capital of at least AED 2 million",
+      "description": "The same headline figure as the Golden Residency investor route, for a differently scoped project.",
+      "source_role": "landing",
+      "source_excerpt": "capital of no less than aed 2 million.",
+      "display_order": 120,
+      "source_excerpt_display": "Capital of no less than AED 2 million."
+    },
+    {
+      "requirement_code": "investor_capital_owned",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: the capital must be fully owned",
+      "description": "Not financed — the authority states full ownership.",
+      "source_role": "landing",
+      "source_excerpt": "the capital must be fully owned.",
+      "display_order": 130,
+      "source_excerpt_display": "The capital must be fully owned."
+    },
+    {
+      "requirement_code": "investor_sme_registration",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: register the project as an SME",
+      "description": "Under the small and medium-sized enterprises category.",
+      "source_role": "landing",
+      "source_excerpt": "register the project under the small and medium-sized enterprises (smes) category.",
+      "display_order": 140,
+      "source_excerpt_display": "Register the project under the small and medium-sized enterprises (SMEs) category."
+    },
+    {
+      "requirement_code": "investor_revenues",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: annual revenues of at least AED 1 million",
+      "description": "Revenue ACHIEVED by the project. The influencer category's AED 1 million is financial support given, which is a different obligation on a different applicant.",
+      "source_role": "landing",
+      "source_excerpt": "achieve annual revenues of no less than aed 1 million.",
+      "display_order": 150,
+      "source_excerpt_display": "Achieve annual revenues of no less than AED 1 million."
+    }
+  ]
+}

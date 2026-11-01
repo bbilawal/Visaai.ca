@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "visaai_id": "no-family-spouse",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "BOUNDED EXTRACTION. The requirements page is 21,998 characters and concatenates at least eight family categories -- spouse, cohabitant, person getting married, children, parents and others -- each with its own 'requirements for both / applicant / reference person' block. The heading 'how to apply' occurs 8+ times and the income figure NOK 436 957 repeats verbatim in every block. Everything below was read ONLY from characters 3,709-5,557, the spouse-or-registered-partner block, which ends where the 'cohabitant' heading begins. Excerpt verification proves a quote is ON the page; it cannot prove the quote is about the right family member, because the repeated figures verify identically from any block. Only the bound does that. If this file is ever re-extracted, re-derive the offsets first -- they move when UDI edits any earlier section.\n\nWHOSE OBLIGATION IS IT. Unlike every other visa type in this registry, UDI splits requirements between two people: the applicant moving to Norway and the reference person already there. The income requirement falls entirely on the reference person, who is not the applicant and never files the form. Each requirement below names whose obligation it is in the label, because a checklist that hands the applicant 'you must earn NOK 436,957' is wrong about who owes what.",
+  "source_roles": {
+    "requirements": "https://www.udi.no/en/want-to-apply/family-immigration/family-immigration-with-norwegian-or-nordic-citizen/",
+    "fees": "https://www.udi.no/en/word-definitions/fees/family-immigration/",
+    "age_rule": "https://www.udi.no/en/word-definitions/requirement-to-be-at-least-24-years-old-in-applications-for-family-immigration/"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "spouse or registered partner",
+      "ends_before": "cohabitant",
+      "note": "the spouse block; ends where the cohabitant heading begins"
+    }
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null,
+    "age_rule": null
+  },
+  "not_extracted": [
+    "The other seven-plus family categories on the same page -- cohabitant, person getting married, children, parents and the rest. Each is a separate route with its own conditions and would need its own visa type. This is the single most important omission in the file: the page's repeated wording makes cross-contamination easy and invisible.",
+    "The country list on the 24-year-old page naming where UDI has experienced forced marriages. UDI states it is 'not exhaustive' and 'can be changed over time', and it drives a discretionary assessment of an applicant's and their PARENTS' background, not a checklist test. Encoding it as a rule would turn a caseworker's judgement into an automated verdict about a person's ethnicity, and it would go stale silently. The exemption is recorded as existing; its criteria are left to UDI.",
+    "The income requirement's detail rules -- what kinds of income count, and the exemptions. UDI links a separate page for these, which is not a registered source.",
+    "How to document income. A separate UDI page linked from the requirement.",
+    "The definitions of forced marriage and circumvention marriage, both separate word-definition pages.",
+    "Service and courier fees charged by visa application centres. UDI states these exist but publishes no amount, directing applicants to the centre.",
+    "Every fee band except the first-time adult one -- renewals, children, refugee family reunification, change of legal basis, and the several zero-fee categories.",
+    "The requirement that the applicant obtain a Norwegian passport for a Norwegian child moving with them. It binds the child's documents, not the applicant's permit, and points at an external embassy process.",
+    "The prior-EU/EEA-residence question the hub guide asks, which routes some couples to the EU/EEA residence-card scheme instead of this permit."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee (first-time application, adult)",
+      "description": "The requirements page states the fee is owed but not its size; UDI publishes the amount on a separate fee page, quoted here. NOK 11,900 is the first-time adult band -- renewals, children and refugee reunification are cheaper and are not extracted.",
+      "source_role": "fees",
+      "source_excerpt": "first-time application for family immigration for adults nok 11900",
+      "parameters": {
+        "amount": 11900,
+        "currency": "NOK"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "First-time application for family immigration for adults NOK 11900"
+    },
+    {
+      "requirement_code": "marriage_validly_entered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your marriage or partnership was validly entered into",
+      "description": "Applies to both of you.",
+      "source_role": "requirements",
+      "source_excerpt": "your marriage/partnership must have been validly entered into.",
+      "display_order": 20,
+      "source_excerpt_display": "Your marriage/partnership must have been validly entered into."
+    },
+    {
+      "requirement_code": "marriage_recognisable_in_norway",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A marriage entered into abroad must be recognisable in Norway",
+      "description": "Applies only if you married outside Norway. Recognition is decided by Norwegian law, not by the country that issued the certificate.",
+      "source_role": "requirements",
+      "source_excerpt": "it must be possible to have your marriage recognised in norway if you entered into marriage while abroad.",
+      "display_order": 30,
+      "source_excerpt_display": "It must be possible to have your marriage recognised in Norway if you entered into marriage while abroad."
+    },
+    {
+      "requirement_code": "plans_to_live_together",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You plan to live together in Norway",
+      "description": "Applies to both of you.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have plans to live together in norway.",
+      "display_order": 40,
+      "source_excerpt_display": "You must have plans to live together in Norway."
+    },
+    {
+      "requirement_code": "not_forced_marriage",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Neither of you was forced to marry",
+      "description": "UDI defines forced marriage on a separate page, which is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you must not have been forced to marry (forced marriage) .",
+      "display_order": 50,
+      "source_excerpt_display": "You must not have been forced to marry (forced marriage)."
+    },
+    {
+      "requirement_code": "not_circumvention_marriage",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The marriage is not a circumvention marriage",
+      "description": "A marriage entered into mainly to obtain residence. UDI defines the term on a separate page, which is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "your marriage must not be circumvention marriage .",
+      "display_order": 60,
+      "source_excerpt_display": "Your marriage must not be circumvention marriage."
+    },
+    {
+      "requirement_code": "both_at_least_24",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Both of you are at least 24 years old",
+      "description": "Applies to both of you, not only the applicant. Exemption is possible in some cases -- see the separate entry below.",
+      "source_role": "requirements",
+      "source_excerpt": "you must be at least 24 years old .",
+      "parameters": {
+        "minimum_age_years": 24
+      },
+      "display_order": 70,
+      "source_excerpt_display": "You must be at least 24 years old."
+    },
+    {
+      "requirement_code": "age_24_exemption_possible",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Exemption from the 24-year age requirement may be possible",
+      "description": "NOT a requirement, and deliberately not a rule. This records that the age bar above is not absolute. UDI decides case by case, weighing which countries the couple's -- and their parents' -- backgrounds are from. The criteria are a caseworker's discretionary assessment that UDI itself calls non-exhaustive and subject to change, so they are cited, not encoded.",
+      "source_role": "age_rule",
+      "source_excerpt": "some couples can be exempted from this requirement. when udi assesses whether you can be granted an exemption, we will consider what countries your background is from, and whether forced marriages occur in these countries.",
+      "display_order": 80,
+      "source_excerpt_display": "Some couples can be exempted from this requirement. When UDI assesses whether you can be granted an exemption, we will consider what countries your background is from, and whether forced marriages occur in these countries."
+    },
+    {
+      "requirement_code": "applicant_documented_identity",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant: proof of identity, usually a valid passport",
+      "description": "Listed by UDI under 'requirements for the applicant'.",
+      "source_role": "requirements",
+      "source_excerpt": "you must document your identity . a valid passport is usually valid proof of identity.",
+      "display_order": 90,
+      "source_excerpt_display": "You must document your identity. A valid passport is usually valid proof of identity."
+    },
+    {
+      "requirement_code": "applicant_no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Applicant: not subject to a prohibition against entry to Norway or Schengen",
+      "description": "Listed by UDI under 'requirements for the applicant'. A Schengen-wide entry ban blocks this permit, not only a Norwegian one.",
+      "source_role": "requirements",
+      "source_excerpt": "you must not be subject to a prohibition against entry to norway or schengen.",
+      "display_order": 100,
+      "source_excerpt_display": "You must not be subject to a prohibition against entry to Norway or Schengen."
+    },
+    {
+      "requirement_code": "reference_person_income",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reference person in Norway: income of at least NOK 436,957 per year pre-tax",
+      "description": "THE SPONSOR'S OBLIGATION, NOT THE APPLICANT'S. The reference person is the family member already living in Norway. UDI requires this income across three periods at once: the year ahead, the year already past, and the whole time the application is being processed. UDI states the amount 'is adjusted in may each year' -- the authority declaring its own figure perishable -- so the next May revision supersedes it.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have an income of at least nok 436 957 per year pre-tax . this amount is adjusted in may each year, but this is the applicable amount if you apply now. you must have this amount of income the first year your family member receives a permit in norway. in addition, you must have had at least this income last year and during the time we process the application.",
+      "parameters": {
+        "per_year_pre_tax_nok": 436957,
+        "currency": "NOK",
+        "adjusted_each": "May"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "You must have an income of at least NOK 436 957 per year pre-tax. This amount is adjusted in May each year, but this is the applicable amount if you apply now. You must have this amount of income the first year your family member receives a permit in Norway. In addition, you must have had at least this income last year and during the time we process the application."
+    }
+  ]
+}

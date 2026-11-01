@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-working-holiday-visa-subclass-417",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/work-holiday-417"
+  },
+  "not_extracted": [
+    "THIN SOURCE. The subclass 417 landing page carries a short summary of the eligibility criteria rather than the full criteria, and it is the only non-fees source registered for this visa type. Health, character, funds, eligible-passport-country list, first/second/third-visa specified work and the application steps are not stated on it. This file is a floor, not a complete picture of the subclass 417 requirements.",
+    "The eligible country or jurisdiction list, and the countries whose citizens may apply up to 35 rather than 30. The page states both exist but names neither, so neither is recorded and the age condition carries no rule: an `age` rule set to the 18-30 floor would make the requirement vanish for an applicant who is over the limit, hiding the very fact that disqualifies them.",
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains only the column headings ('Base application charge', 'Additional applicant charge 18 and over', 'Additional applicant charge under 18', 'Non-internet application charge', 'Subsequent temporary application charge') and no amounts. No amount and no currency was stated, so no fee is recorded.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "age_18_to_30",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be 18 to 30 years old, or up to 35 for some countries",
+      "description": "The page does not name the countries whose citizens may apply up to 35. This requirement deliberately carries no rule - see not_extracted.",
+      "source_role": "landing",
+      "source_excerpt": "Must be 18 to 30 years old (or 35 years old for some countries)",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "eligible_country_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a passport from an eligible country or jurisdiction",
+      "description": "The page states the requirement without publishing the list of eligible countries or jurisdictions.",
+      "source_role": "landing",
+      "source_excerpt": "Must have a passport from an eligible country or jurisdiction",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "no_accompanying_dependent_children",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not be accompanied by dependent children",
+      "source_role": "landing",
+      "source_excerpt": "Must not be accompanied by dependent children",
+      "display_order": 30
+    }
+  ]
+}

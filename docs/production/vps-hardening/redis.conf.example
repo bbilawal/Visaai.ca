@@ -1,0 +1,42 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Self-hosted Redis for BullMQ (REDIS_URL).
+# =============================================================================
+# This is the Redis behind REDIS_URL (default redis://localhost:6379) that
+# BullMQ uses for the ~18 in-process queues (documents/OCR, notifications,
+# reminders, analytics rollups, dunning, payouts sweep, etc.).
+#
+# It is a DIFFERENT store from the Upstash REST instance
+# (UPSTASH_REDIS_REST_URL/TOKEN) that persists LangGraph checkpoints — Upstash is
+# already managed + durable, so nothing here applies to it.
+#
+# Merge these keys into /etc/redis/redis.conf, then: sudo systemctl restart redis
+# =============================================================================
+
+# --- Durability: AOF so queued jobs survive a Redis (or box) restart ---------
+# Without this, an unexpected Redis restart drops every not-yet-processed job
+# (OCR runs, reminder sweeps, payout sweeps) that was sitting in a queue.
+appendonly yes
+appendfsync everysec          # fsync once/sec: ~1s worst-case loss, good throughput
+# RDB snapshots as a second safety net (point-in-time; faster to load than AOF).
+save 900 1
+save 300 10
+save 60 10000
+
+# --- CRITICAL for BullMQ: never evict keys ----------------------------------
+# BullMQ stores job state in Redis. If Redis evicts keys under memory pressure,
+# jobs silently vanish and queues corrupt. noeviction makes Redis REJECT writes
+# instead of evicting — you want the error, not the data loss. Size maxmemory
+# with headroom and monitor it (README §6).
+maxmemory 512mb
+maxmemory-policy noeviction
+
+# --- Bind + auth: do NOT expose Redis publicly ------------------------------
+bind 127.0.0.1 ::1            # localhost only; app + workers are on the same box
+protected-mode yes
+# If you ever move Redis off-box, require a password AND put it on a private
+# network / firewall — an open Redis is a well-known RCE vector.
+# requirepass <long-random-secret>   # then REDIS_URL=redis://:<secret>@host:6379
+
+# --- Misc ---
+timeout 0                     # BullMQ holds long-lived blocking connections
+tcp-keepalive 60

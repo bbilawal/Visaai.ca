@@ -1,0 +1,603 @@
+{
+  "schema_version": 1,
+  "visaai_id": "cn-permanent-residence",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the National Immigration Administration service guide named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "Chinese permanent residence has SEVEN eligibility limbs and SEVEN corresponding document sets, and they are keyed to each other by Roman numeral: an investor files under (i) and submits the (i) documents, a spouse files under (v) and submits the (v) documents. Every label below carries its limb, because flattening them would tell a retiring parent under limb (vii) to produce a capital verification report.\n\nThe INELIGIBILITY section is extracted as its own requirements rather than dropped. It is the only part of the guide that describes losing a status already granted, and the fourth ground — residing under three months a year — is a rule somebody could break without ever knowing it was there.",
+  "source_roles": {
+    "requirements": "https://en.nia.gov.cn/n147423/n147478/n147715/c158291/content.html"
+  },
+  "page_dates": {
+    "requirements": "2023-03-27"
+  },
+  "freshness_note": "The page publishes its own dateline in the body: 2023-03-27. That is a REAL publication date, and it is stronger evidence than most of the corpus carries — Austria's migration.gv.at, Singapore's MOM pages and the US ESTA pages publish none at all. It is also evidence of AGE: this guide has stood unrevised since 2023-03-27. Both halves are recorded here because a dateline is only useful if the number it carries is read rather than merely noted as present, and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The visa CATEGORIES themselves (C, F, G, J1, J2, L, M, Q1, Q2, R, S1, S2, X1, X2, Z). These guides use the letters constantly and define none of them: they are set by the Regulations on Administration of the Entry and Exit of Foreigners, which the guides cite and which is published as a separate document. Every requirement below therefore quotes the letter as the authority uses it and does not gloss it, because a gloss would be this registry describing Chinese visa law rather than quoting it.",
+    "Ordinary visa ISSUANCE outside China. These guides cover what happens after entry — residence permits, extensions, changes, reissuance and permanent residence. Visas are issued by Chinese embassies and consulates, which are a different authority and were not probed.",
+    "The 240-hour visa-free transit and 30-day visa-free entry policies. The NIA publishes them as announcements rather than as service guides, and an announcement about a pilot is a different kind of document from a procedure with an application-materials section."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scope: foreign nationals applying for permanent residence in China",
+      "description": "The guide states its own scope.",
+      "source_role": "requirements",
+      "source_excerpt": "this guidelines applies to foreign nationals applying for permanent residence status in china.",
+      "display_order": 10,
+      "source_excerpt_display": "This Guidelines applies to foreign nationals applying for permanent residence status in China."
+    },
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: the Exit and Entry Administration Law and the Approval Measures",
+      "description": "The two instruments the guide is written under.",
+      "source_role": "requirements",
+      "source_excerpt": "exit and entry administration law of the people's republic of china, measures for the administration of examination and approval of foreigners' permanent residence in china",
+      "display_order": 20,
+      "source_excerpt_display": "Exit and Entry Administration Law of the People's Republic of China, Measures for the Administration of Examination and Approval of Foreigners' Permanent Residence in China"
+    },
+    {
+      "requirement_code": "processing_authorities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Where it is processed: municipal and district-level public security organs",
+      "description": "Not the NIA directly — the application is lodged locally.",
+      "source_role": "requirements",
+      "source_excerpt": "public security organs under municipal people's governments of cities with subordinate districts; public security sub-bureaus and county-level public security sub-bureaus of direct-controlled municipalities.",
+      "display_order": 30,
+      "source_excerpt_display": "Public security organs under municipal people's governments of cities with subordinate districts; public security sub-bureaus and county-level public security sub-bureaus of direct-controlled municipalities."
+    },
+    {
+      "requirement_code": "baseline_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Baseline: abide by Chinese law, good health, no criminal record, AND meet one of the seven conditions",
+      "description": "The baseline and the \"one of the following\" are one sentence, and the \"one of\" is what makes the seven limbs alternatives rather than a checklist.",
+      "source_role": "requirements",
+      "source_excerpt": "foreign nationals applying for permanent residence in china shall abide by chinese laws and regulations, be in good health, have no criminal record, and meet one of the following conditions:",
+      "display_order": 40,
+      "source_excerpt_display": "Foreign nationals applying for permanent residence in China shall abide by Chinese laws and regulations, be in good health, have no criminal record, and meet one of the following conditions:"
+    },
+    {
+      "requirement_code": "limb_i_investment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (i): direct and stable investment with three consecutive years of good tax records",
+      "description": "Three consecutive years, stated by the authority.",
+      "source_role": "requirements",
+      "source_excerpt": "(i) the applicant has made direct and stable investments in china, with good tax payment records for three consecutive years;",
+      "parameters": {
+        "consecutive_tax_years": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "(I) The applicant has made direct and stable investments in China, with good tax payment records for three consecutive years;"
+    },
+    {
+      "requirement_code": "limb_ii_senior_position",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (ii): a senior position or associate senior title, four consecutive years of equivalent salary, three years’ residence within four",
+      "description": "Three numbers in one clause and none of them interchangeable.",
+      "source_role": "requirements",
+      "source_excerpt": "(ii) the applicant holds the position of 1) deputy general manager, 2) factory deputy director or above, or 3) those with professional associate senior titles or above, such as associate professor or associate researcher; or has been enjoying the equivalent salary in china for at least four consecutive years, and residing in china for a total of not less than three years within four years with good tax records;",
+      "parameters": {
+        "salary_years": 4,
+        "residence_years_within_four": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "(II) The applicant holds the position of 1) deputy general manager, 2) factory deputy director or above, or 3) those with professional associate senior titles or above, such as associate professor or associate researcher; or has been enjoying the equivalent salary in China for at least four consecutive years, and residing in China for a total of not less than three years within four years with good tax records;"
+    },
+    {
+      "requirement_code": "limb_iii_outstanding_contribution",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (iii): significant and outstanding contributions to China, and especially needed",
+      "description": "Both halves are stated; neither is qualified further on this page.",
+      "source_role": "requirements",
+      "source_excerpt": "(iii) the applicant has made significant and outstanding contribution(s) to china and is especially needed in the country;",
+      "display_order": 70,
+      "source_excerpt_display": "(III) The applicant has made significant and outstanding contribution(s) to China and is especially needed in the country;"
+    },
+    {
+      "requirement_code": "limb_iv_family_of_i_ii_iii",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (iv): the spouse and unmarried children under 18 of an applicant under (i), (ii) or (iii)",
+      "description": "Derivative eligibility, scoped to the three limbs named.",
+      "source_role": "requirements",
+      "source_excerpt": "(iv) the spouse and the unmarried children (under age 18) of the applicant who meets the foregoing conditions specified in (i), (ii) or (iii);",
+      "parameters": {
+        "child_max_age": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 80,
+      "source_excerpt_display": "(IV) The spouse and the unmarried children (under age 18) of the applicant who meets the foregoing conditions specified in (I), (II) or (III);"
+    },
+    {
+      "requirement_code": "limb_v_spouse",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (v): spouse of a Chinese citizen or permanent resident — five years married, five years resident with nine months a year",
+      "description": "The nine-months-a-year floor is what makes this five years of actual presence rather than five years of status.",
+      "source_role": "requirements",
+      "source_excerpt": "(v) the applicant is the spouse of a chinese citizen or of a foreign national who has obtained permanent residence status in china; the applicant and his or her spouse has been married for a minimum of five years; the applicant has had a minimum of five consecutive years of residence in china with no less than nine months each year, and has a stable source of income and domicile;",
+      "parameters": {
+        "marriage_years": 5,
+        "residence_years": 5,
+        "months_per_year": 9,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "(V) The applicant is the spouse of a Chinese citizen or of a foreign national who has obtained permanent residence status in China; The applicant and his or her spouse has been married for a minimum of five years; The applicant has had a minimum of five consecutive years of residence in China with no less than nine months each year, and has a stable source of income and domicile;"
+    },
+    {
+      "requirement_code": "limb_vi_dependent_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (vi): an unmarried applicant under 18 dependent on their parents",
+      "description": "Stated in one clause.",
+      "source_role": "requirements",
+      "source_excerpt": "(vi) the applicant under the age of 18 is unmarried and dependent on his or her parents;",
+      "parameters": {
+        "max_age": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "(VI) The applicant under the age of 18 is unmarried and dependent on his or her parents;"
+    },
+    {
+      "requirement_code": "limb_vii_elderly_relative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Limb (vii): aged 60 or over, no direct relatives abroad, living with a direct relative in China",
+      "description": "The same five-year, nine-month presence test as limb (v), plus stable income and domicile.",
+      "source_role": "requirements",
+      "source_excerpt": "(vii) the applicant is or above the age of 60, has no direct relatives abroad, and lives with his or her direct relative in china; the applicant has stayed in china for at least five consecutive years with at least nine months of residence in china each year, and has a stable source of income and domicile.",
+      "parameters": {
+        "min_age": 60,
+        "residence_years": 5,
+        "months_per_year": 9,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "(VII) The applicant is or above the age of 60, has no direct relatives abroad, and lives with his or her direct relative in China; The applicant has stayed in China for at least five consecutive years with at least nine months of residence in China each year, and has a stable source of income and domicile."
+    },
+    {
+      "requirement_code": "ineligibility_default",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Applications that meet none of the seven conditions are not accepted",
+      "description": "Not refused after examination — not accepted.",
+      "source_role": "requirements",
+      "source_excerpt": "for foreign nationals who do not meet the foregoing conditions, an application for permanent residence in china will not be accepted.",
+      "display_order": 120,
+      "source_excerpt_display": "For foreign nationals who do not meet the foregoing conditions, an application for permanent residence in China will not be accepted."
+    },
+    {
+      "requirement_code": "cancellation_grounds_intro",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Permanent residence already granted can be cancelled under Article 24",
+      "description": "The NIA may cancel the status and confiscate or invalidate the ID card.",
+      "source_role": "requirements",
+      "source_excerpt": "additionally, according to article 24 of the measures for the administration of examination and approval of foreigners' permanent residence in china, where any of the following circumstances occurs, the national immigration administration (nia) has the right to cancel the previously obtained permanent residence status in china of foreign nationals and confiscate their foreign permanent resident id cards or declare their foreign permanent resident id cards invalid.",
+      "display_order": 130,
+      "source_excerpt_display": "Additionally, according to Article 24 of the Measures for the Administration of Examination and Approval of Foreigners' Permanent Residence in China, where any of the following circumstances occurs, the National Immigration Administration (NIA) has the right to cancel the previously obtained permanent residence status in China of foreign nationals and confiscate their Foreign Permanent Resident ID Cards or declare their Foreign Permanent Resident ID Cards invalid."
+    },
+    {
+      "requirement_code": "cancellation_national_security",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancellation ground (i): endangering national security or interests",
+      "description": "First of four grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "(i) foreign nationals who may endanger china's national security or interests;",
+      "display_order": 140,
+      "source_excerpt_display": "(I) Foreign nationals who may endanger China's national security or interests;"
+    },
+    {
+      "requirement_code": "cancellation_deportation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancellation ground (ii): sentenced to deportation by a people’s court",
+      "description": "Second of four grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "(ii) foreign nationals who have been sentenced to be deported by a people's court;",
+      "display_order": 150,
+      "source_excerpt_display": "(II) Foreign nationals who have been sentenced to be deported by a people's court;"
+    },
+    {
+      "requirement_code": "cancellation_false_materials",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancellation ground (iii): obtained by false materials or unlawful means",
+      "description": "Third of four grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "(iii) foreign nationals who obtained permanent residence in china by false materials or other unlawful means;",
+      "display_order": 160,
+      "source_excerpt_display": "(III) Foreign nationals who obtained permanent residence in China by false materials or other unlawful means;"
+    },
+    {
+      "requirement_code": "cancellation_insufficient_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancellation ground (iv): under three months’ residence a year, or under one year across the five",
+      "description": "The ground a holder is most likely to trip without noticing, and it is quoted in full.",
+      "source_role": "requirements",
+      "source_excerpt": "(iv) foreign nationals whose residence in china, without approval, is less than three months each year or less than one year during the five-year residence.",
+      "parameters": {
+        "min_months_per_year": 3,
+        "min_years_per_five": 1,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "(IV) Foreign nationals whose residence in China, without approval, is less than three months each year or less than one year during the five-year residence."
+    },
+    {
+      "requirement_code": "materials_baseline",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All applicants: a valid passport, a health certificate and a foreign certificate of no criminal record",
+      "description": "Required in addition to the limb-specific set below.",
+      "source_role": "requirements",
+      "source_excerpt": "in addition to a valid foreign passport, a health certificate, and a foreign certificate of no criminal record, the applicants shall submit the following materials when applying for permanent residence in china.",
+      "display_order": 180,
+      "source_excerpt_display": "In addition to a valid foreign passport, a Health Certificate, and a foreign Certificate of No Criminal Record, the applicants shall submit the following materials when applying for permanent residence in China."
+    },
+    {
+      "requirement_code": "materials_investor",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: a copy of the duplicate of the business licence of the enterprise legal person",
+      "description": "First of five investor documents.",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of the duplicate of the business license of the enterprise legal person;",
+      "display_order": 190,
+      "source_excerpt_display": "1. A copy of the duplicate of the business license of the enterprise legal person;"
+    },
+    {
+      "requirement_code": "materials_investor_annual_report",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: a certificate of disclosure of the enterprise’s annual report",
+      "description": "Second of five investor documents.",
+      "source_role": "requirements",
+      "source_excerpt": "2. a certificate of the disclosure of the enterprise's annual report;",
+      "display_order": 200,
+      "source_excerpt_display": "2. A certificate of the disclosure of the enterprise's annual report;"
+    },
+    {
+      "requirement_code": "materials_investor_project_confirmation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: a confirmation letter on foreign-funded projects",
+      "description": "Third of five investor documents.",
+      "source_role": "requirements",
+      "source_excerpt": "3. confirmation letter on foreign-funded projects;",
+      "display_order": 210,
+      "source_excerpt_display": "3. Confirmation Letter on Foreign-funded Projects;"
+    },
+    {
+      "requirement_code": "materials_investor_capital_verification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: a copy of the capital verification report",
+      "description": "Fourth of five investor documents.",
+      "source_role": "requirements",
+      "source_excerpt": "4. a copy of the capital verification report;",
+      "display_order": 220,
+      "source_excerpt_display": "4. A copy of the Capital Verification Report;"
+    },
+    {
+      "requirement_code": "materials_investor_encouraged_enterprise",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: proof the enterprise is encouraged to develop, plus a tax payment certificate where nationally encouraged",
+      "description": "The tax certificate is conditional and the condition is inside the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "5. a copy of the confirmation letter on foreign-funded projects issued by the national authority or a copy of a certificate issued by competent provincial authorities, which prove that the enterprise is a foreign-funded enterprise encouraged to develop, as well as a copy of the individual tax payment certificate (only required for those encouraged to develop by the national authority);",
+      "display_order": 230,
+      "source_excerpt_display": "5. A copy of the Confirmation Letter on Foreign-funded Projects issued by the national authority or a copy of a certificate issued by competent provincial authorities, which prove that the enterprise is a foreign-funded enterprise encouraged to develop, as well as a copy of the individual tax payment certificate (Only required for those encouraged to develop by the national authority);"
+    },
+    {
+      "requirement_code": "materials_employee_employment_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employees: a copy of the employment certificate",
+      "description": "First of six employee documents.",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of the employment certificate;",
+      "display_order": 240,
+      "source_excerpt_display": "1. A copy of the employment certificate;"
+    },
+    {
+      "requirement_code": "materials_employee_work_permit",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employees: a copy of the foreigner’s work permit",
+      "description": "Second of six employee documents.",
+      "source_role": "requirements",
+      "source_excerpt": "2. a copy of the foreigner's work permit;",
+      "display_order": 250,
+      "source_excerpt_display": "2. A copy of the Foreigner's Work Permit;"
+    },
+    {
+      "requirement_code": "materials_employee_employer_registration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employees: a copy of the employer’s registration certificate",
+      "description": "Third of six employee documents.",
+      "source_role": "requirements",
+      "source_excerpt": "3. a copy of the registration certificate of the employer;",
+      "display_order": 260,
+      "source_excerpt_display": "3. A copy of the registration certificate of the employer;"
+    },
+    {
+      "requirement_code": "materials_employee_tax_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employees: a copy of the individual tax payment certificate",
+      "description": "Sixth of six employee documents.",
+      "source_role": "requirements",
+      "source_excerpt": "6. a copy of the individual tax payment certificate;",
+      "display_order": 270,
+      "source_excerpt_display": "6. A copy of the individual tax payment certificate;"
+    },
+    {
+      "requirement_code": "materials_special_recommendation_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Special personnel: a copy of the recommendation letter",
+      "description": "First of two.",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of the recommendation letter;",
+      "display_order": 280,
+      "source_excerpt_display": "1. A copy of the Recommendation Letter;"
+    },
+    {
+      "requirement_code": "materials_special_awards",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Special personnel: copies of relevant awards and achievements",
+      "description": "Second of two.",
+      "source_role": "requirements",
+      "source_excerpt": "2. copies of relevant awards and achievements.",
+      "display_order": 290,
+      "source_excerpt_display": "2. Copies of relevant awards and achievements."
+    },
+    {
+      "requirement_code": "materials_family_relationship_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Family of an eligible investor, employee or special person: marriage, birth or parent-child certificates",
+      "description": "Keyed to limb (iv).",
+      "source_role": "requirements",
+      "source_excerpt": "1. copies of marriage certificate, birth certificate(s) or parent-child relationship certificate(s);",
+      "display_order": 300,
+      "source_excerpt_display": "1. Copies of marriage certificate, birth certificate(s) or parent-child relationship certificate(s);"
+    },
+    {
+      "requirement_code": "materials_family_sponsor_id_card",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Family of an eligible investor, employee or special person: a copy of that person’s foreign permanent resident ID card",
+      "description": "Keyed to limb (iv).",
+      "source_role": "requirements",
+      "source_excerpt": "2. a copy of the foreign permanent resident id card of the above-mentioned investor, employee, and special personnel.",
+      "display_order": 310,
+      "source_excerpt_display": "2. A copy of the Foreign Permanent Resident ID Card of the above-mentioned investor, employee, and special personnel."
+    },
+    {
+      "requirement_code": "materials_spouse_marriage_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse (limb v): a copy of the marriage certificate",
+      "description": "First of four spouse documents.",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of the marriage certificate;",
+      "display_order": 320,
+      "source_excerpt_display": "1. A copy of the marriage certificate;"
+    },
+    {
+      "requirement_code": "materials_spouse_identity_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse (limb v): a copy of the spouse’s identity certificate",
+      "description": "Second of four spouse documents.",
+      "source_role": "requirements",
+      "source_excerpt": "2. a copy of the identity certificate of the spouse;",
+      "display_order": 330,
+      "source_excerpt_display": "2. A copy of the identity certificate of the spouse;"
+    },
+    {
+      "requirement_code": "materials_spouse_housing",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse (limb v): a housing rental certificate or property ownership certificate",
+      "description": "Third of four spouse documents — the domicile half of the eligibility test.",
+      "source_role": "requirements",
+      "source_excerpt": "3. a copy of the housing rental certificate or property ownership certificate;",
+      "display_order": 340,
+      "source_excerpt_display": "3. A copy of the housing rental certificate or property ownership certificate;"
+    },
+    {
+      "requirement_code": "materials_spouse_income",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse (limb v): proof of a stable source of income",
+      "description": "Fourth of four spouse documents.",
+      "source_role": "requirements",
+      "source_excerpt": "4. a copy of a certificate proving that the applicant has a stable source of income.",
+      "display_order": 350,
+      "source_excerpt_display": "4. A copy of a certificate proving that the applicant has a stable source of income."
+    },
+    {
+      "requirement_code": "materials_child_birth_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Children (limb vi): a birth certificate or relationship certificate",
+      "description": "Keyed to limb (vi).",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of the birth certificate or relationship certificate;",
+      "display_order": 360,
+      "source_excerpt_display": "1. A copy of the birth certificate or relationship certificate;"
+    },
+    {
+      "requirement_code": "materials_child_parent_identity",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Children (limb vi): parents’ identity certificates, or passports and permanent resident ID cards",
+      "description": "Which of the two depends on the parents’ nationality.",
+      "source_role": "requirements",
+      "source_excerpt": "2. copies of the identity certificates of parents who are of chinese nationality, or copies of valid passports and foreign permanent resident id cards of parents who are of foreign nationality;",
+      "display_order": 370,
+      "source_excerpt_display": "2. Copies of the identity certificates of parents who are of Chinese nationality, or copies of valid passports and Foreign Permanent Resident ID Cards of parents who are of foreign nationality;"
+    },
+    {
+      "requirement_code": "materials_child_divorced_guardianship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Children (limb vi): if the parents are divorced, proof the sponsor has guardianship",
+      "description": "Conditional, and the condition is stated.",
+      "source_role": "requirements",
+      "source_excerpt": "3. if the parents are divorced, a copy of a certificate that proves the sponsor has responsibilities of guardianship of the child shall be submitted;",
+      "display_order": 380,
+      "source_excerpt_display": "3. If the parents are divorced, a copy of a certificate that proves the sponsor has responsibilities of guardianship of the child shall be submitted;"
+    },
+    {
+      "requirement_code": "materials_relative_no_relatives_abroad",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Relatives (limb vii): proof of having no direct relatives abroad",
+      "description": "The document behind the hardest clause in limb (vii).",
+      "source_role": "requirements",
+      "source_excerpt": "1. a copy of a certificate that proves the applicant has no direct relatives abroad;",
+      "display_order": 390,
+      "source_excerpt_display": "1. A copy of a certificate that proves the applicant has no direct relatives abroad;"
+    },
+    {
+      "requirement_code": "materials_relative_domestic_kinship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Relatives (limb vii): proof of the domestic kinship",
+      "description": "Second of five.",
+      "source_role": "requirements",
+      "source_excerpt": "2. a copy of a certificate that proves the domestic kinship;",
+      "display_order": 400,
+      "source_excerpt_display": "2. A copy of a certificate that proves the domestic kinship;"
+    },
+    {
+      "requirement_code": "materials_relative_sponsor_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Relatives (limb vii): the sponsor’s household registration and ID card, or passport and permanent resident ID card",
+      "description": "Which set depends on whether the sponsor is Chinese or foreign.",
+      "source_role": "requirements",
+      "source_excerpt": "3. copies of the chinese sponsor's household registration document and resident identity card; or copies of the foreign sponsor's valid passport and foreign permanent resident id card;",
+      "display_order": 410,
+      "source_excerpt_display": "3. Copies of the Chinese sponsor's household registration document and Resident Identity Card; or copies of the foreign sponsor's valid passport and Foreign Permanent Resident ID Card;"
+    },
+    {
+      "requirement_code": "procedure_where_to_apply",
+      "kind": "step",
+      "officially_required": true,
+      "label": "How to apply, and who may apply on the applicant’s behalf",
+      "description": "A power of attorney issued abroad must be certified by the Chinese embassy or consulate — that sentence is the one most likely to send a file back.",
+      "source_role": "requirements",
+      "source_excerpt": "(i) application. the applicant shall apply for permanent residence in china at the public security organs under municipal people's governments of cities with subordinate districts, or public security sub-bureaus or county-level public security sub-bureaus of direct-controlled municipalities where the investment is made or where the long-term residence is located. applications are also allowed to be submitted by entrusted persons. if the applicant is under the age of 18, the application can also be submitted by his/her parent(s) or entrusted person(s). for an application submitted by an entrusted person, a power of attorney issued by the applicant and notarized by a notary office is required. if the power of attorney is issued by the applicant abroad, it shall be certified by the chinese embassy or consulate of the corresponding country.",
+      "display_order": 420,
+      "source_excerpt_display": "(I) Application. The applicant shall apply for permanent residence in China at the public security organs under municipal people's governments of cities with subordinate districts, or public security sub-bureaus or county-level public security sub-bureaus of direct-controlled municipalities where the investment is made or where the long-term residence is located. Applications are also allowed to be submitted by entrusted persons. If the applicant is under the age of 18, the application can also be submitted by his/her parent(s) or entrusted person(s). For an application submitted by an entrusted person, a Power of Attorney issued by the applicant and notarized by a notary office is required. If the Power of Attorney is issued by the applicant abroad, it shall be certified by the Chinese embassy or consulate of the corresponding country."
+    },
+    {
+      "requirement_code": "procedure_timeline",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Timeline: three months’ investigation, then two months’ review, then NIA approval",
+      "description": "Two statutory windows in one paragraph, and the NIA is the last step rather than the first.",
+      "source_role": "requirements",
+      "source_excerpt": "(ii) processing, review, and final decision. processing authorities shall complete the investigation within three months from the date of acceptance and report the eligible applications to inspection authorities. inspection authorities shall complete the review of relevant applications within two months and report eligible applications to nia for approval. for applicants who do not meet the relevant requirements, nia shall decide to disapprove. foreign permanent resident id cards shall be issued by nia to foreigners who are approved for permanent residence in china. for applications of change or re-issuance of foreign permanent resident id cards, processing authorities shall report the eligible applications to inspection authorities upon investigation. upon review, inspection authorities shall report to nia for approval.",
+      "parameters": {
+        "investigation_months": 3,
+        "review_months": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 430,
+      "source_excerpt_display": "(II) Processing, review, and final decision. Processing authorities shall complete the investigation within three months from the date of acceptance and report the eligible applications to inspection authorities. Inspection authorities shall complete the review of relevant applications within two months and report eligible applications to NIA for approval. For applicants who do not meet the relevant requirements, NIA shall decide to disapprove. Foreign Permanent Resident ID Cards shall be issued by NIA to foreigners who are approved for permanent residence in China. For applications of change or re-issuance of Foreign Permanent Resident ID Cards, processing authorities shall report the eligible applications to inspection authorities upon investigation. Upon review, inspection authorities shall report to NIA for approval."
+    },
+    {
+      "requirement_code": "fee_application",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee: CNY 1,500",
+      "description": "From the guide’s own fees section.",
+      "source_role": "requirements",
+      "source_excerpt": "application fee: cny 1,500.",
+      "parameters": {
+        "amount": 1500,
+        "currency": "CNY",
+        "unit": "per application",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 440,
+      "source_excerpt_display": "Application fee: CNY 1,500."
+    },
+    {
+      "requirement_code": "fee_card_production",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Production of the card: CNY 300",
+      "description": "Charged separately from the application fee.",
+      "source_role": "requirements",
+      "source_excerpt": "production of card: cny 300.",
+      "parameters": {
+        "amount": 300,
+        "currency": "CNY",
+        "unit": "per card",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 450,
+      "source_excerpt_display": "Production of card: CNY 300."
+    },
+    {
+      "requirement_code": "fee_reissue_lost_or_damaged",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Re-issuance for loss or damage: CNY 600",
+      "description": "Twice the renewal fee.",
+      "source_role": "requirements",
+      "source_excerpt": "re-issuance due to loss or damage: cny 600.",
+      "parameters": {
+        "amount": 600,
+        "currency": "CNY",
+        "unit": "per card",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 460,
+      "source_excerpt_display": "Re-issuance due to loss or damage: CNY 600."
+    },
+    {
+      "requirement_code": "fee_renewal",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Renewal on expiry: CNY 300",
+      "description": "From the guide’s own fees section.",
+      "source_role": "requirements",
+      "source_excerpt": "renewal upon expiration: cny 300.",
+      "parameters": {
+        "amount": 300,
+        "currency": "CNY",
+        "unit": "per card",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 470,
+      "source_excerpt_display": "Renewal upon expiration: CNY 300."
+    }
+  ]
+}

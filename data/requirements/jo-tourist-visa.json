@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jo-tourist-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is the national eGovernment portal's own visa guide; the Ministry of Interior publishes no readable requirement text and its entry-procedure page returns HTTP 500.",
+  "structure_note": "THREE WAYS IN, AND THE PAGE NAMES ALL THREE. A single-entry tourist visa obtained in advance, a visa on arrival available to nationals of many countries at the main entry points, and an e-visa applied for online before travel. The page does NOT say which nationalities get which, and that gap is the most important thing about it: it describes the mechanisms and defers eligibility entirely.\n\nCOVERAGE IS ONE ROUTE. This is the only page Jordan publishes to us with requirement language on it. www.moi.gov.jo reads at 9,862 characters with no requirement markers, its 'mechanism for entering the Kingdom' page returns HTTP 500, and its e-services host does not complete a connection from production.",
+  "source_roles": {
+    "requirements": "https://jordan.gov.jo/AR/Pages/%d8%aa%d8%a3%d8%b4%d9%8a%d8%b1%d8%a7%d8%aa_%d8%a7%d9%84%d8%b3%d9%81%d8%b1"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Source language is Arabic.",
+  "not_extracted": [
+    "Which nationalities qualify for visa on arrival, and which need a visa in advance. The page states that visa on arrival is available to nationals of many countries and names none of them. This is the single most consequential omission on the route and it is the authority's, not ours.",
+    "The visa fees. The page states explicitly that fees vary by type and duration and refers the reader to the official Jordanian visa site or the nearest embassy. No amount is published and none is supplied.",
+    "The Jordan Pass, which waives the tourist visa fee for holders. Administered by the Ministry of Tourism and not mentioned on this page.",
+    "Requirements for anything other than tourism. The page is a tourist visa guide.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "understanding_visa_requirements_matters",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The portal frames this as a guide to the visa process for planning a trip to Jordan",
+      "source_role": "requirements",
+      "source_excerpt": "عند تخطيط رحلتك إلى الأردن، يعتبر فهم متطلبات التأشيرة أمرًا هامًا لضمان دخولك بسهولة إلى هذه الوجهة الرائعة. فيما يلي دليل يساعدك في التعامل مع عملية الحصول على التأشيرة:",
+      "display_order": 10,
+      "source_excerpt_display": "عند تخطيط رحلتك إلى الأردن، يعتبر فهم متطلبات التأشيرة أمرًا هامًا لضمان دخولك بسهولة إلى هذه الوجهة الرائعة. فيما يلي دليل يساعدك في التعامل مع عملية الحصول على التأشيرة:"
+    },
+    {
+      "requirement_code": "single_entry_tourist_visa_is_the_usual_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Most tourists coming to Jordan take a single-entry tourist visa, which permits exploring the country for a defined period",
+      "source_role": "requirements",
+      "source_excerpt": "يُفَضَّلُ لمُعظمِ السُّياحِ القادِمِينَ إلى الأردن الحصول على تأشيرة السياحة لدخول واحد، حيث تتيح لك هذه التأشيرة استكشاف البلد لمدة محددة.",
+      "display_order": 20,
+      "source_excerpt_display": "يُفَضَّلُ لمُعظمِ السُّياحِ القادِمِينَ إلى الأردن الحصول على تأشيرة السياحة لدخول واحد، حيث تتيح لك هذه التأشيرة استكشاف البلد لمدة محددة."
+    },
+    {
+      "requirement_code": "visa_on_arrival_at_main_entry_points",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Jordan offers a visa on arrival to nationals of many countries, obtainable at the main entry points including Queen Alia International Airport in Amman",
+      "description": "The page names the mechanism and no nationality. Which countries qualify is not published here.",
+      "source_role": "requirements",
+      "source_excerpt": "يُقَدِّمُ الأردن تأشيرة عند الوصول لمواطني العديد من الدول، حيث يُمْكِنُ للزوار الحصول على هذه التأشيرة عند الوصول إلى النقاط الرئيسية للدخول، بما في ذلك مطار الملكة علياء الدولي في عمان.",
+      "display_order": 30,
+      "source_excerpt_display": "يُقَدِّمُ الأردن تأشيرة عند الوصول لمواطني العديد من الدول، حيث يُمْكِنُ للزوار الحصول على هذه التأشيرة عند الوصول إلى النقاط الرئيسية للدخول، بما في ذلك مطار الملكة علياء الدولي في عمان."
+    },
+    {
+      "requirement_code": "evisa_available_before_arrival",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Jordan also provides an e-visa system allowing travellers to apply online before arrival",
+      "source_role": "requirements",
+      "source_excerpt": "لتسهيل العملية، توفر الأردن أيضًا نظام تأشيرة إلكترونية، مما يسمح للمسافرين بتقديم طلب عبر الإنترنت قبل وصولهم.",
+      "display_order": 40,
+      "source_excerpt_display": "لتسهيل العملية، توفر الأردن أيضًا نظام تأشيرة إلكترونية، مما يسمح للمسافرين بتقديم طلب عبر الإنترنت قبل وصولهم."
+    },
+    {
+      "requirement_code": "stay_one_or_three_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Tourist visas usually permit a stay of 1 month or 3 months, depending on the type and purpose of the visit",
+      "parameters": {
+        "stay_months_options": [
+          1,
+          3
+        ]
+      },
+      "source_role": "requirements",
+      "source_excerpt": "تسمح التأشيرات السياحية عادة بالإقامة لمدة 1 شهر أو 3 أشهر، اعتمادًا على نوع وغرض زيارتك.",
+      "display_order": 50,
+      "source_excerpt_display": "تسمح التأشيرات السياحية عادة بالإقامة لمدة 1 شهر أو 3 أشهر، اعتمادًا على نوع وغرض زيارتك."
+    },
+    {
+      "requirement_code": "visa_on_arrival_steps",
+      "kind": "step",
+      "officially_required": true,
+      "label": "For a visa on arrival: complete the required forms and pay the visa fee on arrival at the airport or the land border crossing",
+      "source_role": "requirements",
+      "source_excerpt": "التأشيرة عند الوصول للحصول على التأشيرة عند الوصول، قم بملء النماذج المطلوبة وادفع رسوم التأشيرة عند الوصول إلى المطار أو نقطة المرور الحدودية.",
+      "display_order": 60,
+      "source_excerpt_display": "التأشيرة عند الوصول للحصول على التأشيرة عند الوصول، قم بملء النماذج المطلوبة وادفع رسوم التأشيرة عند الوصول إلى المطار أو نقطة المرور الحدودية."
+    },
+    {
+      "requirement_code": "evisa_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For an e-visa: upload the necessary documents, including a passport-sized personal photograph and a copy of the passport",
+      "source_role": "requirements",
+      "source_excerpt": "قم بتحميل الوثائق الضرورية، بما في ذلك صورة شخصية حجم جواز السفر ونسخة من جواز السفر.",
+      "display_order": 70,
+      "source_excerpt_display": "قم بتحميل الوثائق الضرورية، بما في ذلك صورة شخصية حجم جواز السفر ونسخة من جواز السفر."
+    },
+    {
+      "requirement_code": "evisa_payment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Pay the visa fee through the secure online payment gateway",
+      "source_role": "requirements",
+      "source_excerpt": "قم بدفع رسوم التأشيرة باستخدام بوابة الدفع الآمنة عبر الإنترنت.",
+      "display_order": 80,
+      "source_excerpt_display": "قم بدفع رسوم التأشيرة باستخدام بوابة الدفع الآمنة عبر الإنترنت."
+    },
+    {
+      "requirement_code": "fees_vary_and_are_not_published_here",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fees vary by visa type and duration; the portal refers the reader to the official Jordanian visa site or the nearest embassy or consulate for current amounts",
+      "description": "Recorded as the authority states it. No figure appears on this page and none is supplied from elsewhere.",
+      "source_role": "requirements",
+      "source_excerpt": "تختلف رسوم التأشيرة استنادًا إلى نوعها ومدتها. تحقق من الموقع الرسمي للتأشيرات الأردنية أو اتصل بأقرب سفارة أو قنصلية أردنية للحصول على أحدث معلومات حول الرسوم.",
+      "display_order": 90,
+      "source_excerpt_display": "تختلف رسوم التأشيرة استنادًا إلى نوعها ومدتها. تحقق من الموقع الرسمي للتأشيرات الأردنية أو اتصل بأقرب سفارة أو قنصلية أردنية للحصول على أحدث معلومات حول الرسوم."
+    }
+  ]
+}

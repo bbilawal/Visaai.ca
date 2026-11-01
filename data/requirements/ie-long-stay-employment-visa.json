@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "visaai_id": "ie-long-stay-employment-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "TWO AUTHORITIES, IN ORDER. Ireland splits work migration: the employment PERMIT comes from the Department of Enterprise, Trade and Employment (DETE), the VISA from Immigration Service Delivery (ISD). ISD states 'once you have received a permit, you are eligible to apply for an employment visa' -- so the permit is a precondition AND a required supporting document. Someone reading only 'how do I get an Irish work visa' can apply in the wrong order and be refused for a reason no visa criterion lists. That ordering is requirement #1 here.\n\nOnly ISD pages are sources. The seven DETE permit types each carry their own eligibility and belong in their own extraction; summarising them from one ISD sentence would put unverified criteria in front of an applicant.\n\nNO BOUNDS NEEDED, CHECKED NOT ASSUMED. The page covers this one visa. Its site navigation is duplicated in the markup, but no requirement text repeats and no sibling visa's rules appear -- unlike UDI's family page, where one url carries 8+ routes. See no-family-spouse.json for the contrasting case.\n\nWHY THIS VISA WAS PREVIOUSLY RECORDED AS BLOCKED. The route page one level up (/applying-for-a-long-stay-employment-visa/) is a 2,717-character router that states no requirement, and I stopped there. The real page is 16,600 characters and page-sitemap.xml finds it in one fetch.",
+  "source_roles": {
+    "requirements": "https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-work-visa-options/applying-for-a-long-stay-employment-visa/employment-visa/",
+    "fees": "https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "not_extracted": [
+    "The eligibility criteria for any of the seven DETE employment permits. They are issued by a different authority on a different site, and each has its own salary thresholds, occupation lists and labour-market tests. ISD names them; it does not state their criteria.",
+    "The atypical working scheme, which ISD names as a separate permission for jobs not covered by other employment rules. It has its own route page and needs its own visa type.",
+    "The scientific researcher route, also under 'applying for a long stay employment visa' and also a separate page.",
+    "The full list of visa fee exemptions -- exempt nationalities, family members of Irish citizens, and beneficiaries of Directive 2004/38/EC. The fees page enumerates them; only the headline amounts are recorded.",
+    "The photograph specification, which ISD publishes as a separate rules page.",
+    "Biometric enrolment. ISD states it may be required and directs applicants to their application office; no criterion is published.",
+    "Where to send documents. It depends on the application office named on the AVATS summary form, which is generated per applicant.",
+    "Appeal rights and the refusal process beyond the 5-year consequence of supplying false information."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "employment_permit_first",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a DETE employment permit BEFORE applying for this visa",
+      "description": "THE ORDERING TRAP, and the most consequential fact on this page. The permit is issued by a different authority -- the Department of Enterprise, Trade and Employment -- and the visa cannot be applied for until it exists. Applying to ISD first means a refusal for a reason no visa criterion lists.",
+      "source_role": "requirements",
+      "source_excerpt": "if you wish to work in ireland, you need to have an employment permit. this permit is issued by the department of enterprise, trade and employment (dete) .",
+      "display_order": 10,
+      "source_excerpt_display": "If you wish to work in Ireland, you need to have an Employment Permit. This permit is issued by the Department of Enterprise, Trade and Employment (DETE)."
+    },
+    {
+      "requirement_code": "permit_makes_you_eligible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eligibility for the visa begins once the permit is issued",
+      "description": "ISD stating the sequence in its own words. Recorded separately from the requirement above because this is the sentence that establishes the order, not merely the need.",
+      "source_role": "requirements",
+      "source_excerpt": "once you have received a permit, you are eligible to apply for an employment visa.",
+      "display_order": 20,
+      "source_excerpt_display": "Once you have received a permit, you are eligible to apply for an Employment Visa."
+    },
+    {
+      "requirement_code": "apply_from_home_or_legal_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply from your home country or where you are a legal resident",
+      "description": "You cannot lodge this visa from a third country you are merely visiting.",
+      "source_role": "requirements",
+      "source_excerpt": "you must apply from your home country or where you are a legal resident.",
+      "display_order": 30,
+      "source_excerpt_display": "You must apply from your home country or where you are a legal resident."
+    },
+    {
+      "requirement_code": "apply_up_to_3_months_ahead",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply up to 3 months before your date of travel",
+      "description": "An upper bound, not a target: applying earlier than three months out is outside what ISD invites.",
+      "source_role": "requirements",
+      "source_excerpt": "you should apply for a long stay employment visa up to 3 months before your date of travel to ireland.",
+      "parameters": {
+        "apply_within_months_of_travel": 3
+      },
+      "display_order": 40,
+      "source_excerpt_display": "You should apply for a long stay employment visa up to 3 months before your date of travel to Ireland."
+    },
+    {
+      "requirement_code": "avats_online_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create the application online in AVATS, then print, sign and date the summary form",
+      "description": "The online system is only the first half. The signed paper summary form travels with the supporting documents, and the form itself tells you where to send them.",
+      "source_role": "requirements",
+      "source_excerpt": "use the automated visa application and tracking system (avats) to apply for your visa online",
+      "display_order": 50,
+      "source_excerpt_display": "Use the Automated Visa Application and Tracking System (AVATS) to apply for your visa online"
+    },
+    {
+      "requirement_code": "submit_documents_within_30_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Send supporting documents within 30 days of creating the AVATS application",
+      "description": "A hard deadline that starts at the ONLINE step, not at any later point. Nothing is processed until everything arrives.",
+      "source_role": "requirements",
+      "source_excerpt": "you must do this within 30 days of creating an online application via avats. we will not process your application until we receive everything.",
+      "parameters": {
+        "days_to_submit_documents": 30
+      },
+      "display_order": 60,
+      "source_excerpt_display": "You must do this within 30 days of creating an online application via AVATS. We will not process your application until we receive everything."
+    },
+    {
+      "requirement_code": "originals_not_photocopies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Submit original documents, not photocopies",
+      "source_role": "requirements",
+      "source_excerpt": "original documents must be provided. we do not accept photocopies except where stated.",
+      "display_order": 70,
+      "source_excerpt_display": "Original documents must be provided. We do not accept photocopies except where stated."
+    },
+    {
+      "requirement_code": "certified_translation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Documents not in English or Irish need a full certified translation",
+      "source_role": "requirements",
+      "source_excerpt": "if you want to submit a document that is not in english or irish, it must be accompanied by a full certified translation .",
+      "display_order": 80,
+      "source_excerpt_display": "If you want to submit a document that is not in English or Irish, it must be accompanied by a full certified translation."
+    },
+    {
+      "requirement_code": "business_letters_headed_paper",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Letters from any business must be original, on headed paper, with a landline and a non-free email address",
+      "description": "Unusually specific, and each clause rejects a real application: a mobile number is not accepted, Yahoo and Hotmail addresses are not accepted, and an electronic signature is not accepted. ISD gives the reason -- the organisation must be verifiable.",
+      "source_role": "requirements",
+      "source_excerpt": "all letters submitted from a business, company or organisation must be original and on official headed paper . this is to make sure that they can be verified.",
+      "display_order": 90,
+      "source_excerpt_display": "All letters submitted from a business, company or organisation must be original and on official headed paper. This is to make sure that they can be verified."
+    },
+    {
+      "requirement_code": "no_digital_media",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Do not submit documents on USB sticks, memory cards, CD-ROMs or file-sharing links",
+      "description": "Hard copy only. ISD states such devices cannot be accessed, so a document supplied this way counts as not supplied.",
+      "source_role": "requirements",
+      "source_excerpt": "do not submit documentation on usb sticks, memory cards, cd roms as documents on these devices cannot be accessed.",
+      "display_order": 100,
+      "source_excerpt_display": "Do not submit documentation on USB sticks, memory cards, CD ROMs as documents on these devices cannot be accessed."
+    },
+    {
+      "requirement_code": "no_false_information",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "False or misleading information can bar you from an Irish visa for 5 years",
+      "description": "ISD names three consequences, escalating: refusal, loss of the right to appeal, and a five-year block on any Irish visa.",
+      "source_role": "requirements",
+      "source_excerpt": "note: do not include false or misleading information or documents in your application. if you do, your application may be refused. in some circumstances, you may not be allowed to appeal the visa decision and may be blocked from getting an irish visa for 5 years.",
+      "parameters": {
+        "ban_years": 5
+      },
+      "display_order": 110,
+      "source_excerpt_display": "NOTE: Do not include false or misleading information or documents in your application. If you do, your application may be refused. In some circumstances, you may not be allowed to appeal the visa decision and may be blocked from getting an Irish visa for 5 years."
+    },
+    {
+      "requirement_code": "passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Current passport, valid at least 12 months after your planned arrival",
+      "description": "Note the validity is measured from ARRIVAL, not from the application date. ISD also asks for a photocopy of every page of all previous passports and warns the application may be delayed without them.",
+      "source_role": "requirements",
+      "source_excerpt": "send us your current passport . this must be valid for at least twelve months after the date you plan to arrive in ireland.",
+      "parameters": {
+        "passport_validity_months_after_arrival": 12
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Send us your current passport. This must be valid for at least twelve months after the date you plan to arrive in Ireland."
+    },
+    {
+      "requirement_code": "passport_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two colour passport photographs, under 6 months old, signed on the back",
+      "description": "Each photo must be signed in your own handwriting and language, with your AVATS transaction number written on the back.",
+      "source_role": "requirements",
+      "source_excerpt": "include two passport-sized colour photographs with your application. these must not be more than 6 months old.",
+      "parameters": {
+        "photographs": 2,
+        "max_age_months": 6
+      },
+      "display_order": 130,
+      "source_excerpt_display": "Include two passport-sized colour photographs with your application. These must not be more than 6 months old."
+    },
+    {
+      "requirement_code": "application_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Signed application letter explaining why you want to come to Ireland",
+      "description": "ISD prescribes its contents, and the last one is a substantive undertaking rather than a detail: a commitment to observe your visa conditions, not become a burden on the State, and leave when your permission expires.",
+      "source_role": "requirements",
+      "source_excerpt": "type or write a letter explaining why you want to come to ireland. sign and date the letter and submit it with your documents.",
+      "display_order": 140,
+      "source_excerpt_display": "Type or write a letter explaining why you want to come to Ireland. Sign and date the letter and submit it with your documents."
+    },
+    {
+      "requirement_code": "employment_permit_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The DETE employment permit itself — one of seven named types",
+      "description": "Critical Skills, General, Intra-Company Transfer, Contract for Services, Exchange Agreement, Internship, or Sports & Cultural. Each has its own DETE eligibility rules, which are not extracted here because they belong to a different authority.",
+      "source_role": "requirements",
+      "source_excerpt": "you must supply one of the following: critical skills employment permit general employment permit intra-company transfer employment permit contract for services employment permit exchange agreement employment permit internship employment permit sports & cultural employment permit.",
+      "display_order": 150,
+      "source_excerpt_display": "You must supply one of the following: Critical Skills Employment Permit General Employment Permit Intra-Company Transfer Employment Permit Contract for Services Employment Permit Exchange Agreement Employment Permit Internship Employment Permit Sports & Cultural Employment Permit."
+    },
+    {
+      "requirement_code": "contract_of_employment",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Contract of employment, or an employer letter if you have no contract",
+      "description": "ISD accepts either; the employer letter substitutes when no contract exists.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have an employment contract please submit it. if you do not please submit a letter from your employer.",
+      "display_order": 160,
+      "source_excerpt_display": "If you have an Employment Contract please submit it. If you do not please submit a letter from your employer."
+    },
+    {
+      "requirement_code": "employer_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter from your employer in Ireland: job, salary and any accommodation provided",
+      "source_role": "requirements",
+      "source_excerpt": "the letter should include: details of your new job the salary you will be paid details of the accommodation, if the employer is providing you with accommodation.",
+      "display_order": 170,
+      "source_excerpt_display": "The letter should include: Details of your new job The salary you will be paid Details of the accommodation, if the employer is providing you with accommodation."
+    },
+    {
+      "requirement_code": "evidence_of_qualifications",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of qualifications and previous work experience",
+      "description": "ISD's examples are mostly proof of EMPLOYMENT rather than of study: three recent payslips, salary payments into your personal account, a letter from your current employer, tax statements, and professional or training certificates.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of qualifications and previous work experience must be submitted in support of the visa application.",
+      "display_order": 180,
+      "source_excerpt_display": "Evidence of qualifications and previous work experience must be submitted in support of the visa application."
+    },
+    {
+      "requirement_code": "finances_bank_statement",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Six months of bank statements on headed paper — internet printouts are not accepted",
+      "description": "ISD sets no figure, only 'sufficient funds to cover your costs'. Two clauses catch people out: large lodgements must be explained, and a deposit or savings account needs a separate bank letter confirming you may withdraw from it.",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide an up-to-date bank statement, showing what money has been paid into and out of the account over the last six months, and showing sufficient funds to cover your costs. bank statements must be on headed paper – internet printouts will not be accepted.",
+      "parameters": {
+        "bank_statement_months": 6
+      },
+      "display_order": 190,
+      "source_excerpt_display": "You must provide an up-to-date bank statement, showing what money has been paid into and out of the account over the last six months, and showing sufficient funds to cover your costs. Bank statements must be on headed paper – internet printouts will not be accepted."
+    },
+    {
+      "requirement_code": "disclose_visa_refusals",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Disclose every previous visa refusal, from ANY country, with the original refusal letter",
+      "description": "Not limited to Ireland and not limited to refusals: deportation, refused entry, or being required to leave any country -- including overstaying -- all require original documentation and an explanation. ISD states that non-disclosure WILL result in refusal, not may.",
+      "source_role": "requirements",
+      "source_excerpt": "for all visa or preclearance applications, if you have been refused a visa or preclearance in the past for any country, you must provide details to us. the original letter issued to you by the authorities of that country must be provided with your application. not disclosing any previous visa refusals will result in your application being refused.",
+      "display_order": 200,
+      "source_excerpt_display": "For all visa or preclearance applications, if you have been refused a visa or preclearance in the past for any country, you must provide details to us. The original letter issued to you by the authorities of that country must be provided with your application. Not disclosing any previous visa refusals will result in your application being refused."
+    },
+    {
+      "requirement_code": "insurance_at_port_of_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Medical or travel insurance — needed on ARRIVAL, not with the application",
+      "description": "A timing distinction worth reading twice. ISD does not want the evidence with your application, but the immigration officer at the airport or seaport can demand it, and you must be able to present it then. The visa officer may also request it before deciding.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of medical or travel insurance does not need to be provided with your application. however, the visa officer may request it before they make a decision on your application.",
+      "display_order": 210,
+      "source_excerpt_display": "Evidence of medical or travel insurance does not need to be provided with your application. However, the Visa Officer may request it before they make a decision on your application."
+    },
+    {
+      "requirement_code": "visa_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa fee: EUR 60 single entry, EUR 100 multi entry",
+      "description": "Not refunded if the application is refused or withdrawn. Some applicants are exempt and pay nothing; the fees page lists the categories and they are not extracted. Additional local charges may apply at the office handling your documents.",
+      "source_role": "fees",
+      "source_excerpt": "the fees for visas are: single entry : €60 multi entry : €100 transit : €25",
+      "parameters": {
+        "single_entry_eur": 60,
+        "multi_entry_eur": 100,
+        "transit_eur": 25,
+        "currency": "EUR"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "The fees for visas are: Single entry: €60 Multi entry: €100 Transit: €25"
+    },
+    {
+      "requirement_code": "do_not_book_travel",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "ISD advises not to buy travel tickets before you have the decision",
+      "description": "Not a requirement -- the authority's own advice, recorded because acting against it is expensive and applications are processed strictly in date order, so there is no way to hurry one along.",
+      "source_role": "requirements",
+      "source_excerpt": "you are advised not to purchase travel tickets before you know the outcome of your visa application.",
+      "display_order": 230,
+      "source_excerpt_display": "You are advised not to purchase travel tickets before you know the outcome of your visa application."
+    }
+  ]
+}

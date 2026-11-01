@@ -1,0 +1,313 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-employment-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official Ministry of Manpower pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE APPLICANT IS THE EMPLOYER. MOM states it as a pass fact — 'an employer or appointed employment agent needs to apply on behalf of the candidate'. A worker reading this checklist cannot satisfy roughly half of it personally: the ACRA business profile, the MyCareersFuture advertisement, the COMPASS diversity and local-employment scores and both fees are the hiring firm's. Canada's Super Visa introduced requirements binding somebody else as an exception; Singapore makes it the normal case.\n\nTWO STAGES, AND THE FIRST IS A GATE NOT A SCORE. Stage 1 is the EP Qualifying Salary; stage 2 is the 40-point COMPASS framework. MOM says twice, in two different places, that failing stage 1 ends the application 'regardless of the points they would have scored'. A points total is not a substitute for the salary floor, and a reader who meets 40 points on a $5,000 salary does not qualify.\n\nTHE SALARY FLOOR IS AGE-INDEXED AND HAS A DATED SUCCESSOR. $5,600 is the figure at age 23 or below today; it rises with age to $10,700 at 45 and above, and financial services runs higher throughout ($6,200 to $11,800). A second column already binds: new applications from 1 Jan 2027, and renewals of passes expiring from 1 Jan 2028, face $6,000 to $11,500 (financial services $6,600 to $12,700). Both regimes are stored, because a candidate applying in late 2026 for a role starting in 2027 is deciding against the higher one.\n\nBOUNDS CHECKED. Four pages, one subject each; the eligibility page's two figures ($5,600 salary floor, 40 COMPASS points) belong to different sections and are quoted from their own.",
+  "source_roles": {
+    "requirements": "https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility",
+    "eligibility": "https://www.mom.gov.sg/passes-and-permits/employment-pass/key-facts",
+    "documents": "https://www.mom.gov.sg/passes-and-permits/employment-pass/documents-required",
+    "application": "https://www.mom.gov.sg/passes-and-permits/employment-pass/apply-for-a-pass"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "documents": null,
+    "application": null
+  },
+  "freshness_note": "MOM publishes no dateModified in the document head, so by the rule established for Germany that reads as 'unknown', never 'fresh'. What it publishes instead is a per-page machine-readable edit stamp in the body next to 'there are updates on this page': 2026-04-28-08:45:48 on the eligibility page and 2026-05-18-15:45:18 on documents required. Distinct per page and three weeks apart, which is an editing record rather than a build timestamp — the discriminator check-source-freshness.ts uses. The eligibility page also carries a salary schedule that binds from 1 Jan 2027, which a stale page cannot.",
+  "not_extracted": [
+    "The full EP Qualifying Salary table by single year of age (23 through 45+, in two sectors and two effective-date regimes — 92 figures). The endpoints and the rule connecting them are stored; reproducing a 92-cell table in requirement rows would put a wall of numbers in front of an applicant and be wrong the day MOM reindexes it. MOM's own page is the place to read your own age.",
+    "The COMPASS points tables for C1 salary percentile, C2 qualifications, C3 diversity, C4 support for local employment, C5 skills bonus and C6 strategic economic priorities. Four of the six are scored on the EMPLOYER's workforce profile as measured by MOM's own Workforce Insights tool, which neither VisaAI nor the candidate can compute. What is stored is the pass mark, the exemptions, and the fact that the score is mostly not the candidate's to influence.",
+    "The Shortage Occupation List itself, and the additional job-duty checks that apply to candidates who need its bonus points. MOM gates those behind an employer guide.",
+    "The list of institutions whose degrees earn 20 points under C2, and the accepted verification-proof sources. MOM says the lists are updated once a year and that the portal list is non-exhaustive; a snapshot of a list its owner calls non-exhaustive would read as complete.",
+    "Renewal, cancellation, appeal and pass-replacement procedures. This route covers a first Employment Pass.",
+    "Dependant's Pass and Long-Term Visit Pass conditions for the holder's family. Those are separate MOM passes and belong to their own visa types.",
+    "Whether the candidate needs an entry visa to reach Singapore in the first place. That is ICA's question, not MOM's, and the in-principle approval letter's single-entry effect is stored here only because the MOM page states it."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "employer_or_agent_applies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer applies, not you",
+      "description": "The Employment Pass is applied for by the hiring company or its appointed employment agent. A candidate cannot lodge this application personally, which is why so much of the checklist below is the firm's to satisfy.",
+      "source_role": "eligibility",
+      "source_excerpt": "an employer or appointed employment agent needs to apply on behalf of the candidate.",
+      "display_order": 10,
+      "source_excerpt_display": "An employer or appointed employment agent needs to apply on behalf of the candidate."
+    },
+    {
+      "requirement_code": "overseas_company_needs_local_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An employer with no Singapore-registered office must apply through a local sponsor",
+      "description": "MOM will not take the application directly from a company that is not registered in Singapore. A local sponsor submits it, and MOM states a materially longer processing time for that route.",
+      "source_role": "eligibility",
+      "source_excerpt": "for an overseas company without a singapore-registered office, you need to apply through a local sponsor.",
+      "display_order": 20,
+      "source_excerpt_display": "For an overseas company without a Singapore-registered office, you need to apply through a local sponsor."
+    },
+    {
+      "requirement_code": "two_stage_eligibility_framework",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Two stages, both of which must be passed",
+      "description": "Stage 1 is the EP Qualifying Salary. Stage 2 is COMPASS, a 40-point framework. Passing one is not passing the pass.",
+      "source_role": "requirements",
+      "source_excerpt": "to qualify for ep applications , candidates will need to pass a 2-stage eligibility framework:",
+      "display_order": 30,
+      "source_excerpt_display": "To qualify for EP applications, candidates will need to pass a 2-stage eligibility framework:"
+    },
+    {
+      "requirement_code": "ep_qualifying_salary_current",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stage 1: at least $5,600 a month, rising with age to $10,700 at 45 and above",
+      "description": "The EP Qualifying Salary is benchmarked to the top third of local PMET salaries and indexed to the candidate's age. $5,600 is the floor for age 23 or below; it climbs every year to $10,700 at 45 and above. Financial services runs higher throughout — see the next row. Read your own age off MOM's table.",
+      "source_role": "requirements",
+      "source_excerpt": "$5,600 (increases progressively with age from age 23, up to $10,700 at age 45 and above)",
+      "display_order": 40,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_all_sectors": 5600,
+        "max_all_sectors_age_45_plus": 10700,
+        "indexed_by": "age",
+        "regime": "current"
+      },
+      "source_excerpt_display": "$5,600 (increases progressively with age from age 23, up to $10,700 at age 45 and above)"
+    },
+    {
+      "requirement_code": "ep_qualifying_salary_financial_services",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Financial services candidates face a higher floor: $6,200 rising to $11,800",
+      "description": "The same age indexation, a different curve. The sector is the employer's, not the candidate's job title, and it moves the whole schedule.",
+      "source_role": "requirements",
+      "source_excerpt": "financial services $6,200 (increases progressively with age from age 23, up to $11,800 at age 45 and above)",
+      "display_order": 50,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_financial_services": 6200,
+        "max_financial_services_age_45_plus": 11800,
+        "regime": "current"
+      },
+      "source_excerpt_display": "Financial services $6,200 (increases progressively with age from age 23, up to $11,800 at age 45 and above)"
+    },
+    {
+      "requirement_code": "ep_qualifying_salary_from_2027",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A higher schedule already binds: $6,000–$11,500 for new applications from 1 January 2027",
+      "description": "MOM publishes the successor schedule alongside the current one. It applies to new applications from 1 Jan 2027 and to renewals of passes expiring from 1 Jan 2028. A candidate applying in late 2026 for a role that will need renewing is deciding against this column, not the current one.",
+      "source_role": "requirements",
+      "source_excerpt": "the following ep qualifying salary requirements apply to new applications and renewals: sector current minimum qualifying salary minimum qualifying salary for new applications from 1 jan 2027, and for renewal of passes expiring from 1 jan 2028 ... $6,000 (increases progressively with age from age 23, up to $11,500 at age 45 and above)",
+      "display_order": 60,
+      "parameters": {
+        "currency": "SGD",
+        "period": "month",
+        "min_all_sectors": 6000,
+        "max_all_sectors_age_45_plus": 11500,
+        "effective_from": "2027-01-01",
+        "renewals_expiring_from": "2028-01-01",
+        "regime": "announced"
+      },
+      "source_excerpt_display": "The following EP qualifying salary requirements apply to new applications and renewals: Sector Current minimum qualifying salary Minimum qualifying salary for new applications from 1 Jan 2027, and for renewal of passes expiring from 1 Jan 2028 ... $6,000 (increases progressively with age from age 23, up to $11,500 at age 45 and above)"
+    },
+    {
+      "requirement_code": "salary_gate_not_score",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Missing the salary floor ends the application, however high the COMPASS score",
+      "description": "MOM says this twice, in two different sections, because it is the most common misreading of a points system. There is no points total that compensates for a salary below the floor.",
+      "source_role": "requirements",
+      "source_excerpt": "note: candidates who do not meet stage 1 will not be eligible for an ep, regardless of the points they would have scored under compass.",
+      "display_order": 70,
+      "source_excerpt_display": "Note: Candidates who do not meet stage 1 will not be eligible for an EP, regardless of the points they would have scored under COMPASS."
+    },
+    {
+      "requirement_code": "compass_40_points",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stage 2: the application must earn 40 COMPASS points",
+      "description": "COMPASS scores six criteria. Four of them — diversity, support for local employment, and both bonuses — are measured on the EMPLOYER's workforce profile, not on the candidate. The candidate contributes salary percentile and qualifications; the rest is the firm's to move.",
+      "source_role": "requirements",
+      "source_excerpt": "your application needs to earn 40 points to pass compass.",
+      "display_order": 80,
+      "source_excerpt_display": "Your application needs to earn 40 points to pass COMPASS."
+    },
+    {
+      "requirement_code": "compass_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three ways to be exempt from COMPASS entirely",
+      "description": "A fixed monthly salary of at least $22,500, an overseas intra-corporate transfer, or a role of one month or less. Each removes stage 2 only — the qualifying salary still applies, and at $22,500 it is met several times over.",
+      "source_role": "requirements",
+      "source_excerpt": "candidates are exempted from compass if they meet any of these conditions: have a fixed monthly salary of at least $22,500 (similar to the prevailing fair consideration framework (fcf) job advertising exemption from 1 september 2023) ... are applying as an overseas intra-corporate transferee ... are filling the role for 1 month or less",
+      "display_order": 90,
+      "parameters": {
+        "currency": "SGD",
+        "exempt_salary_threshold": 22500,
+        "period": "month"
+      },
+      "source_excerpt_display": "Candidates are exempted from COMPASS if they meet any of these conditions: Have a fixed monthly salary of at least $22,500 (similar to the prevailing Fair Consideration Framework (FCF) job advertising exemption from 1 September 2023) ... Are applying as an overseas intra-corporate transferee ... Are filling the role for 1 month or less"
+    },
+    {
+      "requirement_code": "fcf_job_advertising",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The employer must advertise the job on MyCareersFuture before applying",
+      "description": "The Fair Consideration Framework advertising duty is a precondition on the employer, checked before the application is accepted. It cannot be done retrospectively.",
+      "source_role": "requirements",
+      "source_excerpt": "employers must continue to meet the fair consideration framework (fcf) job advertising requirement before submitting new ep applications.",
+      "display_order": 100,
+      "source_excerpt_display": "Employers must continue to meet the Fair Consideration Framework (FCF) job advertising requirement before submitting new EP applications."
+    },
+    {
+      "requirement_code": "advertise_before_you_apply",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Advertise first, apply second",
+      "description": "MOM repeats the ordering on the application page, in the imperative, because an application filed before the advertisement is not curable by advertising afterwards.",
+      "source_role": "application",
+      "source_excerpt": "you are required to advertise your job opening on mycareersfuture to consider all applicants fairly , before you can apply for an employment pass.",
+      "display_order": 110,
+      "source_excerpt_display": "You are required to advertise your job opening on MyCareersFuture to consider all applicants fairly, before you can apply for an Employment Pass."
+    },
+    {
+      "requirement_code": "passport_personal_particulars",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Personal particulars page of the candidate's passport",
+      "description": "The one document that is unambiguously the candidate's to supply.",
+      "source_role": "documents",
+      "source_excerpt": "personal particulars page of candidate’s passport. learn more about the upload requirements.",
+      "display_order": 120,
+      "source_excerpt_display": "Personal particulars page of candidate’s passport. Learn more about the upload requirements."
+    },
+    {
+      "requirement_code": "acra_business_profile",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The company's latest ACRA business profile",
+      "description": "The hiring firm's registration record from Singapore's company registrar. An overseas employer without one is on the local-sponsor route above.",
+      "source_role": "documents",
+      "source_excerpt": "company’s latest business profile or instant information registered with acra.",
+      "display_order": 130,
+      "source_excerpt_display": "Company’s latest business profile or instant information registered with ACRA."
+    },
+    {
+      "requirement_code": "qualification_verification_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Verification proof for the candidate's qualifications, if points are claimed for them",
+      "description": "Only needed if the application claims COMPASS C2 points for qualifications. MOM accepts proof from selected background screening companies or from a government or awarding institution's own online verification portal, and verification is once per candidate rather than once per application.",
+      "source_role": "documents",
+      "source_excerpt": "verification proof for candidate's qualifications (if applicable)",
+      "display_order": 140,
+      "source_excerpt_display": "Verification proof for candidate's qualifications (if applicable)"
+    },
+    {
+      "requirement_code": "english_translation_single_file",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Non-English documents must be uploaded with an English translation as one file",
+      "description": "One file, not two. MOM accepts a commercial translation service.",
+      "source_role": "documents",
+      "source_excerpt": "for non-english documents, you must upload the original document together with an english translation as 1 file . the translation can be done by a translation service provider.",
+      "display_order": 150,
+      "source_excerpt_display": "For non-English documents, you must upload the original document together with an English translation as 1 file. The translation can be done by a translation service provider."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$105 application fee",
+      "description": "Paid by the employer at submission. Payable again for each family pass applied for, and MOM warns those fees are lost if the Employment Pass itself is rejected.",
+      "source_role": "application",
+      "source_excerpt": "pay the $105 fee by giro, visa, mastercard or amex.",
+      "display_order": 160,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 105,
+        "payer": "employer",
+        "stage": "application"
+      },
+      "source_excerpt_display": "Pay the $105 fee by GIRO, Visa, Mastercard or Amex."
+    },
+    {
+      "requirement_code": "pass_issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$225 to issue the pass, plus $30 for a multiple journey visa",
+      "description": "A second, larger fee falls due only after approval, when the pass is issued. The $30 multiple journey visa is conditional.",
+      "source_role": "application",
+      "source_excerpt": "$225 for each pass ... (if applicable) $30 for each multiple journey visa",
+      "display_order": 170,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 225,
+        "multiple_journey_visa": 30,
+        "payer": "employer",
+        "stage": "issuance"
+      },
+      "source_excerpt_display": "$225 for each pass ... (If applicable) $30 for each Multiple Journey Visa"
+    },
+    {
+      "requirement_code": "ipa_single_entry_six_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The approval letter is itself a single-entry visa, valid six months",
+      "description": "The in-principle approval doubles as the permission to travel. Six months to enter and have the pass issued — after which the approval is spent.",
+      "source_role": "application",
+      "source_excerpt": "is a pre-approved single-entry visa for the candidate to enter singapore . it gives the candidate 6 months to enter singapore and get their pass issued.",
+      "display_order": 180,
+      "parameters": {
+        "entry_window_months": 6,
+        "entries": 1
+      },
+      "source_excerpt_display": "Is a pre-approved single-entry visa for the candidate to enter Singapore. It gives the candidate 6 months to enter Singapore and get their pass issued."
+    },
+    {
+      "requirement_code": "pass_duration_first_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first Employment Pass runs up to 2 years",
+      "description": "Renewals run up to 3 years, and experienced tech professionals in shortage occupations may get 5. The first pass is the short one.",
+      "source_role": "eligibility",
+      "source_excerpt": "first-time candidates: up to 2 years",
+      "display_order": 190,
+      "parameters": {
+        "first_pass_max_years": 2
+      },
+      "source_excerpt_display": "First-time candidates: Up to 2 years"
+    },
+    {
+      "requirement_code": "singapore_address_housing_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The candidate needs a Singapore residential address that meets the housing requirements",
+      "description": "Required at issuance, not at application — and the candidate must be in Singapore for that step. MOM checks the address against its housing rules rather than merely recording it.",
+      "source_role": "application",
+      "source_excerpt": "candidate's singapore residential address, which must meet the housing requirements",
+      "display_order": 200,
+      "source_excerpt_display": "Candidate's Singapore residential address, which must meet the housing requirements"
+    },
+    {
+      "requirement_code": "medical_examination_or_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A completed medical examination form or medical declaration form at issuance",
+      "description": "Which of the two applies is stated on the candidate's own approval letter. MOM will extend a short-term visit pass while medical results are pending, but the request must be filed 7 to 14 days before that pass expires.",
+      "source_role": "application",
+      "source_excerpt": "completed medical examination form or medical declaration form",
+      "display_order": 210,
+      "source_excerpt_display": "Completed medical examination form or medical declaration form"
+    }
+  ]
+}

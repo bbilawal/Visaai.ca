@@ -1,0 +1,32 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Non-secret runtime config for the api + worker.
+# =============================================================================
+# ONLY non-secret values here. Every credential (Supabase keys, Stripe keys,
+# Redis auth, OCR provider keys, encryption keys) goes in a Secret — see
+# secret.example.yaml. Values below mirror apps/api/src/config/configuration.ts.
+#
+# NOTE the production boot guard in configuration.ts: with NODE_ENV=production the
+# API REFUSES to boot unless DATA_RESIDENCY_MODE is regional/jurisdiction-specific
+# AND OCR_PROVIDER is a regional managed provider. These are set accordingly.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: visaai-api-config
+  namespace: visaai
+data:
+  NODE_ENV: "production"
+  PORT: "4000"
+  WEB_URL: "https://visaai.co"
+  API_URL: "https://api.visaai.co"
+  # --- residency / OCR: must satisfy the prod boot guard ---
+  DATA_RESIDENCY_MODE: "regional"
+  OCR_PROVIDER: "azure-di"        # or aws-textract / google-docai — key goes in Secret
+  OCR_REGION: "ca-central-1"
+  # --- feature flags / tunables (non-secret) ---
+  AI_PROVIDERS: "openai"
+  SCAN_PROVIDER: "clamav"
+  SUBSCRIPTIONS_ENABLED: "true"
+  ANALYTICS_WAREHOUSE: "supabase"
+  KPI_SOURCE: "supabase"
+  # APP_ROLE is set per-Deployment (api vs worker), NOT here — see the
+  # Deployment manifests. Keeping it out of the shared ConfigMap is intentional.

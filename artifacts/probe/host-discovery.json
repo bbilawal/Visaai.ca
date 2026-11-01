@@ -1,0 +1,5706 @@
+{
+  "probedAt": "2026-08-25T00:00:12.004Z",
+  "userAgent": "VisaAI-SourceMonitor/1.0 (+https://visaai.co/bots; visa requirement change monitoring)",
+  "results": [
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "immi.homeaffairs.gov.au",
+      "role": "Primary visa catalogue (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "23.44.203.46",
+          "23.44.203.57"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:1c::172c:cb39",
+          "2600:141b:1c00:1c::172c:cb2e"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "www.homeaffairs.gov.au",
+      "role": "Department portfolio site — separate host, separate robots",
+      "dns": {
+        "a": [
+          "23.44.203.57"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:1c::172c:cb39",
+          "2600:141b:1c00:1c::172c:cb2e"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "www.abf.gov.au",
+      "role": "Australian Border Force — entry and traveller obligations",
+      "dns": {
+        "a": [
+          "23.44.203.46",
+          "23.44.203.57"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:1c::172c:cb39",
+          "2600:141b:1c00:1c::172c:cb2e"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "www.legislation.gov.au",
+      "role": "Migration Regulations 1994 — the law the visa criteria are drawn from",
+      "dns": {
+        "a": [
+          "18.239.183.44",
+          "18.239.183.69",
+          "18.239.183.83",
+          "18.239.183.122"
+        ],
+        "aaaa": [
+          "2600:9000:26dc:fe00:1:b918:9580:93a1",
+          "2600:9000:26dc:f400:1:b918:9580:93a1",
+          "2600:9000:26dc:dc00:1:b918:9580:93a1",
+          "2600:9000:26dc:2c00:1:b918:9580:93a1",
+          "2600:9000:26dc:aa00:1:b918:9580:93a1",
+          "2600:9000:26dc:4800:1:b918:9580:93a1",
+          "2600:9000:26dc:d200:1:b918:9580:93a1",
+          "2600:9000:26dc:9400:1:b918:9580:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": [
+          "https://www.legislation.gov.au/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.legislation.gov.au/",
+        "bytesRaw": 61386,
+        "charsNormalized": 1899,
+        "markers": [
+          "document",
+          "fee"
+        ],
+        "latestYear": null,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 11538
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.legislation.gov.au/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 28,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN TEXT BUT 11538 CHARS OF EMBEDDED JSON (script application/json) — the Denmark condition; read the payload, not the render"
+    },
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "online.immi.gov.au",
+      "role": "ImmiAccount application system",
+      "dns": {
+        "a": [
+          "23.44.203.54",
+          "23.44.203.39"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:1c::172c:cb27",
+          "2600:141b:1c00:1c::172c:cb36"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": false,
+        "matchedRule": "Disallow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_DISALLOWS_ROOT (rule: Disallow: /) — the authority publishes crawl rules and they say no. Obeyed."
+    },
+    {
+      "iso": "AU",
+      "country": "Australia",
+      "host": "www.dfat.gov.au",
+      "role": "Foreign Affairs and Trade",
+      "dns": {
+        "a": [
+          "23.49.250.195",
+          "23.49.250.176"
+        ],
+        "aaaa": [
+          "2600:141b:f000:1a::17c7:3e4d",
+          "2600:141b:f000:1a::17c7:3e51"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "This operation was aborted",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (This operation was aborted) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "travel.state.gov",
+      "role": "Consular visa catalogue (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "172.65.90.72",
+          "172.65.90.73"
+        ],
+        "aaaa": [
+          "2606:4700:78::90:0:640",
+          "2606:4700:78::90:0:641"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "www.uscis.gov",
+      "role": "US Citizenship and Immigration Services — status, petitions, F/M/J adjudication",
+      "dns": {
+        "a": [
+          "23.52.148.217"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:27a4::1cc7",
+          "2600:141b:1c00:2780::1cc7"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 44,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.uscis.gov/",
+        "bytesRaw": 98184,
+        "charsNormalized": 6545,
+        "markers": [
+          "requirement",
+          "eligib",
+          "document",
+          "apply",
+          "fee",
+          "visa"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 4313
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.uscis.gov/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 5,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.uscis.gov/sitemap.xml?page=1",
+            "https://www.uscis.gov/sitemap.xml?page=2",
+            "https://www.uscis.gov/sitemap.xml?page=3",
+            "https://www.uscis.gov/sitemap.xml?page=4",
+            "https://www.uscis.gov/sitemap.xml?page=5"
+          ]
+        },
+        {
+          "url": "https://www.uscis.gov/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (6545 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "www.cbp.gov",
+      "role": "Customs and Border Protection — admission at the port of entry",
+      "dns": {
+        "a": [
+          "23.52.146.95"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:2780::1955",
+          "2600:141b:1c00:278c::1955"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 38,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.cbp.gov/",
+        "bytesRaw": 97487,
+        "charsNormalized": 5759,
+        "markers": [
+          "requirement",
+          "document",
+          "apply",
+          "visa"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 4866
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.cbp.gov/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 16,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.cbp.gov/sitemap.xml?page=1",
+            "https://www.cbp.gov/sitemap.xml?page=2",
+            "https://www.cbp.gov/sitemap.xml?page=3",
+            "https://www.cbp.gov/sitemap.xml?page=4",
+            "https://www.cbp.gov/sitemap.xml?page=5",
+            "https://www.cbp.gov/sitemap.xml?page=6",
+            "https://www.cbp.gov/sitemap.xml?page=7",
+            "https://www.cbp.gov/sitemap.xml?page=8",
+            "https://www.cbp.gov/sitemap.xml?page=9",
+            "https://www.cbp.gov/sitemap.xml?page=10",
+            "https://www.cbp.gov/sitemap.xml?page=11",
+            "https://www.cbp.gov/sitemap.xml?page=12",
+            "https://www.cbp.gov/sitemap.xml?page=13",
+            "https://www.cbp.gov/sitemap.xml?page=14",
+            "https://www.cbp.gov/sitemap.xml?page=15",
+            "https://www.cbp.gov/sitemap.xml?page=16"
+          ]
+        },
+        {
+          "url": "https://www.cbp.gov/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (5759 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "www.ice.gov",
+      "role": "ICE / SEVP — student and exchange visitor programme",
+      "dns": {
+        "a": [
+          "23.52.146.95"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:2780::1955",
+          "2600:141b:1c00:278c::1955"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 36,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.ice.gov/",
+        "bytesRaw": 188518,
+        "charsNormalized": 6261,
+        "markers": [],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 13283
+          },
+          {
+            "kind": "JSON inside an HTML attribute (entity-encoded)",
+            "chars": 457
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.ice.gov/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 5,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.ice.gov/sitemap.xml?page=1",
+            "https://www.ice.gov/sitemap.xml?page=2",
+            "https://www.ice.gov/sitemap.xml?page=3",
+            "https://www.ice.gov/sitemap.xml?page=4",
+            "https://www.ice.gov/sitemap.xml?page=5"
+          ]
+        },
+        {
+          "url": "https://www.ice.gov/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (6261 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "studyinthestates.dhs.gov",
+      "role": "DHS student visa guidance",
+      "dns": {
+        "a": [
+          "23.52.146.95"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:2780::1955",
+          "2600:141b:1c00:278c::1955"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 36,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://studyinthestates.dhs.gov/",
+        "bytesRaw": 87157,
+        "charsNormalized": 4646,
+        "markers": [
+          "eligib",
+          "apply",
+          "fee",
+          "visa"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 3992
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://studyinthestates.dhs.gov/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 2,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://edit-studyinthestates.dhs.gov/sitemap.xml?page=1",
+            "https://edit-studyinthestates.dhs.gov/sitemap.xml?page=2"
+          ]
+        },
+        {
+          "url": "https://studyinthestates.dhs.gov/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (4646 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "www.ecfr.gov",
+      "role": "Electronic Code of Federal Regulations — 8 CFR / 22 CFR, the binding text",
+      "dns": {
+        "a": [
+          "75.2.36.59",
+          "99.83.174.136"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 9,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": [
+          "https://www.ecfr.gov/sitemaps/sitemap.xml.gz"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://unblock.federalregister.gov/",
+        "bytesRaw": 10595,
+        "charsNormalized": 1075,
+        "markers": [
+          "document"
+        ],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.ecfr.gov/sitemaps/sitemap.xml.gz",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN (1075 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "www.state.gov",
+      "role": "Department of State",
+      "dns": {
+        "a": [
+          "18.161.34.101",
+          "18.161.34.57",
+          "18.161.34.124",
+          "18.161.34.50"
+        ],
+        "aaaa": [
+          "2600:9000:24ef:400:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:1c00:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:cc00:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:7e00:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:f400:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:a800:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:3400:1f:e8cc:9e00:93a1",
+          "2600:9000:24ef:f800:1f:e8cc:9e00:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.state.gov/",
+        "bytesRaw": 659506,
+        "charsNormalized": 128,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.state.gov/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.state.gov/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN (128 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "US",
+      "country": "United States of America",
+      "host": "esta.cbp.dhs.gov",
+      "role": "ESTA / Visa Waiver Program",
+      "dns": {
+        "a": [
+          "23.207.12.176"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:27a2::12b4",
+          "2600:141b:1c00:27a7::12b4"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://esta.cbp.dhs.gov/",
+        "bytesRaw": 2355,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://esta.cbp.dhs.gov/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://esta.cbp.dhs.gov/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (2355 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "france-visas.gouv.fr",
+      "role": "Official visa portal (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "141.101.90.97",
+          "141.101.90.98",
+          "141.101.90.96",
+          "141.101.90.99"
+        ],
+        "aaaa": [
+          "2a06:98c1:3200::90:1",
+          "2a06:98c1:3200::90:3",
+          "2a06:98c1:3200::90:2",
+          "2a06:98c1:3200::90:0"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.service-public.fr",
+      "role": "National citizen/foreign-national service portal — publishes residence and entry procedures",
+      "dns": {
+        "a": [
+          "160.92.168.33"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 11,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.service-public.gouv.fr/",
+        "bytesRaw": 53039,
+        "charsNormalized": 4573,
+        "markers": [
+          "document"
+        ],
+        "latestYear": 2027,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.service-public.fr/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 14,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.service-public.fr/urlset-1.xml",
+            "https://www.service-public.fr/urlset-2.xml",
+            "https://www.service-public.fr/urlset-3.xml",
+            "https://www.service-public.fr/urlset-4.xml",
+            "https://www.service-public.fr/urlset-5.xml",
+            "https://www.service-public.fr/urlset-6.xml",
+            "https://www.service-public.fr/urlset-7.xml",
+            "https://www.service-public.fr/urlset-8.xml",
+            "https://www.service-public.fr/urlset-9.xml",
+            "https://www.service-public.fr/urlset-10.xml",
+            "https://www.service-public.fr/urlset-11.xml",
+            "https://www.service-public.fr/urlset-12.xml",
+            "https://www.service-public.fr/urlset-13.xml",
+            "https://www.service-public.fr/urlset-14.xml"
+          ]
+        },
+        {
+          "url": "https://www.service-public.fr/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (4573 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "administration-etrangers-en-france.interieur.gouv.fr",
+      "role": "Interior Ministry foreign nationals administration (ANEF)",
+      "dns": {
+        "a": [
+          "45.223.100.23"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/",
+        "bytesRaw": 3041,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": [
+          "Imperva/Incapsula"
+        ]
+      },
+      "sitemaps": [
+        {
+          "url": "https://administration-etrangers-en-france.interieur.gouv.fr/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://administration-etrangers-en-france.interieur.gouv.fr/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "BOT_CHALLENGE_BODY (Imperva/Incapsula) — 200 carrying an interstitial, not content"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.interieur.gouv.fr",
+      "role": "Ministry of the Interior",
+      "dns": {
+        "a": [
+          "172.66.149.1",
+          "104.20.35.184"
+        ],
+        "aaaa": [
+          "2606:4700:10::ac42:9501",
+          "2606:4700:10::6814:23b8"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 46,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.interieur.gouv.fr/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.interieur.gouv.fr/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.immigration.interieur.gouv.fr",
+      "role": "Interior Ministry immigration directorate",
+      "dns": {
+        "a": [
+          "141.101.90.107",
+          "141.101.90.104",
+          "141.101.90.105",
+          "141.101.90.106"
+        ],
+        "aaaa": [
+          "2a06:98c1:3200::90:83",
+          "2a06:98c1:3200::90:82",
+          "2a06:98c1:3200::90:81",
+          "2a06:98c1:3200::90:80"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 46,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.immigration.interieur.gouv.fr/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.immigration.interieur.gouv.fr/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.legifrance.gouv.fr",
+      "role": "CESEDA — the entry and residence code itself",
+      "dns": {
+        "a": [
+          "141.101.90.105",
+          "141.101.90.104",
+          "141.101.90.106",
+          "141.101.90.107"
+        ],
+        "aaaa": [
+          "2a06:98c1:3200::90:82",
+          "2a06:98c1:3200::90:80",
+          "2a06:98c1:3200::90:83",
+          "2a06:98c1:3200::90:81"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.diplomatie.gouv.fr",
+      "role": "Ministry for Europe and Foreign Affairs",
+      "dns": {
+        "a": [
+          "185.149.13.70",
+          "45.145.121.70"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 49,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.diplomatie.gouv.fr/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 2,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.diplomatie.gouv.fr/sitemap.xml?page=1",
+            "https://www.diplomatie.gouv.fr/sitemap.xml?page=2"
+          ]
+        },
+        {
+          "url": "https://www.diplomatie.gouv.fr/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROOT_UNREACHABLE (fetch failed) — robots.txt answered but the page did not"
+    },
+    {
+      "iso": "FR",
+      "country": "France",
+      "host": "www.ofii.fr",
+      "role": "OFII — French Office for Immigration and Integration",
+      "dns": {
+        "a": [
+          "87.98.187.73"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.ofii.fr/",
+        "bytesRaw": 222,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.ofii.fr/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.ofii.fr/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (222 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "moi.gov.cy",
+      "role": "Ministry of Interior (known blanket disallow — re-confirm)",
+      "dns": {
+        "a": [
+          "212.31.118.93"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 11,
+        "rootAllowed": false,
+        "matchedRule": "Disallow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_DISALLOWS_ROOT (rule: Disallow: /) — the authority publishes crawl rules and they say no. Obeyed."
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "www.gov.cy",
+      "role": "National government service portal",
+      "dns": {
+        "a": [
+          "150.171.109.68"
+        ],
+        "aaaa": [
+          "2603:1061:14:113::1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "mfa.gov.cy",
+      "role": "Ministry of Foreign Affairs — visa issuance through missions",
+      "dns": {
+        "a": [
+          "13.74.58.8"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "migration.moi.gov.cy",
+      "role": "Civil Registry and Migration Department",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "www.mfa.gov.cy",
+      "role": "MFA (www variant — distinct robots scope)",
+      "dns": {
+        "a": [
+          "212.31.118.26"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 11,
+        "rootAllowed": false,
+        "matchedRule": "Disallow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_DISALLOWS_ROOT (rule: Disallow: /) — the authority publishes crawl rules and they say no. Obeyed."
+    },
+    {
+      "iso": "CY",
+      "country": "Cyprus",
+      "host": "cyprusvisa.gov.cy",
+      "role": "Candidate visa portal host",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.mofa.go.jp",
+      "role": "Ministry of Foreign Affairs — visa catalogue (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "184.31.65.48"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:2195::3ead",
+          "2600:141b:1c00:2188::3ead"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.moj.go.jp",
+      "role": "Ministry of Justice / Immigration Services Agency",
+      "dns": {
+        "a": [
+          "18.239.168.120",
+          "18.239.168.61",
+          "18.239.168.85",
+          "18.239.168.36"
+        ],
+        "aaaa": [
+          "2600:9000:26dd:bc00:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:6800:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:cc00:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:b200:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:f200:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:6400:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:ce00:14:1ad4:ff00:93a1",
+          "2600:9000:26dd:f800:14:1ad4:ff00:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.moj.go.jp/",
+        "bytesRaw": 42098,
+        "charsNormalized": 4771,
+        "markers": [
+          "在留",
+          "申請"
+        ],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.moj.go.jp/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.moj.go.jp/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (4771 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.isa.go.jp",
+      "role": "Immigration Services Agency — candidate dedicated host",
+      "dns": {
+        "a": [
+          "3.166.96.68",
+          "3.166.96.112",
+          "3.166.96.20",
+          "3.166.96.87"
+        ],
+        "aaaa": [
+          "2600:9000:2798:600:17:557f:5180:93a1",
+          "2600:9000:2798:da00:17:557f:5180:93a1",
+          "2600:9000:2798:cc00:17:557f:5180:93a1",
+          "2600:9000:2798:3400:17:557f:5180:93a1",
+          "2600:9000:2798:1e00:17:557f:5180:93a1",
+          "2600:9000:2798:400:17:557f:5180:93a1",
+          "2600:9000:2798:6e00:17:557f:5180:93a1",
+          "2600:9000:2798:ec00:17:557f:5180:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.moj.go.jp/isa/",
+        "bytesRaw": 45648,
+        "charsNormalized": 3402,
+        "markers": [
+          "在留",
+          "申請",
+          "必要書類"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.isa.go.jp/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.isa.go.jp/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "READABLE (3402 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.evisa.mofa.go.jp",
+      "role": "Japan eVisa system",
+      "dns": {
+        "a": [
+          "23.52.155.76"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.japan.go.jp",
+      "role": "Government of Japan national portal",
+      "dns": {
+        "a": [
+          "18.161.34.105",
+          "18.161.34.54",
+          "18.161.34.99",
+          "18.161.34.82"
+        ],
+        "aaaa": [
+          "2600:9000:24ef:7600:2:a509:7880:93a1",
+          "2600:9000:24ef:1400:2:a509:7880:93a1",
+          "2600:9000:24ef:b800:2:a509:7880:93a1",
+          "2600:9000:24ef:6e00:2:a509:7880:93a1",
+          "2600:9000:24ef:f600:2:a509:7880:93a1",
+          "2600:9000:24ef:4e00:2:a509:7880:93a1",
+          "2600:9000:24ef:c400:2:a509:7880:93a1",
+          "2600:9000:24ef:a600:2:a509:7880:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.japan.go.jp/",
+        "bytesRaw": 109749,
+        "charsNormalized": 6653,
+        "markers": [
+          "visa"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/ld+json",
+            "chars": 888
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.japan.go.jp/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 17,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www.japan.go.jp/copyright_sitemap.xml",
+            "https://www.japan.go.jp/kizuna/sitemap.xml",
+            "https://www.japan.go.jp/topics/sitemap.xml",
+            "https://www.japan.go.jp/tomodachi/sitemap.xml",
+            "https://www.japan.go.jp/publications/sitemap.xml",
+            "https://www.japan.go.jp/japan/sitemap.xml",
+            "https://www.japan.go.jp/accessibility_sitemap.xml",
+            "https://www.japan.go.jp/socialnetwork_sitemap.xml",
+            "https://www.japan.go.jp/privacypolicy_sitemap.xml",
+            "https://www.japan.go.jp/sitemap_sitemap.xml",
+            "https://www.japan.go.jp/about/aboutthissite_sitemap.xml",
+            "https://www.japan.go.jp/app/app_sitemap.xml",
+            "https://www.japan.go.jp/directory/sitemap.xml",
+            "https://www.japan.go.jp/waw2015/sitemap.xml",
+            "https://www.japan.go.jp/latest/sitemap.xml",
+            "https://www.japan.go.jp/archives/sitemap.xml",
+            "https://www.japan.go.jp/toppage_sitemap.xml"
+          ]
+        },
+        {
+          "url": "https://www.japan.go.jp/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (6653 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "JP",
+      "country": "Japan",
+      "host": "www.mhlw.go.jp",
+      "role": "Health/Labour — specified skilled worker programme",
+      "dns": {
+        "a": [
+          "69.192.23.139"
+        ],
+        "aaaa": [
+          "2600:141b:1c00:c8b::3194",
+          "2600:141b:1c00:c86::3194"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 3,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.mhlw.go.jp/index.html",
+        "bytesRaw": 74653,
+        "charsNormalized": 6061,
+        "markers": [
+          "申請"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mhlw.go.jp/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mhlw.go.jp/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (6061 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "www.immigration.go.th",
+      "role": "Immigration Bureau (known server refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "104.26.5.128",
+          "104.26.4.128",
+          "172.67.72.211"
+        ],
+        "aaaa": [
+          "2606:4700:20::681a:580",
+          "2606:4700:20::ac43:48d3",
+          "2606:4700:20::681a:480"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 9,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.immigration.go.th/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.immigration.go.th/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "www.thaievisa.go.th",
+      "role": "Thailand e-Visa official system",
+      "dns": {
+        "a": [
+          "104.18.26.183",
+          "104.18.27.183"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.thaievisa.go.th/",
+        "bytesRaw": 3697,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [
+          {
+            "kind": "script application/ld+json",
+            "chars": 518
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.thaievisa.go.th/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 17,
+          "visaLikeCount": 17,
+          "sampleVisaUrls": [
+            "https://www.thaievisa.go.th/",
+            "https://www.thaievisa.go.th/visa/tourist-visa",
+            "https://www.thaievisa.go.th/visa/transit-visa",
+            "https://www.thaievisa.go.th/visa/business-investor-visa",
+            "https://www.thaievisa.go.th/visa/long-stay-visa",
+            "https://www.thaievisa.go.th/visa/ltr-visa",
+            "https://www.thaievisa.go.th/visa/smart-visa",
+            "https://www.thaievisa.go.th/visa/courtesy-visa",
+            "https://www.thaievisa.go.th/visa/diploma-official-visa",
+            "https://www.thaievisa.go.th/visa/non-immigrant-ed",
+            "https://www.thaievisa.go.th/visa/non-immigrant-f",
+            "https://www.thaievisa.go.th/visa/non-immigrant-m"
+          ],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.thaievisa.go.th/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN ROOT (0 chars) BUT SITEMAP DECLARES 17/17 visa-like URLs — probe those"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "consular.mfa.go.th",
+      "role": "MFA Department of Consular Affairs",
+      "dns": {
+        "a": [
+          "104.18.25.238",
+          "104.18.24.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://consular.mfa.go.th/",
+        "bytesRaw": 12245,
+        "charsNormalized": 821,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 2104
+          },
+          {
+            "kind": "__NEXT_DATA__",
+            "chars": 2104
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://consular.mfa.go.th/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://consular.mfa.go.th/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "THIN TEXT BUT 2104 CHARS OF EMBEDDED JSON (script application/json) — the Denmark condition; read the payload, not the render"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "www.mfa.go.th",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "104.18.25.238",
+          "104.18.24.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.mfa.go.th/",
+        "bytesRaw": 16809,
+        "charsNormalized": 3849,
+        "markers": [
+          "เอกสาร"
+        ],
+        "latestYear": 2025,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 5953
+          },
+          {
+            "kind": "__NEXT_DATA__",
+            "chars": 5953
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mfa.go.th/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mfa.go.th/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (3849 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "thaiedigitalarrival.immigration.go.th",
+      "role": "Digital arrival card system",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENODATA"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENODATA) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "TH",
+      "country": "Thailand",
+      "host": "www.thaiembassy.org",
+      "role": "Official Thai mission network portal",
+      "dns": {
+        "a": [
+          "104.18.12.81",
+          "104.18.13.81"
+        ],
+        "aaaa": [
+          "2606:4700::6812:c51",
+          "2606:4700::6812:d51"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.thaiembassy.org/",
+        "bytesRaw": 49809,
+        "charsNormalized": 16010,
+        "markers": [
+          "fee"
+        ],
+        "latestYear": 2020,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 24274
+          },
+          {
+            "kind": "__NEXT_DATA__",
+            "chars": 24274
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.thaiembassy.org/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.thaiembassy.org/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (16010 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "IL",
+      "country": "Israel",
+      "host": "www.gov.il",
+      "role": "National portal / Population and Immigration Authority (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "172.64.151.242",
+          "104.18.36.14"
+        ],
+        "aaaa": [
+          "2606:4700:4403::ac40:97f2",
+          "2a06:98c1:3107::6812:240e"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.gov.il/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.gov.il/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "IL",
+      "country": "Israel",
+      "host": "www.piba.gov.il",
+      "role": "Population and Immigration Authority — candidate dedicated host",
+      "dns": {
+        "a": [
+          "147.237.3.58"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "IL",
+      "country": "Israel",
+      "host": "embassies.gov.il",
+      "role": "Israeli mission network — consular visa pages",
+      "dns": {
+        "a": [
+          "147.237.3.224"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 23,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://embassies.gov.il/",
+        "bytesRaw": 15706,
+        "charsNormalized": 552,
+        "markers": [],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 1457
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://embassies.gov.il/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://embassies.gov.il/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "THIN (552 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "IL",
+      "country": "Israel",
+      "host": "www.mfa.gov.il",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "147.237.3.58"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "moi.gov.iq",
+      "role": "Ministry of Interior (known refusal — re-confirm)",
+      "dns": {
+        "a": [
+          "104.26.10.210",
+          "104.26.11.210",
+          "172.67.69.8"
+        ],
+        "aaaa": [
+          "2606:4700:20::681a:bd2",
+          "2606:4700:20::ac43:4508",
+          "2606:4700:20::681a:ad2"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 3,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://moi.gov.iq/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://moi.gov.iq/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "mofa.gov.iq",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "172.67.68.251",
+          "104.26.1.234",
+          "104.26.0.234"
+        ],
+        "aaaa": [
+          "2606:4700:20::681a:ea",
+          "2606:4700:20::ac43:44fb",
+          "2606:4700:20::681a:1ea"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 10,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": [
+          "https://mofa.gov.iq/wp-sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://mofa.gov.iq/%d9%88%d8%b2%d8%a7%d8%b1%d8%a9-%d8%a7%d9%84%d8%ae%d8%a7%d8%b1%d8%ac%d9%8a%d8%a9-%d8%a7%d9%84%d8%b9%d8%b1%d8%a7%d9%82%d9%8a%d8%a9/",
+        "bytesRaw": 76743,
+        "charsNormalized": 7829,
+        "markers": [
+          "متطلبات",
+          "إقامة",
+          "جواز",
+          "وثائق"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://mofa.gov.iq/wp-sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 14,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-post-1.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-post-2.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-post-3.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-post-4.xml",
+            "https://mofa.gov.iq/en/wp-sitemap-posts-post-1.xml",
+            "https://mofa.gov.iq/en/wp-sitemap-posts-post-2.xml",
+            "https://mofa.gov.iq/en/wp-sitemap-posts-post-3.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-page-1.xml",
+            "https://mofa.gov.iq/en/wp-sitemap-posts-page-1.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-posts-missions-1.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-taxonomies-category-1.xml",
+            "https://mofa.gov.iq/en/wp-sitemap-taxonomies-category-1.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-taxonomies-post_tag-1.xml",
+            "https://mofa.gov.iq/ar/wp-sitemap-taxonomies-mission_cat-1.xml"
+          ]
+        }
+      ],
+      "verdict": "READABLE (7829 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "www.mofa.gov.iq",
+      "role": "MFA www variant",
+      "dns": {
+        "a": [
+          "104.26.0.234",
+          "104.26.1.234",
+          "172.67.68.251"
+        ],
+        "aaaa": [
+          "2606:4700:20::681a:1ea",
+          "2606:4700:20::681a:ea",
+          "2606:4700:20::ac43:44fb"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 9,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "unavailable",
+        "httpStatus": 530,
+        "reason": "http 530",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mofa.gov.iq/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 530,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mofa.gov.iq/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 530,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 530) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "evisa.mofa.gov.iq",
+      "role": "Candidate Iraqi eVisa host",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "gov.iq",
+      "role": "National government portal",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENODATA"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENODATA) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "IQ",
+      "country": "Iraq",
+      "host": "dop.gov.iq",
+      "role": "Directorate of Passports",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "IR",
+      "country": "Iran",
+      "host": "mfa.gov.ir",
+      "role": "Ministry of Foreign Affairs (known loop — re-confirm)",
+      "dns": {
+        "a": [
+          "185.143.233.238",
+          "185.143.234.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 307,
+        "reason": "too many redirects",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REDIRECTS (307) — the file moved or loops; not a refusal"
+    },
+    {
+      "iso": "IR",
+      "country": "Iran",
+      "host": "en.mfa.gov.ir",
+      "role": "MFA English tree",
+      "dns": {
+        "a": [
+          "185.143.233.238",
+          "185.143.234.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 307,
+        "reason": "too many redirects",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REDIRECTS (307) — the file moved or loops; not a refusal"
+    },
+    {
+      "iso": "IR",
+      "country": "Iran",
+      "host": "evisa.mfa.ir",
+      "role": "e-Visa portal (known loop — re-confirm)",
+      "dns": {
+        "a": [
+          "185.143.234.238",
+          "185.143.233.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 307,
+        "reason": "too many redirects",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REDIRECTS (307) — the file moved or loops; not a refusal"
+    },
+    {
+      "iso": "IR",
+      "country": "Iran",
+      "host": "www.mfa.ir",
+      "role": "MFA alternate domain",
+      "dns": {
+        "a": [
+          "185.143.233.238",
+          "185.143.234.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 307,
+        "reason": "too many redirects",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REDIRECTS (307) — the file moved or loops; not a refusal"
+    },
+    {
+      "iso": "IR",
+      "country": "Iran",
+      "host": "e-visa.mfa.ir",
+      "role": "Candidate e-visa host",
+      "dns": {
+        "a": [
+          "185.143.233.238",
+          "185.143.234.238"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 307,
+        "reason": "too many redirects",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REDIRECTS (307) — the file moved or loops; not a refusal"
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.evisa.gov.bh",
+      "role": "eVisa portal (known Cloudflare challenge — re-confirm, do NOT circumvent)",
+      "dns": {
+        "a": [
+          "172.67.74.63",
+          "104.26.0.222",
+          "104.26.1.222"
+        ],
+        "aaaa": [
+          "2606:4700:20::ac43:4a3f",
+          "2606:4700:20::681a:de",
+          "2606:4700:20::681a:1de"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.bahrain.bh",
+      "role": "Bahrain national eGovernment portal",
+      "dns": {
+        "a": [
+          "63.35.205.137",
+          "52.211.158.22",
+          "108.132.242.220"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": false,
+        "matchedRule": "Disallow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_DISALLOWS_ROOT (rule: Disallow: /) — the authority publishes crawl rules and they say no. Obeyed."
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.npra.gov.bh",
+      "role": "Nationality, Passports and Residence Affairs",
+      "dns": {
+        "a": [
+          "85.158.131.217"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.mofa.gov.bh",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "13.33.82.97",
+          "13.33.82.11",
+          "13.33.82.84",
+          "13.33.82.64"
+        ],
+        "aaaa": [
+          "2600:9000:2140:fa00:11:9de8:3140:93a1",
+          "2600:9000:2140:3400:11:9de8:3140:93a1",
+          "2600:9000:2140:7800:11:9de8:3140:93a1",
+          "2600:9000:2140:ce00:11:9de8:3140:93a1",
+          "2600:9000:2140:4800:11:9de8:3140:93a1",
+          "2600:9000:2140:e800:11:9de8:3140:93a1",
+          "2600:9000:2140:f000:11:9de8:3140:93a1",
+          "2600:9000:2140:b400:11:9de8:3140:93a1"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 405,
+        "reason": "http 405",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 405) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.iga.gov.bh",
+      "role": "Information and eGovernment Authority",
+      "dns": {
+        "a": [
+          "34.240.116.180",
+          "54.217.75.2"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.iga.gov.bh/",
+        "bytesRaw": 76261,
+        "charsNormalized": 4547,
+        "markers": [],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.iga.gov.bh/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.iga.gov.bh/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "READABLE (4547 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "BH",
+      "country": "Bahrain",
+      "host": "www.lmra.gov.bh",
+      "role": "Labour Market Regulatory Authority — work visas",
+      "dns": {
+        "a": [
+          "54.73.67.36",
+          "54.77.2.93"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "www.moi.gov.jo",
+      "role": "Ministry of Interior (known — re-confirm)",
+      "dns": {
+        "a": [
+          "193.188.66.151"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.moi.gov.jo/Default/Ar",
+        "bytesRaw": 5166410,
+        "charsNormalized": 9862,
+        "markers": [
+          "تأشيرة",
+          "إقامة",
+          "جواز",
+          "وثائق"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.moi.gov.jo/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.moi.gov.jo/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (9862 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "jordan.gov.jo",
+      "role": "Jordan national eGovernment portal",
+      "dns": {
+        "a": [
+          "104.18.7.27",
+          "104.18.6.27"
+        ],
+        "aaaa": [
+          "2606:4700::6812:71b",
+          "2606:4700::6812:61b"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 9,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://jordan.gov.jo/Default/Ar",
+        "bytesRaw": 144074,
+        "charsNormalized": 3119,
+        "markers": [
+          "تأشيرة"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://jordan.gov.jo/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://jordan.gov.jo/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (3119 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "www.psd.gov.jo",
+      "role": "Public Security Directorate — residency and borders",
+      "dns": {
+        "a": [
+          "193.188.66.200"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "www.mfa.gov.jo",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "probe threw"
+      },
+      "robots": {
+        "outcome": "error",
+        "httpStatus": null,
+        "reason": "URI malformed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "error",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "PROBE_ERROR: URI malformed"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "eservices.moi.gov.jo",
+      "role": "MOI e-services",
+      "dns": {
+        "a": [
+          "193.188.88.33"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://eservices.moi.gov.jo/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://eservices.moi.gov.jo/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "ROOT_UNREACHABLE (fetch failed) — robots.txt answered but the page did not"
+    },
+    {
+      "iso": "JO",
+      "country": "Jordan",
+      "host": "www.mota.gov.jo",
+      "role": "Ministry of Tourism — Jordan Pass entry waiver",
+      "dns": {
+        "a": [
+          "193.188.66.151"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "This operation was aborted",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mota.gov.jo/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mota.gov.jo/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROOT_UNREACHABLE (This operation was aborted) — robots.txt answered but the page did not"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "www.moi.gov.kw",
+      "role": "Ministry of Interior (known — re-confirm)",
+      "dns": {
+        "a": [
+          "192.124.249.15"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.moi.gov.kw/main/",
+        "bytesRaw": 103085,
+        "charsNormalized": 3137,
+        "markers": [
+          "إقامة",
+          "جواز",
+          "وثائق",
+          "رسوم"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.moi.gov.kw/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.moi.gov.kw/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "READABLE (3137 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "www.e.gov.kw",
+      "role": "Kuwait Government Online national portal",
+      "dns": {
+        "a": [
+          "20.233.91.87"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "evisa.moi.gov.kw",
+      "role": "Kuwait eVisa system",
+      "dns": {
+        "a": [
+          "192.124.249.17"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 502,
+        "reason": "http 502",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 502) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "www.mofa.gov.kw",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "172.66.145.195",
+          "104.20.28.112"
+        ],
+        "aaaa": [
+          "2606:4700:10::ac42:91c3",
+          "2606:4700:10::6814:1c70"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 3,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mofa.gov.kw/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mofa.gov.kw/sitemap_index.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "www.paci.gov.kw",
+      "role": "Public Authority for Civil Information",
+      "dns": {
+        "a": [
+          "91.102.146.146"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "KW",
+      "country": "Kuwait",
+      "host": "www.manpower.gov.kw",
+      "role": "Public Authority for Manpower — work permits",
+      "dns": {
+        "a": [
+          "91.140.151.100"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "OM",
+      "country": "Oman",
+      "host": "evisa.rop.gov.om",
+      "role": "Royal Oman Police eVisa portal (known — re-confirm, check embedded JSON)",
+      "dns": {
+        "a": [
+          "62.231.200.68"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://evisa.rop.gov.om/",
+        "bytesRaw": 73823,
+        "charsNormalized": 3848,
+        "markers": [
+          "apply",
+          "visa",
+          "تأشيرة"
+        ],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://evisa.rop.gov.om/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://evisa.rop.gov.om/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (3848 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "OM",
+      "country": "Oman",
+      "host": "www.rop.gov.om",
+      "role": "Royal Oman Police main site",
+      "dns": {
+        "a": [
+          "212.72.11.44"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.rop.gov.om/",
+        "bytesRaw": 374,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.rop.gov.om/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.rop.gov.om/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (374 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "OM",
+      "country": "Oman",
+      "host": "www.oman.om",
+      "role": "Oman national eGovernment portal",
+      "dns": {
+        "a": [
+          "188.65.24.120"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.oman.om/",
+        "bytesRaw": 5370,
+        "charsNormalized": 219,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.oman.om/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.oman.om/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN (219 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "OM",
+      "country": "Oman",
+      "host": "www.mofa.gov.om",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "62.182.18.218"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "OM",
+      "country": "Oman",
+      "host": "www.mol.gov.om",
+      "role": "Ministry of Labour — work permits",
+      "dns": {
+        "a": [
+          "46.40.200.130"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": "Disallow: (empty)",
+        "sitemapsDeclared": [
+          "https://www.mol.gov.om/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.mol.gov.om/",
+        "bytesRaw": 359437,
+        "charsNormalized": 15211,
+        "markers": [
+          "جواز",
+          "وثائق",
+          "رسوم"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mol.gov.om/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 250,
+          "visaLikeCount": 23,
+          "sampleVisaUrls": [
+            "https://www.mol.gov.om/manpoweralleservices/details/commercial-work-permit-establishments-284",
+            "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-290",
+            "https://www.mol.gov.om/manpoweralleservices/details/work-permit-issuance-individual-289",
+            "https://www.mol.gov.om/manpoweralleservices/details/work-permit-renewal-individuals-288",
+            "https://www.mol.gov.om/manpoweralleservices/details/work-permit-amendment-individuals-287",
+            "https://www.mol.gov.om/manpoweralleservices/details/work-permit-transfer-individuals-286",
+            "https://www.mol.gov.om/manpoweralleservices/details/cancellation-of-work-permit-individuals-285",
+            "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-273",
+            "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-individuals-290",
+            "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-individuals-288",
+            "https://www.mol.gov.om/ManpowerAllEServices/Details/Commercial-Work-Permit-establishments-284",
+            "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Issuance-establishments-283"
+          ],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "READABLE + SITEMAP (15211 chars, 23/250 visa-like URLs) — CANDIDATE"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "portal.moi.gov.qa",
+      "role": "Ministry of Interior portal (known — re-confirm)",
+      "dns": {
+        "a": [
+          "78.100.102.33"
+        ],
+        "aaaa": [
+          "::ff:4e64:6621"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://portal.moi.gov.qa/",
+        "bytesRaw": 245,
+        "charsNormalized": 103,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://portal.moi.gov.qa/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://portal.moi.gov.qa/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN (103 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "hukoomi.gov.qa",
+      "role": "Hukoomi — Qatar national eGovernment portal",
+      "dns": {
+        "a": [
+          "104.18.12.239",
+          "104.18.13.239"
+        ],
+        "aaaa": [
+          "2606:4700::6812:cef",
+          "2606:4700::6812:def"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 5,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": [
+          "https://www.hukoomi.gov.qa/en/df/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/sitemap.xml",
+          "https://www.hukoomi.gov.qa/en/df/news/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/news/sitemap.xml",
+          "https://www.hukoomi.gov.qa/en/df/events/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/events/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/news/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/news/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/events/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/events/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "www.hukoomi.gov.qa",
+      "role": "Hukoomi www variant",
+      "dns": {
+        "a": [
+          "104.18.13.239",
+          "104.18.12.239"
+        ],
+        "aaaa": [
+          "2606:4700::6812:def",
+          "2606:4700::6812:cef"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 5,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": [
+          "https://www.hukoomi.gov.qa/en/df/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/sitemap.xml",
+          "https://www.hukoomi.gov.qa/en/df/news/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/news/sitemap.xml",
+          "https://www.hukoomi.gov.qa/en/df/events/sitemap.xml",
+          "https://www.hukoomi.gov.qa/ar/df/events/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/news/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/news/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/en/df/events/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.hukoomi.gov.qa/ar/df/events/sitemap.xml",
+          "outcome": "blocked",
+          "httpStatus": 403,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ROBOTS_PERMITS_SERVER_REFUSES (http 403) — the published rules say yes and the server says no; the refusal governs"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "www.mofa.gov.qa",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "20.21.184.41"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://mofa.gov.qa/",
+        "bytesRaw": 136745,
+        "charsNormalized": 5064,
+        "markers": [
+          "متطلبات",
+          "وثائق"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 49610
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mofa.gov.qa/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.mofa.gov.qa/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (5064 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "visa.mofa.gov.qa",
+      "role": "Candidate MFA visa host",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "eservices.moi.gov.qa",
+      "role": "MOI e-services (known no connection — re-confirm)",
+      "dns": {
+        "a": [
+          "78.100.102.23"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "QA",
+      "country": "Qatar",
+      "host": "www.gov.qa",
+      "role": "Government of Qatar portal",
+      "dns": {
+        "a": [
+          "212.77.220.157"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "ksavisa.sa",
+      "role": "Visa Services Platform (known zero-char — re-confirm, check embedded JSON)",
+      "dns": {
+        "a": [
+          "176.105.151.194"
+        ],
+        "aaaa": [
+          "2a13:2400::"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://ksavisa.sa/",
+        "bytesRaw": 15182,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://ksavisa.sa/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://ksavisa.sa/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (15182 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "www.my.gov.sa",
+      "role": "Saudi national unified services portal",
+      "dns": {
+        "a": [
+          "104.18.100.228",
+          "104.18.101.228"
+        ],
+        "aaaa": [
+          "2606:4700::6812:65e4",
+          "2606:4700::6812:64e4"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "www.gov.sa",
+      "role": "Government of Saudi Arabia portal",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "visa.mofa.gov.sa",
+      "role": "MFA visa system",
+      "dns": {
+        "a": [
+          "176.105.151.238"
+        ],
+        "aaaa": [
+          "2a13:2400::52"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://visa.mofa.gov.sa/",
+        "bytesRaw": 44582,
+        "charsNormalized": 1269,
+        "markers": [
+          "visa",
+          "تأشيرة"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://visa.mofa.gov.sa/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "THIN (1269 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "www.mofa.gov.sa",
+      "role": "Ministry of Foreign Affairs (known readable, wrong catalogue)",
+      "dns": {
+        "a": [
+          "185.169.32.106"
+        ],
+        "aaaa": [
+          "2a13:2400::53"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.mofa.gov.sa/ar/Pages/default.aspx",
+        "bytesRaw": 329770,
+        "charsNormalized": 5391,
+        "markers": [
+          "visa",
+          "تأشيرة"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.mofa.gov.sa/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://www.mofa.gov.sa/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "READABLE (5391 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "www.moi.gov.sa",
+      "role": "Ministry of Interior",
+      "dns": {
+        "a": [
+          "78.93.109.51"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "SA",
+      "country": "Saudi Arabia",
+      "host": "www.hrsd.gov.sa",
+      "role": "Human Resources and Social Development — work visas",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ETIMEOUT"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ETIMEOUT) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "moi.gov.sy",
+      "role": "Ministry of Interior (known zero-char — re-confirm)",
+      "dns": {
+        "a": [
+          "82.137.234.185"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://moi.gov.sy/",
+        "bytesRaw": 1133,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://moi.gov.sy/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://moi.gov.sy/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (1133 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "www.moi.gov.sy",
+      "role": "MOI www variant",
+      "dns": {
+        "a": [
+          "82.137.234.185"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.moi.gov.sy/",
+        "bytesRaw": 1133,
+        "charsNormalized": 0,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.moi.gov.sy/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.moi.gov.sy/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "ZERO CHARS SERVER-SIDE (1133 bytes raw, 0 chars embedded JSON)"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "mofaex.gov.sy",
+      "role": "Ministry of Foreign Affairs and Expatriates",
+      "dns": {
+        "a": [
+          "185.216.135.129"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 0,
+        "rootAllowed": true,
+        "matchedRule": "Allow: /",
+        "sitemapsDeclared": [
+          "undefined/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://mofaex.gov.sy/",
+        "bytesRaw": 511678,
+        "charsNormalized": 10843,
+        "markers": [
+          "جواز",
+          "وثائق"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "READABLE (10843 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "www.egov.sy",
+      "role": "Syrian eGovernment portal",
+      "dns": {
+        "a": [
+          "185.216.134.58"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "syria.gov.sy",
+      "role": "Candidate national portal",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "SY",
+      "country": "Syria",
+      "host": "immigration.gov.sy",
+      "role": "Immigration and passports (known no connection — re-confirm)",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "moi.gov.ps",
+      "role": "Ministry of Interior (readable — re-enumerate for a visa/entry section)",
+      "dns": {
+        "a": [
+          "161.97.171.86"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://moi.gov.ps/",
+        "bytesRaw": 424880,
+        "charsNormalized": 32352,
+        "markers": [
+          "إقامة",
+          "رسوم"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://moi.gov.ps/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 9,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://moi.gov.ps/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (32352 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "www.mofa.gov.ps",
+      "role": "Ministry of Foreign Affairs and Expatriates",
+      "dns": {
+        "a": [
+          "161.97.171.86"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "mofa.gov.ps",
+      "role": "MFA bare-host variant",
+      "dns": {
+        "a": [
+          "161.97.171.86"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "eservice.moi.gov.ps",
+      "role": "MOI e-services (known client-rendered — re-confirm)",
+      "dns": {
+        "a": [
+          "161.97.171.86"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://eservice.moi.gov.ps/",
+        "bytesRaw": 11392,
+        "charsNormalized": 109,
+        "markers": [],
+        "latestYear": 2021,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://eservice.moi.gov.ps/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://eservice.moi.gov.ps/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "THIN (109 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "www.palestinecabinet.gov.ps",
+      "role": "Council of Ministers",
+      "dns": {
+        "a": [
+          "82.213.48.2"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "PS",
+      "country": "State of Palestine",
+      "host": "www.pcbs.gov.ps",
+      "role": "Central Bureau of Statistics — crossings data",
+      "dns": {
+        "a": [
+          "185.153.160.186"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": 404,
+        "reason": "http 404",
+        "disallowLines": null,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.pcbs.gov.ps/",
+        "bytesRaw": 463994,
+        "charsNormalized": 16142,
+        "markers": [],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://www.pcbs.gov.ps/sitemap.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        },
+        {
+          "url": "https://www.pcbs.gov.ps/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE (16142 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "aima.gov.pt",
+      "role": "AIMA — residence permits (KNOWN READABLE via tls-chain fix)",
+      "dns": {
+        "a": [
+          "83.240.239.145"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 3,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://aima.gov.pt/pt",
+        "bytesRaw": 104459,
+        "charsNormalized": 4133,
+        "markers": [
+          "document"
+        ],
+        "latestYear": 2026,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://aima.gov.pt/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 490,
+          "visaLikeCount": 85,
+          "sampleVisaUrls": [
+            "https://aima.gov.pt/pt/a-aima/etica-gestao-de-risco-e-prevencao-da-corrupcao/canal-de-denuncias/canal-de-denuncia-interna/quais-os-prazos-legais-previstos-para-o-tratamento-das-denuncias",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/registo-de-menores-estrangeiros",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/titulos-de-residencia",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/concessao-de-autorizacao-de-residencia-cplp",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/renovacao-de-titulo-de-residencia-cplp",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/autorizacao-de-residencia-para-investimento-ari",
+            "https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/autorizacao-de-residencia-para-investimento-ari/faq-residence-permit-for-investment-activity-ari",
+            "https://aima.gov.pt/pt/noticias/video-prioridades-da-presidencia-portuguesa-do-processo-de-rabat-2024",
+            "https://aima.gov.pt/pt/noticias/publicado-diploma-que-prorroga-o-prazo-relativo-a-validade-dos-documentos-e-vistos",
+            "https://aima.gov.pt/pt/noticias/sessao-de-esclarecimento-sobre-autorizacao-de-residencia-para-investimento-ari",
+            "https://aima.gov.pt/pt/noticias/o-presidente-da-aima-participa-no-debate-sobre-novas-imigracao-e-retencao-de-talento",
+            "https://aima.gov.pt/pt/noticias/presidente-da-aima-visita-a-madeira"
+          ],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://aima.gov.pt/sitemap_index.xml",
+          "outcome": "unavailable",
+          "httpStatus": 404,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": []
+        }
+      ],
+      "verdict": "READABLE + SITEMAP (4133 chars, 85/490 visa-like URLs) — CANDIDATE"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "vistos.mne.gov.pt",
+      "role": "MFA visa portal (known IP block — re-confirm)",
+      "dns": {
+        "a": [
+          "85.88.155.233"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "www.portaldascomunidades.mne.gov.pt",
+      "role": "MNE consular portal — visa categories",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "eportugal.gov.pt",
+      "role": "ePortugal national services portal",
+      "dns": {
+        "a": [
+          "62.28.186.180"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": "Disallow: (empty)",
+        "sitemapsDeclared": [
+          "http://www2.gov.pt/sitemap.xml"
+        ]
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://www.gov.pt/",
+        "bytesRaw": 234024,
+        "charsNormalized": 38557,
+        "markers": [
+          "document"
+        ],
+        "latestYear": 2020,
+        "embeddedJson": [
+          {
+            "kind": "script application/json",
+            "chars": 73941
+          },
+          {
+            "kind": "__NEXT_DATA__",
+            "chars": 73941
+          }
+        ],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "http://www2.gov.pt/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 2694,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": [
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69629490&amp;layoutUuid=cbf070d3-ef32-b68b-8d40-c532ffac5dad&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69629510&amp;layoutUuid=3f1caa9f-f739-8fbb-9988-34609e89b83d&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69629511&amp;layoutUuid=6aeab99d-18f4-8359-49ca-874e2bce7b7c&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69629719&amp;layoutUuid=cc7dadcb-d5da-4c7c-27d1-c96527434806&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630055&amp;layoutUuid=dd886d11-08ea-8281-3763-b45d280b9ed1&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630117&amp;layoutUuid=f51e7530-682a-d72d-4379-dd743b3b5dcd&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630278&amp;layoutUuid=5dc84048-00ee-36d2-6910-3951a62bc07b&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630485&amp;layoutUuid=086b30c0-9843-8e0d-ab65-dc74d164beef&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630486&amp;layoutUuid=ecc80bee-8f22-2fe1-32c4-e3cef04301d0&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630487&amp;layoutUuid=0cda7372-ba71-752d-68df-1b0d5ca69c9d&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630488&amp;layoutUuid=007d5f2c-6646-e9ef-01f4-01d49cc3352d&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630489&amp;layoutUuid=33e92633-18cf-7461-a5ce-eb6e3d9659e4&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630490&amp;layoutUuid=f82b9d4f-2106-40f1-e7f0-044a350bb319&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630491&amp;layoutUuid=9f27dd83-7c6e-a8ae-3c94-8b6fc7b70f06&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630492&amp;layoutUuid=1e2b5c93-5818-7764-8c54-1d5420e53b10&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630493&amp;layoutUuid=952cee8f-35a8-a872-5087-6ddb09a9c189&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630495&amp;layoutUuid=2f8f9dc4-9c24-dc36-d1e5-7df8b0688b31&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630496&amp;layoutUuid=2f15ddcb-fe27-585e-7cfe-6e43806e9b3e&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69630498&amp;layoutUuid=5739894f-19f1-c567-70e8-36b749ffca78&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69631177&amp;layoutUuid=d5875699-9c5b-5496-ec5d-0e058610af47&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69632007&amp;layoutUuid=ae3c1556-d411-2820-d06a-1751b653109d&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69632008&amp;layoutUuid=f00bddbb-04ef-47ff-e4fe-f1fd9df60b57&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69632780&amp;layoutUuid=329a3d56-3a02-aec2-b597-346b0547fcc5&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69633565&amp;layoutUuid=30692ea6-8147-cb92-728e-0c1d1dcf6706&amp;groupId=20142&amp;privateLayout=false",
+            "https://www2.gov.pt/sitemap.xml?p_l_id=69633679&amp;layoutUuid=2ac4f964-42bf-4169-f8a1-fa08258f363e&amp;groupId=20142&amp;privateLayout=false"
+          ]
+        }
+      ],
+      "verdict": "READABLE (38557 chars, no sitemap visa URLs) — enumerate its links"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "www.sef.pt",
+      "role": "Former SEF (superseded by AIMA) — check for redirect",
+      "dns": {
+        "a": [
+          "83.240.239.140"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "blocked",
+        "httpStatus": 403,
+        "reason": "authority returned 403",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_REFUSED (http 403) — we cannot read what is permitted, so we stop"
+    },
+    {
+      "iso": "PT",
+      "country": "Portugal",
+      "host": "imigrante.sef.pt",
+      "role": "Former SEF migrant portal",
+      "dns": {
+        "a": [
+          "194.210.235.13"
+        ],
+        "aaaa": [
+          "2001:690:a00:1039::13"
+        ],
+        "error": null
+      },
+      "robots": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "disallowLines": 1,
+        "rootAllowed": true,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "ok",
+        "httpStatus": 200,
+        "reason": null,
+        "finalUrl": "https://imigrante.sef.pt/",
+        "bytesRaw": 8130,
+        "charsNormalized": 402,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [
+        {
+          "url": "https://imigrante.sef.pt/sitemap.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        },
+        {
+          "url": "https://imigrante.sef.pt/sitemap_index.xml",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "urlCount": 0,
+          "visaLikeCount": 0,
+          "sampleVisaUrls": [],
+          "childSitemaps": []
+        }
+      ],
+      "verdict": "THIN (402 chars, no embedded payload, no sitemap) — consistent with client rendering"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "moi.gov.ye",
+      "role": "Ministry of Interior (known no connection — re-confirm)",
+      "dns": {
+        "a": [
+          "185.112.201.61"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "www.yemen.gov.ye",
+      "role": "Candidate national portal",
+      "dns": {
+        "a": [
+          "82.114.170.154"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "mofa.gov.ye",
+      "role": "Ministry of Foreign Affairs",
+      "dns": {
+        "a": [
+          "185.112.201.55"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "www.mofa.gov.ye",
+      "role": "MFA www variant",
+      "dns": {
+        "a": [
+          "185.112.201.55"
+        ],
+        "aaaa": [],
+        "error": null
+      },
+      "robots": {
+        "outcome": "unavailable",
+        "httpStatus": null,
+        "reason": "fetch failed",
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "ROBOTS_UNREACHABLE (fetch failed) — DNS resolved but nothing completed; not a refusal by anyone"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "passports.gov.ye",
+      "role": "Immigration, Passports and Naturalisation Authority",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    },
+    {
+      "iso": "YE",
+      "country": "Yemen",
+      "host": "ipa.gov.ye",
+      "role": "IPA (known no connection — re-confirm)",
+      "dns": {
+        "a": [],
+        "aaaa": [],
+        "error": "ENOTFOUND"
+      },
+      "robots": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "disallowLines": null,
+        "rootAllowed": null,
+        "matchedRule": null,
+        "sitemapsDeclared": []
+      },
+      "root": {
+        "outcome": "not attempted",
+        "httpStatus": null,
+        "reason": null,
+        "finalUrl": null,
+        "bytesRaw": null,
+        "charsNormalized": null,
+        "markers": [],
+        "latestYear": null,
+        "embeddedJson": [],
+        "challengeSignals": []
+      },
+      "sitemaps": [],
+      "verdict": "DNS_FAILS (ENOTFOUND) — the host does not exist for us; this is evidence about the NAME, not about the country"
+    }
+  ]
+}

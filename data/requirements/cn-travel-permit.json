@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "visaai_id": "cn-travel-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "other",
+    "official_name": "Issuance of Travel Permits for Foreigners",
+    "slug": "travel-permit",
+    "purpose": "Permission to travel to places in China not open to foreigners. Individuals evidence their reasons for going; tour groups apply through a travel agency, which must file a reception plan 60 days before arrival. Decided within 30 working days, CNY 50.",
+    "source_titles": {
+      "requirements": "Service Guide on Issuance of Travel Permits for Foreigners"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the National Immigration Administration service guide named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "Two entirely different procedures share this guide and the deadline is what separates them. An INDIVIDUAL submits evidence of why they need to be in the closed area. A TOUR GROUP goes through a travel agency, which must file a reception plan with the PROVINCIAL authority SIXTY DAYS before the group arrives — and whether approval is needed at all depends on whether the route passes through prohibited regions, which the authority checks.\n\nSixty days ahead of arrival is the single most consequential number here, and it is quoted in the sentence that carries it rather than restated.",
+  "source_roles": {
+    "requirements": "https://en.nia.gov.cn/n147423/n147478/n147715/c158260/content.html"
+  },
+  "page_dates": {
+    "requirements": "2021-04-01"
+  },
+  "freshness_note": "The page publishes its own dateline in the body: 2021-04-01. That is a REAL publication date — more than Austria's migration.gv.at, Singapore's MOM pages or the US ESTA pages carry — and it is also evidence of AGE: this guide has stood unrevised since 2021-04-01. Both halves are recorded, because a dateline is only useful if the number on it is read rather than noted as present.",
+  "not_extracted": [
+    "The visa CATEGORIES themselves (C, F, G, J1, J2, L, M, Q1, Q2, R, S1, S2, X1, X2, Z). These guides use the letters and define none of them: the definitions live in the Regulations on Administration of the Entry and Exit of Foreigners, a separate instrument. Every requirement quotes the letter as the authority uses it and glosses none.",
+    "The \"rights and obligations of administrative counterpart\" section. It restates general administrative-law rights — to equal treatment, to be informed, to appeal — rather than anything specific to this permit, and publishing it as a visa requirement would misrepresent what it is.",
+    "Ordinary visa ISSUANCE outside China, which is done by embassies and consulates. These guides cover what happens after entry."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scope: foreigners applying for travel permits",
+      "description": "The guide states its own scope.",
+      "source_role": "requirements",
+      "source_excerpt": "this service guide is applicable to foreigners applying for travel permits.",
+      "display_order": 10,
+      "source_excerpt_display": "This service guide is applicable to foreigners applying for travel permits."
+    },
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: the Exit and Entry Administration Law",
+      "description": "One instrument, unlike the other guides in this index.",
+      "source_role": "requirements",
+      "source_excerpt": "exit and entry administration law of the people's republic of china",
+      "display_order": 20,
+      "source_excerpt_display": "Exit and Entry Administration Law of the People's Republic of China"
+    },
+    {
+      "requirement_code": "accepting_authority",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Where it is accepted: prefecture-level and above public security exit-entry authorities",
+      "description": "The NIA entrusts acceptance rather than accepting directly.",
+      "source_role": "requirements",
+      "source_excerpt": "the national immigration administration (nia) has entrusted exit-entry administrations authorities of public security organs at and above the prefecture-level (including districts and counties under the administration of municipalities directly under the central government) to accept and handle foreigners' applications for travel permits.",
+      "display_order": 30,
+      "source_excerpt_display": "The National Immigration Administration (NIA) has entrusted exit-entry administrations authorities of public security organs at and above the prefecture-level (including districts and counties under the administration of municipalities directly under the central government) to accept and handle foreigners' applications for travel permits."
+    },
+    {
+      "requirement_code": "county_level_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "County-level authorities are authorised by the NIA on provincial request",
+      "description": "A second channel.",
+      "source_role": "requirements",
+      "source_excerpt": "with the approval of nia at the request of exit-entry administration authorities of provincial public security organs, exit-entry administration authorities of public security organs at the county-level are authorized by nia to accept and handle applications for travel permits.",
+      "display_order": 40,
+      "source_excerpt_display": "With the approval of NIA at the request of exit-entry administration authorities of provincial public security organs, exit-entry administration authorities of public security organs at the county-level are authorized by NIA to accept and handle applications for travel permits."
+    },
+    {
+      "requirement_code": "application_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Issued to foreigners travelling to places NOT OPEN to foreigners, on providing identification as required",
+      "description": "The permit carries a prescribed period, which the authority states in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigner's travel permits with prescribed period may be issued to foreigners who apply to travel to places not open to foreigners and provide relevant identification documents as required in due course.",
+      "display_order": 50,
+      "source_excerpt_display": "Foreigner's travel permits with prescribed period may be issued to foreigners who apply to travel to places not open to foreigners and provide relevant identification documents as required in due course."
+    },
+    {
+      "requirement_code": "individual_evidence_of_reasons",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Individuals: evidence of the reasons for staying in the destination area",
+      "description": "The whole individual document list is this one item.",
+      "source_role": "requirements",
+      "source_excerpt": "1. individuals applying for a foreigner's travel permit shall submit evidentiary materials related to the reasons for staying in the destination area;",
+      "display_order": 60,
+      "source_excerpt_display": "1. Individuals applying for a foreigner's travel permit shall submit evidentiary materials related to the reasons for staying in the destination area;"
+    },
+    {
+      "requirement_code": "tour_group_reception_plan_60_days",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Tour groups: a reception plan filed with the PROVINCIAL authority 60 days before arrival",
+      "description": "Quoted whole because the rest of the sentence decides the outcome: routes clear of prohibited regions need no approval, while routes passing through them require the plan, personnel lists, and copies of passports and visas or permanent resident ID cards.",
+      "source_role": "requirements",
+      "source_excerpt": "2. for tourist groups of foreigners who apply for travelling to places not open to foreigners, travel agencies shall submit reception plans to the exit-entry administration authority of the provincial-level public security organs in their location. reception plans shall be submitted 60 days prior to arrival of the tourist groups, and the exit-entry administration authority shall verify whether tourist routes pass through regions where foreigners are prohibited from entry. no approval procedures are required for tourist routes clear of the prohibited regions, while approval procedures shall be observed for tourist routes passing through regions where foreigners are prohibited from entry and travel agencies shall submit reception plans, lists of relevant personnel, copies of valid passports and visas (or permanent resident id cards) of the foreigners to apply for approval.",
+      "parameters": {
+        "days_before_arrival": 60,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "2. For tourist groups of foreigners who apply for travelling to places not open to foreigners, travel agencies shall submit reception plans to the exit-entry administration authority of the provincial-level public security organs in their location. Reception plans shall be submitted 60 days prior to arrival of the tourist groups, and the exit-entry administration authority shall verify whether tourist routes pass through regions where foreigners are prohibited from entry. No approval procedures are required for tourist routes clear of the prohibited regions, while approval procedures shall be observed for tourist routes passing through regions where foreigners are prohibited from entry and travel agencies shall submit reception plans, lists of relevant personnel, copies of valid passports and visas (or permanent resident ID cards) of the foreigners to apply for approval."
+    },
+    {
+      "requirement_code": "apply_in_person_or_via_agency",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply in person — or through a travel agency to the provincial authority where the rules allow",
+      "description": "The agency route is conditional on the application meeting the relevant regulations.",
+      "source_role": "requirements",
+      "source_excerpt": "to apply for foreigners' travel permit, foreigners shall complete relevant procedures in person at the exit-entry administration authority of public security organs. where the application meets relevant regulations, travel agencies may apply to the exit-entry administration authority of provincial public security organ under the local government on the behalf of the applicants.",
+      "display_order": 80,
+      "source_excerpt_display": "To apply for foreigners' travel permit, foreigners shall complete relevant procedures in person at the exit-entry administration authority of public security organs. Where the application meets relevant regulations, travel agencies may apply to the exit-entry administration authority of provincial public security organ under the local government on the behalf of the applicants."
+    },
+    {
+      "requirement_code": "acceptance_and_one_time_notice",
+      "kind": "step",
+      "officially_required": true,
+      "label": "On acceptance a receipt is issued, and missing items must be notified AT ONE TIME",
+      "description": "The decision follows within the validity of that receipt.",
+      "source_role": "requirements",
+      "source_excerpt": "upon examination of applications for foreigners' travel permit, eligible applications shall be accepted, and a receipt of acceptance shall be issued, followed by a decision on issuance or not being made within the validity period of the receipt of acceptance. for applications with incomplete procedures and materials, the exit-entry administration authority of public security organs shall inform the applicant of the formalities to be completed and the materials to be supplemented at one time.",
+      "display_order": 90,
+      "source_excerpt_display": "Upon examination of applications for foreigners' travel permit, eligible applications shall be accepted, and a receipt of acceptance shall be issued, followed by a decision on issuance or not being made within the validity period of the receipt of acceptance. For applications with incomplete procedures and materials, the exit-entry administration authority of public security organs shall inform the applicant of the formalities to be completed and the materials to be supplemented at one time."
+    },
+    {
+      "requirement_code": "verification_interview_failure_refusal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Failing to attend an interview without justifiable reason may itself defeat the application",
+      "description": "The same verification regime as the exit-entry permit guide.",
+      "source_role": "requirements",
+      "source_excerpt": "the exit-entry administration authority of public security organs shall verify the authenticity of the application reasons through interviews, telephone inquiries, field investigation and other means, and confirm the applicant is of foreign nationality. where an applicant or relevant entity/individual is notified to take an interview but fails to do that at the agreed time without justifiable reasons, the application may be denied by law.",
+      "display_order": 100,
+      "source_excerpt_display": "The exit-entry administration authority of public security organs shall verify the authenticity of the application reasons through interviews, telephone inquiries, field investigation and other means, and confirm the applicant is of foreign nationality. Where an applicant or relevant entity/individual is notified to take an interview but fails to do that at the agreed time without justifiable reasons, the application may be denied by law."
+    },
+    {
+      "requirement_code": "time_limit_30_working_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A decision within 30 WORKING days of acceptance",
+      "description": "Working days, not calendar days.",
+      "source_role": "requirements",
+      "source_excerpt": "a decision shall be made within 30 working days from the date of acceptance.",
+      "parameters": {
+        "decision_working_days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "A decision shall be made within 30 working days from the date of acceptance."
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Travel permit for foreigners: CNY 50",
+      "description": "Half the exit-entry permit fee, from the guide's own charging-standards section.",
+      "source_role": "requirements",
+      "source_excerpt": "travel permit for foreigners: cny 50",
+      "parameters": {
+        "amount": 50,
+        "currency": "CNY",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Travel permit for foreigners: CNY 50"
+    },
+    {
+      "requirement_code": "collect_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Collected IN PERSON with the acceptance receipt",
+      "description": "The receipt issued at acceptance is what the permit is exchanged for.",
+      "source_role": "requirements",
+      "source_excerpt": "approved and issued travel permits for foreigners shall be collected by the applicants in person at the relevant exit-entry administration authority of public security organs with the acceptance receipt.",
+      "display_order": 130,
+      "source_excerpt_display": "Approved and issued travel permits for foreigners shall be collected by the applicants in person at the relevant exit-entry administration authority of public security organs with the acceptance receipt."
+    }
+  ]
+}

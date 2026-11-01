@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nz-visitor-visa",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official INZ page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.immigration.govt.nz/new-zealand-visas/visas/visa/visitor-visa"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The visa-waiver country list and the NZeTA-eligible country list. INZ links both rather than stating them on this page, and neither linked page is a registered source. Reproducing a country list from memory is exactly what the provenance rule forbids.",
+    "The 'acceptable sponsor' criteria. Linked to a separate page ('who can sponsor a visa applicant') that is not registered.",
+    "The single- versus multiple-entry distinction and its 18-month calculation. Stated on the page but decided by INZ per application, so it is not an applicant requirement.",
+    "Processing times (80% within 2 weeks). A service statistic, not a requirement, and it moves independently of the rules.",
+    "The situations requiring an x-ray or medical examination, and the tuberculosis-incidence country list — both are separate linked pages."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "source_role": "requirements",
+      "source_excerpt": "be in good health",
+      "display_order": 10,
+      "source_excerpt_display": "be in good health"
+    },
+    {
+      "requirement_code": "good_character",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be of good character",
+      "source_role": "requirements",
+      "source_excerpt": "be of good character",
+      "display_order": 20,
+      "source_excerpt_display": "be of good character"
+    },
+    {
+      "requirement_code": "genuine_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have genuine reasons for coming to New Zealand",
+      "source_role": "requirements",
+      "source_excerpt": "have genuine reasons for coming to new zealand",
+      "display_order": 30,
+      "source_excerpt_display": "have genuine reasons for coming to New Zealand"
+    },
+    {
+      "requirement_code": "sufficient_funds_or_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for living expenses, or an acceptable sponsor",
+      "source_role": "requirements",
+      "source_excerpt": "have enough money to pay your living expenses, or have an acceptable sponsor",
+      "display_order": 40,
+      "source_excerpt_display": "have enough money to pay your living expenses, or have an acceptable sponsor"
+    },
+    {
+      "requirement_code": "can_leave_at_end_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show you can leave New Zealand at the end of your stay",
+      "source_role": "requirements",
+      "source_excerpt": "show you can leave new zealand at the end of your stay.",
+      "display_order": 50,
+      "source_excerpt_display": "show you can leave New Zealand at the end of your stay."
+    },
+    {
+      "requirement_code": "no_work_in_new_zealand",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Do not plan to work in New Zealand",
+      "description": "INZ states the exception on the same line: remote work for a business overseas is permitted.",
+      "source_role": "requirements",
+      "source_excerpt": "not plan to work in new zealand, unless you work remotely for a business overseas",
+      "display_order": 60,
+      "source_excerpt_display": "not plan to work in New Zealand, unless you work remotely for a business overseas"
+    },
+    {
+      "requirement_code": "chest_xray_or_medical",
+      "kind": "step",
+      "officially_required": false,
+      "label": "May be asked for a chest x-ray, a medical examination, or both",
+      "description": "INZ frames this as something it MAY require, not a universal step, so it is not recorded as officially required.",
+      "source_role": "requirements",
+      "source_excerpt": "we may ask you to have a chest x-ray, a medical examination or both as proof of your health.",
+      "display_order": 100,
+      "source_excerpt_display": "We may ask you to have a chest X-ray, a medical examination or both as proof of your health."
+    },
+    {
+      "requirement_code": "health_evidence_thresholds",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Health evidence thresholds by length of stay",
+      "description": "No rule attached. The sentence sets two different thresholds for two different documents and says 'not normally' for both; encoding that as a boolean gate would turn a soft default into a hard answer.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are staying less than: 6 months, you do not normally need a chest x-ray 12 months, you do not normally need a medical certificate.",
+      "display_order": 110,
+      "source_excerpt_display": "If you are staying less than: 6 months, you do not normally need a chest X-ray 12 months, you do not normally need a medical certificate."
+    },
+    {
+      "requirement_code": "police_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Police certificates less than 6 months old",
+      "description": "INZ's second condition is a total stay of 24 months or longer, encoded here as 730 days because the rule engine compares days. Rarely reached on this visa, whose maximum stay is 9 months, but it applies when earlier time in New Zealand is counted.",
+      "rule": {
+        "all": [
+          {
+            "fact": "age",
+            "op": "gte",
+            "value": 17
+          },
+          {
+            "fact": "stay_duration_days",
+            "op": "gte",
+            "value": 730
+          }
+        ]
+      },
+      "source_role": "requirements",
+      "source_excerpt": "you must provide police certificates that are less than 6 months old when you apply, if: you are aged 17 or older, and",
+      "display_order": 200,
+      "source_excerpt_display": "You must provide police certificates that are less than 6 months old when you apply, if: you are aged 17 or older, and"
+    },
+    {
+      "requirement_code": "criminal_conviction_may_bar",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A criminal conviction or security risk may prevent a visa",
+      "description": "Recorded so a conviction is never presented to a user as automatically disqualifying — INZ says 'might not'.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have a criminal conviction, or are a security risk to new zealand, we might not give you a visa.",
+      "display_order": 210,
+      "source_excerpt_display": "If you have a criminal conviction, or are a security risk to New Zealand, we might not give you a visa."
+    },
+    {
+      "requirement_code": "funds_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold at least NZD $1,000 per month, or NZD $400 if accommodation is pre-paid",
+      "description": "Applies when the applicant funds the stay themselves; an acceptable sponsor is the alternative.",
+      "parameters": {
+        "per_month_nzd": 1000,
+        "per_month_nzd_accommodation_prepaid": 400,
+        "currency": "NZD",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "if you are paying for yourself you must have at least nzd $1,000 a month, or nzd $400 a month if you have already paid for your accommodation.",
+      "display_order": 300,
+      "source_excerpt_display": "If you are paying for yourself You must have at least NZD $1,000 a month, or NZD $400 a month if you have already paid for your accommodation."
+    },
+    {
+      "requirement_code": "proof_of_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of funds",
+      "source_role": "requirements",
+      "source_excerpt": "evidence can include: proof of accommodation pre-payment, like hotel pre-paid vouchers or receipts bank statements or credit card statements bank drafts or traveller's cheques.",
+      "display_order": 310,
+      "source_excerpt_display": "Evidence can include: proof of accommodation pre-payment, like hotel pre-paid vouchers or receipts bank statements or credit card statements bank drafts or traveller's cheques."
+    },
+    {
+      "requirement_code": "funds_evidence_must_show",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Funds evidence must name the account holder, bank and currency",
+      "source_role": "requirements",
+      "source_excerpt": "evidence must show: the bank account is in the applicant's name which bank the account is with, and which currency the money is in.",
+      "display_order": 320,
+      "source_excerpt_display": "Evidence must show: the bank account is in the applicant's name which bank the account is with, and which currency the money is in."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visitor visa application fee",
+      "description": "INZ publishes this as a 'from' price on the visa page; the final fee depends on where the application is made.",
+      "parameters": {
+        "amount_from": 441,
+        "currency": "NZD",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "cost from nzd $441",
+      "display_order": 400,
+      "source_excerpt_display": "Cost From NZD $441"
+    },
+    {
+      "requirement_code": "length_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stay of up to 6 or 9 months",
+      "description": "Which of the two applies is decided by INZ on the application, so no rule is attached.",
+      "source_role": "requirements",
+      "source_excerpt": "length of stay up to either 6 months or 9 months",
+      "display_order": 410,
+      "source_excerpt_display": "Length of stay Up to either 6 months or 9 months"
+    },
+    {
+      "requirement_code": "study_limit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study is limited to 3 months",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot work, but you can study for up to 3 months.",
+      "display_order": 420,
+      "source_excerpt_display": "You cannot work, but you can study for up to 3 months."
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-six-month-bank-statement-residence",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "other",
+    "official_name": "Six-Month Multiple-Entry Residence Permit Based on a Bank Statement",
+    "slug": "six-month-bank-statement-residence",
+    "purpose": "A six-month multiple-entry Lebanese residence permit granted on the strength of a bank account, requiring a minimum balance of 1.5 billion Lebanese pounds and a notarised undertaking not to work — closed to holders of any work residence permit and to anyone ordered to leave.",
+    "source_titles": {
+      "requirements_497": "A six-month residence visa (multiple-entry), based on a bank statement"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "THIS ROUTE WAS INVISIBLE UNTIL THE STRIPPER WAS FIXED. The page is built from malformed `<span  New Roman\",\"serif\"\">` tags, and the old normaliser could not find their closing `>`, so items 12, 21 and 23 never reached the text at all — including the 1.5-billion-pound minimum balance, which is the entire financial basis of the route. Extracting this page before B-34 would have published a required-documents list with the money requirement missing.\n\nThe exclusions matter as much as the requirements: anyone under an order to leave, and holders of work residence permits of every type, cannot use this route however much money they hold.",
+  "source_roles": {
+    "requirements_497": "https://www.general-security.gov.lb/en/posts/497"
+  },
+  "page_dates": {
+    "requirements_497": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "six_month_multiple_entry_on_bank_statement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A six-month multiple-entry permit, granted on a Lebanese bank statement",
+      "description": "Item 11 — the rule the whole page rests on.",
+      "source_role": "requirements_497",
+      "source_excerpt": "11- arab and foreign nationals are granted a six-month multiple-entry residency permit based on a bank statement from an open account at one of the lebanese banks.",
+      "parameters": {
+        "months": 6,
+        "entries": "multiple",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "11- Arab and foreign nationals are granted a six-month multiple-entry residency permit based on a bank statement from an open account at one of the Lebanese banks."
+    },
+    {
+      "requirement_code": "apply_at_regional_secretariat",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply at a regional centre secretariat, by request to the Director General, with a paid service fee",
+      "description": "Item 12 — one of the three items the old normaliser swallowed.",
+      "source_role": "requirements_497",
+      "source_excerpt": "12- applications from concerned individuals are accepted at the secretariats of regional centers upon a “request to the director general,” and a paid service fee is charged.",
+      "display_order": 20,
+      "source_excerpt_display": "12- Applications from concerned individuals are accepted at the secretariats of regional centers upon a “request to the Director General,” and a paid service fee is charged."
+    },
+    {
+      "requirement_code": "account_holders_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "ONLY the named account holders may benefit",
+      "description": "Item 13. No application is accepted for anyone else on the same statement.",
+      "source_role": "requirements_497",
+      "source_excerpt": "13- only the account holder(s) whose names appear in the bank statement may benefit from these instructions. no residency application is accepted for anyone else on the same basis.",
+      "display_order": 30,
+      "source_excerpt_display": "13- Only the account holder(s) whose names appear in the bank statement may benefit from these instructions. No residency application is accepted for anyone else on the same basis."
+    },
+    {
+      "requirement_code": "ineligible_intro",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Item 14: who cannot use this route",
+      "description": "The authority introduces its own exclusion list.",
+      "source_role": "requirements_497",
+      "source_excerpt": "14- the following persons are not eligible for these instructions:",
+      "display_order": 40,
+      "source_excerpt_display": "14- The following persons are not eligible for these instructions:"
+    },
+    {
+      "requirement_code": "ineligible_order_to_leave",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Excluded: anyone given an order to leave the country",
+      "description": "First exclusion.",
+      "source_role": "requirements_497",
+      "source_excerpt": "those who have been given an order to leave the country",
+      "display_order": 50,
+      "source_excerpt_display": "Those who have been given an order to leave the country"
+    },
+    {
+      "requirement_code": "ineligible_work_permit_holders",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Excluded: holders of work residence permits of ALL types",
+      "description": "The authority enumerates them — grace period, annual or permanent work residency of any category, and the one-year temporary residency on a work undertaking.",
+      "source_role": "requirements_497",
+      "source_excerpt": "holders of work residence permits of all types (work permit grace period, annual or permanent work residency of all categories, temporary one-year residency based on a work responsibility undertaking)",
+      "display_order": 60,
+      "source_excerpt_display": "Holders of work residence permits of all types (work permit grace period, annual or permanent work residency of all categories, temporary one-year residency based on a work responsibility undertaking)"
+    },
+    {
+      "requirement_code": "doc_identification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid identification document, with two colour copies certified at the centre",
+      "description": "Item 21 — swallowed by the old normaliser. The original is returned to the applicant.",
+      "source_role": "requirements_497",
+      "source_excerpt": "21- a valid identification document for the applicant, with two colored copies. the copies are to be certified by the head of the center after comparison, and the original document is returned to the applicant.",
+      "parameters": {
+        "copies": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "21- A valid identification document for the applicant, with two colored copies. The copies are to be certified by the head of the center after comparison, and the original document is returned to the applicant."
+    },
+    {
+      "requirement_code": "doc_notarised_no_work_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A notarised declaration that the applicant will not engage in any paid work",
+      "description": "Item 22, and it is what makes the work-permit exclusion coherent.",
+      "source_role": "requirements_497",
+      "source_excerpt": "22- a notarized declaration from a notary public stating that the applicant will not engage in any paid work.",
+      "display_order": 80,
+      "source_excerpt_display": "22- A notarized declaration from a notary public stating that the applicant will not engage in any paid work."
+    },
+    {
+      "requirement_code": "doc_bank_statement_minimum_balance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A bank statement showing a minimum balance of LBP 1.5 billion, with three months of certified statements",
+      "description": "Item 23 — swallowed by the old normaliser, and the entire financial basis of this route. The authority allows the equivalent in foreign currency at the Sayrafa rate.",
+      "source_role": "requirements_497",
+      "source_excerpt": "23- a bank statement showing a minimum balance of 1.5 billion lebanese pounds (or its equivalent in foreign currency according to the “sayrafa” platform), along with a bank-certified account statement for the last three months for the opened account.",
+      "parameters": {
+        "amount": 1500000000,
+        "currency": "LBP",
+        "statement_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "23- A bank statement showing a minimum balance of 1.5 billion Lebanese pounds (or its equivalent in foreign currency according to the “Sayrafa” platform), along with a bank-certified account statement for the last three months for the opened account."
+    }
+  ]
+}

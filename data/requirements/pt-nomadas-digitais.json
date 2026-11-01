@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-nomadas-digitais",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "THE EMPLOYER OR CLIENT MUST BE OUTSIDE PORTUGAL, AND THE DECLARATION MUST COME FROM THEM. The route turns on a sworn declaration by a person or company domiciled or headquartered outside national territory. Note also what is absent from this route's document list: no tax or social security registration, because the work is not performed for the Portuguese economy.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_remote_work_residence_visa",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid residence visa for professional activity performed remotely for outside national territory",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "visto de residência para o exercício de atividade profissional prestada de forma remota para fora do território nacional válido;",
+      "source_excerpt_display": "Visto de residência para o exercício de atividade profissional prestada de forma remota para fora do território nacional válido;"
+    },
+    {
+      "requirement_code": "declaration_from_foreign_employer_or_client",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration from the person or company domiciled or headquartered OUTSIDE national territory, attesting the employment or the provision of services",
+      "description": "The declaration must come from abroad. A Portuguese client cannot support this route.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "declaração sob compromisso de honra da pessoa singular ou coletiva com domicílio ou sede fora do território nacional atestando o vínculo laboral ou a prestação de serviços, consoante o caso ;",
+      "source_excerpt_display": "Declaração sob compromisso de honra da pessoa singular ou coletiva com domicílio ou sede fora do território nacional atestando o vínculo laboral ou a prestação de serviços, consoante o caso;"
+    },
+    {
+      "requirement_code": "validity_two_years_renewable_three",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Valid 2 years from issue, renewable for successive 3-year periods",
+      "parameters": {
+        "initial_years": 2,
+        "renewal_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "a autorização de residência temporária para o exercício de atividade profissional prestada de forma remota para fora do território nacional é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos.",
+      "source_excerpt_display": "A autorização de residência temporária para o Exercício de atividade profissional prestada de forma remota para fora do território nacional é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos."
+    },
+    {
+      "requirement_code": "general_negative_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Four conditions that must all be absent for a permit to be granted",
+      "description": "A single sentence carrying four separate bars: any fact that would have blocked the visa, a conviction carrying over one year of custody in Portugal, being inside a re-entry ban following removal, and an SII/UCFE alert for refusal of entry or return.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "a concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; ausência de condenação por crime que em portugal seja punível com pena privativa de liberdade de duração superior a um ano; não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; ausência de indicação no sii ucfe para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-a do repsae.",
+      "source_excerpt_display": "A concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; Ausência de condenação por crime que em Portugal seja punível com pena privativa de liberdade de duração superior a um ano; Não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; Ausência de indicação no SII UCFE para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-A do REPSAE."
+    },
+    {
+      "requirement_code": "housing_declaration_and_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration of your address, plus proof of the legal basis for occupying it",
+      "description": "Owner or usufructuary: a land-registry certificate or its access code. Tenant or lessee: a declaration from the landlord or housing provider stating the legal basis. A sworn declaration alone is not enough.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "declaração, sob compromisso de honra, da morada de residência, referindo em que termos se encontra a residir na habitação indicada (ex. proprietário, arrendatário, subarrendatário, usufrutuário, comodatário, entre outras); e",
+      "source_excerpt_display": "Declaração, sob compromisso de honra, da morada de residência, referindo em que termos se encontra a residir na habitação indicada (ex. proprietário, arrendatário, subarrendatário, usufrutuário, comodatário, entre outras); e"
+    }
+  ]
+}

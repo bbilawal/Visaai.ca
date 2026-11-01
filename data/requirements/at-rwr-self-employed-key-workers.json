@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-self-employed-key-workers",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "The defining evidence here is not capital alone but capital PLUS an employment effect: the transfer of investment capital and the intended creation of new jobs or securing of existing ones are stated as one requirement.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/self-employedkeyworkers/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as Singapore's MOM and the US ESTA pages already live.",
+  "not_extracted": [
+    "Fees. The page names none.",
+    "The economic-benefit assessment. The page describes the authority weighing macroeconomic benefit without stating a measurable threshold, so nothing is recorded as a requirement."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "apply_in_person_abroad",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply in person at the Austrian representation abroad",
+      "description": "The application is lodged personally at the embassy or consulate in the applicant's home or residence country.",
+      "source_role": "requirements",
+      "source_excerpt": "you are supposed to lodge your application for a red-white-red card personally with the competent austrian representation (embassy or consulate) in your home country or country of residence.",
+      "display_order": 10,
+      "source_excerpt_display": "You are supposed to lodge your application for a Red-White-Red Card personally with the competent Austrian representation (embassy or consulate) in your home country or country of residence."
+    },
+    {
+      "requirement_code": "capital_and_jobs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of transferred capital AND of jobs created or secured",
+      "description": "One requirement with two limbs. Capital transferred to Austria is not sufficient on its own; the page ties it to an employment effect.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of the transfer of investment capital to austria and of the intended creation of new jobs or securing of existing jobs in austria",
+      "display_order": 20,
+      "source_excerpt_display": "Evidence of the transfer of investment capital to Austria and of the intended creation of new jobs or securing of existing jobs in Austria"
+    },
+    {
+      "requirement_code": "professional_qualification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of the qualification needed for the activity",
+      "description": "Specific to the self-employed activity proposed.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of the qualification necessary for the self-employed professional activity",
+      "display_order": 30,
+      "source_excerpt_display": "Evidence of the qualification necessary for the self-employed professional activity"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, under six months old",
+      "description": "Dimensions and recency both stated.",
+      "source_role": "requirements",
+      "source_excerpt": "photo (dimensions: 45x35mm) not older than six months",
+      "display_order": 40,
+      "source_excerpt_display": "Photo (dimensions: 45x35mm) not older than six months"
+    },
+    {
+      "requirement_code": "health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance covering all risks",
+      "description": "Compulsory insurance or an equivalent policy.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)",
+      "display_order": 50,
+      "source_excerpt_display": "Evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)"
+    }
+  ]
+}

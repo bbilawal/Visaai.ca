@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-positive-list-skilled-work",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "This scheme looks like the Pay Limit Scheme and is not. Two conditions belong to it alone.\n\nTHE EMPLOYER'S APPRENTICESHIP OBLIGATION. A permit under this list requires that the EMPLOYER has met its training obligations under Læreplads-AUB — a condition about the company, not the applicant, which the applicant cannot satisfy and usually cannot see. The authority states in its own FAQ that no exemption is possible. An applicant who reads only the job-title list will not know their application depends on their employer's apprenticeship record.\n\nTHERE IS NO PAY LIMIT. Salary is assessed against Danmarks Statistik wage statistics for the occupation, not against a published threshold, and the authority states that compliance with a collective agreement does NOT automatically make the terms equivalent to Danish standards. Anyone carrying the DKK 552,000 figure across from the Pay Limit Scheme would have the wrong test entirely.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/The-Positive-Lists/Positive-List-for-skilled-work"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The body names 'Wage statistics for the Positive List for Skilled Work valid from 1 August 2026' and states that the list itself is updated twice a year, on 1 January and 1 July, so both moving parts carry their own dates in the text and a revision is visible as a text change.",
+  "not_extracted": [
+    "The list of job titles itself — roughly 160 occupations with DISCO-08 codes, spanning lines 44 to 204 of the page. It is data rather than requirement, it is rewritten twice a year, and a copy of it here would be stale within six months while looking authoritative. The requirement that the job appear on the list IS extracted, and it links to the authority's own list.",
+    "The wage statistics table the salary test is measured against, which the authority publishes as a separate linked document.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "The rules for accompanying family members, which are a separate route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "job_on_positive_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must be included in the Positive List for Skilled Work",
+      "description": "The defining condition, quoted with the authority's own note that others follow.",
+      "source_role": "requirements",
+      "lines": [
+        208
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "list_updated_twice_yearly",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The list is updated twice a year — 1 January and 1 July",
+      "description": "A job on the list today may not be on it at the next revision.",
+      "source_role": "requirements",
+      "lines": [
+        32
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "salary_and_terms_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary and terms of employment must correspond to Danish standards",
+      "description": "The salary test for this route. There is no published pay threshold.",
+      "source_role": "requirements",
+      "lines": [
+        212
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "salary_assessed_against_wage_statistics",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary is assessed against Danmarks Statistik wage statistics for the occupation",
+      "description": "Names the actual benchmark, which is not a fixed figure.",
+      "source_role": "requirements",
+      "lines": [
+        224
+      ],
+      "display_order": 40
+    },
+    {
+      "requirement_code": "collective_agreement_not_automatically_sufficient",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Complying with a collective agreement does NOT automatically satisfy Danish standards",
+      "description": "The assumption most likely to lose an application, contradicted by the authority in its own words.",
+      "source_role": "requirements",
+      "lines": [
+        228
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "employer_educational_obligation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must have met its apprenticeship training obligations under Læreplads-AUB",
+      "description": "A condition on the employer, not the applicant. Quoted with the sentence that introduces the two alternative tests.",
+      "source_role": "requirements",
+      "lines": [
+        242
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "employer_educational_obligation_tests",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The two ways the employer can meet the training target",
+      "description": "Both branches quoted together with the 'Or' between them, because either alone would misstate the test.",
+      "source_role": "requirements",
+      "lines": [
+        244,
+        250
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "employer_educational_obligation_no_exemption",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No exemption is possible from the employer's training obligation",
+      "description": "The authority's own answer in its FAQ. Without it, a partially-compliant employer reads as an argument worth making.",
+      "source_role": "requirements",
+      "lines": [
+        258
+      ],
+      "display_order": 80
+    },
+    {
+      "requirement_code": "danish_bank_account",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary must be paid into a Danish bank account in your own name",
+      "source_role": "requirements",
+      "lines": [
+        270
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "bank_account_180_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Danish bank account must be opened within 180 days",
+      "source_role": "requirements",
+      "lines": [
+        278
+      ],
+      "parameters": {
+        "days_to_open_account": 180,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary may consist only of liquid assets, labour-market pension payments and paid holiday allowance",
+      "source_role": "requirements",
+      "lines": [
+        284,
+        290
+      ],
+      "display_order": 110
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Housing, per diems, car, phone, internet, benefits-in-kind and subscriptions do not count",
+      "description": "Quoted through the authority's own closing caveat that the list is not complete — dropping that line would present an exhaustive list the authority declined to give.",
+      "source_role": "requirements",
+      "lines": [
+        298,
+        316
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "source_role": "requirements",
+      "lines": [
+        320
+      ],
+      "display_order": 130
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "lines": [
+        23,
+        24
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 140
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "description": "Three months normally, four if SIRI needs more — both quoted, because the first alone reads as a commitment.",
+      "source_role": "requirements",
+      "lines": [
+        17,
+        21
+      ],
+      "display_order": 150
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "source_role": "requirements",
+      "lines": [
+        408
+      ],
+      "display_order": 160
+    },
+    {
+      "requirement_code": "duration_of_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Permit length follows the employment, capped at four years",
+      "source_role": "requirements",
+      "lines": [
+        414,
+        416
+      ],
+      "display_order": 170
+    },
+    {
+      "requirement_code": "passport_shortens_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 3 months before the passport expires",
+      "source_role": "requirements",
+      "lines": [
+        426
+      ],
+      "parameters": {
+        "months_before_passport_expiry": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 180
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "source_role": "requirements",
+      "lines": [
+        450
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "work_limited_to_the_named_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is limited to the employment it was granted for",
+      "description": "Unlike the Pay Limit Scheme, a new position within the SAME company also needs a new permit.",
+      "source_role": "requirements",
+      "lines": [
+        438
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "new_position_needs_new_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A new job — including a new position at the same company — requires a new permit",
+      "source_role": "requirements",
+      "lines": [
+        332
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "sideline_employment_needs_separate_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A sideline job requires a separate permit",
+      "source_role": "requirements",
+      "lines": [
+        334
+      ],
+      "display_order": 220
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "lines": [
+        344
+      ],
+      "display_order": 230
+    },
+    {
+      "requirement_code": "absence_six_months_lapses_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Giving up your Danish address or staying abroad over 6 successive months lapses the permit",
+      "source_role": "requirements",
+      "lines": [
+        360
+      ],
+      "parameters": {
+        "max_successive_months_abroad": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240
+    },
+    {
+      "requirement_code": "employment_contract_must_be_attached",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the employment contract or job offer must be attached, stating all terms",
+      "source_role": "requirements",
+      "lines": [
+        220
+      ],
+      "display_order": 250
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "visaai_id": "cn-visa-extension-change-reissuance",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the National Immigration Administration service guide named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "This route is a table of visa letters against maximum extensions, and the numbers are the point: C, G, J2 and L extend by no more than 30 days; F, M, Q2, R and X2 by no more than 180. Getting the letter wrong is a six-fold error in either direction, so every requirement below names its letter and quotes its own limit.\n\nThe cap on the whole exercise is quoted as its own requirement: the accumulated extension may not exceed the original duration of stay.",
+  "source_roles": {
+    "requirements": "https://en.nia.gov.cn/n147423/n147478/n147715/c158249/content.html"
+  },
+  "page_dates": {
+    "requirements": "2021-04-01"
+  },
+  "freshness_note": "The page publishes its own dateline in the body: 2021-04-01. That is a REAL publication date, and it is stronger evidence than most of the corpus carries — Austria's migration.gv.at, Singapore's MOM pages and the US ESTA pages publish none at all. It is also evidence of AGE: this guide has stood unrevised since 2021-04-01. Both halves are recorded here because a dateline is only useful if the number it carries is read rather than merely noted as present, and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The visa CATEGORIES themselves (C, F, G, J1, J2, L, M, Q1, Q2, R, S1, S2, X1, X2, Z). These guides use the letters constantly and define none of them: they are set by the Regulations on Administration of the Entry and Exit of Foreigners, which the guides cite and which is published as a separate document. Every requirement below therefore quotes the letter as the authority uses it and does not gloss it, because a gloss would be this registry describing Chinese visa law rather than quoting it.",
+    "Ordinary visa ISSUANCE outside China. These guides cover what happens after entry — residence permits, extensions, changes, reissuance and permanent residence. Visas are issued by Chinese embassies and consulates, which are a different authority and were not probed.",
+    "The 240-hour visa-free transit and 30-day visa-free entry policies. The NIA publishes them as announcements rather than as service guides, and an announcement about a pilot is a different kind of document from a procedure with an application-materials section."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scope: extension, change and reissuance after entry on a regular visa",
+      "description": "The guide states its own scope.",
+      "source_role": "requirements",
+      "source_excerpt": "applicable to foreigners applying for visa extension, change and reissuance after entry with a regular visa.",
+      "display_order": 10,
+      "source_excerpt_display": "Applicable to foreigners applying for visa extension, change and reissuance after entry with a regular visa."
+    },
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: the Exit and Entry Administration Law and the Entry-Exit Regulations",
+      "description": "The two instruments the guide is written under.",
+      "source_role": "requirements",
+      "source_excerpt": "exit and entry administration law of the people's republic of china, regulations of the people's republic of china on administration of the entry and exit of foreigners.",
+      "display_order": 20,
+      "source_excerpt_display": "Exit and Entry Administration Law of the People's Republic of China, Regulations of the People's Republic of China on Administration of the Entry and Exit of Foreigners."
+    },
+    {
+      "requirement_code": "accepting_authorities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Where it is accepted: exit-entry departments of prefecture-level and above public security organs",
+      "description": "The NIA entrusts acceptance rather than accepting directly.",
+      "source_role": "requirements",
+      "source_excerpt": "the national immigration administration (nia) entrusts the exit-entry departments of public security organs at or above the prefecture-level cities (including counties and districts under the jurisdiction of municipalities directly under the central government) to accept the foreigners' visa affairs.",
+      "display_order": 30,
+      "source_excerpt_display": "The National Immigration Administration (NIA) entrusts the exit-entry departments of public security organs at or above the prefecture-level cities (including counties and districts under the jurisdiction of municipalities directly under the central government) to accept the foreigners' visa affairs."
+    },
+    {
+      "requirement_code": "who_may_apply_on_behalf",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply in person, with three cases where an inviting entity or relative may apply instead",
+      "description": "The three cases are enumerated by the authority immediately below.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners who, after entering china with ordinary visas, need to stay in china for non-diplomatic or unofficial purposes may, in accordance with relevant regulations, apply to exit-entry departments of public security organs for visa extension, change and reissuance. the applicant shall go through the relevant formalities at exit-entry departments of public security organs. in any of the following cases, the inviting entity or relatives of the applicant may apply on behalf of the applicant:",
+      "display_order": 40,
+      "source_excerpt_display": "Foreigners who, after entering China with ordinary visas, need to stay in China for non-diplomatic or unofficial purposes may, in accordance with relevant regulations, apply to exit-entry departments of public security organs for visa extension, change and reissuance. The applicant shall go through the relevant formalities at exit-entry departments of public security organs. In any of the following cases, the inviting entity or relatives of the applicant may apply on behalf of the applicant:"
+    },
+    {
+      "requirement_code": "proxy_case_age_or_illness",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Proxy case 1: under 16, over 60, or inconvenienced by illness or other reasons",
+      "description": "First of three.",
+      "source_role": "requirements",
+      "source_excerpt": "1.the applicant is under the age of 16 or over the age of 60 or it would unduly inconvenience the applicant due to illness or other reasons;",
+      "parameters": {
+        "under_age": 16,
+        "over_age": 60,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "1.The applicant is under the age of 16 or over the age of 60 or it would unduly inconvenience the applicant due to illness or other reasons;"
+    },
+    {
+      "requirement_code": "proxy_case_prior_good_record",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Proxy case 2: not a first entry, with good records of stay or residence",
+      "description": "Second of three.",
+      "source_role": "requirements",
+      "source_excerpt": "2.the applicant's current entry is not his or her first entry into china and the applicant has good records of stay or residence in china;",
+      "display_order": 60,
+      "source_excerpt_display": "2.The applicant's current entry is not his or her first entry into China and the applicant has good records of stay or residence in China;"
+    },
+    {
+      "requirement_code": "proxy_case_guaranteed_expenses",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Proxy case 3: the inviting entity or individual has guaranteed the applicant’s expenses in China",
+      "description": "Third of three.",
+      "source_role": "requirements",
+      "source_excerpt": "3.the inviting entity or individual has guaranteed to cover the necessary expenses of the applicant incurred in china.",
+      "display_order": 70,
+      "source_excerpt_display": "3.The inviting entity or individual has guaranteed to cover the necessary expenses of the applicant incurred in China."
+    },
+    {
+      "requirement_code": "materials_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All applications: a valid passport or other international travel document",
+      "description": "First of four baseline materials.",
+      "source_role": "requirements",
+      "source_excerpt": "a. valid passport or other international travel documents",
+      "display_order": 80,
+      "source_excerpt_display": "a. Valid passport or other international travel documents"
+    },
+    {
+      "requirement_code": "materials_form_and_photo",
+      "kind": "form",
+      "officially_required": true,
+      "label": "All applications: the visa/stay permit/residence permit form and a compliant photo",
+      "description": "Second of four baseline materials.",
+      "source_role": "requirements",
+      "source_excerpt": "b. fill out the visa/ stay permit/ residence permit application form and submit a photo that complies with the guide for entry and exit document photographs",
+      "display_order": 90,
+      "source_excerpt_display": "b. Fill out the Visa/ Stay Permit/ Residence Permit Application Form and submit a photo that complies with the Guide for Entry and Exit Document Photographs"
+    },
+    {
+      "requirement_code": "materials_supporting",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All applications: supporting materials related to the reasons for the application",
+      "description": "Third of four baseline materials.",
+      "source_role": "requirements",
+      "source_excerpt": "c. supporting materials related to reasons of application",
+      "display_order": 100,
+      "source_excerpt_display": "c. Supporting materials related to reasons of application"
+    },
+    {
+      "requirement_code": "extension_apply_seven_days_before",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Extensions: apply 7 DAYS before the stay expires",
+      "description": "The deadline that makes every limit below reachable or not.",
+      "source_role": "requirements",
+      "source_excerpt": "to apply for extension of a stay, a foreigner shall apply to the exit and entry departments of public security organs 7 days prior to the expiration date of the stay specified in the visa, and submit relevant supporting materials as required:",
+      "parameters": {
+        "days_before_expiry": 7,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "To apply for extension of a stay, a foreigner shall apply to the exit and entry departments of public security organs 7 days prior to the expiration date of the stay specified in the visa, and submit relevant supporting materials as required:"
+    },
+    {
+      "requirement_code": "extension_c_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "C visa: a transport-authority or company certificate — extend by no more than 30 days",
+      "description": "Crew members.",
+      "source_role": "requirements",
+      "source_excerpt": "a. holder of c visa shall submit a letter of certificate issued by the competent departments of the people's government at or above the county level or the local civil aviation, railway, road and port transportation companies. the stay may be extended for no more than 30 days.",
+      "parameters": {
+        "max_extension_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "a. Holder of C visa shall submit a letter of certificate issued by the competent departments of the people's government at or above the county level or the local civil aviation, railway, road and port transportation companies. The stay may be extended for no more than 30 days."
+    },
+    {
+      "requirement_code": "extension_f_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "F visa: an inviting and receiving entity certificate — extend by no more than 180 days",
+      "description": "Unregistered entities must also submit a registration certificate.",
+      "source_role": "requirements",
+      "source_excerpt": "b. holder of f visa shall submit a letter of certificate issued by the inviting and receiving entities. the entities that have not filed for records shall also submit the registration certificate. the stay may be extended for no more than 180 days.",
+      "parameters": {
+        "max_extension_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "b. Holder of F visa shall submit a letter of certificate issued by the inviting and receiving entities. The entities that have not filed for records shall also submit the registration certificate. The stay may be extended for no more than 180 days."
+    },
+    {
+      "requirement_code": "extension_g_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "G visa: a receiving entity certificate and a confirmed onward ticket — extend by no more than 30 days",
+      "description": "Transit. The ticket must carry a confirmed seat and date.",
+      "source_role": "requirements",
+      "source_excerpt": "c. holder of g visa shall submit a letter of certificate issued by the receiving entity and a connecting ticket (flight, bus or ship) to the destination country (region) with confirmed seat and date. the stay may be extended for no more than 30 days.",
+      "parameters": {
+        "max_extension_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "c. Holder of G visa shall submit a letter of certificate issued by the receiving entity and a connecting ticket (flight, bus or ship) to the destination country (region) with confirmed seat and date. The stay may be extended for no more than 30 days."
+    },
+    {
+      "requirement_code": "extension_j2_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "J2 visa: a provincial foreign affairs certificate — extend by no more than 30 days",
+      "description": "Short-term journalists.",
+      "source_role": "requirements",
+      "source_excerpt": "d. the holder of j2 visa shall submit a letter of certificate issued by the foreign affairs departments of the people's government at the provincial level. the stay may be extended for no more than 30 days.",
+      "parameters": {
+        "max_extension_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "d. The holder of J2 visa shall submit a letter of certificate issued by the foreign affairs departments of the people's government at the provincial level. The stay may be extended for no more than 30 days."
+    },
+    {
+      "requirement_code": "extension_l_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "L visa: a travel plan and itinerary, plus a travel agency letter for group tours — extend by no more than 30 days",
+      "description": "Tourists.",
+      "source_role": "requirements",
+      "source_excerpt": "e. holder of l visa shall submit a travel plan and itinerary, and for a group tour, also a letter of certificate issued by the travel agency. the stay may be extended for no more 30 days.",
+      "parameters": {
+        "max_extension_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "e. Holder of L visa shall submit a travel plan and itinerary, and for a group tour, also a letter of certificate issued by the travel agency. The stay may be extended for no more 30 days."
+    },
+    {
+      "requirement_code": "extension_m_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "M visa: an inviting entity or individual certificate — extend by no more than 180 days",
+      "description": "An inviting individual must sign and submit household registration or proof of actual residence.",
+      "source_role": "requirements",
+      "source_excerpt": "f. holder of m visa shall submit a letter of certificate issued by the local inviting and receiving entities or individuals, and the entities that have not filed the record shall also submit the registration certificate. the inviting individual shall put signature in the letter and submit local household registration or a certificate of the actual residence. the stay may be extended for no more than 180 days.",
+      "parameters": {
+        "max_extension_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "f. Holder of M visa shall submit a letter of certificate issued by the local inviting and receiving entities or individuals, and the entities that have not filed the record shall also submit the registration certificate. The inviting individual shall put signature in the letter and submit local household registration or a certificate of the actual residence. The stay may be extended for no more than 180 days."
+    },
+    {
+      "requirement_code": "extension_q2_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Q2 visa: an invitation letter, identity certificate and proof of family relationship — extend by no more than 180 days",
+      "description": "Short-term family visits.",
+      "source_role": "requirements",
+      "source_excerpt": "g. holder of q2 visa shall submit an invitation letter provided by the individuals to be visited, the identity certificate, and proof of family relationship. the stay may be extended for no more than 180 days.",
+      "parameters": {
+        "max_extension_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 180,
+      "source_excerpt_display": "g. Holder of Q2 visa shall submit an invitation letter provided by the individuals to be visited, the identity certificate, and proof of family relationship. The stay may be extended for no more than 180 days."
+    },
+    {
+      "requirement_code": "extension_r_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "R visa: an inviting and receiving entity certificate — extend by no more than 180 days",
+      "description": "High-level and urgently-needed talent.",
+      "source_role": "requirements",
+      "source_excerpt": "h. holder of r visa shall submit a certificate letter issued by the inviting and receiving entities, and the entities that have not filed for records shall also submit the registration certificate. the stay may be extended for no more than 180 days.",
+      "parameters": {
+        "max_extension_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 190,
+      "source_excerpt_display": "h. Holder of R visa shall submit a certificate letter issued by the inviting and receiving entities, and the entities that have not filed for records shall also submit the registration certificate. The stay may be extended for no more than 180 days."
+    },
+    {
+      "requirement_code": "extension_s2_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "S2 visa: 180 days for visiting relatives, 90 days for other private or humanitarian purposes",
+      "description": "The only letter with two different limits, and they are 90 days apart.",
+      "source_role": "requirements",
+      "source_excerpt": "i. for the s2 visa holders, the visiting personnel shall submit an invitation letter provided by the individuals to be visited, a foreigner residence permit and proof of family relationship. foreigners visiting for other purposes shall submit certificates stating the nature of the private affairs or humanitarian causes. the duration of stay may be extended to no more than 180 days for those visiting relatives, and no more than 90 days for those visiting for other purposes.",
+      "parameters": {
+        "max_extension_days_relatives": 180,
+        "max_extension_days_other": 90,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "i. For the S2 visa holders, the visiting personnel shall submit an invitation letter provided by the individuals to be visited, a foreigner residence permit and proof of family relationship. Foreigners visiting for other purposes shall submit certificates stating the nature of the private affairs or humanitarian causes. The duration of stay may be extended to no more than 180 days for those visiting relatives, and no more than 90 days for those visiting for other purposes."
+    },
+    {
+      "requirement_code": "extension_x2_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "X2 visa: a current study certificate from a Chinese institution — extend by no more than 180 days",
+      "description": "Short-term study.",
+      "source_role": "requirements",
+      "source_excerpt": "j. holder of x2 visa shall submit a current study certificate issued by an education or training institution within the territory of china. the stay may be extended for no more than 180 days.",
+      "parameters": {
+        "max_extension_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 210,
+      "source_excerpt_display": "j. Holder of X2 visa shall submit a current study certificate issued by an education or training institution within the territory of China. The stay may be extended for no more than 180 days."
+    },
+    {
+      "requirement_code": "extension_cumulative_cap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The accumulated extension cannot exceed the original duration of stay",
+      "description": "The ceiling on all of the above, published by the authority as a note.",
+      "source_role": "requirements",
+      "source_excerpt": "note: the accumulated extension of stay shall not exceed the original duration of stay specified in the visa.",
+      "display_order": 220,
+      "source_excerpt_display": "Note: The accumulated extension of stay shall not exceed the original duration of stay specified in the visa."
+    },
+    {
+      "requirement_code": "change_when_permitted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Changes: permitted on a change of purpose, entry conveniences, a new passport, or separating from a group visa",
+      "description": "Four grounds, enumerated by the authority.",
+      "source_role": "requirements",
+      "source_excerpt": "where a foreigner changes purpose of stay, is granted entry conveniences in accordance with relevant provisions of the state, starts using a new passport, or needs to stay separately from his or her tour group after entering china with a group visa due to objective reasons, the applicant may apply for a change of visa by submitting the following documents:",
+      "display_order": 230,
+      "source_excerpt_display": "Where a foreigner changes purpose of stay, is granted entry conveniences in accordance with relevant provisions of the State, starts using a new passport, or needs to stay separately from his or her tour group after entering China with a group visa due to objective reasons, the applicant may apply for a change of visa by submitting the following documents:"
+    },
+    {
+      "requirement_code": "change_to_f_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Change to an F visa: an inviting entity certificate; up to one year’s validity and 180 days’ stay",
+      "description": "Zero-, single-, double- or multiple-entry.",
+      "source_role": "requirements",
+      "source_excerpt": "a. to apply for the change to f visa, the applicant shall submit a letter of certificate issued by the inviting entities, and may be issued the zero-entry, single-entry, double-entry or multiple-entry visa with a valid period upon entry no more than one year and a stay no more than 180 days.",
+      "parameters": {
+        "max_validity_years": 1,
+        "max_stay_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 240,
+      "source_excerpt_display": "a. To apply for the change to F visa, the applicant shall submit a letter of certificate issued by the inviting entities, and may be issued the zero-entry, single-entry, double-entry or multiple-entry visa with a valid period upon entry no more than one year and a stay no more than 180 days."
+    },
+    {
+      "requirement_code": "change_to_j2_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Change to a J2 visa: a provincial foreign affairs certificate; a zero-entry visa with up to 30 days’ stay",
+      "description": "Zero-entry, which means it cannot be used to re-enter.",
+      "source_role": "requirements",
+      "source_excerpt": "b. to apply for the change to j2 visa, a letter of certificate issued by the foreign affairs department of the people's government at the provincial level shall be submitted. a zero-entry visa with a stay of no more than 30 days can be issued.",
+      "parameters": {
+        "max_stay_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 250,
+      "source_excerpt_display": "b. To apply for the change to J2 visa, a letter of certificate issued by the foreign affairs department of the people's government at the provincial level shall be submitted. A zero-entry visa with a stay of no more than 30 days can be issued."
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-fast-track-scheme",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "FAST-TRACK IS FIVE DIFFERENT PERMITS WEARING ONE NAME. The pay limit, supplementary pay limit, short-term, researcher and educational tracks share only a certified employer and an online application; their salary tests, durations and extra conditions differ completely. Registering 'the Fast-Track requirements' as one list would state conditions that apply to one track as if they applied to all five.\n\nTHE SUPPLEMENTARY TRACK CARRIES TWO CONDITIONS NOTHING ELSE IN THIS REGISTRY HAS, and both can fail through no fault of the applicant:\n\n  * NATIONAL UNEMPLOYMENT. Seasonally adjusted gross unemployment must not have exceeded 3.75 per cent on average in the three months before applying. An otherwise perfect application is refused because of the economy.\n  * A TWO-WEEK JOB POSTING ON TWO NAMED PORTALS. The job must have been advertised on Jobnet AND the EURES portal for at least two weeks before applying, and the authority states plainly that posting on other portals does not satisfy it. The employer controls this entirely, and it cannot be fixed after the fact.\n\nThe two pay limits also differ — DKK 552,000 on the pay limit track, DKK 446,000 on the supplementary track — and the lower figure is the one that carries the extra conditions.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Fast-track"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. Both pay-limit figures carry their own year in the text ('for 2026 is DKK 552,000') and are stated to be regulated every 1 January, so revisions surface as text changes to the daily sync.",
+  "not_extracted": [
+    "The certification process a company goes through to join the Fast-Track Scheme, and the list of certified companies, which the authority publishes separately and updates continuously.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "Guest researchers and PhD students, which the page explicitly excludes from the researcher track and which are separate routes.",
+    "The job change rule, which the page links out to as a separate mechanism."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_tracks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employment must meet the conditions of one of five tracks",
+      "description": "Quoted with all five named, because the conditions below apply per track and not to the scheme as a whole.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "your employment must meet the conditions for one of the fast-track scheme’s five tracks:\n\nthe pay limit track.\n\nthe supplementary pay limit track.\n\nthe short-term track.\n\nthe researcher track.\n\nthe educational track.",
+      "source_excerpt_display": "Your employment must meet the conditions for one of the Fast-Track Scheme’s five tracks:\n\nThe pay limit track.\n\nThe supplementary pay limit track.\n\nThe short-term track.\n\nThe researcher track.\n\nThe educational track."
+    },
+    {
+      "requirement_code": "employer_must_be_certified",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must be certified by SIRI",
+      "description": "The one condition common to every track.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "it is a requirement that your employer is certified by the danish agency for international recruitment and integration (siri).",
+      "source_excerpt_display": "It is a requirement that your employer is certified by the Danish Agency for International Recruitment and Integration (SIRI)."
+    },
+    {
+      "requirement_code": "power_of_attorney_to_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must grant your employer power of attorney to apply on your behalf",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "you must grant your employer power of attorney to handle the application on your behalf.",
+      "source_excerpt_display": "You must grant your employer power of attorney to handle the application on your behalf."
+    },
+    {
+      "requirement_code": "pay_limit_track_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: annual salary of at least DKK 552,000 (2026)",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "minimum_annual_salary": 552000,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40,
+      "source_excerpt": "it is a condition that you have been offered a job with an annual salary that corresponds to at least the pay limit amount. the pay limit amount for 2026 is dkk 552,000. the pay limit amount is regulated every year on 1 january.",
+      "source_excerpt_display": "It is a condition that you have been offered a job with an annual salary that corresponds to at least the pay limit amount. The pay limit amount for 2026 is DKK 552,000. The pay limit amount is regulated every year on 1 January."
+    },
+    {
+      "requirement_code": "pay_limit_track_salary_components",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: which salary components count",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "when siri has to assess whether you have been offered a salary that corresponds to at least the pay limit amount, only the following salary components can be taken into account:\n\ncash salary, including fixed supplements which therefore are guaranteed salary",
+      "source_excerpt_display": "When SIRI has to assess whether you have been offered a salary that corresponds to at least the pay limit amount, only the following salary components can be taken into account:\n\nCash salary, including fixed supplements which therefore are guaranteed salary"
+    },
+    {
+      "requirement_code": "pay_limit_track_unpaid_holiday",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: the salary condition holds even if you take holiday without pay",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "you must meet the condition of an annual salary that corresponds to at least the pay limit amount even if you take holiday without pay.",
+      "source_excerpt_display": "You must meet the condition of an annual salary that corresponds to at least the pay limit amount even if you take holiday without pay."
+    },
+    {
+      "requirement_code": "pay_limit_track_excluded_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: canteen, car, phone, internet and housing do not count",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "your employer can offer you, as a supplement to your salary, benefits such as paid canteen, free use of car, paid phone, paid internet and paid living and housing expenses. note that these salary components cannot be taken into account when assessing whether your salary corresponds to the pay limit amount.",
+      "source_excerpt_display": "Your employer can offer you, as a supplement to your salary, benefits such as paid canteen, free use of car, paid phone, paid internet and paid living and housing expenses. Note that these salary components cannot be taken into account when assessing whether your salary corresponds to the pay limit amount."
+    },
+    {
+      "requirement_code": "full_time_37_to_40_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time work, as a rule 37 to 40 hours a week",
+      "description": "A different hours test from the Pay Limit Scheme's 30-hour floor.",
+      "source_role": "requirements",
+      "parameters": {
+        "hours_per_week_min": 37,
+        "hours_per_week_max": 40,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80,
+      "source_excerpt": "it is a condition that you work full time. as a rule, this mean 37-40 working hours a week.",
+      "source_excerpt_display": "It is a condition that you work full time. As a rule, this mean 37-40 working hours a week."
+    },
+    {
+      "requirement_code": "salary_condition_regardless_of_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pay limit must be met regardless of the number of working hours",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "the condition that your salary corresponds to a least the pay limit amount must be met regardless of the number of work hours.",
+      "source_excerpt_display": "The condition that your salary corresponds to a least the pay limit amount must be met regardless of the number of work hours."
+    },
+    {
+      "requirement_code": "no_legal_labour_dispute",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must not be covered by a legal labour dispute",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "a residence and work permit cannot be granted for a job that is covered by a legal labour dispute.\n\na permit can be given for other jobs in a company affected by a dispute if these jobs are not covered by the conflict according to the rules of labour law.",
+      "source_excerpt_display": "A residence and work permit cannot be granted for a job that is covered by a legal labour dispute.\n\nA permit can be given for other jobs in a company affected by a dispute if these jobs are not covered by the conflict according to the rules of labour law."
+    },
+    {
+      "requirement_code": "danish_authorisation_where_regulated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Danish authorisation is required for regulated professions",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "in some instances, it is required that you have a danish authorisation or a temporary authorisation for employment for adaption and training purposes before you can be granted a residence and work permit.",
+      "source_excerpt_display": "In some instances, it is required that you have a Danish authorisation or a temporary authorisation for employment for adaption and training purposes before you can be granted a residence and work permit."
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "it is a condition that your spouse, cohabiting partner, child or any other family member, who holds a residence permit as an accompanying family member, must not have had his or her residence permit revoked more than once due to the lack of a required specific work permit.",
+      "source_excerpt_display": "It is a condition that your spouse, cohabiting partner, child or any other family member, who holds a residence permit as an accompanying family member, must not have had his or her residence permit revoked more than once due to the lack of a required specific work permit."
+    },
+    {
+      "requirement_code": "supplementary_track_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary pay limit track: annual salary of at least DKK 446,000 (2026)",
+      "description": "A lower threshold than the pay limit track — and the one that carries the unemployment and job-posting conditions.",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "minimum_annual_salary": 446000,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt": "it is a condition that you have been offered a job with an annual salary that corresponds to at least the supplementary pay limit amount. the supplementary pay limit amount for 2026 is dkk 446,000. the pay limit amount is regulated every year on 1 january.",
+      "source_excerpt_display": "It is a condition that you have been offered a job with an annual salary that corresponds to at least the supplementary pay limit amount. The supplementary pay limit amount for 2026 is DKK 446,000. The pay limit amount is regulated every year on 1 January."
+    },
+    {
+      "requirement_code": "supplementary_track_salary_components",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary pay limit track: which salary components count",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "when siri has to assess whether you have been offered a salary that corresponds to at least the pay limit amount, only the following salary components can be taken into account:\n\ncash salary, including fixed supplements which therefore are guaranteed salary\n\npayments to labour market pension schemes, including pension contributions paid by the employer and contributions paid by the applicant\n\npaid holiday allowance",
+      "source_excerpt_display": "When SIRI has to assess whether you have been offered a salary that corresponds to at least the pay limit amount, only the following salary components can be taken into account:\n\nCash salary, including fixed supplements which therefore are guaranteed salary\n\nPayments to labour market pension schemes, including pension contributions paid by the employer and contributions paid by the applicant\n\nPaid holiday allowance"
+    },
+    {
+      "requirement_code": "supplementary_track_unemployment_ceiling",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary track: national gross unemployment must not have exceeded 3.75% over the prior 3 months",
+      "description": "A condition on the Danish economy, not on the applicant or the employer.",
+      "source_role": "requirements",
+      "parameters": {
+        "max_unemployment_percent": 3.75,
+        "months_averaged": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150,
+      "source_excerpt": "it is a condition that the seasonally adjusted gross unemployment has not exceeded 3.75 pct. on average in the 3 months prior to applying.",
+      "source_excerpt_display": "It is a condition that the seasonally adjusted gross unemployment has not exceeded 3.75 pct. on average in the 3 months prior to applying."
+    },
+    {
+      "requirement_code": "supplementary_track_unemployment_fixed_at_application",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Later movement in the unemployment rate does not affect a submitted application",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "whether the level of the seasonally adjusted gross unemployment is regulated after you have submitted the application, has no impact on your application.",
+      "source_excerpt_display": "Whether the level of the seasonally adjusted gross unemployment is regulated after you have submitted the application, has no impact on your application."
+    },
+    {
+      "requirement_code": "supplementary_track_job_posting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary track: the job must have been posted on Jobnet AND EURES for at least 2 weeks before applying",
+      "source_role": "requirements",
+      "parameters": {
+        "minimum_posting_weeks": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170,
+      "source_excerpt": "it is a condition that the job position offered has been posted on jobnet and the eures portal for at least 2 weeks before you apply for a residence and work permit at siri.",
+      "source_excerpt_display": "It is a condition that the job position offered has been posted on Jobnet and the EURES portal for at least 2 weeks before you apply for a residence and work permit at SIRI."
+    },
+    {
+      "requirement_code": "supplementary_track_posting_six_month_limit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The posting must not, as a rule, be more than six months old",
+      "description": "A ceiling as well as a floor — an old advert fails just as a fresh one does.",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "as a rule, the job position must not have been posted for more than six months before you apply for a residence and work permit. siri calculates the six months starting from the day the job is created on jobnet and the eures portal.",
+      "source_excerpt_display": "As a rule, the job position must not have been posted for more than six months before you apply for a residence and work permit. SIRI calculates the six months starting from the day the job is created on Jobnet and the EURES portal."
+    },
+    {
+      "requirement_code": "supplementary_track_other_portals_do_not_count",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Posting on other portals does NOT satisfy the condition",
+      "description": "Stated flatly by the authority, and unrecoverable once the application is in.",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "if the job position is posted on other portals, this condition will not be met.",
+      "source_excerpt_display": "If the job position is posted on other portals, this condition will not be met."
+    },
+    {
+      "requirement_code": "supplementary_track_posting_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The employer must attach documentation of the Jobnet and EURES posting",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "your employer must therefore attach documentation that the job position has been posted on jobnet and the eures portal for at least 2 weeks prior to applying. siri will run spot-checks to verify whether the documentation is correct.",
+      "source_excerpt_display": "Your employer must therefore attach documentation that the job position has been posted on Jobnet and the EURES portal for at least 2 weeks prior to applying. SIRI will run spot-checks to verify whether the documentation is correct."
+    },
+    {
+      "requirement_code": "supplementary_track_applies_to_new_applications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The posting condition applies even if you already hold a Danish work permit for another job",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "note that this is a condition even though you already have a residence and work permit in denmark based on another job position. if you submit a new application before the position has been posted for at least two weeks, you will not fulfil this condition.",
+      "source_excerpt_display": "Note that this is a condition even though you already have a residence and work permit in Denmark based on another job position. If you submit a new application before the position has been posted for at least two weeks, you will not fulfil this condition."
+    },
+    {
+      "requirement_code": "short_term_track_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Short-term track: a permit for up to 90 days",
+      "source_role": "requirements",
+      "parameters": {
+        "max_days": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220,
+      "source_excerpt": "with a short-term stay you can be granted a residence and work permit for up to 90 days.",
+      "source_excerpt_display": "With a short-term stay you can be granted a residence and work permit for up to 90 days."
+    },
+    {
+      "requirement_code": "researcher_track_research_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Researcher track: there must be specific research-related reasons for the position",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "there must be specific research-related reasons for offering you the position as a researcher. this means that the position must be closely connected to you and that the main purpose of your stay must be to do research.",
+      "source_excerpt_display": "There must be specific research-related reasons for offering you the position as a researcher. This means that the position must be closely connected to you and that the main purpose of your stay must be to do research."
+    },
+    {
+      "requirement_code": "researcher_track_excludes_guest_and_phd",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Researcher track: guest researchers and PhD students are NOT included",
+      "source_role": "requirements",
+      "display_order": 240,
+      "source_excerpt": "please note, that guest researchers and phd students are not included in the research track.",
+      "source_excerpt_display": "Please note, that guest researchers and PhD students are not included in the research track."
+    },
+    {
+      "requirement_code": "educational_track_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Educational track: to receive or to give highly qualified training at the certified company",
+      "description": "Both purposes quoted, because the track covers trainee and trainer alike.",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "if you are a highly qualified foreign national with significant work experience within a certain professional field, the educational track is of relevance to you, provided that:\n\nthe purpose of your stay in denmark is to receive highly qualified training in the certified company, or\n\nthe purpose is that you will be training other employees in the certified company at a highly qualified level.",
+      "source_excerpt_display": "If you are a highly qualified foreign national with significant work experience within a certain professional field, the educational track is of relevance to you, provided that:\n\nthe purpose of your stay in Denmark is to receive highly qualified training in the certified company, or\n\nthe purpose is that you will be training other employees in the certified company at a highly qualified level."
+    },
+    {
+      "requirement_code": "application_submitted_online_by_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The application must be submitted online by the employer",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "an application for a residence and work permit under the fast-track scheme must be submitted online by your employer.",
+      "source_excerpt_display": "An application for a residence and work permit under the Fast-Track Scheme must be submitted online by your employer."
+    },
+    {
+      "requirement_code": "quick_job_start_visa_free",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Quick job start: a provisional work permit the day after the employer applies, at the earliest, for visa-free nationals",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "if you are visa-free , siri will give you a provisionary work permit the day after your employer has send an application, at the earliest. for this to happen, you must meet all of the necessary requirements, siri's citizen centre must be open and there must be availlable appointments for you to book right away.",
+      "source_excerpt_display": "If you are visa-free , SIRI will give you a provisionary work permit the day after your employer has send an application, at the earliest. For this to happen, you must meet all of the necessary requirements, SIRI's citizen centre must be open and there must be availlable appointments for you to book right away."
+    },
+    {
+      "requirement_code": "quick_job_start_visa_required",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Visa-required nationals: a decision as a rule in about 10 days",
+      "source_role": "requirements",
+      "display_order": 280,
+      "source_excerpt": "if you are required to have a visa , siri will, as a rule, make a decision concerning your case in about 10 days after we have received your application. however, this only happens if your employer has sent us all the necessary information in the application, if you have paid your fee and if you have had your biometric features recorded.",
+      "source_excerpt_display": "If you are required to have a visa , SIRI will, as a rule, make a decision concerning your case in about 10 days after we have received your application. However, this only happens if your employer has sent us all the necessary information in the application, if you have paid your fee and if you have had your biometric features recorded."
+    },
+    {
+      "requirement_code": "visa_required_cannot_enter_without_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa-required national without a valid visa cannot enter Denmark legally",
+      "source_role": "requirements",
+      "display_order": 290,
+      "source_excerpt": "if you are a citizen in a country with a visa requirement and if you do not have a valid visa , you cannot enter denmark legally.",
+      "source_excerpt_display": "If you are a citizen in a country with a visa requirement and if you do not have a valid visa , you cannot enter Denmark legally."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 300,
+      "source_excerpt": "processing fee\ndkk 6,810,-",
+      "source_excerpt_display": "Processing fee\nDKK 6,810,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "display_order": 310,
+      "source_excerpt": "normal processing time\n1 month\n\nif further information is needed, the processing time can be up to\n2 months",
+      "source_excerpt_display": "Normal processing time\n1 month\n\nIf further information is needed, the processing time can be up to\n2 months"
+    },
+    {
+      "requirement_code": "processing_time_supplementary_track",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Supplementary pay limit track: a longer processing time of its own",
+      "description": "Two months normally against one, and four against two. Publishing only the headline figure would understate this track by half.",
+      "source_role": "requirements",
+      "display_order": 320,
+      "source_excerpt": "normal processing time for applications on the supplementary pay limit track\n2 months\n\nif further information is needed for applications on the supplementary pay limit track, the processing time can be up to\n4 months",
+      "source_excerpt_display": "Normal processing time for applications on the supplementary pay limit track\n2 months\n\nIf further information is needed for applications on the supplementary pay limit track, the processing time can be up to\n4 months"
+    }
+  ]
+}

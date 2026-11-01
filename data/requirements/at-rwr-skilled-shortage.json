@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-skilled-shortage",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "A binding job offer plus a points threshold. The pay condition is not a figure but a standard — whatever law, regulation or collective agreement stipulates — and it carries a clause most summaries drop: customary overpay in that company must be granted to the applicant too.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/skilled-workers-in-shortage-occupations/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as Singapore's MOM and the US ESTA pages already live.",
+  "not_extracted": [
+    "THE POINTS TABLE. Its criterion-to-score mapping does not survive normalization — rows flatten so that criteria and their scores become separate consecutive lines, and the association exists only in visual layout. The THRESHOLD is quoted where the page states it in prose, because that is a sentence; the individual scores are not, because reconstructing them would be inference.",
+    "The shortage-occupation list itself, which the page links to rather than states.",
+    "Fees. The page names none."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "binding_job_offer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A binding job offer at the legally stipulated minimum pay",
+      "description": "The final clause matters and is easily lost: where overpay is customary in that company, it must be granted to the applicant as well.",
+      "source_role": "requirements",
+      "source_excerpt": "you have received a binding job offer in austria and the prospective employer is willing to remunerate you with the minimum pay stipulated by law, regulation or collective agreement (in the event that overpay is customary in the respective company, it must also be granted to you)",
+      "display_order": 10,
+      "source_excerpt_display": "you have received a binding job offer in Austria and the prospective employer is willing to remunerate you with the minimum pay stipulated by law, regulation or collective agreement (in the event that overpay is customary in the respective company, it must also be granted to you)"
+    },
+    {
+      "requirement_code": "points_threshold_55",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A minimum of 55 points",
+      "description": "Five points higher than the start-up route's threshold, and stated in prose so it is quoted.",
+      "source_role": "requirements",
+      "source_excerpt": "you reach a minimum of 55 points according to the following list of criteria:",
+      "display_order": 20,
+      "source_excerpt_display": "you reach a minimum of 55 points according to the following list of criteria:"
+    },
+    {
+      "requirement_code": "travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document",
+      "description": "A passport or equivalent.",
+      "source_role": "requirements",
+      "source_excerpt": "valid travel document (e.g. passport)",
+      "display_order": 30,
+      "source_excerpt_display": "Valid travel document (e.g. passport)"
+    }
+  ]
+}

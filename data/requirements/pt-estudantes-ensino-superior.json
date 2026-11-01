@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-estudantes-ensino-superior",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "THREE YEARS, NOT TWO, AND TWO SEPARATE WAIVERS. This is one of the routes where a special legal provision overrides the general two-year validity: a higher education student permit runs three years, renewable for equal periods, or for the length of the programme if shorter. Two groups are relieved of documents entirely — students at institutions approved under Art. 91.º n.º 5, and Instituto Camões scholarship holders — and the second waiver is unusually wide.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/estudar/autorizacao-de-residencia-emitida-a-estudantes-do-ensino-superior-art-o-91"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "validity_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Valid for 3 years, renewable for equal periods, or for the length of the programme where shorter",
+      "description": "An override of the general two-year rule, stated in the notes rather than the requirements.",
+      "parameters": {
+        "validity_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "a autorização de residência concedida ao abrigo do artigo 91.º a estudantes do ensino superior é válida por três anos, renovável por iguais períodos e, nos casos em que a duração do programa de estudos seja inferior a três anos, é emitida pelo prazo da sua duração (n.º 2 do artigo 91.º repsae).",
+      "source_excerpt_display": "A autorização de residência concedida ao abrigo do artigo 91.º a estudantes do ensino superior é válida por três anos, renovável por iguais períodos e, nos casos em que a duração do programa de estudos seja inferior a três anos, é emitida pelo prazo da sua duração (n.º 2 do artigo 91.º REPSAE)."
+    },
+    {
+      "requirement_code": "enrolment_and_tuition_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of enrolment at a higher education institution, and proof of payment of the tuition fees it requires",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "• comprovativo da matrícula em instituição de ensino superior; • comprovativo do pagamento de propinas exigidas pelo estabelecimento de ensino superior; se aplicável, a atestar por meio de declaração da instituição de ensino;",
+      "source_excerpt_display": "• Comprovativo da matrícula em instituição de ensino superior; • Comprovativo do pagamento de propinas exigidas pelo estabelecimento de ensino superior; se aplicável, a atestar por meio de declaração da Instituição de Ensino;"
+    },
+    {
+      "requirement_code": "visa_required_except_under_art_91_4",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid residence visa under Art. 62.º, except where the permit is granted without a visa under Art. 91.º n.º 4",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "• visto de residência válido, emitido nos termos do artigo 62.º do repsae, exceto no pedido de concessão de autorização de residência sem visto (nos termos do disposto no n.º 4 do artigo 91.º do repsae);",
+      "source_excerpt_display": "• Visto de residência válido, emitido nos termos do artigo 62.º do REPSAE, exceto no pedido de concessão de autorização de residência sem visto (nos termos do disposto no n.º 4 do artigo 91.º do REPSAE);"
+    },
+    {
+      "requirement_code": "approved_institution_waives_subsistence_and_tuition",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A student admitted to an institution approved under Art. 91.º n.º 5 is relieved of proving means of subsistence and tuition payment",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "• ao estudante do ensino superior admitido em estabelecimento de ensino superior aprovado nos termos do n.º 5 do artigo 91.º do repsae é dispensada a apresentação dos meios de subsistência e o comprovativo do pagamento de propinas.",
+      "source_excerpt_display": "• Ao estudante do ensino superior admitido em estabelecimento de ensino superior aprovado nos termos do n.º 5 do artigo 91.º do REPSAE é dispensada a apresentação dos meios de subsistência e o comprovativo do pagamento de propinas."
+    },
+    {
+      "requirement_code": "camoes_scholarship_waives_four_documents",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "An Instituto Camões scholarship holder is relieved of enrolment proof, tuition proof, health insurance AND means of subsistence",
+      "description": "The widest documentary waiver on any Portuguese route.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "• ao estudante do ensino superior que seja beneficiário de bolsa de estudo atribuída pelo instituto camões - instituto da cooperação e da língua, i. p., é dispensada a apresentação do comprovativo de matrícula, do pagamento de propinas, o seguro de saúde e o comprovativo dos meios de subsistência",
+      "source_excerpt_display": "• Ao estudante do ensino superior que seja beneficiário de bolsa de estudo atribuída pelo Instituto Camões - Instituto da Cooperação e da Língua, I. P., é dispensada a apresentação do comprovativo de matrícula, do pagamento de propinas, o seguro de saúde e o comprovativo dos meios de subsistência"
+    },
+    {
+      "requirement_code": "criminal_record_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A criminal record from your country of nationality, or where you lived for more than a year before Portugal",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "• registo criminal do país da nacionalidade do requerente ou registo criminal do país onde este residia há mais de um ano, antes de residir em portugal",
+      "source_excerpt_display": "• Registo Criminal do país da nacionalidade do requerente ou registo criminal do país onde este residia há mais de um ano, antes de residir em Portugal"
+    }
+  ]
+}

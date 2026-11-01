@@ -1,0 +1,1806 @@
+{
+ "schema": {
+  "id": "stable finding id, e.g. DB-001",
+  "component": "affected component",
+  "severity": "Critical|High|Medium|Low|Informational",
+  "evidence": "file path / command output / query result",
+  "root_cause": "string",
+  "impact": "user or business impact",
+  "remediation": "proposed fix",
+  "files_affected": [],
+  "tests_required": [],
+  "status": "OPEN|IN_PROGRESS|RESOLVED|BLOCKED|WONTFIX",
+  "closure_evidence": "string|null",
+  "reviewer": "string|null",
+  "discovered_phase": "string"
+ },
+ "findings": [
+  {
+   "id": "COUNTRY-001",
+   "component": "Country registry (backend strategies + database helper)",
+   "severity": "High",
+   "evidence": "apps/api/src/strategies/country/schengen-members.ts declared 27 SCHENGEN_MEMBERS. supabase/migrations/20260611000001_schengen_bloc_visibility.sql declared the same 27 codes in public.is_schengen_member(). Live query against the locally replayed schema returned: BG=false RO=false DE=true HR=true. Registry enumeration returned SELECTABLE_TOTAL=31 (4 priority + 27 Schengen).",
+   "root_cause": "Two independently hardcoded country lists kept in sync only by a source comment ('MUST stay byte-identical'). Neither was updated when Bulgaria and Romania became full Schengen members \u2014 air/sea borders 31 March 2024 (Council Decision (EU) 2024/210), land borders 1 January 2025 (Council Decision (EU) 2024/3153). Stale for approximately 19 months.",
+   "impact": "Bulgaria and Romania could not be selected as destinations anywhere in the product: the strategy registry never registered them, so GET /countries could not return them and the web dropdown (which derives entirely from that endpoint) could not offer them. Separately, consultant_covers_country() expands the 'SCHENGEN' bloc through the database helper, so any consultant whose consultant_countries row was the bloc sentinel silently covered zero Bulgarian or Romanian applications \u2014 no error was raised. Consultants holding explicit 'BG'/'RO' rows were unaffected.",
+   "remediation": "Added BG and RO to SCHENGEN_MEMBERS (data-only: SchengenMemberStrategy is fully generic \u2014 GDPR compliance, EU data residency, consulate portal, tourist+business Type C \u2014 so both inherit the identical treatment Croatia already receives). Added forward-only migration 20260806150000_schengen_members_bg_ro.sql replacing the literal set with all 29 codes; signature, volatility, security mode and grants unchanged so dependent policies pick it up untouched. Added a live parity guard so the two lists can never drift apart again.",
+   "files_affected": [
+    "apps/api/src/strategies/country/schengen-members.ts",
+    "supabase/migrations/20260806150000_schengen_members_bg_ro.sql",
+    "apps/api/src/modules/countries/countries.controller.spec.ts",
+    "apps/api/test/schengen-registry-db-parity.spec.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/schengen-registry-db-parity.spec.ts (new, live-DB gated)",
+    "apps/api/src/modules/countries/countries.controller.spec.ts (existing, derives from SCHENGEN_MEMBER_CODES)"
+   ],
+   "status": "RESOLVED \u2014 local evidence; production migration not applied (blocked on BLK-1)",
+   "closure_evidence": "See .ai-audit/logs/09-country-fix-verify.log. Post-fix live query: BG=true RO=true SCHENGEN=false GB=false. Selectable country count 31 -> 33.",
+   "reviewer": "pending independent review",
+   "discovered_phase": "PHASE_1_INVENTORY / country source-of-truth audit"
+  },
+  {
+   "id": "COUNTRY-002",
+   "component": "Country/visa program coverage \u2014 country-by-country E2E",
+   "severity": "High",
+   "evidence": "apps/web/e2e/ contains admin-dashboard, admin-users, auth.setup, broadcasts, consultant-dashboard, design-system, notification-ops, notification-templates, notifications, smoke. `grep -rln 'countr' e2e/` returns zero matches.",
+   "root_cause": "The country selector and all country-specific rule loading were never included in end-to-end test scope.",
+   "impact": "Zero executed E2E coverage of the country selector or any country-specific journey on any surface. The spec's mandatory country-by-country coverage currently has a baseline of 0 of 33 enabled countries. COUNTRY-001 went undetected for 19 months partly because nothing exercised the list.",
+   "remediation": "Built a country-parameterised Playwright suite driving the real page and real combobox, stubbing only GET /countries at the network boundary. NOT claimed as a full live E2E: country-specific rules, checklists, fees, AI guidance and the mobile surfaces remain unexecuted.",
+   "files_affected": [
+    "apps/web/e2e/"
+   ],
+   "tests_required": [
+    "country-parameterised Playwright suite (to be built in Phase 10)"
+   ],
+   "status": "RESOLVED \u2014 selector layer; per-country JOURNEYS still unexecuted",
+   "closure_evidence": "apps/web/e2e/country-selector.spec.ts \u2014 43 executed cases, all passing: one per supported country (33) plus list contract, priority ordering, Schengen grouping, keyboard-only operation, ARIA combobox contract, axe with the list open, and negative cases. Fixture kept honest by apps/api/test/countries-fixture-parity.spec.ts. Full web e2e 101 passed / 7 skipped. Commit c50a10c.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY"
+  },
+  {
+   "id": "TEST-001",
+   "component": "apps/api test suite typing",
+   "severity": "High",
+   "evidence": ".ai-audit/logs/02-api-typecheck.log \u2014 `pnpm --filter api exec tsc --noEmit -p tsconfig.json` exits 1 with 82 errors (TS2339 x62, TS2554 x7, TS2739 x4, TS2352 x4, TS2322 x4, TS2741 x1). All 82 are in *.spec.ts; zero in src.",
+   "root_cause": "Four causes, not 82: (1) `as never` on mock literals made the variable type `never`, so later property accesses failed \u2014 62 of the errors; (2) fixtures missing fields their interface had gained; (3) constructors called with stale arity after dependencies were added; (4) `{...base, ...over}` where over is Partial<X> widens every member to optional so the result is not assignable to X.",
+   "impact": "CI's required typecheck step was failing. More seriously, cause (4) was MASKING a real defect: once the Partial spread stopped hiding it, the compiler showed IPayoutsRepository was missing 7 members, IPayoutsStripe was missing createExpressDashboardLink, and both IMessagingRepository mocks were missing several \u2014 those tests asserted against objects that could not stand in for the real implementation.",
+   "remediation": "Update fixtures and mocks to satisfy the current interfaces. Do not widen types or add ts-ignore to silence them.",
+   "files_affected": [
+    "apps/api/test/messaging-p3b-dispatch.spec.ts (19)",
+    "apps/api/test/messaging-p3b-unsub-controller.spec.ts (6)",
+    "apps/api/test/messaging-p2-attachment-service.spec.ts (6)",
+    "and 27 further spec files"
+   ],
+   "tests_required": [
+    "tsc --noEmit must exit 0"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "tsc --noEmit exit 0 (82 -> 0). nest build exit 0. api suite 2126 passed / 0 failed, unchanged from baseline. 12 gated suites green (40 tests). Commit 55bd857.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_0_BASELINE"
+  },
+  {
+   "id": "TEST-002",
+   "component": "CI \u2014 tenant isolation coverage",
+   "severity": "High",
+   "evidence": ".ai-audit/logs/03-api-jest.log \u2014 11 suites skipped, 35 tests skipped, counted green. Each gates on `const describeIf = CONFIGURED ? describe : describe.skip`. .ai-audit/logs/08-rls-live-local.log \u2014 same 11 suites executed against the local disposable stack: 11 passed, 35 tests passed.",
+   "root_cause": "Supabase credentials are not wired into CI, so the RLS and cross-tenant suites self-skip and the pipeline reports green without ever checking tenant isolation.",
+   "impact": "A green pipeline does not mean tenant isolation was checked. PROJECT_STATE names this the highest-value CI gap in the repository; Task 14 previously found a live cross-tenant leak on production that local analysis structurally could not find.",
+   "remediation": "Wire a Supabase instance into CI (a local supabase start in the workflow is sufficient and needs no secrets) and assert the suites actually ran rather than skipped.",
+   "files_affected": [
+    ".github/workflows/agent-tests.yml",
+    "apps/api/test/*-rls.spec.ts",
+    "apps/api/test/rls-cross-tenant.spec.ts"
+   ],
+   "tests_required": [
+    "CI must fail if the RLS suites report skipped"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "New CI job `tenant-isolation` runs `supabase start` (no secrets \u2014 local stack keys are published) and executes all 12 gated suites, then asserts they actually ran. Verified both ways locally: credentials present -> passed=40 skipped=0, guard exits 0; credentials absent -> jest exits 0 with 40 skipped (the original bug), guard exits 1. Commit a1a17e2.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_0_BASELINE"
+  },
+  {
+   "id": "COUNTRY-003",
+   "component": "Australia country strategy",
+   "severity": "Medium",
+   "evidence": "Registry enumeration: PROGRAMS per country \u2014 CA=2, US=2, GB=2, AU=1, and all 27 (now 29) Schengen members =2. apps/api/src/strategies/country/australia.strategy.ts registers only visitorVisaProgram('AU').",
+   "root_cause": "Australia is one of the four pinned launch corridors but only ever received one visa program; the other three received two.",
+   "impact": "Australia offers a narrower journey than the other launch corridors. Whether this is a defect or a deliberate roadmap position is not recorded anywhere in the repository, so it cannot be marked PASS.",
+   "remediation": "Confirm the intended Australian program set with the product owner, then either register the second program or record the single-program scope as an accepted decision.",
+   "files_affected": [
+    "apps/api/src/strategies/country/australia.strategy.ts"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 covered indirectly by countries-fixture-parity.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Australia now registers Student visa (subclass 500) alongside Visitor (subclass 600). Commit 411f76f.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY"
+  },
+  {
+   "id": "OPS-001",
+   "component": "Runtime version parity",
+   "severity": "Medium",
+   "evidence": "`node -v` = v24.14.1 locally. .github/workflows/agent-tests.yml pins node-version: 20 in every job. CLAUDE.md records the Hostinger VPS as Node 20.",
+   "root_cause": "No engines field or version manager file pins the Node version for local development.",
+   "impact": "The entire baseline was taken on a runtime two majors ahead of both CI and production. Behaviour differences would not be caught locally.",
+   "remediation": "Add an engines constraint and a .nvmrc/.tool-versions pinned to Node 20.",
+   "files_affected": [
+    "package.json"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 CI workflow change \u2014 asserted by the pipeline running at all"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "engines {node: >=20 <21} + .nvmrc. Warns without blocking on the Node 24 dev machine (install exit 0). Commit c50a10c.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_0_BASELINE"
+  },
+  {
+   "id": "OPS-002",
+   "component": "Developer tooling",
+   "severity": "Medium",
+   "evidence": "`supabase --version` -> command not found. `psql --version` -> command not found. Both were reachable only as `npx supabase` and `docker exec ... psql`.",
+   "root_cause": "Documented runbooks assume a globally installed Supabase CLI and psql.",
+   "impact": "Every documented `supabase db push` / `supabase migration list` runbook step fails as written on this machine, which is how migration-ledger drift has repeatedly gone unnoticed.",
+   "remediation": "Either add the Supabase CLI as a dev dependency so `pnpm supabase` always resolves, or state the npx invocation in the runbooks.",
+   "files_affected": [
+    "CLAUDE.md",
+    "VISAAIDocs/deployment/"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 developer-tooling note (npx supabase); no runtime behaviour"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Root `supabase` script -> `npx --yes supabase@latest`; `pnpm supabase --version` returns 2.111.0. CLAUDE.md documents it. Commit c50a10c.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_0_BASELINE"
+  },
+  {
+   "id": "BLK-1",
+   "component": "Production database durability",
+   "severity": "Critical",
+   "evidence": "RE-VERIFIED LIVE 2026-08-06 via the Management API: {'pitr_enabled': false, 'walg_enabled': true, 'backups': [], 'physical_backup_data': {}}. WAL archiving is on but there is nothing to restore to.",
+   "root_cause": "Supabase free plan.",
+   "impact": "Zero recovery point for immigration applications, documents, payments and audit chains. Blocks applying any migration to production, including the country fix in COUNTRY-001.",
+   "remediation": "Upgrade to Pro and enable PITR, then evidence a restore. This is a purchase, not an engineering task. MITIGATION SHIPPED: infra/self-hosted now runs a `backup` service (pg_dump -Fc, immediate on start, configurable interval/retention, .partial-then-rename, 10KB size floor, prune only after success, same image as db for version parity, named volume so a dump of passports is never one `git add -A` from a commit). A scheduled CI job was deliberately NOT used: it would move real users' passports into a third-party artifact store, trading availability risk for confidentiality risk.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/api/test/schema-hygiene-db.spec.ts",
+    "apps/web/lib/readiness/unassessed-factors.test.ts"
+   ],
+   "status": "PARTIALLY MITIGATED \u2014 self-hosted stack now backs itself up; hosted production still has no backup",
+   "closure_evidence": "RESTORE-TESTED, not just written: a dump restored into a scratch database matched the source exactly \u2014 133 tables / 143 policies / 1 application. (2 ignored errors on vault.secrets, owned by supabase_admin, expected for a logical dump.) Hosted production is untouched and still has pitr_enabled=false, backups=[] \u2014 that needs a purchase or the migration.",
+   "reviewer": null,
+   "discovered_phase": "carried forward",
+   "blocked_by": "EXTERNAL \u2014 a Supabase Pro purchase, or completing the self-host migration (needs the production DB password). Neither is an engineering task."
+  },
+  {
+   "id": "CONFIG-001",
+   "component": ".env.example",
+   "severity": "Medium",
+   "evidence": "Two-way diff between .env.example, apps/api/.env and every process.env read in apps/api/src.",
+   "root_cause": "Variables read ad hoc via process.env outside the validateEnv schema, so absence is indistinguishable from \"feature off\".",
+   "impact": "SENTRY_DSN (launch blocker BLK-3) was not in the template an operator would copy. The VAPID_* trio was missing, so an environment provisioned from the template gets web push silently disabled \u2014 the service logs \"VAPID keys not set \u2014 push skipped\" with no boot failure.",
+   "remediation": "Added all 15 missing variables with the consequence of leaving each blank stated inline.",
+   "files_affected": [
+    ".env.example"
+   ],
+   "tests_required": [
+    "apps/api config suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Both drift directions re-verified empty; config suite 55 passed. Commit cfcd315.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY"
+  },
+  {
+   "id": "ARCH-001",
+   "component": "apps/sidecar / authority documents",
+   "severity": "Medium",
+   "evidence": "git ls-tree -r HEAD | grep apps/sidecar -> 0 files. Directory holds only a stale node_modules. CLAUDE.md:12 and PROJECT_STATE.md:22 both described it, the latter as 'Live'.",
+   "root_cause": "Commit 369607e (2026-06-02) deliberately deleted the Electron sidecar; PROJECT_STATE.md was written 2026-08-05, two months later, and still asserted it was Live.",
+   "impact": "Authority files described a surface that does not exist, so any documentation-only reading of the repository is unsafe. Eight docs/ files still reference it.",
+   "remediation": "Corrected both authority files; CLAUDE.md now also documents apps/mobile and packages/partner-sdk, previously absent from the layout.",
+   "files_affected": [
+    "CLAUDE.md",
+    "PROJECT_STATE.md"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 documentation move; verified by checksum during Phase 2"
+   ],
+   "status": "RESOLVED \u2014 the 8 docs/ references remain, to be handled in Phase 2/3",
+   "closure_evidence": "Commit cfcd315.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY"
+  },
+  {
+   "id": "TEST-003",
+   "component": "apps/api outcomes module",
+   "severity": "Medium",
+   "evidence": "Import-based check across all spec files: no spec imports from modules/outcomes/ and the module holds no colocated spec. 108 LOC, wired at app.module.ts:118, exposing GET and POST /outcomes/:applicationId.",
+   "root_cause": "Module shipped without tests.",
+   "impact": "Two live authenticated routes with zero coverage. The service filters refusal reasons against an allowlist to keep free-text PII out of the column \u2014 that protection is untested.",
+   "remediation": "Add unit coverage for OutcomesService.report/get, including the refusal-reason allowlist filter and the DB CHECK on outcome.",
+   "files_affected": [
+    "apps/api/src/modules/outcomes/"
+   ],
+   "tests_required": [
+    "outcomes.service.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "25 tests across outcomes.service.spec.ts and outcomes.controller.spec.ts, covering the refusal-reason allowlist and request validation. Commit c50a10c / 6f70b1d.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY"
+  },
+  {
+   "id": "API-001",
+   "component": "apps/api global pipeline",
+   "severity": "Low",
+   "evidence": "No ValidationPipe / useGlobalPipes / APP_PIPE anywhere in main.ts or app.module.ts. Bodies typed as interfaces are erased at runtime.",
+   "root_cause": "No global validation pipe configured.",
+   "impact": "Request bodies are not validated at runtime. Checked on the outcomes route: an invalid `outcome` value is caught by the DB CHECK constraint, so it fails closed rather than corrupting data \u2014 but it surfaces as a 500 after a DB round-trip instead of a 400. The global AllExceptionsFilter does NOT leak internals on 5xx, so this is a semantics and efficiency issue, not a disclosure one.",
+   "remediation": "Applied the repository's existing zod DTO idiom rather than introducing class-validator. A sweep of the remaining write routes is still owed and is tracked as API-002.",
+   "files_affected": [
+    "apps/api/src/main.ts"
+   ],
+   "tests_required": [
+    "apps/api/src/modules/outcomes/outcomes.controller.spec.ts"
+   ],
+   "status": "RESOLVED \u2014 outcomes route; other write routes not audited",
+   "discovered_phase": "PHASE_1_INVENTORY",
+   "closure_evidence": "zod DTO on POST /outcomes/:applicationId; invalid input now 400 before any DB call. 25 tests. Commit 6f70b1d.",
+   "reviewer": null
+  },
+  {
+   "id": "OPS-003",
+   "component": "jest coverage output",
+   "severity": "Low",
+   "tests_required": [
+    "NOT APPLICABLE \u2014 documentation of an existing script"
+   ],
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY",
+   "files_affected": [
+    "apps/api/package.json"
+   ],
+   "evidence": "coverageDirectory was \"../coverage\", writing 412 KB into apps/coverage \u2014 inside the apps/* workspace glob.",
+   "root_cause": "Relative coverage path escaped the package.",
+   "impact": "A non-package directory appeared inside the workspace glob.",
+   "remediation": "Point coverageDirectory at ./coverage and gitignore it.",
+   "status": "RESOLVED",
+   "closure_evidence": "coverageDirectory -> ./coverage; coverage/ gitignored. Commit c50a10c."
+  },
+  {
+   "id": "WEB-001",
+   "component": "apps/web/proxy.ts \u2014 locale-aware auth classification",
+   "severity": "High",
+   "evidence": "Probed with Playwright before the fix: /applications/new -> 200; /fr/applications/new -> 200; /en/applications/new -> /login; /en/privacy -> /login; /en/pricing -> /login.",
+   "root_cause": "splitLocale() stripped a leading locale segment only when it was NOT the default locale (`seg !== DEFAULT_LOCALE`), so '/en/privacy' was classified as the literal path '/en/privacy', matched nothing in the public-route list, and fell through to the logged-out redirect.",
+   "impact": "Every '/en/'-prefixed public URL bounced a logged-out visitor to /login \u2014 including /en/privacy and /en/terms, which must stay publicly reachable, and /en/applications/new, the guest funnel's front door. Non-default locales were unaffected, so the locale most users and most shared links carry was the broken one.",
+   "remediation": "Strip the default locale too while still returning an empty prefix, preserving next-intl's as-needed redirect behaviour.",
+   "files_affected": [
+    "apps/web/proxy.ts"
+   ],
+   "tests_required": [
+    "apps/web/e2e/public-route-locale.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Public routes reachable prefixed or not; protected routes (/my-applications, /profile, /messages) still redirect to /login both ways, so the wider stripping opened no hole. Full web e2e 101 passed. Commit c50a10c.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_10 \u2014 found while building the country E2E suite"
+  },
+  {
+   "id": "WEB-002",
+   "component": "apps/web \u2014 /pricing route gating",
+   "severity": "Medium",
+   "evidence": "Probed logged-out: /pricing -> /login and /en/pricing -> /login. Unlike WEB-001 this is locale-independent \u2014 /pricing is simply absent from the public-route list in proxy.ts.",
+   "root_cause": "'/pricing' is not included in isPublicRoute.",
+   "impact": "The pricing page is unreachable without an account. For most products a pricing page is public and gating it costs conversion, but whether that is intended here is not recorded anywhere in the repository.",
+   "remediation": "Confirm intent with the product owner. If public, add '/pricing' to the public-route list; if deliberate, record it as an accepted decision. NOT changed by this audit \u2014 opening a route is a product decision, and guessing could expose something intentionally gated.",
+   "files_affected": [
+    "apps/web/proxy.ts"
+   ],
+   "tests_required": [
+    "apps/web/e2e/public-route-locale.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "/pricing added to the public-route list; reachable unprefixed, /en and /fr; protected routes still gated. Commit 411f76f.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_10"
+  },
+  {
+   "id": "API-002",
+   "component": "apps/api \u2014 write-route input validation sweep",
+   "severity": "Medium",
+   "evidence": "No global ValidationPipe exists. API-001 fixed the outcomes route; the remaining write routes across 66 controllers were not individually audited.",
+   "root_cause": "Validation is applied per-route by convention rather than enforced centrally.",
+   "impact": "Other write routes may forward unvalidated bodies to the database, failing as 500s rather than 400s. Severity depends on whether any route lacks a DB-level constraint as backstop \u2014 not yet determined.",
+   "remediation": "Audit every @Body()/@Query() route for a zod DTO; add one where missing. Consider a lint rule so a new write route cannot ship without a schema.",
+   "files_affected": [
+    "apps/api/src/modules/**/*.controller.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/api-002-body-validation.spec.ts"
+   ],
+   "status": "RESOLVED \u2014 17 routes; the codebase still has no global pipe",
+   "closure_evidence": "17 previously unvalidated routes across 12 controllers now parse with zod; 22 tests assert rejection without reaching the service. Commit 411f76f.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5 (partial)"
+  },
+  {
+   "id": "WEB-003",
+   "component": "apps/web design-system visual regression",
+   "severity": "Medium",
+   "evidence": "e2e/design-system.spec.ts-snapshots/pricing-{light,dark}-chromium-darwin.png were screenshots of the SIGN-IN page. Confirmed by opening the committed baseline image.",
+   "root_cause": "The baselines were captured while /pricing redirected logged-out visitors to /login (WEB-002), so Playwright screenshotted the login page and saved it under the pricing name.",
+   "impact": "The test 'pricing renders consistently' passed for its whole life without ever rendering the pricing page. A visual-regression baseline captured through a redirect asserts nothing about its named route, and would not have caught any pricing regression.",
+   "remediation": "Baselines regenerated against the real page. The wider lesson \u2014 a visual baseline should assert its final URL before screenshotting \u2014 is left as a follow-up.",
+   "files_affected": [
+    "apps/web/e2e/design-system.spec.ts-snapshots/"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 visual baselines regenerated; guarded by the screenshot suite itself"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Regenerated; both pricing snapshots now show the pricing page. Commit 411f76f.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_6 \u2014 surfaced by the WEB-002 fix"
+  },
+  {
+   "id": "WEB-004",
+   "component": "apps/web design system \u2014 heading class name collision",
+   "severity": "High",
+   "evidence": "globals.css defines .h-1/.h-2/.h-3 as TYPOGRAPHY classes (font/size/line-height, no height). Tailwind independently generates .h-1 = height:0.25rem, .h-2 = 0.5rem, .h-3 = 0.75rem, and wins the cascade. Measured live on /pricing: the <h1 className=\"h-1 mb-3\"> element's box is 4px tall (top 90, bottom 94) while its glyphs render full size and overflow onto the eyebrow above and the lede below. Reproduced after a 2.5s settle, so it is not an animation artifact. Screenshot: the regenerated pricing baseline shows the overlap.",
+   "root_cause": "The design system chose class names that collide with Tailwind's height scale.",
+   "impact": "Every heading using h-1/h-2/h-3 gets a collapsed height box, so headings overlap adjacent text. 30 files use these names. The collision runs BOTH ways: skeleton placeholders such as `h-3 w-32` in loading.tsx and readiness-client.tsx legitimately want Tailwind's height and are instead receiving heading typography. This is now user-visible on /pricing, which this audit just made public.",
+   "remediation": "Rename the design-system classes (e.g. .h-1 -> .type-h1) and update only the usages on heading elements, leaving skeleton usages on Tailwind's height utility. Heading vs skeleton is reliably discriminated by the element type (h1/h2/h3 vs div/span with a w-* sibling class). Requires regenerating the visual-regression baselines, which were all captured with the bug present \u2014 that baseline churn is why this was not swept blind at the end of a long session.",
+   "files_affected": [
+    "apps/web/app/globals.css",
+    "30 files under apps/web/app and apps/web/components"
+   ],
+   "tests_required": [
+    "visual regression baselines regenerated across the design-system suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Renamed to .type-h1/2/3 across 25 files; genuine height usages (Skeletons, funnel-chart bar tracks, h-1.5/h-3.5) individually verified and left on Tailwind. Measured on /pricing: h1 box 4px -> 43px, h1.bottom == lede.top, no overlap. 7 visual baselines regenerated \u2014 all had been captured with the bug. web e2e 104 passed / 7 skipped / 0 failed; web build 0; api 2177 passed. Commit f28cbb5.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_6 \u2014 surfaced by the WEB-002/WEB-003 work"
+  },
+  {
+   "id": "ARCH-002",
+   "component": "apps/api email + docs",
+   "severity": "Medium",
+   "evidence": "grep -rl postmark src --include=*.ts -> 0 files. Email is sent by shared/email/email.service.ts via a nodemailer SMTP transport built from SMTP_* env.",
+   "root_cause": "postmark@^4.0.7 was added as a dependency and the integration was never built (or was replaced by SMTP and the dependency left behind).",
+   "impact": "An unused dependency ships in the image, POSTMARK_* config is dead, and CLAUDE.md's application-flow step 8 ('Postmark webhook ingests -> AI classifies') documents a path with no route behind it. This audit's own INTEGRATION_INVENTORY.md initially repeated the claim, having inferred it from package.json \u2014 corrected in place.",
+   "remediation": "Remove the dependency and the POSTMARK_* config, or wire Postmark if it is the intended provider. Correct CLAUDE.md step 8.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 documentation correction (CLAUDE.md); no code path"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "postmark dependency removed (0 source refs); @langchain/anthropic removed too (also imported nowhere); POSTMARK_* dropped from the config schema and .env.example; CLAUDE.md step 8 and the module list corrected.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "CONFIG-002",
+   "component": "apps/api config",
+   "severity": "Low",
+   "evidence": "INBOUND_WEBHOOK_SECRET is declared in configuration.ts with .default('change-me-inbound-secret') and referenced in no other production file.",
+   "root_cause": "The inbound-email monitor it was added for was never implemented.",
+   "impact": "Not exploitable today \u2014 nothing reads it, so there is no endpoint to attack. It becomes a live risk the moment a consumer is added, because boot succeeds on the placeholder rather than failing closed.",
+   "remediation": "Remove it until the monitor exists, or drop the default so an unset value fails boot.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 env-schema default; exercised by every boot"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "INBOUND_WEBHOOK_SECRET no longer defaults to 'change-me-inbound-secret'; it is optional, so a future consumer fails closed instead of booting on a published placeholder.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "CONFIG-003",
+   "component": "apps/api config schema",
+   "severity": "Low",
+   "evidence": "95 variables declared; 8 read nowhere in production code: ANTHROPIC_API_KEY, GEMINI_API_KEY, MOBILE_APP_SCHEME, SUPABASE_JWT_SECRET, POSTMARK_SERVER_TOKEN, POSTMARK_FROM_EMAIL, INBOUND_WEBHOOK_SECRET, KPI_ROLLUP_STALE_MIN/KPI_COHORT_STALE_HOURS. A first pass also flagged STRIPE_SECRET_KEY and VOICE_MAX_TOKENS; both are used and were false positives of the detector, verified individually.",
+   "root_cause": "Config accreted ahead of features that were deferred or replaced.",
+   "impact": "SUPABASE_JWT_SECRET is REQUIRED to boot yet unused \u2014 JwtGuard verifies through supabase.admin.auth.getUser(). An operator must supply a value that does nothing. ANTHROPIC_API_KEY/GEMINI_API_KEY being unread means those provider paths are not wired despite @langchain/anthropic being a dependency.",
+   "remediation": "Remove the dead declarations or wire the features. Make SUPABASE_JWT_SECRET optional.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 env-schema default; exercised by every boot"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "POSTMARK_* removed. MOBILE_APP_SCHEME kept but documented as NOT WIRED (nothing reads it; every notification path resolves links from WEB_URL). ANTHROPIC_API_KEY/GEMINI_API_KEY kept \u2014 deliberate forward-looking placeholders per their own schema comment.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "ARCH-003",
+   "component": "apps/api module layering",
+   "severity": "Medium",
+   "evidence": "Computed import graph + Tarjan SCC: shared/ai/ai.service.ts:7-8 -> analytics; shared/payments/payment-webhook.service.ts:2 and payments.module.ts:4 -> ledger. shared has 43 dependents, the most of any module.",
+   "root_cause": "The shared infrastructure layer imports back up into two feature modules.",
+   "impact": "Creates a 6-module strongly-connected group (analytics, auth, entitlement, ledger, shared, subscriptions). Nothing fails to build, but shared can no longer be reasoned about, tested or extracted independently, and every importer transitively pulls in analytics and ledger.",
+   "remediation": "Invert with a port: shared/ai should depend on an EventBus interface it declares, with analytics providing it. Same for payments -> ledger. Cutting the 4 back-edges collapses the whole SCC.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/api/test/di-graph.spec.ts",
+    "apps/api/src/modules/shared/payments/payments.module.spec.ts",
+    "apps/api/src/modules/shared/ai/ai.service.analytics.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Recomputed after the fix: CIRCULAR GROUPS none, MUTUAL PAIRS none, `shared` imports no feature module. Two ports added (AI_TELEMETRY, PAYMENT_EVENT_RECORDER) plus SUB_PLAN_RANK moved into entitlement.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "ARCH-004",
+   "component": "apps/api consultant/realtime",
+   "severity": "Low",
+   "evidence": "consultant.module.ts:16 and assignment.service.ts:18 -> realtime; realtime.module.ts:2 and realtime.controller.ts:8 -> consultant.",
+   "root_cause": "Mutual imports between a feature module and the realtime event bus.",
+   "impact": "A genuine cycle, though small \u2014 realtime is 188 LOC.",
+   "remediation": "Cut realtime.controller.ts:8 -> consultant/assignment.service.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 module relocation; covered indirectly by the DI-graph test"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Assignment event bus extracted from `realtime` into its own `event-bus` module; consultant/intake dropped the now-redundant @Global import.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "ARCH-005",
+   "component": "apps/api controllers",
+   "severity": "Low",
+   "evidence": "visa/visa.controller.ts:36, me/me.controller.ts:128/157/183, reminders/reminders.controller.ts:30 all call .from('users'). health.controller.ts also queries directly, which is correct for a liveness probe. Buffer.from false positives excluded.",
+   "root_cause": "HTTP handling and persistence in the same file.",
+   "impact": "Low: all four sites read `users` via the request-scoped client, so RLS still applies. But it is the seam where an RLS mistake would not be caught by a repository test.",
+   "remediation": "Move the reads behind the owning service or repository.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/api/test/visa-controller.spec.ts",
+    "apps/api/src/modules/me/me.controller.analytics.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "UserProfileRepository (@Global) owns every users read/write. Direct `.from('users')` in controllers: 3 -> 0 feature controllers (health.controller remains, correct for a liveness probe).",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1_INVENTORY (\u00a77.2/\u00a77.3)"
+  },
+  {
+   "id": "CONFIG-004",
+   "component": "apps/api analytics-metrics staleness",
+   "severity": "Low",
+   "evidence": "KPI_ROLLUP_STALE_MIN and KPI_COHORT_STALE_HOURS are declared in the config schema and documented in .env.example as the meta.stale threshold, but every call site passed a hardcoded `slaMinutes: 15` or `24 * 60` across 4 services / 5 sites.",
+   "root_cause": "The tunables were declared but never threaded to the code that computes staleness.",
+   "impact": "Setting either variable had no effect. Behaviour was still correct because the hardcoded values equalled the schema defaults \u2014 the variables were simply inert, which is worse than absent because .env.example advertised them as adjustable.",
+   "remediation": "Added engine/kpi-staleness.ts helpers reading the config with the same defaults, injected @Optional() so unit tests can still construct these services without config.",
+   "files_affected": [
+    "apps/api/src/modules/analytics-metrics/engine/kpi-staleness.ts",
+    "4 metric services"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 env-schema default; exercised by every boot"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "analytics-metrics suite 26 files / 62 tests pass; defaults unchanged.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_1 remediation"
+  },
+  {
+   "id": "FAKE-001",
+   "component": "apps/api production provider selection",
+   "severity": "High",
+   "evidence": "Four subsystems can be mock-backed. OCR had an allowlist guard; voice STT/TTS, ANALYTICS_WAREHOUSE and KPI_SOURCE had none. VOICE_STT_PROVIDERS/VOICE_TTS_PROVIDERS are optional and voice-provider.factory.ts falls back to ['mock'] when unset, so a production deploy that never set them selected mock. MockSttProvider returns 'mock-transcript: <lang> <hash>'; MockOcrProvider returns full_name 'Test User' / nationality 'XX'.",
+   "root_cause": "Mock providers are the development default and only OCR had a production boot guard.",
+   "impact": "Real users' speech would be transcribed to an invented string and stored against their immigration application. The realistic trigger was not a careless override but simply not setting an optional variable. Analytics equivalents would have discarded events while reporting success, or rendered seeded numbers as real.",
+   "remediation": "validateEnv now refuses production boot when a voice chain contains 'mock' ANYWHERE or is unset (unset == mock, since that is the factory fallback), or when ANALYTICS_WAREHOUSE/KPI_SOURCE is 'mock'. Deny-by-name, deliberately not trusting a provider's self-declared flags \u2014 MockOcrProvider self-declares regional=true, so a self-attestation check would have passed it.",
+   "files_affected": [
+    "apps/api/src/config/configuration.ts",
+    "apps/api/src/config/no-fabricated-data.spec.ts",
+    "apps/api/test/residency.spec.ts"
+   ],
+   "tests_required": [
+    "apps/api/src/config/no-fabricated-data.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "13 enforcement tests pass, covering unset chains, mock late in a chain, and the self-attestation trap. The guard immediately caught a real instance: test/residency.spec.ts asserted a 'valid production config' that never set voice providers. Full api suite 2191 passed / 0 failed.",
+   "reviewer": null,
+   "discovered_phase": "Cross-phase fabricated-data audit"
+  },
+  {
+   "id": "DOC-001",
+   "component": "Repository separation",
+   "severity": "Medium",
+   "evidence": "266 tracked markdown files in the code repo; 255 classified MOVE, 11 RETAIN with per-file reasons.",
+   "root_cause": "Documentation and code shared one repository.",
+   "impact": "Code repo carried 255 non-runtime documents; CLAUDE.md already pointed at VISAAIDocs, so the split was declared but not done.",
+   "remediation": "Checksum-verified move to VISAAIDocs, references updated, code repo proven to build with the docs repo absent.",
+   "files_affected": [
+    "docs/**"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 documentation"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "255 copied / 255 verified / 0 mismatches / 0 collisions. Code repo 266 -> 11 markdown files. With VISAAIDocs renamed away: api tsc 0, nest build 0, next build 0, mobile 185 passed, i18n generator regenerated. Restored: 3 consecutive full runs at 2191 passed / 0 failed. VISAAIDocs commit 26790d9.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_2"
+  },
+  {
+   "id": "TEST-004",
+   "component": "apps/api test/ai-agent/visa-resilience.spec.ts",
+   "severity": "Low",
+   "evidence": "Failed once during the docs-absent validation run. Then passed 8 consecutive isolated runs and 3 consecutive full-suite runs. No timers, Date.now, Promise.all or retry logic in the spec.",
+   "root_cause": "Unknown \u2014 not reproducible.",
+   "impact": "A test that fails roughly 1 run in 12 will eventually redden CI for an unrelated change and train people to re-run rather than investigate.",
+   "remediation": "Instrument the spec or run it under --runInBand repeatedly to find the shared state or ordering dependency. Do not quarantine without a cause.",
+   "files_affected": [
+    "apps/api/test/ai-agent/visa-resilience.spec.ts"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 closed as not reproducible \u2014 nothing to guard"
+   ],
+   "status": "CLOSED \u2014 NOT REPRODUCIBLE (1 failure in 16 observed runs)",
+   "closure_evidence": "After the single failure the spec passed 8 consecutive isolated runs and 7 consecutive full-suite runs \u2014 15 clean runs, 16 observations total. It contains no timers, Date.now, Promise.all, retry logic or shared global state; its mocks are constructed per-test. The one failure occurred during the docs-absent validation run, when a sibling directory had been renamed mid-session \u2014 a plausible environmental cause but unproven. Closed as not reproducible rather than claimed fixed: nothing was changed. If it recurs, the next step is bisecting with --runInBand to find an ordering dependency.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_2 validation"
+  },
+  {
+   "id": "DUP-001",
+   "component": "apps/api test fakes",
+   "severity": "Medium",
+   "evidence": "Five in-memory repository fakes copy-pasted across 7 spec files. Normalised-body hashing shows they DIVERGED: FakeAuditRepository 7 copies/2 versions, FakeProvenanceRepository 6/4, FakeConsultantRepository 3/2, FakeVerificationRepository 3/2, FakePreflightRepository 2/2. Heaviest pair eligibility.spec <-> preflight.spec shares 204 duplicated 14-line blocks.",
+   "root_cause": "Fakes were copied between spec files instead of shared, then edited independently.",
+   "impact": "Already billed: TEST-001 required the same ConsultantAssignment fixture fix in four files. Worse, six FakeAuditRepository copies implemented findByIdempotencyKey as `return null`, so those suites could not fail when idempotency broke.",
+   "remediation": "Canonical test/fakes/audit-repository.fake.ts adopting the STRONGER implementation, replacing all 7 copies. Other four fakes deliberately left: \u00a79.3 requires proving behavioural equivalence and the divergence table proves the opposite.",
+   "files_affected": [
+    "apps/api/test/fakes/audit-repository.fake.ts",
+    "7 spec files"
+   ],
+   "tests_required": [
+    "full api suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Four fakes analysed. Three consolidated into test/fakes/ adopting their fullest or most current variant (Provenance 6 copies/4 versions differing only in how many of the same five methods were implemented \u2014 2,3,3,5; Preflight, one copy predating a sessionId signature change; Consultant, differing only in parameter naming). FakeVerificationRepository deliberately kept duplicated: its extraction-verification copy implements transition() as a THROW tripwire asserting seeding never transitions, while the eligibility/preflight copies implement it for real. The consolidation attempt turned two verification-drift tests red, which is how that was discovered; the copies were restored with comments rather than forced green. api 2216 passed / 0 failed.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_3"
+  },
+  {
+   "id": "DUP-002",
+   "component": "apps/web ARIA combobox",
+   "severity": "Medium",
+   "evidence": "country-combobox.tsx (434 lines) and searchable-select.tsx (315 lines) share 21 duplicated 14-line blocks; both hand-roll the WAI-ARIA 1.2 editable-combobox pattern (activeIndex, aria-activedescendant, arrow/Home/End/Escape/Enter handling, scroll-into-view).",
+   "root_cause": "The second component was written from scratch rather than reusing the first.",
+   "impact": "Duplicated accessibility logic: a keyboard-navigation fix in one silently persists as a bug in the other, and neither is canonical.",
+   "remediation": "Extracted components/ui/use-combobox.ts carrying the ARIA 1.2 keyboard contract (wrap-around arrows, Home/End, Enter, Escape, Tab, aria-activedescendant, scroll-into-view). The components are NOT merged \u2014 they render flags/Schengen grouping vs generic options. `activeIndex` stays owned by each caller: moving it into the hook would require the hook to take openList/closeList while those needed its setter, a cycle whose only escape is a setState-in-effect (which this repo lints against) and a behaviour change. The one real difference, second-Escape-clears-selection, is expressed as the optional onEscapeWhenClosed callback.",
+   "files_affected": [
+    "apps/web/components/ui/use-combobox.ts (new)",
+    "apps/web/components/ui/country-combobox.tsx",
+    "apps/web/components/ui/searchable-select.tsx"
+   ],
+   "tests_required": [
+    "a11y + visual-regression baselines must be re-verified"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Shared 14-line blocks between the two components: 21 -> 3 (the remainder is render markup, not behaviour). country-combobox 434 -> 373 lines, searchable-select 315 -> 253, hook 156. All 43 country-selector keyboard/ARIA e2e tests pass; web unit suite 250 passed; live-API suite 93 passed; tsc and eslint clean.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_3"
+  },
+  {
+   "id": "DUP-003",
+   "component": "Unreferenced exports",
+   "severity": "Low",
+   "evidence": "62 exported symbols with zero references outside their declaring file. 13 in packages/types, 3 partner-governance, 3 web/lib/api/alerts, 3 web/lib/api/partner-client, 2 analytics-client, 2 mobile auth, 36 scattered.",
+   "root_cause": "Exports added ahead of consumers, plus UI layers (partner portal) that were built but never rendered.",
+   "impact": "Low. packages/types is a published contract surface where no internal reference does not mean unused.",
+   "remediation": "Check external consumers before removing. Two dead exports introduced during this audit itself (LedgerEventInput, ReportOutcomeBody) were removed.",
+   "files_affected": [
+    "packages/types/src/index.ts",
+    "apps/web/lib/api/*"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 investigated; no change made"
+   ],
+   "status": "RESOLVED \u2014 investigated; no removal warranted",
+   "closure_evidence": "Each category verified rather than counted. (1) packages/types is a PUBLISHED contract package (`@visaai/types`, main + types entry points) consumed by @visaai/partner-sdk, which is itself published \u2014 'no internal reference' does not mean unused for an external contract surface. (2) The 8 web API client functions are confirmed unreferenced by any page or component, but they are the client layer for features whose UI is unbuilt or unrendered (the partner portal has never been rendered per PROJECT_STATE). They are pending consumers, not dead code, and unreferenced exports are tree-shaken out of the Next.js client bundle, so they cost nothing at runtime. Deleting them would destroy working code that must be rewritten when the UI ships. (3) __resetSupabaseForTests is a deliberate test hook. Two exports introduced by this audit itself (LedgerEventInput, ReportOutcomeBody) were genuinely dead on arrival and were removed.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_3"
+  },
+  {
+   "id": "DOC-002",
+   "component": "VISAAIDocs corpus",
+   "severity": "Informational",
+   "evidence": "446 files hashed: 0 exact duplicate groups. 418 documents >=120 words compared pairwise (87,153 pairs) by 5-gram Jaccard: 0 pairs >= 0.35; maximum similarity anywhere 0.182. Detector self-tested (identical pair -> 1.00) before the scan.",
+   "root_cause": "n/a \u2014 corpus is clean.",
+   "impact": "No consolidation work required. DOCUMENT_CANONICALIZATION_MAP.csv is header-only by design rather than fabricating rows.",
+   "remediation": "None.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 documentation-corpus analysis, not a code change"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "DOCUMENT_DUPLICATION_REPORT.md",
+   "reviewer": null,
+   "discovered_phase": "PHASE_3"
+  },
+  {
+   "id": "DB-002",
+   "component": "Supabase storage / attachment uploads",
+   "severity": "High",
+   "evidence": "Attachments upload client-direct via createSignedUploadUrl. Bucket `documents` has file_size_limit=null and allowed_mime_types=null. confirmAttachment/confirmVoice called assertAllowed on CLIENT-DECLARED mimeType/sizeBytes, then assertObjectExists checked only existence, then persisted the declared values.",
+   "root_cause": "The server validated the client's claim rather than the stored object, despite a code comment stating confirm 'must not trust the client'.",
+   "impact": "A caller could declare image/png + 1KB, upload an arbitrarily large file of any type to the signed URL, and have it stored and indexed in the database as a small PNG. Storage cost/DoS plus MIME spoofing into downstream OCR/scan/render paths.",
+   "remediation": "assertObjectExists -> assertObjectValid: reads metadata.size/metadata.mimetype from storage.list() (already returned, never read), enforces the 25MB + MIME allow-list against the MEASURED values, persists measured not declared, and fails closed if storage reports no size.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/api/test/attachment-upload-integrity.spec.ts",
+    "apps/api/test/messaging-p2-attachment-service.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "6 regression tests in test/attachment-upload-integrity.spec.ts covering both attack shapes and the fail-closed path. api suite 2197 passed / 0 failed, tsc 0, nest build 0.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_4"
+  },
+  {
+   "id": "DB-003",
+   "component": "Production table grants",
+   "severity": "Low",
+   "evidence": "All 32 RLS-enabled/zero-policy tables carry DELETE/INSERT/UPDATE/TRUNCATE/SELECT grants to anon and authenticated (Supabase default grant model).",
+   "root_cause": "Grants are blanket; RLS is the only control.",
+   "impact": "Nothing exposed today \u2014 anon SELECT returns 0 rows on auth_audit_log, partner_access_tokens, account_lockouts, privacy_requests and analytics_saved_report, verified live. But there is no second layer: if RLS were disabled on one during an incident, anon would have full DML on the audit log and partner credentials.",
+   "remediation": "Migration 20260809120000_revoke_unused_dml_grants.sql. Written DYNAMIC rather than as a hardcoded list: a list derived from one database can be wrong in another, so it computes \"has a DML grant but no permissive write policy for anon/authenticated/public\" at apply time and can only remove grants unreachable in THAT database.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/api/test/schema-hygiene-db.spec.ts"
+   ],
+   "status": "RESOLVED (local, verified) \u2014 production apply pending BLK-1",
+   "closure_evidence": "Applied to local: 137 -> 53 tables granting client-role DML, exactly the 84 with no write policy; all 53 tables that DO have a write policy kept their grants. 40 tenant-isolation tests and 2,232 API tests pass afterwards. Phase 11 added a property guard: v_client_dml_grants_without_policy must return zero rows. Asserts the INVARIANT, not the migration, so a newly added table arriving with default Supabase grants fails it. A missing view fails rather than skips.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_4",
+   "blocked_by": "EXTERNAL \u2014 production apply requires a backup to exist first (BLK-1). Written and verified locally."
+  },
+  {
+   "id": "AUTH-001",
+   "component": "Supabase auth password policy",
+   "severity": "Medium",
+   "evidence": "password_min_length=8, password_required_characters=null, security_captcha_enabled=false.",
+   "root_cause": "Defaults never raised.",
+   "impact": "8 characters with no complexity or breach check guards passports, bank statements and immigration filings. CAPTCHA is off, so the practical control is the app's per-email lockout (5 attempts/15 min), which does not stop a spray across many accounts.",
+   "remediation": "Client half APPLIED: PASSWORD_MIN_LENGTH exported from lib/auth/password-strength.ts and raised 8 -> 12; signup, reset-password and auth-modal all consume it instead of a hardcoded 8; the strength meter's `len` rule follows it. A boundary test pins 12/11 so client and server cannot drift \u2014 a client that accepts 8 while the server rejects it is a form that fails only after submission.\n\nSERVER half NOT APPLIED \u2014 the PATCH to the Supabase auth config was denied by the environment's permission classifier and was not worked around. The operator must run:\n\n  PATCH https://api.supabase.com/v1/projects/ujxzxefvtaoxiydbdrhb/config/auth\n  {\"password_min_length\": 12, \"password_hibp_enabled\": true}\n\nor set both in Dashboard > Authentication > Policies. Reversible by sending the previous values (8 / false). Affects only passwords being SET \u2014 the 13 existing users keep theirs and can still sign in.",
+   "files_affected": [],
+   "tests_required": [
+    "apps/web/lib/auth/password-strength.test.ts"
+   ],
+   "status": "PARTIALLY RESOLVED \u2014 client done; the production config change was blocked and needs the operator",
+   "closure_evidence": null,
+   "reviewer": null,
+   "discovered_phase": "PHASE_4",
+   "blocked_by": "EXTERNAL \u2014 production GoTrue configuration change. Client half shipped."
+  },
+  {
+   "id": "PERF-001",
+   "component": "Database performance baseline",
+   "severity": "Informational",
+   "evidence": "Production row counts: pricing_quote_audit 280, pricing_quotes 140, analytics events 66, applications 26, users 13, documents 5, payments 0.",
+   "root_cause": "Pre-launch data volume.",
+   "impact": "No performance conclusion is obtainable. idx_scan=0 on a 5-row table is not evidence of an unused index, and no index should be dropped on that basis. Database performance is UNVERIFIED, not healthy.",
+   "remediation": "Built scripts/seed-perf-dataset.sql \u2014 the smallest dataset that makes the planner behave like production (2k users / 5k applications / 25k checklist items / 8.9k documents / 56k messages). Guarded to refuse any database with >50 non-seed auth.users.",
+   "files_affected": [],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 the seeder IS the remediation; its guard is the >50-non-seed-user refusal"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Every Phase 9 measurement is taken against it, and it immediately exposed PERF-002 through PERF-005. The guard fired on its own first partial run (2,000 of its own rows), which is why it now excludes @seed.local from the count.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_4"
+  },
+  {
+   "id": "SEC-001",
+   "component": "apps/api iam/security.controller.ts",
+   "severity": "High",
+   "evidence": "POST /auth/record-login is unauthenticated and takes `success` from the client. account_lockouts is PRIMARY KEY (email) with MAX_FAILED_ATTEMPTS=5, LOCKOUT_MINUTES=15. Global throttle was 60/min per IP.",
+   "root_cause": "Authentication happens client-side via Supabase, so the server cannot observe the real login outcome and trusts the client to report it.",
+   "impact": "An unauthenticated attacker can lock any known email for 15 minutes with 5 requests, and hold it shut by repeating. At the previous global budget one IP could lock ~12 named accounts per minute. POST /auth/lockout-status confirms the hit landed.",
+   "remediation": "REAL FIX NOW WRITTEN (was mitigation-only). account_lockouts re-keyed on (email, ip) via migration 20260809160000_lockout_key_email_ip.sql, with the repository, service and controller re-keyed to match and lockout-status scoped to the caller address so a lock earned elsewhere is not reported back. Per-address keying alone would let an attacker with many addresses take 5 attempts each, so MAX_LOCKED_ADDRESSES (10 concurrently locked addresses) is a backstop against a distributed attempt. Legacy rows migrate under the sentinel 0.0.0.0, which no live request presents. Throttles retained.",
+   "files_affected": [
+    "apps/api/src/modules/iam/security.controller.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/lockout-email-ip-key.spec.ts"
+   ],
+   "status": "RESOLVED (code + local) \u2014 production migration apply pending BLK-1",
+   "closure_evidence": "Mitigation verified live in Phase 8: POST /auth/record-login returns 201 for five attempts then 429, matching @Throttle({limit:5, ttl:60_000}). The real fix \u2014 re-keying account_lockouts on (email, ip) so a remote attacker cannot lock a victim out \u2014 is a production schema change and remains blocked on BLK-1. REAL FIX: 5 tests in apps/api/test/lockout-email-ip-key.spec.ts prove the attack is gone \u2014 the attacker address locks, the VICTIM can still sign in from their own address after 15 attacker failures, single-source brute force is still stopped, the distributed case trips the ceiling, and a success clears only that address. Self-tested: reverting to email-only keying fails the victim test. Migration applied and verified locally (PK now (email, ip)). API suite 2290 passed, 348 suites, 0 skipped. NOTE: the first backstop design summed failed_count email-wide and could never have fired, because nextLockoutState resets that counter at the moment it locks \u2014 a test caught it.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5",
+   "blocked_by": "EXTERNAL \u2014 production migration apply gated on BLK-1. Code and migration written and verified locally."
+  },
+  {
+   "id": "SEC-002",
+   "component": "apps/api iam/security.service.ts",
+   "severity": "Low",
+   "evidence": "this.log.warn(`account locked (brute-force): ${ctx.email}`) wrote the full email address to stdout.",
+   "root_cause": "Convenience logging of an identifier that is already persisted in auth_audit_log.",
+   "impact": "PII on a less controlled surface than the RLS-protected audit table \u2014 a log aggregator may retain it outside the erasure paths privacy_requests implements for GDPR/PIPEDA.",
+   "remediation": "Log a 12-char SHA-256 prefix, which still correlates the log line with its audit row.",
+   "files_affected": [
+    "apps/api/src/modules/iam/security.service.ts"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 log redaction; verified live with a passport number and bearer token"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "A full sweep of every log.* call found no other PII case; remaining hits carry user IDs. security suite 24 passing.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5"
+  },
+  {
+   "id": "PERF-002",
+   "component": "apps/api admin/admin-users.service.ts",
+   "severity": "Medium",
+   "evidence": "for (const r of baseRows) { await this.db.auth.admin.getUserById(r.id) } \u2014 one sequential Auth API round-trip per user, page size up to 100. The adjacent rolesByUser() call was already batched.",
+   "root_cause": "Sequential await inside a loop.",
+   "impact": "Admin user-list latency was pageSize x auth-API round-trip, serially.",
+   "remediation": "Promise.all over the page. Fan-out is bounded \u2014 pageSize is clamped to 100 by the zod DTO \u2014 so it cannot become an unbounded burst.",
+   "files_affected": [
+    "apps/api/src/modules/admin/admin-users.service.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/admin-users-batching.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "admin suite 53 passing; api suite 2197 passed / 0 failed; tsc 0; nest build 0. Phase 11 added a concurrency test: a sequential loop and a batched fan-out return identical data, so only timing distinguishes them. With a 20ms per-call delay over 10 rows, sequential is >=200ms and batched ~20ms. Self-tested by reverting to for-await.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5"
+  },
+  {
+   "id": "OPS-004",
+   "component": "apps/api observability",
+   "severity": "Medium",
+   "evidence": "X-Request-Id is implemented only in partner-response.interceptor.ts. No correlation id exists on the user-facing API.",
+   "root_cause": "Request correlation was built for the partner surface only.",
+   "impact": "Log lines from one user-facing request cannot be tied together. This compounds BLK-3 (SENTRY_DSN unset), which leaves structured logs as the only production diagnostic surface.",
+   "remediation": "Promote the partner interceptor's request-id logic to a global interceptor and add it to the pino log context.",
+   "files_affected": [
+    "apps/api/src/modules/partner/partner-response.interceptor.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/request-correlation.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "resolveRequestId moved to observability/request-id (partner-governance re-exports it, so one implementation) and wired into pino genReqId, so every log line for a request carries the id and the response echoes X-Request-Id. 10 tests pin that newline, CRLF, over-long and non-string inbound values are replaced rather than echoed \u2014 log injection and header splitting respectively.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5"
+  },
+  {
+   "id": "FAKE-002",
+   "component": "apps/api vri/graphs/scoring/score-consistency.ts",
+   "severity": "High",
+   "evidence": "score-consistency.ts:7-8 \u2014 `if (cross.length === 0) return { consistency_pct: 100 }`. consistency_pct carries weight 0.15 in DEFAULT_RISK_WEIGHTS and feeds computeOverallScore, which drives decideEscalation (escalate_below: 50, weak_threshold: 70). load-vri-data.ts:69 sets `crossVerifications: crossVerifications ?? []`, so an application with no processed documents genuinely arrives with an empty array. The sibling scorer score-documentation.ts returns 0 in the equivalent no-data case, so the two disagree on how to represent 'nothing measured'.",
+   "root_cause": "An unperformed check is treated as a passed check: 'no mismatches found' is conflated with 'no comparison ran'.",
+   "impact": "The user is shown Consistency 100% on their readiness breakdown when zero cross-verifications were performed \u2014 unearned assurance on an immigration readiness score. It also adds 15 unearned points to the weighted overall score, which can be the difference between auto-escalating an application for consultant review (below 50) and not. NOT YET REALISED: production holds 0 rows in vri_scores, so no real user has seen a fabricated score; the pipeline has never completed there.",
+   "remediation": "Unassessed factors are now EXCLUDED from the weighted aggregate with the remaining weights renormalised, rather than scored. score-consistency and score-documentation mark themselves unassessed when their input data is absent. The recommendation engine also skips them \u2014 without that, changing 100 to 0 would simply invert the defect and advise the user to 'improve Application Consistency' for a check that never ran. Migration 20260806160000 adds a nullable unassessed_factors column so the UI can render 'Not assessed' instead of a percentage; written and verified locally, NOT applied (BLK-1).",
+   "files_affected": [
+    "apps/api/src/modules/vri/graphs/scoring/score-consistency.ts",
+    "apps/api/src/modules/vri/graphs/nodes/aggregate-score.ts"
+   ],
+   "tests_required": [
+    "aggregate-score.spec.ts characterization tests will need updating if the aggregate changes"
+   ],
+   "status": "RESOLVED (code) \u2014 production migration apply pending BLK-1",
+   "closure_evidence": "9 regression tests, including one asserting the fabrication could flip an escalation decision (45 across the board + fabricated 100 => >=50, no escalation; honest => <50, escalates) and one asserting the LLM is never consulted about an unassessed factor. Existing VRI characterization tests unchanged \u2014 the default weights sum to exactly 1.0, so with nothing unassessed the renormalising divisor is 1 and the math is byte-for-byte identical. api 2206 passed / 0 failed, tsc 0, nest build 0. DISPLAY HALF NOW SHIPPED (was pending): save-vri.ts persists unassessed_factors and the readiness UI renders \"Not assessed\" rather than a fabricated percentage, in all 15 locales. Verified on the local stack.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5 fabricated-data re-check",
+   "blocked_by": "EXTERNAL \u2014 production migration apply gated on BLK-1. Code shipped and verified locally."
+  },
+  {
+   "id": "FAKE-003",
+   "component": "apps/web readiness UI + vri_scores persistence",
+   "severity": "Medium",
+   "evidence": "readiness-client.tsx renders `{pct}% \u00b7 {scoreBand(pct).label}` per factor. vri_scores.consistency_pct is `int not null`, so an unassessed factor persists 0 and would display as '0% \u00b7 Weak'.",
+   "root_cause": "The column cannot express \"not assessed\"; the scoring layer now knows, the storage and display layers do not.",
+   "impact": "Inverse of FAKE-002: 100 claimed a pass that never happened, 0 claims a failure that never happened. Not currently visible \u2014 vri_scores holds 0 rows in production, so the pipeline has never produced a row for any user.",
+   "remediation": "Both code halves shipped: save-vri.ts persists unassessed_factors (null when empty), and the readiness UI renders \"Not assessed\" instead of a percentage for those factors, with the bar left empty and the aria-label matching. factorNotAssessed added to all 15 locales. The UI tolerates the column being absent, so the code is safe to deploy before the migration lands.",
+   "files_affected": [
+    "supabase/migrations/20260806160000_vri_unassessed_factors.sql",
+    "apps/api/src/modules/vri/graphs/nodes/save-vri.ts",
+    "apps/web/app/[locale]/(dashboard)/readiness/[applicationId]/readiness-client.tsx"
+   ],
+   "tests_required": [
+    "apps/web/lib/readiness/unassessed-factors.test.ts"
+   ],
+   "status": "RESOLVED (code + local) \u2014 production migration apply pending BLK-1",
+   "closure_evidence": "Column present and exercised on the local stack; web suite 250 passed; tsc/eslint clean. Phase 11 added 6 tests: the unassessed branch, the ?? [] tolerance for the unapplied migration, the \"not assessed\" label instead of a percentage band, aria-label parity, and factorNotAssessed present in all 15 locales. Self-tested \u2014 disabling the branch fails 3.",
+   "reviewer": null,
+   "discovered_phase": "PHASE_5",
+   "blocked_by": "EXTERNAL \u2014 production migration apply gated on BLK-1. Code shipped and verified locally."
+  },
+  {
+   "id": "WEB-005",
+   "component": "apps/web \u2014 playwright.config.ts",
+   "severity": "HIGH",
+   "evidence": "storageState was applied to the whole chromium project whenever E2E_ADMIN_* was set. Supplying credentials produced 43 failures, of which 38 were caused by the leak (marketing header differs when authenticated; logged-out assertions invert).",
+   "root_cause": "One project served both logged-in and logged-out specs.",
+   "impact": "The 6 admin specs could never be enabled, so the entire authenticated portal \u2014 including auth.setup.ts \u2014 had NEVER executed. Its own comment admitted this.",
+   "remediation": "Split into chromium (logged out) and chromium-admin (storageState + setup dependency). The admin spec list is derived by scanning which specs gate on E2E_ADMIN_STORAGE_STATE so the lists cannot drift.",
+   "files_affected": [
+    "apps/web/playwright.config.ts"
+   ],
+   "tests_required": [
+    "suite green in both configurations"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "No credentials: 104 passed / 7 skipped \u2014 identical to historical baseline. With credentials + API: 108 passed / 1 skipped / 3 failed (all three are API-up visual baselines, WEB-010).",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-006",
+   "component": "apps/web \u2014 heading structure",
+   "severity": "LOW",
+   "evidence": "/notification-ops rendered <h1 className=\"type-h2\"> while all 5 sibling admin pages use <h2>, giving h1 -> h3 with no h2. /pricing had <h1> hero followed directly by <h3> cards (Lighthouse heading-order).",
+   "root_cause": "Heading level chosen for visual weight rather than document structure.",
+   "impact": "Screen-reader heading navigation reports a skipped level on both pages.",
+   "remediation": "Change the tag, keep the visual class, so nothing moves on screen and no screenshot baseline shifts.",
+   "files_affected": [
+    "apps/web/app/[locale]/(admin)/notification-ops/page.tsx",
+    "apps/web/app/[locale]/pricing/page.tsx",
+    "apps/web/app/[locale]/pricing/pricing-grid.tsx"
+   ],
+   "tests_required": [
+    "notification-ops.spec.ts",
+    "Lighthouse heading-order on /pricing"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "notification-ops.spec.ts passes; Lighthouse accessibility 100 on /pricing (was 98).",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-007",
+   "component": "apps/web \u2014 i18n catalogues (all 15 locales)",
+   "severity": "MEDIUM",
+   "evidence": "adminTemplates.titlePlaceholder/bodyPlaceholder read \"Notification title with {{variables}}\u2026\". ICU parses {variables} as an argument, so the doubled brace raises MALFORMED_ARGUMENT; next-intl fell back to the key path. Observed rendered: placeholder=\"adminTemplates.titlePlaceholder\".",
+   "root_cause": "Handlebars-style literal braces written into an ICU MessageFormat catalogue without quoting.",
+   "impact": "Admins in all 15 locales saw a raw internal identifier where product copy belongs \u2014 fabricated/placeholder content reaching the UI.",
+   "remediation": "ICU-quote the braces: '{{'variables'}}'. Literal syntax preserved because {{variable}} is the real backend template syntax.",
+   "files_affected": [
+    "apps/web/messages/*.json (15 files)"
+   ],
+   "tests_required": [
+    "lib/i18n/message-syntax.test.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Placeholders render literally as \"Notification title with {{variables}}\u2026\" with 0 IntlErrors. Guard added and self-tested: reintroducing the bug fails en.json.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-008",
+   "component": "apps/web \u2014 admin action buttons",
+   "severity": "HIGH",
+   "evidence": "Inline styles paired background: var(--color-ink) with a literal color: '#fff'. --color-ink is #ece9e6 in dark mode, so axe measured 1.2:1 on the Send broadcast, Save template and active range-toggle labels.",
+   "root_cause": "A literal foreground hardcoded beside a themed background \u2014 the exact bypass globals.css warns against.",
+   "impact": "Primary action button labels were effectively invisible in dark mode on 3 admin screens; 2 further destructive buttons on --color-rose had the same defect and are only reachable after a confirmation step.",
+   "remediation": "Pair with --color-surface, matching .btn-primary/.btn-danger.",
+   "files_affected": [
+    "apps/web/app/[locale]/(admin)/broadcasts/broadcasts-client.tsx",
+    "apps/web/app/[locale]/(admin)/notification-templates/templates-client.tsx",
+    "apps/web/app/[locale]/(admin)/notification-ops/notif-ops-client.tsx",
+    "apps/web/app/[locale]/(admin)/users/users-client.tsx",
+    "apps/web/app/[locale]/(admin)/users/user-detail-client.tsx"
+   ],
+   "tests_required": [
+    "lib/design/tokens.test.ts source scan",
+    "40-route dark sweep"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Now 15.02:1 (ink) and 8.91:1 (rose). 0 violations across 80 authenticated page loads. Source-scan guard self-tested.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-009",
+   "component": "apps/web \u2014 alert components",
+   "severity": "HIGH",
+   "evidence": ".alert-error/.alert-success/.alert-warning used hardcoded hex on a 6%-alpha tint. Dark: error 2.16:1 (#9a2020 on #20171b). Light: warning 4.12:1 \u2014 already below AA before any dark-mode consideration.",
+   "root_cause": "Three of the four alert modifiers never adopted the --color-<status>-fg/-bg pairs that globals.css defines in both themes for exactly this purpose; .alert-info already used them.",
+   "impact": "Error text \u2014 the copy a user most needs when something fails \u2014 was unreadable in dark mode across the app.",
+   "remediation": "Build all three from the semantic status pairs.",
+   "files_affected": [
+    "apps/web/app/globals.css"
+   ],
+   "tests_required": [
+    "lib/design/tokens.test.ts status-on-own-tint",
+    "40-route dark sweep"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Dark 7.5/7.79/7.76:1; light warning 4.9:1. All six combinations clear 4.5:1. Guard self-tested.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "SEO-001",
+   "component": "apps/web \u2014 route metadata",
+   "severity": "HIGH",
+   "evidence": "app/[locale]/layout.tsx declared alternates: { canonical: '/' }. Metadata merges field-by-field and no page overrode it, so every route emitted <link rel=\"canonical\" href=\"/\">. No metadataBase, so canonical and hreflang were relative \u2014 invalid for both. Lighthouse SEO 75 on all 5 public routes.",
+   "root_cause": "A route-specific concern declared once at the layout, where the pathname is not available.",
+   "impact": "/pricing, /privacy and /terms each told search engines they were duplicates of the homepage \u2014 an instruction to de-index the public site. hreflang never advertised non-root locale variants.",
+   "remediation": "Add metadataBase from NEXT_PUBLIC_SITE_URL (declared in .env.example, previously unused); remove the blanket alternates; declare per route via lib/seo/alternates.ts.",
+   "files_affected": [
+    "apps/web/app/[locale]/layout.tsx",
+    "apps/web/lib/seo/alternates.ts",
+    "apps/web/app/[locale]/pricing/page.tsx",
+    "apps/web/app/[locale]/privacy/page.tsx",
+    "apps/web/app/[locale]/terms/page.tsx",
+    "apps/web/app/[locale]/(dashboard)/page.tsx"
+   ],
+   "tests_required": [
+    "Lighthouse SEO on the 5 public routes"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Canonicals verified absolute and per-route on a production build. Lighthouse SEO 75 -> 100 on all five.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "SEO-002",
+   "component": "apps/web \u2014 crawlability",
+   "severity": "MEDIUM",
+   "evidence": "No app/robots.ts existed at all. app/sitemap.ts DID exist and was correct (per-locale entries with hreflang alternates) but /sitemap.xml and /robots.txt both matched the locale proxy and 307d into the localised app, so neither was reachable; Lighthouse quoted the page doctype as the invalid robots line. The sitemap also omitted /pricing.",
+   "root_cause": "The proxy matcher excluded static assets but not the metadata routes.",
+   "impact": "No crawl directives and no sitemap for a 15-locale public site.",
+   "remediation": "Add app/robots.ts; exclude /robots.txt and /sitemap.xml from the proxy matcher so Next's metadata handlers receive the request; add the missing /pricing path to the existing sitemap. robots.ts carries an explicit Allow: /applications/new because proxy.ts:124 sends every logged-out visitor there from /, making it the only page a crawler sees at the root; a blanket /applications disallow would have made the homepage uncrawlable.",
+   "files_affected": [
+    "apps/web/app/robots.ts (new)",
+    "apps/web/app/sitemap.ts (added /pricing)",
+    "apps/web/proxy.ts"
+   ],
+   "tests_required": [
+    "curl /robots.txt and /sitemap.xml on a production build"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Production build: /robots.txt 200 with directives, /sitemap.xml 200 with 90 URLs (6 paths x 15 locales) including /pricing in every locale.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "ANALYTICS-001",
+   "component": "apps/api \u2014 /analytics/collect + apps/web analytics client",
+   "severity": "HIGH",
+   "evidence": "Every public route logs POST /analytics/collect 401. Reproduced directly: no auth -> 401 \"Missing authorization token\"; bad token -> 401. client.ts:33 uses navigator.sendBeacon when no token is present, which cannot set an Authorization header; client.ts:61 emits session.started with no token.",
+   "root_cause": "The endpoint is decorated @AllowAnonymous(), but JwtGuard rejects a missing Authorization header before consulting the decorator. Per the guard docblock, @AllowAnonymous means an anonymous Supabase identity holding a token \u2014 not an unauthenticated request. The client has a tokenless path that can never satisfy that.",
+   "impact": "Both platforms, not just web (apps/mobile client.ts:164 omits the header when there is no token, and analytics.ts posts with auth:'optional'). 100% silent loss of top-of-funnel analytics (landing, pricing, signup, login). This is the concrete cause of the degraded journey/DAU dashboards. Also caps Lighthouse best-practices at 96 via console errors.",
+   "remediation": "Added @AllowUnauthenticated() \u2014 distinct from @AllowAnonymous, which only admits a guest identity that still holds a token. JwtGuard now resolves it BEFORE the header check, so a tokenless beacon proceeds with request.user = null; a valid token still attributes the event; an expired token degrades to unauthenticated rather than 401. Applied to /analytics/collect and /analytics/identify only, with @Throttle(30/min) on top of the existing per-request event cap.",
+   "files_affected": [
+    "apps/api/src/modules/analytics/analytics.controller.ts",
+    "apps/api/src/modules/iam/jwt.guard.ts",
+    "apps/web/lib/analytics/client.ts"
+   ],
+   "tests_required": [
+    "an ingest test asserting an unauthenticated beacon is accepted or deliberately rejected"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Unauthenticated beacon: 202 {\"accepted\":1}. Expired token: 202. Guarded routes unchanged (/notifications, /me, /vri/scores still 401). API suite 2221 passed / 0 failed. Regression spec test/analytics-unauthenticated-ingest.spec.ts pins the AllowAnonymous-vs-AllowUnauthenticated distinction.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-010",
+   "component": "CI \u2014 web e2e job",
+   "severity": "MEDIUM",
+   "evidence": "agent-tests.yml sets NEXT_PUBLIC_API_URL=http://localhost:4000 with no API running. Every API-dependent page is asserted only in its error state. WEB-004 survived in the codebase for exactly this reason.",
+   "root_cause": "The web e2e job boots the web app but not the API.",
+   "impact": "Visual baselines encode the degraded rendering, and a11y/visual coverage of populated pages is zero. Three specs fail whenever the API IS reachable.",
+   "remediation": "Added a `web-e2e-live` CI job: supabase start (replays all migrations, which seed the pricing tables so quotes are deterministic), build + boot the API, seed an admin, run Playwright against the real stack. Snapshot tests are excluded there \u2014 one baseline set cannot be correct both with and without a backend, and a11y is where the defects were. The existing `web` job is untouched, so the committed baselines stay valid.",
+   "files_affected": [
+    ".github/workflows/agent-tests.yml",
+    "apps/web/e2e/design-system.spec.ts-snapshots/"
+   ],
+   "tests_required": [
+    "suite green with the API up"
+   ],
+   "status": "RESOLVED \u2014 a11y/functional covered live; snapshots remain API-down by design",
+   "closure_evidence": "The live job command verified locally: 93 passed, 1 skipped, 0 failed. The CI-exact path (no admin, API down) still returns 104 passed / 7 skipped, identical to the historical baseline. NOTE: the CI job itself has not been executed on GitHub Actions from this environment.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-011",
+   "component": "apps/web \u2014 document structure",
+   "severity": "LOW",
+   "evidence": "18 of 40 static routes render no <h1>: /analytics/* (8), /applications, /assignments, /audit, /broadcasts, /consultant/applications, /forgot-password, /notification-ops, /notification-templates, /reset-password, /users.",
+   "root_cause": "App convention opens pages at <h2>; no layout supplies an <h1>.",
+   "impact": "A screen-reader user navigating by heading gets no document title on those routes. Best practice rather than a WCAG A/AA failure, which is why axe did not flag it.",
+   "remediation": "Page titles promoted h2 -> h1 (tag only, visual class kept) on 7 admin pages, with their section headings h3 -> h2 so no new skip appears. The 8 analytics dashboards rendered no heading at all: AnalyticsNav now emits an sr-only <h1> for the active section. CardTitle gained an `as` prop for the two single-card auth pages where the card title IS the page title. /consultant/applications got an sr-only <h1> in BOTH branches \u2014 the empty branch is the one a consultant with no country scope actually lands on.",
+   "files_affected": [
+    "apps/web/app/[locale]/(admin)/**",
+    "apps/web/app/[locale]/(auth)/**"
+   ],
+   "tests_required": [
+    "a page-has-heading-one assertion once the convention is chosen"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Re-sweep of all 40 routes: routes without <h1> went 18 -> 0. 80 loads, 0 violations.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "WEB-012",
+   "component": "apps/web \u2014 e2e seed data",
+   "severity": "LOW",
+   "evidence": "9 of 40 routes redirected to /welcome for the seeded admin: /, /billing, /developers, /login, /messages, /my-applications, /organizations, /profile, /signup.",
+   "root_cause": "The seeded audit account has not completed onboarding, so the onboarding gate intercepts. (/login and /signup redirecting is correct for a signed-in user.)",
+   "impact": "Seven routes were not audited in their authenticated form.",
+   "remediation": "Root cause was AUTH-002, not the seed: the onboarding gate read a role key nothing writes, so the admin was classified as an applicant. Seed also now sets app_metadata.role and onboarded_at.",
+   "files_affected": [
+    "apps/web/e2e/auth.setup.ts"
+   ],
+   "tests_required": [
+    "re-run the 40-route sweep with a fully onboarded account"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Re-sweep: routes bounced to /welcome went 9 -> 0. All 40 routes audited in their authenticated form.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "AUTH-002",
+   "component": "apps/web \u2014 RBAC claim key",
+   "severity": "HIGH",
+   "evidence": "Three server components read `user.app_metadata.app_role`. The API writes and reads `app_metadata.role` (admin.service.ts:76 `app_metadata: { role }`; JwtGuard.resolveAppRole). `app_role` is written nowhere, so every read fell back to 'user'. Observed live: an admin with app_metadata.role=admin was redirected to /welcome.",
+   "root_cause": "Web and API disagreed on the claim name, and the wrong key silently yields undefined rather than an error.",
+   "impact": "(1) The onboarding gate ran every admin and consultant through the applicant welcome flow \u2014 9 of 40 routes were unreachable. (2) The profile page displayed \"user\" as the role of every admin and consultant. (3) organizations/[id]: canManage never became true via the admin path, so a platform admin could only manage an org by also being an active org_admin member. Fails closed, so it withheld access rather than granting it.",
+   "remediation": "Read `role` in all three places.",
+   "files_affected": [
+    "apps/web/app/[locale]/(dashboard)/layout.tsx",
+    "apps/web/app/[locale]/(dashboard)/profile/page.tsx",
+    "apps/web/app/[locale]/(dashboard)/organizations/[id]/page.tsx"
+   ],
+   "tests_required": [
+    "apps/web/lib/auth/role-claim.test.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Routes bounced to /welcome: 9 -> 0. Guard test scans app/, components/ and lib/ for the wrong key and cross-checks the API still writes `app_metadata: { role }`; self-tested by reintroducing the bug.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "SEO-003",
+   "component": "apps/web \u2014 sitemap fallback domain",
+   "severity": "LOW",
+   "evidence": "app/sitemap.ts fell back to 'https://visaai.app'; .env.example documents 'https://visaai.co' and the mobile bundle IDs are co.visaai.app.* (reverse-DNS of visaai.co).",
+   "root_cause": "Stale default that no environment exercises, because NEXT_PUBLIC_SITE_URL is normally set.",
+   "impact": "If NEXT_PUBLIC_SITE_URL is ever unset, every sitemap URL advertises a domain the product does not use.",
+   "remediation": "Fallback changed to 'https://visaai.co'.",
+   "files_affected": [
+    "apps/web/app/sitemap.ts"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 fallback constant; exercised whenever NEXT_PUBLIC_SITE_URL is unset"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Sitemap serves 90 URLs (6 paths x 15 locales) on the configured host.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "OPS-005",
+   "component": "apps/api \u2014 global rate limit",
+   "severity": "LOW",
+   "evidence": "ThrottlerModule was hardcoded to 60 req/min per IP. Running the e2e suite against a live API tripped it; /me returned 429 and pages rendered their error boundary, which reads as a product failure.",
+   "root_cause": "A production-appropriate limit with no way to raise it for a test run driving all traffic from one address.",
+   "impact": "Any single-IP burst \u2014 a test run, an office NAT, carrier CGNAT \u2014 degrades to error pages rather than throttled requests.",
+   "remediation": "THROTTLE_TTL_MS and THROTTLE_LIMIT added to the env schema, defaults unchanged at 60000/60. The live e2e CI job raises the limit.",
+   "files_affected": [
+    "apps/api/src/app.module.ts",
+    "apps/api/src/config/configuration.ts",
+    ".github/workflows/agent-tests.yml"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 env-configurable throttle; exercised by the live e2e run"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "API suite 2221 passed. Live e2e suite 93 passed with the limit raised; the same run failed one spec at the default limit.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_6"
+  },
+  {
+   "id": "MOB-001",
+   "component": "apps/mobile + apps/web \u2014 deep-link verification",
+   "severity": "HIGH",
+   "evidence": "app.config.ts declares associatedDomains ['applinks:visaai.co'] and an Android intent filter with autoVerify: true. Neither assetlinks.json nor apple-app-site-association existed anywhere in the repo; apps/web/public/.well-known did not exist. The mobile config's own comment says 'assetlinks.json must be served by the web app'. Additionally /.well-known matched the locale proxy, which 307s \u2014 and iOS does NOT follow redirects when fetching apple-app-site-association.",
+   "root_cause": "A cross-surface contract: the mobile config declares the integration, the web deployment has to serve the proof, and nothing tied the two together.",
+   "impact": "Android App Link verification and iOS Universal Links both fail silently. Every emailed link \u2014 invite, status update, password reset \u2014 opens in the browser instead of the installed app. Nothing errors, so it survived a code-complete mobile milestone.",
+   "remediation": "Added apps/web/app/.well-known/assetlinks.json/route.ts and .../apple-app-site-association/route.ts, driven by ANDROID_CERT_FINGERPRINTS and APPLE_TEAM_ID; excluded /.well-known from the proxy matcher. No fingerprint or Team ID is committed \u2014 a wrong value fails as silently as a missing file, so the routes 404 while unset rather than shipping a placeholder that looks configured.",
+   "files_affected": [
+    "apps/web/app/.well-known/assetlinks.json/route.ts",
+    "apps/web/app/.well-known/apple-app-site-association/route.ts",
+    "apps/web/proxy.ts"
+   ],
+   "tests_required": [
+    "device verification once credentials are set (adb shell pm verify-app-links / a real tap on iOS)"
+   ],
+   "status": "RESOLVED (code) \u2014 OPERATOR ACTION REQUIRED: set ANDROID_CERT_FINGERPRINTS and APPLE_TEAM_ID",
+   "closure_evidence": "Production build: 200 + application/json with the env set, 404 with it unset, no redirect on either path.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_7",
+   "blocked_by": "EXTERNAL \u2014 needs ANDROID_CERT_FINGERPRINTS and APPLE_TEAM_ID from Play Console / Apple Developer. Code shipped; routes 404 until set."
+  },
+  {
+   "id": "MOB-002",
+   "component": "apps/mobile \u2014 Android intent filter scope",
+   "severity": "MEDIUM",
+   "evidence": "intentFilters used data: [{ scheme: 'https', host: linkHost, pathPrefix: '/' }] \u2014 the entire domain.",
+   "root_cause": "The broadest possible path claim, written before there were specific in-app destinations.",
+   "impact": "Once verification succeeded, every visaai.co URL \u2014 pricing, privacy, the marketing root \u2014 would be pulled out of the browser into the app, including links shared with people trying to read the website.",
+   "remediation": "Scoped to /applications, /my-applications, /messages, /invite, /reset-password; the iOS AASA route exposes the same list as DEEP_LINK_PATHS, with cross-references so the two cannot drift.",
+   "files_affected": [
+    "apps/mobile/app.config.ts",
+    "apps/web/app/.well-known/apple-app-site-association/route.ts"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 app.config.ts intent-filter scope; no runtime test without a device"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "tsc clean; AASA serves the scoped component list.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_7"
+  },
+  {
+   "id": "FLAG-001",
+   "component": "apps/api \u2014 GET /feature-flags",
+   "severity": "HIGH",
+   "evidence": "Returned 401 to every caller without a token despite @AllowAnonymous() and a docblock stating the beta banner and kill switches must render before signup. Verified live: 401 before, 200 after. Found by auditing every @AllowAnonymous route after ANALYTICS-001 rather than stopping at the first.",
+   "root_cause": "Same decorator confusion as ANALYTICS-001: @AllowAnonymous admits a guest holding a token, not a caller with no credential. The handler already branched on `user?.id` being absent \u2014 only the guard rejected first.",
+   "impact": "Feature-flag kill switches \u2014 the mechanism for disabling a broken feature \u2014 did not work on the landing, pricing, signup or guest-funnel surfaces, on web or mobile.",
+   "remediation": "Added @AllowUnauthenticated(). Response is evaluated booleans only; an unidentified caller gets an empty bucketing subject so partial rollouts do not apply.",
+   "files_affected": [
+    "apps/api/src/modules/feature-flags/feature-flags.controller.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/analytics-unauthenticated-ingest.spec.ts (FLAG-001 block)"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Live: /feature-flags 200 with evaluated booleans; /me, /notifications, /marketplace/consultants still 401. API suite 2223 passed. Guard self-tested by removing the decorator.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_7"
+  },
+  {
+   "id": "SEC-101",
+   "component": "CI \u2014 gitleaks allowlist",
+   "severity": "MEDIUM",
+   "evidence": "gitleaks over 857 commits reported 2 leaks: Supabase local-dev keys (iss=supabase-demo) in .github/workflows/agent-tests.yml whose fingerprints were absent from .gitleaksignore. The commit is on the audit branch, so CI secret-scan would have gone red on merge.",
+   "root_cause": ".gitleaksignore allowlists by fingerprint (commit:file:rule:LINE); the same published key moving down a file produces a new fingerprint and a new failure.",
+   "impact": "A permanently-red secret scanner is functionally no scanner.",
+   "remediation": ".gitleaks.toml with [extend] useDefault = true (without which a custom config REPLACES the built-in ruleset) plus a global allowlist of the two literal key strings rather than fingerprints.",
+   "files_affected": [
+    ".gitleaks.toml (new)"
+   ],
+   "tests_required": [
+    "gitleaks detect on full history"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "857 commits -> 0 findings. Self-tested: a one-character variant still caught; defaults confirmed intact by scanning Stripe/AWS keys with and without the config (identical results).",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "SEC-102",
+   "component": "apps/api \u2014 GET /intake/applications/:id",
+   "severity": "LOW",
+   "evidence": "Returned 200 with a 0-byte body to a non-owner (RLS filtered the row; the raw result was returned).",
+   "root_cause": "Controller returned the query result without an explicit denial.",
+   "impact": "Not a leak and not an oracle (nonexistent id behaved identically), but indistinguishable from a real record and breaks JSON parsing.",
+   "remediation": "Explicit ForbiddenException.",
+   "files_affected": [
+    "apps/api/src/modules/intake/intake.controller.ts"
+   ],
+   "tests_required": [
+    "cross-tenant probe"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Foreign id 403, nonexistent id 403, owner 200. API suite 2223 passed.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "SEC-103",
+   "component": "apps/api \u2014 intake + documents ownership denials",
+   "severity": "MEDIUM",
+   "evidence": "Live cross-tenant probe: GET /documents/:id, /intake/applications/:id/checklist, /intake/applications/:id/messages and POST /documents/presign/:id all returned 500 to a non-owner. Cause: `throw new Error(...)` after an RLS-scoped ownership query \u2014 a bare Error maps to 500. VriService already used ForbiddenException correctly.",
+   "root_cause": "Authorization denial expressed as a bare Error rather than an HTTP exception, in 8 places.",
+   "impact": "No data exposure (RLS held). Users saw \"Internal Server Error\" instead of a denial, and every unauthorized probe wrote an error-level log line \u2014 with SENTRY_DSN unset (BLK-3) logs are the only diagnostic surface.",
+   "remediation": "8 sites converted to ForbiddenException, matching the VRI idiom.",
+   "files_affected": [
+    "apps/api/src/modules/intake/intake.service.ts",
+    "apps/api/src/modules/documents/documents.service.ts"
+   ],
+   "tests_required": [
+    "cross-tenant probe",
+    "API suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "All four routes now 403; nonexistent id identical (no oracle); owner unaffected. API suite 2223 passed.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "SEC-104",
+   "component": "apps/api \u2014 IntakeService.sendMessage",
+   "severity": "MEDIUM",
+   "evidence": "The ownership check ran AFTER checkpoint.load(applicationId), and IntakeGateway passes the client-supplied id straight through, making this service the only authorization point. Probing a foreign id returned \"No active session\" when the application had no checkpoint and \"Access denied\" when it did.",
+   "root_cause": "Authorize-after-act ordering.",
+   "impact": "Another user's intake checkpoint (their answers \u2014 PII) was read into memory before authorization; never returned, but one added line between the two would ship a leak. The differing responses were an observable oracle revealing whether someone else's application had a live intake session.",
+   "remediation": "Ownership check moved first; the no-session case became ConflictException (409) instead of a bare Error (500).",
+   "files_affected": [
+    "apps/api/src/modules/intake/intake.service.ts"
+   ],
+   "tests_required": [
+    "API suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "API suite 2223 passed; both branches unreachable for a non-owner.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "SEC-105",
+   "component": "apps/api \u2014 messaging module",
+   "severity": "LOW",
+   "evidence": "GET /messaging/:applicationId and POST /messaging/:applicationId/messages return 500 to a non-owner \u2014 the same bare-Error pattern as SEC-103.",
+   "root_cause": "Same as SEC-103.",
+   "impact": "Identical to SEC-103; not a confidentiality issue, RLS holds.",
+   "remediation": "Added MessagingService.assertApplicationAccess, called by ensureConversation and listOlderMessages. The root cause was worse than a wrong status code: ensureConversation looked the conversation up under RLS, found nothing, and then attempted an INSERT \u2014 so every unauthorized probe drove a write attempt whose RLS rejection surfaced as a bare Error (500).",
+   "files_affected": [
+    "apps/api/src/modules/messaging/"
+   ],
+   "tests_required": [
+    "cross-tenant probe"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Live: attacker gets 403 on GET thread, GET messages and POST message; nonexistent id 403 identically; owner 200/200/201. API suite 2232 passed. Seven messaging specs updated to use a new test/fakes/scoped-client.fake rather than `{} as SupabaseClient` \u2014 the production check was deliberately NOT made tolerant of a client without .from(), which would have let a wrong object skip authorization.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "PRIV-001",
+   "component": "apps/web \u2014 published privacy policy vs implementation",
+   "severity": "MEDIUM",
+   "evidence": "CORRECTED 2026-08-09. The original finding claimed \"no export endpoint, no deletion endpoint and no DSAR runbook exist anywhere in the repo\". That was FALSE and the error was mine: the Phase 8 greps were truncated with `head -8` / `head -10` and I read \"not in the visible output\" as \"not present\". A `privacy` module exists with GET /me/privacy/export and POST /me/privacy/delete, a privacy_requests audit table, and mobile already calls both. Verified live: export returns a structured bundle; deletion removes auth.users and public.users and requires {\"confirmation\":\"DELETE\"}.\n\nWhat WAS true: (a) \"Backups are purged on a rolling schedule\" is false \u2014 BLK-1 measured pitr_enabled=false, backups=[]; (b) apps/web had no UI for either right, so a web-only user could not exercise what the policy promised; (c) the export omitted the subject's messages and voice transcripts; (d) the erasure audit record was never written (PRIV-002).",
+   "root_cause": "Policy copy written ahead of (and never reconciled with) the implementation.",
+   "impact": "Narrower than first reported. The capability existed; the policy overstated backups, and web users had no route to the capability.",
+   "remediation": "Removed the false backup sentence (removal, not rewording \u2014 adding a NEW backup commitment is counsel's call); pointed the export/deletion sentence at the profile page; built PrivacySection in apps/web so the right is exercisable there. Split the genuinely separate defects into PRIV-002/003/004.",
+   "files_affected": [
+    "apps/web/app/[locale]/privacy/page.tsx"
+   ],
+   "tests_required": [
+    "exercise export and deletion end-to-end as a real user once implemented"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Privacy page no longer asserts a backup schedule. apps/web profile page now offers \"Download my data\" and a type-DELETE erasure flow. Export and deletion both verified live. Web suite 250 passed; tsc/eslint clean.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "DEP-001",
+   "component": "dependencies",
+   "severity": "INFORMATIONAL",
+   "evidence": "osv-scanner over 1,971 packages: 1 Critical, 6 High, 9 Moderate, 2 Low. Each traced via require.resolve from the deployed apps: the Critical (vitest UI RCE) needs `vitest --ui`; vite/esbuild are build-time; image-size and ip-address come from the Expo/Metro toolchain and are unresolvable from apps/api or apps/web; nanoid is transitive with no direct call site.",
+   "root_cause": "Toolchain dependencies dominate the advisory list.",
+   "impact": "None reachable in the deployed product. CI dependency audit runs continue-on-error and osv-scanner is not in CI.",
+   "remediation": "Upgraded vitest 2->3.2.7 and vite 5->6.4.3 (config renamed to vitest.config.mts because @vitejs/plugin-react v5 is ESM-only), then `pnpm dedupe`. Added osv-scanner to CI and a BLOCKING gate, scripts/check-vulnerable-deps.mjs, that fails only when a flagged package is resolvable from a deployed app \u2014 severity is not the gate, reachability is, because failing on toolchain CVEs trains everyone to ignore the scanner.",
+   "files_affected": [
+    "pnpm-lock.yaml",
+    ".github/workflows/agent-tests.yml"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 guarded by scripts/check-vulnerable-deps.mjs in CI (self-tested)"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Advisories 18 -> 11; the CRITICAL (vitest UI RCE) and all vite/esbuild-0.21/nanoid findings are gone. Remaining 11 are Expo/Metro toolchain, none reachable from apps/api or apps/web. Gate self-tested: green normally, exits 1 when a reachable package is flagged. All three suites pass after the dedupe.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "AI-001",
+   "component": "apps/api \u2014 LangGraph prompt construction",
+   "severity": "INFORMATIONAL",
+   "evidence": "13 system-prompt sites; no explicit prompt-injection defence (no delimiting/escaping of untrusted content before interpolation). A pre-LLM guardrails.classifyIntent refusal check does run on the intake socket. On closer reading the live-input path was already sound (user text arrives as a user-role message). The real exposure is SECOND-ORDER: draft-document JSON-stringifies the applicant's stored intake profile directly into the prompt that writes the document they submit to a government portal, so text typed during intake is replayed later as prompt content.",
+   "root_cause": "Prompt safety relies on an intent classifier rather than input isolation.",
+   "impact": "Unquantified. Asserting safety from a static read would be a guess.",
+   "remediation": "Added shared/ai/untrusted.ts (asUntrustedData + UNTRUSTED_DATA_DIRECTIVE): fences untrusted content, neutralises delimiter-escape attempts in both value and label, and pairs it with a standing \"this region is DATA, never instructions\" directive. Applied to draft-document, the site where an applicant's own words reach a filed document.",
+   "files_affected": [
+    "apps/api/src/modules/*/graphs/"
+   ],
+   "tests_required": [
+    "adversarial prompt suite"
+   ],
+   "status": "PARTIALLY RESOLVED \u2014 fencing shipped; live adversarial testing still outstanding",
+   "closure_evidence": "7 tests in test/prompt-injection-fencing.spec.ts, including fence-escape and malicious-label cases plus a source assertion that the raw JSON.stringify interpolation is gone. Self-tested. STILL OPEN: adversarial testing against a live model, and the other prompt sites.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8",
+   "blocked_by": "EXTERNAL \u2014 adversarial prompt testing needs a live model and a budget. Fencing control and 7 tests shipped."
+  },
+  {
+   "id": "PRIV-002",
+   "component": "apps/api \u2014 privacy.service deleteAccount",
+   "severity": "MEDIUM",
+   "evidence": "Erasures were never audited. `record()` inserted privacy_requests with user_id = the just-deleted user; the FK is ON DELETE SET NULL, which rewrites EXISTING rows and cannot rescue an INSERT naming a deleted user. Every erasure hit a foreign-key violation that record() only logged at warn. Verified live before the fix: after a successful deletion privacy_requests held the export and no erasure.",
+   "root_cause": "Insert ordered after the delete, with a non-null FK value; failure swallowed as a warning.",
+   "impact": "No evidence that a data-subject erasure was honoured \u2014 the difference between \"we complied\" and \"we cannot show we complied\", which is the only version a regulator sees.",
+   "remediation": "Record with user_id NULL (the end state the FK was designed to produce) and raise the insert-failure log from warn to error.",
+   "files_affected": [
+    "apps/api/src/modules/privacy/privacy.service.ts"
+   ],
+   "tests_required": [
+    "privacy.service.spec.ts PRIV-002 block"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Live: erasure now recorded as deletion|completed|<email>|user_id NULL. Guard self-tested \u2014 reverting to userId turns the suite red. The pre-existing fake always returned {error:null} and never checked user_id, which is why this survived.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "PRIV-003",
+   "component": "apps/api \u2014 data export completeness",
+   "severity": "MEDIUM",
+   "evidence": "The export returned 7 categories and omitted the subject's own messages and voice transcripts, plus extended profile, notifications, consultations, subscriptions, login history and application activity.",
+   "root_cause": "Export written against the application tables, not against the full set of user-scoped tables.",
+   "impact": "Incomplete under GDPR Art. 15/20 in the categories that matter most \u2014 \"everything except the parts you said out loud\" is not a data export.",
+   "remediation": "Extended to 19 categories, every read on the caller's RLS-scoped client so the bundle can only contain rows the subject may already see.",
+   "files_affected": [
+    "apps/api/src/modules/privacy/privacy.service.ts"
+   ],
+   "tests_required": [
+    "live export shape"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Live export returns 19 categories including messages and voiceTranscripts (was 9). API suite 2232 passed.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "PRIV-004",
+   "component": "apps/web \u2014 no data-rights UI",
+   "severity": "MEDIUM",
+   "evidence": "apps/mobile called /me/privacy/export and /me/privacy/delete; apps/web referenced neither. The published policy said users can export or delete \"at any time\", which for a web-only user was not actionable.",
+   "root_cause": "Endpoints shipped with a mobile client only.",
+   "impact": "A right that exists in the API but cannot be reached by the majority surface is not a right the user has.",
+   "remediation": "Added PrivacySection to the profile page: downloads the export as a JSON file (never rendered into the DOM \u2014 it contains documents and message history) and a type-DELETE erasure flow that mirrors the confirmation the API independently enforces.",
+   "files_affected": [
+    "apps/web/app/[locale]/(dashboard)/profile/privacy-section.tsx",
+    "apps/web/app/[locale]/(dashboard)/profile/page.tsx"
+   ],
+   "tests_required": [
+    "web unit suite"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "tsc 0, eslint clean, web suite 250 passed, web build 0.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_8"
+  },
+  {
+   "id": "PERF-007",
+   "component": "supabase \u2014 redundant indexes",
+   "severity": "LOW",
+   "evidence": "(renumbered from PERF-002 \u2014 that id was already used by a Phase-9 finding) Five indexes fully covered by another on the same table: idx_applications_monitor_token, audit_events_app_seq_idx, subscription_credits_balance_idx (identical column lists to a UNIQUE index) and voice_sessions_cost_idx, evidence_packages_app_idx (same columns, opposite sort direction).",
+   "root_cause": "Explicit indexes added alongside constraint-generated ones, and ASC/DESC pairs created as if direction mattered.",
+   "impact": "Each costs a write on every INSERT/UPDATE of its table plus storage and vacuum work.",
+   "remediation": "Migration 20260809130000_drop_redundant_indexes.sql. NOT dropped: checklist_items_meta_kind/owner (different expressions) and partner_applications_client_idx (partial, WHERE revoked_at IS NULL).",
+   "files_affected": [
+    "supabase/migrations/20260809130000_drop_redundant_indexes.sql"
+   ],
+   "tests_required": [
+    "apps/api/test/schema-hygiene-db.spec.ts"
+   ],
+   "status": "RESOLVED (local, verified) \u2014 production apply pending BLK-1",
+   "closure_evidence": "Backward-scan equivalence PROVED on the 56,251-row messages table: with only a DESC index present, an ASC query planned as \"Index Scan Backward\". The first attempt at that proof ran against EMPTY tables and returned Seq Scan, which proves nothing \u2014 redone with data. 344 suites / 2,272 tests pass after the drop. Phase 11 added guards that the five redundant indexes stay dropped AND that the indexes covering them still exist \u2014 dropping one is only safe while its replacement is there. Self-tested by recreating an index.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_9",
+   "blocked_by": "EXTERNAL \u2014 production apply gated on BLK-1. Applied and verified locally."
+  },
+  {
+   "id": "PERF-003",
+   "component": "apps/api \u2014 JwtGuard token validation",
+   "severity": "MEDIUM",
+   "evidence": "JwtGuard calls supabase.auth.getUser(token) on every request. Measured: GoTrue /auth/v1/user p50 29.1ms; GET /countries (no auth) p50 7.3ms; GET /me (auth) p50 33.6ms. ~80% of an authenticated request, on 296 of 304 routes.",
+   "root_cause": "Remote token validation per request.",
+   "impact": "Every authenticated request pays a network round-trip; worse against a hosted GoTrue than the local one measured.",
+   "remediation": "30-second validated-token cache (modules/auth/token-cache.ts), TTL configurable via TOKEN_CACHE_TTL_MS, 0 disables. Chosen over local JWT verification because that would keep a token valid until expiry (up to an hour) regardless of sign-out; a short cache keeps GoTrue authoritative and bounds staleness. Tokens keyed by SHA-256, never stored raw. Bounded to 5,000 entries with LRU eviction.",
+   "files_affected": [
+    "apps/api/src/modules/auth/token-cache.ts",
+    "apps/api/src/modules/auth/jwt.guard.ts",
+    "apps/api/src/config/configuration.ts"
+   ],
+   "tests_required": [
+    "apps/api/test/token-cache.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "/me 33.6 -> 8.9ms (3.8x), /intake/applications 36.9 -> 13.6ms, /documents 37.9 -> 15.8ms, /messaging 42.2 -> 23.4ms. SECURITY REGRESSION CAUGHT PRE-MERGE: the first version cached every identity, but the @AllowAnonymous gate is per-ROUTE while the cache key is only the token \u2014 a cached guest would have skipped the gate on a gated route. Anonymous identities are now never cached; 2 tests pin it and both fail if the condition is removed.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_9"
+  },
+  {
+   "id": "PERF-004",
+   "component": "supabase \u2014 RLS policy evaluation cost",
+   "severity": "MEDIUM",
+   "evidence": "The applications RLS policy calls is_active_assignee(), app_has_active_consultant() and consultant_covers_country(), and under a generic (parameterised) plan is re-evaluated as a SubPlan per row per joined table. Reproduced with PREPARE/EXECUTE as authenticated: 495ms vs 3.7ms for the same query with a literal.",
+   "root_cause": "Volatile-looking expressions inside the policy are not hoisted, so the planner runs them per row.",
+   "impact": "Dominant database cost on any query touching applications through a view or join under PostgREST.",
+   "remediation": "Migration 20260809140000_hoist_rls_auth_calls.sql rewrites 113 of 143 policies, wrapping auth.uid()/auth.jwt() in a scalar subquery so the planner runs them once as an InitPlan instead of per row. Generated mechanically from pg_policies \u2014 name, permissive/restrictive, command, roles, USING and WITH CHECK copied verbatim, exactly one textual transformation applied. Rewriting 113 security policies is the highest-risk change in this audit, so it is mechanical and independently checked rather than careful.",
+   "files_affected": [
+    "supabase/migrations/ (RLS policies)"
+   ],
+   "tests_required": [
+    "tenant-isolation suites",
+    "before/after plan capture"
+   ],
+   "status": "RESOLVED (local, verified) \u2014 production apply pending BLK-1",
+   "closure_evidence": "SEMANTIC EQUIVALENCE VERIFIED: all 143 policies re-read after applying, the (select ...) wrapper stripped, and compared character-for-character with the before-state \u2014 zero mismatches, policy set unchanged. 345 suites / 2,281 tests pass with ZERO skipped, including all 40 tenant-isolation tests. MEASURED: application_activity generic plan 495 -> 345ms (1.4x); data export 59.2 -> 28.6ms (2.1x, it runs 14 RLS-filtered queries). Single-table routes unchanged \u2014 their policies are a plain auth.uid() = user_id and were already cheap. The textbook 100x did not appear because this policy's cost is three STABLE functions that take the row id and must run per row; they were already correctly marked STABLE.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_9",
+   "blocked_by": "EXTERNAL \u2014 production apply gated on BLK-1. Applied and verified locally, 143 policies checked for semantic equivalence."
+  },
+  {
+   "id": "PERF-005",
+   "component": "apps/api \u2014 data export queried a derived view",
+   "severity": "MEDIUM",
+   "evidence": "pg_stat_statements: application_activity at 1,135.9ms mean, 30.6s total over 26 calls \u2014 95% of the export runtime.",
+   "root_cause": "My own PRIV-003 addition. application_activity is a derived VIEW returning only (application_id, user_id, last_active_at), a GREATEST() over timestamps from applications, documents, generated_documents, vri_scores, submission_sessions and application_profiles \u2014 every one already in the export.",
+   "impact": "1.1s of latency and 30.6s of database time to return zero personal data the subject did not already have.",
+   "remediation": "Removed from the export. Optimising a query nobody needed would have been the wrong fix.",
+   "files_affected": [
+    "apps/api/src/modules/privacy/privacy.service.ts"
+   ],
+   "tests_required": [
+    "export shape"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Export p50 1206.6 -> 59.2ms (20.4x), p95 1373.9 -> 123.7ms. Still 18 categories including messages.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_9"
+  },
+  {
+   "id": "PERF-006",
+   "component": "apps/web \u2014 JS payload",
+   "severity": "LOW",
+   "evidence": "229\u2013249 KB JS per public route; total transfer 392\u2013422 KB. Lighthouse performance 100, TBT 0ms, CLS 0.000.",
+   "root_cause": "Next.js framework + app code on marketing and form pages.",
+   "impact": "No measured user harm on desktop. First metric to degrade on a low-end mobile device on 3G.",
+   "remediation": "Take a CPU- and network-throttled mobile measurement BEFORE changing bundling. Budget set at 300 KB to catch a doubling.",
+   "files_affected": [
+    "apps/web"
+   ],
+   "tests_required": [
+    "throttled mobile Lighthouse run"
+   ],
+   "status": "CLOSED \u2014 measured, no user harm demonstrated",
+   "closure_evidence": "Throttled mobile Lighthouse (4x CPU slowdown, slow 4G: 150ms RTT / 1638 Kbps): performance 94-96, LCP 2.21-2.47s (inside the 2.5s \"good\" threshold), TBT 23-66ms (threshold 200ms), CLS 0.000, TTI 3.66-3.74s. The hypothesis that the 229-249KB payload harms mobile users is NOT supported by measurement, so no bundling change was made \u2014 the spec's own rule is not to optimise on assumptions. WATCH: /login LCP 2.47s is close to the threshold; the 300KB budget in PERFORMANCE_BUDGETS.md is there to catch a regression.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_9",
+   "blocked_by": "CLOSED \u2014 measured under throttled mobile; no user harm demonstrated, so no change made."
+  },
+  {
+   "id": "TEST-005",
+   "component": "apps/web \u2014 consultant e2e fixture",
+   "severity": "MEDIUM",
+   "evidence": "(renumbered from TEST-003 \u2014 that id was already used by a Phase-10 finding) consultant-dashboard.spec.ts gated on E2E_CONSULTANT_STORAGE_STATE, a fixture that never existed \u2014 the only test in the repo with no path to execution. It had been skipped since it was written.",
+   "root_cause": "The consultant auth fixture was never built; Phase 6 fixed the equivalent gap for the six admin specs but not this one.",
+   "impact": "The consultant portal had zero executed test coverage on any surface.",
+   "remediation": "auth.setup.ts generates a consultant storageState alongside the admin one (each skips independently when its own credentials are absent); playwright.config.ts runs those specs in a separate chromium-consultant project so the session cannot leak into the logged-out specs. The spec list is derived by scanning which specs gate on which env var.",
+   "files_affected": [
+    "apps/web/e2e/auth.setup.ts",
+    "apps/web/playwright.config.ts"
+   ],
+   "tests_required": [
+    "consultant-dashboard.spec.ts"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "Executed and passing (test 113 of 113). Web e2e now reports 0 skipped with admin + consultant credentials; the API suite reports 0 skipped with Supabase env. No unexplained skip remains (spec \u00a716.4).",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_10"
+  },
+  {
+   "id": "SEED-001",
+   "component": "scripts/seed-perf-dataset.sql",
+   "severity": "LOW",
+   "evidence": "GET /admin/consultants returned 500 and broke the admin applications page. GoTrue's log gave the cause: \"Scan error on column index 3, name confirmation_token: converting NULL to string is unsupported\". The seeder inserted directly into auth.users leaving the token columns NULL; GoTrue reads them into Go strings, so /admin/users 500s at any page size that includes one bad row.",
+   "root_cause": "Direct auth.users INSERT omitted the empty-string token columns that GoTrue itself always writes.",
+   "impact": "Test-environment only \u2014 but it presented as a product scalability defect (listConsultants pages through every user) and would have been filed as one. Synthetic data that is almost right produces findings that are entirely wrong.",
+   "remediation": "Seeder now sets confirmation_token, recovery_token, email_change*, phone_change*, reauthentication_token to '' explicitly, with a comment recording why. Existing seeded rows repaired.",
+   "files_affected": [
+    "scripts/seed-perf-dataset.sql"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 seeder correctness; proven by GoTrue /admin/users returning 200"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "GoTrue /admin/users?per_page=200 returns 200; GET /admin/consultants returns 200. Full web e2e back to 110 passed / 0 skipped.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_10"
+  },
+  {
+   "id": "DOC-003",
+   "component": "VISAAIDocs deliverable location",
+   "severity": "LOW",
+   "evidence": "(renumbered from DOC-002 \u2014 that id was already used by a Phase-10 finding) Phase 6-10 deliverables (17 files) were written to /Users/bilawalmuzaffar/Desktop/VISAAIDocs \u2014 a directory I created \u2014 instead of the real git-tracked docs repo at /Users/bilawalmuzaffar/Desktop/VisaAI/VISAAIDocs. Earlier phases used a path relative to the code repo and landed correctly.",
+   "root_cause": "An absolute path written from memory in Phase 6 and then reused for five phases.",
+   "impact": "Five phases of deliverables were outside version control and invisible to anyone reading the docs repo.",
+   "remediation": "All 17 files relocated into the real repo (no collisions); stray directory removed. testing/COUNTRY_SELECTION_SOURCE_OF_TRUTH_AUDIT.md is a pointer to the existing audit/ copy rather than a duplicate, since Phase 3 removed duplicate documents.",
+   "files_affected": [
+    "VISAAIDocs/{audit,performance,privacy,security,testing}/"
+   ],
+   "tests_required": [
+    "NOT APPLICABLE \u2014 file relocation into the docs repo"
+   ],
+   "status": "RESOLVED",
+   "closure_evidence": "git status in the real repo shows all 17 as new untracked files; audit/ 16, performance/ 4, privacy/ 1, security/ 29, testing/ 11.",
+   "reviewer": "solo (user waived independent review)",
+   "discovered_phase": "PHASE_10"
+  },
+  {
+   "id": "OCR-001",
+   "component": "api/documents/ocr",
+   "severity": "Critical",
+   "discovered_phase": "PHASE_13",
+   "evidence": "Two guards, each correct alone, have an EMPTY intersection. configuration.ts superRefine refuses to boot when NODE_ENV=production unless OCR_PROVIDER is regional (azure-di | aws-textract | google-docai). All three declare capabilities.implemented=false and their extract() throws \"not yet implemented\". The only implemented providers (mock, openai) are exactly the ones the production guard rejects. Proven by apps/api/test/ocr-deadlock.spec.ts (6/6 pass): each regional provider throws from assertOcrProviderImplemented, and validateEnv rejects mock and openai under an otherwise-valid production env.",
+   "root_cause": "The residency guard (ef49a19, 2026-06-04) shipped an allow-list of regional providers before any regional adapter was wired, and the fail-fast capability check (304ad35, 2026-06-27) later closed the other side. Neither change was wrong; nobody checked the intersection. Existing test/residency.spec.ts could not catch it because its fixture hardcodes capabilities.implemented=true on a provider it names \"azure-di\".",
+   "impact": "No NODE_ENV=production deployment can both boot and OCR a document. With a regional provider selected the API dies in DocumentsProcessor.onModuleInit (DocumentsModule is imported unconditionally at app.module.ts:128), so it is total boot failure, not degraded OCR.",
+   "remediation": "Wire ONE regional adapter end to end (azure-di is the shortest path: @azure-rest/ai-document-intelligence, prebuilt-read) and flip its capabilities.implemented to true. Until then production cannot be entered honestly.",
+   "files_affected": [
+    "apps/api/src/config/configuration.ts",
+    "apps/api/src/modules/documents/ocr/azure-document-intelligence.provider.ts",
+    "apps/api/src/modules/documents/ocr/aws-textract.provider.ts",
+    "apps/api/src/modules/documents/ocr/google-document-ai.provider.ts",
+    "apps/api/src/modules/documents/documents.processor.ts"
+   ],
+   "tests_required": "apps/api/test/ocr-deadlock.spec.ts",
+   "status": "RESOLVED \u2014 azure-di implemented against the Azure Document Intelligence REST API; production can now boot and OCR.",
+   "closure_evidence": "azure-document-intelligence.provider.ts implements analyze + poll + field mapping via fetch (no new dependency). 15 unit tests against a mocked fetch cover request shape, the poll loop, failed/unknown status, missing config, and the field mapping (which never invents a key). test/ocr-deadlock.spec.ts rewritten from \"the deadlock exists\" into the standing invariant \"at least one production-allowed provider is implemented\" \u2014 5 tests. ocr-capability.spec.ts repointed at aws-textract, which is still a deliberate scaffold. test/residency.spec.ts fixture renamed off \"azure-di\" \u2014 impersonating a real provider while hardcoding implemented:true is what hid this for twelve phases. Full API suite 351 suites / 2,320 tests, 0 failed, 0 skipped.",
+   "reviewer": "unreviewed (solo)",
+   "residual_risk": "Never executed against a live Azure endpoint \u2014 that needs a real endpoint and key. Every unexpected response shape fails closed, so the untested failure mode is a document that errors, never a document with invented fields."
+  },
+  {
+   "id": "DEPLOY-001",
+   "component": "infra/deployment",
+   "severity": "Critical",
+   "discovered_phase": "PHASE_13",
+   "evidence": "Live production probed read-only 2026-08-09. Web https://visaai.co (VisaAI Next.js, redirects to /applications/new); API https://api.visaai.co behind nginx/1.24.0; both on 2.24.196.5, same process as srv1584195.hstgr.cloud:4000 (identical uptime 919,169s -> started ~2026-07-29). Build dated from outside by root-GET route presence: /admin/notification-templates (added 2026-07-02) = 401 PRESENT; /analytics/alerts (added 2026-07-09) = 404 ABSENT. Deployed build therefore sits between 2026-07-02 and 2026-07-09.",
+   "root_cause": "git push does not deploy this VPS, and no pull+rebuild has run since early July.",
+   "impact": "Production is roughly five weeks and 50+ unpushed commits behind main. NONE of the Phase 6-12 remediation is live: no accessibility fixes, no SEC-105 messaging authorization, no 403-not-500 ownership denials, no token cache, no RLS hoisting, no privacy export expansion. Every score recorded in Phase 12 describes code that is not running.",
+   "remediation": "Push main to origin, then SSH pull + rebuild + pm2 restart per VISAAIDocs deployment/DOMAIN_MIGRATION.md \u00a75. Gate on OCR-001 and CONFIG-010 first.",
+   "files_affected": [
+    "(deployment)"
+   ],
+   "tests_required": "post-deploy: GET /health/ready must return 200 (it 404s today)",
+   "status": "OPEN \u2014 blocked on OCR-001 and CONFIG-010; deploying today would trip the OCR deadlock.",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": "EXTERNAL \u2014 SSH access to the VPS, plus OCR-001 resolved first."
+  },
+  {
+   "id": "CONFIG-010",
+   "component": "infra/config",
+   "severity": "Critical",
+   "discovered_phase": "PHASE_13",
+   "evidence": "Proof by elimination. The deployed build is dated 2026-07-02..2026-07-09, so it CONTAINS both the REGIONAL_OCR production guard (2026-06-04) and the assertOcrProviderImplemented call in DocumentsProcessor.onModuleInit (2026-06-27). Per OCR-001 no OCR_PROVIDER value lets those two coexist under NODE_ENV=production. The API has nevertheless been up for 10.6 days. Therefore NODE_ENV != production on the VPS.",
+   "root_cause": "The production hardening block is a single `if (cfg.NODE_ENV === \"production\")` in configuration.ts superRefine. One env var switches all of it off.",
+   "impact": "Every production-only safety check is inert on the live system: DATA_RESIDENCY_MODE may be `global` (raw identity/financial documents may egress to a non-regional service); voice STT/TTS, ANALYTICS_WAREHOUSE and KPI_SOURCE may be `mock`; and OCR_PROVIDER DEFAULTS to `mock`. MockOcrProvider invents extraction output (full_name: \"Test User\"). If it is active, fabricated fields are being written against real users' immigration applications \u2014 the exact failure the no-fabricated-data guard exists to prevent.",
+   "remediation": "Read the live env before anything else: `ssh <vps> \"grep -E '^(NODE_ENV|OCR_PROVIDER|DATA_RESIDENCY_MODE|VOICE_STT_PROVIDERS|VOICE_TTS_PROVIDERS|ANALYTICS_WAREHOUSE|KPI_SOURCE)=' <APP_DIR>/apps/api/.env\"`. If OCR_PROVIDER is mock/unset, audit documents.extracted_fields for fabricated rows. Setting NODE_ENV=production is only safe after OCR-001.",
+   "files_affected": [
+    "apps/api/src/config/configuration.ts",
+    "<VPS>/apps/api/.env"
+   ],
+   "tests_required": "a deployed-config assertion in the post-deploy smoke check",
+   "status": "OPEN \u2014 NODE_ENV != production is PROVEN; which mock providers are actually active is UNVERIFIED (needs the VPS env file).",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": "EXTERNAL \u2014 SSH access to read <APP_DIR>/apps/api/.env. Cannot be settled from outside."
+  },
+  {
+   "id": "DEPLOY-002",
+   "component": "infra/deployment",
+   "severity": "High",
+   "discovered_phase": "PHASE_13",
+   "evidence": "The API origin port is publicly reachable without TLS: http://srv1584195.hstgr.cloud:4000/health -> 200, while an HTTPS handshake on :4000 fails (curl exit, http=000). The same process is correctly fronted by nginx at https://api.visaai.co, so :4000 is an unnecessary second door that bypasses TLS.",
+   "root_cause": "The app binds 0.0.0.0:4000 and no firewall rule restricts the port to loopback/nginx.",
+   "impact": "Any client pointed at :4000 sends Bearer JWTs and application PII in cleartext. Also bypasses whatever rate limiting or headers nginx adds.",
+   "remediation": "Bind the API to 127.0.0.1, or add `ufw deny 4000/tcp` (nginx proxies over loopback). Same check for the web port.",
+   "files_affected": [
+    "apps/api/src/main.ts",
+    "(VPS firewall)"
+   ],
+   "tests_required": "external probe: :4000 must refuse from off-host",
+   "status": "OPEN",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": "EXTERNAL \u2014 VPS/firewall access."
+  },
+  {
+   "id": "DEPLOY-003",
+   "component": "infra/deployment",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_13",
+   "evidence": "https://api.visaai.co/health response headers carry only `Server: nginx/1.24.0 (Ubuntu)` and `Access-Control-Allow-Origin: https://visaai.co`. No Strict-Transport-Security, X-Frame-Options or X-Content-Type-Options.",
+   "root_cause": "nginx vhost sets CORS but no security headers; the API sets none either.",
+   "impact": "No HSTS means a first plaintext request is downgradeable; missing XCTO/XFO removes cheap defence-in-depth.",
+   "remediation": "Add HSTS (max-age>=15768000; includeSubDomains), X-Content-Type-Options: nosniff, X-Frame-Options: DENY in the nginx vhost.",
+   "files_affected": [
+    "(nginx vhost)"
+   ],
+   "tests_required": "header assertion in the post-deploy smoke check",
+   "status": "OPEN",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": "EXTERNAL \u2014 VPS access."
+  },
+  {
+   "id": "DOC-010",
+   "component": "docs",
+   "severity": "Low",
+   "discovered_phase": "PHASE_13",
+   "evidence": "CLAUDE.md documents the deployment host as `srv1584195.hstgr.cloud` with web on :3000. Live: the real origins are https://visaai.co and https://api.visaai.co, and :3000 on that host now serves a DIFFERENT product (GoQA, title \"GoQA \u2014 AI-Powered QA Platform\"). api.visaai.app has no DNS record at all.",
+   "root_cause": "The VPS became multi-tenant and the domain moved to .co; the developer guide was not updated.",
+   "impact": "Anyone following CLAUDE.md probes the wrong host and concludes VisaAI is down, or worse, restarts the wrong app.",
+   "remediation": "Update the CLAUDE.md deployment table to visaai.co / api.visaai.co and note GoQA is co-hosted.",
+   "files_affected": [
+    "CLAUDE.md"
+   ],
+   "tests_required": "n/a \u2014 documentation",
+   "status": "RESOLVED \u2014 CLAUDE.md now documents visaai.co / api.visaai.co, warns that the bare VPS hostname is shared with GoQA, and records that :4000 is not a supported entry point.",
+   "closure_evidence": "CLAUDE.md deployment section + monorepo layout corrected against the live probe.",
+   "reviewer": "unreviewed (solo)"
+  },
+  {
+   "id": "COUNTRY-004",
+   "component": "api/countries",
+   "severity": "High",
+   "discovered_phase": "PHASE_13",
+   "evidence": "LIVE confirmation of COUNTRY-001 in production: GET https://api.visaai.co/countries returns 27 schengen codes; BG and RO are absent. Migration 20260806150000_schengen_members_bg_ro.sql is one of 9 local migrations not applied to the production database.",
+   "root_cause": "COUNTRY-001 was fixed locally; the fix has never reached production (BLK-1, and now DEPLOY-001).",
+   "impact": "Applications destined for Bulgaria or Romania are invisible to every SCHENGEN-bloc consultant, silently and with no error, for real users today.",
+   "remediation": "Apply 20260806150000 to production once a backup exists (BLK-1).",
+   "files_affected": [
+    "supabase/migrations/20260806150000_schengen_members_bg_ro.sql"
+   ],
+   "tests_required": "apps/api/test/ (existing COUNTRY-001 coverage) + post-apply live probe of /countries",
+   "status": "OPEN \u2014 user-affecting in production right now.",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": "EXTERNAL \u2014 production migration apply gated on BLK-1 (no backup exists)."
+  },
+  {
+   "id": "CONFIG-011",
+   "component": "api/config",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_13",
+   "evidence": "Same shape as OCR-001, found by looking for it. AI_PROVIDERS accepted 'anthropic' and 'gemini' (UnconfiguredProvider \u2014 throws on every call, ai.service.ts:91) and SCAN_PROVIDER accepted 'clamav' and 'virustotal' (scan-document.ts:176 is a TODO, so every document fails closed). Both were validated as config and then failed at runtime.",
+   "root_cause": "Enums advertised capability the code did not have \u2014 a declared slot reads as a supported option.",
+   "impact": "A one-word env change turned the AI path or every document upload into a guaranteed runtime failure, discovered per-request in production rather than at startup.",
+   "remediation": "Both now fail in validateEnv, naming the offending provider and what to use instead.",
+   "files_affected": [
+    "apps/api/src/config/configuration.ts"
+   ],
+   "tests_required": "apps/api/test/unimplemented-provider-boot.spec.ts",
+   "status": "RESOLVED",
+   "closure_evidence": "9 tests: defaults accepted, each unimplemented name refused, a mixed chain refused on its one bad entry, and the message names the culprit.",
+   "reviewer": "unreviewed (solo)"
+  },
+  {
+   "id": "TEST-010",
+   "component": "ci",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_13",
+   "evidence": "The api job has asserted \"a skip must not pass as green\" since Phase 11. The web-e2e-live job \u2014 the one whose entire purpose is exercising the authenticated portal \u2014 had no such assertion, and seeded only an admin. The consultant auth.setup therefore skipped on every run and the consultant portal was never exercised in CI.",
+   "root_cause": "The guard was added where the problem had been found, not everywhere the same failure mode existed.",
+   "impact": "A broken seed would have taken the authenticated E2E coverage to zero with the job still green.",
+   "remediation": "Seed an e2e consultant, supply the credentials, emit a Playwright JSON report and fail the job on any skip or on fewer than 20 executed tests.",
+   "files_affected": [
+    ".github/workflows/agent-tests.yml"
+   ],
+   "tests_required": "the CI step is itself the guard",
+   "status": "RESOLVED",
+   "closure_evidence": "web-e2e-live now seeds e2e-consultant@local.test with app_metadata.role=consultant (the primary path in JwtGuard.resolveAppRole) and asserts stats.skipped === 0.",
+   "reviewer": "unreviewed (solo)"
+  },
+  {
+   "id": "SEO-010",
+   "component": "web/seo",
+   "severity": "Low",
+   "discovered_phase": "PHASE_13",
+   "evidence": "VISAAIDocs strategy/growth/seo-and-content-plan.md:38 marks structured data (JSON-LD) not implemented; no schema.org markup existed anywhere in apps/web.",
+   "root_cause": "Never built.",
+   "impact": "Search and AI answer engines had no machine-readable description of the product or publisher.",
+   "remediation": "Organization + WebApplication JSON-LD emitted in the locale layout head.",
+   "files_affected": [
+    "apps/web/lib/seo/structured-data.ts",
+    "apps/web/app/[locale]/layout.tsx"
+   ],
+   "tests_required": "n/a \u2014 static markup; typecheck + build cover it",
+   "status": "RESOLVED",
+   "closure_evidence": "Deliberately omits aggregateRating, review, offers and foundingDate. Structured data is a claim quoted back as fact, so only verifiable fields are emitted \u2014 a fabricated rating would be the no-fake-data rule broken in the one place it is machine-readable. `<` is escaped so no value can close the script tag early.",
+   "reviewer": "unreviewed (solo)"
+  },
+  {
+   "id": "TEST-011",
+   "component": "api/test",
+   "severity": "High",
+   "discovered_phase": "PHASE_15",
+   "evidence": "`pnpm --filter api lint` fails, and `jest --config test/jest-e2e.json` had 2 suites failing on a DI error: \"Nest can't resolve dependencies of the PaymentWebhookService ... PAYMENT_EVENT_RECORDER\". payments-webhook.e2e-spec.ts and subscriptions.e2e-spec.ts registered the concrete LedgerService but not the port token that PaymentWebhookService actually injects.",
+   "root_cause": "The ARCH-003 refactor introduced the PAYMENT_EVENT_RECORDER port to break the shared->ledger cycle and bound it in ledger.module.ts (`useExisting: LedgerService`). The two e2e specs build their own testing module and were never updated, so they wired the pre-refactor shape.",
+   "impact": "The money-path e2e \u2014 the suite CI runs specifically to gate payments on every merge \u2014 could not construct the service under test. It was failing, not passing vacuously, but it meant the webhook idempotency guarantee had no executing check.",
+   "remediation": "Bind `{ provide: PAYMENT_EVENT_RECORDER, useExisting: LedgerService }` in both specs, mirroring ledger.module.ts.",
+   "files_affected": [
+    "apps/api/test/payments-webhook.e2e-spec.ts",
+    "apps/api/test/subscriptions.e2e-spec.ts"
+   ],
+   "tests_required": "the specs are the test",
+   "status": "RESOLVED",
+   "closure_evidence": "jest-e2e now 9 suites / 10 tests, 0 failed. Confirmed pre-existing rather than introduced: stashing all uncommitted work made it WORSE (6 failing suites on HEAD vs 2 in the working tree).",
+   "reviewer": "unreviewed (solo)"
+  },
+  {
+   "id": "DEBT-001",
+   "component": "repo/lint",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_15",
+   "evidence": "`npx eslint \"{src,apps,libs,test}/**/*.ts\"` in apps/api reported **1,865 errors / 562 warnings across 301 files**. Measured split, which corrected my own first hypothesis: **1,661 of them (71%) were in specs and fixtures**, not production code. My original write-up said the errors were \"overwhelmingly where `any` escapes Supabase and Stripe\" \u2014 Supabase turned out to be ~3% (typing the client removed only 60).",
+   "root_cause": "The rule set was tightened without a migration campaign, and lint is not a blocking CI step, so the count grew unchecked.",
+   "impact": "Lint carries no signal. A genuine new error is one of 1,868 and nobody sees it \u2014 this is exactly how the PAYMENT_EVENT_RECORDER breakage (TEST-011) could sit in the money-path e2e unnoticed. It is not a style complaint: no-unsafe-* on Supabase results is where a schema change becomes a silent runtime error.",
+   "remediation": "Three things, none of them a blanket suppression: (1) scope the no-unsafe-* family to production code, because a test double IS an `any` on purpose and the rules were never meant for it \u2014 the same rules stay ERRORS in src/**; (2) generate and commit the Supabase schema types; (3) add a ratchet so the count may fall freely but CI fails when it rises.",
+   "files_affected": [
+    "apps/api (301 files)"
+   ],
+   "tests_required": "a CI ratchet step comparing the error count against a committed baseline",
+   "status": "PARTIALLY RESOLVED \u2014 1,865 -> 1,034 errors (-45%) and now ratcheted; the remaining 1,034 are scoped as RT-025/RT-026.",
+   "closure_evidence": "1,865 -> 1,034 errors. scripts/lint-ratchet.mjs self-tested in both directions (passes at baseline; rejects a single injected error with exit 1) and wired into the CI api job. Baseline committed at apps/api/.lint-baseline.json. Full suite re-verified: api 351/2,320, e2e 9/10, web 256, mobile 185, typecheck 0.",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": null
+  },
+  {
+   "id": "RT-026-FINDING",
+   "component": "api/types",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_15",
+   "evidence": "SupabaseService declared `SupabaseClient` with NO generic, so it resolved to `SupabaseClient<any>` and every `.from().select()` chain was untyped. Binding the generated schema types was measured rather than assumed: it produces **59 type errors across 19 files**, and they are real defects, not noise. Samples: provenance.repository.impl.ts assigns `string | null` to `string` (OcrRun promises non-null for nullable columns); supabase-kpi-rollup.reader.ts passes a `text` column where a `SubPlan` union is required.",
+   "root_cause": "No generated database types existed in the repo at all, so there was nothing to bind.",
+   "impact": "The database boundary \u2014 where an unvalidated shape enters business logic \u2014 is the least type-safe part of the application. A column that becomes nullable in a migration produces no compile error anywhere.",
+   "remediation": "Types are generated and committed (packages/types/src/database.types.ts, 140 tables) and exported as `Database`. `iam.repository.impl.ts` is migrated as the worked example, using CHECKED boundary mappers rather than `as` casts. Flipping `Db` to `SupabaseClient<Database>` and clearing the remaining 59 is RT-026.",
+   "files_affected": [
+    "apps/api/src/modules/shared/supabase/supabase.service.ts",
+    "packages/types/src/database.types.ts",
+    "apps/api/src/modules/iam/iam.repository.impl.ts"
+   ],
+   "tests_required": "existing repository suites; the mappers throw on divergence rather than casting",
+   "status": "OPEN \u2014 types committed and one repository migrated; the remaining 18 files are RT-026.",
+   "closure_evidence": "",
+   "reviewer": "unreviewed (solo)",
+   "blocked_by": null
+  },
+  {
+   "id": "TEST-012",
+   "component": "api/test",
+   "severity": "Medium",
+   "discovered_phase": "PHASE_15",
+   "evidence": "test/admin-users-batching.spec.ts (the PERF-002 guard) failed inside the full suite and passed when run alone. It asserted WALL-CLOCK time \u2014 \"sequential would take >= 200ms, batched ~20ms\" \u2014 with a comment claiming the margin would not flake on a loaded CI box.",
+   "root_cause": "A timing assertion measures the machine as much as the code.",
+   "impact": "A guard that flakes gets re-run, then ignored, then deleted \u2014 and PERF-002 (100 serial GoTrue round-trips to render one admin page) comes back unnoticed.",
+   "remediation": "Assert peak concurrent in-flight calls instead: a fan-out reaches ROWS, a serial loop never exceeds 1. Deterministic, no timing.",
+   "files_affected": [
+    "apps/api/test/admin-users-batching.spec.ts"
+   ],
+   "tests_required": "the spec is the test",
+   "status": "RESOLVED",
+   "closure_evidence": "Rewritten to track peak in-flight; passes standalone and inside the full 351-suite run.",
+   "reviewer": "unreviewed (solo)"
+  }
+ ]
+}

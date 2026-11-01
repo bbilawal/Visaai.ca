@@ -1,0 +1,268 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "hk-quality-migrant-admission-scheme",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department's Quality Migrant Admission Scheme page, bounded to the entry section",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE POINTS ARE NOT THE DECISION. QMAS runs four stages: prerequisites, then one of two points tests, then a SELECTION EXERCISE held periodically in which 'not all applications meeting both the prerequisites and the passing threshold will necessarily be approved', then issuance. The threshold is a qualifying bar for a competition, not a pass mark — Singapore's COMPASS is 40 points and you are through; here the points get you considered. Storing the threshold without storing stage 3 would describe a scheme that does not exist.\n\nNO JOB OFFER REQUIRED, WHICH IS THE POINT. Registered the same night as the General Employment Policy, which needs a confirmed offer, a genuine vacancy AND a role the local workforce cannot readily fill. Same authority, opposite premise, and neither page mentions the other.\n\nDISCRETION BROADER THAN THE GEP'S. The GEP reserves discretion to refuse. This page also reserves discretion over whether a criterion was met at all, and adds that no reason need be given.\n\nBOUNDED. Same tabbed structure as GEP: one URL carrying the entry application and a separate extension-of-stay flow with its own fees, documents and processing time. The bound covers the entry block only.",
+  "source_roles": {
+    "requirements": "https://www.immd.gov.hk/eng/services/visas/quality_migrant_admission_scheme.html"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "this webpage aims at providing information to individuals who wish to come to the hong kong special administrative region",
+      "ends_before": "extension of stay apply now",
+      "note": "The ENTRY block only. The same page continues with a separate extension-of-stay flow carrying its own criteria, documents, fees and processing time."
+    }
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateModified and no dateline, so freshness reads as UNKNOWN, never fresh. The page's currency markers are the e-Visa issuance arrangement, the five-year extension for holders with HK$2 million assessable income, and the two current assessment routes. Corroboration, not a dateline.",
+  "not_extracted": [
+    "The 12 criteria of the General Points Test, their weights and the passing threshold, and the 2 criteria of the Achievement-based Points Test. The Department publishes them in its own points tables and guidance notes. A points table a reader cannot apply to themselves — and which the selection exercise can override — looks like a calculator and works like a decoration. Same call as Singapore's COMPASS, same reason.",
+    "The extension-of-stay flow on the same page: the 36-month initial stay, the 3+2 pattern, the settlement and contribution tests, and the five-year extension at HK$2 million assessable income. Excluded by the bound; the initial stay length is stored because it is granted on entry.",
+    "The supporting-document checklist, which the Department holds in Part III of its guidance notes rather than on this page.",
+    "The fee amounts. QMAS is a 'specified scheme' under Schedule 2 of the Immigration Regulations (Cap.115A) and the Department links a fee table rather than publishing figures inline.",
+    "The dates and quotas of individual selection exercises.",
+    "Permanent resident status after seven years, referred to on the page as the point at which the limit of stay ends."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "no_job_offer_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You do not need a job offer before applying",
+      "description": "The premise of the scheme, and the opposite of Hong Kong's General Employment Policy, which requires a confirmed offer, a genuine vacancy and a role the local workforce cannot readily fill.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants are not required to have secured an offer of local employment before applying for entry or being admitted to hong kong for settlement under the scheme.",
+      "display_order": 10,
+      "source_excerpt_display": "Applicants are not required to have secured an offer of local employment before applying for entry or being admitted to Hong Kong for settlement under the Scheme."
+    },
+    {
+      "requirement_code": "four_stage_selection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Four stages, and the points test is only the second",
+      "description": "Prerequisites, then a points test, then a periodic selection exercise, then issuance. Each stage gates the next.",
+      "source_role": "requirements",
+      "source_excerpt": "stage 1: prerequisites ... stage 2: assessment routes ... stage 3: selection exercise ... stage 4: issuance of visa/entry permit",
+      "display_order": 20,
+      "source_excerpt_display": "Stage 1: Prerequisites ... Stage 2: Assessment Routes ... Stage 3: Selection exercise ... Stage 4: Issuance of visa/entry permit"
+    },
+    {
+      "requirement_code": "prerequisites_are_pass_fail",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Fail any prerequisite and the application is refused immediately, without further assessment",
+      "description": "The Department says the application 'will not be further processed'. The points test is never reached.",
+      "source_role": "requirements",
+      "source_excerpt": "if the applicant fails to provide satisfactory supporting documents showing that he/she has met all the above prerequisites, his/her application will not be further processed and will be refused immediately.",
+      "display_order": 30,
+      "source_excerpt_display": "If the applicant fails to provide satisfactory supporting documents showing that he/she has met all the above prerequisites, his/her application will not be further processed and will be refused immediately."
+    },
+    {
+      "requirement_code": "age_18_or_above",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be 18 or over when you apply",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must be aged 18 or above when submitting an application under the scheme.",
+      "display_order": 40,
+      "parameters": {
+        "min_age": 18
+      },
+      "source_excerpt_display": "The applicant must be aged 18 or above when submitting an application under the Scheme."
+    },
+    {
+      "requirement_code": "self_funding_no_public_assistance",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be able to support and house yourself and any dependants without public assistance",
+      "description": "For the whole of your stay, not just on arrival. No figure is published — this is a standard, not a threshold.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must be able to demonstrate that he/she is capable of supporting and accommodating himself/herself and his/her dependant(s), if any, on his/her own financial resources without relying on public assistance during his/her stay in hong kong.",
+      "display_order": 50,
+      "source_excerpt_display": "The applicant must be able to demonstrate that he/she is capable of supporting and accommodating himself/herself and his/her dependant(s), if any, on his/her own financial resources without relying on public assistance during his/her stay in Hong Kong."
+    },
+    {
+      "requirement_code": "good_character",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No criminal record and no adverse immigration record, anywhere",
+      "description": "'in hong kong or elsewhere' — an immigration record in a third country counts.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must not have any criminal record or adverse immigration record in hong kong or elsewhere.",
+      "display_order": 60,
+      "source_excerpt_display": "The applicant must not have any criminal record or adverse immigration record in Hong Kong or elsewhere."
+    },
+    {
+      "requirement_code": "basic_academic_qualifications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A good educational background, normally a first degree from a recognised institution",
+      "description": "The same door left open as on the GEP: technical qualifications, proven professional abilities or documented experience may be considered in special circumstances.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant must have a good educational background, normally a first degree from a recognized university or tertiary educational institution. under special circumstances, good technical qualifications, proven professional abilities, and/or experience and achievements supported by documentary evidence may be considered.",
+      "display_order": 70,
+      "source_excerpt_display": "The applicant must have a good educational background, normally a first degree from a recognized university or tertiary educational institution. Under special circumstances, good technical qualifications, proven professional abilities, and/or experience and achievements supported by documentary evidence may be considered."
+    },
+    {
+      "requirement_code": "two_assessment_routes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Choose one of two points tests: 12 criteria, or 2",
+      "description": "The General Points Test has a passing threshold and the Department advises self-assessing against it before applying. The Achievement-based Points Test has two criteria and no threshold. The criteria and weights are in the Department's own points tables and are not reproduced here.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants who have met all the prerequisites may choose to be assessed either under the general points test or the achievement-based points test . there are 12 assessment criteria under the general points test and two assessment criteria under the achievement-based points test .",
+      "display_order": 80,
+      "parameters": {
+        "general_points_test_criteria": 12,
+        "achievement_based_criteria": 2,
+        "choose": "one_of"
+      },
+      "source_excerpt_display": "Applicants who have met all the prerequisites may choose to be assessed either under the General Points Test or the Achievement-based Points Test. There are 12 assessment criteria under the General Points Test and two assessment criteria under the Achievement-based Points Test."
+    },
+    {
+      "requirement_code": "passing_threshold_is_not_approval",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meeting the threshold does not get you in — it gets you into the selection exercise",
+      "description": "The single most important thing to understand about this scheme. Selection exercises run periodically, applications meeting more criteria are considered more favourably, and a high-level panel chaired by the Secretary for Labour and Welfare may advise on manpower needs across sectors.",
+      "source_role": "requirements",
+      "source_excerpt": "in general, not all applications meeting both the prerequisites and the passing threshold will necessarily be approved and applications meeting more assessment criteria will be considered more favourably.",
+      "display_order": 90,
+      "source_excerpt_display": "In general, not all applications meeting both the prerequisites and the passing threshold will necessarily be approved and applications meeting more assessment criteria will be considered more favourably."
+    },
+    {
+      "requirement_code": "merit_based_selection_panel",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Selection is on merit, weighed against Hong Kong's wider needs",
+      "description": "The panel takes a holistic view of manpower requirements across sectors and industries, the socio-economic needs of Hong Kong, and the applicant's background — factors outside the applicant's control and not in any points table.",
+      "source_role": "requirements",
+      "source_excerpt": "the assessment panel will take a holistic view of the manpower requirements in different sectors and industries, socio-economic needs of hong kong, the background and credentials of applicants, and other relevant factors and advise the director of immigration on the applicants’ suitability.",
+      "display_order": 100,
+      "source_excerpt_display": "The Assessment Panel will take a holistic view of the manpower requirements in different sectors and industries, socio-economic needs of Hong Kong, the background and credentials of applicants, and other relevant factors and advise the Director of Immigration on the applicants’ suitability."
+    },
+    {
+      "requirement_code": "absolute_discretion_no_reason",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Director may decide a criterion was not met, and may refuse without giving any reason",
+      "description": "Broader than the GEP's disclaimer, which reserves discretion to refuse. This one also reserves discretion over whether a criterion was satisfied at all, and adds that the scheme may change without notice.",
+      "source_role": "requirements",
+      "source_excerpt": "the director of immigration has absolute discretion to determine whether applicants have fulfilled any assessment criterion under the two assessment routes of the scheme as the director thinks fit and to approve or refuse any application without giving any reason.",
+      "display_order": 110,
+      "source_excerpt_display": "The Director of Immigration has absolute discretion to determine whether applicants have fulfilled any assessment criterion under the two assessment routes of the Scheme as the Director thinks fit and to approve or refuse any application without giving any reason."
+    },
+    {
+      "requirement_code": "excluded_nationalities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Nationals of Afghanistan, Cuba and North Korea cannot use the scheme",
+      "description": "The same three nationalities excluded from the General Employment Policy.",
+      "source_role": "requirements",
+      "source_excerpt": "the scheme is not applicable to nationals of afghanistan, cuba and korea (democratic people's republic of).",
+      "display_order": 120,
+      "parameters": {
+        "excluded_nationalities": [
+          "afghanistan",
+          "cuba",
+          "korea (democratic people's republic of)"
+        ]
+      },
+      "source_excerpt_display": "The Scheme is not applicable to nationals of Afghanistan, Cuba and Korea (Democratic People's Republic of)."
+    },
+    {
+      "requirement_code": "dependants_spouse_partner_children",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may bring a spouse or recognised partner and unmarried children under 18 — if you can support them yourself",
+      "description": "Hong Kong recognises same-sex and opposite-sex civil partnerships and civil unions recognised where they were entered into. The financial condition is attached in the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "successful applicants under the scheme may bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration note and unmarried dependent children under the age of 18 to hong kong, provided that they are capable of supporting and accommodating their dependants on their own financial resources without relying on public assistance in hong kong.",
+      "display_order": 130,
+      "parameters": {
+        "max_child_age": 18
+      },
+      "source_excerpt_display": "Successful applicants under the Scheme may bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration Note and unmarried dependent children under the age of 18 to Hong Kong, provided that they are capable of supporting and accommodating their dependants on their own financial resources without relying on public assistance in Hong Kong."
+    },
+    {
+      "requirement_code": "partnership_exclusions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cohabiting partners, de facto spouses and fiancé(e)s do not count",
+      "description": "The Department defines a qualifying partnership by four structural features — governed by the legislation of the place it was entered into, registered with a competent authority, evidenced in writing, and a mutual permanent commitment akin to spouses — and then names what falls outside.",
+      "source_role": "requirements",
+      "source_excerpt": "such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc.",
+      "display_order": 140,
+      "source_excerpt_display": "Such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc."
+    },
+    {
+      "requirement_code": "declare_dependants_in_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Name every accompanying family member in the online application",
+      "description": "The Department advises filling in the accompanying-dependant part during the application rather than adding people later.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants under the scheme are advised to fill in the part of accompanying dependant for all accompanying family members during the online application process.",
+      "display_order": 150,
+      "source_excerpt_display": "Applicants under the Scheme are advised to fill in the part of accompanying dependant for all accompanying family members during the online application process."
+    },
+    {
+      "requirement_code": "false_statement_offence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A knowingly false statement is a criminal offence, and it voids the visas already granted",
+      "description": "Not only your own: the Department states that any visa, entry permit or extension granted to you AND your dependants may become null and void.",
+      "source_role": "requirements",
+      "source_excerpt": "any person who knowingly and wilfully makes a statement or gives information which he/she knows to be false or does not believe to be true under or for the purpose of the scheme shall be guilty of an offence under the laws of hong kong and is liable to prosecution and subsequent removal from hong kong.",
+      "display_order": 160,
+      "source_excerpt_display": "Any person who knowingly and wilfully makes a statement or gives information which he/she knows to be false or does not believe to be true under or for the purpose of the Scheme shall be guilty of an offence under the Laws of Hong Kong and is liable to prosecution and subsequent removal from Hong Kong."
+    },
+    {
+      "requirement_code": "initial_stay_36_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Successful applicants on the General Points Test normally get 36 months, with no employment condition",
+      "description": "'on time limitation only without other conditions of stay' — you are not tied to an employer, which is the practical difference from the General Employment Policy.",
+      "source_role": "requirements",
+      "source_excerpt": "persons admitted through the general points test under the scheme will normally be granted an initial stay of 36 months on time limitation only without other conditions of stay upon entry.",
+      "display_order": 170,
+      "parameters": {
+        "initial_stay_months": 36
+      },
+      "source_excerpt_display": "Persons admitted through the General Points Test under the Scheme will normally be granted an initial stay of 36 months on time limitation only without other conditions of stay upon entry."
+    },
+    {
+      "requirement_code": "originals_on_request",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Originals may be demanded even after copies have been supplied",
+      "description": "The checklist itself is in Part III of the Department's guidance notes rather than on this page.",
+      "source_role": "requirements",
+      "source_excerpt": "notwithstanding that applicants have already furnished all necessary copies of documents and information stated in the guidance notes, they may still be required to submit originals of the documents in connection with their applications upon request.",
+      "display_order": 180,
+      "source_excerpt_display": "Notwithstanding that applicants have already furnished all necessary copies of documents and information stated in the Guidance Notes, they may still be required to submit originals of the documents in connection with their applications upon request."
+    },
+    {
+      "requirement_code": "application_fee_non_refundable",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The application fee is non-refundable whatever the outcome",
+      "description": "QMAS is a 'specified scheme' under Schedule 2 of the Immigration Regulations (Cap.115A): the principal applicant and each dependant pay a non-refundable application fee and, on approval, a visa issuance fee. The Department links its fee table rather than publishing amounts here, so no figure is stored.",
+      "source_role": "requirements",
+      "source_excerpt": "the application fee paid is non-refundable in any circumstance irrespective of the application result.",
+      "display_order": 190,
+      "parameters": {
+        "currency": "HKD",
+        "refundable": false,
+        "per": "applicant_and_each_dependant"
+      },
+      "source_excerpt_display": "The application fee paid is non-refundable in any circumstance irrespective of the application result."
+    }
+  ]
+}

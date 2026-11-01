@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-visa-court-sejour",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French. Service-Public.gouv.fr is published by DILA, a service of the Prime Minister; it describes the rules and does not decide applications. France-Visas, which issues the visa, returns HTTP 403 on robots.txt to our monitor from two egress paths and is neither registered nor read.",
+  "structure_note": "France publishes the SCHENGEN rules here, so several requirements are about the Schengen area rather than about France: the 90/180 rule, which consulate is competent, and the shared refusal grounds. Where the page states a France-specific carve-out — outre-mer, the work-authorisation exemptions — it is recorded separately rather than merged into the Schengen rule it sits beside.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16146"
+  },
+  "page_dates": {
+    "requirements": "2026-08-13"
+  },
+  "freshness_note": "The page carries its own verification line in the body: 'vérifié le 13 août 2026 - service public / direction de l'information légale et administrative (premier ministre)'. That is a body dateline rather than a metadata stamp, which makes it harder to bulk-republish than the GOV.UK dateModified that produced a false staleness reading; it is still self-declared and still treated as evidence rather than truth.",
+  "not_extracted": [
+    "The document list. The page states plainly that it depends on the applicant's situation and sends the reader to France-Visas ('pour connaitre selon votre situation la liste des pièces à fournir, vous devez consulter le portail france-visas'). That host refuses our monitor. No document list is recorded, and none is reconstructed from the refusal grounds that mention accommodation, resources and medical insurance — those are grounds for refusal, not a checklist.",
+    "The visa fee. The page links France-Visas for the amount and states none itself. This is the most tempting figure on the route and there is nothing on the page to take it from.",
+    "Which nationalities are exempt. The page states exemption depends on nationality and passport type and sends the reader to the 'assistant visa' téléservice. No list is published and none is constructed.",
+    "The separate visa required for the French overseas territories. The page says one exists and links it; the rules themselves are on another page not registered here.",
+    "Processing times. Not stated."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_needs_a_short_stay_schengen_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three conditions define who needs a Schengen short-stay visa",
+      "description": "The third condition is the one that is missed: holding a residence permit or long-stay visa from another Schengen state takes you out of this route entirely.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous êtes concerné si vous remplissez les 3 conditions suivantes : être étranger non européen ... durée maximale du séjour en france de 3 mois (ou dans un autre pays de l' espace schengen ... ne pas avoir de titre de séjour ou de visa de long séjour dans un pays de l' espace schengen.",
+      "source_excerpt_display": "Vous êtes concerné si vous remplissez les 3 conditions suivantes: Être étranger non européen ... Durée maximale du séjour en France de 3 mois (ou dans un autre pays de l' espace Schengen ... Ne pas avoir de titre de séjour ou de visa de long séjour dans un pays de l' espace Schengen."
+    },
+    {
+      "requirement_code": "exemption_depends_on_nationality_and_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may be exempt from the visa depending on your nationality and the type of passport you hold",
+      "description": "Recorded because the page states the exemption exists and publishes no list — the applicant must use the authority's own téléservice. Naming the exemption without a list is the honest position; supplying a list from elsewhere would not be.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "selon votre nationalité et le type de votre passeport, vous pouvez être dispensé de visa. vous pouvez vérifier si vous avez besoin d'un visa en utilisant le service assistant visa.",
+      "source_excerpt_display": "Selon votre nationalité et le type de votre passeport, vous pouvez être dispensé de visa. Vous pouvez vérifier si vous avez besoin d'un visa en utilisant le service Assistant visa."
+    },
+    {
+      "requirement_code": "short_stay_visa_does_not_permit_settling",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Schengen visa does not allow you to settle in France — that is the long-stay (type D) visa",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "à la différence d'un visa national de long séjour (type d) , le visa schengen ne vous autorise pas à vous installer en france.",
+      "source_excerpt_display": "À la différence d'un visa national de long séjour (type D), le visa Schengen ne vous autorise pas à vous installer en France."
+    },
+    {
+      "requirement_code": "ninety_days_in_any_one_hundred_eighty",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "90 days maximum in any 180-day period, counted across the whole Schengen area",
+      "description": "Counted across all Schengen countries together, not per country, and across several trips as well as one continuous stay.",
+      "parameters": {
+        "max_days": 90,
+        "reference_period_days": 180
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "le visa de court séjour vous permet de séjourner 90 jours maximum pour un séjour continu ou pour plusieurs séjours dans les pays de l'espace schengen sur une période de 180 jours. à la fin de ce délai maximum de 90 jours, vous devez quitter l'espace schengen .",
+      "source_excerpt_display": "Le visa de court séjour vous permet de séjourner 90 jours maximum pour un séjour continu ou pour plusieurs séjours dans les pays de l'espace Schengen sur une période de 180 jours. À la fin de ce délai maximum de 90 jours, vous devez quitter l'espace Schengen."
+    },
+    {
+      "requirement_code": "passport_validity_and_page_conditions",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport valid at least 3 months beyond the visa, issued within the last 10 years, with at least 2 blank pages",
+      "description": "Three separate passport conditions in one sentence, and the second — issued less than ten years ago — refuses passports that are still valid on their face.",
+      "parameters": {
+        "validity_months_after_visa_end": 3,
+        "issued_within_years": 10,
+        "blank_pages_minimum": 2
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "votre passeport doit être valide au moins 3 mois après la date de fin de votre visa. il doit également avoir été délivré depuis moins de 10 ans et contenir au moins 2 pages vierges pour les tampons d’entrées sur un territoire.",
+      "source_excerpt_display": "Votre passeport doit être valide au moins 3 mois après la date de fin de votre visa. Il doit également avoir été délivré depuis moins de 10 ans et contenir au moins 2 pages vierges pour les tampons d’entrées sur un territoire."
+    },
+    {
+      "requirement_code": "apply_online_at_most_three_months_before",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online, at the earliest 3 months before your planned departure",
+      "parameters": {
+        "earliest_application_months_before_departure": 3
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "la demande est à faire au plus tôt 3 mois avant le départ prévu.",
+      "source_excerpt_display": "La demande est à faire au plus tôt 3 mois avant le départ prévu."
+    },
+    {
+      "requirement_code": "consulate_appointment_in_country_of_residence",
+      "kind": "step",
+      "officially_required": true,
+      "label": "After the online application, book an appointment at the French consulate in your country of residence",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "après avoir rempli votre demande sur internet, vous devez prendre rendez-vous au consulat de france du pays dans lequel vous résidez.",
+      "source_excerpt_display": "Après avoir rempli votre demande sur internet, vous devez prendre rendez-vous au consulat de France du pays dans lequel vous résidez."
+    },
+    {
+      "requirement_code": "competent_consulate_when_main_destination_unclear",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the main destination cannot be determined, the country of first entry issues the visa",
+      "description": "Decides WHICH country's consulate to apply to, and getting it wrong means applying to the wrong state entirely. The page gives its own worked example.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "si la destination principale ne peut pas être déterminée, c'est le pays d'entrée dans l' espace schengen qui est compétent pour vous délivrer le visa. par exemple, si vous comptez passer 15 jours en belgique et 15 jours en france pour tourisme en arrivant par la belgique, vous devez faire votre demande auprès du consulat belge.",
+      "source_excerpt_display": "Si la destination principale ne peut pas être déterminée, c'est le pays d'entrée dans l' espace Schengen qui est compétent pour vous délivrer le visa. Par exemple, si vous comptez passer 15 jours en Belgique et 15 jours en France pour tourisme en arrivant par la Belgique, vous devez faire votre demande auprès du consulat belge."
+    },
+    {
+      "requirement_code": "purposes_for_which_a_schengen_visa_may_be_granted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Purposes for which a Schengen visa may be granted",
+      "description": "An open list — the page says 'par exemple'. The last item carries a condition the others do not: paid activity may require a separate work authorisation.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "ce visa peut vous être accordé par exemple pour l'un des motifs suivants : voyage touristique voyage professionnel visite familiale formation courte, stage exercice d'une activité rémunérée qui peut nécessiter une autorisation de travail .",
+      "source_excerpt_display": "Ce visa peut vous être accordé par exemple pour l'un des motifs suivants: Voyage touristique Voyage professionnel Visite familiale Formation courte, stage Exercice d'une activité rémunérée qui peut nécessiter une autorisation de travail."
+    },
+    {
+      "requirement_code": "work_authorisation_needed_unless_exempt_activity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working during a short stay needs a work authorisation, unless the activity is one of seven listed exemptions",
+      "description": "A closed list of exemptions, and an unusually specific one. Recording only 'you need a work authorisation' would be wrong for artists, conference speakers, invited professors, models, domestic staff accompanying their employer, and seconded IT/finance/engineering auditors.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "pour travailler pendant votre court séjour, vous devez détenir une autorisation de travail obtenue pour une activité rémunérée qui ne relève pas des motifs suivants : manifestations sportives, culturelles, artistiques et scientifiques colloques, séminaires et salons professionnels production et diffusion cinématographique, audiovisuelles, du spectacle et de l’édition phonographique, en tant qu’artiste ou personnel technique mannequinat et pose artistique services à la personne et employés de maison pendant le séjour en france de leurs employeurs particuliers missions d’audit et d’expertise en informatique, gestion, finance, assurance, architecture et ingénierie en tant que salarié détaché sous contrat enseignement dispensé en tant que professeur invité.",
+      "source_excerpt_display": "Pour travailler pendant votre court séjour, vous devez détenir une autorisation de travail obtenue pour une activité rémunérée qui ne relève pas des motifs suivants: Manifestations sportives, culturelles, artistiques et scientifiques Colloques, séminaires et salons professionnels Production et diffusion cinématographique, audiovisuelles, du spectacle et de l’édition phonographique, en tant qu’artiste ou personnel technique Mannequinat et pose artistique Services à la personne et employés de maison pendant le séjour en France de leurs employeurs particuliers Missions d’audit et d’expertise en informatique, gestion, finance, assurance, architecture et ingénierie en tant que salarié détaché sous contrat Enseignement dispensé en tant que professeur invité."
+    },
+    {
+      "requirement_code": "biometric_data_recorded_in_visabio",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your photograph and fingerprints are recorded in the VISABIO file and you cannot object",
+      "description": "Stated by the authority as non-refusable, with a right of access and correction but no right to opt out. Children under 12 are excluded from fingerprinting.",
+      "parameters": {
+        "fingerprint_exemption_age_under": 12
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "ces données sont les images numérisées de votre photo et de vos empreintes digitales (l'enfant de moins de 12 ans n'est pas concerné). vous ne pouvez pas vous opposer à cet enregistrement. cependant, vous avez un droit d'accès et de rectification au fichier.",
+      "source_excerpt_display": "Ces données sont les images numérisées de votre photo et de vos empreintes digitales (l'enfant de moins de 12 ans n'est pas concerné). Vous ne pouvez pas vous opposer à cet enregistrement. Cependant, vous avez un droit d'accès et de rectification au fichier."
+    },
+    {
+      "requirement_code": "entry_exit_system_ees_records_third_country_travellers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The EU Entry/Exit System records entries, exits and refusals for third-country travellers on stays under 3 months",
+      "description": "A live change to what happens at the border rather than to who qualifies. Recorded because it is new, it applies to exactly this route's travellers, and the transit page dates its rollout to 12 October 2025.",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "le système européen d’entrée/sortie (ees) est déployé aux points de passage frontaliers extérieurs de l’espace schengen (aéroports, gares et ports). ce système enregistre les données personnelles ainsi que les données concernant les entrées, sorties et refus d’entrées des voyageurs ressortissants de pays tiers qui viennent en france pour un séjour de moins de 3 mois.",
+      "source_excerpt_display": "Le système européen d’entrée/sortie (EES) est déployé aux points de passage frontaliers extérieurs de l’espace Schengen (aéroports, gares et ports). Ce système enregistre les données personnelles ainsi que les données concernant les entrées, sorties et refus d’entrées des voyageurs ressortissants de pays tiers qui viennent en France pour un séjour de moins de 3 mois."
+    },
+    {
+      "requirement_code": "fee_is_not_refunded_on_refusal",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The visa fee is paid when the application is lodged and is not refunded if the visa is refused or the trip cancelled",
+      "description": "No amount is published on this page. What IS published is that a private provider may charge additional service fees on top, which the authority does not set.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "le montant des droits de visa doit être réglé au service des visas au moment du dépôt de la demande. dans les pays où l’état a confié la réception des demandes à un prestataire privé, les frais de dossier doivent être versés à ce prestataire. ce dernier peut aussi réclamer à l'étranger des frais de service supplémentaires.",
+      "source_excerpt_display": "Le montant des droits de visa doit être réglé au service des visas au moment du dépôt de la demande. Dans les pays où l’État a confié la réception des demandes à un prestataire privé, les frais de dossier doivent être versés à ce prestataire. Ce dernier peut aussi réclamer à l'étranger des frais de service supplémentaires."
+    },
+    {
+      "requirement_code": "grounds_for_refusal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Eight grounds on which a Schengen visa may be refused",
+      "description": "Published as a list of refusal grounds, not as a checklist of things to bring. The seventh — failure to establish an intention to leave before the visa expires — is the one refused most often and the one an applicant can least easily evidence.",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "un visa schengen peut vous être refusé pour les motifs suivants : ne pas présenter les justificatifs concernant votre séjour en france (justificatifs d'hébergement, de ressources, assurance médicale, etc.) présenter de faux documents de voyage ou des documents dont l'authenticité est douteuse avoir déjà séjourné 90 jours au cours de la période actuelle de 180 jours sur le territoire français",
+      "source_excerpt_display": "Un visa Schengen peut vous être refusé pour les motifs suivants: Ne pas présenter les justificatifs concernant votre séjour en France (justificatifs d'hébergement, de ressources, assurance médicale, etc.) Présenter de faux documents de voyage ou des documents dont l'authenticité est douteuse Avoir déjà séjourné 90 jours au cours de la période actuelle de 180 jours sur le territoire Français"
+    },
+    {
+      "requirement_code": "refusal_may_be_implicit_after_two_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A refusal may be implicit: no answer within 2 months is itself a refusal",
+      "description": "Load-bearing for the appeal clock. An applicant waiting for a letter that will never arrive can let the 30-day appeal window pass.",
+      "parameters": {
+        "implicit_refusal_after_months": 2
+      },
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "votre visa schengen peut être refusé : explicitement par une décision écrite qui doit préciser le motif du refus implicitement si aucune réponse n'est apportée à votre demande au bout d'un délai de 2 mois.",
+      "source_excerpt_display": "Votre visa Schengen peut être refusé: Explicitement par une décision écrite qui doit préciser le motif du refus Implicitement si aucune réponse n'est apportée à votre demande au bout d'un délai de 2 mois."
+    },
+    {
+      "requirement_code": "rapo_is_a_mandatory_precondition_to_court",
+      "kind": "step",
+      "officially_required": true,
+      "label": "You must file a RAPO administrative appeal before you may go to court",
+      "description": "The ordering IS the requirement: a court application filed without a RAPO is inadmissible.",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "vous pouvez faire un recours contentieux contre une décision de refus de visa. mais vous devez faire d'abord un recours administratif préalable obligatoire (rapo).",
+      "source_excerpt_display": "Vous pouvez faire un recours contentieux contre une décision de refus de visa. Mais vous devez faire d'abord un recours administratif préalable obligatoire (Rapo)."
+    },
+    {
+      "requirement_code": "rapo_deadline_thirty_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The RAPO must be filed within 30 days of being notified of the refusal",
+      "parameters": {
+        "rapo_deadline_days": 30
+      },
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "le rapo doit être formé dans un délai de 30 jours à compter de la date à laquelle de la décision de refus de visa vous a été notifiée.",
+      "source_excerpt_display": "Le Rapo doit être formé dans un délai de 30 jours à compter de la date à laquelle de la décision de refus de visa vous a été notifiée."
+    },
+    {
+      "requirement_code": "court_appeal_two_months_at_nantes",
+      "kind": "step",
+      "officially_required": true,
+      "label": "After the RAPO is rejected, a court appeal goes to the Nantes administrative court within 2 months",
+      "description": "One named court for the whole country, and the two-month clock runs from an implicit rejection as well as an explicit one.",
+      "parameters": {
+        "court_appeal_deadline_months": 2
+      },
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "vous pouvez alors faire un recours en annulation, dans un délai de 2 mois après la décision de rejet implicite ou explicite de votre rapo. c'est le tribunal administratif de nantes qui est compétent pour examiner les recours en annulation contre les refus de visas.",
+      "source_excerpt_display": "Vous pouvez alors faire un recours en annulation, dans un délai de 2 mois après la décision de rejet implicite ou explicite de votre Rapo. C'est le tribunal administratif de Nantes qui est compétent pour examiner les recours en annulation contre les refus de visas."
+    }
+  ]
+}

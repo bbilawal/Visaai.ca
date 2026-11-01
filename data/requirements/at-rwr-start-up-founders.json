@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-start-up-founders",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "Scored like the other Red-White-Red routes, with a capital floor on top. Two different euro figures appear for different things — founding capital and additional investment capital — so each is labelled for what it funds.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/start-up-founders/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as Singapore's MOM and the US ESTA pages already live.",
+  "not_extracted": [
+    "THE POINTS TABLE. Its criterion-to-score mapping does not survive normalization — rows flatten so that criteria and their scores become separate consecutive lines, and the association exists only in visual layout. The THRESHOLD is quoted where the page states it in prose, because that is a sentence; the individual scores are not, because reconstructing them would be inference.",
+    "Fees. The page names none."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "founding_capital",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Founding capital of at least €30,000 with a 50% equity share",
+      "description": "Both parts are one sentence on the page: the amount and the minimum share of it the founder must hold.",
+      "source_role": "requirements",
+      "source_excerpt": "prove capital for the company to be founded amounting to € 30.000 minimum with an equity share of at least 50 %",
+      "display_order": 10,
+      "source_excerpt_display": "prove capital for the company to be founded amounting to € 30.000 minimum with an equity share of at least 50 %"
+    },
+    {
+      "requirement_code": "points_threshold_50",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A minimum of 50 points",
+      "description": "The threshold is stated in prose, so it is quoted. The individual criterion scores are not — see not_extracted.",
+      "source_role": "requirements",
+      "source_excerpt": "can score 50 points minimum according to the following criteria",
+      "display_order": 20,
+      "source_excerpt_display": "can score 50 points minimum according to the following criteria"
+    },
+    {
+      "requirement_code": "additional_investment_capital",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of additional investment capital of at least €50,000",
+      "description": "Separate from the €30,000 founding capital, and a larger figure.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of additional investment capital of € 50.000 minimum",
+      "display_order": 30,
+      "source_excerpt_display": "Evidence of additional investment capital of € 50.000 minimum"
+    }
+  ]
+}

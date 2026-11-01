@@ -1,0 +1,382 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-student-visa-subclass-500",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500"
+  },
+  "not_extracted": [
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains the column headings ('Base application charge', 'Additional applicant charge 18 and over', ...) and no amounts at all. The subclass 500 landing page likewise says only 'From <placeholder> (concessions apply in limited circumstances)'. No amount and no currency was stated, so no fee is recorded. Inventing one is not an option.",
+    "The registered 'eligibility' source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/genuine-student-requirement) was not read: immi.homeaffairs.gov.au returned HTTP 403 to the source monitor on this run and the rule is never to retry through a 403. The Genuine Student requirement therefore appears here only as the landing page states it.",
+    "The registered 'documents' source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/disclaimer-for-document-checklist) was not read, same 403.",
+    "The registered 'forms' source (https://online.immi.gov.au/lusc/login) is disallowed by that host's robots.txt ('User-agent: * / Disallow: /'). It was not fetched and nothing is quoted from it. It is the ImmiAccount login, which is a route rather than a requirement; the online lodgement route is recorded as a step from the landing page instead.",
+    "English language test score thresholds. The landing page states an English language requirement exists and names approved and non-approved tests, but points to 'Gather Documents' and the Document Checklist tool for the minimum band scores. No score is stated on the page read, so none is recorded.",
+    "The full English language exemption list. The page begins one ('you are a citizen and hold a passport from UK, USA, Canada, NZ or Republic of Ireland') inside a nested accordion; the remaining entries could not be attributed with confidence to a single closed list, so the requirement records that exemptions exist without enumerating them.",
+    "Page 'last updated' date. The date is rendered client-side and is absent from the served HTML, so page_dates is empty.",
+    "Requirements that apply only to sponsors. The page carries a 'For Sponsors' toggle whose stored content on this page is unpopulated CMS placeholder text ('sponsor visa cost', 'Question block with hyperlink'). Nothing from that branch is used."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "school_student_age",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be at least 6 years old, and within the age limits for your school year",
+      "description": "Applies to school students who are not in a secondary school student exchange program. The page sets both a floor (aged 6 or older) and per-year-level ceilings. VisaAI does not collect school year level, so this requirement carries no rule and is shown to every applicant with the condition stated here.",
+      "source_role": "landing",
+      "source_excerpt": "If you are a school student (but not participating in a secondary school student exchange program), you must be aged 6 or older to apply for this visa. You must also be: less than 17 years old when you begin Year 9, less than 18 years old when you begin Year 10, less than 19 years old when you begin Year 11, less than 20 years old when you begin Year 12",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "enrolled_in_cricos_course",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be enrolled in a full time CRICOS-registered course",
+      "description": "The Department states an application lodged without the right evidence of enrolment is not valid and cannot be processed.",
+      "source_role": "landing",
+      "source_excerpt": "You must include the right evidence of enrolment in study with your Student visa application, or your application will not be valid and can't be processed. Providing a Confirmation of Enrolment (CoE) You must be enrolled in a full time course registered on the Commonwealth Register of Institutions and courses for Overseas Students (CRICOS).",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "welfare_arrangements_under_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have adequate welfare arrangements in place if you are under 18",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "If you are applying for a Student visa and you are under 18 years of age, you must have adequate welfare arrangements in place while you are in Australia.",
+      "display_order": 30
+    },
+    {
+      "requirement_code": "english_language_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the English language requirement",
+      "description": "The Department states it can ask for this evidence at any time while processing, even where the Document Checklist tool did not ask for it at lodgement. Exemption categories exist; the page does not state a single closed list of them, and it does not state the minimum band scores.",
+      "source_role": "landing",
+      "source_excerpt": "You might need to provide evidence of your English language skills at the time you submit your visa application. To find out the evidence you need to provide, use the Document Checklist tool. Note: We can ask you for evidence of your English language skills after you have submitted your application, at any time while we are processing your application, even if the Document Checklist tool shows that you don't need to provide evidence of your English language skill when you submit your application.",
+      "display_order": 40
+    },
+    {
+      "requirement_code": "english_test_recency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sit an approved English language test within the required period, in person",
+      "description": "The Department does not accept tests delivered entirely online. It names IELTS Online, LANGUAGECERT Academic Online, OET@Home, CELPIP Online, MET Digital (taken at-home) and TOEFL iBT - Home Edition as examples that are not approved.",
+      "source_role": "landing",
+      "source_excerpt": "You must have completed the English language test: within the 2 years before you lodged your visa application, if you are Regular Evidence level; or within the 2 years before a decision is made on your visa application, if you are Streamlined Evidence level and the Department has requested evidence. At-home or online English language tests The Department of Home Affairs does not accept evidence from English language tests where an entire test is delivered online (also known as “remote-proctored” or “at-home”).",
+      "display_order": 50
+    },
+    {
+      "requirement_code": "overseas_student_health_cover",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold and maintain Overseas Student Health Cover (OSHC)",
+      "description": "Exceptions the page names: a Norwegian student covered by the Norwegian National Insurance Scheme, a Swedish student covered by Kammarkollegiet, and a Belgian student covered under the Reciprocal Health Care Agreement with Australia. The Department states it will refuse the application if the health insurance information is not given when you apply.",
+      "source_role": "landing",
+      "source_excerpt": "You and your family members must have and maintain adequate health insurance for the whole of your stay in Australia. To find out the length of coverage you will require, see Student visa grant periods. You and your family members must be covered by Overseas Student Health Cover (OSHC) from an approved Australian health insurance provider, unless an 'Exception' applies.",
+      "display_order": 60
+    },
+    {
+      "requirement_code": "hold_eligible_substantive_visa_in_australia",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold an eligible substantive visa if you apply while in Australia",
+      "description": "The page lists ineligible substantive visas, including subclass 403 (Domestic Worker stream), 426, 485, 600, 601, 602, 651, 771, 988 and 995 (primary holder only). Without an eligible substantive visa there is a 28-day window in defined circumstances.",
+      "rule": {
+        "fact": "application_country",
+        "op": "eq",
+        "value": "AU"
+      },
+      "source_role": "landing",
+      "source_excerpt": "You can be in or outside Australia when you apply for the visa. You can apply in Australia if you hold a substantive visa except for one of these: Temporary Work (International Relations) visa (subclass 403) in the Domestic Worker (Diplomatic or consular) stream, Domestic Worker (Temporary) Diplomatic and Consular visa (subclass 426), Temporary Graduate visa (subclass 485), Visitor visa (subclass 600), Electronic Travel Authority visa (subclass 601) (ETA), Medical Treatment visa (subclass 602), eVisitor visa (subclass 651), Transit visa (subclass 771), Maritime Crew visa (subclass 988), Diplomatic (Temporary) visa (subclass 995)",
+      "display_order": 70
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have enough money for your stay",
+      "source_role": "landing",
+      "source_excerpt": "You must have enough money to pay for your stay in Australia. To see the minimum amount of money you need for your visa application go to 'Gather Documents' under Step by Step.",
+      "display_order": 80
+    },
+    {
+      "requirement_code": "genuine_student",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a genuine student",
+      "source_role": "landing",
+      "source_excerpt": "You must: be a genuine student for entry, be able to show an understanding that studying in Australia is the primary reason of your Student visa.",
+      "display_order": 90
+    },
+    {
+      "requirement_code": "character_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the character requirement",
+      "source_role": "landing",
+      "source_excerpt": "You and family members aged 16 years and over who apply for the visa must meet our character requirement.",
+      "display_order": 100
+    },
+    {
+      "requirement_code": "health_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the health requirement",
+      "source_role": "landing",
+      "source_excerpt": "You and any family members who apply for the visa must meet our health requirement.",
+      "display_order": 110
+    },
+    {
+      "requirement_code": "australian_values_statement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sign the Australian Values Statement",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 18
+      },
+      "source_role": "landing",
+      "source_excerpt": "If you are 18 years of age or older, you must: have read, or had explained to you, the Life in Australia booklet and sign an Australian Values Statement that confirms you will respect the Australian way of life and obey Australian laws",
+      "display_order": 120
+    },
+    {
+      "requirement_code": "no_debt_to_australian_government",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have repaid, or arranged to repay, any debt to the Australian Government",
+      "source_role": "landing",
+      "source_excerpt": "If you or any family members (including those who don't apply for the visa with you) owe the Australian government money, you or they must have paid it back or arranged to pay it back.",
+      "display_order": 130
+    },
+    {
+      "requirement_code": "immigration_history_considered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not have had a visa cancelled or an application refused",
+      "source_role": "landing",
+      "source_excerpt": "We will consider your immigration history when we decide on your application, which means you might not be eligible for this visa if you have had a visa cancelled or refused.",
+      "display_order": 140
+    },
+    {
+      "requirement_code": "best_interests_of_the_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Grant must be in the best interests of an applicant under 18",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "We might not grant this visa if it is not in the best interests of an applicant under 18.",
+      "display_order": 150
+    },
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport",
+      "description": "The Department adds that if you are in Australia and your current passport expires, you must renew it before you apply.",
+      "source_role": "landing",
+      "source_excerpt": "You and your family members must hold a valid passport in order to lodge a Student visa application. If you are in Australia and your current passport expires, you will need to renew it before you apply for your Student visa.",
+      "display_order": 200
+    },
+    {
+      "requirement_code": "identity_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Identity documents - passport pages, national identity card, proof of change of name",
+      "description": "The Department states that if you cannot prove your identity it will refuse the application and might not grant you, or family members listed on your application, another visa for 10 years.",
+      "source_role": "landing",
+      "source_excerpt": "We need proof of your identity. Provide the pages of your current passport showing your photo, personal details, and passport issue and expiry dates. Also provide: a national identity card, if you have one, proof of change of name",
+      "display_order": 210
+    },
+    {
+      "requirement_code": "confirmation_of_enrolment",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Confirmation of Enrolment (CoE) for every intended course",
+      "description": "Alternatives the page names where no CoE is needed: a letter of support (Australian Department of Foreign Affairs and Trade or Department of Defence sponsored), an Acceptance Advice of Secondary Exchange Student (AASES) form (secondary exchange student), or a letter from your education provider (postgraduate research student awaiting thesis marking).",
+      "source_role": "landing",
+      "source_excerpt": "Provide a Confirmation of Enrolment (CoE) in a full time course registered on the Commonwealth Register of Institutions and courses for Overseas Students (CRICOS) for all intended courses. Your CoE must be valid at time of lodgement and when we decide your visa application.",
+      "display_order": 220
+    },
+    {
+      "requirement_code": "genuine_student_response",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Written responses to the Genuine Student questions, plus supporting documents",
+      "description": "The Department states each answer has a 150 word limit, and that there is an additional question if you have previously held a Student visa or are lodging in Australia from a non-student visa.",
+      "source_role": "landing",
+      "source_excerpt": "We will ask you to provide a response, in English, to a set of questions in your online application. Each question has a 150 word limit addressing the genuine student criteria. You will also need to attach supporting documents to your application in your ImmiAccount.",
+      "display_order": 230
+    },
+    {
+      "requirement_code": "financial_capacity_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of financial capacity for the 12-month minimum",
+      "description": "The Department states the minimum you must be able to cover is travel, 12 months of course fees, 12 months of living costs for you and any accompanying family members, and school fees for any school-age children (pro rata for shorter stays). The 12-month living cost figures it publishes are AUD29,710 for the student, AUD10,394 for an accompanying partner and AUD4,449 for an accompanying child, plus at least AUD13,502 a year for each school-age child. As an alternative it accepts evidence of a parent's or partner's personal annual income of at least AUD87,856 in the 12 months before applying, or AUD102,500 where family members come too. Travel-cost guides: AUD2,500 East or Southern Africa, AUD3,000 West Africa, AUD2,000 elsewhere outside Australia, AUD1,000 applying in Australia (AUD1,500 if returning to Africa).",
+      "parameters": {
+        "currency": "AUD",
+        "living_costs_student_12_months": 29710,
+        "living_costs_partner_12_months": 10394,
+        "living_costs_child_12_months": 4449,
+        "school_costs_per_child_per_year_minimum": 13502,
+        "alternative_annual_income_parent_or_partner": 87856,
+        "alternative_annual_income_with_family_members": 102500,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "landing",
+      "source_excerpt": "Living costs 12-month living costs are for: students - AUD29,710, partners coming with you - AUD10,394, a child coming with you - AUD4,449. Alternatively, you can give evidence that your parents or your partner had a personal annual income of at least AUD87,856 in the 12 months before you apply. If you bring family members, your parents' or partner's income must be at least AUD102,500 in the 12 months before you apply. If you are including any school-age children in your application, add schooling costs of at least AUD13,502 per year for each child.",
+      "display_order": 240
+    },
+    {
+      "requirement_code": "genuine_access_to_funds_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence you have genuine access to the money",
+      "description": "Where someone else provides the funds, the Department asks for evidence of your relationship with them, their identity documents, and evidence of any financial support they have given you or another Student visa holder in the past. It states that a bank balance certificate across a single day does not show how the funds were accumulated.",
+      "source_role": "landing",
+      "source_excerpt": "If we ask you to give evidence of financial capacity, you must also prove you have access to it. If you give evidence of deposits of money, explain their source to show how the funds were accumulated. Providing a bank balance certificate across a single day does not show us how you increased your funds.",
+      "display_order": 250
+    },
+    {
+      "requirement_code": "polio_vaccination_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Polio vaccination certificate",
+      "description": "Required when applying from outside Australia and travelling from, or having spent time in, a country the Department considers at risk of polio. VisaAI does not hold that country list, so this carries no rule and the condition is stated here instead.",
+      "source_role": "landing",
+      "source_excerpt": "If you are applying from outside Australia and you are travelling from, or spent time in, a country considered at risk of polio, you need to give us a polio vaccination certificate.",
+      "display_order": 260
+    },
+    {
+      "requirement_code": "welfare_and_consent_documents_under_18",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Welfare arrangements and parental consent documents for students under 18",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "If you are applying for a Student visa and you are under 18 years old, you must have appropriate welfare arrangements in place. This must cover your period of stay or until you turn 18 years, whichever is first. You must also have consent from your parent(s) or guardian(s) to travel to and reside in Australia as an under 18 student.",
+      "display_order": 270
+    },
+    {
+      "requirement_code": "partner_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Partner's identity, character and relationship documents",
+      "description": "For a de facto partner the Department also asks for evidence that the relationship has run for at least 12 months before you applied, or that it is registered by a participating Australian state or territory.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "married",
+          "de_facto",
+          "common_law",
+          "partnered"
+        ]
+      },
+      "source_role": "landing",
+      "source_excerpt": "Provide your partner's: identity documents, character documents, documents about other family members, if applicable. If you are married, provide your marriage certificate or other evidence that your marriage is valid in Australia. If you are a de facto partner, provide documents that show you are in a de facto relationship.",
+      "display_order": 280
+    },
+    {
+      "requirement_code": "vac_exemption_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence you are exempt from paying the visa application charge",
+      "description": "The Department names the exempt groups: Commonwealth-funded scholarship holders, students and family members supported by the Department of Foreign Affairs and Trade or the Department of Defence, secondary exchange students, students affected by education provider default who lodge within 12 months of the default day, family members of students enrolled in a postgraduate research course, and students affected by COVID-19. It warns not to claim an exemption you are unsure of.",
+      "source_role": "landing",
+      "source_excerpt": "The following Student visa applicants are not required to pay a visa application charge (VAC): Students awarded a scholarship funded by the Commonwealth Government of Australia, Students and family members supported by the Department of Foreign Affairs and Trade, Student and family members supported by the Department of Defence, Secondary exchange students, Students affected by education provider default and lodge a new Student visa application within 12 months of the provider default day, Family members of students enrolled in a postgraduate research course, Students affected by COVID-19.",
+      "display_order": 290
+    },
+    {
+      "requirement_code": "authorised_recipient_or_agent_notification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Notification that someone is helping with your application",
+      "description": "The page names Form 956A 'Appointment or withdrawal of an authorised recipient' to nominate someone to receive correspondence, and Form 956 'Appointment of a registered migration agent, legal practitioner or exempt person' to nominate someone to give immigration assistance. official_form_code is left null: Australia publishes no application form identifier for the visa itself, and these two are the Department's own auxiliary form numbers quoted from the page rather than a VisaAI-assigned code.",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "To nominate someone to: receive your correspondence, use Form 956A Appointment or withdrawal of an authorised recipient, provide immigration assistance, use Form 956 Appointment of a registered migration agent, legal practitioner or exempt person. Upload your written notification or your forms to ImmiAccount.",
+      "display_order": 300
+    },
+    {
+      "requirement_code": "apply_online_immiaccount",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online in ImmiAccount and pay the visa application charge",
+      "description": "Australia publishes no paper application form number for this visa; the application is made online. The Department warns that a valid application must be made within the eligibility timeframe because late applications will not be accepted.",
+      "source_role": "landing",
+      "source_excerpt": "Create or log in to ImmiAccount, Attach documents, Pay the visa application charge. When you submit your application you must: pay for you and your family members or your application will not be valid or provide proof of exemption as shown in 'Step by step', Gather your documents.",
+      "display_order": 400
+    },
+    {
+      "requirement_code": "health_examinations",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Health examinations",
+      "description": "The Department states you may complete them before you apply, or check ImmiAccount after applying to find out whether you need them.",
+      "source_role": "landing",
+      "source_excerpt": "You might need to have health examinations. You can complete them before you apply. Find out the examinations you need and how to arrange them if you want to have them before you apply.",
+      "display_order": 410
+    },
+    {
+      "requirement_code": "biometrics",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Provide biometrics if asked",
+      "description": "The Department states most applicants are told immediately after submitting whether biometrics are needed, and that you are given 14 days to provide them.",
+      "source_role": "landing",
+      "source_excerpt": "We might ask for biometrics. Most applicants will be advised immediately after submitting an application if you need to provide biometrics. You will be given 14 days to provide biometrics so it is important to arrange an appointment quickly using the instructions in the request letter. You must provide biometrics before travelling to Australia.",
+      "display_order": 420
+    },
+    {
+      "requirement_code": "maintain_enrolment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Maintain a valid Confirmation of Enrolment until the visa is decided",
+      "source_role": "landing",
+      "source_excerpt": "If you provided a Confirmation of Enrolment (CoE) with your application as evidence of enrolment in study, you must hold a valid CoE when we decide your student visa application. A CoE is no longer valid if it is cancelled or the course is complete. To remain eligible for a student visa a new CoE will need to be attached to ImmiAccount.",
+      "display_order": 430
+    },
+    {
+      "requirement_code": "research_local_cost_of_living",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Research the actual cost of living where you intend to live",
+      "description": "The Department labels this a recommendation, not a requirement: the declared living costs are a visa minimum, and it says actual costs may be much higher.",
+      "source_role": "landing",
+      "source_excerpt": "The living costs we ask you to declare and provide with your visa application is the minimum amount of money you need for the visa. Actual living costs vary throughout Australia. They may be much higher than what you need for the visa. We recommend you research the area you intend to live including the cost of living in that area.",
+      "display_order": 500
+    },
+    {
+      "requirement_code": "do_not_rely_on_work_for_support",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Do not plan to rely on work in Australia to support yourself",
+      "source_role": "landing",
+      "source_excerpt": "You should not rely on work to support yourself or your family while in Australia.",
+      "display_order": 510
+    }
+  ]
+}

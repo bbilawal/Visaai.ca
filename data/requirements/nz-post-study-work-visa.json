@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "visaai_id": "nz-post-study-work-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "A FUTURE-DATED RULE IS RECORDED AS FUTURE-DATED. INZ announces on this page that from 16 November 2026 eligibility will be EXTENDED to graduate-diploma-plus-bachelor's applicants. Extraction ran 2026-08-22, so that is not yet in force. It is recorded with officially_required = false and the date in the label, because the two ways of getting this wrong are both bad: dropping it hides a change that decides whether someone should wait to apply, and recording it as current eligibility tells people today they qualify when they do not.\n\nTHE DEADLINE IS THE TRAP. 'Apply within 3 months of your student visa expiring' is the rule most people carry, and it is wrong for two groups: doctoral graduates get 6 months, and someone who followed an eligible qualification with a shorter higher-level one gets 12 months from the FIRST qualification's visa. INZ says it checks its records for timeliness, so this is decided on facts the applicant cannot re-argue.\n\nELIGIBILITY IS TWO ALTERNATIVE ROUTES, not a list. A degree at level 7 or higher, OR a non-degree qualification at level 7 or lower that appears on INZ's eligible list. They carry different obligations -- only the second forces the job to relate to the study, and INZ writes that into the visa conditions. Recorded as parallel routes with officially_required = false, the same shape as nl-orientation-year.\n\nNO BOUNDS. Single visa page, checked: no requirement text repeats and no sibling visa's rules appear.",
+  "source_roles": {
+    "requirements": "https://www.immigration.govt.nz/new-zealand-visas/visas/visa/post-study-work-visa"
+  },
+  "page_dates": {
+    "requirements": "2026-03-02"
+  },
+  "not_extracted": [
+    "The list of non-degree qualifications eligible for a post study work visa. INZ links it as a separate document; it is long, revised, and reproducing it from memory would be inventing eligibility.",
+    "The list of countries with a low incidence of tuberculosis, which decides whether a chest x-ray is needed. A separate INZ list that changes.",
+    "The New Zealand Qualifications and Credentials Framework level definitions. A different authority's framework.",
+    "How to obtain a police certificate, and the per-country procedures. Separate INZ pages plus foreign authorities.",
+    "Partner and dependent-child visa criteria. INZ states that they can apply; their requirements are separate visa types.",
+    "The pathway to residence. INZ marks this visa as one that 'can lead to a resident visa'; the resident visa has its own criteria.",
+    "Fee exceptions, and the immigration levy or third-party charges that may sit on top of the headline amount.",
+    "The medical examination and chest x-ray procedures, and which panel physicians may perform them."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "recently_finished_nz_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Recently finished studying in New Zealand for an approved qualification",
+      "source_role": "requirements",
+      "source_excerpt": "have recently finished studying in new zealand for an approved qualification",
+      "display_order": 10,
+      "source_excerpt_display": "have recently finished studying in New Zealand for an approved qualification"
+    },
+    {
+      "requirement_code": "hold_qualifying_nz_qualification",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a New Zealand qualification that qualifies you for this visa",
+      "description": "The umbrella requirement. Which of the two routes below applies changes what else you must satisfy.",
+      "source_role": "requirements",
+      "source_excerpt": "you must have gained a qualification in new zealand that lets you apply for this visa.",
+      "display_order": 20,
+      "source_excerpt_display": "You must have gained a qualification in New Zealand that lets you apply for this visa."
+    },
+    {
+      "requirement_code": "route_degree_level_7_or_higher",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route A: a degree at level 7 or higher, studied full-time for at least 30 weeks in New Zealand",
+      "description": "One of two ALTERNATIVE routes — not required if Route B applies. Covers level 8 postgraduate diplomas, level 9 master's degrees and level 10 doctorates. This route does not tie your job to your field of study.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have studied a degree level 7 or higher qualification, you must have studied it full-time for at least 30 weeks in new zealand.",
+      "parameters": {
+        "minimum_full_time_weeks": 30
+      },
+      "display_order": 30,
+      "source_excerpt_display": "If you have studied a degree level 7 or higher qualification, you must have studied it full-time for at least 30 weeks in New Zealand."
+    },
+    {
+      "requirement_code": "route_non_degree_on_eligible_list",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route B: a non-degree qualification at level 7 or lower, on INZ's eligible list — and the job must relate to your study",
+      "description": "The other ALTERNATIVE route, and the more constrained one. Three extra conditions ride on it: the qualification must appear on INZ's published list, the study must have been full-time for the qualification's full duration, and the job you take must relate to what you studied — INZ writes that restriction into your visa conditions.",
+      "source_role": "requirements",
+      "source_excerpt": "if you have studied a non-degree level 7 or lower qualification, it must be on the list of qualifications eligible for a post study work visa. your study must have been full-time in new zealand, and for the full duration required to gain the qualification. the job you end up taking must be related to what you studied. this will be specified in your visa conditions.",
+      "display_order": 40,
+      "source_excerpt_display": "If you have studied a non-degree level 7 or lower qualification, it must be on the list of qualifications eligible for a Post Study Work Visa. Your study must have been full-time in New Zealand, and for the full duration required to gain the qualification. The job you end up taking must be related to what you studied. This will be specified in your visa conditions."
+    },
+    {
+      "requirement_code": "application_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply no later than 3, 6 or 12 months after your student visa expires — which one depends on what you studied",
+      "description": "THE MOST ERROR-PRONE RULE ON THIS PAGE. The default is 3 months. A doctoral degree gets 6. Someone who finished an eligible qualification and went straight into a higher-level one lasting under 30 weeks gets 12 months, measured from the FIRST qualification's student visa. INZ states it checks its own records for timeliness, so this is settled on facts an applicant cannot re-argue after the fact.",
+      "source_role": "requirements",
+      "source_excerpt": "apply no later than 3, 6 or 12 months after your student visa expires, depending on what you studied and what visa you had",
+      "parameters": {
+        "default_months": 3,
+        "doctoral_months": 6,
+        "short_higher_qualification_months": 12
+      },
+      "display_order": 50,
+      "source_excerpt_display": "apply no later than 3, 6 or 12 months after your student visa expires, depending on what you studied and what visa you had"
+    },
+    {
+      "requirement_code": "once_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You can hold this visa only once",
+      "description": "Unlike the Dutch orientation year, which can be granted a second time on a later qualification, this one cannot be repeated.",
+      "source_role": "requirements",
+      "source_excerpt": "you can only have this visa once.",
+      "display_order": 60,
+      "source_excerpt_display": "You can only have this visa once."
+    },
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "description": "INZ may require a chest x-ray, a medical examination, or both, and tells you by email during processing.",
+      "source_role": "requirements",
+      "source_excerpt": "we may ask you to have a chest x-ray, a medical examination or both as proof of your good health.",
+      "display_order": 70,
+      "source_excerpt_display": "We may ask you to have a chest X-ray, a medical examination or both as proof of your good health."
+    },
+    {
+      "requirement_code": "chest_xray_tb_rule",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Chest x-ray if staying over 6 months and linked to a higher-TB-incidence country",
+      "description": "Applies by citizenship OR by where you have spent time — more than 3 months in the last 5 years in a country without a low incidence of TB. A previously supplied x-ray does not always carry over: 6 continuous months in such a country since your last certificate means a new one. The country list is INZ's and is not reproduced here.",
+      "source_role": "requirements",
+      "source_excerpt": "if you will stay in new zealand for more than 6 months, you must have a chest x-ray if you: are a citizen of a country that does not have a low incidence of tuberculosis (tb), or have spent more than 3 months in the last 5 years in a country that does not have a low incidence of tb.",
+      "display_order": 80,
+      "source_excerpt_display": "If you will stay in New Zealand for more than 6 months, you must have a chest X-ray if you: are a citizen of a country that does not have a low incidence of tuberculosis (TB), or have spent more than 3 months in the last 5 years in a country that does not have a low incidence of TB."
+    },
+    {
+      "requirement_code": "good_character",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be of good character",
+      "source_role": "requirements",
+      "source_excerpt": "if you have a criminal conviction or are a security risk to new zealand we might not give you a visa.",
+      "display_order": 90,
+      "source_excerpt_display": "If you have a criminal conviction or are a security risk to New Zealand we might not give you a visa."
+    },
+    {
+      "requirement_code": "police_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Police certificates under 6 months old, if you are 17+ and your total NZ time reaches 24 months",
+      "description": "Two thresholds decide whether you need these at all, and the second counts time on EARLIER visas, not just this one. They must come from every country you are a citizen of and any country you spent more than 5 years in since turning 17. Certificates already supplied within the last 24 months do not need repeating.",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide police certificates that are less than 6 months old when you apply if: you are aged 17 or older, and your total time in new zealand will be 24 months or longer. this includes time you spent in new zealand in the past on other visas.",
+      "parameters": {
+        "certificate_max_age_months": 6,
+        "minimum_age_years": 17,
+        "total_nz_months_trigger": 24
+      },
+      "display_order": 100,
+      "source_excerpt_display": "You must provide police certificates that are less than 6 months old when you apply if: you are aged 17 or older, and your total time in New Zealand will be 24 months or longer. This includes time you spent in New Zealand in the past on other visas."
+    },
+    {
+      "requirement_code": "genuine_intentions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have a genuine reason for coming to New Zealand",
+      "description": "INZ weighs everything it holds about you, including what you told it in earlier applications — so inconsistency across applications is itself a risk.",
+      "source_role": "requirements",
+      "source_excerpt": "have a genuine reason for coming to new zealand",
+      "display_order": 110,
+      "source_excerpt_display": "have a genuine reason for coming to New Zealand"
+    },
+    {
+      "requirement_code": "funds_nzd_5000",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Show at least NZD 5,000 for living expenses, in bank statements in your name",
+      "description": "A flat figure: INZ states it applies to 1, 2 and 3 year applications alike, so a longer visa does not require more. The statements must be in your own name, and INZ may ask to see them again on arrival.",
+      "source_role": "requirements",
+      "source_excerpt": "when you apply you must provide documents, such as bank statements in your name, that show you have at least nzd $5,000 in total for your stay. this applies to visa applications for 1, 2 or 3 years.",
+      "parameters": {
+        "amount": 5000,
+        "currency": "NZD"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "When you apply you must provide documents, such as bank statements in your name, that show you have at least NZD $5,000 in total for your stay. This applies to visa applications for 1, 2 or 3 years."
+    },
+    {
+      "requirement_code": "passport_validity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 3 months beyond your planned departure from New Zealand",
+      "description": "Measured from when you plan to LEAVE, not from when you arrive or apply.",
+      "source_role": "requirements",
+      "source_excerpt": "your passport or certificate of identity must be valid for at least 3 months after the date you plan to leave new zealand.",
+      "parameters": {
+        "validity_months_after_departure": 3
+      },
+      "display_order": 130,
+      "source_excerpt_display": "Your passport or certificate of identity must be valid for at least 3 months after the date you plan to leave New Zealand."
+    },
+    {
+      "requirement_code": "proof_of_qualification",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of the qualification you gained in New Zealand",
+      "description": "INZ accepts any one of three: a copy of the qualification, your academic transcript, or a letter from your tertiary provider confirming completion.",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide: a copy of your qualification your academic transcript, or a letter from your tertiary education provider confirming you have completed your qualification.",
+      "display_order": 140,
+      "source_excerpt_display": "You must provide: a copy of your qualification your academic transcript, or a letter from your tertiary education provider confirming you have completed your qualification."
+    },
+    {
+      "requirement_code": "photo",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "One acceptable photo online, or two photos on paper",
+      "source_role": "requirements",
+      "source_excerpt": "1 acceptable photo if you apply online, or 2 photos if you apply on paper",
+      "display_order": 150,
+      "source_excerpt_display": "1 acceptable photo if you apply online, or 2 photos if you apply on paper"
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee from NZD 1,670",
+      "description": "INZ publishes this as a FROM price — the final amount depends on where and how you apply, and levies or third-party charges may sit on top.",
+      "source_role": "requirements",
+      "source_excerpt": "cost from nzd $1670",
+      "parameters": {
+        "amount_from": 1670,
+        "currency": "NZD"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "Cost From NZD $1670"
+    },
+    {
+      "requirement_code": "incomplete_qualification_warning",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Not completing the qualification named on your student visa can sink the application",
+      "description": "Not a requirement — INZ's own warning, and worth surfacing because it catches people who switched programmes mid-study and assume the final qualification is all that matters.",
+      "source_role": "requirements",
+      "source_excerpt": "if you did not complete the qualification recorded on your student visa, we may not approve your post study work visa application.",
+      "display_order": 170,
+      "source_excerpt_display": "If you did not complete the qualification recorded on your student visa, we may not approve your Post Study Work Visa application."
+    },
+    {
+      "requirement_code": "stay_and_work_up_to_3_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Lets you stay and work for up to 3 years, depending on your qualification",
+      "description": "What the visa grants rather than what it demands. The duration follows the level of the qualification and how long you studied for it.",
+      "source_role": "requirements",
+      "source_excerpt": "you can stay and work in new zealand for up to 3 years depending on the level of your qualification and how long you spent studying for it.",
+      "parameters": {
+        "maximum_stay_years": 3
+      },
+      "display_order": 180,
+      "source_excerpt_display": "You can stay and work in New Zealand for up to 3 years depending on the level of your qualification and how long you spent studying for it."
+    },
+    {
+      "requirement_code": "partner_and_children_may_apply",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Your partner can apply for a work visa and your children for student visas",
+      "description": "A right the visa carries, not a requirement. Each of those is its own visa with its own criteria.",
+      "source_role": "requirements",
+      "source_excerpt": "support visas for your partner and dependent children — your partner can apply for a work visa and your children can apply for student visas to study as in new zealand.",
+      "display_order": 190,
+      "source_excerpt_display": "support visas for your partner and dependent children — your partner can apply for a work visa and your children can apply for student visas to study as in New Zealand."
+    },
+    {
+      "requirement_code": "eligibility_extension_from_2026_11_16",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "NOT YET IN FORCE — from 16 November 2026, eligibility extends to a level 7 graduate diploma plus a bachelor's degree",
+      "description": "FUTURE-DATED. Extraction ran 2026-08-22, so this is announced and not yet law. Recorded rather than dropped because it decides whether someone currently ineligible should wait to apply; recorded as not-required rather than as eligibility because today it grants nothing. The bachelor's degree may be from New Zealand or overseas, but the graduate diploma must have been studied full-time in New Zealand.",
+      "source_role": "requirements",
+      "source_excerpt": "from 16 november 2026, post study work visa eligibility will be extended to applicants who have: an nzqcf level 7 graduate diploma that they studied full-time for in new zealand, and a bachelor’s degree that they completed in new zealand or overseas.",
+      "parameters": {
+        "in_force_from": "2026-11-16"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "From 16 November 2026, Post Study Work Visa eligibility will be extended to applicants who have: an NZQCF level 7 graduate diploma that they studied full-time for in New Zealand, and a bachelor’s degree that they completed in New Zealand or overseas."
+    }
+  ]
+}

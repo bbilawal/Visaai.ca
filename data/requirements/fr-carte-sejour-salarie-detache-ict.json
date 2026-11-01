@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-salarie-detache-ict",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THE LENGTH OF THE MISSION DECIDES WHICH DOCUMENT YOU NEED, and the page states this in its opening paragraph rather than in the eligibility list. More than three months and up to a year: a VLS-TS is sufficient and no card is needed. More than a year: the multi-year card. A reader who goes straight to the eligibility conditions will apply for a card they may not need.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F33952"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The Algerian regime. The page states other rules apply and routes away without stating them.",
+    "The full document list. The identity and status evidence is recorded; the page's list continues into per-situation branches that are not enumerated here.",
+    "The tax and stamp duty amounts. Not stated on this page.",
+    "Processing times. The page states only that a complete file yields a récépissé while the préfecture decides."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "mission_length_decides_the_document",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A VLS-TS suffices for 3 months to 1 year; the multi-year card is for missions longer than 1 year",
+      "parameters": {
+        "vls_ts_covers_months_min": 3,
+        "vls_ts_covers_months_max": 12,
+        "card_validity_years_max": 3
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "la carte est valable 3 ans maximum. si la durée de séjour est de plus de 3 mois et d'1 an maximum, un visa de long séjour valant titre de séjour (vl-ts) mention salarié détaché ict suffit.",
+      "source_excerpt_display": "La carte est valable 3 ans maximum. Si la durée de séjour est de plus de 3 mois et d'1 an maximum, un visa de long séjour valant titre de séjour (VL-TS) mention salarié détaché ICT suffit."
+    },
+    {
+      "requirement_code": "intra_group_transfer_over_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card covers a mission of more than 1 year on a temporary intra-group transfer",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "la carte de séjour pluriannuelle salarié détaché ict permet de séjourner en france pour effectuer une mission de plus d'1 an lors d'un transfert temporaire intragroupe",
+      "source_excerpt_display": "La carte de séjour pluriannuelle salarié détaché ICT permet de séjourner en France pour effectuer une mission de plus d'1 an lors d'un transfert temporaire intragroupe"
+    },
+    {
+      "requirement_code": "five_cumulative_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five conditions, all of which must hold",
+      "description": "The last two are the ones that disqualify: the employment contract must be with the company abroad, not the French entity, and there is a six-month minimum seniority in the group.",
+      "parameters": {
+        "group_seniority_months_minimum": 6
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "vous êtes concerné si vous remplissez l'ensemble des conditions suivantes : vous êtes étranger (sauf européen ... ou algérien) vous avez un visa de long séjour ou un vls-ts salarié détaché ict vous venez en france pour occuper un poste d'encadrement supérieur ou apporter une expertise vous avez un contrat de travail avec l'entreprise qui vous emploie à l'étranger vous avez une ancienneté d'au moins 6 mois dans le groupe qui vous emploie.",
+      "source_excerpt_display": "Vous êtes concerné si vous remplissez l'ensemble des conditions suivantes: Vous êtes étranger (sauf Européen ... ou Algérien) Vous avez un visa de long séjour ou un VLS-TS salarié détaché ICT Vous venez en France pour occuper un poste d'encadrement supérieur ou apporter une expertise Vous avez un contrat de travail avec l'entreprise qui vous emploie à l'étranger Vous avez une ancienneté d'au moins 6 mois dans le groupe qui vous emploie."
+    },
+    {
+      "requirement_code": "senior_management_or_expertise_role",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The post must be senior management or must bring expertise",
+      "description": "Quoted from the page's own framing of the route as being for a 'cadre ou expert'. An ordinary transfer does not qualify.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "si vous êtes étranger, non européen ... et venez en france (en tant que cadre ou expert) pour une mission dans une entreprise du groupe qui vous emploie, vous pouvez demander une carte de séjour salarié détaché ict .",
+      "source_excerpt_display": "Si vous êtes étranger, non européen ... et venez en France (en tant que cadre ou expert) pour une mission dans une entreprise du groupe qui vous emploie, vous pouvez demander une carte de séjour salarié détaché ICT."
+    },
+    {
+      "requirement_code": "apply_abroad_through_the_consulate",
+      "kind": "step",
+      "officially_required": true,
+      "label": "If you live abroad, apply to the French consular authorities in your country of residence",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous devez déposer votre demande auprès des autorités consulaires françaises dans votre pays de résidence.",
+      "source_excerpt_display": "Vous devez déposer votre demande auprès des autorités consulaires françaises dans votre pays de résidence."
+    },
+    {
+      "requirement_code": "apply_in_france_two_months_before_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "If you live in France, apply in the 2 months before your visa or permit expires",
+      "parameters": {
+        "filing_window_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "vous devez déposer votre demande de carte dans les 2 mois précédant la date de fin de votre visa (ou titre de séjour) auprès de la préfecture (ou sous-préfecture) de votre domicile.",
+      "source_excerpt_display": "Vous devez déposer votre demande de carte dans les 2 mois précédant la date de fin de votre visa (ou titre de séjour) auprès de la préfecture (ou sous-préfecture) de votre domicile."
+    },
+    {
+      "requirement_code": "complete_file_yields_a_recepisse",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A complete file yields a récépissé while the préfecture decides",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "si votre dossier est complet, vous recevez un récépissé dans l'attente de la réponse de la préfecture.",
+      "source_excerpt_display": "Si votre dossier est complet, vous recevez un récépissé dans l'attente de la réponse de la préfecture."
+    },
+    {
+      "requirement_code": "documents_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required, starting with a valid long-stay visa or residence permit",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "visa de long séjour ou titre de séjour en cours de validité passeport (pages concernant l'état civil, les dates de validité, les cachets d'entrée et les visas)",
+      "source_excerpt_display": "Visa de long séjour ou titre de séjour en cours de validité Passeport (pages concernant l'état civil, les dates de validité, les cachets d'entrée et les visas)"
+    }
+  ]
+}

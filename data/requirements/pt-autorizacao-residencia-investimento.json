@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-autorizacao-residencia-investimento",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address and is neither registered nor read.",
+  "structure_note": "REAL ESTATE IS OUT, DIRECTLY AND INDIRECTLY, AND THAT IS THE HEADLINE. The ARI regime has existed since 8 October 2012 and is widely known as the golden visa; the property route that made it famous no longer qualifies, and AIMA states the exclusion in one line that a reader skimming the investment amounts will miss.\n\nFIVE QUALIFYING ROUTES, THREE DIFFERENT AMOUNTS. Ten jobs (eight in a low-density territory); EUR 500,000 into research; EUR 250,000 into arts or heritage; EUR 500,000 into a non-real-estate collective investment vehicle with a five-year maturity and 60% in Portuguese companies; or EUR 500,000 into a company plus five permanent jobs. All of them carry a five-year temporal requirement declared on honour.\n\nAND THE ROUTE NEEDS NO RESIDENCE VISA, which makes it one of the few Portuguese routes that does not depend on the MFA portal we cannot read.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/autorizacao-de-residencia-para-investimento-art-90-o-a"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several routes require. Published on vistos.mne.gov.pt, which resets our connection from the production address and answers 200 from a second egress. Not registered, not read.",
+    "The fees. Every page links a single fee schedule rather than stating amounts.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "regime_since_2012_and_no_residence_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The ARI regime has been in force since 8 October 2012 and allows entry to Portugal WITHOUT a residence visa",
+      "description": "The visa waiver is what makes this route fully publishable while its neighbours depend on a portal we cannot read.",
+      "parameters": {
+        "in_force_since": "2012-10-08"
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "o regime de autorização de residência para investimento (ari) , em vigor desde o dia 8 de outubro de 2012, permite que nacionais de países terceiros possam obter uma autorização de residência temporária para atividade de investimento com a dispensa de visto de residência para entrar em portugal.",
+      "source_excerpt_display": "O regime de Autorização de Residência para Investimento (ARI), em vigor desde o dia 8 de outubro de 2012, permite que Nacionais de Países Terceiros possam obter uma autorização de residência temporária para atividade de investimento com a dispensa de visto de residência para entrar em Portugal."
+    },
+    {
+      "requirement_code": "investment_may_not_be_real_estate",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The investment activity may not be directed, directly or indirectly, at real estate investment",
+      "description": "One line, and it removes the route the ARI regime was best known for. Both limbs matter — indirect exposure is excluded too.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "a atividade de investimento não se pode destinar, direta ou indiretamente, ao investimento imobiliário.",
+      "source_excerpt_display": "A atividade de investimento não se pode destinar, direta ou indiretamente, ao investimento imobiliário."
+    },
+    {
+      "requirement_code": "who_may_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Any third-country national carrying on an investment activity personally, or through a company established in Portugal or another EU state with a permanent establishment in Portugal, who meets one quantitative requirement and the temporal requirement",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "todos os nacionais de países terceiros que exerçam uma atividade de investimento, pessoalmente ou através de sociedade constituída em portugal ou noutro estado da ue e com estabelecimento estável em portugal, que reúnam um dos requisitos quantitativos e o requisito temporal previstos na legislação aplicável, podem solicitar autorização de residência para investimento (ari)",
+      "source_excerpt_display": "Todos os Nacionais de Países Terceiros que exerçam uma atividade de investimento, pessoalmente ou através de sociedade constituída em Portugal ou noutro Estado da UE e com estabelecimento estável em Portugal, que reúnam um dos requisitos quantitativos e o requisito temporal previstos na legislação aplicável, podem solicitar Autorização de Residência para Investimento (ARI)"
+    },
+    {
+      "requirement_code": "route_ten_jobs",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route ii: creation of at least 10 jobs",
+      "parameters": {
+        "jobs": 10
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "a criação de, pelo menos, 10 postos de trabalho – subalínea ii ;",
+      "source_excerpt_display": "A criação de, pelo menos, 10 postos de trabalho – subalínea ii;"
+    },
+    {
+      "requirement_code": "low_density_reduces_jobs_to_eight",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "In a low-density territory the ten-job requirement is reduced by 20%, to eight jobs",
+      "parameters": {
+        "reduced_jobs": 8,
+        "reduction_percent": 20
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "para investimento por via da criação de, pelo menos, 10 postos de trabalho, este requisito pode ser reduzido em 20% (8 postos de trabalho) quando seja efetuado em território de baixa densidade.",
+      "source_excerpt_display": "Para investimento por via da criação de, pelo menos, 10 postos de trabalho, este requisito pode ser reduzido em 20% (8 postos de trabalho) quando seja efetuado em território de baixa densidade."
+    },
+    {
+      "requirement_code": "route_research_500k",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route v: transfer of at least EUR 500,000 applied to research carried out by public or private scientific research institutions within the national science and technology system",
+      "parameters": {
+        "amount_eur": 500000
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "transferência de capitais no montante igual ou superior a 500 mil euros , que seja aplicado em atividades de investigação desenvolvidas por instituições públicas ou privadas de investigação científica, integradas no sistema científico e tecnológico nacional – subalínea v ;",
+      "source_excerpt_display": "Transferência de capitais no montante igual ou superior a 500 mil euros, que seja aplicado em atividades de investigação desenvolvidas por instituições públicas ou privadas de investigação científica, integradas no sistema científico e tecnológico nacional – subalínea v;"
+    },
+    {
+      "requirement_code": "route_arts_heritage_250k",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route vi: transfer of at least EUR 250,000 applied to artistic production or the recovery or maintenance of national cultural heritage",
+      "parameters": {
+        "amount_eur": 250000
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "transferência de capitais no montante igual ou superior a 250 mil euros , que seja aplicado em investimento ou apoio à produção artística, recuperação ou manutenção do património cultural nacional",
+      "source_excerpt_display": "Transferência de capitais no montante igual ou superior a 250 mil euros, que seja aplicado em investimento ou apoio à produção artística, recuperação ou manutenção do património cultural nacional"
+    },
+    {
+      "requirement_code": "route_collective_investment_500k",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route vii: transfer of at least EUR 500,000 into units of NON-REAL-ESTATE collective investment vehicles constituted under Portuguese law, with a maturity of at least five years and at least 60% invested in companies headquartered in Portugal",
+      "description": "Three conditions on the vehicle beyond the amount: not real estate, five-year maturity at the moment of investment, and a 60% Portuguese allocation.",
+      "parameters": {
+        "amount_eur": 500000,
+        "maturity_years": 5,
+        "portugal_allocation_percent": 60
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "transferência de capitais no montante igual ou superior a 500 mil euros , destinados à aquisição de partes de organismos de investimento coletivo não imobiliários, que sejam constituídos ao abrigo da legislação portuguesa, cuja maturidade, no momento do investimento, seja de, pelo menos, cinco anos e, pelo menos, 60% do valor dos investimentos seja concretizado em sociedades comerciais sediadas em portugal – subalínea vii ;",
+      "source_excerpt_display": "Transferência de capitais no montante igual ou superior a 500 mil euros, destinados à aquisição de partes de organismos de investimento coletivo não imobiliários, que sejam constituídos ao abrigo da legislação portuguesa, cuja maturidade, no momento do investimento, seja de, pelo menos, cinco anos e, pelo menos, 60% do valor dos investimentos seja concretizado em sociedades comerciais sediadas em Portugal – subalínea vii;"
+    },
+    {
+      "requirement_code": "route_company_500k_plus_jobs",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Route viii: transfer of at least EUR 500,000 to incorporate a company headquartered in Portugal with five permanent jobs, or to increase the capital of an existing one creating five permanent jobs or maintaining ten with at least five permanent, for a minimum of three years",
+      "parameters": {
+        "amount_eur": 500000,
+        "permanent_jobs": 5,
+        "maintained_jobs": 10,
+        "minimum_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "transferência de capitais no montante igual ou superior a 500 mil euros , destinados à constituição de uma sociedade comercial com sede em portugal, conjugada com a criação de cinco postos de trabalho permanentes, ou para reforço de capital social de uma sociedade comercial com sede em portugal, já constituída, com a criação de, pelo menos, cinco postos de trabalho permanentes ou manutenção de, pelo menos, dez postos de trabalho, com um mínimo de cinco permanentes, e por um período mínimo de três anos – subalínea viii ;",
+      "source_excerpt_display": "Transferência de capitais no montante igual ou superior a 500 mil euros, destinados à constituição de uma sociedade comercial com sede em Portugal, conjugada com a criação de cinco postos de trabalho permanentes, ou para reforço de capital social de uma sociedade comercial com sede em Portugal, já constituída, com a criação de, pelo menos, cinco postos de trabalho permanentes ou manutenção de, pelo menos, dez postos de trabalho, com um mínimo de cinco permanentes, e por um período mínimo de três anos – subalínea viii;"
+    },
+    {
+      "requirement_code": "five_year_commitment_declared_on_honour",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration that you will meet the minimum quantitative AND temporal requirements — five years — of the investment activity in Portugal",
+      "description": "The five-year commitment is declared at the outset and is a condition of the whole regime, not of any one route.",
+      "parameters": {
+        "years": 5
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "declaração sob compromisso de honra, pela qual a pessoa que requer declara que cumprirá os requisitos quantitativos e temporais mínimos (5 anos) da atividade de investimento em portugal;",
+      "source_excerpt_display": "Declaração sob Compromisso de Honra, pela qual a pessoa que requer declara que cumprirá os requisitos quantitativos e temporais mínimos (5 anos) da atividade de investimento em Portugal;"
+    },
+    {
+      "requirement_code": "validity_two_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The investment residence permit is valid 2 years from the date the title is issued",
+      "parameters": {
+        "initial_years": 2
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "a autorização de residência temporária para investimento é válida pelo período de dois anos contados a partir da data da emissão do respetivo título.",
+      "source_excerpt_display": "a Autorização de Residência Temporária para Investimento é válida pelo período de dois anos contados a partir da data da emissão do respetivo título."
+    }
+  ]
+}

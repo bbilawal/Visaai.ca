@@ -1,0 +1,27 @@
+{
+  "ts": "2026-08-12T22:53:20.963Z",
+  "base": "http://localhost:3100",
+  "intake_url": "http://localhost:3100/intake/4a237d0f-3cf1-4faf-aacf-b272c0c7e918",
+  "dwell_ms": 20000,
+  "offenders": [
+    {
+      "name": "progress",
+      "requests": 0,
+      "http_403": 0
+    },
+    {
+      "name": "notifications-unread-count",
+      "requests": 0,
+      "http_403": 0
+    },
+    {
+      "name": "messaging-stream",
+      "requests": 0,
+      "http_403": 0
+    }
+  ],
+  "total_403": 0,
+  "console_errors": 0,
+  "console_error_samples": [],
+  "status": "PASS"
+}

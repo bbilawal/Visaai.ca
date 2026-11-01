@@ -1,0 +1,358 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-entrepass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official Ministry of Manpower pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE ONE MOM PASS YOU APPLY FOR YOURSELF. Every other Ministry of Manpower work pass is applied for by the employer; the Employment Pass says so in the same table position that EntrePass uses to say 'candidate can apply directly.' Nothing on this checklist is somebody else's to satisfy — and that is precisely why the bar sits somewhere else.\n\nNO SALARY FLOOR, BECAUSE THERE IS NO EMPLOYER TO GATE ON. 'minimum salary: no stipulated minimum salary.' The Employment Pass gates on a salary a Singapore employer has agreed to pay. EntrePass gates on the BUSINESS instead: an ACRA-registered private limited company in which the applicant holds at least 30%, that is venture-backed or owns innovative technologies, AND at least one of five innovation criteria.\n\nTWO CONDITIONS, THEN ONE OF FIVE. MOM's structure is 'both conditions' followed by 'at least one of the following criteria'. Storing the five as separate requirements without storing the ONE-OF rule would read as five requirements all binding at once, which would be wrong five ways. The one-of rule is therefore its own requirement, placed before them.\n\nA SIX-LINE LIST THAT ENDS MOST APPLICATIONS. Coffee shops, hawker centres and food courts; bars, night clubs and karaoke lounges; foot reflexology and massage parlours; acupuncture, TCM and herbal dispensing; employment agencies; geomancy. No amount of funding moves a business off that list.\n\nBOUNDS CHECKED. Four pages. The eligibility page's SGD 100,000 figure and the documents page's restatement of it are quoted from their own pages, because they sit under different headings and one is a criterion while the other is an evidence standard.\n\nNAMING. The five innovation criteria are coded criterion_*, and the evidence row that follows them is deliberately NOT — it is evidence_for_chosen_criterion. A `criterion_%` prefix match is how the promotion migration asserts there are exactly five, and an evidence row sharing that prefix would have made the assertion count six. It did, once, and the assertion caught it.",
+  "source_roles": {
+    "requirements": "https://www.mom.gov.sg/passes-and-permits/entrepass/eligibility",
+    "eligibility": "https://www.mom.gov.sg/passes-and-permits/entrepass/key-facts",
+    "documents": "https://www.mom.gov.sg/passes-and-permits/entrepass/documents-required",
+    "application": "https://www.mom.gov.sg/passes-and-permits/entrepass/apply-for-a-pass"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "documents": null,
+    "application": null
+  },
+  "freshness_note": "As for the Employment Pass: MOM publishes no dateModified in the head, so freshness reads as unknown rather than fresh, and the signal it does publish is the per-page edit stamp beside 'there are updates on this page'. These four EntrePass pages carry no such stamp at the time of extraction, which means only that they have not been edited recently enough to be flagged — not that they are stale. The corroborating signal is content: the page names Startup SG Equity, Startup SG Accelerator and Startup SG Founder as current Enterprise Singapore programmes and cross-sells Tech.Pass, which is a live scheme.",
+  "not_extracted": [
+    "The renewal criteria, which are a separate MOM page and a different test. They matter here only through the 12-month rule, which is stored.",
+    "The full list of eligible investors, incubators and accelerators. MOM gives them as EXAMPLES — 'seeds capital, vertex ventures ... y-combinator, masschallenge, alchemist accelerator, etc.' — and a list its author calls exemplary would read as exhaustive if stored as a rule.",
+    "The list of approved national IP institutions, and the list of eligible IHLs and research institutes. MOM points at ICA's list and A*STAR's and CREATE's rather than publishing its own.",
+    "Tech.Pass. MOM cross-sells it on this page for founders of sizeable tech companies; it is a different pass with its own criteria.",
+    "Passes for family members, renewal, cancellation and appeal. This route covers a first EntrePass.",
+    "The ACRA company registration and business licensing processes themselves. MOM is explicit that the EntrePass does not guarantee them, and they are another regulator's."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "candidate_applies_directly",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You apply for this one yourself",
+      "description": "The exception among MOM's work passes. Every other one — Employment Pass, S Pass, Work Permit — is lodged by the employer. Here there is no employer, and MOM says so in the same table row the other passes use to name one.",
+      "source_role": "eligibility",
+      "source_excerpt": "who can apply candidate can apply directly.",
+      "display_order": 10,
+      "source_excerpt_display": "Who can apply Candidate can apply directly."
+    },
+    {
+      "requirement_code": "no_minimum_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "There is no minimum salary",
+      "description": "Not a concession. The Employment Pass gates on a salary an employer has agreed to pay; EntrePass has no employer, so it gates on the business instead. The bar is not lower, it is somewhere else.",
+      "source_role": "eligibility",
+      "source_excerpt": "minimum salary no stipulated minimum salary.",
+      "display_order": 20,
+      "source_excerpt_display": "Minimum salary No stipulated minimum salary."
+    },
+    {
+      "requirement_code": "private_limited_company_acra_30_percent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A private limited company registered with ACRA, in which you hold at least 30%",
+      "description": "Started or intended — MOM accepts an applicant who has not incorporated yet. The 30% is a floor on the pass holder's own stake, not on the founding team's.",
+      "source_role": "requirements",
+      "source_excerpt": "have started, or intend to start, a private limited company that is: ... registered with acra (pass holder must hold at least 30% of registered company)",
+      "display_order": 30,
+      "parameters": {
+        "min_shareholding_percent": 30,
+        "company_form": "private limited"
+      },
+      "source_excerpt_display": "Have started, or intend to start, a private limited company that is: ... Registered with ACRA (Pass holder must hold at least 30% of registered company)"
+    },
+    {
+      "requirement_code": "venture_backed_or_innovative_technologies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The company must be venture-backed or own innovative technologies",
+      "description": "The second of the two threshold conditions, and it qualifies everything after it: the five innovation criteria are ways of evidencing this, not alternatives to it.",
+      "source_role": "requirements",
+      "source_excerpt": "venture-backed or owns innovative technologies .",
+      "display_order": 40,
+      "source_excerpt_display": "Venture-backed or owns innovative technologies."
+    },
+    {
+      "requirement_code": "twelve_month_cliff",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A company more than 12 months old is judged on the renewal criteria instead",
+      "description": "Incorporating first and applying later is not the safe order. Past 12 months you are assessed on results rather than on a plan, without ever having held the pass.",
+      "source_role": "requirements",
+      "source_excerpt": "if the registered company is more than 12 months old as of the date of application, you will be assessed according to the renewal criteria .",
+      "display_order": 50,
+      "parameters": {
+        "company_age_months_threshold": 12
+      },
+      "source_excerpt_display": "If the registered company is more than 12 months old as of the date of application, you will be assessed according to the renewal criteria."
+    },
+    {
+      "requirement_code": "one_of_five_innovation_criteria",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Then you need ONE of five innovation criteria — not all five",
+      "description": "MOM's own structure: 'both conditions' above, then 'at least one of the following criteria'. The five that follow are alternatives.",
+      "source_role": "requirements",
+      "source_excerpt": "meet at least one of the following criteria:",
+      "display_order": 60,
+      "parameters": {
+        "satisfy": "at_least_one_of",
+        "count": 5
+      },
+      "source_excerpt_display": "Meet at least one of the following criteria:"
+    },
+    {
+      "requirement_code": "criterion_funding_raised",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Criterion 1: SGD 100,000 raised in a single funding round",
+      "description": "One round, not cumulative, and it may be for any past or current business rather than this one. MOM names Seeds Capital, Vertex Ventures and Startup SG Equity partners as examples of eligible investors.",
+      "source_role": "requirements",
+      "source_excerpt": "you have raised at least sgd 100,000 from a single funding round from investors for any past or current business.",
+      "display_order": 70,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 100000,
+        "single_round": true
+      },
+      "source_excerpt_display": "You have raised at least SGD 100,000 from a single funding round from investors for any past or current business."
+    },
+    {
+      "requirement_code": "criterion_incubator_or_accelerator",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Criterion 2: backed by a government-recognised or internationally renowned incubator or accelerator",
+      "description": "'is or will be' — a signed incubation agreement counts before the programme starts. MOM names Startup SG Accelerator and Startup SG Founder partners, and Y Combinator, MassChallenge and Alchemist as examples.",
+      "source_role": "requirements",
+      "source_excerpt": "the business is or will be supported by an incubator or accelerator that is either: ... government-recognised ... internationally renowned",
+      "display_order": 80,
+      "source_excerpt_display": "The business is or will be supported by an incubator or accelerator that is either: ... Government-recognised ... Internationally renowned"
+    },
+    {
+      "requirement_code": "criterion_founded_and_sold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Criterion 3: you founded and sold a venture-backed or innovative-technology business",
+      "description": "MOM requires all three legs proved separately: that you founded it, that it was venture-backed or owned innovative technologies, and that it was sold under your management.",
+      "source_role": "requirements",
+      "source_excerpt": "you have founded and sold a business that is venture-backed or owns innovative technologies .",
+      "display_order": 90,
+      "source_excerpt_display": "You have founded and sold a business that is venture-backed or owns innovative technologies."
+    },
+    {
+      "requirement_code": "criterion_intellectual_property",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Criterion 4: registered intellectual property that gives a competitive advantage",
+      "description": "Registration with an approved national IP institution is necessary but not sufficient — MOM adds a substantive test that the IP cannot be easily replicated.",
+      "source_role": "requirements",
+      "source_excerpt": "the registered business or proposed business holds intellectual property (ip) that is registered with an approved national ip institution . ... the ip must provide significant competitive advantage which cannot be easily replicated to the business.",
+      "display_order": 100,
+      "source_excerpt_display": "The registered business or proposed business holds Intellectual Property (IP) that is registered with an approved national IP institution. ... The IP must provide significant competitive advantage which cannot be easily replicated to the business."
+    },
+    {
+      "requirement_code": "criterion_research_collaboration",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Criterion 5: an ongoing research collaboration with a Singapore IHL or research institute",
+      "description": "Three conditions on the collaboration itself: your involvement, relevance to the business, and verification by a named contact at the institution.",
+      "source_role": "requirements",
+      "source_excerpt": "the business has a relevant ongoing research collaboration in singapore with at least one of the following: ... institute of higher learning (ihl) ... research institution (ri)",
+      "display_order": 110,
+      "source_excerpt_display": "The business has a relevant ongoing research collaboration in Singapore with at least one of the following: ... Institute of Higher Learning (IHL) ... Research Institution (RI)"
+    },
+    {
+      "requirement_code": "research_collaboration_not_a_service_contract",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A contract of services is not a research collaboration",
+      "description": "MOM closes the obvious workaround explicitly. Paying a university for work does not make it a collaboration.",
+      "source_role": "requirements",
+      "source_excerpt": "contracts of services are not considered research collaborations.",
+      "display_order": 120,
+      "source_excerpt_display": "Contracts of services are not considered research collaborations."
+    },
+    {
+      "requirement_code": "ineligible_business_types",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Six kinds of business cannot get an EntrePass at all",
+      "description": "Coffee shops, hawker centres and food courts; bars, night clubs and karaoke lounges; foot reflexology and massage parlours; acupuncture, traditional Chinese medicine and herbal dispensing; employment agencies; geomancy. No funding, IP or accelerator moves a business off this list.",
+      "source_role": "requirements",
+      "source_excerpt": "the following businesses are not eligible for an entrepass: ... coffee shops, hawker centres, food courts ... bars, night clubs, karaoke lounges ... foot reflexology, massage parlours ... acupuncture, traditional chinese medicine, herbal dispensing businesses ... employment agencies ... geomancy business",
+      "display_order": 130,
+      "parameters": {
+        "excluded": [
+          "coffee shops, hawker centres, food courts",
+          "bars, night clubs, karaoke lounges",
+          "foot reflexology, massage parlours",
+          "acupuncture, traditional chinese medicine, herbal dispensing businesses",
+          "employment agencies",
+          "geomancy business"
+        ]
+      },
+      "source_excerpt_display": "The following businesses are not eligible for an EntrePass: ... Coffee shops, hawker centres, food courts ... Bars, night clubs, karaoke lounges ... Foot reflexology, massage parlours ... Acupuncture, traditional Chinese medicine, herbal dispensing businesses ... Employment agencies ... Geomancy business"
+    },
+    {
+      "requirement_code": "passport_personal_particulars",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Personal particulars page of your passport",
+      "description": null,
+      "source_role": "documents",
+      "source_excerpt": "personal particulars page of your passport",
+      "display_order": 140,
+      "source_excerpt_display": "Personal particulars page of your passport"
+    },
+    {
+      "requirement_code": "business_plan_ten_pages",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A business plan in English, ten pages or fewer",
+      "description": "MOM sets both the language and the length, and names the five sections it wants: product and service, market analysis, operation plan, management team profile, and supporting documents such as licensing agreements, certificates and patents.",
+      "source_role": "documents",
+      "source_excerpt": "a business plan in english. it should include the following in 10 pages or less:",
+      "display_order": 150,
+      "parameters": {
+        "language": "en",
+        "max_pages": 10
+      },
+      "source_excerpt_display": "A business plan in English. It should include the following in 10 pages or less:"
+    },
+    {
+      "requirement_code": "cv_and_testimonials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your CV and past employment testimonials",
+      "description": "MOM asks for these to evidence professional experience, awards and recognitions — the founder's track record, alongside the company's.",
+      "source_role": "documents",
+      "source_excerpt": "your curriculum vitae (cv) and past employment testimonials (if any) to elaborate on professional experiences, awards or recognitions",
+      "display_order": 160,
+      "source_excerpt_display": "Your curriculum vitae (CV) and past employment testimonials (if any) to elaborate on professional experiences, awards or recognitions"
+    },
+    {
+      "requirement_code": "bizfile_business_profile",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The company's latest business profile from BizFile, if it is already registered",
+      "description": null,
+      "source_role": "documents",
+      "source_excerpt": "company’s latest business profile or instant information from bizfile (if applicable)",
+      "display_order": 170,
+      "source_excerpt_display": "Company’s latest business profile or instant information from Bizfile (if applicable)"
+    },
+    {
+      "requirement_code": "financial_statement_after_12_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A latest financial statement if the company has been ACRA-registered for more than 12 months",
+      "description": "The evidence side of the 12-month cliff: past that point MOM wants numbers, not projections.",
+      "source_role": "documents",
+      "source_excerpt": "latest financial statement (if company is registered with acra for more than 12 months)",
+      "display_order": 180,
+      "source_excerpt_display": "Latest financial statement (if company is registered with ACRA for more than 12 months)"
+    },
+    {
+      "requirement_code": "evidence_for_chosen_criterion",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Extra documents depending on which innovation criterion you claim",
+      "description": "Investment agreements and shareholder certificates for funding; an incubation agreement for an accelerator; incorporation documents, a management-team letter, a business plan and a sale and purchase agreement for a founded-and-sold business.",
+      "source_role": "documents",
+      "source_excerpt": "you need to provide additional documents depending on the innovative criteria you plan to apply under:",
+      "display_order": 190,
+      "source_excerpt_display": "You need to provide additional documents depending on the innovative criteria you plan to apply under:"
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$105 application fee",
+      "description": "Paid by you, since you are the applicant. MOM warns that family-pass fees are lost if the EntrePass itself is rejected — so apply for family passes after approval, not alongside.",
+      "source_role": "application",
+      "source_excerpt": "pay the $105 application fee by visa, mastercard or amex.",
+      "display_order": 200,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 105,
+        "stage": "application"
+      },
+      "source_excerpt_display": "Pay the $105 application fee by Visa, Mastercard or Amex."
+    },
+    {
+      "requirement_code": "issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$225 to issue the pass, plus $30 for a multiple journey visa",
+      "description": "Due after approval. Payable in the e-Service, or over the counter at the Employment Pass Services Centre if you have no Singpass account.",
+      "source_role": "application",
+      "source_excerpt": "$225 for each pass ... (if applicable) $30 for each multiple journey visa",
+      "display_order": 210,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 225,
+        "multiple_journey_visa": 30,
+        "stage": "issuance"
+      },
+      "source_excerpt_display": "$225 for each pass ... (If applicable) $30 for each Multiple Journey Visa"
+    },
+    {
+      "requirement_code": "processing_six_weeks_no_stvp_extension",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Around six weeks, and your visit pass will not be extended to cover it",
+      "description": "MOM states both halves in one sentence. An applicant waiting in Singapore on a short-term visit pass that expires mid-decision has to leave.",
+      "source_role": "application",
+      "source_excerpt": "processing time is around 6 weeks . you will not be able to extend your short term visit pass if it expires before your application is approved.",
+      "display_order": 220,
+      "parameters": {
+        "weeks": 6
+      },
+      "source_excerpt_display": "Processing time is around 6 weeks. You will not be able to extend your Short Term Visit Pass if it expires before your application is approved."
+    },
+    {
+      "requirement_code": "ipa_single_entry_six_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The approval letter is a single-entry visa valid six months",
+      "description": "Same mechanism as the Employment Pass: the in-principle approval doubles as permission to travel, and it expires.",
+      "source_role": "application",
+      "source_excerpt": "is a pre-approved single-entry visa for you to enter singapore. it gives you 6 months to enter singapore and get your pass issued.",
+      "display_order": 230,
+      "parameters": {
+        "entry_window_months": 6,
+        "entries": 1
+      },
+      "source_excerpt_display": "Is a pre-approved single-entry visa for you to enter Singapore. It gives you 6 months to enter Singapore and get your pass issued."
+    },
+    {
+      "requirement_code": "pass_does_not_authorise_the_business",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass is not permission to register or licence the business",
+      "description": "MOM says it plainly on its own application page. ACRA registration and any sector licence are separate applications to separate regulators, and either can refuse after the EntrePass is granted.",
+      "source_role": "application",
+      "source_excerpt": "getting an entrepass is not a guarantee that your business registration and licences will get approved.",
+      "display_order": 240,
+      "source_excerpt_display": "Getting an EntrePass is not a guarantee that your business registration and licences will get approved."
+    },
+    {
+      "requirement_code": "pass_duration_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first EntrePass runs up to one year",
+      "description": "So does the first renewal. Only subsequent renewals reach two years — half the Employment Pass's first-pass term, on a route with no employer standing behind it.",
+      "source_role": "eligibility",
+      "source_excerpt": "new pass and first renewal: up to 1 year",
+      "display_order": 250,
+      "parameters": {
+        "first_pass_max_years": 1
+      },
+      "source_excerpt_display": "New pass and first renewal: Up to 1 year"
+    }
+  ]
+}

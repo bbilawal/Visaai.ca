@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "qa-mission-issued-visas",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in English. This is the Ministry of Foreign Affairs' published fee schedule; the Ministry of Interior decides entry and holds the eligibility detail on hosts that serve navigation shells or refuse us.",
+  "structure_note": "THIS ROUTE PUBLISHES WHAT A VISA COSTS AND NOT WHO QUALIFIES FOR IT, and that inversion is unusual enough to state plainly. Qatar's MFA lists seven visa types with QAR amounts and then sends the reader to www.moi.gov.qa for everything else — and portal.moi.gov.qa serves 70KB of markup carrying under 2,000 characters, 85% of it shared between sibling pages, while hukoomi.gov.qa returns HTTP 403 despite robots.txt permitting the path.\n\nNote also WHICH applications this covers: the Consular Affairs Department handles cases that cannot be applied for through the electronic visa system. It is the exception channel, not the main one.",
+  "source_roles": {
+    "requirements": "https://mofa.gov.qa/en/consular-services/visas"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Source language is English.",
+  "not_extracted": [
+    "Who qualifies for any of the seven visa types. The page publishes the fee schedule and refers all detail to www.moi.gov.qa, whose portal serves navigation shells.",
+    "The electronic visa system, which is the main channel. This page covers the applications that CANNOT go through it.",
+    "Document lists, validity periods and permitted lengths of stay. None is stated for any of the seven types.",
+    "Visa-exemption and visa-on-arrival arrangements. Not covered on this page.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "consular_department_handles_non_electronic_cases",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Consular Affairs Department receives visa applications from Qatari embassies and consulates, especially those that cannot be applied for through the electronic visa system",
+      "description": "This is the exception channel. The main route is the electronic visa system, which this page does not describe.",
+      "source_role": "requirements",
+      "source_excerpt": "the consular affairs department receive visa applications from various qatari embassies and consulates for various cases, especially those that cannot be applied for through the electronic visa system, these applications will be dealt with, and visas approvals shall issued accordingly.",
+      "display_order": 10,
+      "source_excerpt_display": "The Consular Affairs Department receive visa applications from various Qatari embassies and consulates for various cases, especially those that cannot be applied for through the electronic visa system, these applications will be dealt with, and visas approvals shall issued accordingly."
+    },
+    {
+      "requirement_code": "seven_visa_types_and_their_fees",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Seven visa types issued by Qatari missions abroad through the automated system, with fees in QAR",
+      "description": "Official visas are exempted; businessmen visas are QAR 200; visit visas, GCC residents visit visas, entry visas for companions of GCC nationals, transit visas and the joint Qatar–Oman tourist visa are QAR 100 each.",
+      "parameters": {
+        "currency": "QAR",
+        "official_visas": "exempted",
+        "businessmen_visas": 200,
+        "visit_visas": 100,
+        "gcc_residents_visit_visas": 100,
+        "companions_of_gcc_nationals": 100,
+        "transit_visas": 100,
+        "joint_qatar_oman_tourist_visa": 100
+      },
+      "source_role": "requirements",
+      "source_excerpt": "table i. types of visas issued by the diplomatic, consular and representative missions of the state of qatar abroad through the automated system:",
+      "display_order": 20,
+      "source_excerpt_display": "Table I. Types of Visas issued by the diplomatic, consular and representative missions of the State of Qatar abroad through the automated system:"
+    },
+    {
+      "requirement_code": "fee_table_rows",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The published fee rows",
+      "source_role": "requirements",
+      "source_excerpt": "official visas exempted businessmen visas 200 visit visas 100 gcc residents visit visas 100 entry visa for companions of gcc nationals 100 transit visas 100 joint tourist visa - qatar & oman 100",
+      "display_order": 30,
+      "source_excerpt_display": "Official visas Exempted Businessmen visas 200 Visit visas 100 GCC residents visit visas 100 Entry visa for companions of GCC Nationals 100 Transit visas 100 Joint Tourist Visa - Qatar & Oman 100"
+    },
+    {
+      "requirement_code": "detail_is_held_by_the_ministry_of_interior",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For more detail about the visa types listed, the ministry refers the reader to www.moi.gov.qa",
+      "description": "Recorded because it is the boundary of this destination: the MFA publishes the price and the MOI holds the rules.",
+      "source_role": "requirements",
+      "source_excerpt": "those wishing to obtain more details about the types of visas listed above, visit: www.moi.gov.qa",
+      "display_order": 40,
+      "source_excerpt_display": "Those wishing to obtain more details about the types of visas listed above, visit: www.moi.gov.qa"
+    }
+  ]
+}

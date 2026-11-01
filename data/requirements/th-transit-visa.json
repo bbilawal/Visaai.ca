@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "th-transit-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Department of Consular Affairs page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Thai. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent. The department's own English pages are dated 2017 and are deliberately not used; see the registration migration. The Immigration Bureau, which decides admission and length of stay in the Kingdom, returns HTTP 403 to our monitor and is not read.",
+  "structure_note": "ONE VISA, THREE PURPOSES, AND THE EVIDENCE DIFFERS FOR EACH. Transit (TS) needs a third-country visa in the passport; sports (S) needs a competition invitation; vehicle crew (C) needs a certificate of crew status. The transit visa is not only for transit, and someone travelling to compete in a sporting event who reads only the word 'transit' will not find their route.",
+  "source_roles": {
+    "requirements": "https://consular.mfa.go.th/th/publicservice/%e0%b8%84%e0%b8%99%e0%b9%80%e0%b8%94%e0%b8%b4%e0%b8%99%e0%b8%97%e0%b8%b2%e0%b8%87%e0%b8%9c%e0%b9%88%e0%b8%b2%e0%b8%99%e0%b8%a3%e0%b8%b2%e0%b8%8a%e0%b8%ad%e0%b8%b2%e0%b8%93%e0%b8%b2%e0%b8%88%e0%b8%b1%e0%b8%81%e0%b8%a3-transit-visa?page=5ddcb94a01330918812bbf22&menu=5ddcb8b29b1e8a30447d6f22"
+  },
+  "page_dates": {
+    "requirements": "2022-11-30"
+  },
+  "freshness_note": "The page publishes its own last-updated stamp in the body: 2022-11-30. That is what admits Thailand on its Thai pages rather than its English ones, which are dated 2017 and list a catalogue missing the LTR visa, the SMART visa and the e-Visa system. Self-declared, and treated as evidence rather than truth.",
+  "not_extracted": [
+    "Everything the Immigration Bureau decides: admission at the border, extension of stay, and change of visa type. The page states plainly that these are applied for at the Immigration Bureau and are at the officer's discretion, and www.immigration.go.th returns 403 to our monitor.",
+    "Which nationalities are visa-exempt or eligible for visa on arrival. The department publishes separate lists for both, and neither is registered here.",
+    "The e-Visa application procedure. Operated at www.thaievisa.go.th, whose pages serve zero characters server-side.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "three_qualifying_purposes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three qualifying purposes: transit through the Kingdom (TS), sports participation (S), and being in charge of or crew of a vehicle arriving at a port, station or locality in the Kingdom (C)",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "เพื่อเดินทางผ่านราชอาณาจักร (ts) เพื่อเล่นกีฬา (s) เป็นผู้ควบคุมพาหนะหรือเป็นคนประจำพาหนะที่เข้ามายังท่า สถานี หรือท้องที่ในราชอาณาจักร (c)",
+      "source_excerpt_display": "เพื่อเดินทางผ่านราชอาณาจักร (TS) เพื่อเล่นกีฬา (S) เป็นผู้ควบคุมพาหนะหรือเป็นคนประจำพาหนะที่เข้ามายังท่า สถานี หรือท้องที่ในราชอาณาจักร (C)"
+    },
+    {
+      "requirement_code": "visa_validity_three_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Visa validity: 3 months",
+      "parameters": {
+        "months": 3
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "อายุวีซ่า 3 เดือน",
+      "source_excerpt_display": "อายุวีซ่า 3 เดือน"
+    },
+    {
+      "requirement_code": "stay_per_entry_30_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Length of stay: 30 days per entry",
+      "parameters": {
+        "days_per_entry": 30
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "ระยะเวลาพำนักในราชอาณาจักร 30 วัน ต่อครั้ง",
+      "source_excerpt_display": "ระยะเวลาพำนักในราชอาณาจักร 30 วัน ต่อครั้ง"
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee: THB 800, for up to 4 entries",
+      "parameters": {
+        "fee_thb": 800,
+        "max_entries": 4
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "ค่าธรรมเนียม 800 บาท (ไม่เกิน 4 ครั้ง)",
+      "source_excerpt_display": "ค่าธรรมเนียม 800 บาท (ไม่เกิน 4 ครั้ง)"
+    },
+    {
+      "requirement_code": "funds_carried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Funds to be carried: THB 10,000 per person, THB 20,000 per family",
+      "description": "Half the tourist visa figures, and the difference is easy to carry across wrongly.",
+      "parameters": {
+        "per_person_thb": 10000,
+        "per_family_thb": 20000
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "จำนวนเงินติดตัว* 10,000 บาท / คน 20,000 บาท / ครอบครัว",
+      "source_excerpt_display": "จำนวนเงินติดตัว* 10,000 บาท / คน 20,000 บาท / ครอบครัว"
+    },
+    {
+      "requirement_code": "passport_validity_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport or travel document valid for at least 6 months",
+      "parameters": {
+        "passport_validity_months": 6
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "• หนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง อายุใช้งานไม่น้อยกว่า 6 เดือน",
+      "source_excerpt_display": "• หนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง อายุใช้งานไม่น้อยกว่า 6 เดือน"
+    },
+    {
+      "requirement_code": "ts_third_country_visa",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For transit (TS): the third country’s visa in your passport or travel document",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "• สำหรับ (ts) วีซ่าของประเทศที่สามในหนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง",
+      "source_excerpt_display": "• สำหรับ (TS) วีซ่าของประเทศที่สามในหนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง"
+    },
+    {
+      "requirement_code": "s_sports_invitation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For sports (S): a letter inviting you to take part in the sporting competition",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "• สำหรับ (s) หนังสือเชิญให้เข้าร่วมในการแข่งขันกีฬา",
+      "source_excerpt_display": "• สำหรับ (S) หนังสือเชิญให้เข้าร่วมในการแข่งขันกีฬา"
+    },
+    {
+      "requirement_code": "c_crew_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For crew (C): a certificate that you are in charge of or crew of the vehicle",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "• สำหรับ (c) หนังสือรับรองว่าเป็นผู้ควบคุมพาหนะหรือเป็นคนประจำพาหนะที่เข้ามายังท่า สถานี หรือท้องที่ในราชอาณาจักร",
+      "source_excerpt_display": "• สำหรับ (C) หนังสือรับรองว่าเป็นผู้ควบคุมพาหนะหรือเป็นคนประจำพาหนะที่เข้ามายังท่า สถานี หรือท้องที่ในราชอาณาจักร"
+    },
+    {
+      "requirement_code": "air_ticket_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A return air ticket, or a ticket onward to a third country",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "• บัตรโดยสารเครื่องบิน ไป-กลับ หรือที่จะเดินทางไปยังประเทศที่สาม",
+      "source_excerpt_display": "• บัตรโดยสารเครื่องบิน ไป-กลับ หรือที่จะเดินทางไปยังประเทศที่สาม"
+    }
+  ]
+}

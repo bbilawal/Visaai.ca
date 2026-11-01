@@ -1,0 +1,190 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ie-family-reunification-non-eea",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two official Immigration Service Delivery pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE MONEY IS THE ROUTE. Ireland's non-EEA family reunification policy turns almost entirely on the SPONSOR'S income, and ISD publishes the figures on one page that is easy to miss from the route pages. They are the hardest numbers to find in this registry and among the highest: EUR 75,000 cumulative over three years for an Irish citizen sponsoring a spouse, and EUR 96,929 a year to sponsor a single dependent adult relative.\n\nTHE SPONSOR'S CATEGORY DECIDES THE THRESHOLD, and it is not the applicant's characteristic at all. Category A (Irish nationals), B (critical-skills permit holders, researchers, investors and others) and C (general employment permit holders) each face a different test for the same family relationship.\n\nWHAT IS NOT HERE, AND WHY. The per-category application pages — spouse, de facto partner, dependent parent, minor child, dependent adult child — are rendered client-side by irishimmigration.ie and are absent from the server-side HTML. Their conditions are therefore NOT in this registry. What is registered is the hub, which states the categories and the general policy, and the thresholds page, which carries the figures. This route publishes what ISD publishes to us and says plainly what it cannot reach — the same choice made for New Zealand's working holiday country list.\n\nNO BOUNDS NEEDED, CHECKED. Two pages, one subject each.",
+  "source_roles": {
+    "requirements": "https://www.irishimmigration.ie/coming-to-join-family-in-ireland/joining-an-irish-national/",
+    "policy": "https://www.irishimmigration.ie/coming-to-join-family-in-ireland/financial-thresholds/"
+  },
+  "page_dates": {
+    "requirements": "2026-06-12T12:53:03+00:00",
+    "policy": "2026-06-12T13:50:38+00:00"
+  },
+  "freshness_note": "Both pages carry their own dateline, an hour apart on 12 June 2026, and the hub repeats it in its body — 'this page was last updated on june 12, 2026'. That is a genuine edit date rather than a platform republish: the two timestamps differ by 57 minutes, not by seconds, which is the discriminator check-source-freshness.ts uses. The threshold tables carry (2026) labels and cite 2025 CSO data, consistent with it.",
+  "not_extracted": [
+    "The per-category application pages — spouse, de facto partner, dependent parent, minor child, dependent adult child. irishimmigration.ie renders those links client-side and they are absent from the server-side HTML, so their conditions cannot be read by us at all.",
+    "The Family Reunification Policy PDF (12 June 2026). ISD links it and the pages defer to its sections 4, 5, 6, 8, 9, 10 and appendix D for the detail. Reading a policy PDF into requirements is a different extraction with different risks, and it is not attempted here.",
+    "Category B thresholds. ISD publishes no figure for them — it says the immigration status 'assumes certain levels of income', which is not a number and is not invented into one.",
+    "Visa requirements for the applicant's own nationality. A family reunification permission and an entry visa are separate systems; ie-short-stay-c-visa and ie-long-term-study-visa cover the visa side.",
+    "The naturalisation and registration processes that follow arrival."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "separate_application_per_category",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Each family category is a separate application with different conditions",
+      "description": "Spouse, civil partner, de facto partner, minor child, dependent parent and dependent adult child are six routes, not one. ISD's per-category pages are rendered client-side and cannot be read by VisaAI, so their conditions are not in this registry — use ISD's own pages for them.",
+      "source_role": "requirements",
+      "source_excerpt": "different family members can apply to join an irish national, including spouse, civil partner, de facto partner, minor child, dependent parent and dependent adult child (only where they are dependent on the care of the parent sponsor for their subsistence due to a serious medical or psychological condition that makes independent life unsustainable). there is a separate application for each category of applicant and different conditions will apply.",
+      "display_order": 10,
+      "source_excerpt_display": "Different family members can apply to join an Irish national, including spouse, civil partner, de facto partner, minor child, dependent parent and dependent adult child (Only where they are dependent on the care of the parent sponsor for their subsistence due to a serious medical or psychological condition that makes independent life unsustainable). There is a separate application for each category of applicant and different conditions will apply."
+    },
+    {
+      "requirement_code": "non_nuclear_family_generally_ineligible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Outside the nuclear family, a dependent parent or a dependent adult child, you are generally not eligible",
+      "description": "Stated flatly by ISD. The exception is exceptional circumstances under section 13 of the policy document — a discretion, not a route.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are not a nuclear family member, dependent parent or dependent adult child of an irish national you will generally not be eligible for family reunification. however, you may apply where exceptional circumstances arise, see section 13 of the policy document.",
+      "display_order": 20,
+      "source_excerpt_display": "If you are not a nuclear family member, dependent parent or dependent adult child of an Irish national you will generally not be eligible for family reunification. However, you may apply where exceptional circumstances arise, see Section 13 of the Policy document."
+    },
+    {
+      "requirement_code": "dependent_adult_child_condition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A dependent adult child qualifies only on a serious medical or psychological condition",
+      "description": "Not financial dependency: ISD requires a condition that makes independent life unsustainable. A financially supported adult child does not qualify on that basis.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are the adult child over the age of 18 of an irish national parent and you are dependent on the care of that parent for your subsistence due to a serious medical or psychological condition that makes independent life unsustainable, please note there are additional qualifying conditions and there is a higher minimum financial threshold.",
+      "display_order": 30,
+      "source_excerpt_display": "If you are the adult child over the age of 18 of an Irish national parent and you are dependent on the care of that parent for your subsistence due to a serious medical or psychological condition that makes independent life unsustainable, please note there are additional qualifying conditions and there is a higher minimum financial threshold."
+    },
+    {
+      "requirement_code": "sponsor_assumes_full_financial_responsibility",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor takes full financial responsibility; the State will not subsidise the family",
+      "description": "The principle every figure below follows from, in ISD's own words.",
+      "source_role": "policy",
+      "source_excerpt": "the sponsor must assume full financial responsibility for the family member they are seeking to bring to reside in ireland with them. the state does not have an obligation to subsidise the family concerned and the sponsor must show evidence that they can provide for their family members if they are permitted to enter and reside in ireland.",
+      "display_order": 40,
+      "source_excerpt_display": "The sponsor must assume full financial responsibility for the family member they are seeking to bring to reside in Ireland with them. The State does not have an obligation to subsidise the family concerned and the sponsor must show evidence that they can provide for their family members if they are permitted to enter and reside in Ireland."
+    },
+    {
+      "requirement_code": "no_state_support_reliance_two_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The sponsor must not have relied mainly on State supports for two years or more before applying",
+      "description": "A bar in its own right, independent of the income tables, and it looks back two continuous years.",
+      "source_role": "policy",
+      "source_excerpt": "all sponsors must not have been mainly reliant on state supports from the irish state for a continuous period of two years or longer immediately prior to application.",
+      "parameters": {
+        "lookback_years": 2
+      },
+      "display_order": 50,
+      "source_excerpt_display": "All sponsors must not have been mainly reliant on State supports from the Irish State for a continuous period of two years or longer immediately prior to application."
+    },
+    {
+      "requirement_code": "one_sponsor_income_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only ONE sponsor's income counts — incomes cannot be combined",
+      "description": "THE RULE MOST LIKELY TO SINK AN OTHERWISE-COMFORTABLE HOUSEHOLD. A couple earning EUR 40,000 each does not meet a EUR 50,200 threshold; one of them must meet it alone.",
+      "source_role": "policy",
+      "source_excerpt": "only the income of one sponsor will be considered, so you cannot combine your salary with that of your spouse, partner or any other family member to reach these thresholds.",
+      "display_order": 60,
+      "source_excerpt_display": "only the income of one sponsor will be considered, so you cannot combine your salary with that of your spouse, partner or any other family member to reach these thresholds."
+    },
+    {
+      "requirement_code": "category_a_spouse_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category A sponsor (e.g. Irish citizen): EUR 75,000 gross cumulative over the three years before applying",
+      "description": "Cumulative, not annual — ISD's own example is EUR 25,000 a year for three years — and above any State benefits, with the expectation it will be maintained. The same test covers unmarried minor children.",
+      "source_role": "policy",
+      "source_excerpt": "category a sponsors (e.g. irish citizens) must have earned a gross income over and above any state benefits of not less than €75,000 , cumulative, over the three-year period prior to application (e.g. €25,000 per year over three years), with the expectation that this level of income will be maintained.",
+      "parameters": {
+        "cumulative_gross_eur": 75000,
+        "over_years": 3,
+        "currency": "EUR"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "Category A sponsors (e.g. Irish citizens) must have earned a gross income over and above any State benefits of not less than €75,000, cumulative, over the three-year period prior to application (e.g. €25,000 per year over three years), with the expectation that this level of income will be maintained."
+    },
+    {
+      "requirement_code": "category_c_spouse_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category C sponsor (e.g. general employment permit holder): over EUR 30,000 gross in the previous year",
+      "description": "A single-year test rather than a three-year cumulative one — a different shape of requirement for the same family relationship, decided entirely by the sponsor's permission type.",
+      "source_role": "policy",
+      "source_excerpt": "category c sponsors (e.g. general employment permit holder) must have a gross income in excess of €30,000 in the previous year, with the expectation that this level of income will be maintained.",
+      "parameters": {
+        "minimum_gross_previous_year_eur": 30000,
+        "currency": "EUR"
+      },
+      "display_order": 80,
+      "source_excerpt_display": "Category C sponsors (e.g. General Employment Permit holder) must have a gross income in excess of €30,000 in the previous year, with the expectation that this level of income will be maintained."
+    },
+    {
+      "requirement_code": "category_b_no_published_figure",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Category B sponsors: no figure is published — the status is taken to assume the income",
+      "description": "Recorded because its ABSENCE is the fact. ISD publishes no number for critical-skills permit holders, researchers, investors and the rest of Category B, and none is invented here.",
+      "source_role": "policy",
+      "source_excerpt": "for category b sponsors (e.g. critical skills employment permit holder or researcher), the immigration status granted assumes certain levels of income either immediately or in the future or on the basis that the sponsor falls into a category whose migration to ireland is promoted as part of government policy.",
+      "display_order": 90,
+      "source_excerpt_display": "For Category B sponsors (e.g. Critical Skills Employment Permit holder or researcher), the immigration status granted assumes certain levels of income either immediately or in the future or on the basis that the sponsor falls into a category whose migration to Ireland is promoted as part of Government policy."
+    },
+    {
+      "requirement_code": "minor_children_thresholds_category_c",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category C sponsoring minor children: EUR 39,780 net (≈EUR 50,200 gross) for one child, rising to EUR 79,664 net for eight or more",
+      "description": "The binding figure is NET, and ISD gives the gross equivalents only as indicative — a job offer quoting gross is not directly comparable. Based on the Department of Social Protection's 2026 Working Family Payment limits.",
+      "source_role": "policy",
+      "source_excerpt": "number of children minimum annual net salary required (2026)[1] indicative annual gross salary equivalent (2026) 1 child €39,780 €50,200 2 children €45,032 €60,200 3 children €50,284 €70,100 4 children €55,016 €80,000 5 children €61,568 €93,700 6 children €67,600 €106,300 7 children €74,672 €121,100 8+ children €79,664 €131,600",
+      "parameters": {
+        "net_1_child_eur": 39780,
+        "net_2_children_eur": 45032,
+        "net_3_children_eur": 50284,
+        "net_4_children_eur": 55016,
+        "net_5_children_eur": 61568,
+        "net_6_children_eur": 67600,
+        "net_7_children_eur": 74672,
+        "net_8_plus_children_eur": 79664,
+        "currency": "EUR",
+        "stated_for_year": 2026
+      },
+      "display_order": 100,
+      "source_excerpt_display": "Number of Children Minimum Annual Net Salary Required (2026)[1] Indicative Annual Gross Salary Equivalent (2026) 1 Child €39,780 €50,200 2 Children €45,032 €60,200 3 Children €50,284 €70,100 4 Children €55,016 €80,000 5 Children €61,568 €93,700 6 Children €67,600 €106,300 7 Children €74,672 €121,100 8+ Children €79,664 €131,600"
+    },
+    {
+      "requirement_code": "dependent_adult_relative_thresholds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Any sponsor bringing dependent adult relatives: EUR 96,929 gross for one, EUR 130,985 for two, EUR 165,042 for three",
+      "description": "THE HIGHEST THRESHOLD IN THIS REGISTRY, and it applies to Category A, B and C alike — earned IN IRELAND, in each of the three years. Based on CSO average earnings for Q2 2025.",
+      "source_role": "policy",
+      "source_excerpt": "number of dependent adult relatives minimum annual gross salary required (2026)[2] 1 adult €96,929 2 adults €130,985 3 adults €165,042",
+      "parameters": {
+        "gross_1_adult_eur": 96929,
+        "gross_2_adults_eur": 130985,
+        "gross_3_adults_eur": 165042,
+        "currency": "EUR",
+        "stated_for_year": 2026
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Number of Dependent Adult Relatives Minimum Annual Gross Salary Required (2026)[2] 1 Adult €96,929 2 Adults €130,985 3 Adults €165,042"
+    },
+    {
+      "requirement_code": "sponsor_categories",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Which category you are in is decided by your immigration permission, not your family relationship",
+      "description": "A: Irish nationals. B: critical-skills permit holders, intra-company transferees, non-locum doctors, researchers on hosting agreements, IIP investors, STEP entrepreneurs, certain students and ministers of religion. C: general and reactivation employment permit holders and independent Stamp 4 holders.",
+      "source_role": "policy",
+      "source_excerpt": "category a: irish nationals category b: critical skills employment permit (csep) holders, intra-company transferees, full-time non-locum doctors in employment, researchers on hosting agreements, investors on the immigrant investor programme (iip), entrepreneurs on the start-up entrepreneur programme (step), isd-approved scholarship programme students (e.g. kasp), phd student permission holders (subject to additional conditions), ministers of religion under the relevant scheme (subject to additional conditions).",
+      "display_order": 120,
+      "source_excerpt_display": "Category A: Irish nationals Category B: Critical Skills Employment Permit (CSEP) holders, Intra-company transferees, Full-time non-locum doctors in employment, Researchers on Hosting Agreements, Investors on the Immigrant Investor Programme (IIP), Entrepreneurs on the Start-up Entrepreneur Programme (STEP), ISD-approved scholarship programme students (e.g. KASP), PhD student permission holders (subject to additional conditions), Ministers of Religion under the relevant scheme (subject to additional conditions)."
+    }
+  ]
+}

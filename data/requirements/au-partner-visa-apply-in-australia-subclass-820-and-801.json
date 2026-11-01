@@ -1,0 +1,294 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-partner-visa-apply-in-australia-subclass-820-and-801",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "eligibility": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820"
+  },
+  "not_extracted": [
+    "STAGE SCOPE. This registry entry covers subclasses 820 and 801 together, but the only page read is the temporary subclass 820 page. Every requirement below is a SUBCLASS 820 (temporary stage) requirement. Nothing about the permanent subclass 801 stage - its separate assessment, its two-year wait, or its own evidence - is recorded, because the subclass 801 page was not read.",
+    "The registered 'landing' source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore) was not read: immi.homeaffairs.gov.au returned HTTP 403 to the source monitor on this run and the rule is never to retry through a 403.",
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains the column headings and no amounts. The subclass 820 page likewise says only 'From <placeholder> for most applicants. From <placeholder> for Prospective Marriage visa (subclass 300) holders.' No amount and no currency was stated, so no fee is recorded.",
+    "The registered 'forms' source (https://online.immi.gov.au/lusc/login) is disallowed by that host's robots.txt ('User-agent: * / Disallow: /'). It was not fetched and nothing is quoted from it.",
+    "Sponsor-side requirements. The page carries a 'For Sponsors' toggle with its own criteria and steps; those are obligations of the sponsor, not of the applicant, and mixing them into an applicant checklist would misattribute them. The applicant-side duty to HAVE an approved sponsor is recorded below.",
+    "Family Violence Provisions and the 'relationship has changed' pathway. The page states these exist and links out; it states no requirement text that could be recorded as a checklist item.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "genuine_partner_relationship",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be the spouse or de facto partner of an Australian citizen, permanent resident or eligible New Zealand citizen",
+      "description": "The Department states this must hold both when you apply and when the application is decided. For a de facto partner it usually requires the relationship to have run at least 12 months immediately before applying, waived where compelling and compassionate circumstances exist, where the partner holds or held a permanent humanitarian visa in defined circumstances, or where the relationship is registered with an Australian state or territory authority.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "married",
+          "de_facto",
+          "common_law",
+          "partnered"
+        ]
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "In most cases, you must be the spouse or de facto partner of an: Australian citizen, Australian permanent resident, or eligible New Zealand citizen. This applies when you make your application and when your application is being decided.",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "have_an_approved_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have a sponsor, approved by the Department, who cannot be changed",
+      "description": "The Department states the sponsor is usually your partner, must be approved, and must be the same person for two years after the temporary subclass 820 visa is granted.",
+      "source_role": "eligibility",
+      "source_excerpt": "You and anyone who applies for the visa with you must have a sponsor when you lodge your application and when you are on this visa. Your sponsor is usually your partner. We must approve your sponsor. You cannot change your sponsor. The person who sponsors you when you apply for the visa must be the same person who sponsors you for 2 years after we grant your temporary Partner visa (subclass 820).",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "be_in_australia_when_you_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in Australia when you apply, along with any family who apply with you",
+      "description": "The Department states you can be in or outside Australia when the temporary visa application is decided, but you must be in Australia to lodge it. A condition preventing further stay, such as condition 8503, blocks the application unless a waiver is approved first.",
+      "rule": {
+        "fact": "application_country",
+        "op": "eq",
+        "value": "AU"
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "Eligible applicants must apply for this visa in Australia. Family members who apply with you must also be in Australia. You can apply for this visa if your current or previous visa does not have a condition that prevents further stay, such as condition 8503.",
+      "display_order": 30
+    },
+    {
+      "requirement_code": "hold_substantive_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a substantive visa, or show compelling reasons",
+      "source_role": "eligibility",
+      "source_excerpt": "If you do not hold a substantive visa at the time you apply for this visa and you did not previously hold a Prospective Marriage (subclass 300) visa, you must demonstrate that compelling reasons exist for the grant of a Partner visa.",
+      "display_order": 40
+    },
+    {
+      "requirement_code": "minimum_holding_period_regional_visas",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the minimum holding period if you hold, or last held, certain regional visas",
+      "description": "Two years for a Skilled - Independent Regional (Provisional) (Class UX) visa, subclass 475, subclass 487 or a Skilled Regional Sponsored (Provisional) (Class SP) visa. Three years for a subclass 491 or subclass 494 visa. VisaAI does not collect which visa the applicant holds in a form this rule engine can test, so this requirement carries no rule and the condition is stated here.",
+      "source_role": "eligibility",
+      "source_excerpt": "You might not be eligible to apply if you are the holder of certain regional visas. If you are the holder of or your last substantive visa was one of the following, you must have held that visa for at least two years before you can apply: Skilled – Independent Regional (Provisional) (Class UX) visa, Subclass 475 (Skilled – Regional Sponsored) visa, Subclass 487 (Skilled – Regional Sponsored) visa or Skilled Regional Sponsored (Provisional ) (Class SP) visa.",
+      "display_order": 50
+    },
+    {
+      "requirement_code": "be_the_right_age",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be 18 or older when you apply",
+      "description": "The Department notes married applicants must in most cases be 18 or older because that is generally the minimum marriageable age under Australian law, and that applicants in de facto relationships must be 18 or older.",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 18
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "Married applicants must, in most cases, be 18 or older when they apply. This is because usually, you must be 18 or older to be married under Australian law. Applicants in de facto relationships must be 18 or older when they apply.",
+      "display_order": 60
+    },
+    {
+      "requirement_code": "immigration_history_considered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Not have had a visa cancelled or an application refused, where you hold no substantive visa",
+      "description": "Where the applicant holds no substantive visa the page sets extra validity conditions: a completed 'Sponsorship for a Partner to Migrate to Australia' online form, evidence of the sponsor's status, and at least two statutory declarations. It states that a Form 888 is NOT a statutory declaration and is not acceptable for this purpose.",
+      "source_role": "eligibility",
+      "source_excerpt": "You might not be eligible to apply for this visa if you do not hold a substantive visa and you have had a visa cancelled or refused, see Limitations on applications in Australia. If this information is not included when you lodge your application, it may be deemed invalid.",
+      "display_order": 70
+    },
+    {
+      "requirement_code": "health_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the health requirement",
+      "source_role": "eligibility",
+      "source_excerpt": "You, any members of the family unit, or dependent children who apply for the visa with you, must meet our health requirement. Family members who do not accompany you to Australia might also need to meet our health requirement.",
+      "display_order": 80
+    },
+    {
+      "requirement_code": "character_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the character requirement",
+      "source_role": "eligibility",
+      "source_excerpt": "You and any family members who apply for the visa with you, must meet our character requirement. Family members who do not accompany you to Australia might also need to meet our character requirement.",
+      "display_order": 90
+    },
+    {
+      "requirement_code": "no_debt_to_australian_government",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have repaid, or arranged to repay, any debt to the Australian Government",
+      "source_role": "eligibility",
+      "source_excerpt": "If you or any family members owe the Australian government money, you or they must have paid it back or arranged to pay it back. This may include family members who do not accompany you to Australia.",
+      "display_order": 100
+    },
+    {
+      "requirement_code": "australian_values_statement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sign the Australian Values Statement",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 18
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "You and any family members who apply with you who are 18 years of age or older, must: have read, or had explained, the Life in Australia booklet, sign an Australian Values Statement that confirms you will respect the Australian way of life and obey Australian laws",
+      "display_order": 110
+    },
+    {
+      "requirement_code": "best_interests_of_the_child",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Grant must be in the best interests of an applicant under 18",
+      "rule": {
+        "fact": "is_minor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "We might not grant this visa if it is not in the best interests of an applicant under 18.",
+      "display_order": 120
+    },
+    {
+      "requirement_code": "identity_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Identity documents - birth certificate showing both parents, passport pages, national identity card, proof of change of name",
+      "description": "Where a birth certificate cannot be provided the Department accepts the identification page of a family book showing both parents, a government-issued identification document, a court-issued document proving identity, or a family census register.",
+      "source_role": "eligibility",
+      "source_excerpt": "Provide a birth certificate showing the names of both parents. Also provide: the pages of your current passport showing your photo, personal details and issue and expiry dates, a national identity card, if you have one, proof of change of name, if applicable",
+      "display_order": 200
+    },
+    {
+      "requirement_code": "relationship_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of your relationship, any former relationships, and any dependants",
+      "source_role": "eligibility",
+      "source_excerpt": "You need to provide evidence of: your relationship with your partner, any former relationships, any dependants you have.",
+      "display_order": 210
+    },
+    {
+      "requirement_code": "australian_police_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Australian police certificate (complete disclosure, AFP-issued)",
+      "description": "Required where you have spent 12 months or more in Australia in the last 10 years since turning 16. The Department states it accepts only complete disclosure National Police Certificates issued by the Australian Federal Police, not standard disclosure certificates and not state or territory police certificates. Certificates are valid 12 months from issue.",
+      "source_role": "eligibility",
+      "source_excerpt": "If you have spent a total of 12 months or more in Australia in the last 10 years (since you turned 16), you must provide an Australian police certificate. We only accept complete disclosure National Police Certificates issued by the Australian Federal Police. We do not accept standard disclosure certificates or national police certificates issued by Australian state or territory police.",
+      "display_order": 220
+    },
+    {
+      "requirement_code": "overseas_police_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Police certificate from every country you spent 12 months or more in",
+      "description": "Counted over the last 10 years since you turned 16. Military service records or discharge papers are also required if you served in the armed forces of any country. For immigration purposes police certificates are valid 12 months from the issue date.",
+      "source_role": "eligibility",
+      "source_excerpt": "Also provide: a police certificate from every country where you spent a total of 12 months or more in, in the last 10 years since you turned 16, military service records or discharge papers if you served in the armed forces of any country. For immigration purposes, police certificates are valid for 12 months from the issue date.",
+      "display_order": 230
+    },
+    {
+      "requirement_code": "form_80_personal_particulars",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Personal particulars for assessment including character assessment",
+      "description": "The page names this Form 80. official_form_code is left null: Australia publishes no application form identifier for the visa itself, and Form 80 is the Department's own auxiliary character form quoted from the page rather than a VisaAI-assigned code.",
+      "source_role": "eligibility",
+      "source_excerpt": "Complete and attach to your application Form 80 Personal particulars for assessment including character assessment (596KB PDF).",
+      "display_order": 240
+    },
+    {
+      "requirement_code": "sponsorship_form_and_declarations_no_substantive_visa",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Sponsorship form, sponsor status evidence and two statutory declarations, where you hold no substantive visa",
+      "description": "The Department states the declarations must each have been made within the last six weeks by an Australian citizen, permanent resident or eligible New Zealand citizen confirming the married or de facto relationship, and that a Form 888 is not a statutory declaration and is not acceptable for this. A driver's licence or Medicare card is not sufficient evidence of the sponsor's or declarant's status.",
+      "source_role": "eligibility",
+      "source_excerpt": "Include a ‘Sponsorship for a Partner to Migrate to Australia’ online form completed by your sponsor. Provide evidence to demonstrate your sponsor's status (for example, passport or birth certificate). A driver's licence or Medicare card is not sufficient evidence. Include a minimum of two statutory declarations, each made within the last six weeks by an Australian citizen, Australian permanent resident or eligible New Zealand citizen confirming that you and your sponsor are in a married or de facto relationship.",
+      "display_order": 250
+    },
+    {
+      "requirement_code": "documents_translated_and_scanned",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All documents translated into English and scanned in colour",
+      "description": "The Department requires translators in Australia to be accredited by the National Accreditation Authority for Translators and Interpreters; translators outside Australia need not be accredited but must give their full name, address and telephone number, and their qualifications and experience in the language, in English. Documents do not need to be certified.",
+      "source_role": "eligibility",
+      "source_excerpt": "Have all documents translated into English. Provide original and translated documents in your application. Translators in Australia must be accredited by the National Accreditation Authority for Translators and Interpreters. Scan or photograph all documents (English and non-English) in colour. You do not need to have any documents certified.",
+      "display_order": 260
+    },
+    {
+      "requirement_code": "apply_online_immiaccount",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online in ImmiAccount under Family, Stage 1 - Partner or Prospective Marriage Visa",
+      "description": "Australia publishes no paper application form number for this visa; the application is made online. The Department caps attachments at 100 documents per person and states the limit cannot be increased.",
+      "source_role": "eligibility",
+      "source_excerpt": "Login or create an ImmiAccount. Select ‘New application’. Select ‘Family’. Select ‘Stage 1 – Partner or Prospective Marriage Visa’. Attach documents. Pay the application charge. We will not process your application until you pay. Note the Transaction Reference Number (TRN). Your sponsor will need the TRN to apply for sponsorship.",
+      "display_order": 400
+    },
+    {
+      "requirement_code": "give_sponsor_your_trn",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Give your sponsor your Transaction Reference Number so they can apply to sponsor you",
+      "source_role": "eligibility",
+      "source_excerpt": "After you apply for this visa, give your sponsor your Transaction Reference Number (TRN) or application ID. Your sponsor can then apply to sponsor you.",
+      "display_order": 410
+    },
+    {
+      "requirement_code": "health_examinations",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Complete health examinations",
+      "description": "The Department states results are valid 12 months from completion, and a health undertaking, if it asks you to sign one, is valid 6 months.",
+      "source_role": "eligibility",
+      "source_excerpt": "You need to have health examinations. The results of your health assessment are valid for 12 months from the date you complete your examinations. If we ask you to sign a health undertaking, this is valid for 6 months.",
+      "display_order": 420
+    },
+    {
+      "requirement_code": "keep_relationship_evidence_current",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Keep your documents and relationship evidence up to date in ImmiAccount",
+      "source_role": "eligibility",
+      "source_excerpt": "As Partner visa applications can have long visa processing times, you should update your documents and evidence of your relationship regularly through ImmiAccount.",
+      "display_order": 430
+    },
+    {
+      "requirement_code": "health_insurance_if_not_medicare_eligible",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Take out health insurance if you are not eligible for Medicare",
+      "description": "The Department labels this a recommendation, not a requirement, and warns you are personally liable for all healthcare costs in Australia otherwise.",
+      "source_role": "eligibility",
+      "source_excerpt": "If you are not eligible for Medicare, we recommend you take out health insurance to cover any unforeseen medical treatment you might need in Australia. Otherwise, you will be personally liable for all your healthcare costs while you are in Australia.",
+      "display_order": 500
+    },
+    {
+      "requirement_code": "time_police_and_health_checks_against_processing_times",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Time your police certificates and health examinations against current processing times",
+      "description": "The Department advises this because both expire, and it may ask for them again if they expire before the visa is decided.",
+      "source_role": "eligibility",
+      "source_excerpt": "Before deciding when to obtain your police certificates, you should refer to the Visa processing times. We may ask you to provide them again if they expire before we decide your visa.",
+      "display_order": 510
+    }
+  ]
+}

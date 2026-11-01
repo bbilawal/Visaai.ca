@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "se-work-permit-employed",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Migrationsverket page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "translation_note": "THE SOURCE IS SWEDISH, as with se-schengen-visa. Every source_excerpt is verbatim Swedish and scripts/verify-excerpts.ts proves that — the check is language-agnostic. The label and description fields are ENGLISH RENDERINGS produced during extraction, and each description states its translation explicitly so quote and rendering sit side by side. A reviewer who does not read Swedish can verify the quote is genuinely on the page but cannot independently verify the translation; that is a real reduction in reviewability. Migrationsverket's English site was not usable: its sitemap contains no /English/ URLs at all.",
+  "source_roles": {
+    "requirements": "https://www.migrationsverket.se/du-vill-ansoka/arbeta/anstalld-eller-egen-foretagare/anstalld.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The list of occupations exempt from the salary requirement. It lives in the Aliens Ordinance (2006:97, ch 5 s 6) and a separate government list, neither of which is a registered source, and Migrationsverket warns the list in force at decision time is the one that applies.",
+    "The current median wage itself. Published by Statistics Sweden each June on their own site.",
+    "The maintenance calculation for accompanying family, including housing-cost rules by tenure type. A substantial separate section that belongs with a family-permit visa type rather than this one.",
+    "The application fee amount. Migrationsverket links a separate fees page.",
+    "Rules for extending a permit or switching employer, which are separate processes."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport",
+      "description": "Translation: you must have a valid passport.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska ha ett giltigt pass",
+      "display_order": 10,
+      "source_excerpt_display": "Du ska ha ett giltigt pass"
+    },
+    {
+      "requirement_code": "signed_employment_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A signed employment contract",
+      "description": "Translation: you must have an employment contract, signed by both you and your employer.",
+      "source_role": "requirements",
+      "source_excerpt": "du ska ha ett anställningsavtal anställningsavtalet ska vara underskrivet av både dig och din arbetsgivare.",
+      "display_order": 20,
+      "source_excerpt_display": "Du ska ha ett anställningsavtal Anställningsavtalet ska vara underskrivet av både dig och din arbetsgivare."
+    },
+    {
+      "requirement_code": "employment_conditions_match_collective_agreement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay and conditions at least matching Swedish collective agreements or industry practice",
+      "description": "Translation: your salary and other employment conditions must be at least at the level of Swedish collective agreements, or what is customary in the occupation or industry.",
+      "source_role": "requirements",
+      "source_excerpt": "din lön och andra anställningsvillkor ska vara på minst samma nivå som svenska kollektivavtal eller vad som är brukligt inom yrket eller branschen.",
+      "display_order": 30,
+      "source_excerpt_display": "Din lön och andra anställningsvillkor ska vara på minst samma nivå som svenska kollektivavtal eller vad som är brukligt inom yrket eller branschen."
+    },
+    {
+      "requirement_code": "employer_insurances",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your employer must hold health, life, security and occupational pension insurance for you",
+      "description": "Translation: the employer must have taken out health insurance, life insurance, security insurance and occupational pension insurance for you when the employment begins. An employer obligation the applicant is nonetheless judged on.",
+      "source_role": "requirements",
+      "source_excerpt": "arbetsgivaren ska ha tecknat sjukförsäkring, livförsäkring, trygghetsförsäkring och tjänstepensionsförsäkring för dig när du påbörjar anställningen.",
+      "display_order": 40,
+      "source_excerpt_display": "Arbetsgivaren ska ha tecknat sjukförsäkring, livförsäkring, trygghetsförsäkring och tjänstepensionsförsäkring för dig när du påbörjar anställningen."
+    },
+    {
+      "requirement_code": "comprehensive_health_insurance_short_contract",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employment of a year or less requires comprehensive health insurance covering your whole stay",
+      "description": "Translation: if your employment will last at most one year, you must have — or have applied for — comprehensive health insurance valid for your whole time in Sweden, covering emergency and other medical care, hospital stays, emergency dental care and repatriation for medical reasons.",
+      "source_role": "requirements",
+      "source_excerpt": "om din anställning ska pågå i högst ett år ska du ha, eller ha ansökt om, en heltäckande sjukförsäkring försäkringen ska gälla för hela den tid som du ska vara i sverige och täcka kostnader för akut och annan sjukvård, sjukhusvistelse och akut tandvård. den ska också täcka kostnader för hemtransport av medicinska skäl.",
+      "display_order": 50,
+      "source_excerpt_display": "Om din anställning ska pågå i högst ett år ska du ha, eller ha ansökt om, en heltäckande sjukförsäkring Försäkringen ska gälla för hela den tid som du ska vara i Sverige och täcka kostnader för akut och annan sjukvård, sjukhusvistelse och akut tandvård. Den ska också täcka kostnader för hemtransport av medicinska skäl."
+    },
+    {
+      "requirement_code": "salary_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Monthly salary at least 90% of Sweden's published median wage",
+      "description": "Translation: you must have a monthly salary amounting to at least 90 per cent of the median wage published by Statistics Sweden (SCB) and in force when you applied.",
+      "source_role": "requirements",
+      "source_excerpt": "det innebär att du måste ha en månadslön som uppgår till minst 90 procent av den medianlön som statistiska centralbyrån (scb) har publicerat och som gällde när du ansökte.",
+      "display_order": 60,
+      "source_excerpt_display": "Det innebär att du måste ha en månadslön som uppgår till minst 90 procent av den medianlön som Statistiska centralbyrån (SCB) har publicerat och som gällde när du ansökte."
+    },
+    {
+      "requirement_code": "salary_minimum_amount",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "At least SEK 34,470 per month",
+      "description": "Translation: to meet the salary requirement you must have a monthly salary of at least SEK 34,470 — 90 per cent of the current median wage SCB publishes each June. This figure changes ANNUALLY; the daily monitor diffs this page so the change surfaces for review.",
+      "parameters": {
+        "per_month_sek": 34470,
+        "currency": "SEK",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "för att uppfylla lönekravet ska du ha en månadslön på minst 34 470 kronor . det motsvarar 90 procent av den aktuella medianlönen som scb publicerar i juni varje år.",
+      "display_order": 70,
+      "source_excerpt_display": "För att uppfylla lönekravet ska du ha en månadslön på minst 34 470 kronor. Det motsvarar 90 procent av den aktuella medianlönen som SCB publicerar i juni varje år."
+    },
+    {
+      "requirement_code": "salary_may_need_to_exceed_minimum",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your salary may need to be higher than the minimum to match collective agreements",
+      "description": "Translation: your monthly salary must also be at the level of collective agreements or industry practice, which means it may need to be higher than 90 per cent of the median wage. Recorded so the SEK 34,470 figure is never read as sufficient on its own.",
+      "source_role": "requirements",
+      "source_excerpt": "din månadslön ska även vara i nivå med kollektivavtal eller i nivå med den praxis som gäller inom yrket eller branschen. det betyder att din lön kan behöva vara högre än 90 procent av medianlönen.",
+      "display_order": 80,
+      "source_excerpt_display": "Din månadslön ska även vara i nivå med kollektivavtal eller i nivå med den praxis som gäller inom yrket eller branschen. Det betyder att din lön kan behöva vara högre än 90 procent av medianlönen."
+    },
+    {
+      "requirement_code": "exempt_occupations_75_percent",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Exempt occupations must still reach 75% of the median wage",
+      "description": "Translation: certain occupations and groups of applicants are exempt from the salary requirement; if an exemption applies, the salary must still be at least 75 per cent of Sweden's median wage at the time of application. The exempt list is in the Aliens Ordinance and a government list, neither a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "vissa yrken och grupper av sökande är undantagna lönekravet. om man omfattas av något av undantagen från lönekravet, måste lönen vara minst 75 procent av medianlönen i sverige vid tidpunkten för ansökan.",
+      "display_order": 90,
+      "source_excerpt_display": "Vissa yrken och grupper av sökande är undantagna lönekravet. Om man omfattas av något av undantagen från lönekravet, måste lönen vara minst 75 procent av medianlönen i Sverige vid tidpunkten för ansökan."
+    },
+    {
+      "requirement_code": "single_employment_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "One employment must meet the requirements — two or more cannot be combined",
+      "description": "Translation: you cannot hold two or more employments that together satisfy the requirements. Excerpt begins mid-word where Migrationsverket's own sentence is split by page structure.",
+      "source_role": "requirements",
+      "source_excerpt": "an inte ha två eller flera anställningar som tillsammans gör att kraven uppfylls.",
+      "display_order": 100,
+      "source_excerpt_display": "an inte ha två eller flera anställningar som tillsammans gör att kraven uppfylls."
+    }
+  ]
+}

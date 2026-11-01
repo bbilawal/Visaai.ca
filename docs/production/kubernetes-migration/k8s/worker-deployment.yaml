@@ -1,0 +1,55 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Worker Deployment (BullMQ processors).
+# =============================================================================
+# Same image as the api, but APP_ROLE=worker → registers the ~18 @Processor
+# workers and does NOT open an HTTP listener. BullMQ distributes jobs across
+# workers via Redis, so replicas>1 IS safe for throughput (processors are
+# idempotent — they read/write Supabase + Upstash, not process memory).
+#
+# No Service / no readiness HTTP probe: workers have no inbound traffic. Health
+# is "is the process up and consuming?" — use a liveness exec probe or rely on
+# BullMQ + queue-depth alerting (README §3 / VPS runbook §6).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visaai-worker
+  namespace: visaai
+  labels: { app: visaai-worker }
+spec:
+  replicas: 1                     # scale on queue depth (see hpa.yaml note)
+  selector:
+    matchLabels: { app: visaai-worker }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  template:
+    metadata:
+      labels: { app: visaai-worker }
+    spec:
+      # Longer than the api: let a long-running OCR job finish (or let BullMQ
+      # re-queue it) before SIGKILL. Pair with graceful shutdown in the app.
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: worker
+          image: registry.example.com/visaai/api:GIT_SHA   # SAME image as api
+          imagePullPolicy: IfNotPresent
+          env:
+            - { name: APP_ROLE, value: "worker" }
+          envFrom:
+            - configMapRef: { name: visaai-api-config }
+            - secretRef:    { name: visaai-api-secrets }
+          # No HTTP port. Liveness via a lightweight process check. A better
+          # probe is a tiny "worker heartbeat" file the app touches each loop.
+          livenessProbe:
+            exec:
+              command: ["node", "-e", "process.exit(0)"]
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+            requests: { cpu: "250m", memory: "512Mi" }
+            limits:   { cpu: "1",    memory: "1Gi" }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }

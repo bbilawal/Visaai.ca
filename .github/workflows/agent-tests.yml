@@ -1,0 +1,574 @@
+name: agent-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api:
+    name: API — typecheck + jest (incl. security/ai-agent)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Analytics PII prop guard (SP-A D7)
+        run: |
+          if grep -REn "props[[:space:]]*:[[:space:]]*\{[^}]*\b(email|password|passport|ssn|dob|date_of_birth|phone|address|first_name|last_name|full_name|card|iban|cvv)\b" apps/api/src/modules/analytics apps/api/src/modules/analytics-metrics apps/api/src/modules/analytics-api apps/api/src/modules/analytics-alerts; then
+            echo "::error::PII key found in analytics event props"; exit 1
+          fi
+      - name: Typecheck (api)
+        run: pnpm --filter api exec tsc --noEmit -p tsconfig.json
+      # DEBT-001. apps/api carried 1,865 lint errors, so lint had no signal —
+      # a real new error was one of thousands. Blocking on zero would mean a
+      # multi-day campaign or a pile of eslint-disable comments; both are worse.
+      # This lets the count fall freely and fails the moment it rises.
+      - name: Lint ratchet (count may fall, never rise)
+        working-directory: apps/api
+        run: |
+          npx eslint "{src,apps,libs,test}/**/*.ts" -f json > /tmp/lint.json || true
+          node ../../scripts/lint-ratchet.mjs < /tmp/lint.json
+      - name: Jest (unit + integration + api + security + ai-agent)
+        run: pnpm --filter api exec jest --ci
+      - name: Jest e2e (payment/subscription/payout money-path)
+        # Self-contained e2e (in-memory Supabase) gate the money path on every
+        # merge. The RLS / cross-tenant suites need a real Supabase and are
+        # gated in the dedicated `tenant-isolation` job below.
+        run: pnpm --filter api exec jest --config ./test/jest-e2e.json --ci
+      - name: Dependency audit (non-blocking)
+        continue-on-error: true
+        run: pnpm --filter api audit --audit-level=high
+      # DEP-001: osv-scanner reads the lockfile, so it sees the whole workspace
+      # rather than one app's tree, and it reports the advisory IDs the audit
+      # step does not. Left non-blocking for the same reason the audit above is:
+      # a toolchain CVE with no path to the deployed artefact should not stop a
+      # release. The gate that DOES block is the vulnerable-in-production check
+      # below, which fails only when a flagged package is resolvable from an app
+      # we actually ship.
+      - name: Dependency scan — osv-scanner (advisory)
+        continue-on-error: true
+        uses: google/osv-scanner-action/osv-scanner-action@v2.2.4
+        with:
+          scan-args: |-
+            --lockfile=pnpm-lock.yaml
+      - name: Gate — no flagged package reachable from a deployed app
+        run: node scripts/check-vulnerable-deps.mjs
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-report
+          path: reports/
+          if-no-files-found: ignore
+
+  tenant-isolation:
+    name: Tenant isolation — RLS suites against a real Supabase
+    runs-on: ubuntu-latest
+    # The suite list below must contain EVERY spec that gates on
+    # `describeIf`/CONFIGURED. Keep it in sync — `schema-hygiene-db` was gated
+    # like the others but was never listed here, so it ran in CI (no) and
+    # locally (no, it skips without credentials) and therefore nowhere at all,
+    # while its own docstring asserted that this job kept it honest. Find
+    # stragglers with:
+    #   grep -ln 'describeIf\|CONFIGURED' apps/api/test/*.spec.ts
+    #
+    # WHY THIS JOB EXISTS: eleven RLS / cross-tenant suites gate on
+    # `describeIf = CONFIGURED ? describe : describe.skip`. Without Supabase
+    # env vars they silently skip and the pipeline still reports green — so a
+    # passing build never meant tenant isolation had been checked. Task 14
+    # found a live cross-tenant leak on production that local analysis
+    # structurally could not find.
+    #
+    # This needs NO SECRETS. `supabase start` brings up a local stack whose
+    # anon/service-role keys are fixed and published in Supabase's own docs,
+    # and it applies every migration in supabase/migrations on the way up.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start local Supabase (applies all migrations)
+        run: supabase start
+      - name: Security RLS regression (SEC-4090/4091/4092/4093/4094/9002/4003)
+        # Asserts the DAST-confirmed RLS + storage exploits stay closed AND
+        # legitimate owner writes still work. Fails the build on any regression.
+        run: |
+          docker exec -i supabase_db_VisaAI \
+            psql -U postgres -d postgres -v ON_ERROR_STOP=1 \
+            < supabase/tests/security/rls_column_hardening_test.sql
+      - name: Visa registry RLS regression
+        # Guards the defect fixed in 20260820150000: a "staff_read" policy
+        # scoped `to authenticated using (true)` ORs away the status=active
+        # restriction beside it, exposing every unreviewed draft requirement
+        # and the whole internal review queue to any signed-up account.
+        run: |
+          docker exec -i supabase_db_VisaAI \
+            psql -U postgres -d postgres -v ON_ERROR_STOP=1 \
+            < supabase/tests/security/visa_registry_rls_test.sql
+      - name: RLS, cross-tenant and registry-parity suites
+        env:
+          SUPABASE_URL: http://127.0.0.1:54321
+          # Fixed local-development keys, not secrets.
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+        run: |
+          pnpm --filter api exec jest --ci --json --outputFile=/tmp/rls.json \
+            rls-cross-tenant messaging-rls messaging-p2-rls messaging-p3a-rls \
+            messaging-p3b-rls messaging-p3c-rls messaging-p4-rls \
+            messaging-delivered-rls messaging-global-search-rls \
+            messaging-pagination-rls messaging-perf-rls \
+            schema-hygiene-db \
+            schengen-registry-db-parity
+      - name: Assert the suites actually RAN (a skip must not pass as green)
+        # This is the whole point. Without it the job would go green in exactly
+        # the failure mode it exists to prevent: the credentials stop working,
+        # every suite silently skips, and nothing complains.
+        run: |
+          node -e '
+            const r = require("/tmp/rls.json");
+            const skipped = r.numPendingTests + r.numTodoTests;
+            const passed  = r.numPassedTests;
+            console.log(`passed=${passed} skipped=${skipped} suites=${r.numTotalTestSuites}`);
+            if (skipped > 0) {
+              console.error(`::error::${skipped} tenant-isolation test(s) SKIPPED. They gate on Supabase env vars — a skip here means isolation was never checked.`);
+              process.exit(1);
+            }
+            if (passed < 43) {
+              console.error(`::error::only ${passed} tenant-isolation tests ran; expected at least 43. Suites may have been silently dropped.`);
+              process.exit(1);
+            }
+          '
+
+  web:
+    name: Web — typecheck + build
+    runs-on: ubuntu-latest
+    # A hung Playwright run used to hold the runner for over an hour.
+    timeout-minutes: 30
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-dummy-anon-key
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck + build (web)
+        run: pnpm --filter web exec next build
+      - name: Unit (vitest)
+        run: pnpm --filter web test:unit --reporter=dot
+      - name: Install Playwright browsers
+        run: pnpm --filter web exec playwright install --with-deps chromium
+      # Visual snapshots are excluded here: this job has no API or database,
+      # so /pricing renders its error page and the landing picker its loading
+      # state. They run in web-e2e-live, against the real stack.
+      - name: E2E + a11y (Playwright + axe, snapshots excluded)
+        run: pnpm --filter web exec playwright test --grep-invert "renders consistently|reflows at"
+        env:
+          CI: 'true'
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+      - name: Perf budgets (lighthouse-ci)
+        continue-on-error: true
+        run: pnpm --filter web build && pnpm --filter web test:perf
+
+  web-e2e-live:
+    name: Web E2E — against a REAL API (authenticated portal)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # The API connects to Redis (REDIS_URL, default redis://localhost:6379) at
+    # boot; without one it never became healthy ("ECONNREFUSED 127.0.0.1:6379")
+    # and every spec below ran against nothing.
+    services:
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    # WHY THIS JOB EXISTS: the `web` job above runs Playwright with
+    # NEXT_PUBLIC_API_URL pointing at a port nothing listens on. Every
+    # API-dependent page is therefore only ever asserted in its ERROR state —
+    # /pricing renders "Live pricing is briefly unavailable" and axe inspects a
+    # fallback paragraph instead of the plan cards a visitor sees. A real WCAG
+    # failure (WEB-004, 3.9:1 on the recommended card) lived in the codebase
+    # precisely because the nodes that carried it never rendered under test.
+    #
+    # It also seeds an admin, so the six authenticated specs — which had NEVER
+    # executed in CI or anywhere else — actually run.
+    #
+    # Snapshot tests are excluded on purpose. The committed baselines encode the
+    # API-down rendering the `web` job produces; one baseline set cannot be
+    # correct for both worlds, and a11y is where the defects were.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start local Supabase (applies all migrations)
+        run: supabase start
+      - name: Build shared types + API
+        run: pnpm build:types && pnpm --filter api build
+      - name: Seed the e2e admin
+        # Fixed local-development keys, not secrets — same ones the
+        # tenant-isolation job uses.
+        run: |
+          curl -sf -X POST http://127.0.0.1:54321/auth/v1/admin/users \
+            -H "apikey: $SERVICE_ROLE_KEY" -H "Authorization: Bearer $SERVICE_ROLE_KEY" \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"e2e-admin@local.test","password":"LocalE2EAdmin!2026","email_confirm":true,"app_metadata":{"role":"admin"}}' \
+            > /dev/null
+          # Consultant too. Without this the consultant auth.setup skips, the
+          # consultant portal is never exercised, and the no-skip gate below
+          # would have nothing to catch it with. JwtGuard.resolveAppRole reads
+          # app_metadata.role first, so this is all the seeding the role needs.
+          curl -sf -X POST http://127.0.0.1:54321/auth/v1/admin/users \
+            -H "apikey: $SERVICE_ROLE_KEY" -H "Authorization: Bearer $SERVICE_ROLE_KEY" \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"e2e-consultant@local.test","password":"LocalE2EConsultant!2026","email_confirm":true,"app_metadata":{"role":"consultant"}}' \
+            > /dev/null
+          echo "seeded e2e admin + consultant"
+        env:
+          SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+      - name: Boot the API
+        run: |
+          node -e "process.exit(0)"
+          nohup node apps/api/dist/main.js > /tmp/api.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://127.0.0.1:4100/health && { echo "api up after ${i}s"; exit 0; }
+            sleep 1
+          done
+          echo "::error::API did not become healthy"; tail -40 /tmp/api.log; exit 1
+        env:
+          NODE_ENV: development
+          PORT: '4100'
+          SUPABASE_URL: http://127.0.0.1:54321
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+          SUPABASE_JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters-long
+          OPENAI_API_KEY: sk-ci-placeholder
+          STRIPE_SECRET_KEY: sk_test_ci_placeholder
+          STRIPE_WEBHOOK_SECRET: whsec_ci_placeholder
+          UPSTASH_REDIS_REST_URL: http://127.0.0.1:1
+          UPSTASH_REDIS_REST_TOKEN: ci-placeholder
+          # 127.0.0.1, not localhost: the runner also resolves ::1, where the
+          # service container does not listen.
+          REDIS_URL: redis://127.0.0.1:6379
+          ADMIN_EMAILS: e2e-admin@local.test
+          WEB_URL: http://localhost:3100
+          API_URL: http://127.0.0.1:4100
+          # The suite drives every request from one address; the 60/min
+          # production default trips partway through and pages render their
+          # error boundary, which looks exactly like a product failure.
+          THROTTLE_LIMIT: '100000'
+      - name: Install Playwright browsers
+        run: pnpm --filter web exec playwright install --with-deps chromium
+      # Visual snapshots run here, not in the `web` job: this one has the real
+      # API and database, so the pages render what users see. Baselines are the
+      # *-chromium-linux.png files, rendered on this runner.
+      - name: E2E + a11y against the live API (incl. visual snapshots)
+        run: pnpm --filter web exec playwright test --reporter=line,json
+        env:
+          CI: 'true'
+          PLAYWRIGHT_JSON_OUTPUT_NAME: /tmp/web-e2e.json
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:4100
+          NEXT_PUBLIC_SITE_URL: http://localhost:3100
+          E2E_ADMIN_EMAIL: e2e-admin@local.test
+          E2E_ADMIN_PASSWORD: LocalE2EAdmin!2026
+          E2E_CONSULTANT_EMAIL: e2e-consultant@local.test
+          E2E_CONSULTANT_PASSWORD: LocalE2EConsultant!2026
+          E2E_CONSULTANT_STORAGE_STATE: e2e/.auth/consultant.json
+      - name: Assert the authenticated specs actually RAN (a skip must not pass as green)
+        # This job exists to exercise the authenticated portal, which every
+        # admin spec gates on E2E_ADMIN_STORAGE_STATE. Without this check the job
+        # goes green in the exact failure mode it exists to prevent: the seed
+        # breaks, auth.setup skips, every admin spec skips, and nothing complains.
+        # The api job has had this guard since Phase 11; the web side did not.
+        run: |
+          node -e '
+            const fs = require("fs");
+            const path = "/tmp/web-e2e.json";
+            if (!fs.existsSync(path)) {
+              console.error("::error::no Playwright JSON report — cannot tell whether the specs ran");
+              process.exit(1);
+            }
+            const r = JSON.parse(fs.readFileSync(path, "utf8"));
+            const s = r.stats || {};
+            console.log(`expected=${s.expected} skipped=${s.skipped} flaky=${s.flaky} unexpected=${s.unexpected}`);
+            if ((s.skipped ?? 0) > 0) {
+              console.error(`::error::${s.skipped} authenticated E2E test(s) SKIPPED. They gate on E2E_ADMIN_STORAGE_STATE — a skip here means the authenticated portal was never tested.`);
+              process.exit(1);
+            }
+            if ((s.expected ?? 0) < 20) {
+              console.error(`::error::only ${s.expected} E2E tests ran; expected at least 20. Specs may have been silently dropped.`);
+              process.exit(1);
+            }
+          '
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-live-playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+
+  extension:
+    name: Extension — typecheck + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter extension exec tsc --noEmit
+      - run: cd apps/extension && node build.mjs
+
+  mobile:
+    name: Mobile — lint + typecheck + jest
+    runs-on: ubuntu-latest
+    env:
+      # Non-secret placeholders so config validation passes in CI. The real
+      # values are supplied by EAS build profiles / repository secrets — never
+      # committed (see VISAAIDocs/mobile/setup.md).
+      EXPO_PUBLIC_APP_ENV: test
+      EXPO_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ci-dummy-anon-key
+      EXPO_PUBLIC_API_URL: http://localhost:4000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # @visaai/types is consumed as a workspace package; without its build the
+      # mobile typecheck resolves stale (or missing) declarations.
+      - name: Build shared types
+        run: pnpm build:types
+      - name: Lint (mobile)
+        run: pnpm --filter mobile lint
+      - name: Typecheck (mobile)
+        run: pnpm --filter mobile exec tsc --noEmit
+      - name: Jest (unit + component + screen + a11y)
+        run: pnpm --filter mobile exec jest --ci
+      - name: Bundle for iOS and Android
+        # THE gate that matters. Typecheck, lint and unit tests were all green
+        # while the app could not produce a bundle at all (a Metro resolver flag
+        # incompatible with pnpm's layout). Only an export catches that.
+        run: |
+          pnpm --filter mobile exec expo export \
+            --platform ios --platform android --output-dir /tmp/mobile-bundle
+          test -n "$(find /tmp/mobile-bundle -name '*.hbc' -print -quit)" \
+            || { echo "::error::no Hermes bundle produced"; exit 1; }
+      - name: Expo config resolves for every environment
+        # Catches a broken app.config.ts (bad plugin, invalid bundle id) here
+        # rather than at the start of a 20-minute EAS build.
+        run: |
+          set -e
+          for env in development test staging production; do
+            APP_ENV=$env pnpm --filter mobile exec expo config --type public > /dev/null
+            echo "expo config OK: $env"
+          done
+      - name: Native config resolves (prebuild)
+        # Catches an invalid plugin, bundle id, or missing asset here rather than
+        # twenty minutes into an EAS build.
+        run: pnpm --filter mobile exec expo prebuild --platform all --no-install
+      - name: Secret guard — no service-role or secret keys in the app bundle
+        # The mobile binary is fully readable by anyone who installs it. Only the
+        # Supabase anon key (RLS-guarded by design) may ever appear.
+        run: |
+          # Comment lines are excluded: .env.example and several modules
+          # deliberately NAME these keys to warn against them, and a guard that
+          # fires on its own documentation gets disabled rather than obeyed.
+          HITS=$(grep -REn --exclude-dir=node_modules --exclude-dir=ios --exclude-dir=android \
+                   "SUPABASE_SERVICE_ROLE|STRIPE_SECRET_KEY|VAPID_PRIVATE_KEY|SERVICE_ROLE_KEY" \
+                   apps/mobile | grep -vE ':[0-9]+: *(#|//|\*)' || true)
+          if [ -n "$HITS" ]; then
+            echo "::error::server-side secret referenced in the mobile app"
+            echo "$HITS"; exit 1
+          fi
+          echo "mobile secret guard clean"
+      - name: Dependency audit (non-blocking)
+        continue-on-error: true
+        run: pnpm --filter mobile audit --audit-level=high
+
+  secret-scan:
+    name: Secret scan (fail on leaked credentials)
+    runs-on: ubuntu-latest
+    # Scoped to this job rather than the workflow: gitleaks-action asks the API
+    # which commits a PR contains, and the repository default token cannot read
+    # pull requests -- it answered "Resource not accessible by integration".
+    # Read-only, and nothing else in this file needs either scope.
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # gitleaks needs history, not just the tip: a credential committed and
+          # then deleted is still a leaked credential, and a shallow clone is
+          # exactly how that gets missed.
+          fetch-depth: 0
+      - name: gitleaks — full history
+        # Pinned to a release tag rather than a moving ref: a secret scanner is
+        # a build-blocking dependency, and letting it float means an upstream
+        # change can gate every merge.
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          # Required since gitleaks-action v2.3: without it the action exits 1
+          # on pull_request events with "GITHUB_TOKEN is now required to scan
+          # pull requests" -- before scanning anything. The job was therefore
+          # RED on every PR and GREEN on every push to main, which reads exactly
+          # like "this branch leaked something" and is the failure mode most
+          # likely to get a secret scanner waved through.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+          GITLEAKS_ENABLE_SUMMARY: "true"
+      - name: Scan tracked source for secrets
+        run: |
+          set -e
+          # JWT (eyJhbGci...) or Supabase PAT (sbp_<hex>) in tracked source — excl. docs/tests.
+          HITS=$(git ls-files 'apps/**' 'packages/**' 'supabase/**' '*.example' \
+            | grep -vE '(\.spec\.ts$|/test/|^docs/)' \
+            | xargs grep -lE 'eyJhbGciOi[A-Za-z0-9_-]{10}|sbp_[0-9a-f]{20}' 2>/dev/null || true)
+          if [ -n "$HITS" ]; then echo "::error::secret-like strings in: $HITS"; exit 1; fi
+          echo "secret scan clean"
+
+  infra:
+    name: Infra — shell lint + SBOM + env-isolation guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Deploy and preflight scripts are the least-tested code in the repo and
+      # the most expensive to get wrong: they run as root on the box that
+      # serves production.
+      - name: ShellCheck
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y shellcheck
+          shellcheck infra/scripts/*.sh docs/production/vps-hardening/*.sh \
+            infra/self-hosted/backup.sh infra/self-hosted/backup.test.sh \
+            infra/self-hosted/backup-health.sh infra/self-hosted/backup-health.test.sh
+
+      - name: Backup sidecar healthcheck
+        run: sh infra/self-hosted/backup-health.test.sh
+
+      - name: Backup sidecar start-up retry
+        run: sh infra/self-hosted/backup.test.sh
+
+      - name: Environment isolation guard
+        run: pnpm --filter api exec jest src/config --ci
+
+      # The guard is only useful if it is actually wired into boot. This asserts
+      # a non-production config pointed at the production project is refused —
+      # if someone removes the call from validateEnv, this fails.
+      - name: Boot refuses production config outside production
+        run: |
+          set -e
+          cat > /tmp/isolation-check.js <<'EOF'
+          // This file runs from /tmp, so resolve from the checkout (the step's
+          // working directory), not relative to the script.
+          const { validateEnv } = require(require('path').resolve('apps/api/dist/config/configuration.js'));
+          // A complete non-production config whose only fault is pointing at
+          // the production Supabase project. NODE_ENV is 'development' because
+          // the schema accepts development|test|production ('staging' was
+          // dropped); the other required keys are placeholders so the schema
+          // passes and the isolation guard is what rejects it.
+          const base = {
+            NODE_ENV: 'development',
+            SUPABASE_URL: 'https://ujxzxefvtaoxiydbdrhb.supabase.co',
+            SUPABASE_SERVICE_ROLE_KEY: 'x', SUPABASE_ANON_KEY: 'x', SUPABASE_JWT_SECRET: 'x',
+            STRIPE_SECRET_KEY: 'sk_test_x', STRIPE_WEBHOOK_SECRET: 'whsec_x', OPENAI_API_KEY: 'x',
+            UPSTASH_REDIS_REST_URL: 'https://example.upstash.io', UPSTASH_REDIS_REST_TOKEN: 'x',
+          };
+          try {
+            validateEnv(base);
+            console.error('::error::validateEnv accepted a staging config pointed at production');
+            process.exit(1);
+          } catch (err) {
+            if (!/Environment isolation violation/.test(String(err.message))) {
+              console.error('::error::rejected, but not by the isolation guard: ' + err.message);
+              process.exit(1);
+            }
+            console.log('isolation guard active');
+          }
+          EOF
+          pnpm --filter api exec nest build
+          node /tmp/isolation-check.js
+
+      # An SBOM is the only way to answer "are we affected?" on the day a CVE
+      # lands, without auditing by hand.
+      - name: Generate SBOM (CycloneDX)
+        # Was `pnpm dlx @cyclonedx/cyclonedx-npm ... || echo warning`. That tool
+        # shells out to `npm ls`, which cannot read pnpm's store layout, so it
+        # failed on every run — and the `|| echo` swallowed it. The job stayed
+        # green and no SBOM was ever produced. This generator reads
+        # `pnpm licenses list` and is allowed to fail the build.
+        run: node infra/scripts/generate-sbom.mjs --out sbom.json
+      - name: Licence guard — GPL-family code stays out of distributed artifacts
+        # arabic-reshaper (GPL-3.0) is a deliberate SERVER-ONLY dependency of
+        # apps/api, used for Arabic shaping in generated PDFs. The SaaS reading
+        # (no distribution, no source-disclosure trigger) holds only while it
+        # stays server-side. The moment it appears in the mobile app, the
+        # extension or the sidecar, those ARE distributed and the analysis
+        # changes. Assert the premise instead of trusting it.
+        run: |
+          set -e
+          for app in mobile extension sidecar web; do
+            [ -f "apps/$app/package.json" ] || continue
+            if node -e "const p=require('./apps/$app/package.json');
+                        const all={...p.dependencies,...p.devDependencies};
+                        process.exit(all['arabic-reshaper'] ? 1 : 0)"; then
+              echo "  apps/$app: clean"
+            else
+              echo "::error::GPL-3.0 arabic-reshaper reached apps/$app, which is distributed to users"
+              exit 1
+            fi
+          done
+      - name: Upload SBOM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.json
+          if-no-files-found: warn

@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-courtesy-residence",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "Courtesy residence is granted FREE and is defined by who you are rather than by what you do — eight beneficiary categories, from a Lebanese citizen using a second nationality to a retired diplomat who once served in Lebanon. Three documents are common to all eight; the rest are keyed to the category number, and every label below carries that number because the wrong category’s document list is simply the wrong list.",
+  "source_roles": {
+    "requirements": "https://www.general-security.gov.lb/en/posts/6"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. So freshness here rests on a body-year rather than on a publication date. That is recorded rather than hidden — it is the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at — and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Every fee printed as a row of zeros. The annual-residence page states several fees as `000000 lbp` and `0000,000 lbp` — the authority's own placeholders, not amounts. They are quoted nowhere here. A zero fee published as a fee would tell somebody a residence permit is free.",
+    "Routes this authority enumerates and this batch has not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, and entry of artists in nightclubs. The artist, domestic-worker, religious, foreign-expert, passport-renewal and bank-statement routes named here previously are now EXTRACTED and live. Residence permits for Iraqi nationals (posts/428) is excluded on evidence: its served text refers to items (1) and (2) that are absent from the page.",
+    "The Arabic-language pages. This authority publishes an English tree and an Arabic tree; only the English tree is read, and no claim is made that the two say the same thing."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "granted_free",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Temporary courtesy residence permits are granted for free",
+      "description": "The only route in this registry so far that the authority states as free of charge.",
+      "source_role": "requirements",
+      "source_excerpt": "temporary residence permits are granted to arab & foreign immigrants for free.",
+      "parameters": {
+        "amount": 0,
+        "currency": "LBP",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "Temporary residence permits are granted to Arab & foreign immigrants for free."
+    },
+    {
+      "requirement_code": "beneficiary_1_second_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 1: a Lebanese citizen with another nationality, applying on the second nationality",
+      "description": "First of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "1- lebanese citizen that has another nationality, and wishes to obtain a courtesy resident permit based on his second nationality.",
+      "display_order": 20,
+      "source_excerpt_display": "1- Lebanese citizen that has another nationality, and wishes to obtain a courtesy resident permit based on his second nationality."
+    },
+    {
+      "requirement_code": "beneficiary_2_lebanese_origin_unregistered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 2: an immigrant of Lebanese origin, born but not registered in Lebanon",
+      "description": "Second of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "2- the arab or foreign immigrant of lebanese origin (born but not registered in lebanon)",
+      "display_order": 30,
+      "source_excerpt_display": "2- The Arab or foreign immigrant of Lebanese origin (born but not registered in Lebanon)"
+    },
+    {
+      "requirement_code": "beneficiary_3_child_of_lebanese_parent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 3: the child, by birth or adoption, of a Lebanese father or mother",
+      "description": "Third of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "3- the arab or foreign immigrant child of a lebanese father or mother (birth/adopted child)",
+      "display_order": 40,
+      "source_excerpt_display": "3- The Arab or foreign immigrant child of a Lebanese father or mother (birth/adopted child)"
+    },
+    {
+      "requirement_code": "beneficiary_4_husband_of_lebanese_woman",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 4: the husband of a Lebanese woman, married more than one year",
+      "description": "The one-year threshold is the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "4- the husband of a lebanese woman if their marriage is dated to more than one year",
+      "parameters": {
+        "minimum_marriage_years": 1,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "4- The husband of a Lebanese woman if their marriage is dated to more than one year"
+    },
+    {
+      "requirement_code": "beneficiary_5_non_working_wife",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 5: the wife of a Lebanese man, who does not work",
+      "description": "Fifth of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "5- the wife of a lebanese man, that doesn’t work",
+      "display_order": 60,
+      "source_excerpt_display": "5- The wife of a Lebanese man, that doesn’t work"
+    },
+    {
+      "requirement_code": "beneficiary_6_minor_born_in_lebanon_studying",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 6: a person under 18 born in Lebanon to non-Lebanese parents, pursuing studies",
+      "description": "Sixth of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "6- the arab or foreign citizen (under 18) born in lebanon while having non lebanese parents, that is perusing his studies",
+      "parameters": {
+        "applies_under_age": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "6- The Arab or foreign citizen (under 18) born in Lebanon while having non Lebanese parents, that is perusing his studies"
+    },
+    {
+      "requirement_code": "beneficiary_7_retired_diplomat",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 7: a diplomat of any nationality who has served in Lebanon and wishes to stay after retirement",
+      "description": "Seventh of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "7- diplomats from all nationalities that have already worked in lebanon, and that want to stay there after their retirement",
+      "display_order": 80,
+      "source_excerpt_display": "7- Diplomats from all nationalities that have already worked in Lebanon, and that want to stay there after their retirement"
+    },
+    {
+      "requirement_code": "beneficiary_8_under_consideration_holders",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Beneficiary 8: holders of a residency permit \"under consideration\", with spouse and children",
+      "description": "Eighth of eight categories.",
+      "source_role": "requirements",
+      "source_excerpt": "8- the holders of a residency permit ‘under consideration’, their wife/husband and kids",
+      "display_order": 90,
+      "source_excerpt_display": "8- The holders of a residency permit ‘under consideration’, their wife/husband and kids"
+    },
+    {
+      "requirement_code": "common_application_form_in_person",
+      "kind": "form",
+      "officially_required": true,
+      "label": "All categories: an application form signed IN PERSON at the authorised General Security department",
+      "description": "Signed personally by the applicant, at the department — not posted.",
+      "source_role": "requirements",
+      "source_excerpt": "- an application form that is filled out and signed personally by the applicant in the authorized general security department",
+      "display_order": 100,
+      "source_excerpt_display": "- An application form that is filled out and signed personally by the applicant in the authorized general security department"
+    },
+    {
+      "requirement_code": "common_passport_three_years",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All categories: a passport valid at least three years, plus two photocopies",
+      "description": "A three-year floor for a free temporary permit.",
+      "source_role": "requirements",
+      "source_excerpt": "- a passport valid for at least three years, as well as two photocopies of the latter",
+      "parameters": {
+        "minimum_validity_years": 3,
+        "photocopies": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "- A passport valid for at least three years, as well as two photocopies of the latter"
+    },
+    {
+      "requirement_code": "common_three_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All categories: three recent 3.5 × 4.5 photos",
+      "description": "Quantity and dimensions both stated.",
+      "source_role": "requirements",
+      "source_excerpt": "- three recent 3.5 x 4.5 photos",
+      "parameters": {
+        "quantity": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "- Three recent 3.5 x 4.5 photos"
+    },
+    {
+      "requirement_code": "cat1_proof_of_lebanese_citizenship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 1: an ID card, a civil-status certificate under 3 months old, or another official proof of being Lebanese",
+      "description": "The three-month recency is part of the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "an id card, a certificate of a recent civil status (less than 3 months), or any other official documents that prove that the applicant is lebanese.",
+      "display_order": 130,
+      "source_excerpt_display": "An id card, a certificate of a recent civil status (less than 3 months), or any other official documents that prove that the applicant is Lebanese."
+    },
+    {
+      "requirement_code": "cat2_proof_of_lebanese_origin",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 2: an official document proving Lebanese origin",
+      "description": "Keyed to beneficiary 2.",
+      "source_role": "requirements",
+      "source_excerpt": "an official document that proves that the applicant is of lebanese origins.",
+      "display_order": 140,
+      "source_excerpt_display": "An official document that proves that the applicant is of Lebanese origins."
+    },
+    {
+      "requirement_code": "cat3_birth_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 3: a birth certificate or other proof of a Lebanese parent",
+      "description": "Keyed to beneficiary 3.",
+      "source_role": "requirements",
+      "source_excerpt": "a birth certificate or any official document that proves that the applicant has a lebanese mother/father",
+      "display_order": 150,
+      "source_excerpt_display": "A birth certificate or any official document that proves that the applicant has a Lebanese mother/father"
+    },
+    {
+      "requirement_code": "cat3_parent_id_or_civil_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 3: the Lebanese parent’s ID card or recent civil status",
+      "description": "Keyed to beneficiary 3.",
+      "source_role": "requirements",
+      "source_excerpt": "an id card or a recent civil status for the lebanese mother/father",
+      "display_order": 160,
+      "source_excerpt_display": "An id card or a recent civil status for the Lebanese mother/father"
+    },
+    {
+      "requirement_code": "cat4_marriage_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 4: a marriage certificate complying with current law",
+      "description": "Keyed to beneficiary 4.",
+      "source_role": "requirements",
+      "source_excerpt": "a marriage certificate that complies to current laws and regulations",
+      "display_order": 170,
+      "source_excerpt_display": "A marriage certificate that complies to current laws and regulations"
+    },
+    {
+      "requirement_code": "cat4_proof_of_one_year_marriage_and_lease",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 4: proof the marriage is at least a year old, and a lease or property title",
+      "description": "Two documents on one line, kept together.",
+      "source_role": "requirements",
+      "source_excerpt": "an official document that proves that the marriage dates to one year at the least a lease or a property title",
+      "display_order": 180,
+      "source_excerpt_display": "An official document that proves that the marriage dates to one year at the least A lease or a property title"
+    },
+    {
+      "requirement_code": "cat4_husband_id_and_family_record",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 4: a certified copy of the husband’s ID card and an extract of the family civil registry",
+      "description": "Keyed to beneficiary 4.",
+      "source_role": "requirements",
+      "source_excerpt": "a certified copy of the husband’s id card, and an extract of family civil registry record",
+      "display_order": 190,
+      "source_excerpt_display": "A certified copy of the husband’s ID card, and an Extract of Family Civil Registry Record"
+    },
+    {
+      "requirement_code": "cat5_non_activity_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 5: an attestation of non-activity",
+      "description": "Keyed to beneficiary 5, matching the \"does not work\" condition.",
+      "source_role": "requirements",
+      "source_excerpt": "- an attestation of non-activity",
+      "display_order": 200,
+      "source_excerpt_display": "- An attestation of non-activity"
+    },
+    {
+      "requirement_code": "cat7_mfa_document_of_prior_service",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Category 7: a Ministry of Foreign Affairs document proving prior diplomatic service in Lebanon",
+      "description": "The issuing ministry is named, which makes this document unobtainable anywhere else.",
+      "source_role": "requirements",
+      "source_excerpt": "an official document that proves that the diplomat has already worked in lebanon, delivered by the ministry of foreign affairs",
+      "display_order": 210,
+      "source_excerpt_display": "An official document that proves that the diplomat has already worked in Lebanon, delivered by the ministry of foreign affairs"
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-permanent-residence",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "Two permits under one heading, and they are not variants of each other: a THREE-year permanent residence with three qualifying routes (cash guarantee, Arab-national businessperson or investor, three-year work permit holder), and a TWO-year permanent residence for first-category two-year work permit holders. Every requirement below names which one it belongs to, because the passport validity, the fee and the work-permit remaining-validity all differ between them.",
+  "source_roles": {
+    "requirements": "https://www.general-security.gov.lb/en/posts/5"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. So freshness here rests on a body-year rather than on a publication date. That is recorded rather than hidden — it is the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at — and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Every fee printed as a row of zeros. The annual-residence page states several fees as `000000 lbp` and `0000,000 lbp` — the authority's own placeholders, not amounts. They are quoted nowhere here. A zero fee published as a fee would tell somebody a residence permit is free.",
+    "Routes this authority enumerates and this batch has not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, and entry of artists in nightclubs. The artist, domestic-worker, religious, foreign-expert, passport-renewal and bank-statement routes named here previously are now EXTRACTED and live. Residence permits for Iraqi nationals (posts/428) is excluded on evidence: its served text refers to items (1) and (2) that are absent from the page.",
+    "The Arabic-language pages. This authority publishes an English tree and an Arabic tree; only the English tree is read, and no claim is made that the two say the same thing."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "three_year_fee_cash_guarantee_route",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Three-year, cash-guarantee route: fee of LBP 54,000,000",
+      "description": "The fee stated against this route in the authority’s own table.",
+      "source_role": "requirements",
+      "source_excerpt": "based on a cash guarantee ... lbp 54,000,000",
+      "parameters": {
+        "amount": 54000000,
+        "currency": "LBP",
+        "unit": "per residence permit",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "Based on a Cash Guarantee ... LBP 54,000,000"
+    },
+    {
+      "requirement_code": "three_year_application_form",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Three-year: complete the approved application form",
+      "description": "First row of the document list.",
+      "source_role": "requirements",
+      "source_excerpt": "• complete the approved application form.",
+      "display_order": 20,
+      "source_excerpt_display": "• Complete the approved application form."
+    },
+    {
+      "requirement_code": "three_year_passport_three_years",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year: a colour copy of a passport valid at least three years, plus two photocopies",
+      "description": "The validity floor matches the permit length, and the two photocopies are part of the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "• a colored copy of a passport valid for at least three years, plus two photocopies.",
+      "parameters": {
+        "minimum_validity_years": 3,
+        "photocopies": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 30,
+      "source_excerpt_display": "• A colored copy of a passport valid for at least three years, plus two photocopies."
+    },
+    {
+      "requirement_code": "three_year_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year: three recent passport-size photographs",
+      "description": "Quantity stated by the authority.",
+      "source_role": "requirements",
+      "source_excerpt": "• three recent passport-size photographs.",
+      "parameters": {
+        "quantity": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 40,
+      "source_excerpt_display": "• Three recent passport-size photographs."
+    },
+    {
+      "requirement_code": "three_year_undertaking_not_to_work",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, cash-guarantee route: a written undertaking not to work, for applicants under 64",
+      "description": "Age-bounded, and the bound is unusual enough to be worth quoting exactly.",
+      "source_role": "requirements",
+      "source_excerpt": "• a written undertaking not to work for applicants under 64 years of age.",
+      "parameters": {
+        "applies_under_age": 64,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "• A written undertaking not to work for applicants under 64 years of age."
+    },
+    {
+      "requirement_code": "three_year_cash_guarantee",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, cash-guarantee route: LBP 4,500,000,000 deposited with the Ministry of Finance",
+      "description": "The authority writes the figure twice — in digits and in words — and names exactly which department holds it.",
+      "source_role": "requirements",
+      "source_excerpt": "• a cash guarantee of lbp 4,500,000,000 (four billion five hundred million lebanese pounds), to be deposited in cash or by a fresh cashier’s check with the ministry of finance – treasury directorate – accounting and funds department.",
+      "parameters": {
+        "amount": 4500000000,
+        "currency": "LBP",
+        "unit": "cash guarantee",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "• A cash guarantee of LBP 4,500,000,000 (Four Billion Five Hundred Million Lebanese Pounds), to be deposited in cash or by a Fresh cashier’s check with the Ministry of Finance – Treasury Directorate – Accounting and Funds Department."
+    },
+    {
+      "requirement_code": "three_year_lease_or_title_and_coverage",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, cash-guarantee route: lease or title deed — and who the permit covers",
+      "description": "The coverage note shares the line with the document and is kept with it: spouse, minor children and dependent relatives over 64.",
+      "source_role": "requirements",
+      "source_excerpt": "• lease agreement or title deed. note: this residence permit covers the applicant, spouse, minor children, and dependent relatives over 64 years of age.",
+      "display_order": 70,
+      "source_excerpt_display": "• Lease agreement or title deed. Note: This residence permit covers the applicant, spouse, minor children, and dependent relatives over 64 years of age."
+    },
+    {
+      "requirement_code": "three_year_businessperson_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Three-year, Arab-national businessperson or investor: fee of LBP 54,000,000",
+      "description": "Stated separately by the authority even though it equals the cash-guarantee fee.",
+      "source_role": "requirements",
+      "source_excerpt": "businessperson or investor (nationals of arab countries) ... lbp 54,000,000",
+      "parameters": {
+        "amount": 54000000,
+        "currency": "LBP",
+        "unit": "per residence permit",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 80,
+      "source_excerpt_display": "Businessperson or Investor (Nationals of Arab Countries) ... LBP 54,000,000"
+    },
+    {
+      "requirement_code": "three_year_professional_status_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, businessperson or investor: a home-country certificate confirming professional status",
+      "description": "Issued by the competent authorities in the applicant’s own country.",
+      "source_role": "requirements",
+      "source_excerpt": "• a certificate issued by the competent authorities in the applicant's home country confirming his/her professional status.",
+      "display_order": 90,
+      "source_excerpt_display": "• A certificate issued by the competent authorities in the applicant's home country confirming his/her professional status."
+    },
+    {
+      "requirement_code": "three_year_investment_commenced_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, businessperson or investor: a Lebanese certificate confirming investment projects have COMMENCED",
+      "description": "Commenced, not planned. That word is the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "• a certificate issued by the competent lebanese authorities confirming that the applicant has commenced investment projects in lebanon.",
+      "display_order": 100,
+      "source_excerpt_display": "• A certificate issued by the competent Lebanese authorities confirming that the applicant has commenced investment projects in Lebanon."
+    },
+    {
+      "requirement_code": "three_year_work_permit_fees_by_category",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: first category LBP 108,000,000 per year",
+      "description": "Per year, not per permit, and the second category is a different figure quoted separately.",
+      "source_role": "requirements",
+      "source_excerpt": "first category: lbp 108,000,000 per year.",
+      "parameters": {
+        "amount": 108000000,
+        "currency": "LBP",
+        "unit": "per year, first category",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "First Category: LBP 108,000,000 per year."
+    },
+    {
+      "requirement_code": "three_year_work_permit_fee_second_category",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: second category LBP 72,000,000 per year",
+      "description": "Quoted separately from the first category because the two are 36 million apart.",
+      "source_role": "requirements",
+      "source_excerpt": "second category: lbp 72,000,000 per year.",
+      "parameters": {
+        "amount": 72000000,
+        "currency": "LBP",
+        "unit": "per year, second category",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Second Category: LBP 72,000,000 per year."
+    },
+    {
+      "requirement_code": "three_year_work_permit_remaining_validity",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: a three-year work permit with at least two years six months left",
+      "description": "Measured at the time of application.",
+      "source_role": "requirements",
+      "source_excerpt": "• a three-year work permit with at least two years and six months of remaining validity at the time of application, together with a copy.",
+      "display_order": 130,
+      "source_excerpt_display": "• A three-year work permit with at least two years and six months of remaining validity at the time of application, together with a copy."
+    },
+    {
+      "requirement_code": "three_year_employer_id",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: a copy of the employer’s ID, or the commercial registration certificate",
+      "description": "Which of the two depends on whether the sponsor is a person or a legal entity.",
+      "source_role": "requirements",
+      "source_excerpt": "• a copy of the employer's id (or the commercial registration certificate if the sponsor is a legal entity).",
+      "display_order": 140,
+      "source_excerpt_display": "• A copy of the employer's ID (or the Commercial Registration Certificate if the sponsor is a legal entity)."
+    },
+    {
+      "requirement_code": "three_year_employment_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: a certified true copy of the three-year employment contract",
+      "description": "The authority’s exceptions travel with the requirement — employers, representatives or agents of foreign companies, and news-agency correspondents without a Lebanese office.",
+      "source_role": "requirements",
+      "source_excerpt": "• a certified true copy of the three-year employment contract (except for employers, representatives or agents of foreign companies, or correspondents of news agencies that do not have a representative office in lebanon).",
+      "display_order": 150,
+      "source_excerpt_display": "• A certified true copy of the three-year employment contract (except for employers, representatives or agents of foreign companies, or correspondents of news agencies that do not have a representative office in Lebanon)."
+    },
+    {
+      "requirement_code": "three_year_not_for_egyptian_nationals",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three-year, work-permit route: not granted to Egyptian nationals",
+      "description": "Stated flatly by the authority, and repeated by it for the two-year permit.",
+      "source_role": "requirements",
+      "source_excerpt": "note: this residence permit is not granted to egyptian nationals.",
+      "display_order": 160,
+      "source_excerpt_display": "Note: This residence permit is not granted to Egyptian nationals."
+    },
+    {
+      "requirement_code": "two_year_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Two-year permanent residence: fee of LBP 216,000,000",
+      "description": "Four times the three-year cash-guarantee fee, for a shorter permit. Quoted as published.",
+      "source_role": "requirements",
+      "source_excerpt": "holder of a two-year work permit (first category only) ... lbp 216,000,000",
+      "parameters": {
+        "amount": 216000000,
+        "currency": "LBP",
+        "unit": "per residence permit",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "Holder of a Two-Year Work Permit (First Category Only) ... LBP 216,000,000"
+    },
+    {
+      "requirement_code": "two_year_passport_two_years",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two-year: a colour copy of a passport valid at least two years, plus two photocopies",
+      "description": "A different floor from the three-year permit.",
+      "source_role": "requirements",
+      "source_excerpt": "• a colored copy of a passport valid for at least two years, plus two photocopies.",
+      "parameters": {
+        "minimum_validity_years": 2,
+        "photocopies": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 180,
+      "source_excerpt_display": "• A colored copy of a passport valid for at least two years, plus two photocopies."
+    },
+    {
+      "requirement_code": "two_year_work_permit_eighteen_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two-year: a two-year work permit with at least eighteen months’ validity",
+      "description": "Measured at the time of application, and a different threshold from the three-year route’s thirty months.",
+      "source_role": "requirements",
+      "source_excerpt": "• a two-year work permit, provided that its validity is not less than eighteen months at the time of application, plus a copy.",
+      "parameters": {
+        "minimum_remaining_months": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 190,
+      "source_excerpt_display": "• A two-year work permit, provided that its validity is not less than eighteen months at the time of application, plus a copy."
+    },
+    {
+      "requirement_code": "two_year_employment_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two-year: a certified true copy of the two-year employment contract",
+      "description": "With the same named exceptions as the three-year route.",
+      "source_role": "requirements",
+      "source_excerpt": "• a certified true copy of the two-year employment contract (except for employers, representatives or agents of foreign companies, or correspondents of news agencies that do not have a representative office in lebanon).",
+      "display_order": 200,
+      "source_excerpt_display": "• A certified true copy of the two-year employment contract (except for employers, representatives or agents of foreign companies, or correspondents of news agencies that do not have a representative office in Lebanon)."
+    },
+    {
+      "requirement_code": "passport_shorter_than_two_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the passport has between eighteen months and two years left, the permit is cut to the passport",
+      "description": "The permit follows the document, not the entitlement.",
+      "source_role": "requirements",
+      "source_excerpt": "• if the passport validity is less than two years and more than one and a half years, the residence permit is granted according to passport validity.",
+      "display_order": 210,
+      "source_excerpt_display": "• If the passport validity is less than two years and more than one and a half years, the residence permit is granted according to passport validity."
+    },
+    {
+      "requirement_code": "passport_shorter_than_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the passport has between thirty months and three years left, the permit is cut to the passport",
+      "description": "The same rule at the three-year threshold, stated separately by the authority.",
+      "source_role": "requirements",
+      "source_excerpt": "• if the passport validity is less than three years and more than two and a half years, the residence permit is granted according to passport validity.",
+      "display_order": 220,
+      "source_excerpt_display": "• If the passport validity is less than three years and more than two and a half years, the residence permit is granted according to passport validity."
+    },
+    {
+      "requirement_code": "two_year_work_permit_gives_one_year_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Two-year work permits yield a ONE-year residence permit, renewable for the second year on the same permit",
+      "description": "This is the note that stops a two-year work permit being read as two years of residence.",
+      "source_role": "requirements",
+      "source_excerpt": "• regarding two-year work permits, holders are granted a one-year residence permit, provided that the same permit is valid for renewal of the residence permit for the second year.",
+      "display_order": 230,
+      "source_excerpt_display": "• Regarding two-year work permits, holders are granted a one-year residence permit, provided that the same permit is valid for renewal of the residence permit for the second year."
+    }
+  ]
+}

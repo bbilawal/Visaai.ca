@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-recherche-emploi",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "TWO ENTRY PATHS AND THEY HAVE DIFFERENT CLOCKS. A graduate still in France must file within the two months before their student card expires. A graduate who has already left France has FOUR YEARS from graduation to apply. Publishing one deadline as 'the' deadline would either close a route that is open for years, or open one that closed months ago. Both are recorded, each labelled with the situation it belongs to.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17319"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth. The €2,800.53 salary floor carries no stated reference year on this page.",
+  "not_extracted": [
+    "The talent-chercheur variant. The page carries a second branch for holders of a 'talent-chercheur' card whose rules it states are different. It is not extracted here; only the France-graduate branch is.",
+    "The Algerian position. The page states flatly that this card does not concern Algerian students, and does not say what does. Nothing is extracted for them.",
+    "The 'autorisation provisoire de séjour' available to nationals of countries with a migration-flows agreement with France. The page names it without stating its conditions or which countries have such an agreement.",
+    "The tax and stamp duty amount. Not stated on this page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "resident_in_france_two_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you are still in France: hold a student card, and have graduated within the last 12 months at master's level or equivalent",
+      "description": "Both conditions bind together. The qualifying awards are named exactly — a licence professionnelle, a mastère spécialisé, a Conférence des grandes écoles-labelled Master of Science, or another award at least equivalent to a master's.",
+      "parameters": {
+        "graduation_within_months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous devez remplir les 2 conditions suivantes : séjourner en france avec une carte de séjour étudiant ou étudiant programme de mobilité avoir obtenu au cours des 12 derniers mois , une licence professionnelle, un mastère spécialisé , un master of science (labellisé par la conférence des grandes écoles ) ou un autre diplôme au moins équivalent au master",
+      "source_excerpt_display": "Vous devez remplir les 2 conditions suivantes: Séjourner en France avec une carte de séjour étudiant ou étudiant programme de mobilité Avoir obtenu au cours des 12 derniers mois, une licence professionnelle, un Mastère Spécialisé, un Master of Science (labellisé par la conférence des grandes écoles) ou un autre diplôme au moins équivalent au master"
+    },
+    {
+      "requirement_code": "abroad_four_year_window",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you have left France: you have 4 years from graduation to apply",
+      "description": "A far longer window than the in-country route, and the one applicants most often do not know exists.",
+      "parameters": {
+        "application_window_years_after_graduation": 4
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "si, à l’issue de vos études, vous avez quitté la france, vous pouvez demander cette carte si vous remplissez les 2 conditions suivantes : avoir obtenu, en france, une licence professionnelle, un mastère spécialisé , un master of science (labellisé par la conférence des grandes écoles ) ou un autre diplôme au moins équivalent au master ... faire votre demande dans le délai maximal de 4 ans à compter de l’obtention de votre diplôme.",
+      "source_excerpt_display": "Si, à l’issue de vos études, vous avez quitté la France, vous pouvez demander cette carte si vous remplissez les 2 conditions suivantes: Avoir obtenu, en France, une licence professionnelle, un Mastère Spécialisé, un Master of Science (labellisé par la conférence des grandes écoles) ou un autre diplôme au moins équivalent au master ... Faire votre demande dans le délai maximal de 4 ans à compter de l’obtention de votre diplôme."
+    },
+    {
+      "requirement_code": "card_not_available_to_algerian_students",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "This card does not apply to Algerian students",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "cette carte de séjour ne concerne pas les étudiants algériens .",
+      "source_excerpt_display": "Cette carte de séjour ne concerne pas les étudiants algériens."
+    },
+    {
+      "requirement_code": "one_year_to_find_work_or_start_a_business",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card gives one year to find work or start a business connected to your studies or research",
+      "parameters": {
+        "validity_years": 1
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "la carte de séjour temporaire ou vls-ts - recherche d'emploi/création d'entreprise vous permet de rester en france, pendant 1 an, afin de vous permettre de chercher un emploi ou de créer une entreprise en lien avec vos études ou vos recherches.",
+      "source_excerpt_display": "La carte de séjour temporaire ou VLS-TS - recherche d'emploi/création d'entreprise vous permet de rester en France, pendant 1 an, afin de vous permettre de chercher un emploi ou de créer une entreprise en lien avec vos études ou vos recherches."
+    },
+    {
+      "requirement_code": "employer_needs_no_work_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may work as an employee and the employer is exempt from applying for a work authorisation",
+      "description": "A real relief and the practical point of the card — every other employed route in this registry requires the employer to obtain an authorisation first.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "pendant sa validité , cette carte vous permet de travailler en tant que salarié. l’employeur est dispensé de demander une autorisation de travail.",
+      "source_excerpt_display": "Pendant sa validité, cette carte vous permet de travailler en tant que salarié. L’employeur est dispensé de demander une autorisation de travail."
+    },
+    {
+      "requirement_code": "job_must_relate_to_studies_and_pay_2800_53",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must relate to your studies AND pay more than €2,800.53 gross per month",
+      "description": "Two conditions on the JOB rather than on the applicant, and the salary floor is what makes this card unusable for many graduate roles.",
+      "parameters": {
+        "monthly_gross_salary_minimum_eur": 2800.53
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "cependant, l’emploi doit obligatoirement remplir les 2 conditions suivantes : être en lien avec vos études être assorti d’une rémunération mensuelle brute supérieure à 2 800,53 € .",
+      "source_excerpt_display": "Cependant, l’emploi doit obligatoirement remplir les 2 conditions suivantes: Être en lien avec vos études Être assorti d’une rémunération mensuelle brute supérieure à 2 800,53 €."
+    },
+    {
+      "requirement_code": "student_60_percent_work_cap_does_not_apply",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The student 60% annual working-time cap (964 hours) does not apply on this card",
+      "description": "Relieves a restriction rather than imposing one. Recorded because a graduate moving from a student card will otherwise assume the hour cap follows them.",
+      "parameters": {
+        "student_cap_hours_that_do_not_apply": 964
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "la limitation à 60 % de la durée annuelle de travail (964 heures) ne s’applique pas.",
+      "source_excerpt_display": "La limitation à 60 % de la durée annuelle de travail (964 heures) ne s’applique pas."
+    },
+    {
+      "requirement_code": "file_within_two_months_before_student_card_expires",
+      "kind": "step",
+      "officially_required": true,
+      "label": "If you are in France: file at your préfecture in the 2 months before your student card expires",
+      "parameters": {
+        "filing_window_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "vous devez déposer votre demande à la préfecture ou sous-préfecture de votre domicile, dans les 2 mois précédant la date de fin de validité de votre carte étudiant ou étudiant-programme de mobilité.",
+      "source_excerpt_display": "Vous devez déposer votre demande à la préfecture ou sous-préfecture de votre domicile, dans les 2 mois précédant la date de fin de validité de votre carte étudiant ou étudiant-programme de mobilité."
+    },
+    {
+      "requirement_code": "documents_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required, starting with a valid student card or a VLS-TS validated online",
+      "description": "The first item carries a condition of its own: a VLS-TS only counts if it has actually been validated on the internet, which is the step students most often skip.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "carte de séjour étudiant (ou étudiant - programme de mobilité ) en cours de validité, ou visa de long séjour valant titre de séjour validé sur internet",
+      "source_excerpt_display": "Carte de séjour étudiant (ou étudiant - programme de mobilité) en cours de validité, ou visa de long séjour valant titre de séjour validé sur internet"
+    }
+  ]
+}

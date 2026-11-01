@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "visaai_id": "ae-golden-residency",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the ICP page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Where the authority states a figure, the figure is quoted rather than restated.",
+  "structure_note": "The Golden Residency is not one eligibility test but six category-specific ones — investors, humanitarian pioneers, entrepreneurs, outstanding students, exceptional talent, and real-estate investors — each with its own duration and its own documents. Requirements are therefore scoped to a category in their label rather than presented as a single checklist an applicant must satisfy in full. Presenting them as one list would tell an entrepreneur they need AED 2 million in an investment fund, which the page does not say.",
+  "source_roles": {
+    "landing": "https://icp.gov.ae/en/services/uae-golden-residency/"
+  },
+  "page_dates": {
+    "landing": "2026-08-20"
+  },
+  "freshness_note": "The page publishes a dateline of 2026-08-20 and its body references 2026. That is the freshness signal Austria's pages lack entirely, and it is why this route was extracted first.",
+  "not_extracted": [
+    "Visit and tourist visas. The ICP services index enumerates only the Blue, Golden and Green Residency routes; short-stay entry for the UAE is administered partly by the emirate-level GDRFA authorities, which have not been probed. The catalogue here is what this authority's own index publishes, not the whole of UAE entry policy.",
+    "The Blue and Green Residency routes, which are enumerable from the same index and not yet extracted.",
+    "Fees. The page names no fee amounts, so none is recorded."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "no_sponsor_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No sponsor is required",
+      "description": "Unlike most UAE residence routes, the Golden Residency is granted without a sponsoring employer or individual, and runs for five or ten years with automatic renewal depending on the category.",
+      "source_role": "landing",
+      "source_excerpt": "the golden residency is one of the flagship initiatives of the federal authority for identity, citizenship, customs and port security (icp). it enables eligible individuals to obtain long-term residency in the united arab emirates for a period of five or ten years, with automatic renewal, without the need for a sponsor.",
+      "display_order": 10,
+      "source_excerpt_display": "The Golden Residency is one of the flagship initiatives of the Federal Authority for Identity, Citizenship, Customs and Port Security (ICP). It enables eligible individuals to obtain long-term residency in the United Arab Emirates for a period of five or ten years, with automatic renewal, without the need for a sponsor."
+    },
+    {
+      "requirement_code": "investor_public_min_capital",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: minimum capital of AED 2 million",
+      "description": "Applies to the public-investment category, which the authority grants for ten years.",
+      "source_role": "landing",
+      "source_excerpt": "a minimum capital investment of aed 2 million.",
+      "display_order": 20,
+      "source_excerpt_display": "A minimum capital investment of AED 2 million."
+    },
+    {
+      "requirement_code": "investor_tax_alternative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors: or an establishment paying AED 250,000 in annual taxes",
+      "description": "An alternative to the capital threshold for the same category — the page states it as an either/or, not an additional requirement.",
+      "source_role": "landing",
+      "source_excerpt": "ownership of real estate or a stake in an establishment that pays annual taxes of no less than aed 250,000.",
+      "display_order": 30,
+      "source_excerpt_display": "Ownership of real estate or a stake in an establishment that pays annual taxes of no less than AED 250,000."
+    },
+    {
+      "requirement_code": "investor_fund_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors: letter from an accredited investment fund",
+      "description": "Documentary proof of the deposit behind the capital threshold above.",
+      "source_role": "landing",
+      "source_excerpt": "a letter from an accredited investment fund confirming the existence of a deposit of no less than aed 2 million.",
+      "display_order": 40,
+      "source_excerpt_display": "A letter from an accredited investment fund confirming the existence of a deposit of no less than AED 2 million."
+    },
+    {
+      "requirement_code": "realestate_ownership_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Real-estate investors: land registration department letter",
+      "description": "The authority requires the property to be unencumbered — it says 'without loans'.",
+      "source_role": "landing",
+      "source_excerpt": "a letter from the land registration department confirming ownership of one or more properties valued at ≥ aed 2 million (without loans).",
+      "display_order": 50,
+      "source_excerpt_display": "A letter from the Land Registration Department confirming ownership of one or more properties valued at ≥ AED 2 million (without loans)."
+    },
+    {
+      "requirement_code": "residence_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Real-estate investors: proof of residence in the UAE",
+      "description": "Either property ownership or a tenancy contract satisfies this.",
+      "source_role": "landing",
+      "source_excerpt": "proof of residence in the uae (property ownership or tenancy contract).",
+      "display_order": 60,
+      "source_excerpt_display": "Proof of residence in the UAE (property ownership or tenancy contract)."
+    },
+    {
+      "requirement_code": "entrepreneur_project_type",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Entrepreneurs: an innovative or technology-based project",
+      "description": "The authority scopes this category by the nature of the project rather than by a capital figure.",
+      "source_role": "landing",
+      "source_excerpt": "innovative or technology-based projects.",
+      "display_order": 70,
+      "source_excerpt_display": "Innovative or technology-based projects."
+    },
+    {
+      "requirement_code": "entrepreneur_project_value",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Entrepreneurs: documents verifying the project's value",
+      "description": "The page does not state a threshold figure for entrepreneurs, only that the value must be evidenced.",
+      "source_role": "landing",
+      "source_excerpt": "documents verifying the value of the project.",
+      "display_order": 80,
+      "source_excerpt_display": "Documents verifying the value of the project."
+    },
+    {
+      "requirement_code": "entrepreneur_incubator_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Entrepreneurs: letter from a business incubator or the emirate's authority",
+      "description": "Either an accredited incubator or the relevant authority in the emirate may issue it.",
+      "source_role": "landing",
+      "source_excerpt": "a letter from a business incubator or the relevant authority in the emirate.",
+      "display_order": 90,
+      "source_excerpt_display": "A letter from a business incubator or the relevant authority in the emirate."
+    },
+    {
+      "requirement_code": "student_excellence_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Outstanding students: excellence certificates",
+      "description": "The authority grants five years for outstanding high-school students and ten for university students.",
+      "source_role": "landing",
+      "source_excerpt": "excellence certificates.",
+      "display_order": 100,
+      "source_excerpt_display": "Excellence certificates."
+    },
+    {
+      "requirement_code": "student_recommendation_letters",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Outstanding students: recommendation letters",
+      "description": "Issued by the school or university the applicant attends.",
+      "source_role": "landing",
+      "source_excerpt": "recommendation letters from the school or university.",
+      "display_order": 110,
+      "source_excerpt_display": "Recommendation letters from the school or university."
+    },
+    {
+      "requirement_code": "humanitarian_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Humanitarian pioneers: certificates of appreciation",
+      "description": "Recognition of the outstanding efforts on which this category is granted.",
+      "source_role": "landing",
+      "source_excerpt": "certificates of appreciation or documentation of outstanding efforts.",
+      "display_order": 120,
+      "source_excerpt_display": "Certificates of appreciation or documentation of outstanding efforts."
+    },
+    {
+      "requirement_code": "humanitarian_service_record",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Humanitarian pioneers: five years' involvement or 500 volunteer hours",
+      "description": "The authority states these as alternatives, and the volunteer-hours figure is a minimum.",
+      "source_role": "landing",
+      "source_excerpt": "proof of involvement in humanitarian organisations for ≥ 5 years or completion of at least 500 volunteer hours.",
+      "display_order": 130,
+      "source_excerpt_display": "Proof of involvement in humanitarian organisations for ≥ 5 years or completion of at least 500 volunteer hours."
+    },
+    {
+      "requirement_code": "passport_and_health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport copy and health insurance",
+      "description": "Listed by the authority among the required documents for the humanitarian category.",
+      "source_role": "landing",
+      "source_excerpt": "passport copy and health insurance.",
+      "display_order": 140,
+      "source_excerpt_display": "Passport copy and health insurance."
+    }
+  ]
+}

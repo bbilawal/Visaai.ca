@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-autorizacao-residencia-permanente",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "FIVE YEARS, BASIC PORTUGUESE, AND A CLEAN FIVE-YEAR RECORD. The language requirement can be met six different ways and the alternatives matter — a school certificate from a Portuguese-speaking country counts, as does an A2 pass on a Português Língua de Acolhimento course. The criminal condition is stated as a five-year lookback and it counts sentences CUMULATIVELY, and it applies even where the sentence was suspended.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/autorizacao-de-residencia-permanente-art-80-o"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_years_of_temporary_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold a temporary residence permit for at least 5 years",
+      "parameters": {
+        "years": 5
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "titularidade de autorização de residência temporária há pelo menos 5 anos;",
+      "source_excerpt_display": "Titularidade de autorização de residência temporária há pelo menos 5 anos;"
+    },
+    {
+      "requirement_code": "basic_portuguese_six_ways",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of basic Portuguese, provable six different ways",
+      "description": "A qualifications certificate from a Portuguese school; a certificate from a school in a Portuguese-speaking country; an IEFP basic Portuguese course pass; a pass from a legally recognised school; a CAPLE test certificate; or completion of level A2 or above on a Português Língua de Acolhimento course.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "comprovativo de conhecimento de português básico, mediante apresentação de:",
+      "source_excerpt_display": "Comprovativo de conhecimento de português básico, mediante apresentação de:"
+    },
+    {
+      "requirement_code": "a2_pla_course_counts",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Completion of level A2 or above on a Português Língua de Acolhimento course satisfies the language requirement",
+      "description": "The route most migrants actually take, and it sits last in the list.",
+      "parameters": {
+        "level": "A2"
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "certificado de conclusão do nível a2 ou superior em curso de português língua de acolhimento (cf. modelo anexo), promovido por estabelecimentos de ensino da rede pública",
+      "source_excerpt_display": "Certificado de conclusão do nível A2 ou superior em curso de Português Língua de Acolhimento (cf. modelo anexo), promovido por estabelecimentos de ensino da rede pública"
+    },
+    {
+      "requirement_code": "criminal_condition_five_year_cumulative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No sentence or sentences exceeding one year of imprisonment, alone or cumulatively, in the last 5 years of residence — even if suspended",
+      "description": "Three traps in one sentence: the five-year window, the cumulative counting, and that a suspended sentence still counts.",
+      "parameters": {
+        "lookback_years": 5,
+        "threshold_years": 1
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "é condição para a concessão da autorização de residência permanente a inexistência, nos últimos 5 anos de residência em território nacional, de condenação em pena ou penas que, isolada ou cumulativamente, ultrapassem um ano de prisão, ainda que, no caso de condenação por crime doloso previsto no presente diploma ou com este conexo, ou por crime de terrorismo, por criminalidade violenta ou por criminalidade especialmente violenta ou altamente organizada, a respetiva execução tenha sido suspensa.",
+      "source_excerpt_display": "É condição para a concessão da autorização de residência permanente a inexistência, nos últimos 5 anos de residência em Território Nacional, de condenação em pena ou penas que, isolada ou cumulativamente, ultrapassem um ano de prisão, ainda que, no caso de condenação por crime doloso previsto no presente diploma ou com este conexo, ou por crime de terrorismo, por criminalidade violenta ou por criminalidade especialmente violenta ou altamente organizada, a respetiva execução tenha sido suspensa."
+    },
+    {
+      "requirement_code": "tax_and_social_security_compliance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of compliance with tax and social security obligations",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "comprovativo do cumprimento das obrigações fiscais e perante a segurança social;",
+      "source_excerpt_display": "Comprovativo do cumprimento das obrigações fiscais e perante a segurança social;"
+    },
+    {
+      "requirement_code": "investment_holders_get_a_permanent_investment_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Investment permit holders and their families who meet Art. 80.º receive a PERMANENT INVESTMENT residence permit, taxed under its own schedule",
+      "description": "A separate title with a separate fee, and it disapplies part of the cancellation-for-absence rule.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "aos cidadãos titulares de autorização de residência para atividade de investimento e seus familiares, que cumpram os requisitos previstos no artigo 80.º do repsae e requeiram a concessão de autorização de residência permanente, será emitida uma autorização de residência para atividade de investimento permanente",
+      "source_excerpt_display": "Aos cidadãos titulares de autorização de residência para atividade de investimento e seus familiares, que cumpram os requisitos previstos no artigo 80.º do REPSAE e requeiram a concessão de autorização de residência permanente, será emitida uma autorização de residência para atividade de investimento permanente"
+    }
+  ]
+}

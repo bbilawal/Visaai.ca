@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-stagiaire",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THE FIRST DEADLINE ON THIS ROUTE BELONGS TO THE HOST COMPANY AND FALLS TWO MONTHS BEFORE THE INTERNSHIP STARTS. The French host must have the tripartite agreement endorsed by the administration before the intern enters France, and silence from the administration is a REFUSAL rather than an approval. An intern who books travel on the strength of a signed agreement can arrive without the document their visa depends on.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17312"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth. The €615 monthly resource figure carries no stated reference year.",
+  "not_extracted": [
+    "The Canadian exemption's own rules. The page states Canadians are exempt from the agreement-validation step and says nothing further about what applies to them instead.",
+    "The reference year for the €615 figure. Not stated on the page.",
+    "The visa fee and the residence permit tax. Not stated on this page.",
+    "What OFII may require at the supplementary formalities. The page names a medical examination as an example ('notamment') and does not publish the full set."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "three_qualifying_internship_situations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three qualifying situations: a training-linked company internship, an employer-sponsored training course, or a hospital placement",
+      "description": "The third is narrower than it looks — it must sit within the international hospital cooperation convention, not merely be a placement at a hospital.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "effectuer un stage dans un établissement de santé public ou privé à but non lucratif en vue de bénéficier d'une formation complémentaire qui conduit à la reconnaissance d'un niveau de qualification professionnelle, dans le cadre de la convention de coopération internationale hospitalière.",
+      "source_excerpt_display": "Effectuer un stage dans un établissement de santé public ou privé à but non lucratif en vue de bénéficier d'une formation complémentaire qui conduit à la reconnaissance d'un niveau de qualification professionnelle, dans le cadre de la convention de coopération internationale hospitalière."
+    },
+    {
+      "requirement_code": "tripartite_internship_agreement_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A tripartite internship agreement between you, the training body abroad, and the host company in France",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous devez effectuer votre stage en entreprise dans le cadre d'une convention de stage. cette convention est conclue entre vous , l' établissement de formation à l'étranger et votre entreprise d'accueil en france.",
+      "source_excerpt_display": "Vous devez effectuer votre stage en entreprise dans le cadre d'une convention de stage. Cette convention est conclue entre vous, l' établissement de formation à l'étranger et votre entreprise d'accueil en France."
+    },
+    {
+      "requirement_code": "agreement_does_not_confer_employee_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The internship agreement cannot give you employee status",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "la convention de stage ne peut pas vous donner le statut de salarié .",
+      "source_excerpt_display": "La convention de stage ne peut pas vous donner le statut de salarié."
+    },
+    {
+      "requirement_code": "internship_maximum_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The internship may not exceed 6 months",
+      "parameters": {
+        "internship_months_max": 6
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "la durée du stage ne peut pas excéder 6 mois.",
+      "source_excerpt_display": "La durée du stage ne peut pas excéder 6 mois."
+    },
+    {
+      "requirement_code": "monthly_resources_615_euros",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must have at least €615 per month to live on during your stay",
+      "parameters": {
+        "monthly_resources_eur": 615
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous devez avoir au minimum 615 € par mois de ressources pour vivre en france durant votre séjour.",
+      "source_excerpt_display": "Vous devez avoir au minimum 615 € par mois de ressources pour vivre en France durant votre séjour."
+    },
+    {
+      "requirement_code": "host_must_have_agreement_endorsed_two_months_ahead",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The host company must have the agreement endorsed at least 2 months before the internship starts — 1 month for EU or intergovernmental cooperation programmes",
+      "description": "An obligation on the HOST, with a deadline the intern cannot control, and a shorter clock for cooperation-programme placements.",
+      "parameters": {
+        "endorsement_lead_months": 2,
+        "endorsement_lead_months_cooperation_programme": 1
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "l'entreprise qui vous accueille en france doit, 2 mois au moins avant le début du stage (ou 1 mois si votre stage relève d'un programme de coopération européen ou intergouvernemental), faire valider la convention de stage par l'administration.",
+      "source_excerpt_display": "L'entreprise qui vous accueille en France doit, 2 mois au moins avant le début du stage (ou 1 mois si votre stage relève d'un programme de coopération européen ou intergouvernemental), faire valider la convention de stage par l'administration."
+    },
+    {
+      "requirement_code": "silence_is_a_refusal_after_30_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No answer within 30 days — 15 for cooperation programmes — means the agreement validation is REFUSED",
+      "description": "The opposite of the usual French administrative rule, where silence often means acceptance. Waiting quietly here loses the internship.",
+      "parameters": {
+        "silence_refusal_days": 30,
+        "silence_refusal_days_cooperation_programme": 15
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "si l'administration n'a pas répondu dans un délai de 30 jours (ou 15 jours si votre stage relève d'un programme de coopération européen ou intergouvernemental), la demande de validation de votre convention est refusée .",
+      "source_excerpt_display": "Si l'administration n'a pas répondu dans un délai de 30 jours (ou 15 jours si votre stage relève d'un programme de coopération européen ou intergouvernemental), la demande de validation de votre convention est refusée."
+    },
+    {
+      "requirement_code": "endorsed_agreement_arrives_before_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If approved, the endorsed agreement reaches you before you enter France",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "en cas d'accord, la convention visée vous est transmise avant votre entrée en france.",
+      "source_excerpt_display": "En cas d'accord, la convention visée vous est transmise avant votre entrée en France."
+    },
+    {
+      "requirement_code": "documents_for_the_visa_application",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Four documents for the VLS-TS application",
+      "description": "The second is the endorsed tripartite agreement — an unendorsed one does not satisfy it.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "passeport en cours de validité convention de stage tripartite, visée par l'administration et signée entre vous, l'établissement de formation ou votre employeur établi à l'étranger et votre entreprise d'accueil en france justificatif de vos ressources justificatif d'hébergement en france.",
+      "source_excerpt_display": "Passeport en cours de validité Convention de stage tripartite, visée par l'administration et signée entre vous, l'établissement de formation ou votre employeur établi à l'étranger et votre entreprise d'accueil en France Justificatif de vos ressources Justificatif d'hébergement en France."
+    },
+    {
+      "requirement_code": "vls_ts_stagiaire_replaces_a_residence_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The 'stagiaire' VLS-TS lets you enter and exempts you from applying for a residence card",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "vous devez demander auprès des autorités françaises compétentes dans votre pays de résidence un visa de long séjour valant titre de séjour (vls-ts) mention stagiaire . ce visa vous permet d'entrer en france et vous dispense de demander une carte de séjour.",
+      "source_excerpt_display": "Vous devez demander auprès des autorités françaises compétentes dans votre pays de résidence un visa de long séjour valant titre de séjour (VLS-TS) mention stagiaire. Ce visa vous permet d'entrer en France et vous dispense de demander une carte de séjour."
+    },
+    {
+      "requirement_code": "ofii_may_summon_you_for_further_formalities",
+      "kind": "step",
+      "officially_required": true,
+      "label": "OFII may summon you for supplementary formalities, including a medical examination",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "peut vous convoquer pour accomplir des formalités complémentaires comme passer une visite médicale notamment.",
+      "source_excerpt_display": "peut vous convoquer pour accomplir des formalités complémentaires comme passer une visite médicale notamment."
+    }
+  ]
+}

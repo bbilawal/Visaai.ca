@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "hk-general-employment-policy",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department's General Employment Policy page, bounded to the entry section",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "ONE URL, TWO FLOWS — BOUNDED. GEP.html is a tabbed page carrying BOTH the entry application and the extension of stay, each with its own eligibility criteria, supporting documents, processing time and fee section. 'processing time' occurs four times on it. An unbounded extraction would mix a first application with a renewal and every excerpt would still verify, which is the exact failure source_bounds exists to prevent. The bound starts at the entry introduction and ends before 'extension of stay apply now'.\n\nTHE AUTHORITY DISCLAIMS ITS OWN CHECKLIST. 'the director of immigration reserves absolute discretion to refuse any application even if the application meets all eligibility criteria.' Stated twice on the page. No other authority in this registry says it that plainly, and a checklist that implied sufficiency would contradict the source it cites — so it is stored as a requirement, first in the list.\n\nA JOB OFFER IS NOT ENOUGH: the vacancy must be GENUINE, and the role must be one 'that cannot be readily taken up by the local work force'. Two separate conditions about the employer's position, neither of which the candidate can evidence alone.\n\nHONG KONG RECOGNISES SAME-SEX PARTNERSHIPS FOR DEPENDANTS, and defines what it will accept in unusual detail — four structural features, and an explicit exclusion of de facto spouses, cohabiting partners and fiancé(e)s. Stored because the recognition and its limits are equally consequential.\n\nWHO IS EXCLUDED IS AS IMPORTANT AS WHO QUALIFIES. Mainland Chinese residents are outside the GEP entirely (routed to ASMTP); Afghan, Cuban and North Korean nationals are excluded from the entry arrangement; non-local graduates go through IANG instead.",
+  "source_roles": {
+    "requirements": "https://www.immd.gov.hk/eng/services/visas/GEP.html"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "this webpage sets out the entry arrangement for persons who wish to enter",
+      "ends_before": "extension of stay apply now",
+      "note": "The ENTRY block only. The same page continues with a separate extension-of-stay flow that has its own eligibility criteria, documents, processing time and fees; 'processing time' occurs four times on the page."
+    }
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The Department publishes no dateModified and no dateline, so freshness reads as UNKNOWN, never fresh. The page's own currency markers are dated policy it could not carry if stale: the e-Visa arrangement 'with effect from 28 december 2021', the GEP technical professionals stream, and the top-tier employment stream with its HK$2 million threshold. Corroboration, recorded as corroboration.",
+  "not_extracted": [
+    "The extension-of-stay flow on the same page — its 3-2 year pattern, its two-to-three week processing time, the top-tier employment stream's HK$2 million assessable income test, and its own document list. That is a different application and it is what the bound excludes.",
+    "The fee amounts. The Department states that the GEP is a 'specified scheme' under Schedule 2 of the Immigration Regulations (Cap.115A) and links a fee table rather than publishing figures inline; no amount is invented from that.",
+    "The GEP technical professionals stream (GEP(TP)) for non-degree professionals aged 18 to 40. The Department says it is quota-limited and sector-specific and links elsewhere for the detail.",
+    "The Admission Scheme for Mainland Talents and Professionals (ASMTP) and the Immigration Arrangements for Non-local Graduates (IANG), both cross-referenced here and both separate routes on their own pages.",
+    "The full supporting-document lists for the applicant and the employing company. They are on the page and are worth extracting; this first pass stores the eligibility rules that decide whether applying is worthwhile at all.",
+    "Right of abode after seven years' ordinary residence, mentioned on the page as a consequence rather than a condition of this route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "discretion_reserved",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meeting every criterion does not entitle you to the visa",
+      "description": "The Immigration Department states this twice on its own page. Every requirement below is necessary; the Department says outright that together they are not sufficient.",
+      "source_role": "requirements",
+      "source_excerpt": "all applications are processed and determined by the immd. approval of applications is entirely discretionary and is subject to changes in government policies. the director of immigration reserves absolute discretion to refuse any application even if the application meets all eligibility criteria.",
+      "display_order": 10,
+      "source_excerpt_display": "All applications are processed and determined by the ImmD. Approval of applications is entirely discretionary and is subject to changes in government policies. The Director of Immigration reserves absolute discretion to refuse any application even if the application meets all eligibility criteria."
+    },
+    {
+      "requirement_code": "no_security_objection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No security objection and no known record of serious crime",
+      "description": "The first of the five GEP criteria.",
+      "source_role": "requirements",
+      "source_excerpt": "there is no security objection and no known record of serious crime in respect of the applicant;",
+      "display_order": 20,
+      "source_excerpt_display": "there is no security objection and no known record of serious crime in respect of the applicant;"
+    },
+    {
+      "requirement_code": "good_education_background",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A good education background — normally a first degree in the relevant field",
+      "description": "The Department leaves a door open: good technical qualifications, proven professional abilities, or relevant experience and achievements may be accepted in special circumstances, but only with documentary evidence.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant has a good education background, normally a first degree in the relevant field, but in special circumstances, good technical qualifications, proven professional abilities and/or relevant experience and achievements supported by documentary evidence may also be accepted;",
+      "display_order": 30,
+      "source_excerpt_display": "the applicant has a good education background, normally a first degree in the relevant field, but in special circumstances, good technical qualifications, proven professional abilities and/or relevant experience and achievements supported by documentary evidence may also be accepted;"
+    },
+    {
+      "requirement_code": "genuine_job_vacancy",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The vacancy must be genuine",
+      "description": "A condition on the employer, stated separately from the offer itself.",
+      "source_role": "requirements",
+      "source_excerpt": "there is a genuine job vacancy;",
+      "display_order": 40,
+      "source_excerpt_display": "there is a genuine job vacancy;"
+    },
+    {
+      "requirement_code": "offer_relevant_and_not_locally_available",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A confirmed offer, relevant to your qualifications, that the local workforce cannot readily fill",
+      "description": "Three tests in one sentence, and the last of them is about the Hong Kong labour market rather than about you. Neither you nor the employer can settle it in advance.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant has a confirmed offer of employment and is employed in a job relevant to his academic qualifications or work experience that cannot be readily taken up by the local work force; and",
+      "display_order": 50,
+      "source_excerpt_display": "the applicant has a confirmed offer of employment and is employed in a job relevant to his academic qualifications or work experience that cannot be readily taken up by the local work force; and"
+    },
+    {
+      "requirement_code": "market_rate_remuneration",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The whole remuneration package must match the prevailing Hong Kong market level",
+      "description": "Income, accommodation, medical and other fringe benefits together — not salary alone.",
+      "source_role": "requirements",
+      "source_excerpt": "the remuneration package including income, accommodation, medical and other fringe benefits is broadly commensurate with the prevailing market level for professionals in the hksar.",
+      "display_order": 60,
+      "source_excerpt_display": "the remuneration package including income, accommodation, medical and other fringe benefits is broadly commensurate with the prevailing market level for professionals in the HKSAR."
+    },
+    {
+      "requirement_code": "quota_free_non_sector_specific",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The GEP is quota-free and not restricted to particular sectors",
+      "description": "Unusual among the work routes in this registry — Singapore's S Pass is capped by an employer quota, and Malaysia's expatriate approvals run through sector regulators.",
+      "source_role": "requirements",
+      "source_excerpt": "the gep is quota-free and non-sector specific.",
+      "display_order": 70,
+      "source_excerpt_display": "The GEP is quota-free and non-sector specific."
+    },
+    {
+      "requirement_code": "mainland_residents_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Mainland Chinese residents cannot use the GEP",
+      "description": "They are routed to the Admission Scheme for Mainland Talents and Professionals instead. A PRC passport does not admit its holder to Hong Kong — the SAR administers its own immigration.",
+      "source_role": "requirements",
+      "source_excerpt": "this entry arrangement does not apply to: ... chinese residents of the mainland",
+      "display_order": 80,
+      "source_excerpt_display": "This entry arrangement does not apply to: ... Chinese residents of the Mainland"
+    },
+    {
+      "requirement_code": "excluded_nationalities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Nationals of Afghanistan, Cuba and North Korea are excluded from this arrangement",
+      "description": "Stated as part of the same exclusion list as mainland residents.",
+      "source_role": "requirements",
+      "source_excerpt": "nationals of afghanistan, cuba and korea (democratic people's republic of).",
+      "display_order": 90,
+      "parameters": {
+        "excluded_nationalities": [
+          "afghanistan",
+          "cuba",
+          "korea (democratic people's republic of)"
+        ]
+      },
+      "source_excerpt_display": "nationals of Afghanistan, Cuba and Korea (Democratic People's Republic of)."
+    },
+    {
+      "requirement_code": "normal_immigration_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The general immigration requirements apply on top of the GEP criteria",
+      "description": "A valid travel document with adequate returnability, a clear criminal record, no security concern, and no likelihood of becoming a burden on Hong Kong. The Department also warns the criteria may change without notice.",
+      "source_role": "requirements",
+      "source_excerpt": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the hksar; have no likelihood of becoming a burden on the hksar, etc.) as well as the relevant specific eligibility criteria detailed above",
+      "display_order": 100,
+      "source_excerpt_display": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the HKSAR; have no likelihood of becoming a burden on the HKSAR, etc.) as well as the relevant specific eligibility criteria detailed above"
+    },
+    {
+      "requirement_code": "overseas_chinese_prc_passport_facilitation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Overseas Chinese on PRC passports qualify through permanent residence abroad, or a year's residence abroad",
+      "description": "For the one-year route the application must also be submitted from overseas — and 'overseas' expressly excludes the mainland, Hong Kong, Macao and Taiwan.",
+      "source_role": "requirements",
+      "source_excerpt": "the applicant has permanent residence overseas; or ... the applicant has been residing overseas for at least one year immediately before the submission of application",
+      "display_order": 110,
+      "parameters": {
+        "min_years_residing_overseas": 1
+      },
+      "source_excerpt_display": "the applicant has permanent residence overseas; or ... the applicant has been residing overseas for at least one year immediately before the submission of application"
+    },
+    {
+      "requirement_code": "dependants_partnership_recognition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A spouse or a recognised same-sex or opposite-sex civil partnership may come as your dependant",
+      "description": "Hong Kong recognises partnerships entered into under the law of the place of celebration, provided that place legally and officially recognises them. Unmarried dependent children under 18 also qualify.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants admitted or seeking admission under the gep may apply to bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration",
+      "display_order": 120,
+      "parameters": {
+        "max_child_age": 18
+      },
+      "source_excerpt_display": "Applicants admitted or seeking admission under the GEP may apply to bring their spouse or the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration"
+    },
+    {
+      "requirement_code": "partnership_definition_and_exclusions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as a partnership is defined tightly, and cohabitation is excluded",
+      "description": "Four structural features are required: the relationship is governed by the legislation of the place it was entered into, it requires registration by a competent authority, the registration is evidenced in writing, and the parties have a mutual permanent commitment akin to spouses. De facto spouses, cohabiting partners and fiancé(e)s do not qualify.",
+      "source_role": "requirements",
+      "source_excerpt": "such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc.",
+      "display_order": 130,
+      "source_excerpt_display": "Such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc."
+    },
+    {
+      "requirement_code": "dependant_sponsorship_criteria",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "As sponsor you must prove the relationship is genuine and that you can support and house them well above subsistence",
+      "description": "The Department's three dependant criteria. 'Well above the subsistence level' is a standard, not a figure, and no amount is published.",
+      "source_role": "requirements",
+      "source_excerpt": "there is reasonable proof of a genuine relationship between the dependant and the sponsor; ... the sponsor is able to support the dependant's living at a standard well above the subsistence level and provide him/her with suitable accommodation in the hksar.",
+      "display_order": 140,
+      "source_excerpt_display": "there is reasonable proof of a genuine relationship between the dependant and the sponsor; ... the sponsor is able to support the dependant's living at a standard well above the subsistence level and provide him/her with suitable accommodation in the HKSAR."
+    },
+    {
+      "requirement_code": "dependant_stay_linked_to_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your dependants' stay is tied to yours, and to the relationship continuing",
+      "description": "The Department names the failure modes explicitly: a change in the marriage relationship, or the sponsor's death. A dependant under 16 needs a parent or guardian to sign the form.",
+      "source_role": "requirements",
+      "source_excerpt": "the length of stay of such dependants will normally be linked to that of their sponsors. any subsequent applications for extension of stay will be considered only when the applicant continues to meet the eligibility criteria for entry for residence as dependants (including that there is no change in circumstances which would have otherwise resulted in loss of sponsorship for the applicant, e.g. change in marriage relationship between the dependent spouse and the sponsor, or death of sponsor) and the sponsor remains a bona fide hong kong resident living in the hksar.",
+      "display_order": 150,
+      "source_excerpt_display": "The length of stay of such dependants will normally be linked to that of their sponsors. Any subsequent applications for extension of stay will be considered only when the applicant continues to meet the eligibility criteria for entry for residence as dependants (including that there is no change in circumstances which would have otherwise resulted in loss of sponsorship for the applicant, e.g. change in marriage relationship between the dependent spouse and the sponsor, or death of sponsor) and the sponsor remains a bona fide Hong Kong resident living in the HKSAR."
+    },
+    {
+      "requirement_code": "dependants_may_work_or_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your dependants may work or study without a separate permission",
+      "description": "A sharp contrast with Singapore's Dependant's Pass, which requires a work pass the employer applies for, and with Malaysia's, which bars work outright.",
+      "source_role": "requirements",
+      "source_excerpt": "these dependants are not prohibited from taking up employment or studies in the hksar under the existing policy.",
+      "display_order": 160,
+      "source_excerpt_display": "These dependants are not prohibited from taking up employment or studies in the HKSAR under the existing policy."
+    },
+    {
+      "requirement_code": "processing_four_weeks",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Four weeks, and the clock does not start until everything has arrived",
+      "description": "The Department states plainly that it will not begin processing until all documents AND the fee have been received.",
+      "source_role": "requirements",
+      "source_excerpt": "for applications submitted under the gep, it normally takes four weeks upon receipt of all the required documents and the relevant application fee. the immigration department (hereafter “immd”) will not be able to start processing the application unless all the required documents and the relevant application fee have been received.",
+      "display_order": 170,
+      "parameters": {
+        "weeks": 4
+      },
+      "source_excerpt_display": "For applications submitted under the GEP, it normally takes four weeks upon receipt of all the required documents and the relevant application fee. The Immigration Department (hereafter “ImmD”) will not be able to start processing the application unless all the required documents and the relevant application fee have been received."
+    },
+    {
+      "requirement_code": "application_fee_non_refundable",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The application fee is non-refundable whatever the outcome",
+      "description": "The GEP is a 'specified scheme' under Schedule 2 of the Immigration Regulations (Cap.115A): the principal applicant and each dependant pay a non-refundable application fee and, on approval, a visa issuance fee. The Department links its fee table rather than publishing the amounts here, so no figure is stored.",
+      "source_role": "requirements",
+      "source_excerpt": "the application fee paid is non-refundable in any circumstance irrespective of the application result.",
+      "display_order": 180,
+      "parameters": {
+        "currency": "HKD",
+        "refundable": false,
+        "per": "applicant_and_each_dependant"
+      },
+      "source_excerpt_display": "The application fee paid is non-refundable in any circumstance irrespective of the application result."
+    },
+    {
+      "requirement_code": "evisa_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The visa is issued as an e-Visa, and you present it on a phone or on paper",
+      "description": "Scanned at an immigration counter via its encrypted QR code. There is no label in the passport.",
+      "source_role": "requirements",
+      "source_excerpt": "a visa/entry permit (in the form of “e-visa” ) will be issued upon successful application.",
+      "display_order": 190,
+      "source_excerpt_display": "A visa/entry permit (in the form of “e-Visa”) will be issued upon successful application."
+    }
+  ]
+}

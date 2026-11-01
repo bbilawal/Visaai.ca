@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-autorizacao-residencia-geral",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "THE GENERAL REGIME IS A SEPARATE ROUTE AND IT IS NOT OPTIONAL READING. Art. 77.º n.º 1 sets the baseline every permit below is granted under — the four negative conditions, the two-year initial validity renewable in three-year periods, and the housing and registration evidence. Each route page repeats parts of it and none repeats all of it, so the general regime is registered in its own right and the specific routes record only what they ADD or CHANGE.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/autorizacao-de-residencia-regime-e-requisitos-gerais-art-o-77-o-n-o-1"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "application_is_by_appointment_and_in_person",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The application is made by appointment and delivered in person on AIMA's own form, at any AIMA branch",
+      "description": "An electronic platform is stated to be \"em fase de implementação\" for residence-visa holders — announced, not yet the route.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "o pedido de concessão de autorização de residência é formulado mediante agendamento (ou através de plataforma eletrónica – em fase de implementação para titulares de visto de residência ) e é entregue presencialmente com impresso próprio assinado pelo requerente ou pelo seu representante legal.",
+      "source_excerpt_display": "O pedido de concessão de autorização de residência é formulado mediante agendamento (ou através de plataforma eletrónica – em fase de implementação para titulares de visto de residência) e é entregue presencialmente com impresso próprio assinado pelo requerente ou pelo seu representante legal."
+    },
+    {
+      "requirement_code": "valid_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid passport or other travel document",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "passaporte ou outro documento de viagem válido;",
+      "source_excerpt_display": "Passaporte ou outro documento de viagem válido;"
+    },
+    {
+      "requirement_code": "valid_residence_visa",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid residence visa",
+      "description": "Obtained from the MFA visa portal, which we cannot read. This is the dependency that makes Portugal a half-published destination.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "visto de residência válido;",
+      "source_excerpt_display": "Visto de residência válido;"
+    },
+    {
+      "requirement_code": "means_of_subsistence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of means of subsistence",
+      "description": "No amount is stated; the page links Portaria n.º 1563/2007.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "comprovativo de meios de subsistência ;",
+      "source_excerpt_display": "Comprovativo de meios de subsistência;"
+    },
+    {
+      "requirement_code": "housing_declaration_and_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration of your address, plus proof of the legal basis for occupying it",
+      "description": "Owner or usufructuary: a land-registry certificate or its access code. Tenant or lessee: a declaration from the landlord or housing provider stating the legal basis. A sworn declaration alone is not enough.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "declaração, sob compromisso de honra, da morada de residência, referindo em que termos se encontra a residir na habitação indicada (ex. proprietário, arrendatário, subarrendatário, usufrutuário, comodatário, entre outras); e",
+      "source_excerpt_display": "Declaração, sob compromisso de honra, da morada de residência, referindo em que termos se encontra a residir na habitação indicada (ex. proprietário, arrendatário, subarrendatário, usufrutuário, comodatário, entre outras); e"
+    },
+    {
+      "requirement_code": "tax_and_social_security_registration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of registration with the tax authority and with social security, where applicable",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "comprovativo de inscrição na administração fiscal , se aplicável; comprovativo de inscrição na segurança social , se aplicável.",
+      "source_excerpt_display": "Comprovativo de inscrição na administração fiscal, se aplicável; Comprovativo de inscrição na segurança social, se aplicável."
+    },
+    {
+      "requirement_code": "health_insurance_or_sns",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance, or proof that you are covered by the national health service",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "seguro de saúde ou comprovativo de que se encontra abrangido pelo serviço nacional de saúde.",
+      "source_excerpt_display": "Seguro de saúde ou comprovativo de que se encontra abrangido pelo Serviço Nacional de Saúde."
+    },
+    {
+      "requirement_code": "general_negative_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Four conditions that must all be absent for a permit to be granted",
+      "description": "A single sentence carrying four separate bars: any fact that would have blocked the visa, a conviction carrying over one year of custody in Portugal, being inside a re-entry ban following removal, and an SII/UCFE alert for refusal of entry or return.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "a concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; ausência de condenação por crime que em portugal seja punível com pena privativa de liberdade de duração superior a um ano; não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; ausência de indicação no sii ucfe para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-a do repsae.",
+      "source_excerpt_display": "A concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; Ausência de condenação por crime que em Portugal seja punível com pena privativa de liberdade de duração superior a um ano; Não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; Ausência de indicação no SII UCFE para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-A do REPSAE."
+    },
+    {
+      "requirement_code": "validity_two_years_renewable_three",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Temporary residence is valid 2 years from issue and renewable for successive 3-year periods",
+      "description": "Unless a special legal provision sets a different period for the specific route.",
+      "parameters": {
+        "initial_years": 2,
+        "renewal_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "sem prejuízo das disposições legais especiais aplicáveis (quando a lei de estrangeiros preveja especificamente prazos diferentes), a autorização de residência temporária é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos.",
+      "source_excerpt_display": "Sem prejuízo das disposições legais especiais aplicáveis (quando a Lei de Estrangeiros preveja especificamente prazos diferentes), a autorização de residência temporária é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos."
+    },
+    {
+      "requirement_code": "administrative_offences",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three administrative offences apply: illegal stay, failure to declare entry, and failure to present the travel document",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "são aplicáveis as seguintes contraordenações: art. 192.º do repsae (permanência ilegal); art. 197.º do repsae (falta de declaração de entrada); art. 199.º do repsae (falta de apresentação do documento de viagem).",
+      "source_excerpt_display": "São aplicáveis as seguintes contraordenações: Art. 192.º do REPSAE (Permanência ilegal); Art. 197.º do REPSAE (Falta de declaração de entrada); Art. 199.º do REPSAE (Falta de apresentação do documento de viagem)."
+    },
+    {
+      "requirement_code": "forms_modelo_1_and_4",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Modelo 1 is mandatory; Modelo 4 (termo de responsabilidade) where applicable",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "modelo 1 (preenchimento obrigatório) modelo 4 (termo de responsabilidade, preenchimento se aplicável)",
+      "source_excerpt_display": "Modelo 1 (Preenchimento obrigatório) Modelo 4 (Termo de Responsabilidade, Preenchimento se aplicável)"
+    }
+  ]
+}

@@ -1,0 +1,325 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fi-entrepreneur",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the two official Migri pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE REGISTRY'S FIRST ENTREPRENEUR ROUTE, and the first permit decided by TWO authorities in sequence. Migri states plainly that the application 'will be processed in two stages': the Economic Development Centre issues a partial decision on whether the business is a real, profitable one, and only then does Migri process the permit. It also states the order dependency — if the applicant fails the GENERAL residence-permit requirements, the Centre will not issue a partial decision at all. That is recorded as a requirement, because someone whose passport or entry record is the problem would otherwise spend weeks preparing a business plan for a decision that is already blocked.\n\nTHE ELIGIBLE FORMS OF BUSINESS ARE THE ELIGIBILITY TEST. Migri does not ask what the business does; it asks what the applicant's legal relationship to it is — private trader, general partner, unlimited-liability cooperative member, or a shareholder in a managerial position holding at least 30 per cent of capital or votes. A minority shareholder with no managerial role is not an entrepreneur for this permit however large the company, and a silent partner in a limited partnership is explicitly excluded.\n\nTHE THIRD PLACE 'LIGHT ENTREPRENEURS' ARE TURNED AWAY. fi-employed-person excludes them, this page excludes them, and Migri states here that freelancers and invoicing-service workers cannot use this permit either. The registry now holds both refusals, which is the useful thing: someone working through a service company is told by both routes, not left between them.\n\nNO BOUNDS NEEDED, CHECKED. One route per page; the three numbered requirement headings occur once each.",
+  "source_roles": {
+    "requirements": "https://migri.fi/en/entrepreneur",
+    "eligibility": "https://migri.fi/en/first-residence-permit"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null
+  },
+  "freshness_note": "No dateModified on either page — 'unknown', never 'fresh'. The fee figures match Migri's 2026 decree-based fee schedule ('fees of the finnish immigration service (eur) in 2026'), which is the corroboration used for the other Finnish routes.",
+  "not_extracted": [
+    "How to register a business in Finland. Migri links the Finnish Patent and Registration Office and the Business Information System; company formation is those authorities' subject, not this permit's.",
+    "The Economic Development Centre's own assessment criteria for profitability. Migri states that the Centre assesses it and does not publish the test; inventing one would be worse than pointing at the authority.",
+    "The start-up entrepreneur permit. A separate route with its own page, its own Business Finland eligibility statement, and its own fee.",
+    "The full conditional attachment list by company form (memoranda and articles of association for each of five company types). The requirement to supply them is recorded; enumerating every branch would reproduce the page rather than summarise the obligation.",
+    "The municipality-of-residence and personal identity code steps, which belong to the Digital and Population Data Services Agency."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eligible_form_of_business",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your legal relationship to the business must be one Migri recognises",
+      "description": "The eligibility test is the FORM of the business, not what it does. A silent partner in a limited partnership is excluded by name, and a shareholder qualifies only in a managerial position — see the 30 per cent rule in its own entry.",
+      "source_role": "requirements",
+      "source_excerpt": "1. you are a self-employed person and your form of business is one of the following: a private trader, in other words a private entrepreneur a partner in a general partnership a general partner (not a silent partner) in a limited partnership a member of a cooperative who has an unlimited liability for refinancing entrepreneur in a limited liability company",
+      "display_order": 10,
+      "source_excerpt_display": "1. You are a self-employed person and your form of business is one of the following: a private trader, in other words a private entrepreneur a partner in a general partnership a general partner (not a silent partner) in a limited partnership a member of a cooperative who has an unlimited liability for refinancing entrepreneur in a limited liability company"
+    },
+    {
+      "requirement_code": "shareholder_thirty_percent_and_managerial",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A shareholder needs BOTH a managerial position and 30% of capital or votes",
+      "description": "Both limbs, not either. A managing director with a small holding does not qualify, and neither does a 40% owner with no managerial role.",
+      "source_role": "requirements",
+      "source_excerpt": "a shareholder in a managerial position in a limited-liability company (managing director or member of the board of directors) or a person working in another type of company in a managerial position if you personally own at least 30 per cent of the company’s share capital or personally have at least 30 per cent of the number of votes produced by the company’s shares",
+      "parameters": {
+        "minimum_share_capital_percent": 30,
+        "minimum_votes_percent": 30
+      },
+      "display_order": 20,
+      "source_excerpt_display": "a shareholder in a managerial position in a limited-liability company (Managing Director or member of the Board of Directors) or a person working in another type of company in a managerial position if you personally own at least 30 per cent of the company’s share capital or personally have at least 30 per cent of the number of votes produced by the company’s shares"
+    },
+    {
+      "requirement_code": "business_must_be_profitable",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The business must be profitable, and your income from it must support you",
+      "description": "Assessed by the Economic Development Centre rather than by Migri. The Centre publishes no test, so none is invented here.",
+      "source_role": "requirements",
+      "source_excerpt": "2. your business operations are profitable. your business must be profitable. your means of support must be secured by your income from your business. economic development centre will assess whether you meet these requirements.",
+      "display_order": 30,
+      "source_excerpt_display": "2. Your business operations are profitable. Your business must be profitable. Your means of support must be secured by your income from your business. Economic Development Centre will assess whether you meet these requirements."
+    },
+    {
+      "requirement_code": "registered_in_trade_register",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The business must be entered in the Finnish Trade Register",
+      "source_role": "requirements",
+      "source_excerpt": "3. you have registered your business in the trade register maintained by the finnish patent and registration office.",
+      "display_order": 40,
+      "source_excerpt_display": "3. You have registered your business in the Trade Register maintained by the Finnish Patent and Registration Office."
+    },
+    {
+      "requirement_code": "business_id_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You need your own Business ID — with one narrow exception for private traders applying from abroad",
+      "description": "A genuine chicken-and-egg, and Migri resolves it explicitly: a private trader cannot establish a toiminimi from outside Finland, so a first permit applied for BEFORE arriving may go in without a Business ID. Applying from inside Finland does not get that concession.",
+      "source_role": "requirements",
+      "source_excerpt": "you can apply for a residence permit for an entrepreneur only if you have your own business id.",
+      "display_order": 50,
+      "source_excerpt_display": "You can apply for a residence permit for an entrepreneur only if you have your own Business ID."
+    },
+    {
+      "requirement_code": "private_trader_business_id_exception",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A private trader may apply without a Business ID only from abroad, before arriving",
+      "description": "The exception to the rule above, with Migri's own reason. It also requires an EEA domicile to get the Business ID at all.",
+      "source_role": "requirements",
+      "source_excerpt": "as a private trader, you can apply for a residence permit for an entrepreneur without a business id only if you apply for a first residence permit before arriving in finland. this is because you cannot establish an individually-owned business (toiminimi) abroad.",
+      "display_order": 60,
+      "source_excerpt_display": "As a private trader, you can apply for a residence permit for an entrepreneur without a Business ID only if you apply for a first residence permit before arriving in Finland. This is because you cannot establish an individually-owned business (toiminimi) abroad."
+    },
+    {
+      "requirement_code": "must_also_work_in_the_company",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Owning the company is not enough — you must work in it, in Finland",
+      "description": "Stated by Migri as a bare sentence and easy to skim past. It is the difference between an investor and an entrepreneur, and this permit is only for the second.",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot get a residence permit only because you own a company. you must also work in the company in finland.",
+      "display_order": 70,
+      "source_excerpt_display": "You cannot get a residence permit only because you own a company. You must also work in the company in Finland."
+    },
+    {
+      "requirement_code": "two_stage_decision",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Two authorities decide in sequence: the Economic Development Centre first, then Migri",
+      "description": "AND THE ORDER MATTERS IN A WAY THAT COSTS TIME. Migri states that failing the GENERAL residence-permit requirements stops the Centre issuing a partial decision at all — so a passport or entry-record problem blocks the business assessment before it starts.",
+      "source_role": "requirements",
+      "source_excerpt": "the application will be processed in two stages. first, the economic development centre (elinvoimakeskus.fi) will make a partial decision. after this, the finnish immigration service will process the application. if you do not meet the general requirements for obtaining a residence permit, the economic development centre will not issue a partial decision.",
+      "display_order": 80,
+      "source_excerpt_display": "The application will be processed in two stages. First, the Economic Development Centre (elinvoimakeskus.fi) will make a partial decision. After this, the Finnish Immigration Service will process the application. If you do not meet the general requirements for obtaining a residence permit, the Economic Development Centre will not issue a partial decision."
+    },
+    {
+      "requirement_code": "light_entrepreneurs_and_freelancers_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Freelancers and invoicing-service workers cannot use this permit either",
+      "description": "The third place Migri turns this arrangement away: the employed-person permit excludes it, and so does this one. Someone working through a service company is refused by both routes rather than left between them.",
+      "source_role": "requirements",
+      "source_excerpt": "if you are a freelancer or working through an invoicing service company (in finnish: kevytyrittäjä), it is not possible to apply for this permit.",
+      "display_order": 90,
+      "source_excerpt_display": "If you are a freelancer or working through an invoicing service company (in Finnish: kevytyrittäjä), it is not possible to apply for this permit."
+    },
+    {
+      "requirement_code": "apply_abroad_for_first_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A first permit is applied for abroad; only extensions are applied for in Finland",
+      "source_role": "requirements",
+      "source_excerpt": "if you apply for this permit as a first residence permit, you must submit the application abroad. applications for an extended permit can only be submitted in finland.",
+      "display_order": 100,
+      "source_excerpt_display": "If you apply for this permit as a first residence permit, you must submit the application abroad. Applications for an extended permit can only be submitted in Finland."
+    },
+    {
+      "requirement_code": "application_fee_electronic",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic application fee: EUR 750 first permit (EUR 230 extended)",
+      "source_role": "requirements",
+      "source_excerpt": "electronic application fee first permit 750 € / extended permit 230 €",
+      "parameters": {
+        "first_permit_eur": 750,
+        "extended_permit_eur": 230,
+        "currency": "EUR"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Electronic application fee First permit 750 € / extended permit 230 €"
+    },
+    {
+      "requirement_code": "application_fee_paper",
+      "kind": "fee",
+      "officially_required": false,
+      "label": "Paper application fee: EUR 900 first permit (EUR 430 extended)",
+      "description": "The largest paper premium of Finland's four routes — EUR 150 over the online fee — and the channel is the applicant's choice.",
+      "source_role": "requirements",
+      "source_excerpt": "paper application fee first permit 900 € / extended permit 430 €",
+      "parameters": {
+        "first_permit_eur": 900,
+        "extended_permit_eur": 430,
+        "currency": "EUR"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Paper application fee First permit 900 € / extended permit 430 €"
+    },
+    {
+      "requirement_code": "general_attachments",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport, passport photo and a colour copy of the data page",
+      "source_role": "requirements",
+      "source_excerpt": "a valid passport issued by your country of nationality. for more information, see the page passports and other travel documents . show the passport when you visit a service point to prove your identity. a passport photo complying with the photo guidelines issued by the police (poliisi.fi) , or a photograph retrieval code you received from a photo shop the passport photo must be no more than 6 months old. colour copy of the passport page containing your personal data.",
+      "parameters": {
+        "max_photo_age_months": 6
+      },
+      "display_order": 130,
+      "source_excerpt_display": "A valid passport issued by your country of nationality. For more information, see the page Passports and other travel documents. Show the passport when you visit a service point to prove your identity. A passport photo complying with the photo guidelines issued by the police (poliisi.fi), or a photograph retrieval code you received from a photo shop The passport photo must be no more than 6 months old. Colour copy of the passport page containing your personal data."
+    },
+    {
+      "requirement_code": "form_mp1",
+      "kind": "form",
+      "officially_required": false,
+      "label": "Form MP_1 — only if you submit the application inside Finland",
+      "official_form_code": "MP_1",
+      "source_role": "requirements",
+      "source_excerpt": "response to possible denial of admittance or stay and to entry ban (the form mp_1 ) this form is needed only if you, for some reason, submit your residence permit application in finland.",
+      "display_order": 140,
+      "source_excerpt_display": "Response to possible denial of admittance or stay and to entry ban (the form MP_1) This form is needed only if you, for some reason, submit your residence permit application in Finland."
+    },
+    {
+      "requirement_code": "business_plan",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A business plan",
+      "description": "Required for every first permit. On an extension it is required only where the business has changed.",
+      "source_role": "requirements",
+      "source_excerpt": "business plan add this attachment if you are applying for a first residence permit for an entrepreneur or if you are applying for an extended permit and there have been changes in your business activities.",
+      "display_order": 150,
+      "source_excerpt_display": "Business plan Add this attachment if you are applying for a first residence permit for an entrepreneur or if you are applying for an extended permit and there have been changes in your business activities."
+    },
+    {
+      "requirement_code": "financial_forecast_two_years",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A financial forecast for the next two years",
+      "source_role": "requirements",
+      "source_excerpt": "financial forecast for the next two years add this attachment only if you are applying for a first residence permit for an entrepreneur or if you are applying for an extended permit and there have been changes in your business activities.",
+      "parameters": {
+        "forecast_years": 2
+      },
+      "display_order": 160,
+      "source_excerpt_display": "Financial forecast for the next two years Add this attachment only if you are applying for a first residence permit for an entrepreneur or if you are applying for an extended permit and there have been changes in your business activities."
+    },
+    {
+      "requirement_code": "bank_statements_three_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Bank statements from your own account covering the past three months",
+      "description": "Three months here, against six on the study permit — the same authority asks for different histories on different routes, so the figure is stored rather than assumed.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of financial resources (a bank statement, for example) attach bank statements from your own bank account from the past three months if you have funds of your own for the initial operating stage of your company or for supporting yourself.",
+      "parameters": {
+        "bank_statement_months": 3
+      },
+      "display_order": 170,
+      "source_excerpt_display": "Proof of financial resources (a bank statement, for example) Attach bank statements from your own bank account from the past three months if you have funds of your own for the initial operating stage of your company or for supporting yourself."
+    },
+    {
+      "requirement_code": "company_form_documents",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Memoranda and articles of association, where the company is not yet in the Trade Register",
+      "description": "Conditional on the company's form and on whether it is already registered. The obligation is recorded; the five-way branch is left on Migri's page rather than reproduced here.",
+      "source_role": "requirements",
+      "source_excerpt": "attachments regarding form of company: if your company is a limited liability company: memorandum of association, if your company has not been entered in the finnish trade register; articles of association, if your company has not been entered in the finnish trade register; shareholder register.",
+      "display_order": 180,
+      "source_excerpt_display": "Attachments regarding form of company: If your company is a limited liability company: memorandum of association, if your company has not been entered in the Finnish Trade Register; articles of association, if your company has not been entered in the Finnish Trade Register; shareholder register."
+    },
+    {
+      "requirement_code": "business_premises_documents",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Rental agreement or proof of ownership, if the company has premises",
+      "source_role": "requirements",
+      "source_excerpt": "documents regarding your company’s business premises (rental agreement or proof of ownership of the premises) add this attachment if your company has business premises and if you are applying for a first residence permit or if you are applying for an extended permit and there have been changes in your business activities.",
+      "display_order": 190,
+      "source_excerpt_display": "Documents regarding your company’s business premises (rental agreement or proof of ownership of the premises) Add this attachment if your company has business premises and if you are applying for a first residence permit or if you are applying for an extended permit and there have been changes in your business activities."
+    },
+    {
+      "requirement_code": "qualifications_evidence",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Degree certificates or employment certificates in your company's line of business",
+      "description": "Conditional on having them. Migri does not require qualifications for this permit — it requires the evidence where they exist.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of professional qualifications and competence (degree certificates and/or certificates of employment) add these attachments if you have relevant work experience or qualifications in your company’s line of business.",
+      "display_order": 200,
+      "source_excerpt_display": "Proof of professional qualifications and competence (degree certificates and/or certificates of employment) Add these attachments if you have relevant work experience or qualifications in your company’s line of business."
+    },
+    {
+      "requirement_code": "general_valid_passport",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: hold a valid national passport",
+      "description": "These six are what the Economic Development Centre checks BEFORE assessing the business — see the two-stage entry.",
+      "source_role": "eligibility",
+      "source_excerpt": "you have a valid passport. when you apply for a residence permit, you must usually have a valid national passport.",
+      "display_order": 210,
+      "source_excerpt_display": "You have a valid passport. When you apply for a residence permit, you must usually have a valid national passport."
+    },
+    {
+      "requirement_code": "general_no_entry_prohibition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: no prohibition of entry against you",
+      "source_role": "eligibility",
+      "source_excerpt": "you have not been prescribed a prohibition of entry.",
+      "display_order": 220,
+      "source_excerpt_display": "You have not been prescribed a prohibition of entry."
+    },
+    {
+      "requirement_code": "general_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public order or security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public order or security.",
+      "display_order": 230,
+      "source_excerpt_display": "You are not a danger to public order or security."
+    },
+    {
+      "requirement_code": "general_national_security",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to national security",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to national security.",
+      "display_order": 240,
+      "source_excerpt_display": "You are not a danger to national security."
+    },
+    {
+      "requirement_code": "general_public_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to public health",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to public health.",
+      "display_order": 250,
+      "source_excerpt_display": "You are not a danger to public health."
+    },
+    {
+      "requirement_code": "general_international_relations",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General entry requirement: not a danger to Finland's international relations",
+      "source_role": "eligibility",
+      "source_excerpt": "you are not a danger to finland’s international relations.",
+      "display_order": 260,
+      "source_excerpt_display": "You are not a danger to Finland’s international relations."
+    }
+  ]
+}

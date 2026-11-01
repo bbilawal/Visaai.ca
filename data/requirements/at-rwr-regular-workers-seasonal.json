@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-regular-workers-seasonal",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "This route rewards a work history rather than a qualification: seven months as a registered seasonal worker in the SAME industry within the last two years, plus A1 German and a binding permanent offer from that employer.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/regular-workers-in-tourism-agriculture-and-forestry/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as Singapore's MOM and the US ESTA pages already live.",
+  "not_extracted": [
+    "Fees. The page names none."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "seasonal_history_7_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Seven months' registered seasonal work in the same industry within two years",
+      "description": "Both the duration and the same-industry constraint are stated; a season in a different sector does not count.",
+      "source_role": "requirements",
+      "source_excerpt": "you have been employed for at least 7 months in the last two years as a registered regular seasonal worker in the same industry,",
+      "display_order": 10,
+      "source_excerpt_display": "you have been employed for at least 7 months in the last two years as a registered Regular Seasonal Worker in the same industry,"
+    },
+    {
+      "requirement_code": "german_a1",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "German at A1 level",
+      "description": "The lowest German requirement of any Austrian route extracted so far.",
+      "source_role": "requirements",
+      "source_excerpt": "you can proof german language skills at a1 level,",
+      "display_order": 20,
+      "source_excerpt_display": "you can proof German language skills at A1 level,"
+    },
+    {
+      "requirement_code": "binding_permanent_offer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A binding offer of permanent employment from that employer",
+      "description": "The offer must be for permanent work, which is what distinguishes this from continuing seasonal employment.",
+      "source_role": "requirements",
+      "source_excerpt": "you have received a binding job offer for permanent employment by your respective employer, and",
+      "display_order": 30,
+      "source_excerpt_display": "you have received a binding job offer for permanent employment by your respective employer, and"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, under six months old",
+      "description": "Quoted as published, including the page's own spelling.",
+      "source_role": "requirements",
+      "source_excerpt": "photo (dimensions: 45x35mm) wich is not older than six month",
+      "display_order": 40,
+      "source_excerpt_display": "Photo (dimensions: 45x35mm) wich is not older than six month"
+    },
+    {
+      "requirement_code": "health_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance covering all risks",
+      "description": "Compulsory insurance or an equivalent policy.",
+      "source_role": "requirements",
+      "source_excerpt": "evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)",
+      "display_order": 50,
+      "source_excerpt_display": "Evidence of health insurance covering all risks (compulsory health insurance or equivalent insurance policy)"
+    }
+  ]
+}

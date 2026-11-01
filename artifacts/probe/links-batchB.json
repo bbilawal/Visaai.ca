@@ -1,0 +1,1232 @@
+{
+  "probedAt": "2026-08-25T00:02:31.548Z",
+  "userAgent": "VisaAI-SourceMonitor/1.0 (+https://visaai.co/bots; visa requirement change monitoring)",
+  "report": [
+    {
+      "start": "https://www.isa.go.jp/",
+      "origin": "https://www.isa.go.jp",
+      "counts": {
+        "anchors": 233,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 0,
+        "visaLike": 0
+      },
+      "declaredSitemaps": [],
+      "probes": [],
+      "allVisaLikeUrls": []
+    },
+    {
+      "start": "https://www.moj.go.jp/isa/applications/status/index.html",
+      "origin": "https://www.moj.go.jp",
+      "counts": {
+        "anchors": 172,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 100,
+        "visaLike": 19
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://www.moj.go.jp/isa/about/organization/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1915,
+          "bytesRaw": 17006,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国在留管理庁の概要"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/about/region/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2139,
+          "bytesRaw": 18357,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "地方出入国在留管理官署"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2724,
+          "bytesRaw": 18905,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/tetuduki_index1_1.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2101,
+          "bytesRaw": 18071,
+          "markers": [
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入（帰）国手続について（解説）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/16-5.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4510,
+          "bytesRaw": 23179,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "再入国許可申請"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/ttp2_index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4212,
+          "bytesRaw": 23484,
+          "markers": [
+            "fee",
+            "要件",
+            "申請"
+          ],
+          "latestYear": 2025,
+          "anchorText": "トラスティド・トラベラー・プログラム（TTP）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/06_00005.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1924,
+          "bytesRaw": 17079,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "乗員上陸許可申請（NACCS）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/resources/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2046,
+          "bytesRaw": 17553,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "各種公表資料"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/faq/kanri_qa.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 30349,
+          "bytesRaw": 60059,
+          "markers": [
+            "必要書類",
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "出入国審査・在留審査Q&A"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3573,
+          "bytesRaw": 30558,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "在留手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2402,
+          "bytesRaw": 19733,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "在留資格から探す"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4662,
+          "bytesRaw": 24810,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": 2026,
+          "anchorText": "在留支援"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/guidance/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 6160,
+          "bytesRaw": 30137,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "新規入国者向けガイダンスページ"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/fresc/fresc01.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 12164,
+          "bytesRaw": 58762,
+          "markers": [
+            "要件",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "外国人在留支援センター(FRESC／フレスク）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/qaq5.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 6824,
+          "bytesRaw": 26040,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "在留資格一覧表"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/consultation/center/index.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5725,
+          "bytesRaw": 29529,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "外国人在留総合インフォメーションセンター"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/student.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 9718,
+          "bytesRaw": 35835,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "21. 留学"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/spouseorchildofpermanentresident.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 9760,
+          "bytesRaw": 35750,
+          "markers": [
+            "必要書類",
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "27. 永住者の配偶者等"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/longtermresident.html",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2606,
+          "bytesRaw": 18420,
+          "markers": [
+            "申請"
+          ],
+          "latestYear": null,
+          "anchorText": "28. 定住者"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://www.moj.go.jp/isa/about/organization/index.html",
+          "text": "出入国在留管理庁の概要"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/about/region/index.html",
+          "text": "地方出入国在留管理官署"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/index.html",
+          "text": "出入国手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/tetuduki_index1_1.html",
+          "text": "出入（帰）国手続について（解説）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/16-5.html",
+          "text": "再入国許可申請"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/ttp2_index.html",
+          "text": "トラスティド・トラベラー・プログラム（TTP）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/procedures/06_00005.html",
+          "text": "乗員上陸許可申請（NACCS）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/resources/index.html",
+          "text": "各種公表資料"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/immigration/faq/kanri_qa.html",
+          "text": "出入国審査・在留審査Q&A"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/index.html",
+          "text": "在留手続"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+          "text": "在留資格から探す"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/index.html",
+          "text": "在留支援"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/guidance/index.html",
+          "text": "新規入国者向けガイダンスページ"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/support/fresc/fresc01.html",
+          "text": "外国人在留支援センター(FRESC／フレスク）"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/qaq5.html",
+          "text": "在留資格一覧表"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/consultation/center/index.html",
+          "text": "外国人在留総合インフォメーションセンター"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/student.html",
+          "text": "21. 留学"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/spouseorchildofpermanentresident.html",
+          "text": "27. 永住者の配偶者等"
+        },
+        {
+          "url": "https://www.moj.go.jp/isa/applications/status/longtermresident.html",
+          "text": "28. 定住者"
+        }
+      ]
+    },
+    {
+      "start": "https://www.mol.gov.om/",
+      "origin": "https://www.mol.gov.om",
+      "counts": {
+        "anchors": 220,
+        "payload": 0,
+        "sitemapPages": 250,
+        "sameHost": 362,
+        "visaLike": 31
+      },
+      "declaredSitemaps": [
+        "https://www.mol.gov.om/sitemap.xml"
+      ],
+      "probes": [
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/Heat-WorkPermit-Application-348",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7152,
+          "bytesRaw": 92637,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تصاريح العمل في أوقات الظهيرة لأشهر الصيف&nbsp; جديد"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/Reactivate-Work-permit-Individuals-336",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5514,
+          "bytesRaw": 90470,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "خدمة إرجاع العامل على رأس العمل (الأفراد)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-273",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5696,
+          "bytesRaw": 90194,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "إصدار تصاريح مزاولة العمل الخاصة (الأفراد)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-individuals-290",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7170,
+          "bytesRaw": 93793,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-individuals-288",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5472,
+          "bytesRaw": 90598,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Commercial-Work-Permit-establishments-284",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7689,
+          "bytesRaw": 94711,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Issuance-establishments-283",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5576,
+          "bytesRaw": 91112,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-establishments-282",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5839,
+          "bytesRaw": 91474,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Amendment-establishments-281",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5788,
+          "bytesRaw": 91330,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/eservices/employer/HeatWorkPermitApplication/HeatWorkPermitApplicationList",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 123,
+          "bytesRaw": 246,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "ابدأ الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Heat-WorkPermit-Application-348",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7152,
+          "bytesRaw": 92637,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Reactivate-Work-permit-335",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5780,
+          "bytesRaw": 90338,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-Individuals-273",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5696,
+          "bytesRaw": 90194,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Reactivate-Work-permit-Individuals-336",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5514,
+          "bytesRaw": 90470,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Issuance-individual-289",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 5313,
+          "bytesRaw": 90768,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/BotDetectCaptcha.ashx?get=sound&amp;c=ResidentDataCaptcha&amp;t=beb8c2aedaad4248a592235dccdeffb4",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 124,
+          "bytesRaw": 247,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": ""
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEservices/Details/Commercial-Work-Permit-establishments-284",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7689,
+          "bytesRaw": 94711,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "إصدار تصاريح مزاولة العمل التجاري"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEservices/Details/Private-Work-Permit-individuals-290",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7170,
+          "bytesRaw": 93793,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "إصدار تصاريح مزاولة العمل الخاصة"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/commercial-work-permit-establishments-284",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7689,
+          "bytesRaw": 94711,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-290",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 7170,
+          "bytesRaw": 93793,
+          "markers": [
+            "شروط",
+            "وثائق",
+            "مستندات",
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "(from sitemap)"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/Heat-WorkPermit-Application-348",
+          "text": "تصاريح العمل في أوقات الظهيرة لأشهر الصيف&nbsp; جديد"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/Reactivate-Work-permit-Individuals-336",
+          "text": "خدمة إرجاع العامل على رأس العمل (الأفراد)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-273",
+          "text": "إصدار تصاريح مزاولة العمل الخاصة (الأفراد)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-individuals-290",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-individuals-288",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Commercial-Work-Permit-establishments-284",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Issuance-establishments-283",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-establishments-282",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Amendment-establishments-281",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/eservices/employer/HeatWorkPermitApplication/HeatWorkPermitApplicationList",
+          "text": "ابدأ الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Heat-WorkPermit-Application-348",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Reactivate-Work-permit-335",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-Individuals-273",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Reactivate-Work-permit-Individuals-336",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Issuance-individual-289",
+          "text": "تفاصيل الخدمة"
+        },
+        {
+          "url": "https://www.mol.gov.om/BotDetectCaptcha.ashx?get=sound&amp;c=ResidentDataCaptcha&amp;t=beb8c2aedaad4248a592235dccdeffb4",
+          "text": ""
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEservices/Details/Commercial-Work-Permit-establishments-284",
+          "text": "إصدار تصاريح مزاولة العمل التجاري"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEservices/Details/Private-Work-Permit-individuals-290",
+          "text": "إصدار تصاريح مزاولة العمل الخاصة"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/commercial-work-permit-establishments-284",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/private-work-permit-individuals-290",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/work-permit-issuance-individual-289",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/work-permit-renewal-individuals-288",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/work-permit-amendment-individuals-287",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/work-permit-transfer-individuals-286",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/manpoweralleservices/details/cancellation-of-work-permit-individuals-285",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Transfer-establishments-280",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Amendment-individuals-287",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Transfer-Individuals-286",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Cancellation-of-work-permit-individuals-285",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/ManpowerAllEServices/Details/Cancellation-of-work-permit-establishments-279",
+          "text": "(from sitemap)"
+        },
+        {
+          "url": "https://www.mol.gov.om/CMSUploadFolder/site/WebSitePublications\\23112015%20090125%20%D8%B5_aoj0ggc2y2u4pkl3zpbvtm1z20151020159124study_publiactions.pdf",
+          "text": "(from sitemap)"
+        }
+      ]
+    },
+    {
+      "start": "https://evisa.rop.gov.om/en/types-of-visa",
+      "origin": "https://evisa.rop.gov.om",
+      "counts": {
+        "anchors": 37,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 8,
+        "visaLike": 8
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://evisa.rop.gov.om/en/home",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3848,
+          "bytesRaw": 73886,
+          "markers": [
+            "apply"
+          ],
+          "latestYear": null,
+          "anchorText": ""
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/types-of-visa",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 927,
+          "bytesRaw": 44892,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "Know your Visa Type"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/track-your-application",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3545,
+          "bytesRaw": 108528,
+          "markers": [
+            "document"
+          ],
+          "latestYear": null,
+          "anchorText": "Track Your Application"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/reach-us",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 964,
+          "bytesRaw": 43658,
+          "markers": [
+            "fee"
+          ],
+          "latestYear": null,
+          "anchorText": "Contact Us"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/frequently-asked-questions",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 704,
+          "bytesRaw": 42694,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "Frequently Asked Questions"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/loginportal",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 798,
+          "bytesRaw": 53195,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "Tourist"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/evisalogin",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1008,
+          "bytesRaw": 51418,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "PRO / Sponsor"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/types-of-visa?p_auth=QOFM8v1k&amp;p_p_auth=SFW6K04b&amp;p_p_id=49&amp;p_p_lifecycle=1&amp;p_p_state=normal&amp;p_p_mode=view&amp;p_p_col_count=1&amp;_49_struts_action=%2Fmy_sites%2Fview&amp;_49_groupId=10183&amp;_49_privateLayout=false",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 501,
+          "bytesRaw": 40817,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": ""
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://evisa.rop.gov.om/en/home",
+          "text": ""
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/types-of-visa",
+          "text": "Know your Visa Type"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/track-your-application",
+          "text": "Track Your Application"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/reach-us",
+          "text": "Contact Us"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/frequently-asked-questions",
+          "text": "Frequently Asked Questions"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/loginportal",
+          "text": "Tourist"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/evisalogin",
+          "text": "PRO / Sponsor"
+        },
+        {
+          "url": "https://evisa.rop.gov.om/en/types-of-visa?p_auth=QOFM8v1k&amp;p_p_auth=SFW6K04b&amp;p_p_id=49&amp;p_p_lifecycle=1&amp;p_p_state=normal&amp;p_p_mode=view&amp;p_p_col_count=1&amp;_49_struts_action=%2Fmy_sites%2Fview&amp;_49_groupId=10183&amp;_49_privateLayout=false",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "start": "https://www.mofa.gov.sa/en/eservices/Pages/default.aspx",
+      "origin": "https://www.mofa.gov.sa",
+      "counts": {
+        "anchors": 180,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 130,
+        "visaLike": 1
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://www.mofa.gov.sa/en/eservices/Pages/svcPassportRegister.aspx",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4494,
+          "bytesRaw": 183883,
+          "markers": [
+            "requirement",
+            "document",
+            "fee",
+            "valid passport",
+            "متطلبات",
+            "مستندات"
+          ],
+          "latestYear": 2026,
+          "anchorText": ""
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://www.mofa.gov.sa/en/eservices/Pages/svcPassportRegister.aspx",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "start": "https://visa.mofa.gov.sa/",
+      "origin": "https://visa.mofa.gov.sa",
+      "counts": {
+        "anchors": 30,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 10,
+        "visaLike": 10
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Login/Company",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1309,
+          "bytesRaw": 34368,
+          "markers": [],
+          "latestYear": 2026,
+          "anchorText": "حساب دخول للجهة"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1269,
+          "bytesRaw": 44582,
+          "markers": [],
+          "latestYear": 2026,
+          "anchorText": "منصة التأشيرات"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Templates/UserManualAr.pdf",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 772319,
+          "bytesRaw": 1522655,
+          "markers": [
+            "fee"
+          ],
+          "latestYear": 2022,
+          "anchorText": "مساعدة"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Support",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1237,
+          "bytesRaw": 29559,
+          "markers": [],
+          "latestYear": 2026,
+          "anchorText": "اﻟﺪﻋﻢ اﻟﻔﻨﻲ"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Loginindividuals",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1704,
+          "bytesRaw": 39191,
+          "markers": [],
+          "latestYear": 2026,
+          "anchorText": "دخول الأفراد"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Login",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 1309,
+          "bytesRaw": 34360,
+          "markers": [],
+          "latestYear": 2026,
+          "anchorText": "دخول الجهات الحكومية وقطاع الأعمال"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=1",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 8157,
+          "bytesRaw": 92534,
+          "markers": [
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "خدمات الزوار"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=2",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 8157,
+          "bytesRaw": 92534,
+          "markers": [
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "خدمات المواطنين والمقيمين"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=3",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 8157,
+          "bytesRaw": 92534,
+          "markers": [
+            "رسوم"
+          ],
+          "latestYear": 2026,
+          "anchorText": "خدمات الأعمال و الجهات"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Templates/Usage%20policy%20-%20AR.pdf",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 618434,
+          "bytesRaw": 1149277,
+          "markers": [],
+          "latestYear": null,
+          "anchorText": "سياسة الاستخدام"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Login/Company",
+          "text": "حساب دخول للجهة"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index",
+          "text": "منصة التأشيرات"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Templates/UserManualAr.pdf",
+          "text": "مساعدة"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Support",
+          "text": "اﻟﺪﻋﻢ اﻟﻔﻨﻲ"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Loginindividuals",
+          "text": "دخول الأفراد"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Account/Login",
+          "text": "دخول الجهات الحكومية وقطاع الأعمال"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=1",
+          "text": "خدمات الزوار"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=2",
+          "text": "خدمات المواطنين والمقيمين"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Home/Index2?service_type=3",
+          "text": "خدمات الأعمال و الجهات"
+        },
+        {
+          "url": "https://visa.mofa.gov.sa/Templates/Usage%20policy%20-%20AR.pdf",
+          "text": "سياسة الاستخدام"
+        }
+      ]
+    },
+    {
+      "start": "https://www.mofa.gov.qa/en/home",
+      "origin": "https://www.mofa.gov.qa",
+      "counts": {
+        "anchors": 116,
+        "payload": 0,
+        "sitemapPages": 0,
+        "sameHost": 45,
+        "visaLike": 6
+      },
+      "declaredSitemaps": [],
+      "probes": [
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 3185,
+          "bytesRaw": 54893,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2868,
+          "bytesRaw": 55950,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4034,
+          "bytesRaw": 70127,
+          "markers": [
+            "document",
+            "fee"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 4078,
+          "bytesRaw": 53243,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2025,
+          "anchorText": "Travel Advisory"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/Item%20with%20ID:",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 135,
+          "bytesRaw": 935,
+          "markers": [],
+          "latestYear": 2017,
+          "anchorText": "Travel-Preregistration"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/qatar/latest-articles/latest-news/details/2026/08/24/hh-the-amir-receives-written-message-from-president-of-united-republic-of-tanzania",
+          "outcome": "ok",
+          "httpStatus": 200,
+          "chars": 2748,
+          "bytesRaw": 51122,
+          "markers": [
+            "document"
+          ],
+          "latestYear": 2026,
+          "anchorText": "HH the Amir Receives Written Message from President of United Republic of Tanzania"
+        }
+      ],
+      "allVisaLikeUrls": [
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/consular-services",
+          "text": "Embassy Services"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/visas",
+          "text": "Visas"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/legalization",
+          "text": "Legalization"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/consular-services/travel-advisory",
+          "text": "Travel Advisory"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/Item%20with%20ID:",
+          "text": "Travel-Preregistration"
+        },
+        {
+          "url": "https://mofa.gov.qa/en/qatar/latest-articles/latest-news/details/2026/08/24/hh-the-amir-receives-written-message-from-president-of-united-republic-of-tanzania",
+          "text": "HH the Amir Receives Written Message from President of United Republic of Tanzania"
+        }
+      ]
+    }
+  ]
+}

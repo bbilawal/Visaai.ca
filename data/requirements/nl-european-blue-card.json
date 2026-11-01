@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nl-european-blue-card",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IND page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://ind.nl/en/residence-permits/work/european-blue-card-residence-permit"
+  },
+  "page_dates": {
+    "requirements": "2026-06-15"
+  },
+  "not_extracted": [
+    "The Blue Card salary criterion amount. IND links a separate income page; the figure changes annually and is not stated here. What IS stated — that it is higher than the highly skilled migrant criterion — is recorded.",
+    "The named Dutch employment acts an employer must not have been fined under. IND lists them running into links.",
+    "The requirements that apply to everyone. Linked, not stated.",
+    "Long-term and short-term EU mobility rules for Blue Card holders moving between member states, which IND treats as separate situations.",
+    "Fee exceptions. Only the headline € 423,00 is recorded."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "non_eu_highly_educated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be a highly educated employee from outside the EU, EEA or Switzerland",
+      "source_role": "requirements",
+      "source_excerpt": "a european blue card is a european work and residence permit for highly educated employees from outside the european union (eu), the european economic area (eea), or switzerland .",
+      "display_order": 10,
+      "source_excerpt_display": "A European Blue Card is a European work and residence permit for highly educated employees from outside the European Union (EU), the European Economic Area (EEA), or Switzerland."
+    },
+    {
+      "requirement_code": "general_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the requirements that apply to everyone",
+      "description": "IND links a separate general-requirements page, not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the requirements that apply to everyone .",
+      "display_order": 20,
+      "source_excerpt_display": "You meet the requirements that apply to everyone."
+    },
+    {
+      "requirement_code": "highly_qualified_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work in the Netherlands must be highly qualified",
+      "source_role": "requirements",
+      "source_excerpt": "you will be doing highly qualified work in the netherlands and:",
+      "display_order": 30,
+      "source_excerpt_display": "You will be doing highly qualified work in the Netherlands and:"
+    },
+    {
+      "requirement_code": "higher_education_diploma",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A higher education diploma from a programme of at least 3 years, relevant to the profession",
+      "source_role": "requirements",
+      "source_excerpt": "you have a diploma of a programme in higher education. this programme was at least 3 years. the diploma is needed for the profession or sector and is appropriate for the profession or sector.",
+      "display_order": 40,
+      "source_excerpt_display": "you have a diploma of a programme in higher education. This programme was at least 3 years. The diploma is needed for the profession or sector and is appropriate for the profession or sector."
+    },
+    {
+      "requirement_code": "foreign_diploma_nuffic_evaluation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A foreign diploma must be evaluated by Nuffic",
+      "source_role": "requirements",
+      "source_excerpt": "do you have a foreign diploma? then nuffic must evaluate the diploma. this means that nuffic will examine what the foreign diploma (‘credential’) is worth in the netherlands,",
+      "display_order": 50,
+      "source_excerpt_display": "Do you have a foreign diploma? Then Nuffic must evaluate the diploma. This means that Nuffic will examine what the foreign diploma (‘credential’) is worth in the Netherlands,"
+    },
+    {
+      "requirement_code": "work_experience_alternative",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Or 5 years of relevant experience at higher-education level — 3 years for IT roles",
+      "description": "An alternative to the diploma, not an addition. The IT exception is shorter but time-bounded: 3 years within the 7 years before applying.",
+      "source_role": "requirements",
+      "source_excerpt": "or you have a minimum of 5 years of relevant work experience. your work experience is at the level of a higher education diploma. are you an it manager or it professional? a minimum of 3 years of relevant work experience is required during the period of 7 years before the application.",
+      "display_order": 60,
+      "source_excerpt_display": "or you have a minimum of 5 years of relevant work experience. Your work experience is at the level of a higher education diploma. Are you an IT manager or IT professional? A minimum of 3 years of relevant work experience is required during the period of 7 years before the application."
+    },
+    {
+      "requirement_code": "income_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the income requirements",
+      "description": "No figure recorded: IND links a separate income page that is not a registered source, and Blue Card salary criteria change annually. See blue_card_salary_higher for what this page DOES state about it.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the income requirements .",
+      "display_order": 70,
+      "source_excerpt_display": "You meet the income requirements."
+    },
+    {
+      "requirement_code": "blue_card_salary_higher",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Blue Card salary criterion is higher than the highly skilled migrant reduced criterion",
+      "description": "Recorded because the two permits look interchangeable and are not. Someone choosing the Blue Card for its residency benefit needs to know the salary bar is higher.",
+      "source_role": "requirements",
+      "source_excerpt": "the reduced salary criterion is higher for the european blue card in comparison to the criterion for highly skilled migrants.",
+      "display_order": 80,
+      "source_excerpt_display": "The reduced salary criterion is higher for the European Blue Card in comparison to the criterion for highly skilled migrants."
+    },
+    {
+      "requirement_code": "contract_at_least_6_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An employment contract valid for at least 6 months",
+      "source_role": "requirements",
+      "source_excerpt": "your employment contract is valid for at least 6 months.",
+      "display_order": 90,
+      "source_excerpt_display": "Your employment contract is valid for at least 6 months."
+    },
+    {
+      "requirement_code": "employer_economic_activity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your employer's company must carry out economic activity",
+      "source_role": "requirements",
+      "source_excerpt": "your employer's company carries out economic activity.",
+      "display_order": 100,
+      "source_excerpt_display": "Your employer's company carries out economic activity."
+    },
+    {
+      "requirement_code": "employer_not_fined",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your employer must not have been fined in the past 5 years under the named employment laws",
+      "description": "IND lists the specific acts in Dutch immediately after; the list is not reproduced because it runs into links.",
+      "source_role": "requirements",
+      "source_excerpt": "your employer has not been fined in the past 5 years for violating one of the following laws:",
+      "display_order": 110,
+      "source_excerpt_display": "Your employer has not been fined in the past 5 years for violating one of the following laws:"
+    },
+    {
+      "requirement_code": "no_recognised_sponsor_needed",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Your employer does NOT need to be an IND-recognised sponsor",
+      "description": "An absence of a requirement, recorded deliberately: it is the main practical difference from the highly skilled migrant permit and the reason many employers can use this route at all.",
+      "source_role": "requirements",
+      "source_excerpt": "your employer does not need to be a recognised sponsor in order to apply for a european blue card. for a highly skilled migrant application, this is mandatory.",
+      "display_order": 120,
+      "source_excerpt_display": "Your employer does not need to be a recognised sponsor in order to apply for a European Blue Card. For a highly skilled migrant application, this is mandatory."
+    },
+    {
+      "requirement_code": "may_apply_yourself",
+      "kind": "step",
+      "officially_required": true,
+      "label": "You or your employer may submit the application",
+      "description": "Unlike the highly skilled migrant permit and the student permit, both of which only a recognised sponsor can lodge.",
+      "source_role": "requirements",
+      "source_excerpt": "your employer will apply to the ind for the residence permit. your employer must do this within 3 months after you travel to the netherlands. you may also apply to the ind yourself.",
+      "display_order": 130,
+      "source_excerpt_display": "Your employer will apply to the IND for the residence permit. Your employer must do this within 3 months after you travel to the Netherlands. You may also apply to the IND yourself."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "parameters": {
+        "amount": 423,
+        "currency": "EUR",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "the application costs € 423,00. for all fees and exceptions, visit our web page fees: costs of an application .",
+      "display_order": 140,
+      "source_excerpt_display": "The application costs € 423,00. For all fees and exceptions, visit our web page Fees: costs of an application."
+    },
+    {
+      "requirement_code": "long_term_eu_residency_2_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "May allow EU long-term residency after 2 years instead of 5",
+      "description": "A benefit the permit grants, not an obligation. Recorded because it is the reason applicants choose this route over the highly skilled migrant permit.",
+      "source_role": "requirements",
+      "source_excerpt": "with a european blue card, you can in some cases apply for long-term eu residency after 2 years instead of 5 years.",
+      "display_order": 150,
+      "source_excerpt_display": "With a European Blue Card, you can in some cases apply for long-term EU residency after 2 years instead of 5 years."
+    }
+  ]
+}

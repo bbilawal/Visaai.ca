@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "gb-electronic-travel-authorisation-eta",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official GOV.UK pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. The UK publishes no application form identifier for the ETA — it is an online service and a mobile app — so official_form_code is null everywhere and the route is recorded as a step.",
+  "source_roles": {
+    "landing": "https://www.gov.uk/eta",
+    "eligibility": "https://www.gov.uk/eta/when-not-need-eta",
+    "application": "https://www.gov.uk/eta/apply"
+  },
+  "page_dates": {},
+  "not_extracted": [
+    "The list of nationalities that need an ETA rather than a visa. GOV.UK gates it behind the separate 'check if you need a UK visa or ETA' tool, so VisaAI cannot yet tell an applicant which applies to them. The landing page says only that you usually need an ETA rather than a visa if you are from Europe, the USA, Australia, Canada or certain other countries.",
+    "What you can and cannot do with an ETA. That is the unregistered sub-page /eta/what-you-can-and-cannot-do; the landing page links to it but does not restate its contents.",
+    "The digital photo rules for the face photo. GOV.UK holds them on a separate 'rules for digital photos' page that is not a registered source; the apply page only says the photo may be delayed or rejected if it does not meet them."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "eta_or_visa_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Most visitors need an ETA or a visa before travelling",
+      "description": "GOV.UK states what you need depends on your nationality and why you are coming, and publishes the nationality list only through a separate checker tool.",
+      "source_role": "landing",
+      "source_excerpt": "most visitors need an eta or a visa. what you need depends on: your nationality ... why you’re coming to the uk, jersey, guernsey or the isle of man",
+      "display_order": 10,
+      "source_excerpt_display": "Most visitors need an ETA or a visa. What you need depends on: your nationality ... why you’re coming to the UK, Jersey, Guernsey or the Isle of Man"
+    },
+    {
+      "requirement_code": "not_covered_by_an_exemption",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You need an ETA only if none of the ETA exemptions applies to you",
+      "description": "GOV.UK lists the exemptions: British or Irish citizen; you have a UK visa; you have permission to live, work or study in the UK (including settled or pre-settled status or right of abode); you have permission to live, work or study in Jersey, Guernsey or the Isle of Man; you are transiting a UK airport airside without passing border control; you travel on a British Overseas Territories citizen passport; you travel on a British National (Overseas) passport; you live in Ireland and travel from Ireland, Guernsey, Jersey or the Isle of Man; you are a child travelling on the France-UK school trip travel information form; you are exempt from immigration control or do not need permission to enter; or you are waiting for a decision on an EU Settlement Scheme application.",
+      "source_role": "eligibility",
+      "source_excerpt": "you do not need an eta to travel to the uk if: you’re a british or irish citizen",
+      "display_order": 20,
+      "source_excerpt_display": "You do not need an ETA to travel to the UK if: you’re a British or Irish citizen"
+    },
+    {
+      "requirement_code": "one_eta_per_traveller",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Every traveller needs their own ETA, including babies and children",
+      "description": "GOV.UK states you can apply on behalf of other people.",
+      "source_role": "landing",
+      "source_excerpt": "each person travelling needs an eta , including babies and children.",
+      "display_order": 30,
+      "source_excerpt_display": "Each person travelling needs an ETA, including babies and children."
+    },
+    {
+      "requirement_code": "landside_transit_needs_eta",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You need an ETA if you pass through UK border control while transiting",
+      "description": "GOV.UK says to check with your airline if you are not sure. Transiting airside, without passing border control, is listed among the exemptions.",
+      "source_role": "landing",
+      "source_excerpt": "you need an eta if you’re passing through border control at a uk airport before continuing your onward journey.",
+      "display_order": 40,
+      "source_excerpt_display": "You need an ETA if you’re passing through border control at a UK airport before continuing your onward journey."
+    },
+    {
+      "requirement_code": "dual_citizens_cannot_get_eta",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Dual citizens with British or Irish citizenship cannot get an ETA",
+      "description": "GOV.UK states such travellers prove citizenship instead with a valid British passport, another valid passport carrying a certificate of entitlement to the right of abode, or a valid Irish passport.",
+      "source_role": "eligibility",
+      "source_excerpt": "if you’re a dual citizen with british or irish citizenship, you cannot get an eta .",
+      "display_order": 50,
+      "source_excerpt_display": "If you’re a dual citizen with British or Irish citizenship, you cannot get an ETA."
+    },
+    {
+      "requirement_code": "eta_scope_and_duration",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An ETA allows visits of up to 6 months and lasts 2 years or until your passport expires",
+      "description": "GOV.UK states the ETA is linked to the passport you applied with, and that you can travel as many times as you want while you have one.",
+      "source_role": "landing",
+      "source_excerpt": "​​an electronic travel authorisation ( eta ) lets you travel to the uk, jersey, guernsey or the isle of man for up to 6 months.",
+      "display_order": 60,
+      "source_excerpt_display": "​​An electronic travel authorisation (ETA) lets you travel to the UK, Jersey, Guernsey or the Isle of Man for up to 6 months."
+    },
+    {
+      "requirement_code": "eta_does_not_guarantee_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An ETA does not guarantee entry",
+      "source_role": "landing",
+      "source_excerpt": "an eta does not guarantee entry to the uk, jersey, guernsey or the isle of man.",
+      "display_order": 70,
+      "source_excerpt_display": "An ETA does not guarantee entry to the UK, Jersey, Guernsey or the Isle of Man."
+    },
+    {
+      "requirement_code": "travel_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The passport you will travel with",
+      "source_role": "application",
+      "source_excerpt": "you’ll need: the passport you’ll travel with",
+      "display_order": 100,
+      "source_excerpt_display": "You’ll need: the passport you’ll travel with"
+    },
+    {
+      "requirement_code": "email_address",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An email address",
+      "description": "The decision, containing the 16-digit ETA reference number, is sent by email.",
+      "source_role": "application",
+      "source_excerpt": "an email address",
+      "display_order": 110,
+      "source_excerpt_display": "an email address"
+    },
+    {
+      "requirement_code": "payment_method",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A credit card, debit card, Apple Pay or Google Pay",
+      "source_role": "application",
+      "source_excerpt": "a credit card, debit card, apple pay or google pay",
+      "display_order": 120,
+      "source_excerpt_display": "a credit card, debit card, Apple Pay or Google Pay"
+    },
+    {
+      "requirement_code": "face_photo",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A photo of the face of the person applying",
+      "description": "GOV.UK states the application may be delayed or rejected if the photo does not meet its rules for digital photos of faces.",
+      "source_role": "application",
+      "source_excerpt": "when you apply, you’ll need to upload or take photos of the face of the person applying.",
+      "display_order": 130,
+      "source_excerpt_display": "When you apply, you’ll need to upload or take photos of the face of the person applying."
+    },
+    {
+      "requirement_code": "passport_and_face_photo_for_someone_else",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A photo of the passport and face of anyone you apply for who is not with you",
+      "source_role": "application",
+      "source_excerpt": "if the person you’re applying for is not with you, you must apply for their eta online. you’ll need a photo of their passport and a photo of their face.",
+      "display_order": 140,
+      "source_excerpt_display": "If the person you’re applying for is not with you, you must apply for their ETA online. You’ll need a photo of their passport and a photo of their face."
+    },
+    {
+      "requirement_code": "irish_residence_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "If you live in Ireland: an original, valid, Irish government-issued document proving it",
+      "description": "GOV.UK accepts an Irish driving licence, Irish learner permit, medical card, GP visit card, European Health Insurance Card, Irish residence permit, permanent residence certificate, national age card, or diplomatic identity card. Under 16s do not need to bring proof they live in Ireland.",
+      "rule": {
+        "fact": "residence_country",
+        "op": "eq",
+        "value": "IE"
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "if you’re 16 or older, you’ll need to bring one of the following: irish driving licence ... the document must be: an original ... issued by the irish government ... valid at the time you travel",
+      "display_order": 150,
+      "source_excerpt_display": "If you’re 16 or older, you’ll need to bring one of the following: Irish driving licence ... The document must be: an original ... issued by the Irish government ... valid at the time you travel"
+    },
+    {
+      "requirement_code": "apply_via_app_or_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply through the UK ETA app or online",
+      "description": "The UK publishes no form number for the ETA. GOV.UK states you should apply online if you cannot download the app on your phone, and that you cannot get a faster decision by applying through another website or app. Other websites may charge more; GOV.UK warns to avoid sites that imitate government services.",
+      "source_role": "application",
+      "source_excerpt": "apply on the uk eta app you’ll need to use your phone’s camera to scan your passport and your face.",
+      "display_order": 300,
+      "source_excerpt_display": "Apply on the UK ETA app You’ll need to use your phone’s camera to scan your passport and your face."
+    },
+    {
+      "requirement_code": "wait_for_decision_before_travel",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Wait for the email confirming your ETA before you travel",
+      "description": "GOV.UK states a decision usually arrives by email within a day but can take up to 3 working days, and that the email contains a 16-digit ETA reference number. People you applied for may get decisions at different times.",
+      "source_role": "application",
+      "source_excerpt": "you must wait until you get an email confirming you have an eta before you travel to the uk.",
+      "display_order": 310,
+      "source_excerpt_display": "You must wait until you get an email confirming you have an ETA before you travel to the UK."
+    },
+    {
+      "requirement_code": "eta_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Electronic Travel Authorisation fee",
+      "description": "GBP 20 per person, whether you apply online or through the UK ETA app. GOV.UK states there is no refund after you apply: if the application is rejected, or you need to change details, you must apply again and pay again.",
+      "parameters": {
+        "amount": 20,
+        "currency": "GBP",
+        "unit": "per person",
+        "refundable": false,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "application",
+      "source_excerpt": "it costs £20 to apply online or through the uk eta app. you cannot get a refund after you apply.",
+      "display_order": 400,
+      "source_excerpt_display": "It costs £20 to apply online or through the UK ETA app. You cannot get a refund after you apply."
+    }
+  ]
+}

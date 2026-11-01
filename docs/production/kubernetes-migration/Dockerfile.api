@@ -1,0 +1,57 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. Multi-stage image for apps/api (NestJS).
+# =============================================================================
+# Monorepo image built from the REPO ROOT as context:
+#   docker build -f docs/production/kubernetes-migration/Dockerfile.api \
+#     -t registry.example.com/visaai/api:$(git rev-parse --short HEAD) .
+#
+# Uses `pnpm deploy` to produce a self-contained, node_modules-included folder
+# for just the `api` package (resolves the workspace: protocol + hoisting so the
+# runtime image doesn't need the whole monorepo). Node 20 to match CI + VPS.
+#
+# The SAME image runs the HTTP API and the worker — the pod's APP_ROLE env
+# selects behaviour (see README §4 "APP_ROLE split"). One build, two Deployments.
+# =============================================================================
+
+# ---- base: pnpm via corepack, pinned to CI's major (9) ----------------------
+FROM node:20-slim AS base
+ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
+RUN corepack enable && corepack prepare pnpm@9 --activate
+WORKDIR /repo
+
+# ---- deps: install with full workspace context, cached on lockfile ----------
+FROM base AS deps
+# Copy only what the resolver needs first, for layer caching.
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY packages/types/package.json packages/types/
+COPY apps/api/package.json apps/api/
+# --frozen-lockfile matches CI; fails if lockfile is stale.
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+# ---- build: compile shared types then the api ------------------------------
+FROM deps AS build
+COPY packages/ packages/
+COPY apps/api/ apps/api/
+RUN pnpm build:types \
+ && pnpm --filter api build
+# Produce a self-contained prod bundle for `api` at /out (dist + prod deps only).
+RUN pnpm --filter api deploy --prod --legacy /out
+
+# ---- runner: minimal, non-root ---------------------------------------------
+FROM node:20-slim AS runner
+ENV NODE_ENV=production
+# dumb-init gives correct PID-1 signal handling so SIGTERM reaches Node for
+# graceful shutdown (see README §4 graceful-shutdown prerequisite).
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init \
+ && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=build /out/node_modules ./node_modules
+COPY --from=build /out/dist ./dist
+# Run as the built-in non-root `node` user.
+USER node
+EXPOSE 4000
+# APP_ROLE (api|worker) is injected per-Deployment; default 'api' here.
+ENV APP_ROLE=api
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "dist/main.js"]

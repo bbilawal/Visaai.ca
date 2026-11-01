@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-annual-residence",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "The annual residence page is a table of CIRCUMSTANCES — the spouse and children of a category-2 worker, the parent of a Lebanese citizen, the wife of a Lebanese citizen, the mother of a Lebanese child, a widow — each with its own document row. Every label below names the circumstance, because the required proof is entirely different between them and a merged list would be wrong for every reader.\n\nThe fees are the reason this route registers a second source. Several of the fee cells on the annual-residence page itself are rows of zeros — the authority's own placeholders — so no fee is quoted from that page. The published fee schedule is a separate page and the amounts come from there.",
+  "source_roles": {
+    "requirements": "https://www.general-security.gov.lb/en/posts/241",
+    "fees": "https://www.general-security.gov.lb/en/posts/169"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. So freshness here rests on a body-year rather than on a publication date. That is recorded rather than hidden — it is the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at — and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Every fee printed as a row of zeros. The annual-residence page states several fees as `000000 lbp` and `0000,000 lbp` — the authority's own placeholders, not amounts. They are quoted nowhere here. A zero fee published as a fee would tell somebody a residence permit is free.",
+    "Routes this authority enumerates and this batch has not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, and entry of artists in nightclubs. The artist, domestic-worker, religious, foreign-expert, passport-renewal and bank-statement routes named here previously are now EXTRACTED and live. Residence permits for Iraqi nationals (posts/428) is excluded on evidence: its served text refers to items (1) and (2) that are absent from the page.",
+    "The Arabic-language pages. This authority publishes an English tree and an Arabic tree; only the English tree is read, and no claim is made that the two say the same thing."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "worker_family_same_fee_as_worker",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: the same fee as the worker",
+      "description": "Stated as a relation rather than an amount, so it is quoted as one. No number is invented.",
+      "source_role": "requirements",
+      "source_excerpt": "the same fees requested from the worker (husband)",
+      "display_order": 10,
+      "source_excerpt_display": "The same fees requested from the worker (husband)"
+    },
+    {
+      "requirement_code": "worker_family_application_form",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: an application form filled and signed",
+      "description": "First row of the document list.",
+      "source_role": "requirements",
+      "source_excerpt": "an application form filled and signed",
+      "display_order": 20,
+      "source_excerpt_display": "An application form filled and signed"
+    },
+    {
+      "requirement_code": "worker_family_marriage_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: a document proving the marriage",
+      "description": "Listed for this circumstance.",
+      "source_role": "requirements",
+      "source_excerpt": "a document to prove their marriage",
+      "display_order": 30,
+      "source_excerpt_display": "A document to prove their marriage"
+    },
+    {
+      "requirement_code": "worker_family_passport_one_year",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: a passport valid at least a year, plus 2 copies",
+      "description": "Quoted with the authority’s own phrasing.",
+      "source_role": "requirements",
+      "source_excerpt": "a passport valid for a year at the least + 2 copies of the latter",
+      "parameters": {
+        "minimum_validity_years": 1,
+        "copies": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 40,
+      "source_excerpt_display": "A passport valid for a year at the least + 2 copies of the latter"
+    },
+    {
+      "requirement_code": "worker_family_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: three ID photos, 4.5 × 3.5 cm",
+      "description": "The dimensions are part of the requirement.",
+      "source_role": "requirements",
+      "source_excerpt": "three id photos 4.5 * 3.5 cm",
+      "parameters": {
+        "quantity": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "Three ID photos 4.5 * 3.5 cm"
+    },
+    {
+      "requirement_code": "worker_family_copy_of_worker_permit",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: a copy of the worker’s annual residency permit",
+      "description": "Listed for this circumstance.",
+      "source_role": "requirements",
+      "source_excerpt": "a copy of the annual residency permit owned by the worker",
+      "display_order": 60,
+      "source_excerpt_display": "A copy of the annual residency permit owned by the worker"
+    },
+    {
+      "requirement_code": "worker_family_notarised_non_working_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Spouse and children of a category-2 worker: a notarised attestation that they are not working, and that the head of the family supports minor children",
+      "description": "Two attestations in one row, quoted whole.",
+      "source_role": "requirements",
+      "source_excerpt": "an attestation done via a notary stipulating that the wife and kids are not working. an attestation that the head of the family is in financially in charge of the kids if they are minors.",
+      "display_order": 70,
+      "source_excerpt_display": "An attestation done via a notary stipulating that the wife and kids are not working. An attestation that the head of the family is in financially in charge of the kids if they are minors."
+    },
+    {
+      "requirement_code": "parent_family_ties_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Parent of a Lebanese citizen: an official document proving family ties",
+      "description": "Listed for this circumstance.",
+      "source_role": "requirements",
+      "source_excerpt": "an official document proving family ties",
+      "display_order": 80,
+      "source_excerpt_display": "An official document proving family ties"
+    },
+    {
+      "requirement_code": "parent_non_working_attestation_under_64",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Parent of a Lebanese citizen: a notarised attestation of no work, for those under 64",
+      "description": "Age-bounded, like the permanent-residence undertaking.",
+      "source_role": "requirements",
+      "source_excerpt": "an attestation of absence of work done via a notary, for those who are aged less than 64 years",
+      "parameters": {
+        "applies_under_age": 64,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 90,
+      "source_excerpt_display": "An attestation of absence of work done via a notary, for those who are aged less than 64 years"
+    },
+    {
+      "requirement_code": "parent_financial_responsibility_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Parent of a Lebanese citizen: an attestation that the Lebanese citizen is financially responsible",
+      "description": "Listed for this circumstance.",
+      "source_role": "requirements",
+      "source_excerpt": "an attestation stating that the lebanese citizen is financially responsible for the interested party",
+      "display_order": 100,
+      "source_excerpt_display": "An attestation stating that the Lebanese citizen is financially responsible for the interested party"
+    },
+    {
+      "requirement_code": "fee_work_residence_category_1_amount",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Category 1 annual work residence: LBP 108,000,000",
+      "description": "The amount, quoted from the fee schedule.",
+      "source_role": "fees",
+      "source_excerpt": "annual work residence permit (category 1) and family members ... lbp 108,000,000",
+      "parameters": {
+        "amount": 108000000,
+        "currency": "LBP",
+        "unit": "per year",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "Annual Work Residence Permit (Category 1) and family members ... LBP 108,000,000"
+    },
+    {
+      "requirement_code": "fee_work_residence_category_2_amount",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Category 2 annual work residence: LBP 72,000,000",
+      "description": "The amount, quoted from the fee schedule.",
+      "source_role": "fees",
+      "source_excerpt": "annual work residence permit (category 2) and family members ... lbp 72,000,000",
+      "parameters": {
+        "amount": 72000000,
+        "currency": "LBP",
+        "unit": "per year",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Annual Work Residence Permit (Category 2) and family members ... LBP 72,000,000"
+    },
+    {
+      "requirement_code": "fee_work_residence_category_3_amount",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Category 3 annual work residence: LBP 24,000,000",
+      "description": "The amount, quoted from the fee schedule.",
+      "source_role": "fees",
+      "source_excerpt": "annual work residence permit (category 3) ... lbp 24,000,000",
+      "parameters": {
+        "amount": 24000000,
+        "currency": "LBP",
+        "unit": "per year",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "Annual Work Residence Permit (Category 3) ... LBP 24,000,000"
+    },
+    {
+      "requirement_code": "fee_work_residence_category_4_amount",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Category 4 annual work residence: LBP 18,000,000",
+      "description": "The amount, quoted from the fee schedule.",
+      "source_role": "fees",
+      "source_excerpt": "annual work residence permit (category 4) ... lbp 18,000,000",
+      "parameters": {
+        "amount": 18000000,
+        "currency": "LBP",
+        "unit": "per year",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "Annual Work Residence Permit (Category 4) ... LBP 18,000,000"
+    },
+    {
+      "requirement_code": "fee_student_residence_amount",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Annual student residence permit: LBP 15,000,000",
+      "description": "The amount, quoted from the fee schedule.",
+      "source_role": "fees",
+      "source_excerpt": "annual student residence permit ... lbp 15,000,000",
+      "parameters": {
+        "amount": 15000000,
+        "currency": "LBP",
+        "unit": "per year",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "Annual Student Residence Permit ... LBP 15,000,000"
+    },
+    {
+      "requirement_code": "fee_urgent_service",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Urgent paid service: LBP 4,900,000 per permit, on top of the legal fee",
+      "description": "The authority states explicitly that this is IN ADDITION to the prescribed fee.",
+      "source_role": "fees",
+      "source_excerpt": "urgent paid service fee (processed by the public relations department) : lbp 4,900,000 per residence permit (in addition to the prescribed legal fee).",
+      "parameters": {
+        "amount": 4900000,
+        "currency": "LBP",
+        "unit": "per residence permit, in addition to the legal fee",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "Urgent Paid Service Fee (processed by the Public Relations Department): LBP 4,900,000 per residence permit (in addition to the prescribed legal fee)."
+    },
+    {
+      "requirement_code": "fee_three_year_is_three_times_annual",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "A three-year permit is charged three times the annual fee",
+      "description": "A rule rather than an amount, and quoted as one.",
+      "source_role": "fees",
+      "source_excerpt": "in cases where a three-year residence permit may be granted, a fee equal to three times the annual residence permit fee shall be charged.",
+      "display_order": 170,
+      "source_excerpt_display": "In cases where a three-year residence permit may be granted, a fee equal to three times the annual residence permit fee shall be charged."
+    }
+  ]
+}

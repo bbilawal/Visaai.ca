@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "au-skills-in-demand-visa-subclass-482",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official Department of Home Affairs page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim Department of Home Affairs wording in the Department's own casing. immi.homeaffairs.gov.au renders its visa content client-side; the wording quoted here is the page content as published in the page's own content payload, which is what a reader sees in a browser. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. Australia publishes no application form identifier for this visa - the application is made online in ImmiAccount - so official_form_code is null throughout.",
+  "source_roles": {
+    "landing": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482"
+  },
+  "not_extracted": [
+    "THIN SOURCE. Only the subclass 482 landing page could be read, and that page carries a short summary of the eligibility criteria rather than the full criteria. The registered 'eligibility' source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream) - which holds the per-stream criteria, evidence, steps and English language thresholds - was NOT read: immi.homeaffairs.gov.au returned HTTP 403 to the source monitor on this run and the rule is never to retry through a 403. This file is therefore a floor, not a complete picture of the subclass 482 requirements.",
+    "STREAM SCOPE. Subclass 482 has multiple streams (including the Core Skills stream registered as this entry's eligibility source). The three criteria recorded below come from the subclass-level landing page and are stated by the Department for the subclass, not for one stream. No stream-specific requirement is recorded.",
+    "The landing page's 'warning' slot contains unpublished CMS placeholder text ('Warning text here. Anchor with information here') rather than a real Departmental warning. It is ignored.",
+    "The registered 'forms' source (https://online.immi.gov.au/lusc/login) is disallowed by that host's robots.txt ('User-agent: * / Disallow: /'). It was not fetched and nothing is quoted from it.",
+    "Fees / visa application charge. The registered fees source (https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing) renders its whole price table client-side from an API; the served HTML contains only the column headings ('Base application charge', 'Additional applicant charge 18 and over', 'Additional applicant charge under 18', 'Non-internet application charge', 'Subsequent temporary application charge') and no amounts. No amount and no currency was stated, so no fee is recorded.",
+    "Page 'last updated' date. Rendered client-side and absent from the served HTML, so page_dates is empty."
+  ],
+  "page_dates": {},
+  "requirements": [
+    {
+      "requirement_code": "nominated_by_approved_sponsor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be nominated for a skilled position by an approved sponsor",
+      "description": "The Department describes the visa as one that lets an employer sponsor a suitably skilled worker to fill a position they cannot find a suitably skilled Australian to fill.",
+      "rule": {
+        "fact": "has_sponsor",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "landing",
+      "source_excerpt": "You must: be nominated for a skilled position by an approved sponsor",
+      "display_order": 10
+    },
+    {
+      "requirement_code": "right_skills_for_the_job",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have the right skills to do the job",
+      "description": "The landing page states this at subclass level and does not state how the skills are assessed. The stream page that would say more could not be read.",
+      "source_role": "landing",
+      "source_excerpt": "You must: have the right skills to do the job",
+      "display_order": 20
+    },
+    {
+      "requirement_code": "english_language_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the relevant English language requirements",
+      "description": "The landing page states the requirement exists but states no test, score or exemption. Those are on the stream page, which could not be read.",
+      "source_role": "landing",
+      "source_excerpt": "You must: meet the relevant English language requirements",
+      "display_order": 30
+    }
+  ]
+}

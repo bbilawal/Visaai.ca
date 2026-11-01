@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-visa-long-sejour",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French. France-Visas, which issues the visa, refuses our monitor at robots.txt and is neither registered nor read.",
+  "structure_note": "THE LONG-STAY VISA IS THREE DIFFERENT DOCUMENTS AND THE PAGE SAYS SO. A VLS-TS *is* a residence permit and must be validated online within three months. A visa marked 'carte de séjour à solliciter dans les 2 mois' is not, and requires a préfecture application within two months. A 'vacances-travail' visa is a third thing entirely, governed by a bilateral agreement whose terms differ per country. Publishing 'the French long-stay visa' as one set of rules would give two thirds of holders the wrong deadline, which is why each is recorded as its own requirement with its own clock.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16162"
+  },
+  "page_dates": {
+    "requirements": "2026-08-21"
+  },
+  "freshness_note": "Body dateline 'vérifié le 21 août 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The per-nationality working-holiday terms in full. The page publishes an accordion with a separate block for each partner country — age ranges, durations and whether another permit may be applied for all differ. Two are quoted below as the authority's own worked examples of the variation; the rest are NOT enumerated here, because a partial list of country blocks reads as a complete one. This is the Singapore V39A shape: one visa, many nationality regimes.",
+    "The visa fee and the VLS-TS validation tax. The page states a tax exists and is paid on top of the visa fee; no amount is published on this page.",
+    "The document list. Set per route by France-Visas, which refuses our monitor.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "long_stay_visa_mandatory_over_three_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A long-stay (type D) visa is mandatory to enter and stay in France for more than 3 months",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "pour entrer et séjourner plus de 3 mois en france, un étranger doit obligatoirement détenir un visa de long séjour ( type d ). ce visa est accordé par les autorités consulaires françaises.",
+      "source_excerpt_display": "Pour entrer et séjourner plus de 3 mois en France, un étranger doit obligatoirement détenir un visa de long séjour (type D). Ce visa est accordé par les autorités consulaires françaises."
+    },
+    {
+      "requirement_code": "long_stay_visa_permits_schengen_movement_up_to_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The type D visa also allows movement in the Schengen area, capped at 90 days within its validity",
+      "description": "Two limits at once: the visa lasts 3 months to a year in France, and permits at most 90 days elsewhere in Schengen during that time.",
+      "parameters": {
+        "france_stay_months_min": 3,
+        "france_stay_months_max": 12,
+        "schengen_days_max": 90
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "le visa de long séjour, type d , vous permet d'entrer et séjourner en france plus de 3 mois à 1 an . il permet aussi de circuler (sans autre visa) dans l'ensemble de l'espace schengen , à condition de ne pas dépasser 90 jours durant sa période de validité.",
+      "source_excerpt_display": "Le visa de long séjour, type D, vous permet d'entrer et séjourner en France plus de 3 mois à 1 an. Il permet aussi de circuler (sans autre visa) dans l'ensemble de l'espace Schengen, à condition de ne pas dépasser 90 jours durant sa période de validité."
+    },
+    {
+      "requirement_code": "short_stay_exemption_does_not_exempt_from_long_stay_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Being exempt from the short-stay visa does not exempt an adult from the long-stay visa",
+      "description": "The single most reachable wrong assumption on this route: a national who can visit France without a visa still needs one to stay.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "si vous êtes majeur, vous devez demander un visa de long séjour même si votre nationalité vous dispense de visa de court séjour.",
+      "source_excerpt_display": "Si vous êtes majeur, vous devez demander un visa de long séjour même si votre nationalité vous dispense de visa de court séjour."
+    },
+    {
+      "requirement_code": "visa_not_issued_in_three_cases",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three cases in which the visa is not issued at all",
+      "description": "Not refusal grounds to be argued — the page states the visa is not delivered. The first has a five-year clock and a humanitarian exception; the second carves out spouses of French nationals.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "le visa n'est pas délivré dans les cas suivants : étranger qui a fait l'objet d'une obligation de quitter le territoire français depuis moins de 5 ans et qui n'apporte pas la preuve qu'il a quitté le territoire français dans le délai qui lui a été accordé, sauf circonstances humanitaires",
+      "source_excerpt_display": "Le visa n'est pas délivré dans les cas suivants: Étranger qui a fait l'objet d'une obligation de quitter le territoire français depuis moins de 5 ans et qui n'apporte pas la preuve qu'il a quitté le territoire français dans le délai qui lui a été accordé, sauf circonstances humanitaires"
+    },
+    {
+      "requirement_code": "eu_law_exemptions_from_long_stay_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five categories are exempt from the long-stay visa under EU law",
+      "description": "Includes people who have held an equivalent EU Blue Card in another member state for at least a year, and ICT employees on long-term mobility — both easy to miss because they turn on a permit held elsewhere rather than on nationality.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous êtes dispensé de vls, conformément à des directives de l’union européenne, si vous êtes : citoyen européen ... étranger tiers titulaire de la « carte de séjour de membre de la famille d'un citoyen de l'union » délivrée par un état membre de l' ue",
+      "source_excerpt_display": "Vous êtes dispensé de VLS, conformément à des directives de l’Union européenne, si vous êtes: Citoyen européen ... Étranger tiers titulaire de la «carte de séjour de membre de la famille d'un citoyen de l'Union» délivrée par un État membre de l' UE"
+    },
+    {
+      "requirement_code": "international_agreement_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Nationals of Andorra, Monaco, San Marino and the Holy See are exempt under international agreements",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "vous êtes dispensé de visa long séjour en application d’accords internationaux si vous êtes ressortissants d’andorre, de monaco, de saint-marin ou du saint siège/vatican.",
+      "source_excerpt_display": "Vous êtes dispensé de visa long séjour en application d’accords internationaux si vous êtes ressortissants d’Andorre, de Monaco, de Saint-Marin ou du Saint siège/Vatican."
+    },
+    {
+      "requirement_code": "vls_ts_is_itself_a_residence_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A VLS-TS acts as a residence permit — no préfecture application on arrival",
+      "description": "Which of the three long-stay documents you hold decides everything that follows. Students, permanent-contract employees, spouses of French nationals and talent-card holders are named as the typical VLS-TS cases.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "ce visa, dit vls-ts , vaut titre de séjour et vous dispense de demande de carte de séjour en préfecture dès votre arrivée en france. vous êtes notamment concerné dans les cas suivants : étudiant salarié (titulaire d'un contrat à durée indéterminée) époux de français carte de séjour talents.",
+      "source_excerpt_display": "Ce visa, dit VLS-TS, vaut titre de séjour et vous dispense de demande de carte de séjour en préfecture dès votre arrivée en France. Vous êtes notamment concerné dans les cas suivants: Étudiant Salarié (titulaire d'un contrat à durée indéterminée) Époux de Français Carte de séjour Talents."
+    },
+    {
+      "requirement_code": "vls_ts_must_be_validated_within_three_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Validate the VLS-TS online within 3 months of arrival and pay the tax",
+      "description": "The deadline with the sharpest consequence on the route: without validation the holder is not in regular status and cannot re-cross the Schengen border. The tax is separate from and additional to the visa fee.",
+      "parameters": {
+        "validation_deadline_months_after_arrival": 3
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "dans les 3 mois suivant votre arrivée en france, vous devez valider votre vls-ts et payer une taxe qui s'ajoute aux droits de visa.",
+      "source_excerpt_display": "Dans les 3 mois suivant votre arrivée en France, vous devez valider votre VLS-TS et payer une taxe qui s'ajoute aux droits de visa."
+    },
+    {
+      "requirement_code": "vls_ts_unconditional_for_spouse_of_french_national",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A spouse of a French national receives the VLS-TS without condition, subject to three exceptions",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "si vous êtes marié avec un français, le vls-ts vous est délivré sans condition. il peut vous être refusé si votre mariage est frauduleux ou a été annulé ou si vous représentez une menace à l'ordre public.",
+      "source_excerpt_display": "Si vous êtes marié avec un Français, le VLS-TS vous est délivré sans condition. Il peut vous être refusé si votre mariage est frauduleux ou a été annulé ou si vous représentez une menace à l'ordre public."
+    },
+    {
+      "requirement_code": "carte_de_sejour_visa_two_month_prefecture_deadline",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A visa marked 'carte de séjour à solliciter dans les 2 mois' requires a préfecture application within 2 months of arrival",
+      "description": "A DIFFERENT deadline from the VLS-TS's three months, and a different office. Named on the visa sticker itself; the categories are family of French nationals, self-employed and liberal professions, several worker routes, retirees and artists.",
+      "parameters": {
+        "prefecture_application_deadline_months": 2
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "ce visa porte la mention carte de séjour à solliciter dans les 2 mois suivant l'arrivée . il vous permet d'entrer en france et d'obtenir une carte de séjour en préfecture.",
+      "source_excerpt_display": "Ce visa porte la mention carte de séjour à solliciter dans les 2 mois suivant l'arrivée. Il vous permet d'entrer en France et d'obtenir une carte de séjour en préfecture."
+    },
+    {
+      "requirement_code": "working_holiday_visa_needs_a_bilateral_agreement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A 'vacances-travail' visa requires a bilateral agreement between your country and France",
+      "description": "Nationality is the gate, and the page names Taiwan as the one case granted without an agreement.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "ce visa peut vous être délivré uniquement si votre pays est lié avec la france par un accord bilatéral \"vacances-travail\" . il peut également être délivré sans accord bilatéral pour les ressortissants taïwanais.",
+      "source_excerpt_display": "Ce visa peut vous être délivré uniquement si votre pays est lié avec la France par un accord bilatéral \"vacances-travail\". Il peut également être délivré sans accord bilatéral pour les ressortissants taïwanais."
+    },
+    {
+      "requirement_code": "working_holiday_one_year_no_extension",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The working-holiday visa lasts at most 1 year and cannot be extended, save exceptions in the agreements",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "sa durée est fixée à 1 an maximum. vous ne pourrez pas prolonger votre séjour au-delà de cette date, mais il peut avoir des exceptions prévues dans les accords.",
+      "source_excerpt_display": "Sa durée est fixée à 1 an maximum. Vous ne pourrez pas prolonger votre séjour au-delà de cette date, mais il peut avoir des exceptions prévues dans les accords."
+    },
+    {
+      "requirement_code": "working_holiday_terms_vary_by_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working-holiday terms differ per country — the age range, the duration, and whether another permit may be sought",
+      "description": "The page publishes a separate block per partner country and they genuinely disagree. Argentina is 18 to 35 with a route to a 'talent' card if applied for three months before expiry; Brazil is 18 to 30 with no other permit possible at all. Quoting either one as 'the working-holiday rule' would be wrong for the other. The full per-country list is deliberately not reproduced — see not_extracted.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "ce visa s'adresse aux jeunes de 18 à 35 ans . il a une durée maximum de 12 mois et vous dispense de demander une carte de séjour. vous ne pourrez pas prolonger votre séjour au-delà de durée autorisée. vous ne pouvez pas demander une carte de séjour pour un autre motif, mais il y a une exception si vous remplissez les conditions de délivrance d'une carte de séjour pluriannuelle « talent ». la demande de carte « talent » devra être faite 3 mois avant la date de fin de votre visa « vacances-travail ».",
+      "source_excerpt_display": "Ce visa s'adresse aux jeunes de 18 à 35 ans. Il a une durée maximum de 12 mois et vous dispense de demander une carte de séjour. Vous ne pourrez pas prolonger votre séjour au-delà de durée autorisée. Vous ne pouvez pas demander une carte de séjour pour un autre motif, mais il y a une exception si vous remplissez les conditions de délivrance d'une carte de séjour pluriannuelle «talent». La demande de carte «talent» devra être faite 3 mois avant la date de fin de votre visa «Vacances-travail»."
+    },
+    {
+      "requirement_code": "seasonal_worker_card_exempts_up_to_six_months_a_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A 'travailleur saisonnier' card exempts you from the long-stay visa, up to a cumulative 6 months per year",
+      "parameters": {
+        "cumulative_months_per_year": 6
+      },
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "si vous avez une carte de séjour « travailleur saisonnier », vous pouvez entrer en france pour travailler sans dépasser une durée cumulée de 6 mois par an.",
+      "source_excerpt_display": "Si vous avez une carte de séjour «travailleur saisonnier», vous pouvez entrer en France pour travailler sans dépasser une durée cumulée de 6 mois par an."
+    },
+    {
+      "requirement_code": "retired_card_holder_may_enter_at_any_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A 'retraité' or 'conjoint de retraité' card lets you enter at any time for stays under 1 year without a visa",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "si vous avez une carte de séjour « retraité » ou « conjoint de retraité » , vous pouvez entrer en france à tout moment pour y effectuer des séjours de moins d’1 an sans demander de visa.",
+      "source_excerpt_display": "Si vous avez une carte de séjour «retraité» ou «conjoint de retraité», vous pouvez entrer en France à tout moment pour y effectuer des séjours de moins d’1 an sans demander de visa."
+    }
+  ]
+}

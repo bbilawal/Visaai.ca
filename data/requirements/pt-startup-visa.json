@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-startup-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "THE GATE IS IAPMEI, NOT AIMA. The route requires proof of an innovative business inside a CERTIFIED incubator, evidenced by a declaration from IAPMEI, and pre-registration with IAPMEI is required before AIMA sees the file. Note also what is absent: no residence visa in the document list, which makes this one of the few routes that does not depend on the portal we cannot read.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/autorizacao-de-residencia-para-imigrantes-empreendedores-startup-visa-art-89-o-n-o-4"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "iapmei_declaration_of_innovative_business",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of creating an innovation-based company inside a certified incubator, by declaration from IAPMEI",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "comprovativo de criação de empresa de base inovadora integrada em incubadora certificada, mediante declaração do iapmei.",
+      "source_excerpt_display": "Comprovativo de criação de empresa de base inovadora integrada em incubadora certificada, mediante declaração do IAPMEI."
+    },
+    {
+      "requirement_code": "pre_registration_with_iapmei_required",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Proof of being inside a certified incubator under Portaria n.º 344/2017, and pre-registration with IAPMEI is required",
+      "description": "The sequencing is the requirement: IAPMEI first, AIMA second.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "exige pré-inscrição junto do iapmei, i.p.",
+      "source_excerpt_display": "Exige pré-inscrição junto do IAPMEI, I.P."
+    },
+    {
+      "requirement_code": "criminal_record_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A duly authenticated criminal record from your country of nationality, or from the country where you lived for more than a year before Portugal",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "registo criminal do país da nacionalidade ou do registo criminal do país onde a pessoa que requer residia há mais de um ano, antes de residir em portugal devidamente autenticado ;",
+      "source_excerpt_display": "Registo Criminal do país da nacionalidade ou do registo criminal do país onde a pessoa que requer residia há mais de um ano, antes de residir em Portugal devidamente autenticado;"
+    },
+    {
+      "requirement_code": "professional_body_declaration_where_regulated",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Where the profession requires special qualifications in Portugal, a declaration from the relevant professional body",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "declaração emitida pela respetiva ordem profissional sobre a verificação dos requisitos de inscrição ou documento comprovativo de que está habilitado ao exercício da profissão quando esta, em portugal, esteja sujeita a qualificações especiais.",
+      "source_excerpt_display": "Declaração emitida pela respetiva ordem profissional sobre a verificação dos requisitos de inscrição ou documento comprovativo de que está habilitado ao exercício da profissão quando esta, em Portugal, esteja sujeita a qualificações especiais."
+    },
+    {
+      "requirement_code": "validity_two_years_renewable_three",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Valid 2 years from issue, renewable for successive 3-year periods",
+      "parameters": {
+        "initial_years": 2,
+        "renewal_years": 3
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "a autorização de residência temporária para imigrantes empreendedores é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos.",
+      "source_excerpt_display": "A autorização de residência temporária para imigrantes empreendedores é válida pelo período de dois anos contados a partir da data da emissão do respetivo título e é renovável por períodos sucessivos de três anos."
+    },
+    {
+      "requirement_code": "general_negative_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Four conditions that must all be absent for a permit to be granted",
+      "description": "A single sentence carrying four separate bars: any fact that would have blocked the visa, a conviction carrying over one year of custody in Portugal, being inside a re-entry ban following removal, and an SII/UCFE alert for refusal of entry or return.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "a concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; ausência de condenação por crime que em portugal seja punível com pena privativa de liberdade de duração superior a um ano; não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; ausência de indicação no sii ucfe para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-a do repsae.",
+      "source_excerpt_display": "A concessão da autorização de residência implica: a inexistência de qualquer facto que, se fosse conhecido pelas autoridades competentes, devesse obstar à concessão do visto; Ausência de condenação por crime que em Portugal seja punível com pena privativa de liberdade de duração superior a um ano; Não se encontrar o requerente no período de interdição de entrada e de permanência em território nacional, subsequente a uma medida de afastamento; Ausência de indicação no SII UCFE para efeitos de recusa de entrada e de permanência ou de regresso, nos termos dos artigos 33.º e 33.º-A do REPSAE."
+    }
+  ]
+}

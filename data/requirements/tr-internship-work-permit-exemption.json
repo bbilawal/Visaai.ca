@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-internship-work-permit-exemption",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Turkish Ministry of Foreign Affairs page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Where the authority states a period or a threshold, the number is quoted rather than restated.",
+  "structure_note": "Article 55 of the enforcement regulation on Law 4817 lists thirteen lettered categories of work-permit exemption. They are quoted individually rather than summarised, because the exemptions differ by MONTHS — one month for scientific and cultural work, four for sport, three for machinery installation, six for fairs, eight for tour operators, two years for study visits — and a person reading a merged version would use the wrong number.",
+  "source_roles": {
+    "policy": "https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa",
+    "requirements": "https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa"
+  },
+  "page_dates": {
+    "policy": null,
+    "requirements": null
+  },
+  "freshness_note": "Neither page publishes a dateline or a Last-Modified header. The requirements page mentions no year at all; the companion policy page references 2026 in its body. So this route’s freshness rests on a body-year on one of its two sources and on nothing on the other. That is recorded rather than hidden — it is the same state check-source-freshness already reports for Singapore’s MOM pages, the US ESTA pages and all of Austria’s migration.gv.at — and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The visa-exemption roster. The requirements page enumerates fourteen countries whose nationals may enter on a national ID and eight whose expired passports are still accepted, and the companion page carries a country-by-country entry regime running to roughly two hundred entries. None of it is extracted: this registry publishes what a DESTINATION requires, and per-nationality entry policy is a different dataset that would need its own model, its own review and its own freshness guarantees.",
+    "The fee schedule. The authority links a separate PDF (vize-harc-miktarlari-en.pdf) rather than stating amounts in the page body. No Turkish visa fee amount is published here, because none was read from a page this registry monitors.",
+    "The catalogue subtypes with no published requirements. The catalogue page enumerates five classes and roughly thirty-five lettered subtypes, and only some carry a requirements section of their own. Registered here are the routes the authority actually describes: e-Visa, tourist, working, internship and work-permit exemption, tour operator representative, transportation, religious-foundation personnel, and archaeological/documentary. The official visa class, the student-education class and the individual tourist sub-purposes (transit, conference, festival, sportive activity, cultural artistic activity, official visit, visit to the Turkish Republic of Northern Cyprus) are ENUMERATED by the authority and carry no requirement text on either page, so they are named in the coverage-exception ledger rather than registered as empty routes.",
+    "The e-Visa portal itself. www.evisa.gov.tr returns 1,176 bytes that normalize to ZERO characters — it renders entirely by script — so nothing was read from it. Everything published about the e-Visa here comes from the ministry’s own server-rendered description of it."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "passport_validity_60_days_beyond_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Passport valid at least 60 days beyond the visa’s duration of stay",
+      "description": "Set by Article 7.1b of Law no. 6458. This is a validity margin ON TOP of the stay, not six months from arrival — the authority works both examples through on the page.",
+      "source_role": "policy",
+      "source_excerpt": "as of 1 january 2015, in accordance with the article 7.1b of “the law on foreigners and international protection” no. 6458, foreigners wishing to enter türkiye should carry a travel document (passport) with an expiration date at least 60 days beyond the “duration of stay” of their visa, e-visa, visa exemption, or residence permit.",
+      "parameters": {
+        "additional_validity_days": 60,
+        "measured_from": "duration of stay",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 10,
+      "source_excerpt_display": "As of 1 January 2015, in accordance with the article 7.1b of “the Law on Foreigners and International Protection” no. 6458, foreigners wishing to enter Türkiye should carry a travel document (passport) with an expiration date at least 60 days beyond the “duration of stay” of their visa, e-Visa, visa exemption, or residence permit."
+    },
+    {
+      "requirement_code": "stay_90_days_in_180",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Maximum 90 days of stay within any 180 days",
+      "description": "Binding on all foreigners, whether they travel on a visa or a visa exemption.",
+      "source_role": "requirements",
+      "source_excerpt": "the length of stay provided by visa or visa exemption cannot exceed 90 days within each 180 days. the regulation of 90 days of stay within the last 180 days is binding for all foreigners that will travel to türkiye.",
+      "parameters": {
+        "max_days": 90,
+        "window_days": 180,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "The length of stay provided by visa or visa exemption cannot exceed 90 days within each 180 days. The regulation of 90 days of stay within the last 180 days is binding for all foreigners that will travel to Türkiye."
+    },
+    {
+      "requirement_code": "medical_insurance_for_stay",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Medical insurance valid for the whole stay",
+      "description": "Required of all applicants, not of a particular route.",
+      "source_role": "requirements",
+      "source_excerpt": "all applicants are required to have a medical insurance that will be valid during their stay in türkiye.",
+      "display_order": 30,
+      "source_excerpt_display": "All applicants are required to have a medical insurance that will be valid during their stay in Türkiye."
+    },
+    {
+      "requirement_code": "apply_one_month_in_advance",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Apply at least one month before travel",
+      "description": "The authority’s own recommendation, stated as a processing-delay precaution.",
+      "source_role": "requirements",
+      "source_excerpt": "in order to avoid inconveniences that may be caused by delays in processing, it is recommended to apply for visas at least one month in advance before the planned travel.",
+      "display_order": 40,
+      "source_excerpt_display": "In order to avoid inconveniences that may be caused by delays in processing, it is recommended to apply for visas at least one month in advance before the planned travel."
+    },
+    {
+      "requirement_code": "visa_does_not_guarantee_entry",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa does not guarantee entry",
+      "description": "Stated by the authority in its own words.",
+      "source_role": "requirements",
+      "source_excerpt": "the visas submitted to foreigners do not guarantee absolute rights of entry to türkiye.",
+      "display_order": 50,
+      "source_excerpt_display": "The visas submitted to foreigners do not guarantee absolute rights of entry to Türkiye."
+    },
+    {
+      "requirement_code": "fees_not_refundable_on_refusal",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Visa fees are not refunded if the application is rejected",
+      "description": "The authority states this without qualification.",
+      "source_role": "requirements",
+      "source_excerpt": "visa fees are not refundable in cases where applications are rejected",
+      "display_order": 60,
+      "source_excerpt_display": "Visa fees are not refundable in cases where applications are rejected"
+    },
+    {
+      "requirement_code": "minor_needs_both_parents_approval",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicants under 18: written approval from BOTH parents",
+      "description": "The authority names the exceptions itself — divorce with proven custody, or a deceased parent — and they are quoted in the same sentence rather than dropped.",
+      "source_role": "requirements",
+      "source_excerpt": "any applicant under the age of 18 must submit official written approvals from both parents. for those applicants who certify that their parents are officially divorced and prove the parent holding their custody as well as for those with one parent deceased, visas may be issued in accordance with their purpose of visit.",
+      "parameters": {
+        "applies_under_age": 18,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 70,
+      "source_excerpt_display": "Any applicant under the age of 18 must submit official written approvals from both parents. For those applicants who certify that their parents are officially divorced and prove the parent holding their custody as well as for those with one parent deceased, visas may be issued in accordance with their purpose of visit."
+    },
+    {
+      "requirement_code": "stay_over_90_days_needs_residence_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Staying longer than 90 days requires a short-term residence permit",
+      "description": "A consular visa cannot exceed 90 days in any category; a longer stay is a separate application to the provincial migration directorate.",
+      "source_role": "requirements",
+      "source_excerpt": "in all types of visa applications, turkish consular offices may issue visas with a maximum duration of stay of 90 days. the foreigners who wish to stay longer than 90 days in türkiye, should apply for “short term residence permit” at the provincial directorate of migration administration in order to extend their residence.",
+      "display_order": 80,
+      "source_excerpt_display": "In all types of visa applications, Turkish consular offices may issue visas with a maximum duration of stay of 90 days. The foreigners who wish to stay longer than 90 days in Türkiye, should apply for “Short Term Residence Permit” at the Provincial Directorate of Migration Administration in order to extend their residence."
+    },
+    {
+      "requirement_code": "private_internship_needs_work_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A private internship outside Article 55 needs a work permit",
+      "description": "The default, stated before the exemptions.",
+      "source_role": "requirements",
+      "source_excerpt": "applicants need to obtain a work permit from the ministry of labor and social security pursuant to the law numbered 4817 for private internship applications outside the provisions set forth in the article 55 \"work permit exemption\" title of law enforcement regulation about working permits of foreigners.",
+      "display_order": 90,
+      "source_excerpt_display": "Applicants need to obtain a work permit from the Ministry of Labor and Social Security pursuant to the Law numbered 4817 for private internship applications outside the provisions set forth in the Article 55 \"Work Permit Exemption\" title of Law Enforcement Regulation about Working Permits of Foreigners."
+    },
+    {
+      "requirement_code": "article_55_defines_the_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Article 55 defines who is exempt and for how long",
+      "description": "The authority’s framing of the list that follows.",
+      "source_role": "requirements",
+      "source_excerpt": "article 55 of the law enforcement regulation on working permits of foreigners no. 4817 regulating working permit exemptions, the extent and the lengths of time the foreigners are exempt from working permit are stated. those who meet the requirements below do not need to obtain a work permit.",
+      "display_order": 100,
+      "source_excerpt_display": "Article 55 of the Law Enforcement Regulation on Working Permits of Foreigners no. 4817 regulating working permit exemptions, the extent and the lengths of time the foreigners are exempt from working permit are stated. Those who meet the requirements below do not need to obtain a work permit."
+    },
+    {
+      "requirement_code": "exempt_scientific_cultural_under_one_month_sport_under_four",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exempt: scientific, cultural or artistic visits under one month; sport under four months",
+      "description": "One clause, two different limits. Quoting either alone would give the wrong ceiling to the other group.",
+      "source_role": "requirements",
+      "source_excerpt": "the foreigners holding permanent residences abroad and wishing to visit türkiye temporarily with purposes of scientific studies, cultural and artistic activities for a period shorter than a month and with the aim of sporting activities for a period less than four months,",
+      "parameters": {
+        "scientific_cultural_max_months": 1,
+        "sport_max_months": 4,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 110,
+      "source_excerpt_display": "the foreigners holding permanent residences abroad and wishing to visit Türkiye temporarily with purposes of scientific studies, cultural and artistic activities for a period shorter than a month and with the aim of sporting activities for a period less than four months,"
+    },
+    {
+      "requirement_code": "exempt_machinery_installation_three_months_per_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exempt: installing, maintaining or repairing imported machinery — three months in a year, and it must be evidenced",
+      "description": "The three-month ceiling is measured from the date of entry and the traveller carries the burden of proving it.",
+      "source_role": "requirements",
+      "source_excerpt": "for the purpose of installation, maintenance and repair of machinery and equipment imported to türkiye, providing training for their utilization or transporting of defective equipment from türkiye and provided that they do not exceed the total stay of three months within a year as of the date of entry into türkiye and verify this condition with the documents that they will submit, the ones coming to türkiye,",
+      "parameters": {
+        "max_months_per_year": 3,
+        "measured_from": "date of entry",
+        "read_at": "2026-08-24"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "For the purpose of installation, maintenance and repair of machinery and equipment imported to Türkiye, providing training for their utilization or transporting of defective equipment from Türkiye and provided that they do not exceed the total stay of three months within a year as of the date of entry into Türkiye and verify this condition with the documents that they will submit, the ones coming to Türkiye,"
+    },
+    {
+      "requirement_code": "exempt_fairs_and_circuses_six_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exempt: entertainers and performers at fairs and circuses — six months",
+      "description": "Scoped by the authority to activity OUTSIDE certificated tourism establishments.",
+      "source_role": "requirements",
+      "source_excerpt": "being an entertainer, performer and etc. in charge at fair and circuses which are going to carry out activities outside the borders of certificated tourism establishments and provided that they do not exceed six months as of the date of entry into türkiye and verify this condition with the documents that they will submit, the ones in türkiye",
+      "parameters": {
+        "max_months": 6,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "Being an entertainer, performer and etc. in charge at fair and circuses which are going to carry out activities outside the borders of certificated tourism establishments and provided that they do not exceed six months as of the date of entry into Türkiye and verify this condition with the documents that they will submit, the ones in Türkiye"
+    },
+    {
+      "requirement_code": "exempt_study_visits_two_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exempt: study visits to state institutions and universities — up to two years",
+      "description": "Limited to the period of study, and evidenced by documents.",
+      "source_role": "requirements",
+      "source_excerpt": "on condition that it does not exceed two years and it will be limited to the period of study, the foreigners coming to state institutions and organizations together with the universities so as to enhance their information and good manners by verifying their state via the documents that they will submit,",
+      "parameters": {
+        "max_years": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "On condition that it does not exceed two years and it will be limited to the period of study, the foreigners coming to state institutions and organizations together with the universities so as to enhance their information and good manners by verifying their state via the documents that they will submit,"
+    },
+    {
+      "requirement_code": "exemption_once_per_calendar_year_and_three_month_gap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The exemption can be used once per calendar year, and only three months after the last permit expired",
+      "description": "The sting in the tail of Article 55, and the reason a second short assignment in the same year needs a work visa.",
+      "source_role": "requirements",
+      "source_excerpt": "within the scope of article 55, residence permits of the foreigners coming to türkiye are given as “short term\" residence permits by provincial directorate of migration administration. exemption periods cannot be extended, the foreigners under this provision can make use of exemption rules only once within one calendar year. however, it is required that it must have been three months as of the expiry date of the residence permit granted to the foreigner with the same purpose in order to exercise this right. in case of the need of working longer than the exemption period allows, the foreigner has to obtain a work visa through the ministry of labor and social security.",
+      "parameters": {
+        "uses_per_calendar_year": 1,
+        "gap_months": 3,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "Within the scope of article 55, residence permits of the foreigners coming to Türkiye are given as “Short Term\" residence permits by Provincial Directorate of Migration Administration. Exemption periods cannot be extended, the foreigners under this provision can make use of exemption rules only once within one calendar year. However, it is required that it must have been three months as of the expiry date of the residence permit granted to the foreigner with the same purpose in order to exercise this right. In case of the need of working longer than the exemption period allows, the foreigner has to obtain a work visa through the Ministry of Labor and Social Security."
+    }
+  ]
+}

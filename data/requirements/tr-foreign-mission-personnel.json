@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-foreign-mission-personnel",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "diplomatic",
+    "official_name": "Residence Procedures for Foreign Mission Personnel and Their Family Members",
+    "slug": "foreign-mission-personnel",
+    "purpose": "The foreign mission identity card that exempts accredited diplomatic, consular and international-organisation staff and their families from a Turkish residence permit — applied for within seven days, renewed within sixty days of expiry, and replaced by an ordinary residence permit within ten days of the status ending.",
+    "source_titles": {
+      "requirements": "Residence Permit Procedures for Foreign Mission Personnel and Their Family Members"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "This route is made of DEADLINES, and they are all short: seven days to obtain the card, sixty days before expiry to renew it, ten days after the exempt status ends to convert to an ordinary residence permit. Each is published as its own requirement because missing any one of them changes a person's legal status rather than merely delaying paperwork.\n\nIt is also the one route on this authority's site that the authority does not itself decide. The card is issued by the MINISTRY OF FOREIGN AFFAIRS, and reciprocity-based family applications travel from the mission, through the MFA, to the Presidency of Migration Management, and finally to the governorates.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-procedures-for-foreign-mission-personnel-and-their-family-members"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The residence permit FEES, which do not apply to this route: the whole point of the mission identity card is exemption from a residence permit. The fee page is registered on the six ordinary residence routes instead.",
+    "The application DOCUMENT lists, which the index links at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler` — 13,615 bytes normalising to 379 characters, rendered entirely by script. Not a refusal and not a parse failure; there is no server-rendered text to read."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_gets_the_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who gets a foreign mission identity card, and who issues it",
+      "description": "Issued by the MINISTRY OF FOREIGN AFFAIRS, not the migration authority — the one route on this site the migration authority does not itself decide. The authority enumerates the mission types it covers.",
+      "source_role": "requirements",
+      "source_excerpt": "foreign mission identity card shall be granted by the ministry of foreign affairs, for family members and foreign missionary personnels who work for accreditated embassy, embassy, consulate general on duty, consulate, assistant consulate, consulate agencies and international foundation agencies.",
+      "display_order": 10,
+      "source_excerpt_display": "Foreign Mission Identity Card shall be granted by the Ministry of Foreign Affairs, for family members and foreign missionary personnels who work for accreditated Embassy, Embassy, Consulate General on duty, Consulate, Assistant Consulate, Consulate Agencies and International Foundation Agencies."
+    },
+    {
+      "requirement_code": "apply_within_seven_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply within SEVEN DAYS of entry or of the mission start date",
+      "description": "The shortest deadline anywhere in the Turkish corpus. The seven days run from entry, or from the start of the mission where the person already holds a residence permit.",
+      "source_role": "requirements",
+      "source_excerpt": "foreign mission personnel shall apply to the ministry of foreign affairs on purpose of obtaining foreign mission identity card for himself/herself and family members within seven days following the entry date or starting date of mission if the personnel is a residence permit holder in turkey.",
+      "parameters": {
+        "deadline_days": 7,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "Foreign mission personnel shall apply to the Ministry of Foreign Affairs on purpose of obtaining Foreign Mission Identity Card for himself/herself and family members within seven days following the entry date or starting date of mission if the personnel is a residence permit holder in Turkey."
+    },
+    {
+      "requirement_code": "exemption_from_residence_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Article 20 exempts diplomatic and consular staff, their families, and international organisation staff — provided they are NOTIFIED to the ministry",
+      "description": "The notification condition is what the exemption hangs on, and it sits inside the same sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "article 20 of the law shall regulate exemption from residence permit. pursuant to article in question; members of the diplomatic and consular missions in turkey, family members of diplomatic and consular officers, provided they are notified to the ministry of foreign affairs and members of the representations of international organisations in turkey whose status has been determined by virtue of agreements shall be exempted from residence permit.",
+      "display_order": 30,
+      "source_excerpt_display": "Article 20 of the Law shall regulate exemption from residence permit. Pursuant to Article in question; members of the diplomatic and consular missions in Turkey, family members of diplomatic and consular officers, provided they are notified to the Ministry of Foreign Affairs and members of the representations of international organisations in Turkey whose status has been determined by virtue of agreements shall be exempted from residence permit."
+    },
+    {
+      "requirement_code": "card_certifies_exemption",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card itself certifies the exemption from a residence permit",
+      "description": "Which is why obtaining it inside the seven days matters.",
+      "source_role": "requirements",
+      "source_excerpt": "additionally, foreign mission identity card certifies that the holder is exempted from residence permit.",
+      "display_order": 40,
+      "source_excerpt_display": "Additionally, Foreign Mission Identity Card certifies that the holder is exempted from residence permit."
+    },
+    {
+      "requirement_code": "renewal_sixty_days_before",
+      "kind": "step",
+      "officially_required": true,
+      "label": "On assignment extension: apply for a new card within SIXTY DAYS before expiry — and in any case before it",
+      "description": "Two constraints in one sentence: a sixty-day window, and an absolute bar on letting the card lapse first.",
+      "source_role": "requirements",
+      "source_excerpt": "in case of a foreign mission personnel’s assignment extension, personnel in question is required to obtain a new identity card by applying to the ministry of foreign affairs within sixty days prior to the expiration of the card and, in any case, before the expiration date of the card.",
+      "parameters": {
+        "window_days": 60,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "In case of a foreign mission personnel’s assignment extension, personnel in question is required to obtain a new identity card by applying to the Ministry of Foreign Affairs within sixty days prior to the expiration of the card and, in any case, before the expiration date of the card."
+    },
+    {
+      "requirement_code": "family_ten_days_after_status_ends",
+      "kind": "step",
+      "officially_required": true,
+      "label": "When the exempt status ends: apply to the governorates within TEN DAYS to stay",
+      "description": "The exemption does not decay gently — ten days after the status ends, a residence permit is required.",
+      "source_role": "requirements",
+      "source_excerpt": "in cases where foreign mission personnel and their family members wish to stay in turkey, after the end of their status that entitled them to exemption from a residence permit, shall apply with the governorates no later than ten days to obtain a residence permit.",
+      "parameters": {
+        "deadline_days": 10,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 60,
+      "source_excerpt_display": "In cases where foreign mission personnel and their family members wish to stay in Turkey, after the end of their status that entitled them to exemption from a residence permit, shall apply with the governorates no later than ten days to obtain a residence permit."
+    },
+    {
+      "requirement_code": "reciprocity_applications_via_mfa",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Family members required to hold a permit under reciprocity apply THROUGH the mission and the Ministry of Foreign Affairs",
+      "description": "The application is routed by the affiliated representation to the Presidency of Migration Management via the MFA, and approved applicants are then directed to the governorates. Three bodies in one path.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit applications of foreign mission personnel for their family members who are required to obtain a residence permit document within the scope of reciprocity principle shall be made by the affiliated representations to the presidency of migration management by way of the ministry of foreign affairs within the period stipulated in the legislation. foreigners who are considered appropriate for the residence permit shall be directed to the governorates.",
+      "display_order": 70,
+      "source_excerpt_display": "The residence permit applications of foreign mission personnel for their family members who are required to obtain a residence permit document within the scope of reciprocity principle shall be made by the affiliated representations to the Presidency of Migration Management by way of the Ministry of Foreign Affairs within the period stipulated in the legislation. Foreigners who are considered appropriate for the residence permit shall be directed to the governorates."
+    }
+  ]
+}

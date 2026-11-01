@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "hk-residence-as-dependant",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department's residence as dependant page, bounded to the entry section",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "WHO YOUR SPONSOR IS DECIDES WHETHER YOUR PARENTS CAN COME. A sponsor admitted for employment, study, investment or training gets spouse-or-partner and unmarried children under 18. A sponsor who is a permanent resident, or has the right to land or unconditional stay, gets those AND 'his/her parents aged 60 or above'. A work-visa holder can never bring a parent, however long they stay; a permanent resident can, once the parent turns 60. None of Hong Kong's three registered work routes says this, because each describes only its own dependants.\n\nIT ALSO CORRECTS WHAT THOSE ROUTES IMPLY. hk-general-employment-policy and hk-non-local-graduates both record that dependants 'are not prohibited from taking up employment' — true of them. The whole rule has an exception: dependants of people admitted to STUDY are prohibited from working without the Director's prior permission. A student's spouse is the one dependant in Hong Kong who must ask.\n\nTWO EXTENSION CLOCKS. A dependant under a 'specified scheme' may apply to extend within three months of expiry; every other dependant within FOUR WEEKS. Same pass, same authority — and a dependant who assumes the three-month window because a colleague had it files too early.\n\nBOUNDED, like Hong Kong's other three routes: one URL carrying the entry application and a separate extension-of-stay flow.",
+  "source_roles": {
+    "requirements": "https://www.immd.gov.hk/eng/services/visas/residence_as_dependant.html"
+  },
+  "source_bounds": {
+    "requirements": {
+      "starts_at": "this webpage sets out the entry arrangement for persons who wish to enter the hong kong special administrative region (hereafter “hksar”) for residence as dependants.",
+      "ends_before": "extension of stay apply now",
+      "note": "The ENTRY block only. The page continues with a separate extension-of-stay flow carrying its own criteria, forms, fees and processing time."
+    }
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateModified and no dateline, so freshness reads as UNKNOWN, never fresh. The page carries its own dated policy instead: 'the capital investment entrant scheme has been suspended since 15 january 2015, while the new capital investment entrant scheme was launched on 1 march 2024', and it names the Top Talent Pass Scheme among qualifying sponsor categories. A page listing a 2024 scheme launch is being maintained. Corroboration, recorded as corroboration.",
+  "not_extracted": [
+    "The extension-of-stay flow on the same page, excluded by the bound — including its two-to-three week processing time and the ID 91 / ID 481A / ID 481B forms specific to Capital Investment Entrant Scheme sponsors.",
+    "The full supporting-document lists, which differ by sponsor category and by relationship.",
+    "The fee amounts. Dependants under a 'specified scheme' pay under a two-tiered fee structure the Department publishes elsewhere; dependants of other sponsors may pay nothing at all, which is why the page writes the fee as conditional throughout.",
+    "The sponsor schemes themselves — VPAS, TechTAS, the second-generation scheme, the Top Talent Pass Scheme, the new Capital Investment Entrant Scheme. Each is a separate route with its own page; this route only records which of them can sponsor a dependant.",
+    "What 'a standard well above the subsistence level' means. The Department states it as a standard and publishes no figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "discretion_reserved",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meeting every criterion does not entitle you to the visa",
+      "description": "The same sentence the Department puts on its other routes, and it qualifies everything below.",
+      "source_role": "requirements",
+      "source_excerpt": "all applications are processed and determined by the immd. approval of applications is entirely discretionary and is subject to changes in government policies. the director of immigration reserves absolute discretion to refuse any application even if the application meets all eligibility criteria.",
+      "display_order": 10,
+      "source_excerpt_display": "All applications are processed and determined by the ImmD. Approval of applications is entirely discretionary and is subject to changes in government policies. The Director of Immigration reserves absolute discretion to refuse any application even if the application meets all eligibility criteria."
+    },
+    {
+      "requirement_code": "sponsor_on_a_visa_spouse_and_children_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If your sponsor is here on a visa, only a spouse or partner and children under 18 may join",
+      "description": "Covers sponsors admitted for employment (GEP, ASMTP, IANG, VPAS, TechTAS), for investment or training, for full-time local degree study, and entrants under CIES, QMAS, the second-generation scheme, the Top Talent Pass Scheme and the new CIES. No parents, at any age.",
+      "source_role": "requirements",
+      "source_excerpt": "the following dependants may apply to join him/her for residence in the hksar: ... (i) his/her spouse; or ... his/her unmarried dependent children under the age of 18;",
+      "display_order": 20,
+      "parameters": {
+        "max_child_age": 18,
+        "parents_eligible": false
+      },
+      "source_excerpt_display": "the following dependants may apply to join him/her for residence in the HKSAR: ... (i) his/her spouse; or ... his/her unmarried dependent children under the age of 18;"
+    },
+    {
+      "requirement_code": "sponsor_is_permanent_resident_parents_at_60",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If your sponsor is a permanent resident, parents aged 60 or above may join too",
+      "description": "The one route into Hong Kong for a parent. It requires the sponsor to be a permanent resident, or to have the right to land or unconditional stay — a work-visa holder cannot do it however long they have been here.",
+      "source_role": "requirements",
+      "source_excerpt": "for a sponsor who is a hong kong permanent resident or a resident who is not subject to a limit of stay (i.e. a resident with the right to land or on unconditional stay), the following dependants may apply to join him/her for residence in the hksar:",
+      "display_order": 30,
+      "source_excerpt_display": "For a sponsor who is a Hong Kong permanent resident or a resident who is not subject to a limit of stay (i.e. a resident with the right to land or on unconditional stay), the following dependants may apply to join him/her for residence in the HKSAR:"
+    },
+    {
+      "requirement_code": "parents_aged_60_or_above",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "That parent must be 60 or above",
+      "description": "Stated as its own line in the permanent-resident list, and absent from the visa-holder list entirely.",
+      "source_role": "requirements",
+      "source_excerpt": "his/her parents aged 60 or above.",
+      "display_order": 40,
+      "parameters": {
+        "min_parent_age": 60
+      },
+      "source_excerpt_display": "his/her parents aged 60 or above."
+    },
+    {
+      "requirement_code": "partnership_recognition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A recognised same-sex or opposite-sex civil partnership or union counts as a spouse",
+      "description": "Recognised where it was entered into, and legally and officially recognised by that place's authorities.",
+      "source_role": "requirements",
+      "source_excerpt": "(ii) the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration",
+      "display_order": 50,
+      "source_excerpt_display": "(ii) the other party to a same-sex civil partnership, same-sex civil union, “same-sex marriage”, opposite-sex civil partnership or opposite-sex civil union entered into by him/her in accordance with the local law in force of the place of celebration and with such status being legally and officially recognised by the local authorities of the place of celebration"
+    },
+    {
+      "requirement_code": "partnership_exclusions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cohabiting partners, de facto spouses and fiancé(e)s do not count",
+      "description": "The Department defines a qualifying partnership by four structural features and then names what falls outside it.",
+      "source_role": "requirements",
+      "source_excerpt": "such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc.",
+      "display_order": 60,
+      "source_excerpt_display": "Such relationships do not include de facto spouse, partners in cohabitation, fiancé/fiancée, etc."
+    },
+    {
+      "requirement_code": "genuine_relationship",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reasonable proof of a genuine relationship with your sponsor",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "there is reasonable proof of a genuine relationship between the applicant and the sponsor;",
+      "display_order": 70,
+      "source_excerpt_display": "there is reasonable proof of a genuine relationship between the applicant and the sponsor;"
+    },
+    {
+      "requirement_code": "no_adverse_record",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No known record to your detriment",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "there is no known record to the detriment of the applicant; and",
+      "display_order": 80,
+      "source_excerpt_display": "there is no known record to the detriment of the applicant; and"
+    },
+    {
+      "requirement_code": "sponsor_can_support_and_house_you",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your sponsor must be able to support and house you well above subsistence level",
+      "description": "A standard, not a figure — the Department publishes no threshold.",
+      "source_role": "requirements",
+      "source_excerpt": "the sponsor is able to support the dependant's living at a standard well above the subsistence level and provide him/her with suitable accommodation in the hksar.",
+      "display_order": 90,
+      "source_excerpt_display": "the sponsor is able to support the dependant's living at a standard well above the subsistence level and provide him/her with suitable accommodation in the HKSAR."
+    },
+    {
+      "requirement_code": "normal_immigration_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The general immigration requirements apply on top",
+      "description": "A valid travel document with adequate returnability, a clear criminal record, no security concern, and no likelihood of becoming a burden on Hong Kong.",
+      "source_role": "requirements",
+      "source_excerpt": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the hksar; have no likelihood of becoming a burden on the hksar, etc.) as well as the relevant specific eligibility criteria detailed above",
+      "display_order": 100,
+      "source_excerpt_display": "an applicant should meet normal immigration requirements (such as holding a valid travel document with adequate returnability to his/her country of residence or citizenship; be of clear criminal record and raise no security or criminal concerns to the HKSAR; have no likelihood of becoming a burden on the HKSAR, etc.) as well as the relevant specific eligibility criteria detailed above"
+    },
+    {
+      "requirement_code": "dependants_may_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Most dependants may work without asking",
+      "description": "Dependants of permanent residents, of people not subject to a limit of stay, of those admitted for employment, and of scheme entrants are all free to take up employment.",
+      "source_role": "requirements",
+      "source_excerpt": "dependants of the following persons are not prohibited from taking up employment in the hksar:",
+      "display_order": 110,
+      "source_excerpt_display": "Dependants of the following persons are not prohibited from taking up employment in the HKSAR:"
+    },
+    {
+      "requirement_code": "students_dependants_need_permission_to_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The exception: a student's dependant must get permission first",
+      "description": "The one dependant in Hong Kong who must ask. It qualifies the general rule above, and neither of Hong Kong's employment routes mentions it because neither is affected by it.",
+      "source_role": "requirements",
+      "source_excerpt": "however, dependants of persons who have been admitted into the hksar to study are prohibited from taking up employment in the hksar unless they have obtained prior permission from the director of immigration.",
+      "display_order": 120,
+      "source_excerpt_display": "However, dependants of persons who have been admitted into the HKSAR to study are prohibited from taking up employment in the HKSAR unless they have obtained prior permission from the Director of Immigration."
+    },
+    {
+      "requirement_code": "all_dependants_may_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Every dependant may study without permission",
+      "description": "No exception here — the study freedom is unconditional across all sponsor categories.",
+      "source_role": "requirements",
+      "source_excerpt": "all dependants do not require prior permission from the director of immigration to study in the hksar.",
+      "display_order": 130,
+      "source_excerpt_display": "All dependants do not require prior permission from the Director of Immigration to study in the HKSAR."
+    },
+    {
+      "requirement_code": "extension_window_differs_by_scheme",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Two different extension windows: three months, or four weeks",
+      "description": "A dependant under a 'specified scheme' gets three months before expiry; every other dependant gets four. Filing outside your own window is not an early application, it is a rejected one.",
+      "source_role": "requirements",
+      "source_excerpt": "a dependant under a “specified scheme” may apply for extension of stay within three months before his/her limit of stay expires; whereas other dependants may do so within four weeks before their limit of stay expires.",
+      "display_order": 140,
+      "parameters": {
+        "specified_scheme_months": 3,
+        "other_dependants_weeks": 4
+      },
+      "source_excerpt_display": "A dependant under a “Specified Scheme” may apply for extension of stay within three months before his/her limit of stay expires; whereas other dependants may do so within four weeks before their limit of stay expires."
+    },
+    {
+      "requirement_code": "processing_six_weeks",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Six weeks, and the clock does not start until everything has arrived",
+      "description": "The Department states plainly that it will not begin processing until all documents and any fee have been received.",
+      "source_role": "requirements",
+      "source_excerpt": "it normally takes six weeks to process a visa/entry permit application for residence as dependant upon receipt of all the required documents and the relevant application fee note (if applicable).",
+      "display_order": 150,
+      "parameters": {
+        "weeks": 6
+      },
+      "source_excerpt_display": "It normally takes six weeks to process a visa/entry permit application for residence as dependant upon receipt of all the required documents and the relevant application fee Note (if applicable)."
+    },
+    {
+      "requirement_code": "specified_scheme_fee_non_refundable",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Under a specified scheme, a non-refundable application fee and an issuance fee on approval",
+      "description": "A two-tiered fee structure the Department publishes separately. Dependants of other sponsors may pay nothing, which is why the page writes the fee as conditional throughout.",
+      "source_role": "requirements",
+      "source_excerpt": "an applicant who makes an application as a dependant under a “specified scheme” is required to pay an application fee and, upon approval of the concerned application, the relevant visa/ entry permit issuance fee according to the two-tiered fee structure. the application fee paid is non-refundable in any circumstance irrespective of the application result.",
+      "display_order": 160,
+      "parameters": {
+        "currency": "HKD",
+        "refundable": false
+      },
+      "source_excerpt_display": "An applicant who makes an application as a dependant under a “Specified Scheme” is required to pay an application fee and, upon approval of the concerned application, the relevant visa/ entry permit issuance fee according to the two-tiered fee structure. The application fee paid is non-refundable in any circumstance irrespective of the application result."
+    }
+  ]
+}

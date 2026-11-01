@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-talent-famille",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "The defining fact about this route is what it AVOIDS: the family of a 'talent' card holder is exempt from the regroupement familial procedure, which is the long, income-tested and housing-tested route every other family reunification in France goes through. That exemption is recorded first, because it is the reason the route exists.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F35792"
+  },
+  "page_dates": {
+    "requirements": "2026-05-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 mai 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The conditions of the principal 'talent' card itself. This route depends on someone else holding it; that card is a separate registered route.",
+    "The visa procedure abroad. The page says to apply to the French consular authorities and nothing more; France-Visas holds the detail and refuses our monitor.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "exempt_from_family_reunification_procedure",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You obtain a permit without going through the family reunification procedure",
+      "description": "The point of the route. Regroupement familial imposes income, housing and waiting-period conditions that do not apply here.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous pouvez obtenir un titre de séjour sans passer par la procédure de regroupement familial.",
+      "source_excerpt_display": "Vous pouvez obtenir un titre de séjour sans passer par la procédure de regroupement familial."
+    },
+    {
+      "requirement_code": "who_qualifies_as_talent_family",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Four qualifying situations, including two that turn on the child's age",
+      "description": "The child rules are precise and diverge: a child of the couple who entered France as a minor and has since turned 18, or a child aged 16 to 18 who wants to work. A child under 16 is not in this list.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous êtes concerné si vous remplissez l'une des conditions suivantes : avoir plus de 18 ans et être marié à une personne ayant une carte de séjour \"talent\" être un enfant du couple, être devenu majeur et être entré en france en tant que mineur être un enfant du couple, être âgé de 16 à 18 ans et souhaiter exercer une activité professionnelle",
+      "source_excerpt_display": "Vous êtes concerné si vous remplissez l'une des conditions suivantes: Avoir plus de 18 ans et être marié à une personne ayant une carte de séjour \"talent\" Être un enfant du couple, être devenu majeur et être entré en France en tant que mineur Être un enfant du couple, être âgé de 16 à 18 ans et souhaiter exercer une activité professionnelle"
+    },
+    {
+      "requirement_code": "eu_blue_card_family_one_month_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Family of an EU Blue Card holder coming from another member state must apply within 1 month of entering France",
+      "description": "A one-month window, far shorter than the two months that apply to everyone else on this route, and it applies only to families arriving from another EU member state.",
+      "parameters": {
+        "application_deadline_months_after_entry": 1
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "être l'époux ou l'enfant d'une personne ayant une carte de séjour ''talent-carte bleue européenne'' et votre famille vivait dans un état membre de l'union européenne ... vous pouvez demander dans le mois qui suit votre entrée en france une carte de séjour ''talent famille''.",
+      "source_excerpt_display": "Être l'époux ou l'enfant d'une personne ayant une carte de séjour ''talent-carte bleue européenne'' et votre famille vivait dans un État membre de l'Union européenne ... vous pouvez demander dans le mois qui suit votre entrée en France une carte de séjour ''talent famille''."
+    },
+    {
+      "requirement_code": "right_to_work_without_employer_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card allows employed and self-employed work; the employer needs no authorisation and pays no foreign-worker tax",
+      "description": "Two separate reliefs for the employer, which is what makes a talent-famille holder materially easier to hire than most permit holders.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "la carte de séjour « talent-famille » vous autorise à exercer une activité professionnelle salariée et/ou non salariée. dans le cadre d’une activité salariée, l’employeur n’a pas à demander d’autorisation de travail et est exonéré du paiement de la taxe pour l’emploi d’un ressortissant étranger.",
+      "source_excerpt_display": "La carte de séjour «talent-famille» vous autorise à exercer une activité professionnelle salariée et/ou non salariée. Dans le cadre d’une activité salariée, l’employeur n’a pas à demander d’autorisation de travail et est exonéré du paiement de la taxe pour l’emploi d’un ressortissant étranger."
+    },
+    {
+      "requirement_code": "filing_deadlines_differ_by_document_held",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Two different filing windows, depending on whether you hold a long-stay visa or a VLS-TS",
+      "description": "A long-stay visa gives two months from entry. A VLS-TS or existing permit gives a window that opens four months and closes two months before expiry. Applying the wrong one is a missed deadline, not a delay.",
+      "parameters": {
+        "long_stay_visa_deadline_months_after_entry": 2,
+        "vls_ts_window_earliest_months_before_expiry": 4,
+        "vls_ts_window_latest_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "dans les 2 mois suivant votre entrée en france , si vous êtes titulaire d’un visa long séjour au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour si vous êtes titulaire d’un visa long séjour valant titre de séjour (vls/ts) ou d’un titre de séjour.",
+      "source_excerpt_display": "Dans les 2 mois suivant votre entrée en France, si vous êtes titulaire d’un visa long séjour Au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour si vous êtes titulaire d’un visa long séjour valant titre de séjour (VLS/TS) ou d’un titre de séjour."
+    },
+    {
+      "requirement_code": "documents_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required for the 'talent-famille' card",
+      "description": "Note the relationship evidence differs by which family member you are joining: a marriage certificate bearing the most recent mention for a spouse, a full birth certificate showing filiation for a parent.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "visa de long séjour \"talent-famille\" ou titre de séjour en cours de validité ... justificatif de domicile datant de moins de 6 mois ... carte de séjour de votre époux ou parent (ou carte d'identité) si vous rejoignez votre époux : extrait d'acte de mariage portant la mention la plus récente",
+      "source_excerpt_display": "Visa de long séjour \"talent-famille\" ou titre de séjour en cours de validité ... Justificatif de domicile datant de moins de 6 mois ... Carte de séjour de votre époux ou parent (ou carte d'identité) Si vous rejoignez votre époux: extrait d'acte de mariage portant la mention la plus récente"
+    },
+    {
+      "requirement_code": "cost_350_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The card costs €350 — a €50 stamp duty plus a €300 tax",
+      "description": "The authority publishes the split as well as the total, which matters because the two are paid as separate timbres fiscaux.",
+      "parameters": {
+        "total_eur": 350,
+        "stamp_duty_eur": 50,
+        "tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "vous devez régler 350 € (droit de timbre de 50 € + taxe de 300 € ) par timbres fiscaux .",
+      "source_excerpt_display": "Vous devez régler 350 € (droit de timbre de 50 € + taxe de 300 €) par timbres fiscaux."
+    }
+  ]
+}

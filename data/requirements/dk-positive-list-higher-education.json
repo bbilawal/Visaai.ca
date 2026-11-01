@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-positive-list-higher-education",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "This is the graduate-level Positive List, and it differs from the skilled-work list in three ways that matter.\n\nTHE EDUCATION IS PER JOB TITLE. Every title on the list carries its own required educational level, so 'I have a degree' is not the test — the degree has to match the level the list names for that title. The authority gives its own worked example (civil engineer, professional bachelor's minimum).\n\nHOURS ARE 'USUAL', NOT A NUMBER. The skilled-work and Pay Limit routes state a floor in hours. This one requires that hours be usual for the field, normally 37 a week, with industry exceptions. A reader carrying the 30-hour figure across from the Pay Limit Scheme would apply a test this route does not use.\n\nTHERE IS NO EMPLOYER APPRENTICESHIP CONDITION. The skilled-work list requires the EMPLOYER to have met Læreplads-AUB training obligations, with no exemption possible. That condition does not appear here, and nothing is registered claiming it does.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Positive-List-Higher-Education"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. The body references 2028 in permit-duration examples and the list itself is revised on a published schedule, so a revision surfaces as a text change to the daily sync.",
+  "not_extracted": [
+    "The list of job titles itself — several hundred occupations occupying lines 40 to 772 of the page, each with its required educational level. It is data rather than requirement, it is revised on a schedule, and a copy here would be stale while looking authoritative. The requirement that the job appear on the list IS extracted.",
+    "The criteria by which a job title is added to or removed from the list, which describe the authority's own list-making process rather than an applicant's obligations.",
+    "The step-by-step portal walkthrough, the document checklists, and the biometrics appointment procedure.",
+    "The rules for accompanying family members, which are a separate route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "job_on_positive_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must be included in the Positive List",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "your job must be included in the positive list. in addition, there are a number of other conditions.",
+      "source_excerpt_display": "Your job must be included in the Positive List. In addition, there are a number of other conditions."
+    },
+    {
+      "requirement_code": "completed_higher_education",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A completed higher educational programme is required for every job title on the list",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "it is a condition for all job titles on the positive list for people with a higher education that you have completed a higher educational programme.",
+      "source_excerpt_display": "It is a condition for all job titles on the Positive List for People with a Higher Education that you have completed a higher educational programme."
+    },
+    {
+      "requirement_code": "education_level_is_per_job_title",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The required educational level is set per job title, not in general",
+      "description": "Quoted with the authority's own worked example, because the general statement alone does not convey that the level varies.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "the list contains information about what educational level is required for each job title.\n\nfor example, if you are offered employment as a civil engineer, you must document that you have, as a minimum, completed a professional bachelor's degree.",
+      "source_excerpt_display": "The list contains information about what educational level is required for each job title.\n\nFor example, if you are offered employment as a civil engineer, you must document that you have, as a minimum, completed a professional bachelor's degree."
+    },
+    {
+      "requirement_code": "authorisation_or_recognition_some_titles",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Some job titles additionally require a Danish authorisation or official recognition",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "for som job titles it is in addition a requirement that you have obtained a danish authorisation or official recognition.",
+      "source_excerpt_display": "For som job titles it is in addition a requirement that you have obtained a Danish authorisation or official recognition."
+    },
+    {
+      "requirement_code": "salary_and_terms_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary and terms of employment must correspond to Danish standards",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "your salary and terms of employment must correspond to danish standards . this means that your salary, holiday entitlements and terms of notice etc. must not be inferior to the standards within the professional field in which you are going to work.",
+      "source_excerpt_display": "Your salary and terms of employment must correspond to Danish standards . This means that your salary, holiday entitlements and terms of notice etc. must not be inferior to the standards within the professional field in which you are going to work."
+    },
+    {
+      "requirement_code": "weekly_hours_must_be_usual",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working hours must be usual for the field — normally 37 hours a week",
+      "description": "This route sets no numeric floor. Quoted whole, including the industry exception.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "it is a condition that your working hours are usual. this means that you typically must work full time (normally 37 hours a week). however, within certain industries there might be job positions with employment of less than 37 hours per week, which in some instances may be considered usual.",
+      "source_excerpt_display": "It is a condition that your working hours are usual. This means that you typically must work full time (normally 37 hours a week). However, within certain industries there might be job positions with employment of less than 37 hours per week, which in some instances may be considered usual."
+    },
+    {
+      "requirement_code": "salary_not_lower_than_normal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The offered salary must not be lower than normal in the field",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "the salary you have been offered must not be lower that normal within the field you will be working in.",
+      "source_excerpt_display": "The salary you have been offered must not be lower that normal within the field you will be working in."
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only liquid assets, labour-market pension payments and holiday allowance are taken into account",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "siri can only take into account, following pay, when accessing whether the offered salary is corresponding to danish standards:\n\nsalary in the form of liquid assets, including fixed supplements which are, therefore, guaranteed salary\n\npayments to labour market pension schemes, including the pension contributions paid by both the employer and the applicant\n\nholiday allowance",
+      "source_excerpt_display": "SIRI can only take into account, following pay, when accessing whether the offered salary is corresponding to Danish standards:\n\nSalary in the form of liquid assets, including fixed supplements which are, therefore, guaranteed salary\n\nPayments to labour market pension schemes, including the pension contributions paid by both the employer and the applicant\n\nHoliday allowance"
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Housing, per diems, car, phone, internet, benefits-in-kind and subscriptions do not count",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "your employer might offer you, as a supplement to your salary. these salary components cannot be taken into account when assessing whether your salary corresponds to danish standards:\n\npaid living and housing expenses\n\nper diems\n\nfree use of car\n\npaid phone\n\npaid internet\n\nbenefits-in-kind\n\nsubscriptions\n\nother services offered to you by your employer.",
+      "source_excerpt_display": "Your employer might offer you, as a supplement to your salary. These salary components cannot be taken into account when assessing whether your salary corresponds to Danish standards:\n\nPaid living and housing expenses\n\nPer diems\n\nFree use of car\n\nPaid phone\n\nPaid internet\n\nBenefits-in-kind\n\nSubscriptions\n\nOther services offered to you by your employer."
+    },
+    {
+      "requirement_code": "danish_bank_account",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary must be paid into a Danish bank account in your own name",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "your salary must be paid into a danish bank account in your own name, and the bank has to be operating legally in denmark.",
+      "source_excerpt_display": "Your salary must be paid into a Danish bank account in your own name, and the bank has to be operating legally in Denmark."
+    },
+    {
+      "requirement_code": "bank_account_180_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Danish bank account must be opened within 180 days",
+      "source_role": "requirements",
+      "parameters": {
+        "days_to_open_account": 180,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 110,
+      "source_excerpt": "your danish bank account must be opened within 180 days of your residence and work permit being granted. if you enter denmark after you have been granted a residence and work permit, you must open a danish bank account within 180 days from your entry into denmark. if you already hold a danish residence permit that is valid for at least 180 days, your salary must be paid into your danish bank account from your first salary payment.",
+      "source_excerpt_display": "Your Danish bank account must be opened within 180 days of your residence and work permit being granted. If you enter Denmark after you have been granted a residence and work permit, you must open a Danish bank account within 180 days from your entry into Denmark. If you already hold a Danish residence permit that is valid for at least 180 days, your salary must be paid into your Danish bank account from your first salary payment."
+    },
+    {
+      "requirement_code": "danish_authorisation_where_regulated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Danish authorisation is required for regulated professions, such as doctors",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "in some cases it is required that you have a danish authorisation. this applies if you are a doctor, for example.",
+      "source_excerpt_display": "In some cases it is required that you have a Danish authorisation. This applies if you are a doctor, for example."
+    },
+    {
+      "requirement_code": "authorisation_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documentation of the authorisation — or a receipt for having applied — must be attached",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "please note that you must attach documentation proving that you have obtained danish authorisation, or attach a receipt proving that you have submitted an application for danish authorisation. therefore, you should wait to apply for a residence and work permit at siri, until after you have applied for your danish authorisation.",
+      "source_excerpt_display": "Please note that you must attach documentation proving that you have obtained Danish authorisation, or attach a receipt proving that you have submitted an application for Danish authorisation. Therefore, you should wait to apply for a residence and work permit at SIRI, until after you have applied for your Danish authorisation."
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "one of the conditions for a residence permit under this scheme is that an accompanying family member (spouse, cohabiting partner, children or in certain circumstances other family members) has not had its residence permit revoked more than once due to lack of a required work permit.",
+      "source_excerpt_display": "One of the conditions for a residence permit under this scheme is that an accompanying family member (spouse, cohabiting partner, children or in certain circumstances other family members) has not had its residence permit revoked more than once due to lack of a required work permit."
+    },
+    {
+      "requirement_code": "employment_contract_must_be_attached",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the employment contract or job offer must be attached, stating all terms",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "when you apply, you must attach a copy of your employment contract or job offer. all terms of employment must be stated in the contract or the job offer.",
+      "source_excerpt_display": "When you apply, you must attach a copy of your employment contract or job offer. All terms of employment must be stated in the contract or the job offer."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt": "processing fee\ndkk 6,810,-",
+      "source_excerpt_display": "Processing fee\nDKK 6,810,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "normal processing time\n1 month\n\nif further information is needed, the processing time can be up to\n3 months",
+      "source_excerpt_display": "Normal processing time\n1 month\n\nIf further information is needed, the processing time can be up to\n3 months"
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "if you apply from abroad, you can be granted a residence permit valid for 1 month before you start working in denmark. it will give you the time to settle in denmark. when you apply, you must declare that you can support yourself and any accompanying family members during this time. if you do not declare this, your residence permit will be valid for 14 days before you start working.",
+      "source_excerpt_display": "If you apply from abroad, you can be granted a residence permit valid for 1 month before you start working in Denmark. It will give you the time to settle in Denmark. When you apply, you must declare that you can support yourself and any accompanying family members during this time. If you do not declare this, your residence permit will be valid for 14 days before you start working."
+    },
+    {
+      "requirement_code": "duration_under_four_years_with_job_seeking",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Shorter employment gives a permit for its duration, plus an automatic 6-month job-seeking permit",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "if you are employed for a shorter period than 4 years, your residence and work permit will normally be valid for the period of your employment. if you wish to continue working in denmark after this time, you must apply for an extension of your residence and work permit.\n\nin addition, you will automatically be granted a 6 month job seeking permit allowing you to look for a new job in denmark.",
+      "source_excerpt_display": "If you are employed for a shorter period than 4 years, your residence and work permit will normally be valid for the period of your employment. If you wish to continue working in Denmark after this time, you must apply for an extension of your residence and work permit.\n\nIn addition, you will automatically be granted a 6 month job seeking permit allowing you to look for a new job in Denmark."
+    },
+    {
+      "requirement_code": "no_work_during_job_seeking_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are not allowed to work during the job-seeking period",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "you are not allowed to work during your job seeking period.",
+      "source_excerpt_display": "You are not allowed to work during your job seeking period."
+    },
+    {
+      "requirement_code": "duration_employment_four_years_or_more",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Four-year permit where the employment is four years or longer",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "if your employment is for a period of 4 years or more, you will normally be granted a permit valid for 4 years. if you wish to continue to work after the first 4 years, you must apply for an extension of your residence and work permit based on the extension of your employment. ´",
+      "source_excerpt_display": "If your employment is for a period of 4 years or more, you will normally be granted a permit valid for 4 years. If you wish to continue to work after the first 4 years, you must apply for an extension of your residence and work permit based on the extension of your employment. ´"
+    },
+    {
+      "requirement_code": "passport_shortens_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 3 months before the passport expires",
+      "source_role": "requirements",
+      "parameters": {
+        "months_before_passport_expiry": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220,
+      "source_excerpt": "a residence permit can only be valid until 3 months before the expiry date of your passport.",
+      "source_excerpt_display": "A residence permit can only be valid until 3 months before the expiry date of your passport."
+    },
+    {
+      "requirement_code": "work_limited_to_the_named_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is limited to the employment it was granted for",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "your work permit is limited to the employment that is the basis for your permit. you are not allowed to work in other positions than the one stated in your permit. this also applies if you are offered a new position in the same company.",
+      "source_excerpt_display": "Your work permit is limited to the employment that is the basis for your permit. You are not allowed to work in other positions than the one stated in your permit. This also applies if you are offered a new position in the same company."
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "source_role": "requirements",
+      "display_order": 240,
+      "source_excerpt": "you must inform siri if you lose your job. your residence and work permit will be revoked as it is based on this exact job.",
+      "source_excerpt_display": "You must inform SIRI if you lose your job. Your residence and work permit will be revoked as it is based on this exact job."
+    },
+    {
+      "requirement_code": "job_seeking_permit_two_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply for a job-seeking permit no later than two days after employment ends",
+      "source_role": "requirements",
+      "parameters": {
+        "days_after_employment_ends": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 250,
+      "source_excerpt": "you must apply for a job seeking permit no later than two days after your employment ends.",
+      "source_excerpt_display": "You must apply for a job seeking permit no later than two days after your employment ends."
+    },
+    {
+      "requirement_code": "absence_six_months_lapses_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Giving up your Danish address or staying abroad over 6 successive months lapses the permit",
+      "source_role": "requirements",
+      "parameters": {
+        "max_successive_months_abroad": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 260,
+      "source_excerpt": "you must not give up your danish address or stay abroad for longer than 6 successive months. a violation will result in the lapse of your permit. this means that you will lose your right to stay in denmark.",
+      "source_excerpt_display": "You must not give up your Danish address or stay abroad for longer than 6 successive months. A violation will result in the lapse of your permit. This means that you will lose your right to stay in Denmark."
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "you must be able to support yourself and your family during your stay. for instance, you are not allowed to receive benefits under the terms of the active social policy act – and there might be other benefits that you cannot receive.",
+      "source_excerpt_display": "You must be able to support yourself and your family during your stay. For instance, you are not allowed to receive benefits under the terms of the Active Social Policy Act – and there might be other benefits that you cannot receive."
+    },
+    {
+      "requirement_code": "biometrics_within_14_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Biometric features must be recorded no later than 14 days after submitting the application",
+      "source_role": "requirements",
+      "parameters": {
+        "days_after_submission": 14,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt": "you must have your biometric features recorded no later than 14 days after you submitted your application.",
+      "source_excerpt_display": "You must have your biometric features recorded no later than 14 days after you submitted your application."
+    }
+  ]
+}

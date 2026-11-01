@@ -1,0 +1,4 @@
+# Run output: ledgers, generated payloads, screenshots. Regenerate with
+# run-prefill-matrix.mjs / run-ui-check.mjs — see REPORT.md §6.
+results/
+matrix.json

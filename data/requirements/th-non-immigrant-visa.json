@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "th-non-immigrant-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Department of Consular Affairs page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Thai. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent. The department's own English pages are dated 2017 and are deliberately not used; see the registration migration. The Immigration Bureau, which decides admission and length of stay in the Kingdom, returns HTTP 403 to our monitor and is not read.",
+  "structure_note": "ONE VISA TYPE, TEN LETTERED PURPOSES, AND THE LETTER DECIDES THE FILE. The department publishes a single non-immigrant visa covering official duty (F), business and work (B), approved investment (IM), BOI investment (IB), study and training (ED), media (M), religion (R), scientific research or teaching (RS), skilled expert work (EX) and 'other' (O). The (O) branch alone subdivides into at least seven further situations, from retirement to being a witness in court. This is the Singapore entry-visa shape: one visa the authority does not split, and evidence requirements that genuinely differ, so the sub-purposes are recorded as their own requirements rather than merged.",
+  "source_roles": {
+    "requirements": "https://consular.mfa.go.th/th/publicservice/%e0%b8%84%e0%b8%99%e0%b8%ad%e0%b8%a2%e0%b8%b9%e0%b9%88%e0%b8%8a%e0%b8%b1%e0%b9%88%e0%b8%a7%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%a7-%e0%b9%8cnon-immigrant-visa?page=5ddcb94a01330918812bbf22&menu=5ddcb8b29b1e8a30447d6f22"
+  },
+  "page_dates": {
+    "requirements": "2022-11-30"
+  },
+  "freshness_note": "The page publishes its own last-updated stamp in the body: 2022-11-30. That is what admits Thailand on its Thai pages rather than its English ones, which are dated 2017 and list a catalogue missing the LTR visa, the SMART visa and the e-Visa system. Self-declared, and treated as evidence rather than truth.",
+  "not_extracted": [
+    "Everything the Immigration Bureau decides: admission at the border, extension of stay, and change of visa type. The page states plainly that these are applied for at the Immigration Bureau and are at the officer's discretion, and www.immigration.go.th returns 403 to our monitor.",
+    "Which nationalities are visa-exempt or eligible for visa on arrival. The department publishes separate lists for both, and neither is registered here.",
+    "The e-Visa application procedure. Operated at www.thaievisa.go.th, whose pages serve zero characters server-side.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "ten_lettered_purposes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten lettered purposes qualify for the non-immigrant visa",
+      "description": "The letter is not a formality: it decides which additional documents are required and is chosen at application.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "• การปฏิบัติหน้าที่ทางราชการ (f) • การติดต่อหรือประกอบธุรกิจ และการทำงาน (b) • การลงทุนที่ได้รับความเห็นชอบจากกระทรวงที่เกี่ยวข้อง (im) • การลงทุนหรือการอื่นภายใต้ข้อบังคับกฎหมายว่าด้วยการส่งเสริมการลงทุน (ib) • การศึกษา ดูงาน และฝึกอบรมต่างๆ (ed) • การปฏิบัติหน้าที่สื่อมวลชน (m) • การเผยแผ่ศาสนาที่ได้รับความเห็นชอบจากกรมการศาสนา กระทรวงศึกษาธิการ (r) • การค้นคว้าทางวิทยาศาสตร์หรือฝึกสอนในสถาบันการค้นคว้า หรือสถาบันการศึกษาในราชอาณาจักร (rs) • การปฏิบัติงานด้านช่างฝีมือผู้เชี่ยวชาญ (ex) • การอื่น (o)",
+      "source_excerpt_display": "• การปฏิบัติหน้าที่ทางราชการ (F) • การติดต่อหรือประกอบธุรกิจ และการทำงาน (B) • การลงทุนที่ได้รับความเห็นชอบจากกระทรวงที่เกี่ยวข้อง (IM) • การลงทุนหรือการอื่นภายใต้ข้อบังคับกฎหมายว่าด้วยการส่งเสริมการลงทุน (IB) • การศึกษา ดูงาน และฝึกอบรมต่างๆ (ED) • การปฏิบัติหน้าที่สื่อมวลชน (M) • การเผยแผ่ศาสนาที่ได้รับความเห็นชอบจากกรมการศาสนา กระทรวงศึกษาธิการ (R) • การค้นคว้าทางวิทยาศาสตร์หรือฝึกสอนในสถาบันการค้นคว้า หรือสถาบันการศึกษาในราชอาณาจักร (RS) • การปฏิบัติงานด้านช่างฝีมือผู้เชี่ยวชาญ (EX) • การอื่น (O)"
+    },
+    {
+      "requirement_code": "visa_validity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Visa validity: 3 months single entry, 12 months multiple entries",
+      "parameters": {
+        "single_entry_months": 3,
+        "multiple_entry_months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "อายุวีซ่า 3 เดือน (single entries) 12 เดือน (multiple entries)",
+      "source_excerpt_display": "อายุวีซ่า 3 เดือน (Single Entries) 12 เดือน (Multiple Entries)"
+    },
+    {
+      "requirement_code": "stay_per_entry_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Length of stay: 90 days per entry",
+      "parameters": {
+        "days_per_entry": 90
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "ระยะเวลาพำนักในราชอาณาจักร 90 วัน ต่อครั้ง",
+      "source_excerpt_display": "ระยะเวลาพำนักในราชอาณาจักร 90 วัน ต่อครั้ง"
+    },
+    {
+      "requirement_code": "fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Fee: THB 2,000 single entry, THB 5,000 multiple entries",
+      "parameters": {
+        "single_entry_thb": 2000,
+        "multiple_entry_thb": 5000
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "ค่าธรรมเนียม 2,000 บาท (single entries) 5,000 บาท (multiple entries)",
+      "source_excerpt_display": "ค่าธรรมเนียม 2,000 บาท (Single Entries) 5,000 บาท (Multiple Entries)"
+    },
+    {
+      "requirement_code": "funds_carried",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Funds to be carried: THB 20,000 per person, THB 40,000 per family",
+      "parameters": {
+        "per_person_thb": 20000,
+        "per_family_thb": 40000
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "จำนวนเงินติดตัว* 20,000 บาท / คน 40,000 บาท / ครอบครัว",
+      "source_excerpt_display": "จำนวนเงินติดตัว* 20,000 บาท / คน 40,000 บาท / ครอบครัว"
+    },
+    {
+      "requirement_code": "passport_validity_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport or travel document valid for at least 6 months",
+      "parameters": {
+        "passport_validity_months": 6
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "• หนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง อายุใช้งานไม่น้อยกว่า 6 เดือน",
+      "source_excerpt_display": "• หนังสือเดินทางหรือเอกสารใช้แทนหนังสือเดินทาง อายุใช้งานไม่น้อยกว่า 6 เดือน"
+    },
+    {
+      "requirement_code": "work_b_requires_labour_ministry_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For work (B): a letter from the Department of Employment, Ministry of Labour, notifying approval for the foreign national to work at the company",
+      "description": "A TWO-AUTHORITY ROUTE. The Ministry of Labour decides whether the person may work; the MFA then issues the visa. Applying to the consulate first does not work.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "• สำหรับ (b) ทำงาน - หนังสือกรมการจัดหางาน กระทรวงแรงงาน แจ้งผลการพิจารณาอนุญาตให้คนต่างด้าวเข้ามาทำงานในบริษัทฯ",
+      "source_excerpt_display": "• สำหรับ (B) ทำงาน - หนังสือกรมการจัดหางาน กระทรวงแรงงาน แจ้งผลการพิจารณาอนุญาตให้คนต่างด้าวเข้ามาทำงานในบริษัทฯ"
+    },
+    {
+      "requirement_code": "study_ed_requires_acceptance_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For study (ED): a letter of acceptance from the educational institution",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "• สำหรับ (ed) นักเรียน / นักศึกษา - หนังสือตอบรับจากสถานศึกษา",
+      "source_excerpt_display": "• สำหรับ (ED) นักเรียน / นักศึกษา - หนังสือตอบรับจากสถานศึกษา"
+    },
+    {
+      "requirement_code": "buddhist_study_requires_national_office_permission",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For study (ED) by a monk studying Buddhism: permission from the National Office of Buddhism",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "• สำหรับ (ed) นักบวชที่จะเข้ามาศึกษาพระพุทธศาสนา - หนังสืออนุญาตจากสำนักงานพระพุทธศาสนาแห่งชาติ",
+      "source_excerpt_display": "• สำหรับ (ED) นักบวชที่จะเข้ามาศึกษาพระพุทธศาสนา - หนังสืออนุญาตจากสำนักงานพระพุทธศาสนาแห่งชาติ"
+    },
+    {
+      "requirement_code": "retirement_o_requires_age_50_and_no_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For retirement (O): the applicant must be at least 50 years old, must state the purpose is to retire, and must not work while in Thailand",
+      "description": "Three conditions in one line, and the third is a continuing undertaking rather than an application statement.",
+      "parameters": {
+        "minimum_age": 50
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "- ผู้ร้องต้องมีอายุตั้งแต่ 50 ปีบริบูรณ์ขึ้นไป ระบุวัตถุประสงค์ว่าจะขอเข้ามาใช้ชีวิตในฐานะผู้สูงอายุหรือเกษียณ และจะไม่ทำงานในระหว่างพำนักในไทย",
+      "source_excerpt_display": "- ผู้ร้องต้องมีอายุตั้งแต่ 50 ปีบริบูรณ์ขึ้นไป ระบุวัตถุประสงค์ว่าจะขอเข้ามาใช้ชีวิตในฐานะผู้สูงอายุหรือเกษียณ และจะไม่ทำงานในระหว่างพำนักในไทย"
+    },
+    {
+      "requirement_code": "medical_treatment_o_requires_hospital_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For medical treatment (O): a letter of acceptance from a hospital accredited by a Thai government agency",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "• สำหรับ (o) เข้ามาเพื่อรับการรักษาพยาบาล - หนังสือตอบรับจากสถานพยาบาลที่ได้รับการรับรองจากหน่วยงานของรัฐในประเทศไทย",
+      "source_excerpt_display": "• สำหรับ (O) เข้ามาเพื่อรับการรักษาพยาบาล - หนังสือตอบรับจากสถานพยาบาลที่ได้รับการรับรองจากหน่วยงานของรัฐในประเทศไทย"
+    },
+    {
+      "requirement_code": "court_witness_o_requires_court_summons",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For being a party or witness in court (O): a letter or summons from a Thai court",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "• สำหรับ (o) คู่ความหรือพยานในศาล - หนังสือหรือหมายจากศาลของไทย",
+      "source_excerpt_display": "• สำหรับ (O) คู่ความหรือพยานในศาล - หนังสือหรือหมายจากศาลของไทย"
+    },
+    {
+      "requirement_code": "dependant_o_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "For dependants (O): proof of the family relationship, the Thai-based worker’s employment certificate and valid work permit, and proof the spouse is Thai or a resident of the Kingdom",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "- หลักฐานการเป็นบิดา มารดา บุตร / สูติบัตร / ใบสำคัญการสมรส - หนังสือรับรองการทำงาน ใบอนุญาตทำงานที่ยังมีอายุใช้งาน ของผู้ที่ทำงานในประเทศไทย",
+      "source_excerpt_display": "- หลักฐานการเป็นบิดา มารดา บุตร / สูติบัตร / ใบสำคัญการสมรส - หนังสือรับรองการทำงาน ใบอนุญาตทำงานที่ยังมีอายุใช้งาน ของผู้ที่ทำงานในประเทศไทย"
+    }
+  ]
+}

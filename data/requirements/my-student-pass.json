@@ -1,0 +1,303 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "my-student-pass",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read directly from the Immigration Department of Malaysia's Student Pass page",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "ONE PAGE, ONE SOURCE — AND THAT IS THE POINT. imi.gov.my serves an identical 820-line navigation menu on every page. Its Employment Pass page has three unique lines of content inside that menu; this Student Pass page has 96 unique lines out of 267. Only pages whose content is distinct from the navigation are registered, and the comparison is what proves it — no single-page check can, because boilerplate is by definition what pages share.\n\nTWO OTHER BODIES DECIDE BEFORE IMMIGRATION DOES. EMGS (Education Malaysia Global Services) screens academics and issues the Approval to Study letter; the Ministry of Home Affairs authorises the institution to enrol international students; only then does the Immigration Department endorse a pass. An applicant who reaches Immigration first has not started early, they have started in the wrong place.\n\nTHE ORDERING IS THE REQUIREMENT. Apply from outside Malaysia; get eVAL approval; then a single-entry visa from the eVisa portal if your nationality needs one; then enter; then a post-arrival medical within 7 days; then the institution submits for endorsement. Each step gates the next, and the page states them as a sequence.\n\nCATEGORY DECIDES ENTITLEMENTS, NOT JUST PAPERWORK. Only master's and PhD holders may bring dependants at all. Language, training/skills and accredited centre students may bring none, and may not take the part-time work permission either. The same pass carries three different sets of rights depending on where you study.\n\nSABAH AND SARAWAK ARE SEPARATE. They administer their own immigration and the page lists state-specific documents for them inline. Recorded as its own requirement rather than folded into the general list.",
+  "source_roles": {
+    "requirements": "https://www.imi.gov.my/index.php/en/main-services/pass/student-pass/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The Department publishes no dateModified and no body dateline; freshness reads as UNKNOWN, never fresh — the rule Germany set. What the page does carry is a live server clock in its own header (it rendered 'saturday : august 22, 2026' when fetched) and current-scheme references: the STARS system, the EMGS portal, and the eVisa portal's stated exclusion of applications from Malaysia, Israel and North Korea. Corroboration, recorded as corroboration.",
+  "not_extracted": [
+    "The Employment Pass, the Professional Visitor Pass and the Residence Pass, which are separate routes on separate pages. The Employment Pass page in particular is registered NOWHERE: it is 3 unique lines inside the site menu, and the Department devolves the decision to the Expatriate Committee and sector regulators without publishing their criteria.",
+    "Visa fees. The Department states only that they 'vary by country' and links a rates table; no figure is invented from that.",
+    "EMGS's own academic screening criteria and the Approval to Study process. A different body's rules on a different site.",
+    "The MOHA authorisation process for institutions. It binds the school, not the student, and the student can only check whether their institution already holds it.",
+    "Renewal, cancellation and the Special Pass. This route covers a first Student Pass.",
+    "The dependants' and guardians' own Social Visit Pass conditions beyond who is eligible and the RM90 fee — those sit on the Long-Term Social Visit Pass page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "apply_from_outside_malaysia",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be outside Malaysia when the application is submitted",
+      "description": "Not a preference. A student already in the country on another pass cannot start this route from inside it.",
+      "source_role": "requirements",
+      "source_excerpt": "d. applicants must be outside malaysia at the time of application submission.",
+      "display_order": 10,
+      "source_excerpt_display": "d. Applicants MUST BE OUTSIDE MALAYSIA at the time of application submission."
+    },
+    {
+      "requirement_code": "institution_must_be_approved",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your institution must already be approved to enrol international students",
+      "description": "Public universities qualify directly. A private higher education institution needs its courses and establishment approved by MOHE and separate MOHA authorisation to enrol international students; a language, training/skills or accredited centre needs MOE and MOHR registration plus the same MOHA authorisation. This is the school's status, checkable before you apply and not fixable by you.",
+      "source_role": "requirements",
+      "source_excerpt": "b. admission to private higher education institutions (ipts) with courses and establishment approved by the ministry of higher education (mohe), and authorized to enrol international students by the ministry of home affairs (moha).",
+      "display_order": 20,
+      "source_excerpt_display": "b. Admission to Private Higher Education Institutions (IPTS) with courses and establishment approved by the Ministry of Higher Education (MOHE), and authorized to enrol international students by the Ministry of Home Affairs (MOHA)."
+    },
+    {
+      "requirement_code": "emgs_academic_screening",
+      "kind": "step",
+      "officially_required": true,
+      "label": "EMGS screens you academically and issues the Approval to Study letter first",
+      "description": "Applications go through the STARS system or the EMGS portal. Only eligible applicants get the letter, and without it nothing reaches Immigration.",
+      "source_role": "requirements",
+      "source_excerpt": "applications may be submitted online by institutions or students via the stars system or emgs portal ... emgs will conduct academic screening and issue the approval to study for international student letter only to eligible applicants.",
+      "display_order": 30,
+      "source_excerpt_display": "Applications may be submitted online by institutions or students via the STARS system or EMGS portal ... EMGS will conduct academic screening and issue the Approval to Study for International Student letter only to eligible applicants."
+    },
+    {
+      "requirement_code": "eval_approval_then_visa",
+      "kind": "step",
+      "officially_required": true,
+      "label": "After eVAL approval, apply for a single-entry visa on the official eVisa portal if your nationality needs one",
+      "description": "The Department names the portal exclusively. Travel document and security checks happen at the eVAL stage, after EMGS forwards the file.",
+      "source_role": "requirements",
+      "source_excerpt": "f. upon obtaining eval approval, applicants from countries requiring a visa",
+      "display_order": 40,
+      "source_excerpt_display": "f. Upon obtaining eVAL approval, applicants from countries requiring a visa"
+    },
+    {
+      "requirement_code": "evisa_not_available_from_three_places",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "eVisa applications cannot be made from Malaysia, Israel or North Korea",
+      "description": "Worldwide otherwise. Being physically in one of the three at application time blocks the route, which compounds with the rule that you must apply from outside Malaysia.",
+      "source_role": "requirements",
+      "source_excerpt": "g. note: evisa applications can be made worldwide, except from malaysia, israel, and north korea",
+      "display_order": 50,
+      "parameters": {
+        "excluded_locations": [
+          "malaysia",
+          "israel",
+          "north korea"
+        ]
+      },
+      "source_excerpt_display": "g. Note: eVISA applications can be made worldwide, except from Malaysia, Israel, and North Korea"
+    },
+    {
+      "requirement_code": "post_arrival_medical_7_days",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A post-arrival medical examination within 7 days of arriving",
+      "description": "Seven days from landing, not from enrolment. The pass is not endorsed until it is passed and EMGS issues its support letter.",
+      "source_role": "requirements",
+      "source_excerpt": "h. upon arrival in malaysia, students must undergo a post-arrival medical examination within 7 days.",
+      "display_order": 60,
+      "parameters": {
+        "days_after_arrival": 7
+      },
+      "source_excerpt_display": "h. Upon arrival in Malaysia, students must undergo a Post-Arrival Medical Examination within 7 days."
+    },
+    {
+      "requirement_code": "institution_submits_for_endorsement",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your institution submits for endorsement at the immigration office nearest to it",
+      "description": "The last step is the school's, not yours, and it is tied to the school's address rather than your own.",
+      "source_role": "requirements",
+      "source_excerpt": "i. after passing the medical examination and receiving emgs support letter, institutions may submit applications to the immigration office nearest to the institution’s address for student pass endorsement and issuance.",
+      "display_order": 70,
+      "source_excerpt_display": "i. After passing the medical examination and receiving EMGS support letter, institutions may submit applications to the Immigration Office nearest to the institution’s address for Student Pass endorsement and issuance."
+    },
+    {
+      "requirement_code": "dependants_masters_or_phd_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only master's and PhD students may bring dependants",
+      "description": "Undergraduates may not, whatever their circumstances. Eligible dependants are a spouse, biological, step or adopted children under 18, disabled children of any age certified by a specialist, biological parents and parents-in-law.",
+      "source_role": "requirements",
+      "source_excerpt": "g. only student pass holders at master’s or phd level are permitted to bring dependents to reside in malaysia.",
+      "display_order": 80,
+      "source_excerpt_display": "g. Only Student Pass holders at Master’s or PhD level are permitted to bring dependents to reside in Malaysia."
+    },
+    {
+      "requirement_code": "centre_students_no_dependants",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Language, training/skills and accredited centre students may bring no dependants at all",
+      "description": "A second, independent bar on top of the degree-level rule.",
+      "source_role": "requirements",
+      "source_excerpt": "i. student pass holders under the language centre, training/skills centre, and accredited centre category are not permitted to bring dependents.",
+      "display_order": 90,
+      "source_excerpt_display": "i. Student Pass holders under the Language Centre, Training/Skills Centre, and Accredited Centre category are not permitted to bring dependents."
+    },
+    {
+      "requirement_code": "dependants_may_not_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Dependants and guardians may not work, do business, or take part in political activity",
+      "description": "The Department lists the same restriction twice, once for dependants and once for guardians, and it includes political speeches and lectures.",
+      "source_role": "requirements",
+      "source_excerpt": "h. dependents are not allowed to work, conduct business, deliver political speeches, lectures, or engage in political activities.",
+      "display_order": 100,
+      "source_excerpt_display": "h. Dependents are NOT ALLOWED to work, conduct business, deliver political speeches, lectures, or engage in political activities."
+    },
+    {
+      "requirement_code": "part_time_work_20_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Part-time work is capped at 20 hours a week, and only at named kinds of workplace",
+      "description": "Restaurants, petrol stations, mini markets, hotels and university or college areas. Only university and private higher education students qualify; centre students do not.",
+      "source_role": "requirements",
+      "source_excerpt": "b. student pass holders are allowed to work part-time during their study period, limited to 20 hours per week, only at approved locations:",
+      "display_order": 110,
+      "parameters": {
+        "max_hours_per_week": 20
+      },
+      "source_excerpt_display": "b. Student Pass holders are allowed to work part-time during their study period, limited to 20 hours per week, only at approved locations:"
+    },
+    {
+      "requirement_code": "work_prohibitions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Front desk duties and student recruitment work are prohibited outright",
+      "description": "Two specific bans inside the part-time permission, not general conditions.",
+      "source_role": "requirements",
+      "source_excerpt": "c. students are prohibited from front desk duties in line with current foreign worker policies and from working as student recruitment agents.",
+      "display_order": 120,
+      "source_excerpt_display": "c. Students are prohibited from front desk duties in line with current foreign worker policies and from working as student recruitment agents."
+    },
+    {
+      "requirement_code": "student_pass_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "RM60 for the Student Pass",
+      "description": "The Department's own figure. The visa fee is separate and varies by nationality.",
+      "source_role": "requirements",
+      "source_excerpt": "a. student pass – rm60.00",
+      "display_order": 130,
+      "parameters": {
+        "currency": "MYR",
+        "amount": 60
+      },
+      "source_excerpt_display": "a. Student Pass – RM60.00"
+    },
+    {
+      "requirement_code": "dependant_pass_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "RM90 for each dependant's or guardian's Social Visit Pass",
+      "description": null,
+      "source_role": "requirements",
+      "source_excerpt": "b. social visit pass for dependents / guardians of student pass holders – rm90.00",
+      "display_order": 140,
+      "parameters": {
+        "currency": "MYR",
+        "amount": 90,
+        "per": "person"
+      },
+      "source_excerpt_display": "b. Social Visit Pass for Dependents / Guardians of Student Pass holders – RM90.00"
+    },
+    {
+      "requirement_code": "emgs_support_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The EMGS support letter — the Acceptance Declaration",
+      "description": "The document that proves the academic screening was passed.",
+      "source_role": "requirements",
+      "source_excerpt": "emgs support letter [acceptance declaration (ad)]",
+      "display_order": 150,
+      "source_excerpt_display": "EMGS Support Letter [Acceptance Declaration (AD)]"
+    },
+    {
+      "requirement_code": "form_14",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Form 14 (IMM.14), for both new and renewal applications",
+      "description": "The Department writes it as '14 form' on the higher-education list and 'imm.14 form' on the school list; they are the same form.",
+      "source_role": "requirements",
+      "source_excerpt": "14 form (new & renewal applications)",
+      "display_order": 160,
+      "official_form_code": "IMM.14",
+      "source_excerpt_display": "14 Form (New & Renewal Applications)"
+    },
+    {
+      "requirement_code": "passport_18_months_all_pages",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of every passport page, including the cover, with at least 18 months' validity",
+      "description": "Eighteen months, not the usual six, and every page rather than the biodata page alone.",
+      "source_role": "requirements",
+      "source_excerpt": "copy of passport (all pages including cover; validity must be at least 18 months)",
+      "display_order": 170,
+      "parameters": {
+        "passport_validity_months": 18,
+        "pages": "all"
+      },
+      "source_excerpt_display": "Copy of passport (all pages including cover; validity must be at least 18 months)"
+    },
+    {
+      "requirement_code": "photo_35x50_white",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A passport-sized photograph, 3.5cm × 5cm, white background",
+      "description": "Larger than the common 3.5 × 4.5cm format.",
+      "source_role": "requirements",
+      "source_excerpt": "passport-sized photo (3.5cm x 5cm, white background)",
+      "display_order": 180,
+      "parameters": {
+        "width_cm": 3.5,
+        "height_cm": 5,
+        "background": "white"
+      },
+      "source_excerpt_display": "Passport-sized photo (3.5cm x 5cm, white background)"
+    },
+    {
+      "requirement_code": "health_insurance_12_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Health insurance recognised in Malaysia, covering at least 12 months",
+      "description": "A Malaysian policy or an international one giving personal cover recognised in Malaysia.",
+      "source_role": "requirements",
+      "source_excerpt": "health insurance policy recognized in malaysia with a coverage period of at least 12 months.",
+      "display_order": 190,
+      "parameters": {
+        "min_coverage_months": 12
+      },
+      "source_excerpt_display": "Health Insurance Policy recognized in Malaysia with a coverage period of at least 12 months."
+    },
+    {
+      "requirement_code": "personal_bond_stamped",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A stamped personal bond form",
+      "description": "Required on both the higher-education and school lists.",
+      "source_role": "requirements",
+      "source_excerpt": "personal bond form (stamped)",
+      "display_order": 200,
+      "source_excerpt_display": "Personal Bond form (stamped)"
+    },
+    {
+      "requirement_code": "moha_approval_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The institution's valid MOHA approval letter for international student intake",
+      "description": "The school's document, which you must obtain from them and submit.",
+      "source_role": "requirements",
+      "source_excerpt": "valid moha approval letter for international student intake",
+      "display_order": 210,
+      "source_excerpt_display": "Valid MOHA approval letter for international student intake"
+    },
+    {
+      "requirement_code": "sarawak_extra_documents",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sarawak adds three documents of its own",
+      "description": "A letter of authorization and a cover letter from the institution, and a pre-eVAL medical report from your country of origin. Sabah and Sarawak administer their own immigration, and the Department lists their requirements inline rather than on a separate page.",
+      "source_role": "requirements",
+      "source_excerpt": "letter of authorization from the institution of higher learning (sarawak only) ... cover letter from the institution of higher learning (sarawak only) ... pre-val medical report / health report from country of origin (sarawak only)",
+      "display_order": 220,
+      "source_excerpt_display": "Letter of Authorization from the Institution of Higher Learning (Sarawak only) ... Cover Letter from the Institution of Higher Learning (Sarawak only) ... Pre-VAL Medical Report / Health Report from Country of Origin (Sarawak only)"
+    }
+  ]
+}

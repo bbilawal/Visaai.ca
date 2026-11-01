@@ -1,0 +1,18 @@
+{
+  "schema": {
+    "command": "exact command run",
+    "cwd": "working directory",
+    "start": "ISO timestamp",
+    "end": "ISO timestamp",
+    "exit_code": "int",
+    "passed": "int|null",
+    "failed": "int|null",
+    "skipped": "int|null",
+    "warnings": "int|null",
+    "log": "path to captured log",
+    "environment": "local|ci|remote",
+    "commit_sha": "string",
+    "phase": "string"
+  },
+  "runs": []
+}

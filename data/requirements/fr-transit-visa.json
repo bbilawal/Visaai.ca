@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-transit-visa",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THIS ROUTE IS THIN BECAUSE THE AUTHORITY IS THIN, AND THAT IS THE FINDING. France's own page on transit states that a visa may be required and then hands the question to a téléservice rather than publishing a rule or a country list. Two sentences of substance and a legal citation is the whole page. Nothing here is padded from the short-stay visa page next door, because airport transit and short stay are different regimes with different exemptions.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2672"
+  },
+  "page_dates": {
+    "requirements": "2025-10-12"
+  },
+  "freshness_note": "Body dateline 'vérifié le 12 octobre 2025' — the oldest of the eighteen French routes, and the same date the page gives for the start of the EES rollout. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "Which nationalities need an airport transit visa. The page publishes NO list and no criterion — it directs the reader to a téléservice that answers the question interactively. This is the whole substance of the route and it is absent by the authority's own choice, not by our omission.",
+    "The distinction between airport transit and territorial transit. The page names airport transit in its téléservice link and does not define either.",
+    "The fee, the application procedure and the document list. None is stated on this page; France-Visas holds them and refuses our monitor.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "transit_may_require_a_prior_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A non-European transiting through France may need to apply for a visa in advance",
+      "description": "Note the authority's own hedge — 'peut-être'. It states the possibility and publishes no rule for when it applies.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "si vous êtes non européen et transitez ... par la france lors d'un voyage, vous devez peut-être demander préalablement un visa.",
+      "source_excerpt_display": "Si vous êtes non européen et transitez ... par la France lors d'un voyage, vous devez peut-être demander préalablement un visa."
+    },
+    {
+      "requirement_code": "check_via_the_official_teleservice",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Use the official téléservice to find out whether an airport transit visa is required",
+      "description": "Recorded as the requirement it is: the authority's answer to 'do I need a transit visa' is to run their tool. There is no published list to reproduce.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "un téléservice permet de savoir si vous devez demander un visa : savoir si un visa est nécessaire pour un transit aéroportuaire",
+      "source_excerpt_display": "Un téléservice permet de savoir si vous devez demander un visa: Savoir si un visa est nécessaire pour un transit aéroportuaire"
+    },
+    {
+      "requirement_code": "ees_rollout_from_12_october_2025",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "From 12 October 2025 the EU Entry/Exit System is being deployed over 6 months at border crossings",
+      "description": "A dated, staged change to what happens at the border. Recorded because the rollout is progressive, so what a traveller meets depends on when and where they cross.",
+      "parameters": {
+        "rollout_start": "2025-10-12",
+        "rollout_months": 6
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "depuis le 12 octobre 2025, le système européen d’entrée/sortie (ees) est déployé progressivement sur 6 mois aux points de passage frontaliers (aéroports, gares et ports). ce système enregistre les données personnelles ainsi que les données concernant les entrées, sorties et refus d’entrées des voyageurs ressortissants de pays tiers qui viennent en france pour un séjour de moins de 3 mois.",
+      "source_excerpt_display": "Depuis le 12 octobre 2025, le système européen d’entrée/sortie (EES) est déployé progressivement sur 6 mois aux points de passage frontaliers (aéroports, gares et ports). Ce système enregistre les données personnelles ainsi que les données concernant les entrées, sorties et refus d’entrées des voyageurs ressortissants de pays tiers qui viennent en France pour un séjour de moins de 3 mois."
+    },
+    {
+      "requirement_code": "legal_basis_ceseda_l311",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "The legal basis is CESEDA articles L311-1 and L311-2",
+      "description": "Recorded because it is the only precise thing the page offers about transit, and it tells a reader where the rule actually lives.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "code de l'entrée et du séjour des étrangers et du droit d'asile : articles l311-1 et l311-2",
+      "source_excerpt_display": "Code de l'entrée et du séjour des étrangers et du droit d'asile: articles L311-1 et L311-2"
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-student-higher-education",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "THE RIGHT TO WORK DEPENDS ON WHETHER THE PROGRAMME IS STATE-APPROVED, AND FOR ONE GROUP IT IS NOW ZERO. A student on a state-approved higher educational programme gets a limited work permit — 90 hours a month from September to May and full time in June, July and August. A student on a NON-state-approved programme who applied on or after 2 May 2025 gets no work permit at all and no right to work. Publishing the 90-hour figure as 'the student work rule' would tell that second group they may work, and working without the permit is what the authority calls illegal work, punishable by warning, fine or revocation.\n\nTHE SELF-SUPPORT FIGURE HAS A CAP THAT LOOKS LIKE AN ERROR IF YOU MULTIPLY. DKK 7,426 a month, multiplied by the months of study — but for studies over a year the total required is capped at DKK 89,112. Twelve months at 7,426 is 89,112, so the cap is one year's worth, and a three-year student does not need three times the sum. Someone applying the monthly figure literally would try to show DKK 267,336.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Study/Higher-Education"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. Both money figures carry their own year in the text ('DKK 7,426 (2026 level)'), and the work-permit rule carries a commencement date of 2 May 2025, so revisions surface as text changes to the daily sync.",
+  "not_extracted": [
+    "The rules for EU/EEA and Swiss citizens, whom the page routes to the EU residence document instead — a separate enumerated route.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "The separate study routes the catalogue enumerates alongside this one — basic and youth study programmes, folk high schools, Erhvervskandidat, study internships, job-seeking after study, educational attachment and change of education.",
+    "PhD study, which is its own enumerated route and its own registration here."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "admitted_to_higher_education_full_time",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be admitted to a higher educational programme and study full time",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "it is a requirement that you are admitted to a higher educational programme in denmark, and that you are studying full time at your place of education.",
+      "source_excerpt_display": "It is a requirement that you are admitted to a higher educational programme in Denmark, and that you are studying full time at your place of education."
+    },
+    {
+      "requirement_code": "no_permit_for_part_time_study",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit cannot be granted for part-time study",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "you can not be granted a residence permit to study part time.",
+      "source_excerpt_display": "You can not be granted a residence permit to study part time."
+    },
+    {
+      "requirement_code": "language_proficiency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must understand the language of instruction well enough to participate actively",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "you must be able to speak and understand the language of instruction at a level that allows you to actively participate in the courses you are attending.",
+      "source_excerpt_display": "You must be able to speak and understand the language of instruction at a level that allows you to actively participate in the courses you are attending."
+    },
+    {
+      "requirement_code": "institution_must_be_accredited",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The educational institution must be publicly accredited",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "the educational institution must be publically accredited. as an alternative at least one of the board members of the educational institution must be appointed by the ministry of higher education and science. you can see a list of publically accredited educational institutions here",
+      "source_excerpt_display": "The educational institution must be publically accredited. As an alternative at least one of the board members of the educational institution must be appointed by the Ministry of Higher Education and Science. You can see a list of publically accredited educational institutions here"
+    },
+    {
+      "requirement_code": "programme_must_be_approved",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The programme must be approved by a state authority, or hold an advisory statement",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "the educational programme must be approved by a state authority. if your educational programme is not approved by a state authority, it must instead have an advisory statementor by the danish evaluation institute, (eva). you can read more about educational programmes approved by eva here .",
+      "source_excerpt_display": "The educational programme must be approved by a state authority. If your educational programme is not approved by a state authority, it must instead have an advisory statementor by the Danish Evaluation Institute, (EVA). You can read more about educational programmes approved by EVA here ."
+    },
+    {
+      "requirement_code": "self_support_monthly_amount",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Self-support: DKK 7,426 (2026 level) per month of study",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "per_month": 7426,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 60,
+      "source_excerpt": "you have sufficient funds, if your disposable amount corresponds to dkk 7,426 (2026 level) per month. you must multiply the amount with the number of months you will be studying at a higher educational programme in denmark. if you are studying more than one year, you must be able to document funds for 12 months. that means a maximum of dkk 89,112 (2026 level).",
+      "source_excerpt_display": "You have sufficient funds, if your disposable amount corresponds to DKK 7,426 (2026 level) per month. You must multiply the amount with the number of months you will be studying at a higher educational programme in Denmark. If you are studying more than one year, you must be able to document funds for 12 months. That means a maximum of DKK 89,112 (2026 level)."
+    },
+    {
+      "requirement_code": "self_support_annual_cap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For studies over a year the sum is capped at DKK 89,112 (2026 level)",
+      "description": "The cap that stops the monthly figure being multiplied out across a whole degree.",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "maximum_total": 89112,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 70,
+      "source_excerpt": "if you are studying in denmark for more than a year, the sum must correspond to a maximum of dkk 89,112 (2026 level).",
+      "source_excerpt_display": "If you are studying in Denmark for more than a year, the sum must correspond to a maximum of DKK 89,112 (2026 level)."
+    },
+    {
+      "requirement_code": "self_support_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A bank statement no more than 30 days old, showing date, name, balance and currency",
+      "source_role": "requirements",
+      "parameters": {
+        "max_statement_age_days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80,
+      "source_excerpt": "bank statement that shows:\n\ndate of the statement (maximum 30 days old at the time of submission of application)\n\nyour full name\n\nbalance\n\ncurrency",
+      "source_excerpt_display": "Bank statement that shows:\n\nDate of the statement (maximum 30 days old at the time of submission of application)\n\nYour full name\n\nBalance\n\nCurrency"
+    },
+    {
+      "requirement_code": "liquid_assets_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only liquid assets are accepted as documentation",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "please note that we only accept documentation for liquid assets (that means assets that can quickly be realised into cash, which you have access to). therefore, we do not accept restricted stocks, bonds or an investment portfolio as documentation.",
+      "source_excerpt_display": "Please note that we only accept documentation for liquid assets (that means assets that can quickly be realised into cash, which you have access to). Therefore, we do not accept restricted stocks, bonds or an investment portfolio as documentation."
+    },
+    {
+      "requirement_code": "third_party_funds_not_accepted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A bank statement in someone else's name — a parent's, for instance — is not accepted",
+      "description": "The most common way this requirement is failed.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "a bank statement under another person's name (e.g. your parents), or a statement from others saying that your financial support is secured, will not be accepted as documentation either.",
+      "source_excerpt_display": "A bank statement under another person's name (e.g. your parents), or a statement from others saying that your financial support is secured, will not be accepted as documentation either."
+    },
+    {
+      "requirement_code": "scholarship_or_loan_accepted",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A granted scholarship or student loan can satisfy the self-support requirement",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "your scholarship or student loan must be granted to you, and the sum must correspond to dkk 7,426 (2026 level) per month, for each month that you are studying in denmark.",
+      "source_excerpt_display": "Your scholarship or student loan must be granted to you, and the sum must correspond to DKK 7,426 (2026 level) per month, for each month that you are studying in Denmark."
+    },
+    {
+      "requirement_code": "under_18_parental_consent",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicants under 18 need a declaration of consent signed by both parents",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "if you have not yet turned 18, both of your parents must sign a declaration of consent to allow you to study in denmark (i.e. they must both sign a declaration of consent).",
+      "source_excerpt_display": "If you have not yet turned 18, both of your parents must sign a declaration of consent to allow you to study in Denmark (i.e. they must both sign a declaration of consent)."
+    },
+    {
+      "requirement_code": "under_18_school_declaration",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The school must declare it will ensure proper residence and study conditions",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "the school must also declare that it will ensure that you will have proper residence and study conditions in denmark.",
+      "source_excerpt_display": "The school must also declare that it will ensure that you will have proper residence and study conditions in Denmark."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 3060,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 140,
+      "source_excerpt": "processing fee\ndkk 3,060,-",
+      "source_excerpt_display": "Processing fee\nDKK 3,060,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "normal processing time\n2 months\n\nif further information is needed, the processing time can be up to\n3 months",
+      "source_excerpt_display": "Normal processing time\n2 months\n\nIf further information is needed, the processing time can be up to\n3 months"
+    },
+    {
+      "requirement_code": "work_rights_state_approved",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "State-approved programmes: a limited work permit is granted alongside the residence permit",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "as a student in a state-approved higher educational programme, you will be granted a limited work permit in addition to your residence permit.",
+      "source_excerpt_display": "As a student in a state-approved higher educational programme, you will be granted a limited work permit in addition to your residence permit."
+    },
+    {
+      "requirement_code": "work_hours_allowed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "90 hours a month September to May, full time in June, July and August",
+      "source_role": "requirements",
+      "parameters": {
+        "hours_per_month_in_term": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170,
+      "source_excerpt": "you are allowed to work:\n\n90 hours per month during the normal period of study from september to may, and\n\nfull-time through june, july and august.",
+      "source_excerpt_display": "You are allowed to work:\n\n90 hours per month during the normal period of study from September to May, and\n\nfull-time through June, July and August."
+    },
+    {
+      "requirement_code": "no_work_rights_non_state_approved_after_may_2025",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Non-state-approved programmes: NO work permit and no right to work if applied on or after 2 May 2025",
+      "description": "Quoted with the sentence that identifies which students it applies to, because the rule alone would read as applying to everyone.",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "as a student in a non-state-approved higher educational programme with an advisory statement from the danish evaluation institute (eva), you will only get a limited work permit if you have been granted or applied for a residence permit before 2 may 2025.\nif you have applied for a residence permit on or after 2 may 2025, you will not be granted a limited work permit and therefore do not have the right to work.",
+      "source_excerpt_display": "As a student in a non-state-approved higher educational programme with an advisory statement from the Danish Evaluation Institute (EVA), you will only get a limited work permit if you have been granted or applied for a residence permit before 2 May 2025.\nIf you have applied for a residence permit on or after 2 May 2025, you will not be granted a limited work permit and therefore do not have the right to work."
+    },
+    {
+      "requirement_code": "illegal_work_consequences",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working more hours than allowed is illegal work — warning, fine, or revocation",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "if you work illegally you can receive a warning, a fine or your residence permit as a student can be revoked. you can read more about illegal work here .",
+      "source_excerpt_display": "If you work illegally you can receive a warning, a fine or your residence permit as a student can be revoked. You can read more about illegal work here ."
+    },
+    {
+      "requirement_code": "unpaid_voluntary_work_unlimited",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Unpaid voluntary work of benefit to society is permitted without limit",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "however, you are permitted to dounlimited hours of unpaid voluntary work for an organisation or association, if the work is a benefit to society. hours spent on doing unpaid voluntary work, does not count as part of your limited work permit. read more about unpaid voluntary work .",
+      "source_excerpt_display": "However, you are permitted to dounlimited hours of unpaid voluntary work for an organisation or association, if the work is a benefit to society. Hours spent on doing unpaid voluntary work, does not count as part of your limited work permit. Read more about unpaid voluntary work ."
+    },
+    {
+      "requirement_code": "mandatory_internship_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A programme with a mandatory internship carries an automatic permit to work in it",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "if you are granted a residence permit to study at an educational programme containing a mandatory internship, you will automatically be granted a permit to work full-time for the duration of the internship.",
+      "source_excerpt_display": "If you are granted a residence permit to study at an educational programme containing a mandatory internship, you will automatically be granted a permit to work full-time for the duration of the internship."
+    },
+    {
+      "requirement_code": "internship_permit_must_precede_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not begin full-time internship work before the permit is granted",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "please note that you cannot not begin working full-time during the internship before you have been granted a permit.",
+      "source_excerpt_display": "Please note that you cannot not begin working full-time during the internship before you have been granted a permit."
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not apply for public benefits",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "you must be able to support yourself and your family members, if they live in denmark during your stay. therefore, you are not allowed to apply for public benefits, e.g. benefits under the terms of the active social policy act, state educational grant (su) and housing benefits.",
+      "source_excerpt_display": "You must be able to support yourself and your family members, if they live in Denmark during your stay. Therefore, you are not allowed to apply for public benefits, e.g. benefits under the terms of the Active Social Policy Act, State Educational Grant (SU) and housing benefits."
+    },
+    {
+      "requirement_code": "absence_six_months_lapses_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Giving up your Danish address or staying abroad over 6 successive months lapses the permit",
+      "source_role": "requirements",
+      "parameters": {
+        "max_successive_months_abroad": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 240,
+      "source_excerpt": "please note that you must not give up your danish address or stay abroad for more than 6 successive months. a violation of this rule will result in the lapse of your permit. this means that you will lose your right to stay in denmark.",
+      "source_excerpt_display": "Please note that you must not give up your Danish address or stay abroad for more than 6 successive months. A violation of this rule will result in the lapse of your permit. This means that you will lose your right to stay in Denmark."
+    },
+    {
+      "requirement_code": "permit_lasts_nominal_duration",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit lasts the nominal duration of the programme, if you actively participate",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "you can stay in denmark for the standard (nominal) duration of your educational programme, provided that you are actively participating in the programme.",
+      "source_excerpt_display": "You can stay in Denmark for the standard (nominal) duration of your educational programme, provided that you are actively participating in the programme."
+    },
+    {
+      "requirement_code": "extension_maximum_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A permit can be extended by a maximum of 1 year",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "your permit can be extended for a maximum of 1 year. as a rule, your permit cannot be extended further if you prolong your studies by more than a year.",
+      "source_excerpt_display": "Your permit can be extended for a maximum of 1 year. As a rule, your permit cannot be extended further if you prolong your studies by more than a year."
+    },
+    {
+      "requirement_code": "extension_window",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply no later than the day the permit expires, and no earlier than 4 months before",
+      "description": "A window with a floor as well as a ceiling; applying too early fails too.",
+      "source_role": "requirements",
+      "parameters": {
+        "earliest_months_before_expiry": 4,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 270,
+      "source_excerpt": "you must apply for an extension not later than the day your permit expires - however, you must not apply for an extension earlier than 4 months before your permit for studying expires.",
+      "source_excerpt_display": "You must apply for an extension not later than the day your permit expires - however, you must not apply for an extension earlier than 4 months before your permit for studying expires."
+    },
+    {
+      "requirement_code": "change_of_programme_needs_new_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Changing educational programme requires a new residence permit",
+      "source_role": "requirements",
+      "display_order": 280,
+      "source_excerpt": "if you change your educational programme, you must apply for a new residence permit for the new programme. you are allowed to start your new educational programme while you wait for us to reach a decision regarding your case.",
+      "source_excerpt_display": "If you change your educational programme, you must apply for a new residence permit for the new programme. You are allowed to start your new educational programme while you wait for us to reach a decision regarding your case."
+    },
+    {
+      "requirement_code": "job_seeking_permit_after_completion",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Completing a state-approved programme can bring a 6-month or 3-year job-seeking permit",
+      "source_role": "requirements",
+      "display_order": 290,
+      "source_excerpt": "if you have completed an entire state-approved higher educational programme in denmark, you can be granted either a 6-month or a 3-year residence permit to look for employment in denmark. this depends on which kind of educational programme you have completed.",
+      "source_excerpt_display": "If you have completed an entire state-approved higher educational programme in Denmark, you can be granted either a 6-month or a 3-year residence permit to look for employment in Denmark. This depends on which kind of educational programme you have completed."
+    }
+  ]
+}

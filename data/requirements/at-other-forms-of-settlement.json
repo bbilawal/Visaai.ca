@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-other-forms-of-settlement",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "A group of settlement titles rather than one route, including the artist settlement permit and permits for people already resident. Two distinct thresholds appear: A1 German when first applying for a settlement permit excluding gainful employment, and five years' uninterrupted entitlement to reside for another title.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/other-forms-of-settlement/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as sources already live in this registry.",
+  "not_extracted": [
+    "Fees. The page names none.",
+    "The institution list for acceptable German diplomas, which the page introduces and then enumerates as a list of providers rather than a requirement."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "health_insurance_all_risks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Health insurance covering all risks, with benefits in Austria",
+      "description": "The same standard as family reunification.",
+      "source_role": "requirements",
+      "source_excerpt": "the third-country national must have health insurance coverage, providing benefits in austria and covering all risks.",
+      "display_order": 10,
+      "source_excerpt_display": "The third-country national must have health insurance coverage, providing benefits in Austria and covering all risks."
+    },
+    {
+      "requirement_code": "accommodation_family_size",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Accommodation adequate for the family size by local standards",
+      "description": "Assessed against family size, not the applicant alone.",
+      "source_role": "requirements",
+      "source_excerpt": "the third-country national must provide evidence of a legal title to an accommodation (e.g. by presenting a lease contract) considered adequate for his/her family size according to local standards.",
+      "display_order": 20,
+      "source_excerpt_display": "The third-country national must provide evidence of a legal title to an accommodation (e.g. by presenting a lease contract) considered adequate for his/her family size according to local standards."
+    },
+    {
+      "requirement_code": "german_a1_settlement_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "German at A1 for a settlement permit excluding gainful employment",
+      "description": "The authority is explicit that only beginner-level German is required for this title.",
+      "source_role": "requirements",
+      "source_excerpt": "third-country nationals have to provide evidence of german language skills at a1 level according to the common european framework of reference for languages , when first applying for a residence title “settlement permit – gainful employment excluded”. only basic german language skills at beginner level are required.",
+      "display_order": 30,
+      "source_excerpt_display": "Third-country nationals have to provide evidence of German language skills at A1 level according to the Common European Framework of Reference for Languages, when first applying for a residence title “Settlement permit – gainful employment excluded”. Only basic German language skills at beginner level are required."
+    },
+    {
+      "requirement_code": "five_years_uninterrupted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five years' uninterrupted entitlement to reside",
+      "description": "A separate threshold for a different title in this group — not an alternative to the A1 requirement above.",
+      "source_role": "requirements",
+      "source_excerpt": "have been entitled to reside in austria during the last five years without interruption,",
+      "display_order": 40,
+      "source_excerpt_display": "have been entitled to reside in Austria during the last five years without interruption,"
+    },
+    {
+      "requirement_code": "artistic_education_or_works",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of artistic education, or a description of former works",
+      "description": "For the artist settlement permit, the authority accepts a description of past work in place of formal education.",
+      "source_role": "requirements",
+      "source_excerpt": "proof of an artistic education or description of former artistic works",
+      "display_order": 50,
+      "source_excerpt_display": "Proof of an artistic education or description of former artistic works"
+    }
+  ]
+}

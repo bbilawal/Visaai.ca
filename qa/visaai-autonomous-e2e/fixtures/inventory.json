@@ -1,0 +1,2029 @@
+{
+  "generated_at": "2026-08-12T13:32:27.149Z",
+  "selectable_country_count": 33,
+  "matrix_row_count": 71,
+  "countries": [
+    {
+      "code": "CA",
+      "name": "Canada",
+      "programs": [
+        "visitor_visa",
+        "family_sponsorship",
+        "business_visa",
+        "student_visa",
+        "work_permit"
+      ]
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "programs": [
+        "visitor_visa",
+        "business_visa",
+        "family_sponsorship"
+      ]
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "programs": [
+        "visitor_visa",
+        "student_visa"
+      ]
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "programs": [
+        "visitor_visa",
+        "student_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "BG",
+      "name": "Bulgaria",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "CZ",
+      "name": "Czech Republic",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "HU",
+      "name": "Hungary",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "IS",
+      "name": "Iceland",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "LI",
+      "name": "Liechtenstein",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "LU",
+      "name": "Luxembourg",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "MT",
+      "name": "Malta",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "RO",
+      "name": "Romania",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "SI",
+      "name": "Slovenia",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "programs": [
+        "tourist_visa",
+        "business_visa"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "program_id": "visitor_visa",
+      "program_label": "Visitor Visa (TRV)",
+      "forms": [
+        "IMM 5257"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "sufficient_funds",
+        "intent_to_return"
+      ],
+      "validation_rules": [
+        "passport_expiry:error",
+        "name_consistency:warning"
+      ],
+      "evidence_rules": [
+        "employment",
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "weak_home_ties@0.3",
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "prior_refusal@0.1"
+      ]
+    },
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "program_id": "family_sponsorship",
+      "program_label": "Super Visa (parents / grandparents)",
+      "forms": [
+        "IMM 5257",
+        "IMM 5645"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "sponsor_status",
+        "relationship",
+        "sponsor_income"
+      ],
+      "validation_rules": [
+        "relationship_proof:error"
+      ],
+      "evidence_rules": [
+        "funds_history"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "inconsistent_info@0.2"
+      ]
+    },
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "IMM 5257"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "program_id": "student_visa",
+      "program_label": "Study Permit",
+      "forms": [
+        "IMM 1294"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "admission",
+        "tuition_funds"
+      ],
+      "validation_rules": [
+        "institution_recognised:error"
+      ],
+      "evidence_rules": [
+        "funds_history"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "program_id": "work_permit",
+      "program_label": "Work Permit",
+      "forms": [
+        "IMM 1295"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "job_offer",
+        "qualifications"
+      ],
+      "validation_rules": [
+        "employer_eligible:error"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "inconsistent_info@0.2",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "US",
+      "country_name": "United States",
+      "program_id": "visitor_visa",
+      "program_label": "B-2 Visitor (Tourism)",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "sufficient_funds",
+        "intent_to_return"
+      ],
+      "validation_rules": [
+        "passport_expiry:error",
+        "name_consistency:warning"
+      ],
+      "evidence_rules": [
+        "employment",
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "weak_home_ties@0.3",
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "prior_refusal@0.1"
+      ]
+    },
+    {
+      "country_code": "US",
+      "country_name": "United States",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "US",
+      "country_name": "United States",
+      "program_id": "family_sponsorship",
+      "program_label": "Family sponsorship (Form I-130)",
+      "forms": [
+        "I-130"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "sponsor_status",
+        "relationship",
+        "sponsor_income"
+      ],
+      "validation_rules": [
+        "relationship_proof:error"
+      ],
+      "evidence_rules": [
+        "funds_history"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "inconsistent_info@0.2"
+      ]
+    },
+    {
+      "country_code": "GB",
+      "country_name": "United Kingdom",
+      "program_id": "visitor_visa",
+      "program_label": "Standard Visitor Visa",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "sufficient_funds",
+        "intent_to_return"
+      ],
+      "validation_rules": [
+        "passport_expiry:error",
+        "name_consistency:warning"
+      ],
+      "evidence_rules": [
+        "employment",
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "weak_home_ties@0.3",
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "prior_refusal@0.1"
+      ]
+    },
+    {
+      "country_code": "GB",
+      "country_name": "United Kingdom",
+      "program_id": "student_visa",
+      "program_label": "Student Visa",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "admission",
+        "tuition_funds"
+      ],
+      "validation_rules": [
+        "institution_recognised:error"
+      ],
+      "evidence_rules": [
+        "funds_history"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "AU",
+      "country_name": "Australia",
+      "program_id": "visitor_visa",
+      "program_label": "Visitor visa (subclass 600)",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "sufficient_funds",
+        "intent_to_return"
+      ],
+      "validation_rules": [
+        "passport_expiry:error",
+        "name_consistency:warning"
+      ],
+      "evidence_rules": [
+        "employment",
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "weak_home_ties@0.3",
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "prior_refusal@0.1"
+      ]
+    },
+    {
+      "country_code": "AU",
+      "country_name": "Australia",
+      "program_id": "student_visa",
+      "program_label": "Student visa (subclass 500)",
+      "forms": [],
+      "documents": [],
+      "eligibility_checks": [
+        "admission",
+        "tuition_funds"
+      ],
+      "validation_rules": [
+        "institution_recognised:error"
+      ],
+      "evidence_rules": [
+        "funds_history"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "AU",
+      "country_name": "Australia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "1415"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "AT",
+      "country_name": "Austria",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "AT",
+      "country_name": "Austria",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "BE",
+      "country_name": "Belgium",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "BE",
+      "country_name": "Belgium",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "BG",
+      "country_name": "Bulgaria",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "BG",
+      "country_name": "Bulgaria",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "HR",
+      "country_name": "Croatia",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "HR",
+      "country_name": "Croatia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "CZ",
+      "country_name": "Czech Republic",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "CZ",
+      "country_name": "Czech Republic",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "DK",
+      "country_name": "Denmark",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "DK",
+      "country_name": "Denmark",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "EE",
+      "country_name": "Estonia",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "EE",
+      "country_name": "Estonia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "FI",
+      "country_name": "Finland",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "FI",
+      "country_name": "Finland",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "FR",
+      "country_name": "France",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "FR",
+      "country_name": "France",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "DE",
+      "country_name": "Germany",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "DE",
+      "country_name": "Germany",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "GR",
+      "country_name": "Greece",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "GR",
+      "country_name": "Greece",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "HU",
+      "country_name": "Hungary",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "HU",
+      "country_name": "Hungary",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "IS",
+      "country_name": "Iceland",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "IS",
+      "country_name": "Iceland",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "IT",
+      "country_name": "Italy",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "IT",
+      "country_name": "Italy",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "LV",
+      "country_name": "Latvia",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "LV",
+      "country_name": "Latvia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "LI",
+      "country_name": "Liechtenstein",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "LI",
+      "country_name": "Liechtenstein",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "LT",
+      "country_name": "Lithuania",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "LT",
+      "country_name": "Lithuania",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "LU",
+      "country_name": "Luxembourg",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "LU",
+      "country_name": "Luxembourg",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "MT",
+      "country_name": "Malta",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "MT",
+      "country_name": "Malta",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "NL",
+      "country_name": "Netherlands",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "NL",
+      "country_name": "Netherlands",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "NO",
+      "country_name": "Norway",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "NO",
+      "country_name": "Norway",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "PL",
+      "country_name": "Poland",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "PL",
+      "country_name": "Poland",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "PT",
+      "country_name": "Portugal",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "PT",
+      "country_name": "Portugal",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "RO",
+      "country_name": "Romania",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "RO",
+      "country_name": "Romania",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "SK",
+      "country_name": "Slovakia",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "SK",
+      "country_name": "Slovakia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "SI",
+      "country_name": "Slovenia",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "SI",
+      "country_name": "Slovenia",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "ES",
+      "country_name": "Spain",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "ES",
+      "country_name": "Spain",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "SE",
+      "country_name": "Sweden",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "SE",
+      "country_name": "Sweden",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    },
+    {
+      "country_code": "CH",
+      "country_name": "Switzerland",
+      "program_id": "tourist_visa",
+      "program_label": "Tourist Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "return_ticket"
+      ],
+      "validation_rules": [
+        "passport_expiry:error"
+      ],
+      "evidence_rules": [
+        "funds_history",
+        "itinerary"
+      ],
+      "risk_signals": [
+        "insufficient_funds@0.25",
+        "unclear_purpose@0.15"
+      ]
+    },
+    {
+      "country_code": "CH",
+      "country_name": "Switzerland",
+      "program_id": "business_visa",
+      "program_label": "Business Visa",
+      "forms": [
+        "SCHENGEN-C"
+      ],
+      "documents": [],
+      "eligibility_checks": [
+        "valid_passport",
+        "business_purpose"
+      ],
+      "validation_rules": [
+        "employer_match:warning"
+      ],
+      "evidence_rules": [
+        "employment"
+      ],
+      "risk_signals": [
+        "unclear_purpose@0.15",
+        "weak_home_ties@0.3"
+      ]
+    }
+  ]
+}

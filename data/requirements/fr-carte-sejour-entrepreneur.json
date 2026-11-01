@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-entrepreneur",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "Four eligibility tests, and three of them are about the BUSINESS rather than the applicant: it must be the principal activity, registered at the guichet unique, economically viable, and matched to the applicant's own qualifications or experience. The document list then branches by activity type; the common core is recorded here and the branch-specific documents are named as a branch rather than flattened into one list.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F35795"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The per-activity document branches in full. The page publishes different lists for creating versus taking over a commercial, industrial or craft activity, and different ones again for the liberal professions. The COMMON list is recorded; the branches are named without being enumerated, because a partial branch list reads as the whole requirement.",
+    "What counts as 'economically viable'. The page states the test and defers the definition to a tooltip that carries no threshold. No figure is published and none is supplied.",
+    "The stamp duty amount. The document list requires proof of payment; the page does not state the amount on this route.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "who_the_entrepreneur_card_is_for",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For a commercial, craft, industrial or liberal activity carried on in France for more than 3 months",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous êtes concerné par cette carte si vous souhaitez résider en france pour y exercer une activité commerciale, artisanale ou industrielle.",
+      "source_excerpt_display": "Vous êtes concerné par cette carte si vous souhaitez résider en France pour y exercer une activité commerciale, artisanale ou industrielle."
+    },
+    {
+      "requirement_code": "activity_must_be_principal_and_registered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The activity must be your principal one and must be registered at the guichet unique des formalités des entreprises",
+      "description": "'À titre principal' excludes a side business run alongside other work.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "votre activité doit être exercée à titre principal . elle doit faire l'objet d'une inscription au guichet unique des formalités des entreprises .",
+      "source_excerpt_display": "Votre activité doit être exercée à titre principal. Elle doit faire l'objet d'une inscription au guichet unique des formalités des entreprises."
+    },
+    {
+      "requirement_code": "activity_must_be_viable_and_provide_a_living",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The activity must be economically viable and must provide you sufficient means of existence",
+      "description": "Two tests, not one: a viable business that does not support the applicant fails the second. No threshold is published for either.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "votre activité doit être économiquement viable ... elle doit également vous apporter des moyens d'existence suffisants.",
+      "source_excerpt_display": "Votre activité doit être économiquement viable ... Elle doit également vous apporter des moyens d'existence suffisants."
+    },
+    {
+      "requirement_code": "activity_must_match_qualifications_or_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The activity must correspond to your qualifications or professional experience",
+      "description": "Rules out changing trade on arrival, which is the assumption most often made about an entrepreneur route.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "votre activité doit correspondre à vos qualifications ou à votre expérience professionnelle .",
+      "source_excerpt_display": "Votre activité doit correspondre à vos qualifications ou à votre expérience professionnelle."
+    },
+    {
+      "requirement_code": "prefecture_may_refuse_on_conduct_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The préfecture may refuse the card for an unfulfilled removal order or for named offences",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "la préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (oqtf) ou si vous avez commis l'un des faits suivants : faux et usage de faux documents",
+      "source_excerpt_display": "La préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (OQTF) ou si vous avez commis l'un des faits suivants: Faux et usage de faux documents"
+    },
+    {
+      "requirement_code": "file_within_two_months_before_expiry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "File at your préfecture in the 2 months before your current card expires",
+      "parameters": {
+        "filing_window_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "vous devez déposer votre demande à la préfecture ou sous-préfecture de votre domicile, dans les 2 mois précédant la date de fin de validité de votre carte de séjour.",
+      "source_excerpt_display": "Vous devez déposer votre demande à la préfecture ou sous-préfecture de votre domicile, dans les 2 mois précédant la date de fin de validité de votre carte de séjour."
+    },
+    {
+      "requirement_code": "documents_required_in_all_cases",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required in every case, whatever the activity",
+      "description": "The authority's own common list. Three photographs rather than an e-photo code on this route, and an OFII medical certificate handed over at issue.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "vous devez dans tous les cas fournir les documents suivants : visa de long séjour ou titre de séjour en cours de validité justificatif de nationalité (passeport, carte d'identité, carte consulaire) justificatif de domicile datant de moins de 6 mois 3 photos d'identité",
+      "source_excerpt_display": "Vous devez dans tous les cas fournir les documents suivants: Visa de long séjour ou titre de séjour en cours de validité Justificatif de nationalité (passeport, carte d'identité, carte consulaire) Justificatif de domicile datant de moins de 6 mois 3 photos d'identité"
+    },
+    {
+      "requirement_code": "civil_status_documents_need_certified_translation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Civil status documents must be accompanied by a translation from a sworn translator",
+      "description": "Mandatory, and by a specific class of translator. An ordinary translation is not accepted.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "les actes d'état civil doivent être obligatoirement accompagnés de leur traduction en français par un traducteur interprète agréé .",
+      "source_excerpt_display": "Les actes d'état civil doivent être obligatoirement accompagnés de leur traduction en français par un traducteur interprète agréé."
+    },
+    {
+      "requirement_code": "non_polygamy_declaration_where_applicable",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A sworn declaration of non-polygamy, if you are married and from a country that permits it",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "déclaration sur l'honneur de non polygamie ... en france si vous êtes marié et êtes ressortissant d'un pays qui l'autorise",
+      "source_excerpt_display": "Déclaration sur l'honneur de non polygamie ... en France si vous êtes marié et êtes ressortissant d'un pays qui l'autorise"
+    },
+    {
+      "requirement_code": "additional_documents_depend_on_the_activity",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Further documents depend on the activity — creating a commercial business needs a cerfa form and, if you are abroad, a criminal record extract",
+      "description": "Recorded so a reader knows the common list is not the whole list. The full per-activity branches are not reproduced; see not_extracted.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "formulaire cerfa \"commerçant, artisan, industriel\" complété si vous résidez hors de france, extrait du casier judiciaire ou document équivalent de votre pays d'origine",
+      "source_excerpt_display": "Formulaire cerfa \"commerçant, artisan, industriel\" complété Si vous résidez hors de France, extrait du casier judiciaire ou document équivalent de votre pays d'origine"
+    }
+  ]
+}

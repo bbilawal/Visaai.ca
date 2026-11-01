@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "visaai_id": "at-rwr-card-plus",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the page named in source_roles. Nothing is inferred.",
+  "structure_note": "Three alternative routes in, not three conditions. The page numbers them, and the third depends on the first two — a family member qualifies only if their relative falls within item 1 or 2, and only after twelve months' lawful settlement of their own.",
+  "source_roles": {
+    "requirements": "https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/redwhiteredcardplus/"
+  },
+  "page_dates": {},
+  "freshness_note": "No dateline is published and the body mentions no year. Tracked by check-source-freshness as '[none published]', the same condition as Singapore's MOM and the US ESTA pages already live.",
+  "not_extracted": [
+    "Fees. The page names none.",
+    "The family-status documents the page lists as 'as applicable' rather than required."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "route_two_years_settled",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Two years lawfully settled with progressive integration",
+      "description": "The first of three alternatives. The page qualifies it with prior lawful employment or particularly close social and family ties.",
+      "source_role": "requirements",
+      "source_excerpt": "you have been lawfully settled in austria for two years and are progressively integrated (if you have previously been lawfully employed or when – under certain circumstances – admission to employment is necessary due to your particularly close social and family ties to austria), or",
+      "display_order": 10,
+      "source_excerpt_display": "you have been lawfully settled in Austria for two years and are progressively integrated (if you have previously been lawfully employed or when – under certain circumstances – admission to employment is necessary due to your particularly close social and family ties to Austria), or"
+    },
+    {
+      "requirement_code": "route_work_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Or hold a valid work permit or exemption certificate",
+      "description": "The second alternative, and the shortest path for someone already working lawfully.",
+      "source_role": "requirements",
+      "source_excerpt": "you hold a valid work permit or a valid exemption certificate, or",
+      "display_order": 20,
+      "source_excerpt_display": "you hold a valid work permit or a valid exemption certificate, or"
+    },
+    {
+      "requirement_code": "route_family_member",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Or be a family member of someone in the first two groups, after twelve months settled",
+      "description": "Derivative and conditional: it depends on the relative qualifying, and adds a twelve-month settlement requirement of its own.",
+      "source_role": "requirements",
+      "source_excerpt": "you are a family member of a third-country national who falls within the scope of item 1. or 2., provided you have been lawfully settled in austria for twelve months.",
+      "display_order": 30,
+      "source_excerpt_display": "you are a family member of a third-country national who falls within the scope of item 1. or 2., provided you have been lawfully settled in Austria for twelve months."
+    },
+    {
+      "requirement_code": "travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Valid travel document",
+      "description": "A passport or equivalent.",
+      "source_role": "requirements",
+      "source_excerpt": "a valid travel document (e.g. passport)",
+      "display_order": 40,
+      "source_excerpt_display": "a valid travel document (e.g. passport)"
+    },
+    {
+      "requirement_code": "photo_spec",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photo, 45x35mm, taken within six months",
+      "description": "Dimensions and recency both stated.",
+      "source_role": "requirements",
+      "source_excerpt": "a photo (dimensions: 45x35mm) of the applicant, taken recently (six months ago or less)",
+      "display_order": 50,
+      "source_excerpt_display": "a photo (dimensions: 45x35mm) of the applicant, taken recently (six months ago or less)"
+    }
+  ]
+}

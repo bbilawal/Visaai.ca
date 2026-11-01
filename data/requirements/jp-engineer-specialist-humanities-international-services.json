@@ -1,0 +1,218 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-engineer-specialist-humanities-international-services",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where Migrationsverket's Swedish is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "THE DOCUMENT LIST DEPENDS ON THE EMPLOYER, NOT THE APPLICANT. ISA sorts employing organisations into four categories, and which one applies decides what must be filed. Category 1 is listed companies and public bodies; category 4 is everyone who cannot evidence membership of 1, 2 or 3 — the authority states plainly that failing to produce category evidence puts you in category 4. An applicant with identical qualifications faces a materially different file depending on who is hiring them, and that is recorded as its own requirement rather than folded into a document list.\n\nAND A NEW LANGUAGE REQUIREMENT LANDED ON 15 APRIL 2026 for categories 3 and 4 only. It is recorded with its date and its five deemed-equivalent routes, because a reader who meets any of the five needs no test at all.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/gijinkoku.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh. Its BODY carries two dates that do function as evidence of currency: a reference document updated 令和８年７月１３日 (13 July 2026) and a requirement effective from 令和８年４月１５日 (15 April 2026).",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: ISA grants the status, MOFA issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria) in full. The page links them as a PDF rather than stating them in the served HTML. The PDF is not fetched and its content is not paraphrased.",
+    "The full per-category document lists. The common documents and the category system are recorded; the four category-specific lists run to dozens of items each and branch further, and are not enumerated.",
+    "The dispatch/派遣 employment arrangements. Linked as a separate PDF updated 13 July 2026 and not read.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: work requiring natural-science or humanities knowledge, or work requiring foreign-culture-based thinking or sensitivity, under a contract with a Japanese public or private body",
+      "description": "The authority's own statutory definition, including the exclusions — activities belonging to Professor, Artist, Journalist, Business Manager, Legal/Accounting, Medical, Researcher, Instructor, Intra-company Transferee, Nursing Care and Entertainer are carved out of this status. Those exclusions are what make this status residual rather than general.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "本邦の公私の機関との契約に基づいて行う理学、工学その他の自然科学の分野若しくは法律学、経済学、社会学その他の人文科学の分野に属する技術若しくは知識を要する業務又は外国の文化に基盤を有する思考若しくは感受性を必要とする業務に従事する活動",
+      "source_excerpt_display": "本邦の公私の機関との契約に基づいて行う理学、工学その他の自然科学の分野若しくは法律学、経済学、社会学その他の人文科学の分野に属する技術若しくは知識を要する業務又は外国の文化に基盤を有する思考若しくは感受性を必要とする業務に従事する活動"
+    },
+    {
+      "requirement_code": "examples_of_qualifying_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: mechanical engineers, interpreters, designers, private-sector language teachers, marketing staff",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、機械工学等の技術者、通訳、デザイナー、私企業の語学教師、マーケティング業務従事者等。",
+      "source_excerpt_display": "該当例としては、機械工学等の技術者、通訳、デザイナー、私企業の語学教師、マーケティング業務従事者等。"
+    },
+    {
+      "requirement_code": "period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: 5 years, 3 years, 1 year or 3 months",
+      "description": "Four fixed options, not a range. The authority chooses; the applicant does not.",
+      "parameters": {
+        "period_options": [
+          "5 years",
+          "3 years",
+          "1 year",
+          "3 months"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "在留期間 ５年、３年、１年又は３月",
+      "source_excerpt_display": "在留期間 ５年、３年、１年又は３月"
+    },
+    {
+      "requirement_code": "employer_category_decides_the_document_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employing organisation falls into one of four categories, and the category decides which documents are required",
+      "description": "Category 1 covers companies listed on a Japanese stock exchange, mutual insurance companies, national and local government bodies in Japan or abroad, independent administrative institutions, special and authorised corporations, approved public-interest corporations, public corporations under the Corporation Tax Act, and designated innovation-creating companies.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "カテゴリー１ カテゴリー２ カテゴリー３ カテゴリー４ 区分 （所属機関） 次のいずれかに該当する機関 日本の証券取引所に上場している企業 保険業を営む相互会社 日本又は外国の国・地方公共団体 独立行政法人 特殊法人・認可法人 日本の国・地方公共団体認可の公益法人 法人税法別表第１に掲げる公共法人",
+      "source_excerpt_display": "カテゴリー１ カテゴリー２ カテゴリー３ カテゴリー４ 区分 （所属機関） 次のいずれかに該当する機関 日本の証券取引所に上場している企業 保険業を営む相互会社 日本又は外国の国・地方公共団体 独立行政法人 特殊法人・認可法人 日本の国・地方公共団体認可の公益法人 法人税法別表第１に掲げる公共法人"
+    },
+    {
+      "requirement_code": "category_two_withholding_tax_threshold",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Category 2: an organisation whose previous year's withholding tax on employment income was ¥10,000,000 or more",
+      "description": "A published numeric threshold about the EMPLOYER's tax filings, which the applicant cannot verify and usually cannot see.",
+      "parameters": {
+        "withholding_tax_threshold_jpy": 10000000
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "前年分の給与所得の源泉徴収票等の法定調書合計表中、給与所得の源泉徴収合計表の源泉徴収税額が１，０００万円以上ある団体・個人",
+      "source_excerpt_display": "前年分の給与所得の源泉徴収票等の法定調書合計表中、給与所得の源泉徴収合計表の源泉徴収税額が１，０００万円以上ある団体・個人"
+    },
+    {
+      "requirement_code": "failing_to_evidence_a_category_means_category_four",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you cannot produce documents evidencing a category, you are treated as category 4",
+      "description": "The default is the heaviest file, not the lightest. Stated in a parenthesis on the common document list and easy to miss entirely.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "上記カテゴリーのいずれかに該当することを証明する文書 適宜（提出可能な書類がない場合は、カテゴリー４に該当することとなります。）",
+      "source_excerpt_display": "上記カテゴリーのいずれかに該当することを証明する文書 適宜（提出可能な書類がない場合は、カテゴリー４に該当することとなります。）"
+    },
+    {
+      "requirement_code": "new_documents_for_categories_three_and_four_from_2026_04_15",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "From 15 April 2026, categories 3 and 4 must additionally file a declaration about the organisation's representative, and CEFR B2 language evidence where the work is mainly language-based",
+      "description": "A dated change affecting only two of the four categories. Recorded with its effective date because a reader comparing against older guidance will not know it applies to them.",
+      "parameters": {
+        "effective_from": "2026-04-15",
+        "language_level": "CEFR B2"
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "令和８年４月１５日（水）以降の申請から、カテゴリー３又は４に該当する場合は、以下の添付書類を追加で提出いただく必要があります。",
+      "source_excerpt_display": "令和８年４月１５日（水）以降の申請から、カテゴリー３又は４に該当する場合は、以下の添付書類を追加で提出いただく必要があります。"
+    },
+    {
+      "requirement_code": "deemed_b2_language_ability",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Five ways to be deemed to hold CEFR B2 Japanese without a test",
+      "description": "JLPT N2 or above, BJT 400 points or above, twenty years' residence as a mid-to-long-term resident, graduation from a Japanese university or completion of a Japanese college of technology or specialised course, or completion of Japanese compulsory education plus high school. Recorded as officially_required false because each RELIEVES the evidence requirement — and a reader who meets one and does not know it will sit a test they do not need.",
+      "parameters": {
+        "jlpt_minimum": "N2",
+        "bjt_minimum_points": 400,
+        "residence_years": 20
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "・ｊｌｐｔ・ｎ２以上を取得していること ・ｂｊｔビジネス日本語能力テストにおいて４００点以上を取得していること ・中長期在留者として２０年以上本邦に在留していること ・本邦の大学を卒業し、又は本邦の高等専門学校若しくは専修学校の専門課程若しくは専攻科を修了していること ・我が国の義務教育を修了し高等学校を卒業していること",
+      "source_excerpt_display": "・ＪＬＰＴ・Ｎ２以上を取得していること ・ＢＪＴビジネス日本語能力テストにおいて４００点以上を取得していること ・中長期在留者として２０年以上本邦に在留していること ・本邦の大学を卒業し、又は本邦の高等専門学校若しくは専修学校の専門課程若しくは専攻科を修了していること ・我が国の義務教育を修了し高等学校を卒業していること"
+    },
+    {
+      "requirement_code": "language_evidence_applies_to_translation_and_customer_facing_roles",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The language evidence is required where the job is mainly language-based — translation, interpreting, hotel front desk and similar customer-facing work",
+      "description": "And it bites again on renewal: a change of duties or of employer into language-based work triggers it at the extension application even for someone already in Japan.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "申請職種が「翻訳・通訳」やホテルフロント業務等の「接客」の場 合等、日本語能力等の言語能力を用いた業務に主に従事する場合には、提出が必要となります。",
+      "source_excerpt_display": "申請職種が「翻訳・通訳」やホテルフロント業務等の「接客」の場 合等、日本語能力等の言語能力を用いた業務に主に従事する場合には、提出が必要となります。"
+    },
+    {
+      "requirement_code": "no_language_evidence_on_renewal_if_duties_unchanged",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "On an extension application, no language evidence is needed if you have continued in the same kind of work",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "在留期間更新許可申請時において、以前から継続して同様の業務内容に従事している場合は提出を要しません。",
+      "source_excerpt_display": "在留期間更新許可申請時において、以前から継続して同様の業務内容に従事している場合は提出を要しません。"
+    },
+    {
+      "requirement_code": "certificates_must_be_under_three_months_old",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Every certificate issued in Japan must be less than 3 months old at the time of filing",
+      "parameters": {
+        "certificate_max_age_months": 3
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "日本で発行される証明書は全て、発行日から３か月以内のものを提出してください。",
+      "source_excerpt_display": "日本で発行される証明書は全て、発行日から３か月以内のものを提出してください。"
+    },
+    {
+      "requirement_code": "foreign_language_documents_need_a_japanese_translation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Any document in a foreign language must be accompanied by a Japanese translation",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "提出書類が外国語で作成されている場合には、訳文（日本語）を添付してください。",
+      "source_excerpt_display": "提出書類が外国語で作成されている場合には、訳文（日本語）を添付してください。"
+    },
+    {
+      "requirement_code": "documents_are_not_returned_unless_requested_at_filing",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Submitted documents are not returned as a rule — ask at the time of filing if you need an original back",
+      "description": "The request must be made AT filing. There is no later opportunity, and originals that are hard to obtain again are exactly what people submit without thinking.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "原則として、提出された資料は返却できませんので、再度入手することが困難な資料の原本等の返却を希望する場合は、申請時に申し出てください。",
+      "source_excerpt_display": "原則として、提出された資料は返却できませんので、再度入手することが困難な資料の原本等の返却を希望する場合は、申請時に申し出てください。"
+    },
+    {
+      "requirement_code": "incomplete_filings_delay_or_disadvantage",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An incomplete filing may be substantially delayed or may result in an adverse decision",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "提出書類が揃っていない申請の場合、大幅に審査が遅れる、または不利益処分となり得る可能性があるのでご留意ください。",
+      "source_excerpt_display": "提出書類が揃っていない申請の場合、大幅に審査が遅れる、または不利益処分となり得る可能性があるのでご留意ください。"
+    },
+    {
+      "requirement_code": "further_documents_may_be_requested",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The authority may require documents beyond those listed on the page during examination",
+      "description": "Recorded because it bounds what the published list can promise: it is a floor, not a ceiling.",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "申請いただいた後に、当局における審査の過程において、本ページ記載外の資料を求める場合もありますので、あらかじめ御承知おき願います。",
+      "source_excerpt_display": "申請いただいた後に、当局における審査の過程において、本ページ記載外の資料を求める場合もありますので、あらかじめ御承知おき願います。"
+    },
+    {
+      "requirement_code": "common_documents_certificate_of_eligibility",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Common documents: one application form for a Certificate of Eligibility, one photograph to the specified standard, and a stamped self-addressed registered-post envelope",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "在留資格認定証明書交付申請書 １通",
+      "source_excerpt_display": "在留資格認定証明書交付申請書 １通"
+    }
+  ]
+}

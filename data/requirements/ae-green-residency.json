@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "visaai_id": "ae-green-residency",
+  "extracted_at": "2026-08-25",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement is bound to a verbatim excerpt from the ICP page named in source_roles. Figures are quoted, never restated.",
+  "structure_note": "Green Residence has three eligibility categories — skilled workers, freelancers and self-employed individuals, and investors and business partners — each with its own requirements. Labels scope every rule to its category, because the salary threshold applies to skilled workers and the annual-income threshold to freelancers, and a flattened list would assert both of everyone.",
+  "source_roles": {
+    "landing": "https://icp.gov.ae/en/services/uae-green-residency/"
+  },
+  "page_dates": {
+    "landing": "2026-08-20"
+  },
+  "freshness_note": "The page publishes a dateline of 2026-08-20 and its body references 2026.",
+  "not_extracted": [
+    "Fees. The page names no amounts.",
+    "Family sponsorship conditions. The page says holders may sponsor spouse and children 'in accordance with the approved requirements' without stating those requirements, so nothing is recorded about them."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_year_renewable",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Five years, renewable, no sponsor",
+      "description": "Green Residence runs for five years with the option of renewal and, unlike most UAE work residences, does not require a sponsoring employer.",
+      "source_role": "landing",
+      "source_excerpt": "green residence is one of the uae’s long-term residence categories. it is granted for a period of five years, with the option of renewal, and enables holders to live and work in the uae without the need for a sponsor.",
+      "display_order": 10,
+      "source_excerpt_display": "Green Residence is one of the UAE’s long-term residence categories. It is granted for a period of five years, with the option of renewal, and enables holders to live and work in the UAE without the need for a sponsor."
+    },
+    {
+      "requirement_code": "skilled_employment_contract",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Skilled workers: a valid UAE employment contract",
+      "description": "The first of four conditions for the skilled-worker category.",
+      "source_role": "landing",
+      "source_excerpt": "the applicant must have a valid employment contract within the uae.",
+      "display_order": 20,
+      "source_excerpt_display": "The applicant must have a valid employment contract within the UAE."
+    },
+    {
+      "requirement_code": "skilled_classification",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Skilled workers: occupational classification levels 1–3",
+      "description": "Against the Ministry of Human Resources and Emiratisation's approved classification.",
+      "source_role": "landing",
+      "source_excerpt": "a professional classification from levels 1 to 3, in accordance with the approved occupational classification of the ministry of human resources and emiratisation.",
+      "display_order": 30,
+      "source_excerpt_display": "A professional classification from levels 1 to 3, in accordance with the approved occupational classification of the Ministry of Human Resources and Emiratisation."
+    },
+    {
+      "requirement_code": "skilled_degree",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Skilled workers: bachelor's degree or higher",
+      "description": "The authority states a floor, not a specific field.",
+      "source_role": "landing",
+      "source_excerpt": "hold a qualification of no less than a bachelor's degree.",
+      "display_order": 40,
+      "source_excerpt_display": "Hold a qualification of no less than a bachelor's degree."
+    },
+    {
+      "requirement_code": "skilled_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Skilled workers: AED 15,000 monthly minimum",
+      "description": "A monthly figure, and it applies to the skilled-worker category only.",
+      "source_role": "landing",
+      "source_excerpt": "meet a minimum monthly salary requirement of aed 15,000 or its equivalent in foreign currencies.",
+      "display_order": 50,
+      "source_excerpt_display": "Meet a minimum monthly salary requirement of AED 15,000 or its equivalent in foreign currencies."
+    },
+    {
+      "requirement_code": "freelance_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Freelancers: a freelance or self-employment permit",
+      "description": "Issued by the Ministry of Human Resources and Emiratisation.",
+      "source_role": "landing",
+      "source_excerpt": "hold a freelance work permit or a self-employment permit issued by the ministry of human resources and emiratisation.",
+      "display_order": 60,
+      "source_excerpt_display": "Hold a freelance work permit or a self-employment permit issued by the Ministry of Human Resources and Emiratisation."
+    },
+    {
+      "requirement_code": "freelance_qualification",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Freelancers: bachelor's degree, specialised diploma or equivalent",
+      "description": "A wider qualification floor than the skilled-worker category allows.",
+      "source_role": "landing",
+      "source_excerpt": "hold a qualification of no less than a bachelor's degree, specialised diploma, or equivalent.",
+      "display_order": 70,
+      "source_excerpt_display": "Hold a qualification of no less than a bachelor's degree, specialised diploma, or equivalent."
+    },
+    {
+      "requirement_code": "freelance_solvency",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Freelancers: proof of stable income or financial solvency",
+      "description": "Required for the whole period of residence, not only at application.",
+      "source_role": "landing",
+      "source_excerpt": "provide proof of stable annual income or financial solvency throughout the period of residence in the uae.",
+      "display_order": 80,
+      "source_excerpt_display": "Provide proof of stable annual income or financial solvency throughout the period of residence in the UAE."
+    },
+    {
+      "requirement_code": "freelance_income",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Freelancers: AED 360,000 annual income over the previous two years",
+      "description": "An ANNUAL figure covering the previous two years — distinct from the skilled-worker monthly salary, and not interchangeable with it.",
+      "source_role": "landing",
+      "source_excerpt": "the annual income from freelance work during the previous two years must not be less than aed 360,000 or its equivalent in foreign currencies.",
+      "display_order": 90,
+      "source_excerpt_display": "The annual income from freelance work during the previous two years must not be less than AED 360,000 or its equivalent in foreign currencies."
+    },
+    {
+      "requirement_code": "investor_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Investors and business partners: proof of investment",
+      "description": "Either an investment or a contribution to a business venture in the UAE.",
+      "source_role": "landing",
+      "source_excerpt": "provide proof of investment or contribution to a business venture within the uae.",
+      "display_order": 100,
+      "source_excerpt_display": "Provide proof of investment or contribution to a business venture within the UAE."
+    },
+    {
+      "requirement_code": "investor_licences",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Investors and business partners: required licences and approvals",
+      "description": "From the relevant authorities; the page does not enumerate which.",
+      "source_role": "landing",
+      "source_excerpt": "obtain the necessary licences and approvals from the relevant authorities.",
+      "display_order": 110,
+      "source_excerpt_display": "Obtain the necessary licences and approvals from the relevant authorities."
+    }
+  ]
+}

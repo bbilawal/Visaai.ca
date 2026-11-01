@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "om-private-work-permit",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Ministry of Labour page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Arabic. Labels and descriptions are VisaAI's English and are ours, not the authority's. This is a WORK PERMIT, not a visa: the Royal Oman Police decides entry and residence and serves its visa catalogue as client-rendered script, so nothing about the entry visa is recorded here.",
+  "structure_note": "THREE FEE TABLES FOR DOMESTIC WORK, AND THEY ARE NOT INTERCHANGEABLE. 101 rial for one to three domestic workers and 141 for four or more; but 141 for one to three camel or livestock herders and grooms, and 241 for four or more of those. A residential building guard appears in BOTH lists, at two different prices. Publishing one table as 'the domestic worker fee' would be wrong for half the occupations named on the page.\n\nAND THE 90-DAY REPLACEMENT WINDOW. A replacement-for-departed permit is available only where the worker left within 90 days of arrival.",
+  "source_roles": {
+    "requirements": "https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-individuals-290"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The pages carry an 'آخر تحديث' (last updated) stamp of 25/08/2026 in the site chrome rather than on the content itself, so it is recorded as a site-level stamp and not treated as a content dateline. The fee tables cite their own legal instruments — Ministerial Decision 340/2016 as amended, and 602/2025 as amended — which date the RULES even where they do not date the page.",
+  "not_extracted": [
+    "The entry visa. A non-Omani worker needs both a Ministry of Labour work permit and a Royal Oman Police visa. evisa.rop.gov.om serves 44,892 bytes normalising to 927 characters because its catalogue is rendered by script, and www.rop.gov.om normalises to zero. Nobody has refused us; there is no text to read.",
+    "The 'دليل الخدمات' (services guide). Every page defers the per-activity and per-occupation document lists to this guide rather than stating them, and links it as a separate document. It is not fetched and its contents are not paraphrased.",
+    "The occupation classification file for private-sector establishments, which decides which fee category a job falls into. Linked, not stated.",
+    "Whether a fee figure is current. The pages cite ministerial decisions by number and year but publish no effective date for the amounts themselves."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "what_the_service_covers",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The service issues work permits for domestic workers and equivalent occupations",
+      "source_role": "requirements",
+      "source_excerpt": "تمكن خدمة \"تصاريح العمل الخاصة\" مستخدمي النظام من تقديم طلبات الحصول على تصاريح العمل لعمال المنازل ومن في حكمهم.",
+      "display_order": 10,
+      "source_excerpt_display": "تمكن خدمة \"تصاريح العمل الخاصة\" مستخدمي النظام من تقديم طلبات الحصول على تصاريح العمل لعمال المنازل ومن في حكمهم."
+    },
+    {
+      "requirement_code": "replacement_within_90_days_of_arrival",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A replacement-for-departed permit is available to replace a non-Omani worker who left within 90 days of arrival",
+      "parameters": {
+        "days": 90
+      },
+      "source_role": "requirements",
+      "source_excerpt": "- تقديم طلبات تصاريح العمل لبدل المغادر (من أجل استبدال القوى العاملة غير العمانية التي غادرت خلال فترة لم تتجاوز 90 يوما من تاريخ الوصول)",
+      "display_order": 20,
+      "source_excerpt_display": "- تقديم طلبات تصاريح العمل لبدل المغادر (من أجل استبدال القوى العاملة غير العمانية التي غادرت خلال فترة لم تتجاوز 90 يوما من تاريخ الوصول)"
+    },
+    {
+      "requirement_code": "early_departure_replacement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An early-departure permit is available to replace a worker who left the Sultanate before their work permit was issued",
+      "source_role": "requirements",
+      "source_excerpt": "- تقديم طلبات تصاريح العمل للمغادرة المبكرة (من أجل استبدال القوى العاملة غير العمانية التي غادرت السلطنة قبل إصدار تصاريح عمل لها)",
+      "display_order": 30,
+      "source_excerpt_display": "- تقديم طلبات تصاريح العمل للمغادرة المبكرة (من أجل استبدال القوى العاملة غير العمانية التي غادرت السلطنة قبل إصدار تصاريح عمل لها)"
+    },
+    {
+      "requirement_code": "approval_one_to_ten_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Approval takes from one day up to a maximum of ten days, provided the conditions and documents in the services guide are met",
+      "parameters": {
+        "approval_days_min": 1,
+        "approval_days_max": 10
+      },
+      "source_role": "requirements",
+      "source_excerpt": "الموافقة من يوم إلى فترة لا تتجــاوز عشــرة أيــام كحد أقصى شرط استيفاء الاشتراطات و المستندات الواردة في دليل الخدمات .",
+      "display_order": 40,
+      "source_excerpt_display": "الموافقة من يوم إلى فترة لا تتجــاوز عشــرة أيــام كحد أقصى شرط استيفاء الاشتراطات و المستندات الواردة في دليل الخدمات."
+    },
+    {
+      "requirement_code": "fee_101_141_domestic_occupations",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "101 rial for 1–3 workers and 141 for 4 or more, for domestic workers, nannies, private drivers, gardeners, residential building guards, nurses and home health assistants",
+      "parameters": {
+        "tier1_1to3_omr": 101,
+        "tier1_4plus_omr": 141
+      },
+      "source_role": "requirements",
+      "source_excerpt": "101 ريال عماني للعدد من 1-3 عمال ، و 141 ريال عماني للعدد 4 عمال فأكثر للمهن التالية:",
+      "display_order": 50,
+      "source_excerpt_display": "101 ريال عماني للعدد من 1-3 عمال ، و 141 ريال عماني للعدد 4 عمال فأكثر للمهن التالية:"
+    },
+    {
+      "requirement_code": "fee_141_241_livestock_occupations",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "141 rial for 1–3 workers and 241 for 4 or more, for camel and livestock herders, horse grooms, farriers, riders and residential building guards",
+      "description": "A residential building guard appears in this list AND the 101/141 one. The two tables overlap and the page does not reconcile them; both are recorded as published.",
+      "parameters": {
+        "tier2_1to3_omr": 141,
+        "tier2_4plus_omr": 241
+      },
+      "source_role": "requirements",
+      "source_excerpt": "141 ريال عماني للعدد من 1-3 عمال ، 241 ريال عماني لعدد 4 عمال فأكثر للمهن التالية:",
+      "display_order": 60,
+      "source_excerpt_display": "141 ريال عماني للعدد من 1-3 عمال ، 241 ريال عماني لعدد 4 عمال فأكثر للمهن التالية:"
+    },
+    {
+      "requirement_code": "fee_201_other_occupations",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "201 rial for the further occupations listed",
+      "parameters": {
+        "omr": 201
+      },
+      "source_role": "requirements",
+      "source_excerpt": "201 ريال عماني للمهن التالية:",
+      "display_order": 70,
+      "source_excerpt_display": "201 ريال عماني للمهن التالية:"
+    },
+    {
+      "requirement_code": "property_or_farm_ownership_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of owning the farm or agricultural holding, or of owning the residential unit",
+      "description": "Which document applies depends on the occupation being authorised.",
+      "source_role": "requirements",
+      "source_excerpt": "- إثبات ملكيــة المزرعــة أو الحيــازة الزراعيــة .",
+      "display_order": 80,
+      "source_excerpt_display": "- إثبات ملكيــة المزرعــة أو الحيــازة الزراعيــة."
+    },
+    {
+      "requirement_code": "application_steps",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Three steps: log in with a national ID card reader or e-authentication-enabled mobile, enter the recruitment data including the labour office, worker count, occupation and geographic work location, and upload the documents",
+      "source_role": "requirements",
+      "source_excerpt": "2. تعبئة البيانات المطلوبة لاستقدام قوى عاملة غير عمانية وتتضمن مكتب العمل ، عدد القوى العاملة والمهنة ، و الموقع الجغرافي لمزاولة العمل .",
+      "display_order": 90,
+      "source_excerpt_display": "2. تعبئة البيانات المطلوبة لاستقدام قوى عاملة غير عمانية وتتضمن مكتب العمل ، عدد القوى العاملة والمهنة ، و الموقع الجغرافي لمزاولة العمل."
+    }
+  ]
+}

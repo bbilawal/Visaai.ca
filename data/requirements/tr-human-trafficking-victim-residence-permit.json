@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "visaai_id": "tr-human-trafficking-victim-residence-permit",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "humanitarian",
+    "official_name": "Residence Permit for Victims of Human Trafficking",
+    "slug": "human-trafficking-victim-residence-permit",
+    "purpose": "A thirty-day Türkiye residence permit for victims of human trafficking, or where strong circumstantial evidence suggests they might be, renewable in six-month periods to a maximum of three years and issued without the conditions attached to other permits.",
+    "source_titles": {
+      "requirements": "Residence Permit Types",
+      "fees": "Residence Permit Card Fee and Residence Permit Fee Amount"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Presidency of Migration Management page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The eligibility test is deliberately low: the permit is granted to victims OR where there is strong circumstantial evidence that a person might be one. That wording is quoted rather than tightened.\n\nThe cancellation rule carries a protection that must not be lost. Re-contacting the perpetrators cancels the permit — but only where it was of the person's OWN VOLITION. Where it happened through coercion, intimidation, violence or threat, the permit is NOT cancelled. Publishing the first half without the second would describe a trap rather than a safeguard.",
+  "source_roles": {
+    "requirements": "https://en.goc.gov.tr/residence-permit-types",
+    "fees": "https://en.goc.gov.tr/documents-for-residence-permit-fee-amount"
+  },
+  "page_dates": {
+    "requirements": null,
+    "fees": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2025. Freshness therefore rests on a body-year rather than a publication date — better than the Ministry of Foreign Affairs pages, which reference no year at all on the requirements side. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The application DOCUMENT lists. The index links them at `e-ikamet.goc.gov.tr/Ikamet/IstenenBelgeler`, which returns 13,615 bytes normalising to 379 characters — the list is rendered entirely by script. This is not a refusal (robots.txt is 404, conventionally unrestricted) and not a parse failure; there is no server-rendered text to read. So this registry publishes what the LAW requires — eligibility, duration, conditions, cancellation grounds and fees — and cannot publish the counter-by-counter paperwork.",
+    "The VISA side of Turkish entry, which is a different authority — the Ministry of Foreign Affairs — and is already published under its own eight routes. This page is about permission to STAY, not permission to enter."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: Articles 48-49 of Law 6458",
+      "description": "The authority cites its own instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "residence permit for victims of human trafficking shall be regulated by articles 48 to 49 of the law on foreigners and international protection law no. 6458.",
+      "display_order": 10,
+      "source_excerpt_display": "Residence permit for victims of human trafficking shall be regulated by Articles 48 to 49 of the Law on Foreigners and International Protection Law No. 6458."
+    },
+    {
+      "requirement_code": "legal_basis_regulation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "And Articles 45 and 46 of the implementing regulation",
+      "description": "The second instrument.",
+      "source_role": "requirements",
+      "source_excerpt": "besides, residence permit for victims of human trafficking shall be regulated by articles 45 and 46 of the regulation for implementation of the law on foreigners and international protection.",
+      "display_order": 20,
+      "source_excerpt_display": "Besides, residence permit for victims of human trafficking shall be regulated by Articles 45 and 46 of the Regulation for Implementation of the Law on Foreigners and International Protection."
+    },
+    {
+      "requirement_code": "who_qualifies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who qualifies: victims — OR where strong circumstantial evidence suggests they might be",
+      "description": "The lower evidential threshold is the point and is quoted as written.",
+      "source_role": "requirements",
+      "source_excerpt": "a residence permit for victims of human trafficking shall be granted to foreigners who are victims of human trafficking or where there is strong circumstantial evidence that they might be victims.",
+      "display_order": 30,
+      "source_excerpt_display": "A residence permit for victims of human trafficking shall be granted to foreigners who are victims of human trafficking or where there is strong circumstantial evidence that they might be victims."
+    },
+    {
+      "requirement_code": "duration_thirty_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Duration: thirty days, issued by governorates",
+      "description": "The shortest permit on this page.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit for victims of human trafficking shall be issued for thirty days by governorates.",
+      "parameters": {
+        "days": 30,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40,
+      "source_excerpt_display": "The residence permit for victims of human trafficking shall be issued for thirty days by governorates."
+    },
+    {
+      "requirement_code": "renewal_six_months_max_three_years",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Renewable in six-month periods, to a total not exceeding three years",
+      "description": "Both the increment and the ceiling are in one sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit may be renewed for six months periods. however, the total duration shall not exceed three years.",
+      "parameters": {
+        "renewal_months": 6,
+        "max_total_years": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "The residence permit may be renewed for six months periods. However, the total duration shall not exceed three years."
+    },
+    {
+      "requirement_code": "no_other_conditions_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The conditions attached to other residence permit types are NOT sought",
+      "description": "The same waiver as the humanitarian permit.",
+      "source_role": "requirements",
+      "source_excerpt": "conditions attached to other types of residence permit shall not be sought while issuing these residence permits.",
+      "display_order": 60,
+      "source_excerpt_display": "Conditions attached to other types of residence permit shall not be sought while issuing these residence permits."
+    },
+    {
+      "requirement_code": "cancellation_recontact_own_volition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled where the person re-connects with the perpetrators of their OWN VOLITION",
+      "description": "The volition qualifier is what the protection below turns on.",
+      "source_role": "requirements",
+      "source_excerpt": "- in cases where it is determined that foreigners have re-connected with the perpetrators of the crime through their own volition;",
+      "display_order": 70,
+      "source_excerpt_display": "- In cases where it is determined that foreigners have re-connected with the perpetrators of the crime through their own volition;"
+    },
+    {
+      "requirement_code": "cancellation_conditions_lapsed",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled where the compelling conditions no longer apply",
+      "description": "Second of three grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- in cases where the compelling conditions no longer apply;",
+      "display_order": 80,
+      "source_excerpt_display": "- In cases where the compelling conditions no longer apply;"
+    },
+    {
+      "requirement_code": "cancellation_not_a_victim",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Cancelled where it is revealed the person is not a victim",
+      "description": "Third of three grounds.",
+      "source_role": "requirements",
+      "source_excerpt": "- in cases where it is revealed that foreigners are not victims",
+      "display_order": 90,
+      "source_excerpt_display": "- In cases where it is revealed that foreigners are not victims"
+    },
+    {
+      "requirement_code": "coercion_protection",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "NOT cancelled where the contact was outside the person's will — coercion, intimidation, violence or threat",
+      "description": "The safeguard that makes the volition qualifier meaningful. Published as its own requirement so it cannot be separated from the cancellation rule.",
+      "source_role": "requirements",
+      "source_excerpt": "the residence permit for victims of human trafficking shall be cancelled. however, if it is found out that it is committed outside the will, depending on the reasons such as coercion, intimidation, violence or threat, permit in question shall not be cancelled.",
+      "display_order": 100,
+      "source_excerpt_display": "the residence permit for victims of human trafficking shall be cancelled. However, if it is found out that it is committed outside the will, depending on the reasons such as coercion, intimidation, violence or threat, permit in question shall not be cancelled."
+    },
+    {
+      "requirement_code": "fee_document_is_valuable_paper",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The permit document carries a fee set annually — with NO exemption for any nationality",
+      "description": "Residence permit documents are \"valuable paper\" under Law 210. The no-exemption clause is in the same sentence and is what distinguishes this fee from the permit fee below, which some nationalities are exempt from.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit documents are within the scope of valuable paper in accordance with the law no. 210 on valuable papers and are subject to a document fee, the amount of which is determined annually by the ministry of finance. there is no exemption from the document fee for citizens of any country.",
+      "display_order": 110,
+      "source_excerpt_display": "Residence permit documents are within the scope of valuable paper in accordance with the Law No. 210 on Valuable Papers and are subject to a document fee, the amount of which is determined annually by the Ministry of Finance. There is no exemption from the document fee for citizens of any country."
+    },
+    {
+      "requirement_code": "fee_document_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 document fee, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the communique published in Official Gazette 33117 of 24 December 2025. The citation is quoted because it is what makes the figure checkable.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee, which will be effective as of 1 january 2026, as determined by the general communique of the directorate general of public accounts published in the official gazette dated 24 december 2025 and numbered 33117, is specified in the table below.",
+      "display_order": 120,
+      "source_excerpt_display": "The residence permit fee, which will be effective as of 1 January 2026, as determined by the General Communique of the Directorate General of Public Accounts published in the Official Gazette dated 24 December 2025 and numbered 33117, is specified in the table below."
+    },
+    {
+      "requirement_code": "fee_document_amount_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Residence permit document: TRY 964.00 (2026)",
+      "description": "Quoted with the row label above it, because the amount alone does not say what it buys.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit document ... 964,00 tl",
+      "parameters": {
+        "amount": 964,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "RESIDENCE PERMIT DOCUMENT ... 964,00 TL"
+    },
+    {
+      "requirement_code": "fee_permit_basis_2026",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The 2026 permit fee basis, and the gazette that set it",
+      "description": "Effective 1 January 2026, from the circular published in Official Gazette 33124 of 31 December 2025. The authority scopes this to \"citizens of countries not included in the list\".",
+      "source_role": "fees",
+      "source_excerpt": "for citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of january 1, 2026, as determined by the general circular on the fees act published in the official gazette no. 33124 dated december 31, 2025—are listed below.",
+      "display_order": 140,
+      "source_excerpt_display": "For citizens of countries not included in the list, the residence permit fee amounts—which will take effect as of January 1, 2026, as determined by the General Circular on the Fees Act published in the Official Gazette No. 33124 dated December 31, 2025—are listed below."
+    },
+    {
+      "requirement_code": "fee_permit_per_day_first_month",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "First month: TRY 348.10 per day, floored at TRY 653.70 and capped at TRY 3,359.90",
+      "description": "A per-day rate with both a floor and a ceiling, all three in one sentence. A short stay pays the floor, not the daily rate.",
+      "source_role": "fees",
+      "source_excerpt": "the residence permit fee is 348.10 turkish lira per day for up to one month. ( this amount shall not be less than 653.70 tl and shall not be more than 3.359.90 tl for each permit for the first month.",
+      "parameters": {
+        "per_day": 348.1,
+        "minimum": 653.7,
+        "maximum": 3359.9,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "The residence permit fee is 348.10 Turkish Lira per day for up to one month. (this amount shall not be less than 653.70 TL and shall not be more than 3.359.90 TL for each permit for the first month."
+    },
+    {
+      "requirement_code": "fee_permit_per_month_after_first",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Each month after the first: TRY 2,232.30",
+      "description": "A flat monthly rate replacing the per-day calculation.",
+      "source_role": "fees",
+      "source_excerpt": "for each month after the first month, the fee is 2,232.30 turkish lira.",
+      "parameters": {
+        "per_month": 2232.3,
+        "currency": "TRY",
+        "year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "For each month after the first month, the fee is 2,232.30 Turkish Lira."
+    },
+    {
+      "requirement_code": "fee_amounts_scoped_to_ungrouped_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those amounts apply to citizens of countries in NO country group — Serbia, Fiji, Norway and the Northern Mariana Islands",
+      "description": "The scoping sentence. Without it the figures above read as universal, and they are not: every other nationality is priced by a country group this page does not reproduce.",
+      "source_role": "fees",
+      "source_excerpt": "residence permit fees stated above are applied to citizens of serbia, fiji, norway and northern mariana islands which are not included in any country group.",
+      "display_order": 170,
+      "source_excerpt_display": "Residence permit fees stated above are applied to citizens of Serbia, Fiji, Norway and Northern Mariana Islands which are not included in any country group."
+    },
+    {
+      "requirement_code": "fee_reciprocity_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Ten jurisdictions are EXEMPT from the permit fee under reciprocity",
+      "description": "Quoted whole. Naming some and not others would be the worst possible summary of a list that decides whether somebody pays at all.",
+      "source_role": "fees",
+      "source_excerpt": "the czech republic, denmark, ireland, kosovo, naples, sri lanka, syria, turkmenistan, turkish republic of northern cyprus and palestine were exempted from residence permit fees in accordance with the reciprocity principle.",
+      "display_order": 180,
+      "source_excerpt_display": "The Czech Republic, Denmark, Ireland, Kosovo, Naples, Sri Lanka, Syria, Turkmenistan, Turkish Republic of Northern Cyprus and Palestine were exempted from residence permit fees in accordance with the reciprocity principle."
+    },
+    {
+      "requirement_code": "fee_set_by_treasury_on_reciprocity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The Ministry of Treasury and Finance sets these fees on the reciprocity principle",
+      "description": "Who decides, and on what basis — which is why the amounts above can move without the law changing.",
+      "source_role": "fees",
+      "source_excerpt": "the ministry of treasury and finance is authorized to determine residence permit fees, taking into account the principle of reciprocity.",
+      "display_order": 190,
+      "source_excerpt_display": "The Ministry of Treasury and Finance is authorized to determine residence permit fees, taking into account the principle of reciprocity."
+    }
+  ]
+}

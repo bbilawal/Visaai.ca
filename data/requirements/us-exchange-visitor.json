@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-exchange-visitor",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the USCIS Exchange Visitors page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim. This route previously had ONE registered source, travel.state.gov, which refuses the monitor at robots.txt — so it held no requirements at all. USCIS publishes the J-1 classification and permits us to read it.",
+  "structure_note": "J-1 is unusual in this registry and the shape of the extraction reflects it: the applicant does not deal with the immigration authority first. A Department of State-designated SPONSOR issues the Form DS-2019, and the sponsor — not USCIS and not the applicant — decides what evidence is needed for it. Several requirements below therefore point at the sponsor rather than at a document list, because that is what the authority states and inventing a checklist would misdescribe who is actually asking.",
+  "source_roles": {
+    "requirements": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/exchange-visitors"
+  },
+  "page_dates": {
+    "requirements": "2025-01-13"
+  },
+  "freshness_note": "The page publishes 'Last Reviewed/Updated: 01/13/2025' in its own markup. Self-declared, treated as evidence rather than as truth.",
+  "not_extracted": [
+    "The education, experience and skills needed to qualify for a given exchange programme. The page states these exist and links them to the Department of State website ('information on the education, experience, and skills required to qualify is available on the dos website'). That host refuses the monitor, and the criteria vary by programme category, so nothing is recorded. This is the most consequential gap on the route and it is named rather than filled.",
+    "The documents needed to be issued a Form DS-2019. The page states explicitly that the Responsible Officer decides this and explains it to the applicant. There is no published list to quote and none is constructed.",
+    "The visa application fee and the SEVIS fee. Neither amount appears on this page.",
+    "The two-year home residence requirement (INA 212(e)). The page links Form I-612, the waiver application, without stating when the requirement applies. Recording the waiver without the rule it waives would be worse than recording neither.",
+    "Processing times and interview waiting times. The page says only that they 'can vary'."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "approved_exchange_programme_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Intend to participate in an approved programme for one of the listed exchange purposes",
+      "description": "The purposes are a closed list on this page, unlike the B-1 activity list which is explicitly open. Graduate medical education is named separately from study, and it carries consequences elsewhere in US immigration law that this page does not cover.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "the j-1 classification (exchange visitors) is authorized for those who intend to participate in an approved program for the purpose of teaching, instructing or lecturing, studying, observing, conducting research, consulting, demonstrating special skills, receiving training, or to receive graduate medical education or training.",
+      "source_excerpt_display": "The J-1 classification (exchange visitors) is authorized for those who intend to participate in an approved program for the purpose of teaching, instructing or lecturing, studying, observing, conducting research, consulting, demonstrating special skills, receiving training, or to receive graduate medical education or training."
+    },
+    {
+      "requirement_code": "sponsored_by_dos_designated_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be sponsored by an exchange program designated by the U.S. Department of State",
+      "description": "The applicant cannot self-sponsor. Designation is a Department of State act, and without a designated sponsor there is no J-1 route at all.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "in carrying out the responsibilities of the exchange visitor program, the department of state designates public and private entities to act as exchange program sponsors. j-1 nonimmigrants are therefore sponsored by an exchange program that is designated as such by the u.s. department of state.",
+      "source_excerpt_display": "In carrying out the responsibilities of the Exchange Visitor Program, the Department of State designates public and private entities to act as exchange program sponsors. J-1 nonimmigrants are therefore sponsored by an exchange program that is designated as such by the U.S. Department of State."
+    },
+    {
+      "requirement_code": "form_ds_2019_from_sponsor",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Obtain Form DS-2019, Certificate of Eligibility for Exchange Visitor Status, from your sponsoring agency",
+      "official_form_code": "DS-2019",
+      "description": "The first step of the whole route, and it is not filed with the immigration authority — the sponsor issues it. The page names who is authorised to do so and states that this person decides what documents are needed.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "the u.s. department of state plays the primary role in administering the j-1 exchange visitor program, so the first step in obtaining a j-1 visa is to submit a form ds-2019, certificate of eligibility for exchange visitor status, (formerly known as an iap-66). your sponsoring agency will provide you this form.",
+      "source_excerpt_display": "The U.S. Department of State plays the primary role in administering the J-1 exchange visitor program, so the first step in obtaining a J-1 visa is to submit a Form DS-2019, Certificate of Eligibility for Exchange Visitor Status, (formerly known as an IAP-66). Your sponsoring agency will provide you this form."
+    },
+    {
+      "requirement_code": "responsible_officer_sets_the_document_list",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Responsible Officer or Alternate Responsible Officer explains which documents are needed for the DS-2019",
+      "description": "Recorded because the absence of a published document list is itself the fact an applicant needs. The list exists, it is per-sponsor, and the authority does not publish it.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "an official who is authorized to issue form ds-2019 is known as a responsible officer (ro) or alternate responsible officer (aro). your ro or aro will explain to you what documents are needed in order to be issued a ds-2019.",
+      "source_excerpt_display": "An official who is authorized to issue Form DS-2019 is known as a responsible officer (RO) or alternate responsible officer (ARO). Your RO or ARO will explain to you what documents are needed in order to be issued a DS-2019."
+    },
+    {
+      "requirement_code": "apply_for_visa_after_ds_2019",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply for the J-1 visa only after you hold the DS-2019",
+      "description": "The ordering is the requirement. Applying for the visa first is not a slower route, it is not a route.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "after you have obtained a form ds-2019, you may then apply for a j-1 visa through the u.s. department of state at a u.s. embassy or consulate.",
+      "source_excerpt_display": "After you have obtained a Form DS-2019, you may then apply for a J-1 visa through the U.S. Department of State at a U.S. Embassy or Consulate."
+    },
+    {
+      "requirement_code": "no_entry_more_than_30_days_before_programme",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You may not enter the United States in J-1 status more than 30 days before your programme begins",
+      "parameters": {
+        "earliest_entry_days_before_programme_start": 30
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "though you may not enter the united states in j-1 status more than 30 days before your program begins",
+      "source_excerpt_display": "though you may not enter the United States in J-1 status more than 30 days before your program begins"
+    },
+    {
+      "requirement_code": "duration_of_status_governed_by_ds_2019",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Admitted for duration of status — the DS-2019 governs, and no extension is filed with USCIS",
+      "description": "This is where J-1 differs most sharply from the other nonimmigrant routes in this registry. There is no Form I-539 extension and no USCIS filing: the programme sponsor extends the programme, and the stay follows.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "an exchange visitor is generally admitted for duration of status (d/s). thus, the program duration on their ds-2019 governs their status, and an exchange visitor cannot and need not file a request for extension of stay with uscis.",
+      "source_excerpt_display": "An exchange visitor is generally admitted for duration of status (D/S). Thus, the program duration on their DS-2019 governs their status, and an exchange visitor cannot and need not file a request for extension of stay with USCIS."
+    },
+    {
+      "requirement_code": "status_maintained_by_continuing_programme_activities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You keep J-1 status only while you continue to engage in the programme activities your programme requires",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "generally, an exchange visitor maintains status while they continue to engage in program activities as required by the terms of their program.",
+      "source_excerpt_display": "Generally, an exchange visitor maintains status while they continue to engage in program activities as required by the terms of their program."
+    },
+    {
+      "requirement_code": "extension_is_sought_through_the_sponsor",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Extend the programme through your sponsor and the Department of State, not through USCIS",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "an exchange visitor may seek to extend the length of their program through their program sponsor with the department of state, which extends their stay in the u.s.",
+      "source_excerpt_display": "An exchange visitor may seek to extend the length of their program through their program sponsor with the Department of State, which extends their stay in the U.S."
+    },
+    {
+      "requirement_code": "employment_only_under_programme_terms",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employment is authorised only under the terms of the exchange programme",
+      "description": "Not every J-1 involves work, and where it does the sponsor's programme terms — not the classification — set the limits.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "some j-1 nonimmigrants enter the united states specifically to work while others do not. employment is authorized for j-1 nonimmigrants only under the terms of the exchange program.",
+      "source_excerpt_display": "Some J-1 nonimmigrants enter the United States specifically to work while others do not. Employment is authorized for J-1 nonimmigrants only under the terms of the exchange program."
+    },
+    {
+      "requirement_code": "family_j2_and_dependant_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Spouse and unmarried children under 21 qualify for J-2, may work, but their income may not be used to support you",
+      "description": "Two rules that pull against each other and both are stated: J-2 dependants may be authorised to work, and the income cannot count toward the principal's support. A reader who takes only the first half will plan their finances wrongly.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "your spouse and unmarried children under 21 years of age, regardless of nationality, are entitled to j-2 classification. your spouse and children are entitled to employment authorization; however, their income may not be used to support you.",
+      "source_excerpt_display": "Your spouse and unmarried children under 21 years of age, regardless of nationality, are entitled to J-2 classification. Your spouse and children are entitled to employment authorization; however, their income may not be used to support you."
+    },
+    {
+      "requirement_code": "form_i_765_for_j2_employment_authorisation",
+      "kind": "form",
+      "officially_required": true,
+      "label": "A J-2 dependant files Form I-765 to obtain employment authorisation",
+      "official_form_code": "I-765",
+      "official_form_url": "https://www.uscis.gov/i-765",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "to apply for employment authorization as a j-2 nonimmigrant, your spouse or child would file form i-765, application for employment authorization.",
+      "source_excerpt_display": "To apply for employment authorization as a J-2 nonimmigrant, your spouse or child would file Form I-765, Application for Employment Authorization."
+    },
+    {
+      "requirement_code": "examples_of_exchange_visitor_categories",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples of who holds J-1 status",
+      "description": "An open list of examples rather than a rule. Recorded with officially_required false because it helps a reader place themselves without implying that appearing on it qualifies them.",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "examples of exchange visitors include, but are not limited to: professors or scholars research assistants students trainees teachers specialists au pairs camp counselors",
+      "source_excerpt_display": "Examples of exchange visitors include, but are not limited to: Professors or scholars Research assistants Students Trainees Teachers Specialists Au pairs Camp counselors"
+    }
+  ]
+}

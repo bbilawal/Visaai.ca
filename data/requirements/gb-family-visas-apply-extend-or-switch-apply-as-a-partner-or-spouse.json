@@ -1,0 +1,351 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official GOV.UK pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state. The UK publishes no application form identifier for this route, so official_form_code is null everywhere and the online route is recorded as a step.",
+  "source_roles": {
+    "landing": "https://www.gov.uk/uk-family-visa",
+    "eligibility": "https://www.gov.uk/uk-family-visa/partner-spouse",
+    "documents": "https://www.gov.uk/uk-family-visa/provide-information"
+  },
+  "page_dates": {},
+  "not_extracted": [
+    "The registered 'fees' source https://www.gov.uk/government/publications/visa-regulations-revised-table states NO fee amount in its HTML — it is an attachment wrapper listing ODS/HTML fee tables (latest: 'home office immigration and nationality fees, 8 april 2026'; page last updated 18 march 2026). Because it publishes no amount in-page it is absent from source_roles and no requirement cites it. The fees below are quoted from the registered landing page, which does state them.",
+    "The minimum income threshold for a partner or spouse. GOV.UK puts it on the unregistered sub-page 'financial requirements if you're applying as a partner or spouse'. The registered pages state only that you must meet the financial requirements and what evidence proves your income, never the figure.",
+    "The English language requirement level and how to prove it — unregistered sub-page /uk-family-visa/knowledge-of-english.",
+    "The super priority service fee (GBP 1,000, applying from inside the UK) and the fee waiver route. Both are stated on the registered landing page but are OPTIONAL — GOV.UK does not require either — so neither is modelled as a fee row that would render as owed. They are recorded in the application fee's description instead.",
+    "Requirements for the other family routes on this guide (parent, child, adult coming to be cared for by a relative, private life). This extraction covers the partner or spouse route only, which is what this visa type names.",
+    "The list of countries whose nationals must take a tuberculosis test.",
+    "Appendix FM and the detailed maintenance/income guidance GOV.UK links to for non-employment income, maternity or paternity leave, and combining income sources."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "both_partners_18_or_over",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You and your partner must both be 18 or over",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 18
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "to apply as a partner, you and your partner both need to be 18 or over.",
+      "display_order": 10,
+      "source_excerpt_display": "To apply as a partner, you and your partner both need to be 18 or over."
+    },
+    {
+      "requirement_code": "partner_immigration_status",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your partner must hold a qualifying status in the UK",
+      "description": "GOV.UK lists: a British or Irish citizen; settled in the UK (for example indefinite leave to remain, settled status or proof of permanent residence); from the EU, Switzerland, Norway, Iceland or Liechtenstein with pre-settled status having started living in the UK before 1 January 2021; a Turkish Businessperson or Turkish Worker visa holder; protection status (refugee or humanitarian protection); or permission to stay as a stateless person granted before you became their partner.",
+      "source_role": "eligibility",
+      "source_excerpt": "your partner must also either: be a british or irish citizen",
+      "display_order": 20,
+      "source_excerpt_display": "Your partner must also either: be a British or Irish citizen"
+    },
+    {
+      "requirement_code": "intend_to_live_together_permanently",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You and your partner must intend to live together permanently in the UK",
+      "source_role": "eligibility",
+      "source_excerpt": "you and your partner must intend to live together permanently in the uk after you apply.",
+      "display_order": 30,
+      "source_excerpt_display": "You and your partner must intend to live together permanently in the UK after you apply."
+    },
+    {
+      "requirement_code": "qualifying_relationship",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Prove a qualifying relationship with your partner",
+      "description": "GOV.UK accepts any one of: a civil partnership or marriage recognised in the UK; living together in a relationship for at least 2 years at the time you apply; being a fiancé, fiancée or proposed civil partner who will marry or form a civil partnership in the UK within 6 months of arriving; or a relationship of at least 2 years where you cannot live together, for example because of work, study or culture.",
+      "source_role": "eligibility",
+      "source_excerpt": "you must be able to prove one of the following: you’re in a civil partnership or marriage that’s recognised in the uk",
+      "display_order": 40,
+      "source_excerpt_display": "You must be able to prove one of the following: you’re in a civil partnership or marriage that’s recognised in the UK"
+    },
+    {
+      "requirement_code": "knowledge_of_english",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Have a good knowledge of English",
+      "source_role": "eligibility",
+      "source_excerpt": "you also need to prove you: have a good knowledge of english",
+      "display_order": 50,
+      "source_excerpt_display": "You also need to prove you: have a good knowledge of English"
+    },
+    {
+      "requirement_code": "financial_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the financial requirements",
+      "description": "GOV.UK bases this on your income, the income of the family member you are joining, or both. It publishes the threshold figure on a sub-page that is not a registered source, so no amount is recorded here. The registered documents page does state that cash savings above GBP 16,000 count as income, and that self-employed income is based on the last 6 months or more counting back from the day you apply.",
+      "source_role": "eligibility",
+      "source_excerpt": "meet the financial requirements",
+      "display_order": 60,
+      "source_excerpt_display": "meet the financial requirements"
+    },
+    {
+      "requirement_code": "fiance_marry_within_6_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Fiancé, fiancée or proposed civil partner: marry within 6 months of arriving and show previous marriages have ended",
+      "description": "GOV.UK also states you cannot work or study in the UK during your engagement, and that you must apply to extend your stay after you marry or form the civil partnership.",
+      "source_role": "eligibility",
+      "source_excerpt": "you must prove that: you plan to marry or become civil partners within 6 months of arriving in the uk ... any previous marriages or civil partnerships have ended",
+      "display_order": 70,
+      "source_excerpt_display": "You must prove that: you plan to marry or become civil partners within 6 months of arriving in the UK ... any previous marriages or civil partnerships have ended"
+    },
+    {
+      "requirement_code": "passport_or_travel_id",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your current passport or other valid travel ID",
+      "source_role": "documents",
+      "source_excerpt": "you’ll need to provide: all your names ... your date of birth ... your current passport or other valid travel id",
+      "display_order": 100,
+      "source_excerpt_display": "You’ll need to provide: all your names ... your date of birth ... your current passport or other valid travel ID"
+    },
+    {
+      "requirement_code": "previous_passport_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Copies of the photo page and any visa or entry stamps in your previous passports",
+      "source_role": "documents",
+      "source_excerpt": "copies of the photo page and any visa or entry stamps in your previous passports",
+      "display_order": 110,
+      "source_excerpt_display": "copies of the photo page and any visa or entry stamps in your previous passports"
+    },
+    {
+      "requirement_code": "previous_immigration_applications",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Details of any previous immigration applications you have made",
+      "source_role": "documents",
+      "source_excerpt": "details of any previous immigration applications you’ve made",
+      "display_order": 120,
+      "source_excerpt_display": "details of any previous immigration applications you’ve made"
+    },
+    {
+      "requirement_code": "criminal_convictions",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Details of any criminal convictions",
+      "source_role": "documents",
+      "source_excerpt": "details of any criminal convictions",
+      "display_order": 130,
+      "source_excerpt_display": "details of any criminal convictions"
+    },
+    {
+      "requirement_code": "national_insurance_number",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your National Insurance number, if you have one",
+      "source_role": "documents",
+      "source_excerpt": "your national insurance number, if you have one",
+      "display_order": 140,
+      "source_excerpt_display": "your national insurance number, if you have one"
+    },
+    {
+      "requirement_code": "parents_date_of_birth_and_nationality",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your parents' date of birth and nationality, if applying from outside the UK",
+      "source_role": "documents",
+      "source_excerpt": "your parents’ date of birth and nationality if you’re applying from outside the uk",
+      "display_order": 150,
+      "source_excerpt_display": "your parents’ date of birth and nationality if you’re applying from outside the UK"
+    },
+    {
+      "requirement_code": "tb_test_results",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Tuberculosis test results, if you are from a country where the test is required",
+      "source_role": "documents",
+      "source_excerpt": "your tuberculosis test results if you’re from a country where you have to take the test",
+      "display_order": 160,
+      "source_excerpt_display": "your tuberculosis test results if you’re from a country where you have to take the test"
+    },
+    {
+      "requirement_code": "certified_translations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Certified translation of any document not in English or Welsh",
+      "source_role": "documents",
+      "source_excerpt": "a certified translation of any document that is not in english or welsh",
+      "display_order": 170,
+      "source_excerpt_display": "a certified translation of any document that is not in English or Welsh"
+    },
+    {
+      "requirement_code": "proof_of_immigration_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Online proof of your immigration status (eVisa share code) or your biometric residence permit",
+      "description": "GOV.UK states a BRP can be used for 24 months after the expiry date printed on the card, or until 31 December 2026, whichever comes first.",
+      "source_role": "documents",
+      "source_excerpt": "you’ll also need to provide either: online proof of your immigration status if you have an evisa - you’ll need to get a share code ... your biometric residence permit (brp) - you can use it for 24 months after the expiry date printed on your card or until 31 december 2026, whichever comes first",
+      "display_order": 180,
+      "source_excerpt_display": "You’ll also need to provide either: online proof of your immigration status if you have an eVisa - you’ll need to get a share code ... your biometric residence permit (BRP) - you can use it for 24 months after the expiry date printed on your card or until 31 December 2026, whichever comes first"
+    },
+    {
+      "requirement_code": "relationship_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence confirming your relationship with your partner",
+      "description": "GOV.UK requires evidence that comes from the government, a bank, landlord, utility provider or a medical professional, confirms the relationship, and is less than 4 years old. It names marriage or civil partnership certificates, tenancy agreements, utility or council tax bills, joint bank statements, and letters from a doctor or dentist confirming a shared address. Where none of those exist it accepts a one-off bill such as vet's fees or home repairs, voting register letters, or student finance paperwork showing a shared address.",
+      "source_role": "eligibility",
+      "source_excerpt": "send evidence that: comes from the government, a bank, landlord, utility provider, or a medical professional ... confirms your relationship with your partner - for example, that you live together, share expenses or are married or in a civil partnership ... is less than 4 years old",
+      "display_order": 190,
+      "source_excerpt_display": "Send evidence that: comes from the government, a bank, landlord, utility provider, or a medical professional ... confirms your relationship with your partner - for example, that you live together, share expenses or are married or in a civil partnership ... is less than 4 years old"
+    },
+    {
+      "requirement_code": "proof_of_income",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of the income you rely on for the financial requirement",
+      "description": "For employed income GOV.UK names bank statements showing the income, 6 months of payslips counting back from the day you apply, and a dated employer's letter on headed paper confirming employment, job title, length of service, contract type, pre-tax pay, how long that salary has been paid, and that the payslips are genuine.",
+      "source_role": "documents",
+      "source_excerpt": "you’ll need to provide proof of the income with your application.",
+      "display_order": 200,
+      "source_excerpt_display": "You’ll need to provide proof of the income with your application."
+    },
+    {
+      "requirement_code": "partner_details",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your partner's details and history",
+      "description": "GOV.UK asks for your partner's name, date of birth, nationality, passport and right to be in the UK, plus details of anyone your partner was previously married to, in a civil partnership with or had children with, evidence of marriages ending such as a divorce certificate, and anyone your partner supports financially.",
+      "source_role": "documents",
+      "source_excerpt": "if you have a partner, you’ll be asked about their: name ... date of birth ... nationality ... passport ... right to be in the uk, for example they’re a british citizen",
+      "display_order": 210,
+      "source_excerpt_display": "If you have a partner, you’ll be asked about their: name ... date of birth ... nationality ... passport ... right to be in the UK, for example they’re a British citizen"
+    },
+    {
+      "requirement_code": "children_details",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Details of your children, including children who are not applying",
+      "description": "GOV.UK asks for each child's name, nationality, date of birth and passport details, who the child normally lives with, others with parental responsibility, your involvement in their daily life, contact arrangements, the child's extended family, and any countries the child has visited or lived in.",
+      "rule": {
+        "fact": "has_dependants",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "documents",
+      "source_excerpt": "you’ll need to give details of your children (and your partner’s children if you have one). you’ll be asked about all children, even if they’re not applying.",
+      "display_order": 220,
+      "source_excerpt_display": "You’ll need to give details of your children (and your partner’s children if you have one). You’ll be asked about all children, even if they’re not applying."
+    },
+    {
+      "requirement_code": "life_outside_the_uk",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Details of your life outside the UK",
+      "source_role": "documents",
+      "source_excerpt": "you’ll need to give details of: countries outside the uk you’ve lived in and visited ... family and friends in the countries where you were born or have nationality",
+      "display_order": 230,
+      "source_excerpt_display": "You’ll need to give details of: countries outside the UK you’ve lived in and visited ... family and friends in the countries where you were born or have nationality"
+    },
+    {
+      "requirement_code": "apply_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online",
+      "description": "The UK publishes no application form number for this route — the application exists only as an online service, with separate services for applying from outside the UK and from inside it. GOV.UK also offers assisted digital help with the online form for people applying in the UK who lack confidence with, or access to, a computer; that service cannot give immigration advice.",
+      "source_role": "eligibility",
+      "source_excerpt": "outside the uk you must apply online from outside the uk . in the uk you must apply online in the uk .",
+      "display_order": 300,
+      "source_excerpt_display": "Outside the UK You must apply online from outside the UK. In the UK You must apply online in the UK."
+    },
+    {
+      "requirement_code": "email_address",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Have an email address for the online application",
+      "source_role": "documents",
+      "source_excerpt": "you’ll need an email address to make an online application.",
+      "display_order": 310,
+      "source_excerpt_display": "You’ll need an email address to make an online application."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Family visa application fee (joining a partner)",
+      "description": "GBP 2,064 applying from outside the UK, GBP 1,407 applying from inside the UK. Each dependant added to the application pays the same amount again. GOV.UK also states an optional super priority service costs an extra GBP 1,000 when applying from the UK, and that a fee waiver may be available if you cannot afford a place to live or your essential living costs, or if paying would harm your child's wellbeing. Neither the optional service nor the waiver is listed as a fee here because neither is required.",
+      "parameters": {
+        "currency": "GBP",
+        "unit": "per person",
+        "read_at": "2026-08-21",
+        "tiers": [
+          {
+            "tier": "joining your partner, parent or child — apply outside the uk",
+            "amount": 2064
+          },
+          {
+            "tier": "joining your partner, parent or child — apply in the uk",
+            "amount": 1407
+          },
+          {
+            "tier": "each dependant added to your application — apply outside the uk",
+            "amount": 2064
+          },
+          {
+            "tier": "each dependant added to your application — apply in the uk",
+            "amount": 1407
+          }
+        ]
+      },
+      "source_role": "landing",
+      "source_excerpt": "apply outside the uk apply in the uk cost if joining your partner, parent or child £2,064 £1,407 cost for each dependant added to your application £2,064 each person £1,407 each person",
+      "display_order": 400,
+      "source_excerpt_display": "Apply outside the UK Apply in the UK Cost if joining your partner, parent or child £2,064 £1,407 Cost for each dependant added to your application £2,064 each person £1,407 each person"
+    },
+    {
+      "requirement_code": "healthcare_surcharge",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Immigration healthcare surcharge",
+      "description": "Adults (18 or older) pay GBP 2,587.50 for 2 years and 6 months, GBP 3,105 for 2 years and 9 months, or GBP 5,175 for 5 years. Children (under 18) pay GBP 1,940, GBP 2,328 and GBP 3,880 for the same periods.",
+      "parameters": {
+        "currency": "GBP",
+        "unit": "per person",
+        "read_at": "2026-08-21",
+        "tiers": [
+          {
+            "tier": "adult (18 or older), 2 years and 6 months",
+            "amount": 2587.5
+          },
+          {
+            "tier": "adult (18 or older), 2 years and 9 months",
+            "amount": 3105
+          },
+          {
+            "tier": "adult (18 or older), 5 years",
+            "amount": 5175
+          },
+          {
+            "tier": "child (under 18), 2 years and 6 months",
+            "amount": 1940
+          },
+          {
+            "tier": "child (under 18), 2 years and 9 months",
+            "amount": 2328
+          },
+          {
+            "tier": "child (under 18), 5 years",
+            "amount": 3880
+          }
+        ]
+      },
+      "source_role": "landing",
+      "source_excerpt": "for each adult (18 or older) it costs: £2,587.50 if you’re staying for 2 years and 6 months ... £3,105 if you’re staying for 2 years and 9 months ... £5,175 if you’re staying for 5 years ... for each child (under 18), it costs: £1,940 if you’re staying for 2 years and 6 months ... £2,328 if you’re staying for 2 years and 9 months ... £3,880 if you’re staying for 5 years",
+      "display_order": 410,
+      "source_excerpt_display": "For each adult (18 or older) it costs: £2,587.50 if you’re staying for 2 years and 6 months ... £3,105 if you’re staying for 2 years and 9 months ... £5,175 if you’re staying for 5 years ... For each child (under 18), it costs: £1,940 if you’re staying for 2 years and 6 months ... £2,328 if you’re staying for 2 years and 9 months ... £3,880 if you’re staying for 5 years"
+    }
+  ]
+}

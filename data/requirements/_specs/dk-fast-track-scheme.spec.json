@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-fast-track-scheme",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "FAST-TRACK IS FIVE DIFFERENT PERMITS WEARING ONE NAME. The pay limit, supplementary pay limit, short-term, researcher and educational tracks share only a certified employer and an online application; their salary tests, durations and extra conditions differ completely. Registering 'the Fast-Track requirements' as one list would state conditions that apply to one track as if they applied to all five.\n\nTHE SUPPLEMENTARY TRACK CARRIES TWO CONDITIONS NOTHING ELSE IN THIS REGISTRY HAS, and both can fail through no fault of the applicant:\n\n  * NATIONAL UNEMPLOYMENT. Seasonally adjusted gross unemployment must not have exceeded 3.75 per cent on average in the three months before applying. An otherwise perfect application is refused because of the economy.\n  * A TWO-WEEK JOB POSTING ON TWO NAMED PORTALS. The job must have been advertised on Jobnet AND the EURES portal for at least two weeks before applying, and the authority states plainly that posting on other portals does not satisfy it. The employer controls this entirely, and it cannot be fixed after the fact.\n\nThe two pay limits also differ — DKK 552,000 on the pay limit track, DKK 446,000 on the supplementary track — and the lower figure is the one that carries the extra conditions.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Fast-track"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline. Both pay-limit figures carry their own year in the text ('for 2026 is DKK 552,000') and are stated to be regulated every 1 January, so revisions surface as text changes to the daily sync.",
+  "not_extracted": [
+    "The certification process a company goes through to join the Fast-Track Scheme, and the list of certified companies, which the authority publishes separately and updates continuously.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "Guest researchers and PhD students, which the page explicitly excludes from the researcher track and which are separate routes.",
+    "The job change rule, which the page links out to as a separate mechanism."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_tracks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Employment must meet the conditions of one of five tracks",
+      "description": "Quoted with all five named, because the conditions below apply per track and not to the scheme as a whole.",
+      "source_role": "requirements",
+      "lines": [
+        38,
+        48
+      ],
+      "display_order": 10
+    },
+    {
+      "requirement_code": "employer_must_be_certified",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must be certified by SIRI",
+      "description": "The one condition common to every track.",
+      "source_role": "requirements",
+      "lines": [
+        56
+      ],
+      "display_order": 20
+    },
+    {
+      "requirement_code": "power_of_attorney_to_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must grant your employer power of attorney to apply on your behalf",
+      "source_role": "requirements",
+      "lines": [
+        66
+      ],
+      "display_order": 30
+    },
+    {
+      "requirement_code": "pay_limit_track_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: annual salary of at least DKK 552,000 (2026)",
+      "source_role": "requirements",
+      "lines": [
+        76
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "minimum_annual_salary": 552000,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40
+    },
+    {
+      "requirement_code": "pay_limit_track_salary_components",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: which salary components count",
+      "source_role": "requirements",
+      "lines": [
+        78,
+        80
+      ],
+      "display_order": 50
+    },
+    {
+      "requirement_code": "pay_limit_track_unpaid_holiday",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: the salary condition holds even if you take holiday without pay",
+      "source_role": "requirements",
+      "lines": [
+        86
+      ],
+      "display_order": 60
+    },
+    {
+      "requirement_code": "pay_limit_track_excluded_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay limit track: canteen, car, phone, internet and housing do not count",
+      "source_role": "requirements",
+      "lines": [
+        90
+      ],
+      "display_order": 70
+    },
+    {
+      "requirement_code": "full_time_37_to_40_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Full-time work, as a rule 37 to 40 hours a week",
+      "description": "A different hours test from the Pay Limit Scheme's 30-hour floor.",
+      "source_role": "requirements",
+      "lines": [
+        122
+      ],
+      "parameters": {
+        "hours_per_week_min": 37,
+        "hours_per_week_max": 40,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 80
+    },
+    {
+      "requirement_code": "salary_condition_regardless_of_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pay limit must be met regardless of the number of working hours",
+      "source_role": "requirements",
+      "lines": [
+        124
+      ],
+      "display_order": 90
+    },
+    {
+      "requirement_code": "no_legal_labour_dispute",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must not be covered by a legal labour dispute",
+      "source_role": "requirements",
+      "lines": [
+        128,
+        130
+      ],
+      "display_order": 100
+    },
+    {
+      "requirement_code": "danish_authorisation_where_regulated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Danish authorisation is required for regulated professions",
+      "source_role": "requirements",
+      "lines": [
+        134
+      ],
+      "display_order": 110
+    },
+    {
+      "requirement_code": "accompanying_family_no_repeat_revocation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An accompanying family member must not have had a permit revoked more than once for lacking a work permit",
+      "source_role": "requirements",
+      "lines": [
+        144
+      ],
+      "display_order": 120
+    },
+    {
+      "requirement_code": "supplementary_track_salary",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary pay limit track: annual salary of at least DKK 446,000 (2026)",
+      "description": "A lower threshold than the pay limit track — and the one that carries the unemployment and job-posting conditions.",
+      "source_role": "requirements",
+      "lines": [
+        172
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "minimum_annual_salary": 446000,
+        "stated_for_year": 2026,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130
+    },
+    {
+      "requirement_code": "supplementary_track_salary_components",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary pay limit track: which salary components count",
+      "source_role": "requirements",
+      "lines": [
+        174,
+        180
+      ],
+      "display_order": 140
+    },
+    {
+      "requirement_code": "supplementary_track_unemployment_ceiling",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary track: national gross unemployment must not have exceeded 3.75% over the prior 3 months",
+      "description": "A condition on the Danish economy, not on the applicant or the employer.",
+      "source_role": "requirements",
+      "lines": [
+        232
+      ],
+      "parameters": {
+        "max_unemployment_percent": 3.75,
+        "months_averaged": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150
+    },
+    {
+      "requirement_code": "supplementary_track_unemployment_fixed_at_application",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Later movement in the unemployment rate does not affect a submitted application",
+      "source_role": "requirements",
+      "lines": [
+        234
+      ],
+      "display_order": 160
+    },
+    {
+      "requirement_code": "supplementary_track_job_posting",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Supplementary track: the job must have been posted on Jobnet AND EURES for at least 2 weeks before applying",
+      "source_role": "requirements",
+      "lines": [
+        240
+      ],
+      "parameters": {
+        "minimum_posting_weeks": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170
+    },
+    {
+      "requirement_code": "supplementary_track_posting_six_month_limit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The posting must not, as a rule, be more than six months old",
+      "description": "A ceiling as well as a floor — an old advert fails just as a fresh one does.",
+      "source_role": "requirements",
+      "lines": [
+        242
+      ],
+      "display_order": 180
+    },
+    {
+      "requirement_code": "supplementary_track_other_portals_do_not_count",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Posting on other portals does NOT satisfy the condition",
+      "description": "Stated flatly by the authority, and unrecoverable once the application is in.",
+      "source_role": "requirements",
+      "lines": [
+        244
+      ],
+      "display_order": 190
+    },
+    {
+      "requirement_code": "supplementary_track_posting_documentation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The employer must attach documentation of the Jobnet and EURES posting",
+      "source_role": "requirements",
+      "lines": [
+        248
+      ],
+      "display_order": 200
+    },
+    {
+      "requirement_code": "supplementary_track_applies_to_new_applications",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The posting condition applies even if you already hold a Danish work permit for another job",
+      "source_role": "requirements",
+      "lines": [
+        250
+      ],
+      "display_order": 210
+    },
+    {
+      "requirement_code": "short_term_track_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Short-term track: a permit for up to 90 days",
+      "source_role": "requirements",
+      "lines": [
+        294
+      ],
+      "parameters": {
+        "max_days": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220
+    },
+    {
+      "requirement_code": "researcher_track_research_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Researcher track: there must be specific research-related reasons for the position",
+      "source_role": "requirements",
+      "lines": [
+        404
+      ],
+      "display_order": 230
+    },
+    {
+      "requirement_code": "researcher_track_excludes_guest_and_phd",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Researcher track: guest researchers and PhD students are NOT included",
+      "source_role": "requirements",
+      "lines": [
+        406
+      ],
+      "display_order": 240
+    },
+    {
+      "requirement_code": "educational_track_purpose",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Educational track: to receive or to give highly qualified training at the certified company",
+      "description": "Both purposes quoted, because the track covers trainee and trainer alike.",
+      "source_role": "requirements",
+      "lines": [
+        502,
+        506
+      ],
+      "display_order": 250
+    },
+    {
+      "requirement_code": "application_submitted_online_by_employer",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The application must be submitted online by the employer",
+      "source_role": "requirements",
+      "lines": [
+        306
+      ],
+      "display_order": 260
+    },
+    {
+      "requirement_code": "quick_job_start_visa_free",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Quick job start: a provisional work permit the day after the employer applies, at the earliest, for visa-free nationals",
+      "source_role": "requirements",
+      "lines": [
+        612
+      ],
+      "display_order": 270
+    },
+    {
+      "requirement_code": "quick_job_start_visa_required",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Visa-required nationals: a decision as a rule in about 10 days",
+      "source_role": "requirements",
+      "lines": [
+        614
+      ],
+      "display_order": 280
+    },
+    {
+      "requirement_code": "visa_required_cannot_enter_without_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa-required national without a valid visa cannot enter Denmark legally",
+      "source_role": "requirements",
+      "lines": [
+        604
+      ],
+      "display_order": 290
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "lines": [
+        29,
+        30
+      ],
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 300
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "lines": [
+        15,
+        19
+      ],
+      "display_order": 310
+    },
+    {
+      "requirement_code": "processing_time_supplementary_track",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Supplementary pay limit track: a longer processing time of its own",
+      "description": "Two months normally against one, and four against two. Publishing only the headline figure would understate this track by half.",
+      "source_role": "requirements",
+      "lines": [
+        23,
+        27
+      ],
+      "display_order": 320
+    }
+  ]
+}

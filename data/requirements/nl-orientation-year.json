@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "nl-orientation-year",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IND page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "ELIGIBILITY HERE IS A SET OF ALTERNATIVES, NOT A CHECKLIST. IND writes 'one of these situations applies to you' and then lists four routes. The four route_* requirements are therefore officially_required = false individually, with one_qualifying_situation carrying the actual obligation. Marking each route as required would tell an applicant they need a Dutch degree AND an Erasmus Mundus master's AND scientific research AND a top-200 foreign degree.",
+  "source_roles": {
+    "requirements": "https://ind.nl/en/residence-permits/work/residence-permit-for-orientation-year"
+  },
+  "page_dates": {
+    "requirements": "2026-06-12"
+  },
+  "not_extracted": [
+    "The general requirements that apply to everyone. Linked, not stated.",
+    "The specific ranking tables themselves. IND names the three publishers; the rankings are live external documents and change annually.",
+    "The Code of Conduct for international students, the Civic Integration Act 2021 and the Civic Integration Decree provisions IND cites — all separate legal instruments, two of them Dutch-only.",
+    "Different requirements that may apply to Turkish citizens and their family members, which IND flags but handles elsewhere.",
+    "Fee exceptions. Only the headline EUR 254,00 is recorded.",
+    "The start-up entrepreneur permit IND names as an alternative for graduates who want to found a company."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "general_requirements",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the general requirements that apply to everyone",
+      "description": "IND links a separate general-requirements page, not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the general requirements that apply to everyone .",
+      "display_order": 10,
+      "source_excerpt_display": "You meet the general requirements that apply to everyone."
+    },
+    {
+      "requirement_code": "one_qualifying_situation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "ONE of the qualifying situations must apply — they are alternatives, not a checklist",
+      "description": "The structural point of this permit. IND lists four alternative routes (Dutch degree, Erasmus Mundus master's, scientific research in the Netherlands, or a foreign degree from a top-ranked institution). An applicant needs ONE, not all. Recording them as parallel conditions would imply otherwise.",
+      "source_role": "requirements",
+      "source_excerpt": "one of these situations applies to you:",
+      "display_order": 20,
+      "source_excerpt_display": "One of these situations applies to you:"
+    },
+    {
+      "requirement_code": "route_scientific_research",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route: scientific research in the Netherlands in the 3 years before applying",
+      "description": "One of the alternative routes. Not officially required in itself — see one_qualifying_situation. IND adds that the contract job code from the university job classification system (UFO) must start with 01 to count as scientific research.",
+      "source_role": "requirements",
+      "source_excerpt": "you have conducted scientific research in the netherlands in the 3 years before the date of application.",
+      "display_order": 30,
+      "source_excerpt_display": "You have conducted scientific research in the Netherlands in the 3 years before the date of application."
+    },
+    {
+      "requirement_code": "route_erasmus_mundus",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route: a master's degree from an Erasmus Mundus joint programme in the last 3 years",
+      "source_role": "requirements",
+      "source_excerpt": "you obtained a master’s degree in the 3 years before the date of application in the context of an erasmus mundus joint master programme.",
+      "display_order": 40,
+      "source_excerpt_display": "You obtained a master’s degree in the 3 years before the date of application in the context of an Erasmus Mundus Joint Master programme."
+    },
+    {
+      "requirement_code": "route_dutch_study_programme",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route: an accredited Dutch bachelor's or master's, or a post-master's of at least 10 months",
+      "source_role": "requirements",
+      "source_excerpt": "an accredited bachelor’s or master’s degree programme at a dutch higher education institution. a post-master’s study programme in the netherlands for at least one academic year (at least 10 months).",
+      "display_order": 50,
+      "source_excerpt_display": "An accredited bachelor’s or master’s degree programme at a Dutch higher education institution. A post-master’s study programme in the Netherlands for at least one academic year (at least 10 months)."
+    },
+    {
+      "requirement_code": "route_foreign_top_200_institution",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Route: a foreign degree from an institution in the top 200 of at least 2 of 3 named rankings",
+      "description": "The three publishers are Times Higher Education, Quacquarelli Symonds (QS) and ShanghaiRanking Consultancy. A live external test, assessed as at the graduation date — not a static list.",
+      "source_role": "requirements",
+      "source_excerpt": "your educational institution is in the top 200 of the general rankings or the rankings by subject of at least 2 of the 3 publishers. your educational institution is in the top 200 of these rankings on the date of your graduation or promotion.",
+      "display_order": 60,
+      "source_excerpt_display": "Your educational institution is in the top 200 of the general rankings or the rankings by subject of at least 2 of the 3 publishers. Your educational institution is in the top 200 of these rankings on the date of your graduation or promotion."
+    },
+    {
+      "requirement_code": "subject_ranking_must_match",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A subject ranking must be for your own study or research subject",
+      "description": "IND also allows combining a general ranking with a subject ranking, provided they are from different publishers.",
+      "source_role": "requirements",
+      "source_excerpt": "is your educational institution in a ranking by subject? in that case that ranking must be about your study or research subject.",
+      "display_order": 70,
+      "source_excerpt_display": "Is your educational institution in a ranking by subject? In that case that ranking must be about your study or research subject."
+    },
+    {
+      "requirement_code": "programme_language",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The master's, doctoral or post-master's programme must have been in English or Dutch",
+      "source_role": "requirements",
+      "source_excerpt": "your master’s degree programme, doctoral programme or post-master’s study programme was in english or dutch.",
+      "display_order": 80,
+      "source_excerpt_display": "Your master’s degree programme, doctoral programme or post-master’s study programme was in English or Dutch."
+    },
+    {
+      "requirement_code": "nuffic_diploma_evaluation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Foreign diplomas must be evaluated by Nuffic before they are accepted",
+      "description": "IND exempts diplomas from accredited programmes in Flanders, Belgium, provided the programme is in the Flanders higher education register.",
+      "source_role": "requirements",
+      "source_excerpt": "all foreign diplomas have to be evaluated by nuffic before they can be accepted. this credential evaluation shows the worth of a foreign degree in the netherlands. nuffic may also check whether your diploma is genuine.",
+      "display_order": 90,
+      "source_excerpt_display": "All foreign diplomas have to be evaluated by Nuffic before they can be accepted. This credential evaluation shows the worth of a foreign degree in the Netherlands. Nuffic may also check whether your diploma is genuine."
+    },
+    {
+      "requirement_code": "mvv_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A valid provisional residence permit (mvv) is needed",
+      "source_role": "requirements",
+      "source_excerpt": "a valid provisional residence permit (mvv) is needed for this application",
+      "display_order": 100,
+      "source_excerpt_display": "A valid provisional residence permit (MVV) is needed for this application"
+    },
+    {
+      "requirement_code": "documents_legalised_and_translated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Foreign documents must be legalised and translated into Dutch, English, French or German",
+      "source_role": "requirements",
+      "source_excerpt": "have official foreign documents legalised and translated into dutch, english, french or german.",
+      "display_order": 110,
+      "source_excerpt_display": "Have official foreign documents legalised and translated into Dutch, English, French or German."
+    },
+    {
+      "requirement_code": "application_form_lists_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The application form lists the documents you need",
+      "source_role": "requirements",
+      "source_excerpt": "the application form lists which documents you need. collect all documents before you apply.",
+      "display_order": 120,
+      "source_excerpt_display": "The application form lists which documents you need. Collect all documents before you apply."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee",
+      "description": "Excerpt preserves IND's own broken word ('f ees') where a link splits it.",
+      "parameters": {
+        "amount": 254,
+        "currency": "EUR",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "the application costs € 254,00. for all fees and exceptions, visit our web page f ees: costs of an application .",
+      "display_order": 130,
+      "source_excerpt_display": "The application costs € 254,00. For all fees and exceptions, visit our web page F ees: costs of an application."
+    },
+    {
+      "requirement_code": "payment_timing",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay no later than 3 weeks after your appointment, and wait a week after it",
+      "description": "A two-sided timing window that is easy to miss: not before one week, not after three.",
+      "source_role": "requirements",
+      "source_excerpt": "please wait 1 week after your appointment with the dutch representation before paying for your application. the application form explains how to pay for the application. you must pay no later than 3 weeks after the date of your appointment.",
+      "display_order": 140,
+      "source_excerpt_display": "Please wait 1 week after your appointment with the Dutch representation before paying for your application. The application form explains how to pay for the application. You must pay no later than 3 weeks after the date of your appointment."
+    },
+    {
+      "requirement_code": "second_orientation_year_possible",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A further orientation year is possible after each new qualifying programme or research project",
+      "description": "Recorded because people assume this permit is once-only. IND requires the new qualification to post-date the previous orientation year.",
+      "source_role": "requirements",
+      "source_excerpt": "the ind can give a residence permit for an orientation year after each performed research project. or after each completed study programme at a dutch higher education institution, or a doctoral programme. however, the new study programme or doctoral programme must have been completed after your previous orientation year.",
+      "display_order": 150,
+      "source_excerpt_display": "The IND can give a residence permit for an orientation year after each performed research project. Or after each completed study programme at a Dutch higher education institution, or a doctoral programme. However, the new study programme or doctoral programme must have been completed after your previous orientation year."
+    }
+  ]
+}

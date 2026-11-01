@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-foreign-expert-at-port",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "temporary_worker",
+    "official_name": "Entry Visa for Foreign Technical Specialists at Ports",
+    "slug": "foreign-expert-at-port",
+    "purpose": "A one-month non-renewable visa issued at a Lebanese port for foreign technical or administrative experts brought in by an enterprise, applied for through the Bureau of Public Relations; stays beyond a month fall under the first-class worker rules instead.",
+    "source_titles": {
+      "requirements_65": "A visa for a foreign expert at a port"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The whole route turns on ONE MONTH. Under it, the enterprise applies through the Bureau of Public Relations for a non-renewable one-month visa against a seven-document list. Over it, the authority does not extend this route at all — it redirects to the modalities for a first-class worker, which is a different regime entirely. Both halves are published so nobody plans a six-week assignment on a one-month route.\n\nThe page also carries the seafarer transit visa, which is a different route on the same page and is registered here as a condition rather than split out, because the authority publishes no document list for it.",
+  "source_roles": {
+    "requirements_65": "https://www.general-security.gov.lb/en/posts/65"
+  },
+  "page_dates": {
+    "requirements_65": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who this covers: foreign experts brought for technical or administrative work",
+      "description": "Granted a visa at a port.",
+      "source_role": "requirements_65",
+      "source_excerpt": "the foreign experts brought for technical or administrative work are granted a visa at a port as follows:",
+      "display_order": 10,
+      "source_excerpt_display": "The foreign experts brought for technical or administrative work are granted a visa at a port as follows:"
+    },
+    {
+      "requirement_code": "under_one_month_route",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stays up to 1 month: the ENTERPRISE applies via the Bureau of Public Relations, and the visa is NON-RENEWABLE",
+      "description": "Three facts in one sentence: who applies, where, and that it cannot be extended.",
+      "source_role": "requirements_65",
+      "source_excerpt": "1- if the length of his stay doesn’t exceed 1 month , the concerned enterprise will apply for a one month non renewable visa via the bureau of public relations. the following documents are requested:",
+      "parameters": {
+        "max_months": 1,
+        "renewable": false,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 20,
+      "source_excerpt_display": "1- If the length of his stay doesn’t exceed 1 month, the concerned enterprise will apply for a one month non renewable visa via the bureau of public relations. The following documents are requested:"
+    },
+    {
+      "requirement_code": "doc_passport_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A certified copy of the expert’s passport, valid at least 6 months",
+      "description": "First of the seven-document list.",
+      "source_role": "requirements_65",
+      "source_excerpt": "11- a certified copy of the passport of the foreigner valid for 6 months at least.",
+      "parameters": {
+        "minimum_validity_months": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 30,
+      "source_excerpt_display": "11- A certified copy of the passport of the foreigner valid for 6 months at least."
+    },
+    {
+      "requirement_code": "doc_enterprise_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Certified copies of the enterprise’s official documents",
+      "description": "The authority gives the commercial register as its own example.",
+      "source_role": "requirements_65",
+      "source_excerpt": "12- certified copies of the official documents related to the enterprise or institution (e.g. register commercial).",
+      "display_order": 40,
+      "source_excerpt_display": "12- Certified copies of the official documents related to the enterprise or institution (e.g. register commercial)."
+    },
+    {
+      "requirement_code": "doc_director_id",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A certified copy of the director’s or owner’s ID or civil-status extract",
+      "description": "Third of the seven-document list.",
+      "source_role": "requirements_65",
+      "source_excerpt": "13- a certified copy of the id card or the extract of civil status of the director or owner.",
+      "display_order": 50,
+      "source_excerpt_display": "13- A certified copy of the ID card or the extract of civil status of the director or owner."
+    },
+    {
+      "requirement_code": "doc_profession",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A document establishing the expert’s profession",
+      "description": "Fourth of the seven-document list.",
+      "source_role": "requirements_65",
+      "source_excerpt": "14- a document that underlines the foreigner’s profession.",
+      "display_order": 60,
+      "source_excerpt_display": "14- A document that underlines the foreigner’s profession."
+    },
+    {
+      "requirement_code": "doc_insurance_by_enterprise",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Insurance procured BY THE ENTERPRISE for the whole stay",
+      "description": "The obligation is the enterprise's, not the expert's.",
+      "source_role": "requirements_65",
+      "source_excerpt": "15- an insurance is procured by the enterprise in favor of the worker during his stay in lebanon.",
+      "display_order": 70,
+      "source_excerpt_display": "15- An insurance is procured by the enterprise in favor of the worker during his stay in Lebanon."
+    },
+    {
+      "requirement_code": "doc_residence_permit_if_third_country",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A valid residence permit, if the expert lives outside their country of origin",
+      "description": "Conditional, and the condition is stated.",
+      "source_role": "requirements_65",
+      "source_excerpt": "16- a valid residence permit for the worker if his country of residence is not his country of origin.",
+      "display_order": 80,
+      "source_excerpt_display": "16- A valid residence permit for the worker if his country of residence is not his country of origin."
+    },
+    {
+      "requirement_code": "doc_company_ledger",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The company’s ledger showing what work the expert was brought to do",
+      "description": "Seventh of the seven-document list.",
+      "source_role": "requirements_65",
+      "source_excerpt": "17- the company’s ledger showing the object of the work the expert was brought to do, as well as other relevant information.",
+      "display_order": 90,
+      "source_excerpt_display": "17- The company’s ledger showing the object of the work the expert was brought to do, as well as other relevant information."
+    },
+    {
+      "requirement_code": "over_one_month_first_class_worker",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Stays beyond one month: the first-class worker modalities apply instead",
+      "description": "The authority does not extend this route — it redirects to a different regime whose requirements are not published on this page. The question and its answer are quoted together because either alone says nothing.",
+      "source_role": "requirements_65",
+      "source_excerpt": "2- if the length of his stay exceeds one month: ... the modalities required are those prescribed for a first class worker .",
+      "display_order": 100,
+      "source_excerpt_display": "2- If the length of his stay exceeds one month: ... The modalities required are those prescribed for a first class worker."
+    },
+    {
+      "requirement_code": "seafarer_transit_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Foreign sailors and sailing specialists boarding foreign ships get a TRANSIT visa",
+      "description": "The authority names superintendent, inspector and marine surveyor itself. No document list is published for this route and none is invented.",
+      "source_role": "requirements_65",
+      "source_excerpt": "when it comes to foreign sailors and foreign sailing specialists (superintendant, inspector, marine surveyor) wanting to get on foreign ships, they are granted a \" transit visa \" to do so.",
+      "display_order": 110,
+      "source_excerpt_display": "When it comes to foreign sailors and foreign sailing specialists (Superintendant, Inspector, Marine Surveyor) wanting to get on foreign ships, they are granted a \" transit visa \" to do so."
+    }
+  ]
+}

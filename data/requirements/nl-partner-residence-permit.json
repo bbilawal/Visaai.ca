@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "visaai_id": "nl-partner-residence-permit",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "claude-opus-5",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE PAGE RENDERS ITS REQUIREMENT LIST TWICE, AND THE TWO COPIES DIFFER. Block A (chars 4145-8130) and block B (8130-11023) both open '1. check requirements'. B is a strict SUBSET of A -- a line-by-line diff shows 10 lines present only in A and zero present only in B. The two A-only items are the tuberculosis test and the civic integration exam abroad.\n\nNo form control, tab or query parameter selects between them; I checked every input, select, option and button on the page and none splits content. So the split had to be established from the page's own wording rather than inferred, and step 3 does it: variant A reads 'you apply for the mvv and the residence permit at the same time' and adds that the partner may apply at a Dutch embassy abroad, while variant B reads only 'you can apply online or in writing by post'. A is therefore the MVV route -- partner coming from abroad -- and B the route where no MVV is involved.\n\nThat also makes the two A-only requirements internally coherent: the civic integration exam is due 'before you apply for the mvv', and the TB test 'after your partner arrives in the netherlands'. Both are quoted with that conditionality intact rather than flattened into unconditional rules.\n\nThIS FILE EXTRACTS BLOCK A, the superset and the case most applicants are in. No source_bounds is declared because B contains nothing A does not, so there is no sibling text to be mis-attributed -- unlike no-family-spouse.json, where one url carries 8+ different family routes.\n\nWHOSE OBLIGATION IS IT. As in Norway and Sweden, requirements divide between the partner applying and the sponsor in the Netherlands. The income requirement and the sponsor declaration fall on the sponsor.",
+  "source_roles": {
+    "requirements": "https://ind.nl/en/residence-permits/family-and-partner/residence-permit-for-partner"
+  },
+  "page_dates": {
+    "requirements": "2026-07-24"
+  },
+  "not_extracted": [
+    "The income requirement AMOUNT. IND states the requirement and links an income test rather than publishing a figure on this page. Inventing one would be the single most damaging error available here.",
+    "The full list of countries exempt from the tuberculosis test. IND publishes it as a separate PDF appendix (7644) that changes.",
+    "The civic integration exam abroad itself -- its content, cost, and the exemption and dispensation grounds. A separate IND page and a separate process at a Dutch embassy.",
+    "The document checklist. IND generates it per applicant from a questionnaire rather than publishing a fixed list.",
+    "The appendix antecedents certificate form (7601) contents, beyond the fact that everyone over 12 must complete one.",
+    "The sponsor's obligations and responsibilities, which IND links as a separate page.",
+    "Different requirements that may apply to Turkish citizens and their family members, and to family members of UK nationals. IND flags both and handles them elsewhere.",
+    "The rules for Dutch nationals who have lived with their partner in another EU country, where EU law rather than Dutch law may apply.",
+    "The non-MVV variant of this route (block B). It states no requirement that block A does not.",
+    "Fee exceptions. Only the headline EUR 254,00 is recorded."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "valid_travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Both of you hold a valid passport or other travel document",
+      "source_role": "requirements",
+      "source_excerpt": "you and your partner have a valid passport or other travel document.",
+      "display_order": 10,
+      "source_excerpt_display": "You and your partner have a valid passport or other travel document."
+    },
+    {
+      "requirement_code": "verifiable_relationship",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A verifiable relationship — married, registered partnership, or unmarried",
+      "description": "Note that being unmarried is explicitly allowed. The test is that the relationship is verifiable, not that it is formalised.",
+      "source_role": "requirements",
+      "source_excerpt": "you have a verifiable relationship with your partner. you are married, you have a registered partnership, or you are unmarried.",
+      "display_order": 20,
+      "source_excerpt_display": "You have a verifiable relationship with your partner. You are married, you have a registered partnership, or you are unmarried."
+    },
+    {
+      "requirement_code": "age_21_or_18_if_already_married",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Both 21 or older — or 18, if you were already married while both living outside the Netherlands",
+      "description": "The lower bar is easy to miss and applies to a large group: couples already married before either moved to the Netherlands qualify at 18.",
+      "source_role": "requirements",
+      "source_excerpt": "you are both 21 years or older. were you already married to your partner when you both (still) lived outside the netherlands? then you also meet the requirement when you are both 18 years or older.",
+      "parameters": {
+        "minimum_age_years": 21,
+        "minimum_age_years_if_already_married": 18
+      },
+      "display_order": 30,
+      "source_excerpt_display": "You are both 21 years or older. Were you already married to your partner when you both (still) lived outside the Netherlands? Then you also meet the requirement when you are both 18 years or older."
+    },
+    {
+      "requirement_code": "living_together_registered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Live together and be registered at the same address with the municipality",
+      "description": "Municipal registration is the proof, and it happens at the municipality rather than at IND.",
+      "source_role": "requirements",
+      "source_excerpt": "in the netherlands, you live together with your partner. you and your partner are registered at the same address with the municipality.",
+      "display_order": 40,
+      "source_excerpt_display": "In the Netherlands, you live together with your partner. You and your partner are registered at the same address with the municipality."
+    },
+    {
+      "requirement_code": "income_requirement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sponsor in the Netherlands: meet the income requirements",
+      "description": "THE SPONSOR'S OBLIGATION, and IND publishes NO FIGURE on this page — it links an income test instead. No amount is recorded here for that reason; a number invented or recalled for this field would be the most damaging possible error on this page.",
+      "source_role": "requirements",
+      "source_excerpt": "you meet the income requirements . do you want to know whether your income is sufficient? take the income test .",
+      "display_order": 50,
+      "source_excerpt_display": "You meet the income requirements. Do you want to know whether your income is sufficient? Take the income test."
+    },
+    {
+      "requirement_code": "sponsor_declaration",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sponsor in the Netherlands: declare sponsorship on the application form",
+      "description": "Not a formality — IND states it carries obligations and responsibilities, which it details on a separate page.",
+      "source_role": "requirements",
+      "source_excerpt": "you declare that you are a sponsor for your partner in the application form. this means that you have obligations and responsibilities .",
+      "display_order": 60,
+      "source_excerpt_display": "You declare that you are a sponsor for your partner in the application form. This means that you have obligations and responsibilities."
+    },
+    {
+      "requirement_code": "sponsor_dutch_nationality_or_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Sponsor in the Netherlands: hold Dutch nationality or a valid Dutch residence permit",
+      "source_role": "requirements",
+      "source_excerpt": "you have dutch nationality or you have a valid dutch residence permit.",
+      "display_order": 70,
+      "source_excerpt_display": "You have Dutch nationality or you have a valid Dutch residence permit."
+    },
+    {
+      "requirement_code": "excluded_sponsor_permit_purposes",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Seven permit purposes that disqualify you from sponsoring a partner",
+      "description": "A hard exclusion rather than a hurdle: au pair, working holiday, cultural exchange, work experience, seasonal work, seafaring service, and the EU-UK trade agreement permit. Someone in the Netherlands on any of these cannot bring a partner at all.",
+      "source_role": "requirements",
+      "source_excerpt": "you cannot have your partner come join you in the netherlands if you have a residence permit for one of these purposes of stay: au pair working holiday cultural exchange work experience (intern or apprentice) seasonal work seafaring service as a crew member on board a seagoing vessel eu-uk trade agreement",
+      "display_order": 80,
+      "source_excerpt_display": "You cannot have your partner come join you in the Netherlands if you have a residence permit for one of these purposes of stay: Au pair Working Holiday Cultural exchange Work experience (intern or apprentice) Seasonal work Seafaring service as a crew member on board a seagoing vessel EU-UK Trade Agreement"
+    },
+    {
+      "requirement_code": "one_year_residence_if_obliged_to_integrate",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If you must integrate in the Netherlands: one year of residence before you can bring a partner",
+      "description": "A waiting period that applies only to sponsors under a civic integration obligation. IND names one exception: where it is in the interest of the sponsor's minor children that the partner comes sooner.",
+      "source_role": "requirements",
+      "source_excerpt": "are you obliged to integrate in the netherlands? then you must have lived for at least 1 year in the netherlands with a valid residence permit, before you can bring your partner to the netherlands. this does not apply when it is in the interest of your minor children that your partner already comes to the netherlands now.",
+      "parameters": {
+        "minimum_residence_years": 1
+      },
+      "display_order": 90,
+      "source_excerpt_display": "Are you obliged to integrate in the Netherlands? Then you must have lived for at least 1 year in the Netherlands with a valid residence permit, before you can bring your partner to the Netherlands. This does not apply when it is in the interest of your minor children that your partner already comes to the Netherlands now."
+    },
+    {
+      "requirement_code": "civic_integration_exam_abroad",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Partner passes the civic integration exam abroad BEFORE the MVV is applied for",
+      "description": "Nothing else in this registry looks like this: a language-and-society exam sat at a Dutch embassy overseas, before the application. The timing is the trap — it must be passed before applying for the MVV, not before travelling. Exemptions and dispensations exist and are handled on a separate IND page.",
+      "source_role": "requirements",
+      "source_excerpt": "before you apply for the mvv, your partner has passed the civic integration exam abroad . sometimes your partner does not have to take the exam.",
+      "display_order": 100,
+      "source_excerpt_display": "Before you apply for the MVV, your partner has passed the civic integration exam abroad. Sometimes your partner does not have to take the exam."
+    },
+    {
+      "requirement_code": "tb_test_after_arrival",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Partner takes a tuberculosis test AFTER arriving in the Netherlands",
+      "description": "Unusual timing: this obligation falls after entry, not before it, so it is easy to treat as done once the permit is granted. Five exemptions apply, including nationality of a listed country and a TB test taken in the Netherlands within the last 6 months; the country list is a separate IND appendix.",
+      "source_role": "requirements",
+      "source_excerpt": "after your partner arrives in the netherlands, your partner must take a tb (tuberculosis) test.",
+      "display_order": 110,
+      "source_excerpt_display": "After your partner arrives in the Netherlands, your partner must take a TB (tuberculosis) test."
+    },
+    {
+      "requirement_code": "no_danger_public_order",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No danger to public order or national security — antecedents certificate for everyone over 12",
+      "description": "The age threshold is 12, not 18, so children of secondary-school age must complete the certificate themselves.",
+      "source_role": "requirements",
+      "source_excerpt": "your partner does not pose a danger to public order or national security. everyone over the age of 12 must completely fill in an appendix antecedents certificate and enclose it with the application.",
+      "parameters": {
+        "antecedents_certificate_minimum_age": 12
+      },
+      "display_order": 120,
+      "source_excerpt_display": "Your partner does not pose a danger to public order or national security. Everyone over the age of 12 must completely fill in an Appendix Antecedents Certificate and enclose it with the application."
+    },
+    {
+      "requirement_code": "legalise_and_translate_documents",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Have foreign documents legalised and translated into Dutch, English, French or German",
+      "description": "Legalisation is separate from translation and both are required. IND's own video warns this step can take a long time.",
+      "source_role": "requirements",
+      "source_excerpt": "have official foreign documents legalised and translated into dutch, english, french or german.",
+      "display_order": 130,
+      "source_excerpt_display": "Have official foreign documents legalised and translated into Dutch, English, French or German."
+    },
+    {
+      "requirement_code": "apply_mvv_and_permit_together",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply for the MVV and the residence permit at the same time",
+      "description": "One application, not two. The partner may alternatively apply at a Dutch embassy or consulate abroad.",
+      "source_role": "requirements",
+      "source_excerpt": "you apply for the mvv and the residence permit at the same time. you can apply online or in writing by post.",
+      "display_order": 140,
+      "source_excerpt_display": "You apply for the MVV and the residence permit at the same time. You can apply online or in writing by post."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Application fee EUR 254,00",
+      "description": "Paid immediately via iDEAL or Wero when applying online; written applicants are billed by letter afterwards. Exceptions exist and are on IND's fees page.",
+      "source_role": "requirements",
+      "source_excerpt": "the application costs € 254,00. for all fees and exceptions, visit our web page fees: application costs .",
+      "parameters": {
+        "amount": 254,
+        "currency": "EUR"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "The application costs € 254,00. For all fees and exceptions, visit our web page Fees: application costs."
+    },
+    {
+      "requirement_code": "decision_period_90_days",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "IND decides within 90 days",
+      "description": "Not a requirement — the authority's own decision period, recorded because it sets expectations and because IND says it sometimes uses the full period and may extend it when asking for more information.",
+      "source_role": "requirements",
+      "source_excerpt": "the ind must take a decision within 90 days. this is called the decision period.",
+      "parameters": {
+        "decision_days": 90
+      },
+      "display_order": 160,
+      "source_excerpt_display": "The IND must take a decision within 90 days. This is called the decision period."
+    }
+  ]
+}

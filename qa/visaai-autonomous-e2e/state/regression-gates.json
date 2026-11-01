@@ -1,0 +1,71 @@
+{
+  "_comment": "Controller §21 regression gates. Recorded from actual runs — a gate that was not executed is marked run:false, never assumed to pass. build-reports.mjs reads this to decide definition_of_done_met, so the completion claim can never outrun the evidence.",
+  "recorded_at": "2026-08-12T23:05:00Z",
+  "git_head": "9ae7a99",
+  "gates": [
+    {
+      "name": "api_typecheck",
+      "command": "pnpm --filter api exec tsc --noEmit -p tsconfig.build.json",
+      "run": true,
+      "exit_code": 0,
+      "note": "src only. The repo-wide `tsc --noEmit` still exits 1 with pre-existing errors confined to *.spec.ts (drifted mocks) — a known, separately tracked condition, not introduced here."
+    },
+    {
+      "name": "api_unit_integration",
+      "command": "pnpm --filter api exec jest",
+      "run": true,
+      "exit_code": 0,
+      "passed": 2460,
+      "failed": 0,
+      "skipped": 43,
+      "note": "Green only after BUG-004 and BUG-005 were fixed. Four consecutive full runs before that failed with a DIFFERENT test each time (partner webhook sender, then the secret scan, then forms sequential-fetch) — the gate had been red and was being read as flake."
+    },
+    {
+      "name": "web_typecheck",
+      "command": "pnpm --filter web exec tsc --noEmit",
+      "run": true,
+      "exit_code": 0
+    },
+    {
+      "name": "web_unit",
+      "command": "pnpm --filter web exec vitest run",
+      "run": true,
+      "exit_code": 0,
+      "passed": 283,
+      "failed": 0,
+      "files": 60
+    },
+    {
+      "name": "web_production_build",
+      "command": "CI=1 pnpm --filter web build",
+      "run": true,
+      "exit_code": 0,
+      "note": "611 static pages generated across 15 locales."
+    },
+    {
+      "name": "api_production_build",
+      "command": "CI=1 pnpm --filter api build",
+      "run": true,
+      "exit_code": 0
+    },
+    {
+      "name": "formatter",
+      "command": null,
+      "run": false,
+      "note": "No formatter gate is configured for these paths in the repo; nothing to run."
+    },
+    {
+      "name": "lint",
+      "command": null,
+      "run": false,
+      "note": "Not executed this session. eslint configs exist per app but were not part of the harness gate set."
+    },
+    {
+      "name": "e2e_browser",
+      "command": "node qa/visaai-autonomous-e2e/harness/{run-scenarios,run-stages,verify-bug-002}.mjs",
+      "run": true,
+      "exit_code": 0,
+      "note": "1,015 scenarios + 71 matrix cells + 32 authenticated stage runs (160/160 stage checks) + the BUG-002 guest verification."
+    }
+  ]
+}

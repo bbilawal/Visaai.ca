@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "visaai_id": "cn-residence-permit",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "v3",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the National Immigration Administration service guide named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of the text this project’s own fetcher retrieved, not retyped, and then re-verified against a fresh fetch.",
+  "structure_note": "The residence permit is one permit with FIVE types — work, student, journalist, reunion and private affairs — and the type is fixed by the visa the holder entered on (Z, X1, J1, Q1, S1). The maximum validity differs by type and, within the work type, by who the holder is: five years for high-level talent, two for staff of registered entities with a good record, one for everybody else. Each is quoted separately because they are the numbers a person plans around.\n\nThe 30-day post-entry deadline is extracted first for the same reason: it is the requirement that expires.",
+  "source_roles": {
+    "requirements": "https://en.nia.gov.cn/n147423/n147478/n147715/c158270/content.html"
+  },
+  "page_dates": {
+    "requirements": "2021-04-01"
+  },
+  "freshness_note": "The page publishes its own dateline in the body: 2021-04-01. That is a REAL publication date, and it is stronger evidence than most of the corpus carries — Austria's migration.gv.at, Singapore's MOM pages and the US ESTA pages publish none at all. It is also evidence of AGE: this guide has stood unrevised since 2021-04-01. Both halves are recorded here because a dateline is only useful if the number it carries is read rather than merely noted as present, and the daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "The visa CATEGORIES themselves (C, F, G, J1, J2, L, M, Q1, Q2, R, S1, S2, X1, X2, Z). These guides use the letters constantly and define none of them: they are set by the Regulations on Administration of the Entry and Exit of Foreigners, which the guides cite and which is published as a separate document. Every requirement below therefore quotes the letter as the authority uses it and does not gloss it, because a gloss would be this registry describing Chinese visa law rather than quoting it.",
+    "Ordinary visa ISSUANCE outside China. These guides cover what happens after entry — residence permits, extensions, changes, reissuance and permanent residence. Visas are issued by Chinese embassies and consulates, which are a different authority and were not probed.",
+    "The 240-hour visa-free transit and 30-day visa-free entry policies. The NIA publishes them as announcements rather than as service guides, and an announcement about a pilot is a different kind of document from a procedure with an application-materials section."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Scope: residence permits for foreigners",
+      "description": "The guide states its own scope.",
+      "source_role": "requirements",
+      "source_excerpt": "this guide is applicable for residence permits for foreigners.",
+      "display_order": 10,
+      "source_excerpt_display": "This Guide is applicable for residence permits for foreigners."
+    },
+    {
+      "requirement_code": "legal_basis",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Legal basis: the Exit and Entry Administration Law and the Entry-Exit Regulations",
+      "description": "The two instruments the guide is written under.",
+      "source_role": "requirements",
+      "source_excerpt": "exit and entry administration law of the people's republic of china, regulations of the people's republic of china on administration of the entry and exit of foreigners",
+      "display_order": 20,
+      "source_excerpt_display": "Exit and Entry Administration Law of the People's Republic of China, Regulations of the People's Republic of China on Administration of the Entry and Exit of Foreigners"
+    },
+    {
+      "requirement_code": "accepting_authorities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Where it is accepted: exit and entry departments of prefecture-level and above public security organs",
+      "description": "The NIA entrusts acceptance rather than accepting directly.",
+      "source_role": "requirements",
+      "source_excerpt": "the national immigration administration (nia) has entrusted the exit and entry departments of china's public security organs of cities at prefecture level and above (including districts and counties under the administration of municipalities directly under the central government) to accept applications for residence permits of foreigners.",
+      "display_order": 30,
+      "source_excerpt_display": "The National Immigration Administration (NIA) has entrusted the exit and entry departments of China's public security organs of cities at prefecture level and above (including districts and counties under the administration of municipalities directly under the central government) to accept applications for residence permits of foreigners."
+    },
+    {
+      "requirement_code": "who_must_apply",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who applies: foreigners residing for non-diplomatic, non-official reasons",
+      "description": "Covers issuance, extension, change and re-issuance in one sentence.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners who enter china and need to reside in the country for reasons other than diplomatic or official purposes shall file an application at the exit and entry departments of public security organs for the issuance, extension, change and re-issuance of a residence permit.",
+      "display_order": 40,
+      "source_excerpt_display": "Foreigners who enter China and need to reside in the country for reasons other than diplomatic or official purposes shall file an application at the exit and entry departments of public security organs for the issuance, extension, change and re-issuance of a residence permit."
+    },
+    {
+      "requirement_code": "apply_in_person_with_exceptions",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply in person — unless you are high-level talent, under 16, over 60, or disabled",
+      "description": "The exceptions name exactly who may file on the applicant’s behalf.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners applying for a residence permit shall apply in person at exit and entry departments of china's public security organs to complete relevant formalities. for foreigners who are high-level talents or urgently-needed professionals, or under 16 or over 60 years old, or disabled due to illness or other reasons, an application may be filed by the inviting entity/individual, families or relatives or a professional service agency on behalf of the applicant.",
+      "parameters": {
+        "under_age": 16,
+        "over_age": 60,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 50,
+      "source_excerpt_display": "Foreigners applying for a residence permit shall apply in person at exit and entry departments of China's public security organs to complete relevant formalities. For foreigners who are high-level talents or urgently-needed professionals, or under 16 or over 60 years old, or disabled due to illness or other reasons, an application may be filed by the inviting entity/individual, families or relatives or a professional service agency on behalf of the applicant."
+    },
+    {
+      "requirement_code": "materials_passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All types: a valid passport or other international travel document",
+      "description": "First of four baseline materials.",
+      "source_role": "requirements",
+      "source_excerpt": "a. valid passport or other international travel documents.",
+      "display_order": 60,
+      "source_excerpt_display": "a. Valid passport or other international travel documents."
+    },
+    {
+      "requirement_code": "materials_form_and_photo",
+      "kind": "form",
+      "officially_required": true,
+      "label": "All types: the visa/stay permit/residence permit application form and a compliant photo",
+      "description": "The photo must comply with the exit-entry document photograph guidelines.",
+      "source_role": "requirements",
+      "source_excerpt": "b. fill out a visa/stay permit/residence permit application form and submit a photo that complies with the guidelines for exit-entry documents photographs.",
+      "display_order": 70,
+      "source_excerpt_display": "b. Fill out a Visa/Stay Permit/Residence Permit Application Form and submit a photo that complies with the Guidelines for Exit-Entry Documents Photographs."
+    },
+    {
+      "requirement_code": "materials_supporting",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All types: supporting materials related to the reasons for the application",
+      "description": "Third of four baseline materials.",
+      "source_role": "requirements",
+      "source_excerpt": "c. supporting materials related to reasons of the application.",
+      "display_order": 80,
+      "source_excerpt_display": "c. Supporting materials related to reasons of the application."
+    },
+    {
+      "requirement_code": "materials_originals_and_copies",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "All types: originals for verification, photocopies for submission",
+      "description": "A procedural rule that decides whether a visit succeeds.",
+      "source_role": "requirements",
+      "source_excerpt": "d. other formalities to be completed and supporting materials to be submitted. the original of relevant materials will be required for verification, and photocopies shall be submitted.",
+      "display_order": 90,
+      "source_excerpt_display": "d. Other formalities to be completed and supporting materials to be submitted. The original of relevant materials will be required for verification, and photocopies shall be submitted."
+    },
+    {
+      "requirement_code": "apply_within_30_days_of_entry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Where the visa says so: apply within 30 DAYS of entry, in the intended place of residence",
+      "description": "The deadline that expires, and the place is specified too.",
+      "source_role": "requirements",
+      "source_excerpt": "where a foreigner’s visa indicates that application for residence permit is required after entry, an application shall be filed at the exit and entry departments of public security organs in the intended place of residence within 30 days after entry.",
+      "parameters": {
+        "deadline_days": 30,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "Where a foreigner’s visa indicates that application for residence permit is required after entry, an application shall be filed at the exit and entry departments of public security organs in the intended place of residence within 30 days after entry."
+    },
+    {
+      "requirement_code": "health_certificate_over_one_year",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Permits over 1 year: a health certificate from a county-level or above institution",
+      "description": "The authority names what it must certify — no serious mental disorder, tuberculosis or other infectious disease hazardous to public health.",
+      "source_role": "requirements",
+      "source_excerpt": "where a foreigner applies for residence permit with a validity period of above 1 year, the applicant shall submit, in accordance with relevant provisions, a health certificate issued by the local health and quarantine authority or health and medical institution above county level, certifying that the applicant does not have serious mental disorder, tuberculosis or other infectious diseases which may potentially cause substantial hazard to public health. the applicant shall also submit the following supporting materials:",
+      "display_order": 110,
+      "source_excerpt_display": "Where a foreigner applies for residence permit with a validity period of above 1 year, the applicant shall submit, in accordance with relevant provisions, a health certificate issued by the local health and quarantine authority or health and medical institution above county level, certifying that the applicant does not have serious mental disorder, tuberculosis or other infectious diseases which may potentially cause substantial hazard to public health. The applicant shall also submit the following supporting materials:"
+    },
+    {
+      "requirement_code": "work_z_visa_materials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Work type: Z-visa entrants submit a work permit and an employer certification letter",
+      "description": "Issued by the local human resources authority or foreign expert administration.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners entering china with a z visa shall submit a work permit issued by the local human resources and social security authority or foreign expert administration authority, and a letter of certification from the employer.",
+      "display_order": 120,
+      "source_excerpt_display": "Foreigners entering China with a Z visa shall submit a work permit issued by the local human resources and social security authority or foreign expert administration authority, and a letter of certification from the employer."
+    },
+    {
+      "requirement_code": "work_other_visa_materials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Work type: entrants on other visas prove they meet the high-level talent, urgently-needed professional or investor standards",
+      "description": "Issued by competent departments of the Chinese government.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners entering china with other categories of visas shall submit supporting materials certifying that they comply with the standards for foreign high-level talents, urgently-needed professionals and investors, etc., issued by the competent departments of the chinese government.",
+      "display_order": 130,
+      "source_excerpt_display": "Foreigners entering China with other categories of visas shall submit supporting materials certifying that they comply with the standards for foreign high-level talents, urgently-needed professionals and investors, etc., issued by the competent departments of the Chinese government."
+    },
+    {
+      "requirement_code": "work_validity_five_years_talent",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work type: up to 5 years for high-level talents, urgently-needed professionals and investors",
+      "description": "The longest work-type validity the guide publishes.",
+      "source_role": "requirements",
+      "source_excerpt": "residence permit with a validity period of no more than 5 years may be issued to foreign high-level talents, urgently-needed professionals and investors.",
+      "parameters": {
+        "max_years": 5,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 140,
+      "source_excerpt_display": "Residence permit with a validity period of no more than 5 years may be issued to foreign high-level talents, urgently-needed professionals and investors."
+    },
+    {
+      "requirement_code": "work_validity_two_years_good_record",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work type: up to 2 years for staff of registered entities with a good track record",
+      "description": "Quoted separately from the five-year and one-year figures.",
+      "source_role": "requirements",
+      "source_excerpt": "residence permit with a validity period of no more than 2 years may be issued to foreigners who work in registered entities with good track record.",
+      "parameters": {
+        "max_years": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "Residence permit with a validity period of no more than 2 years may be issued to foreigners who work in registered entities with good track record."
+    },
+    {
+      "requirement_code": "work_validity_one_year_other",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Work type: up to 1 year for everybody else",
+      "description": "The default, and the one most applicants get.",
+      "source_role": "requirements",
+      "source_excerpt": "for other personnel, a residence permit with a validity period of no more than 1 year may be issued.",
+      "parameters": {
+        "max_years": 1,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "For other personnel, a residence permit with a validity period of no more than 1 year may be issued."
+    },
+    {
+      "requirement_code": "student_x1_materials_and_term",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Student type: X1-visa entrants submit a school letter stating the term of study, and an admission or enrolment letter",
+      "description": "The permit period follows the stated term of study.",
+      "source_role": "requirements",
+      "source_excerpt": "a foreigner entering china with an x1 visa shall submit a letter from the school/university indicating the term of study, and a letter of admission or enrollment. foreigners entering china with other categories of visa shall submit supporting materials issued by competent authorities. residence permit may be issued with a residence period in consistent with the indicated term of study of the school/university.",
+      "display_order": 170,
+      "source_excerpt_display": "A foreigner entering China with an X1 visa shall submit a letter from the school/university indicating the term of study, and a letter of admission or enrollment. Foreigners entering China with other categories of visa shall submit supporting materials issued by competent authorities. Residence permit may be issued with a residence period in consistent with the indicated term of study of the school/university."
+    },
+    {
+      "requirement_code": "student_part_time_remark_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Student type: part-time work or an internship needs a REMARK on the permit",
+      "description": "Approved by the school first, then applied for at the public security exit-entry department, stating location and duration.",
+      "source_role": "requirements",
+      "source_excerpt": "where a foreigner holding a residence permit for students intends to work part-time or take internship outside the school/university, the applicant shall, with the approval of the school/university, apply to the exit and entry departments of public security organs for remarks on residence permit indicating the location and duration of the part-time job or internship.",
+      "display_order": 180,
+      "source_excerpt_display": "Where a foreigner holding a residence permit for students intends to work part-time or take internship outside the school/university, the applicant shall, with the approval of the school/university, apply to the exit and entry departments of public security organs for remarks on residence permit indicating the location and duration of the part-time job or internship."
+    },
+    {
+      "requirement_code": "student_no_remark_no_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Student type: without the remark, working or interning outside the school is not allowed",
+      "description": "The consequence, stated by the authority in its own sentence rather than implied.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners holding student-type residence permits without the required remarks shall not be allowed to work or take internship outside the school/university.",
+      "display_order": 190,
+      "source_excerpt_display": "Foreigners holding student-type residence permits without the required remarks shall not be allowed to work or take internship outside the school/university."
+    },
+    {
+      "requirement_code": "journalist_j1_materials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Journalist type: J1-visa entrants submit a provincial foreign affairs letter and a press card",
+      "description": "Validity of not more than one year.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners entering china with j1 visa shall submit the letter issued by the foreign affairs authority of provincial level people's government and a duly issued press card. residence permit with a validity period of not more than one year may be issued.",
+      "parameters": {
+        "max_years": 1,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 200,
+      "source_excerpt_display": "Foreigners entering China with J1 visa shall submit the letter issued by the foreign affairs authority of provincial level people's government and a duly issued Press Card. Residence permit with a validity period of not more than one year may be issued."
+    },
+    {
+      "requirement_code": "reunion_q1_materials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Reunion type: Q1-visa entrants submit the visited person’s identity certificate and a letter explaining the relationship",
+      "description": "Entrants on other visa categories also submit proofs of family relationship.",
+      "source_role": "requirements",
+      "source_excerpt": "foreigners entering china with q1 visa shall submit the identity certificate of the person being visited and a letter explaining the relationship between family members.",
+      "display_order": 210,
+      "source_excerpt_display": "Foreigners entering China with Q1 visa shall submit the identity certificate of the person being visited and a letter explaining the relationship between family members."
+    },
+    {
+      "requirement_code": "reunion_validity_by_age",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Reunion type: up to 3 years for under-18s and over-60s, up to 2 for others — and a minor’s permit cannot outlast their 18th birthday",
+      "description": "The birthday clause is the part a summary drops.",
+      "source_role": "requirements",
+      "source_excerpt": "for those under the age of 18 or at or above the age of 60, residence permit with a validity period of not more than 3 years may be issued. the date of expiry of the residence permit for a person under the age of 18 shall not be later than the date on which he/she turns 18. for other persons, a residence permit with a validity period of no more than 2 years may be issued.",
+      "parameters": {
+        "max_years_age_bounded": 3,
+        "max_years_other": 2,
+        "read_at": "2026-08-24"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "For those under the age of 18 or at or above the age of 60, residence permit with a validity period of not more than 3 years may be issued. The date of expiry of the residence permit for a person under the age of 18 shall not be later than the date on which he/she turns 18. For other persons, a residence permit with a validity period of no more than 2 years may be issued."
+    },
+    {
+      "requirement_code": "reunion_custodial_child",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Reunion type: a foreign child in custodial care in China — the full document set",
+      "description": "Birth certificate, parents’ passports, custody and acceptance-of-custody letters naming the guardian and term, and the custodian’s six-month residence proof and ID card.",
+      "source_role": "requirements",
+      "source_excerpt": "for foreign child of chinese of foreign nationality or overseas chinese who is under the age of 18 and in custodial care in china, the exit and entry departments of the public security organ in the place of permanent residence or main place of residence of the custodian may issue a residence permit with a validity period of no more than 3 years. the expiry of his/her residence permit shall not be later than the date on which he/she turns 18. the applicant's birth certificate and a copy of the passports of the foreign parents shall be submitted. for those both or one of whose parents are/is chinese, a copy of the residence permit in the relevant foreign country shall also be submitted. the applicant shall also submit a letter of child custody from the parents of the applicant and a letter of acceptance of child custody from the custodian. the letter of custody shall clearly indicate the custodian or guardian and the term of the custody, etc. the custodian's local permanent residence permit or proof of residence in the his/her actual place of residence for more than 6 months and the resident id card shall also be submitted.",
+      "display_order": 230,
+      "source_excerpt_display": "For foreign child of Chinese of foreign nationality or overseas Chinese who is under the age of 18 and in custodial care in China, the exit and entry departments of the public security organ in the place of permanent residence or main place of residence of the custodian may issue a residence permit with a validity period of no more than 3 years. The expiry of his/her residence permit shall not be later than the date on which he/she turns 18. The applicant's birth certificate and a copy of the passports of the foreign parents shall be submitted. For those both or one of whose parents are/is Chinese, a copy of the residence permit in the relevant foreign country shall also be submitted. The applicant shall also submit a letter of child custody from the parents of the applicant and a letter of acceptance of child custody from the custodian. The letter of custody shall clearly indicate the custodian or guardian and the term of the custody, etc. The custodian's local permanent residence permit or proof of residence in the his/her actual place of residence for more than 6 months and the resident ID card shall also be submitted."
+    },
+    {
+      "requirement_code": "private_affairs_s1_materials",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Private affairs type: S1-visa entrants submit a kinship letter and the visited person’s residence permit",
+      "description": "The permit is issued to match the validity of the visited person’s own permit.",
+      "source_role": "requirements",
+      "source_excerpt": "for foreigners entering china with s1 visa for the purpose of visiting family, the applicant shall submit a letter explaining the kinship (spouse, parents, spouse's parents, minor children below 18) from and the residence permit of the person being visited. a residence permit with a validity period consistent with that of the residence permit of the person being visited in china may be issued.",
+      "display_order": 240,
+      "source_excerpt_display": "For foreigners entering China with S1 visa for the purpose of visiting family, the applicant shall submit a letter explaining the kinship (spouse, parents, spouse's parents, minor children below 18) from and the residence permit of the person being visited. A residence permit with a validity period consistent with that of the residence permit of the person being visited in China may be issued."
+    }
+  ]
+}

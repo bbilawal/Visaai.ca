@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "us-business-visitor",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the USCIS pages registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim. This route was previously registered against travel.state.gov alone, which returns HTTP 403 on robots.txt to the monitor; nothing could be read and nothing was published. USCIS publishes the B-1 classification itself and permits us to read it. Note what that changes and what it does not: USCIS states who may hold B-1 status and on what conditions. It does NOT state how the visa is issued at a consulate, and nothing here is extrapolated to cover that.",
+  "structure_note": "The eligibility criteria are a five-item list under a heading the page itself calls 'eligibility criteria'. Each item is recorded as its own requirement rather than as one block, because they are separate tests an applicant must each satisfy and a reader checking themselves against a merged paragraph loses the ability to see which one they fail.",
+  "source_roles": {
+    "requirements": "https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business/b-1-temporary-business-visitor",
+    "landing": "https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business"
+  },
+  "page_dates": {
+    "requirements": "2025-01-25"
+  },
+  "freshness_note": "The B-1 page publishes 'Last Reviewed/Updated: 01/25/2025' in its own markup. That is a self-declared date and is treated as evidence rather than as truth; check-source-freshness.ts is the check that reconciles it against the body.",
+  "not_extracted": [
+    "The visa application fee. USCIS does not publish the consular fee for a B-1 visa, because it does not charge it — the Department of State does, on the host that refuses us. No amount is stated on any page read here, so none is recorded.",
+    "How to apply for the visa itself. The page says only 'for information on applying for a b-1 visa, see the \"department of state\" link.' Following that link is not possible from production egress and the procedure is not reproduced here from memory.",
+    "Which nationalities are exempt from the visa requirement. The page defers this to CBP ('aliens seeking a b-1 visa from certain countries may be able to enter the united states without a visa'), naming no countries. The Visa Waiver Program is a separate registered route and the list belongs there, not here.",
+    "The B-2 tourism half of the B classification. It is a separate registered visa type and this file covers only what the B-1 page states.",
+    "Processing times. Not stated on either page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "business_activities_of_commercial_or_professional_nature",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be participating in business activities of a commercial or professional nature",
+      "description": "The page introduces this as an open list — 'including, but not limited to' — so the activities named are examples of qualifying business, not a closed set. Transit and deadheading are listed here by the authority itself, which is why the transit route registers this same page.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "you may be eligible for a b-1 visa if you will be participating in business activities of a commercial or professional nature in the united states, including, but not limited to: consulting with business associates traveling for a scientific, educational, professional or business convention, or a conference on specific dates settling an estate negotiating a contract participating in short-term training",
+      "source_excerpt_display": "You may be eligible for a B-1 visa if you will be participating in business activities of a commercial or professional nature in the United States, including, but not limited to: Consulting with business associates Traveling for a scientific, educational, professional or business convention, or a conference on specific dates Settling an estate Negotiating a contract Participating in short-term training"
+    },
+    {
+      "requirement_code": "purpose_of_trip_is_legitimate_business",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The purpose of your trip is business of a legitimate nature",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "the purpose of your trip is to enter the united states for business of a legitimate nature",
+      "source_excerpt_display": "The purpose of your trip is to enter the United States for business of a legitimate nature"
+    },
+    {
+      "requirement_code": "specific_limited_period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You plan to remain for a specific limited period of time",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "you plan to remain for a specific limited period of time",
+      "source_excerpt_display": "You plan to remain for a specific limited period of time"
+    },
+    {
+      "requirement_code": "sufficient_funds_for_trip_and_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You have sufficient funds to cover the trip and your stay",
+      "description": "No amount is stated. USCIS sets the test without publishing a figure, and the figure is not supplied from anywhere else.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "you have sufficient funds to cover the expenses of the trip and your stay in the united states",
+      "source_excerpt_display": "You have sufficient funds to cover the expenses of the trip and your stay in the United States"
+    },
+    {
+      "requirement_code": "residence_abroad_not_abandoned",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You have a residence abroad you do not intend to abandon, and binding ties that will ensure your return",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "you have a residence outside the united states that you have no intention of abandoning, as well as other binding ties that will ensure your return abroad at the end of the visit",
+      "source_excerpt_display": "You have a residence outside the United States that you have no intention of abandoning, as well as other binding ties that will ensure your return abroad at the end of the visit"
+    },
+    {
+      "requirement_code": "otherwise_admissible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are otherwise admissible to the United States",
+      "description": "A separate and load-bearing test: satisfying every B-1 criterion does not by itself make a person admissible, and inadmissibility is decided under grounds this page does not enumerate.",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "you are otherwise admissible to the united states",
+      "source_excerpt_display": "You are otherwise admissible to the United States"
+    },
+    {
+      "requirement_code": "admission_authorised_at_port_of_entry",
+      "kind": "step",
+      "officially_required": true,
+      "label": "An immigration official must authorise your admission at the port of entry",
+      "description": "Holding the visa is not admission. The length of stay is set on arrival, not by the visa, and the page states a one-year ceiling on the initial admission.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "at the port of entry, an immigration official must authorize your admission to the united states, and, if you are eligible for admission, you may be admitted initially for the period necessary to carry out your business activities, up to a maximum period of 1 year.",
+      "source_excerpt_display": "At the port of entry, an immigration official must authorize your admission to the United States, and, if you are eligible for admission, you may be admitted initially for the period necessary to carry out your business activities, up to a maximum period of 1 year."
+    },
+    {
+      "requirement_code": "period_of_stay_and_extension_limits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Initial stay of 1 to 6 months, extendable by up to 6 months, generally capped at 1 year per trip",
+      "description": "Quoted from the page's own period-of-stay table. The two numbers are different limits: 6 months is the maximum initial admission, 1 year the maximum total time in B-1 status on one trip.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "initial period of stay extension of stay 1 to 6 months; 6 months is the maximum up to 6 months; maximum total amount of time permitted in b-1 status on any one trip is generally 1 year.",
+      "source_excerpt_display": "Initial Period of Stay Extension of Stay 1 to 6 months; 6 months is the maximum Up to 6 months; maximum total amount of time permitted in B-1 status on any one trip is generally 1 year."
+    },
+    {
+      "requirement_code": "form_i_539_to_extend_stay",
+      "kind": "form",
+      "officially_required": true,
+      "label": "File Form I-539 to stay beyond the date on your Form I-94",
+      "official_form_code": "I-539",
+      "official_form_url": "https://www.uscis.gov/i-539",
+      "description": "Applies only to those extending without leaving the United States. The controlling date is the one on the Form I-94, which is issued at admission — not the expiry printed on the visa.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "if you who wish to stay beyond the time indicated on the form i-94 without departing from the united states, you must file form i-539, application to extend/change nonimmigrant status, and submit any required supporting documents to uscis.",
+      "source_excerpt_display": "If you who wish to stay beyond the time indicated on the Form I-94 without departing from the United States, you must file Form I-539, Application to Extend/Change Nonimmigrant Status, and submit any required supporting documents to USCIS."
+    },
+    {
+      "requirement_code": "change_to_b1_from_another_status",
+      "kind": "step",
+      "officially_required": false,
+      "label": "If you are already in the US in another valid nonimmigrant status, you may change to B-1 instead of applying abroad",
+      "description": "An alternative route into B-1 status, not a requirement of it. Recorded because it is the only path this page describes that does not depend on the consular host we cannot read.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "if you are in the united states in another valid nonimmigrant status, you may be eligible to change to b-1 status. to change to b-1 status, file a form i-539, application to extend/change nonimmigrant status",
+      "source_excerpt_display": "If you are in the United States in another valid nonimmigrant status, you may be eligible to change to B-1 status. To change to B-1 status, file a Form I-539, Application to Extend/Change Nonimmigrant Status"
+    },
+    {
+      "requirement_code": "dependants_have_no_derivative_visa",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Your spouse and children get no dependent visa — each must apply separately for a B-2",
+      "description": "Stated as a fact about the classification rather than as a condition on the applicant, and recorded because its absence is what a reader would otherwise assume: almost every other work or business classification in this registry carries a derivative status for a spouse.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "your spouse and children are not eligible for a dependent visa. each of your dependents who will be accompanying or following to join you must apply separately for a b-2 visa and must follow the regulations for that visa.",
+      "source_excerpt_display": "Your spouse and children are not eligible for a dependent visa. Each of your dependents who will be accompanying or following to join you must apply separately for a B-2 visa and must follow the regulations for that visa."
+    },
+    {
+      "requirement_code": "domestic_servants_and_airline_employees_no_ead_required",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Certain domestic servants and foreign airline employees may hold B-1 status without an Employment Authorization Document",
+      "description": "A narrow sub-class the page states in full. Recorded with officially_required false because it applies to specific people rather than to every B-1 applicant, and dropping it would hide the one case where B-1 activity connected to foreign employment is not treated as prohibited local employment.",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "certain personal or domestic servants accompanying or following to join individuals in a b, e, f, h, i, j, l, or tn nonimmigrant classification, personal or domestic servants of u.s. citizens who have a permanent home or are stationed in a foreign country, as well as certain employees of foreign airlines, may be eligible for b-1 nonimmigrant status if their activities in the united states are in connection with their foreign employment.",
+      "source_excerpt_display": "Certain personal or domestic servants accompanying or following to join individuals in a B, E, F, H, I, J, L, or TN nonimmigrant classification, personal or domestic servants of U.S. citizens who have a permanent home or are stationed in a foreign country, as well as certain employees of foreign airlines, may be eligible for B-1 nonimmigrant status if their activities in the United States are in connection with their foreign employment."
+    },
+    {
+      "requirement_code": "activity_outside_b1_status_is_a_violation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Working for another US employer, or overstaying the authorised period, violates B-1 status",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "if such persons engage in activities outside their b-1 nonimmigrant status, such as working for another employer in the united states, they will be found to have violated their b-1 nonimmigrant status. they also may not remain in the united states for longer than the authorized period of stay in b-1 nonimmigrant status.",
+      "source_excerpt_display": "if such persons engage in activities outside their B-1 nonimmigrant status, such as working for another employer in the United States, they will be found to have violated their B-1 nonimmigrant status. They also may not remain in the United States for longer than the authorized period of stay in B-1 nonimmigrant status."
+    }
+  ]
+}

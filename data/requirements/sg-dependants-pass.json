@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-dependants-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the five official Ministry of Manpower pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE FAMILY'S STATUS IS NOT THE FAMILY'S. Every substantive test here is applied to somebody else: the work pass holder's pass type, the work pass holder's salary, and the work pass holder's employer as sponsor. MOM adds a sentence most authorities leave implicit — 'this is based on your salary, and not based on your combined household income' — because the rule reads like a household test and is not one. A dependant who works and earns adds nothing to it.\n\n$6,000 IS ABOVE THE PASS THAT QUALIFIES FOR IT. The Employment Pass salary floor starts at $5,600 at age 23 or below. The Dependant's Pass needs $6,000. An EP holder at the bottom of the schedule holds a valid pass and cannot bring a spouse. The two numbers are set by the same ministry on different pages and never appear together, which is why both are in this registry.\n\nTHE PASS EXPIRES WHEN SOMEBODY ELSE'S DOES, and that is the mechanism behind the Student's Pass rule extracted alongside it: a child studying on a Dependant's Pass must apply for their own Student's Pass, on the prevailing criteria, if the parent's pass lapses mid-course.\n\nTHE LETTER OF CONSENT IS GONE. The widely repeated belief is that a DP holder may work on a Letter of Consent. MOM's page now routes them to an Employment Pass, an S Pass or a DP-Work Permit, applied for by the prospective employer — and getting an EP or S Pass ENDS the dependency, because the DP must be cancelled before it is issued. The better outcome removes the fallback.\n\nBOUNDS CHECKED. Five pages. The $105 and $225 fees appear on both the key-facts summary and the application page; each is quoted from the application page, where the payment step it belongs to is stated.",
+  "source_roles": {
+    "requirements": "https://www.mom.gov.sg/passes-and-permits/dependants-pass/eligibility",
+    "eligibility": "https://www.mom.gov.sg/passes-and-permits/dependants-pass/key-facts",
+    "documents": "https://www.mom.gov.sg/passes-and-permits/dependants-pass/documents-required",
+    "application": "https://www.mom.gov.sg/passes-and-permits/dependants-pass/apply-for-a-pass",
+    "policy": "https://www.mom.gov.sg/passes-and-permits/dependants-pass/working-in-singapore"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "documents": null,
+    "application": null,
+    "policy": null
+  },
+  "freshness_note": "MOM publishes no dateModified in the head, so freshness reads as unknown rather than fresh. The corroborating signal on this route is dated forward-looking policy that a stale page could not carry: the working-in-Singapore page states that 'from 2028, the current tier 1 and tier 2 in the services and manufacturing sectors will be merged' and gives the post-merger levy rates. A page describing a 2028 change is being maintained now.",
+  "not_extracted": [
+    "The DP-Work Permit levy table by sector and dependency-ratio tier — seven sectors and tiers, from $200 to $600 a month, plus the 2028 merger. It is the EMPLOYER's cost, it turns on the employer's quota position, and reproducing it here would put a table in front of a family that neither pays it nor can compute it.",
+    "Dependants of Overseas Networks & Expertise Pass and EntrePass holders. MOM routes them to separate requirements on separate pages; those are different eligibility tests and are not claimed to be covered by this one.",
+    "The Long-Term Visit Pass, which is what MOM offers to family members who do not qualify here — common-law spouses, unmarried handicapped children over 21, unmarried step-children under 21, parents. It is a different pass with its own page.",
+    "Getting a pass for a newborn, renewal, cancellation, appeal and pass-card replacement. This route covers a first Dependant's Pass.",
+    "The Employment Pass and S Pass qualifying criteria that a DP holder must meet to convert to one. Those live on their own routes — see sg-employment-pass.",
+    "MOM's minimum mandatory medical insurance coverage requirement, referenced on the working-in-Singapore page and defined elsewhere."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "sponsor_holds_ep_or_s_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The family member you are joining must hold an Employment Pass or S Pass",
+      "description": "The first of three cumulative requirements, all of them on the work pass holder rather than on the family. Holders of an ONE Pass or EntrePass are covered by separate MOM requirements, not by these.",
+      "source_role": "requirements",
+      "source_excerpt": "hold an employment pass or s pass .",
+      "display_order": 10,
+      "source_excerpt_display": "Hold an Employment Pass or S Pass."
+    },
+    {
+      "requirement_code": "sponsor_salary_6000_not_household",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "That person must earn at least $6,000 a month — their salary alone, not the household's",
+      "description": "MOM says the second half explicitly because the first half reads like a household test. A working spouse's earnings do not count toward it. Note the number: the Employment Pass floor starts at $5,600, so an EP holder at the bottom of the schedule holds a valid pass and still cannot bring a spouse.",
+      "source_role": "requirements",
+      "source_excerpt": "earn a minimum fixed monthly salary of $6,000 . this is based on your salary, and not based on your combined household income.",
+      "display_order": 20,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 6000,
+        "period": "month",
+        "household_income_counted": false,
+        "applies_to": "main_work_pass_holder"
+      },
+      "source_excerpt_display": "Earn a minimum fixed monthly salary of $6,000. This is based on your salary, and not based on your combined household income."
+    },
+    {
+      "requirement_code": "sponsored_by_singapore_registered_company",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An established Singapore-registered company must sponsor the pass",
+      "description": "Usually the work pass holder's own employer. A third party the family does not control is required to act.",
+      "source_role": "requirements",
+      "source_excerpt": "are sponsored by an established, singapore-registered company (usually your employer).",
+      "display_order": 30,
+      "source_excerpt_display": "Are sponsored by an established, Singapore-registered company (usually your employer)."
+    },
+    {
+      "requirement_code": "eligible_family_members",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only a legally married spouse and unmarried children under 21",
+      "description": "Adopted children are included. Everyone else — a common-law partner, a parent, a child of 21 — is outside this pass and MOM routes them to the Long-Term Visit Pass instead.",
+      "source_role": "requirements",
+      "source_excerpt": "you can get a pass for the following family members: ... legally married spouse. ... unmarried children under 21 years old, including legally adopted children.",
+      "display_order": 40,
+      "parameters": {
+        "max_child_age": 21,
+        "spouse": "legally_married",
+        "adopted_children_included": true
+      },
+      "source_excerpt_display": "You can get a pass for the following family members: ... Legally married spouse. ... Unmarried children under 21 years old, including legally adopted children."
+    },
+    {
+      "requirement_code": "ict_fta_families_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Families of overseas intra-corporate transferees are excluded",
+      "description": "If the work pass holder applied as an overseas ICT under WTO GATS or an FTA, their family gets neither a Dependant's Pass nor a Long-Term Visit Pass unless a specific FTA covers them. The exclusion follows from a choice made on the worker's own application, months earlier.",
+      "source_role": "requirements",
+      "source_excerpt": "family members of employment pass holders who chose to apply as an overseas ict under wto gats or an applicable fta are not eligible for dependant’s passes or long-term visit passes, except where they are specifically covered by an applicable fta and meet the prevailing criteria for consideration.",
+      "display_order": 50,
+      "source_excerpt_display": "Family members of Employment Pass holders who chose to apply as an overseas ICT under WTO GATS or an applicable FTA are not eligible for Dependant’s Passes or Long-Term Visit Passes, except where they are specifically covered by an applicable FTA and meet the prevailing criteria for consideration."
+    },
+    {
+      "requirement_code": "employer_applies",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer applies, not the family",
+      "description": "As with every MOM pass except the EntrePass. The family cannot lodge this application itself.",
+      "source_role": "eligibility",
+      "source_excerpt": "who can apply an employer or appointed employment agent must apply on behalf of the candidate.",
+      "display_order": 60,
+      "source_excerpt_display": "Who can apply An employer or appointed employment agent must apply on behalf of the candidate."
+    },
+    {
+      "requirement_code": "duration_tied_to_main_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass lasts only as long as the main work pass",
+      "description": "Or the duration requested, whichever is shorter. A dependant's right to remain ends with a job they do not hold — and if that happens mid-course, a child studying here needs their own Student's Pass, assessed on the criteria in force that day.",
+      "source_role": "eligibility",
+      "source_excerpt": "what is the duration the duration is tied to the validity of the main work pass or up to the duration requested, whichever is shorter.",
+      "display_order": 70,
+      "source_excerpt_display": "What is the duration The duration is tied to the validity of the main work pass or up to the duration requested, whichever is shorter."
+    },
+    {
+      "requirement_code": "passport_personal_particulars",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The personal particulars page of each family member's passport",
+      "description": "Where a child shares a passport with a parent, the parent's page is needed too.",
+      "source_role": "documents",
+      "source_excerpt": "copy of the personal particulars page of the candidate’s passport. learn more about the upload requirements.",
+      "display_order": 80,
+      "source_excerpt_display": "Copy of the personal particulars page of the candidate’s passport. Learn more about the upload requirements."
+    },
+    {
+      "requirement_code": "marriage_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A marriage certificate for a spouse",
+      "description": null,
+      "source_role": "documents",
+      "source_excerpt": "copy of the marriage certificate.",
+      "display_order": 90,
+      "source_excerpt_display": "Copy of the marriage certificate."
+    },
+    {
+      "requirement_code": "birth_certificate_naming_parents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A birth certificate stating the parents' names for a child",
+      "description": "Naming the parents, not merely the child — a certificate that omits them will not do.",
+      "source_role": "documents",
+      "source_excerpt": "copy of the official birth certificate stating the parents' names.",
+      "display_order": 100,
+      "source_excerpt_display": "Copy of the official birth certificate stating the parents' names."
+    },
+    {
+      "requirement_code": "adoption_order",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An adoption order for a legally adopted child",
+      "description": null,
+      "source_role": "documents",
+      "source_excerpt": "copy of the adoption order or other relevant documents.",
+      "display_order": 110,
+      "source_excerpt_display": "Copy of the adoption order or other relevant documents."
+    },
+    {
+      "requirement_code": "cda_vaccination_verification_under_12",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Vaccination verification from the Communicable Diseases Agency for foreign-born children aged 12 and under",
+      "description": "Needed for a NEW pass, and MOM counts a pass expired or cancelled for more than 30 days as new. Existing DP, LTVP and Student's Pass holders are exempt.",
+      "source_role": "documents",
+      "source_excerpt": "verification of vaccination requirements (for entry to singapore) document issued by the communicable diseases agency (cda) is needed for foreign-born children who meet these conditions: ... aged 12 and below. ... applying for a new dp - this includes those whose dps have expired or been cancelled for more than 30 days.",
+      "display_order": 120,
+      "parameters": {
+        "max_age_years": 12,
+        "counts_as_new_after_days": 30
+      },
+      "source_excerpt_display": "Verification of Vaccination Requirements (for entry to Singapore) document issued by the Communicable Diseases Agency (CDA) is needed for foreign-born children who meet these conditions: ... Aged 12 and below. ... Applying for a new DP - this includes those whose DPs have expired or been cancelled for more than 30 days."
+    },
+    {
+      "requirement_code": "english_translation_single_file",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Non-English documents must be uploaded with an English translation as one file",
+      "description": "One file, not two — the same rule as the Employment Pass.",
+      "source_role": "documents",
+      "source_excerpt": "for non-english documents , please upload the original document together with an english translation as 1 file . you may approach a translation service provider for translations.",
+      "display_order": 130,
+      "source_excerpt_display": "For non-English documents, please upload the original document together with an English translation as 1 file. You may approach a translation service provider for translations."
+    },
+    {
+      "requirement_code": "application_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$105 for each pass at application",
+      "description": "Per family member, not per family. MOM's Employment Pass page warns that these fees are lost if the main pass application is rejected, which is why it advises applying for family passes after approval.",
+      "source_role": "application",
+      "source_excerpt": "pay $105 fee for each application. you can pay by giro, visa, mastercard or amex.",
+      "display_order": 140,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 105,
+        "per": "pass",
+        "stage": "application"
+      },
+      "source_excerpt_display": "Pay $105 fee for each application. You can pay by GIRO, Visa, Mastercard or Amex."
+    },
+    {
+      "requirement_code": "issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "$225 for each pass at issuance, plus $30 for a multiple journey visa",
+      "description": "Again per family member. A spouse and two children cost $315 to apply for and $675 to issue, before any multiple journey visa.",
+      "source_role": "application",
+      "source_excerpt": "$225 for each pass ... $30 for each multiple journey visa (if applicable)",
+      "display_order": 150,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 225,
+        "multiple_journey_visa": 30,
+        "per": "pass",
+        "stage": "issuance"
+      },
+      "source_excerpt_display": "$225 for each pass ... $30 for each Multiple Journey Visa (if applicable)"
+    },
+    {
+      "requirement_code": "processing_three_weeks",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Three weeks for dependants of EP and S Pass holders",
+      "description": "Six weeks if the main holder is on an EP under sponsorship, a Personalised Employment Pass or an EntrePass.",
+      "source_role": "application",
+      "source_excerpt": "for dependants of ep and s pass holders ... processing time: within 3 weeks. some cases will take more time.",
+      "display_order": 160,
+      "parameters": {
+        "weeks": 3
+      },
+      "source_excerpt_display": "For dependants of EP and S Pass holders ... Processing time: within 3 weeks. Some cases will take more time."
+    },
+    {
+      "requirement_code": "ipa_single_entry_six_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The approval letter is a single-entry visa valid six months",
+      "description": "The same mechanism as every other MOM pass registered here.",
+      "source_role": "application",
+      "source_excerpt": "the ipa letter is a pre-approved single-entry visa for the foreigner to enter singapore. it gives the foreigner 6 months to enter singapore and get their pass issued.",
+      "display_order": 170,
+      "parameters": {
+        "entry_window_months": 6,
+        "entries": 1
+      },
+      "source_excerpt_display": "The IPA letter is a pre-approved single-entry visa for the foreigner to enter Singapore. It gives the foreigner 6 months to enter Singapore and get their pass issued."
+    },
+    {
+      "requirement_code": "dp_holder_needs_a_work_pass_to_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Dependant's Pass does not let you work — you need a work pass of your own",
+      "description": "The Letter of Consent people still ask about is not the route. MOM's answer is an Employment Pass, an S Pass or a DP-Work Permit, and in every case the prospective EMPLOYER applies.",
+      "source_role": "policy",
+      "source_excerpt": "prospective employers can apply for an employment pass (ep), s pass, or dp-work permit (dp-wp) for their dp holders.",
+      "display_order": 180,
+      "source_excerpt_display": "Prospective employers can apply for an Employment Pass (EP), S Pass, or DP-Work Permit (DP-WP) for their DP holders."
+    },
+    {
+      "requirement_code": "ep_or_s_pass_ends_the_dependency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Converting to an Employment Pass or S Pass ends the dependency — and the Dependant's Pass",
+      "description": "The better outcome removes the fallback. The DP must be cancelled before the new pass is issued, so a subsequent job loss no longer leaves the family's status resting on the other spouse's pass.",
+      "source_role": "policy",
+      "source_excerpt": "will no longer be dependent on the main pass holder for their stay in singapore. they will need to have their dp cancelled before their ep or s pass is issued.",
+      "display_order": 190,
+      "source_excerpt_display": "Will no longer be dependent on the main pass holder for their stay in Singapore. They will need to have their DP cancelled before their EP or S Pass is issued."
+    },
+    {
+      "requirement_code": "dp_work_permit_keeps_the_dependency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The DP-Work Permit keeps the dependency instead, and has no salary floor",
+      "description": "Open to any nationality, no minimum qualifying salary, validity tied to the Dependant's Pass, and exempt from the six-monthly medical examination and security bond. The cost is the employer's: the role sits inside their foreign-worker quota and attracts a monthly levy.",
+      "source_role": "policy",
+      "source_excerpt": "dp holders who get a dp-wp: ... can be of any nationality/citizenship. ... are not subject to a minimum qualifying salary. ... will have their dp-wp’s validity period tied to their dp.",
+      "display_order": 200,
+      "source_excerpt_display": "DP holders who get a DP-WP: ... Can be of any nationality/citizenship. ... Are not subject to a minimum qualifying salary. ... Will have their DP-WP’s validity period tied to their DP."
+    }
+  ]
+}

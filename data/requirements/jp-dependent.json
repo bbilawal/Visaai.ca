@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-dependent",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "THE STATUS IS DEFINED BY THE SPONSOR'S STATUS, AND THE LIST IS CLOSED. A dependent may only accompany a holder of one of the seventeen statuses named in the definition. Notably 特定技能２号 is on the list and 特定技能１号 is NOT — a Specified Skilled Worker at level 1 cannot bring their family on this route, and at level 2 they can. That single difference decides whether a family can be together.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/dependent.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: daily activities as the dependent spouse or child of a holder of one of the named statuses",
+      "description": "The named statuses are Professor, Artist, Religious Activities, Journalist, Highly Skilled Professional, Business Manager, Legal/Accounting Services, Medical Services, Researcher, Instructor, Engineer/Specialist in Humanities/International Services, Intra-company Transferee, Nursing Care, Entertainer, Skilled Labor, Specified Skilled Worker (ii), Cultural Activities and Student. Specified Skilled Worker (i) is absent.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "入管法別表第一の一の表の教授、芸術、宗教、報道、二の表の高度専門職、経営・管理、法律・会計業務、医療、研究、教育、技術・人文知識・国際業務、企業内転勤、介護、興行、技能、特定技能２号、三の表の文化活動又はこの表の留学の在留資格をもって在留する者の扶養を受ける配偶者又は子として行う日常的な活動。",
+      "source_excerpt_display": "入管法別表第一の一の表の教授、芸術、宗教、報道、二の表の高度専門職、経営・管理、法律・会計業務、医療、研究、教育、技術・人文知識・国際業務、企業内転勤、介護、興行、技能、特定技能２号、三の表の文化活動又はこの表の留学の在留資格をもって在留する者の扶養を受ける配偶者又は子として行う日常的な活動。"
+    },
+    {
+      "requirement_code": "examples",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: the spouse and children supported by a foreign resident",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、在留外国人が扶養する配偶者・子。",
+      "source_excerpt_display": "該当例としては、在留外国人が扶養する配偶者・子。"
+    },
+    {
+      "requirement_code": "period_of_stay_designated_individually",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: designated individually by the Minister of Justice, within a ceiling of 5 years",
+      "parameters": {
+        "ceiling": "5 years"
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "在留期間 法務大臣が個々に指定する期間（５年を超えない範囲）",
+      "source_excerpt_display": "在留期間 法務大臣が個々に指定する期間（５年を超えない範囲）"
+    }
+  ]
+}

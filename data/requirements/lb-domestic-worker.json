@@ -1,0 +1,421 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-domestic-worker",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "temporary_worker",
+    "official_name": "Domestic Worker — entry visa, work permit and residence",
+    "slug": "domestic-worker",
+    "purpose": "The full Lebanese domestic-worker pipeline in the order General Security publishes it: a prior Ministry of Labour authorisation, a visa at a General Security bureau, a labour permit, a residence permit and its renewal — with the sponsor's own financial standing and the published fee ceiling.",
+    "source_titles": {
+      "requirements_23": "The documents required to obtain a domestic worker",
+      "requirements_171": "Application for a domestic worker entry visa",
+      "requirements_168": "Fees for hiring a domestic worker"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "This is not one checklist but FIVE NUMBERED STAGES, published in order: (1) prior authorisation from the Ministry of Labour, (2) the visa requested at a General Security bureau, (3) the labour permit, (4) granting the residence permit, (5) renewing it. Every label below names its stage, because the same document — a copy of the passport — appears at four of them with different companions, and a flattened list would tell somebody to bring everything at once to a counter that wants four items.\n\nThe fee is stated by GENDER and is the same figure at stage 4 and stage 5: LBP 18,000,000 for women, LBP 24,000,000 for men. Both are quoted as the authority writes them.\n\nA second page carries what the SPONSOR must show. It is titled \"Application for a domestic worker entry visa\" and its text says only \"the applicants must hand out the following\", without ever defining whether the applicant is the employer or the worker. The documents themselves — a blocked bank account, a commercial register for enterprise owners, ministerial and ambassadorial accreditation — indicate the sponsoring party, but the page does not say so, and neither do these labels.",
+  "source_roles": {
+    "requirements_23": "https://www.general-security.gov.lb/en/posts/23",
+    "requirements_171": "https://www.general-security.gov.lb/en/posts/171",
+    "requirements_168": "https://www.general-security.gov.lb/en/posts/168"
+  },
+  "page_dates": {
+    "requirements_23": null,
+    "requirements_171": null,
+    "requirements_168": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "stage1_passport_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 1: a certified copy of the worker’s passport",
+      "description": "Filed with the Ministry of Labour.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a certified copy of the foreigner’s passport",
+      "display_order": 10,
+      "source_excerpt_display": "A certified copy of the foreigner’s passport"
+    },
+    {
+      "requirement_code": "stage1_sponsor_id",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 1: a certified copy of the sponsoring party’s identity card",
+      "description": "The authority calls this party \"the interested party\" throughout.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a certified copy of the identity card held by the interested party",
+      "display_order": 20,
+      "source_excerpt_display": "A certified copy of the identity card held by the interested party"
+    },
+    {
+      "requirement_code": "stage1_bank_guarantee",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 1: a bank guarantee",
+      "description": "Stated without an amount on this page.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a bank guarantee.",
+      "display_order": 30,
+      "source_excerpt_display": "A bank guarantee."
+    },
+    {
+      "requirement_code": "stage2_gs_authorisation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 2: the authorisation issued by General Security",
+      "description": "The output of stage 1 becomes an input to stage 2.",
+      "source_role": "requirements_23",
+      "source_excerpt": "the authorization delivered by the general security",
+      "display_order": 40,
+      "source_excerpt_display": "The authorization delivered by the general security"
+    },
+    {
+      "requirement_code": "stage2_notarised_guarantee",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 2: a guarantee to General Security executed before a notary",
+      "description": "Distinct from the stage-1 bank guarantee.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a guarantee to the general security done via a notary",
+      "display_order": 50,
+      "source_excerpt_display": "A guarantee to the general security done via a notary"
+    },
+    {
+      "requirement_code": "stage2_profession_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 2: an attestation of the sponsor’s profession, such as a salary attestation",
+      "description": "The authority gives the salary attestation as its own example.",
+      "source_role": "requirements_23",
+      "source_excerpt": "an attestation that underlines the profession of the interested party: a salary attestation for instance",
+      "display_order": 60,
+      "source_excerpt_display": "An attestation that underlines the profession of the interested party: a salary attestation for instance"
+    },
+    {
+      "requirement_code": "stage3_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 3: insurance for the foreigner through an insurance company",
+      "description": "Listed at the labour-permit stage, not at the visa stage.",
+      "source_role": "requirements_23",
+      "source_excerpt": "an insurance for foreigners via an insurance company",
+      "display_order": 70,
+      "source_excerpt_display": "An insurance for foreigners via an insurance company"
+    },
+    {
+      "requirement_code": "stage3_medical_tests",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 3: medical laboratory tests",
+      "description": "Required of the worker.",
+      "source_role": "requirements_23",
+      "source_excerpt": "medical laboratory tests to which the foreigner is submitted",
+      "display_order": 80,
+      "source_excerpt_display": "Medical laboratory tests to which the foreigner is submitted"
+    },
+    {
+      "requirement_code": "stage3_notarised_contract",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Stage 3: a work contract signed before a notary",
+      "description": "Executed by the sponsoring party.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a work contract done and signed by the interested party via a notary",
+      "display_order": 90,
+      "source_excerpt_display": "A work contract done and signed by the interested party via a notary"
+    },
+    {
+      "requirement_code": "stage4_work_permit_six_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 4: the work permit, valid at least 6 months, plus a copy",
+      "description": "The remaining-validity floor is the requirement.",
+      "source_role": "requirements_23",
+      "source_excerpt": "the work permit as well as a copy of the latter (valid for 6 months at least)",
+      "parameters": {
+        "minimum_remaining_months": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "The work permit as well as a copy of the latter (valid for 6 months at least)"
+    },
+    {
+      "requirement_code": "stage4_certified_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 4: a certified copy of the work contract, with the authority’s named exceptions",
+      "description": "Foreign employers, representatives of foreign enterprises and press correspondents without a Lebanese branch are excepted, and the exception travels with the requirement.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a certified copy of the work contract (with the exception of a foreign employer, or the representative of a foreign enterprise, or press correspondents of an agency that has no branches in lebanon)",
+      "display_order": 110,
+      "source_excerpt_display": "A certified copy of the work contract (with the exception of a foreign employer, or the representative of a foreign enterprise, or press correspondents of an agency that has no branches in lebanon)"
+    },
+    {
+      "requirement_code": "stage4_guarantor_registry_extract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 4: the guarantor’s family civil registry extract, issued within the last 3 years, and 3 ID photos",
+      "description": "The recency limit and the photo count share the authority’s line and are kept together.",
+      "source_role": "requirements_23",
+      "source_excerpt": "an extract of family civil registry of the guarantor, as well as a copy of the latter (it must be emitted 3 years ago at the most) - 3 id photos",
+      "parameters": {
+        "max_age_years": 3,
+        "photos": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "An extract of family civil registry of the guarantor, as well as a copy of the latter (it must be emitted 3 years ago at the most) - 3 ID photos"
+    },
+    {
+      "requirement_code": "stage4_fee_by_gender",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Stage 4: residence permit fee — LBP 18,000,000 (women) / LBP 24,000,000 (men)",
+      "description": "The authority prices this by gender and both figures are on one line.",
+      "source_role": "requirements_23",
+      "source_excerpt": "the fees related to the residency permit: 18.000.000 l.b.p for women and 24.000.000 l.b.p for men",
+      "parameters": {
+        "amount_female": 18000000,
+        "amount_male": 24000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "The fees related to the residency permit: 18.000.000 L.B.P for women and 24.000.000 L.B.P for men"
+    },
+    {
+      "requirement_code": "stage5_previous_permit_original",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 5: the previous residence permit, as the ORIGINAL document",
+      "description": "Not a copy.",
+      "source_role": "requirements_23",
+      "source_excerpt": "the previous residency permit (original document)",
+      "display_order": 140,
+      "source_excerpt_display": "The previous residency permit (original document)"
+    },
+    {
+      "requirement_code": "stage5_passport_one_year",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 5: the worker’s passport, valid at least a year, plus a copy",
+      "description": "A different validity floor from the six-month work permit.",
+      "source_role": "requirements_23",
+      "source_excerpt": "the foreigner’s passport as well as a copy of the latter (it has to be valid for a year at least)",
+      "parameters": {
+        "minimum_validity_years": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 150,
+      "source_excerpt_display": "The foreigner’s passport as well as a copy of the latter (it has to be valid for a year at least)"
+    },
+    {
+      "requirement_code": "stage5_renewed_work_permit",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 5: a renewed work permit valid at least 6 months, plus a copy",
+      "description": "Measured at the time of the renewal application.",
+      "source_role": "requirements_23",
+      "source_excerpt": "a work permit (renewed) valid for 6 months at least, as well as a copy of the latter.",
+      "parameters": {
+        "minimum_remaining_months": 6,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 160,
+      "source_excerpt_display": "A work permit (renewed) valid for 6 months at least, as well as a copy of the latter."
+    },
+    {
+      "requirement_code": "stage5_worker_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Stage 5: three ID photos of the worker",
+      "description": "Quantity stated by the authority.",
+      "source_role": "requirements_23",
+      "source_excerpt": "an id photo of the worker (3 copies)",
+      "parameters": {
+        "quantity": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 170,
+      "source_excerpt_display": "An ID photo of the worker (3 copies)"
+    },
+    {
+      "requirement_code": "sponsor_blocked_account",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant’s standing: a blocked account of at least LBP 150,000,000, held 3 months, bank-signed",
+      "description": "Three conditions in one sentence — the amount, the age of the account and the bank's signature.",
+      "source_role": "requirements_171",
+      "source_excerpt": "a bank statement that points out a blocked account of an amount that is at least equal to 150 000 000 l.b.p, at any lebanese banks, that goes back to 3months at the least. this statement must be signed by the concerned bank.",
+      "parameters": {
+        "amount": 150000000,
+        "currency": "LBP",
+        "minimum_age_months": 3,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 180,
+      "source_excerpt_display": "A bank statement that points out a blocked account of an amount that is at least equal to 150 000 000 L.B.P, at any Lebanese banks, that goes back to 3months at the least. This statement must be signed by the concerned bank."
+    },
+    {
+      "requirement_code": "sponsor_property_or_investment",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant’s standing: a lease or title deed, and investment contracts",
+      "description": "An alternative basis to the blocked account.",
+      "source_role": "requirements_171",
+      "source_excerpt": "a leasing contract or a title deed, as well as investment contracts",
+      "display_order": 190,
+      "source_excerpt_display": "A leasing contract or a title deed, as well as investment contracts"
+    },
+    {
+      "requirement_code": "sponsor_public_office_accreditation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant’s standing: professional licence or accreditation, for ministers, judges, ambassadors and MPs",
+      "description": "The authority names those offices itself.",
+      "source_role": "requirements_171",
+      "source_excerpt": "a copy of the professional license and any valid accreditation for public personalities such as ministers, or judges, ambassadors or members of the parliament",
+      "display_order": 200,
+      "source_excerpt_display": "A copy of the professional license and any valid accreditation for public personalities such as ministers, or judges, ambassadors or members of the parliament"
+    },
+    {
+      "requirement_code": "sponsor_salary_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant’s standing: a bank-certified salary attestation with a housing condition",
+      "description": "Rent or ownership must be evidenced alongside the salary.",
+      "source_role": "requirements_171",
+      "source_excerpt": "a salary attestation that points out a monthly salary ceritfied by the bank, condition (rent or ownership statement).",
+      "display_order": 210,
+      "source_excerpt_display": "A salary attestation that points out a monthly salary ceritfied by the bank, condition (rent or ownership statement)."
+    },
+    {
+      "requirement_code": "sponsor_commercial_register",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicant’s standing: a commercial register extract for enterprise owners",
+      "description": "With a title deed or other evidence of the company's investments.",
+      "source_role": "requirements_171",
+      "source_excerpt": "an extract of the commercial register for enterprise owners, as well as a copy of the title deed, or any other document that underlines investments held by this company",
+      "display_order": 220,
+      "source_excerpt_display": "An extract of the commercial register for enterprise owners, as well as a copy of the title deed, or any other document that underlines investments held by this company"
+    },
+    {
+      "requirement_code": "sponsor_non_working_may_use_guarantor",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "People who do not work may have a guarantor provide these documents",
+      "description": "The guarantor then also carries the costs, by an undertaking before a notary.",
+      "source_role": "requirements_171",
+      "source_excerpt": "when it comes to individuals that do not work, the above-mentioned documents can be provided by the guarantor, in virtue of his engagement established via a notary. he is also then responsible for the costs that are associated with the above-mentioned service.",
+      "display_order": 230,
+      "source_excerpt_display": "When it comes to individuals that do not work, the above-mentioned documents can be provided by the guarantor, in virtue of his engagement established via a notary. He is also then responsible for the costs that are associated with the above-mentioned service."
+    },
+    {
+      "requirement_code": "sponsor_copies_certified",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Copies must be clear and certified, carrying the employer’s name and signature",
+      "description": "A procedural rule that decides whether a file is accepted.",
+      "source_role": "requirements_171",
+      "source_excerpt": "- the copies must be clear, and certified, the name and signature of the employer must also be on these documents.",
+      "display_order": 240,
+      "source_excerpt_display": "- The copies must be clear, and certified, the name and signature of the employer must also be on these documents."
+    },
+    {
+      "requirement_code": "fee_ceiling_warning",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "No fee beyond the published list may be charged",
+      "description": "Addressed to citizens, employment bureaux and workers alike.",
+      "source_role": "requirements_168",
+      "source_excerpt": "citizens and all intermediary employment bureaus as well as domestic workers, are advised not to pay any supplementary fee other than the following:",
+      "display_order": 250,
+      "source_excerpt_display": "Citizens and all intermediary employment bureaus as well as domestic workers, are advised not to pay any supplementary fee other than the following:"
+    },
+    {
+      "requirement_code": "fee_prior_authorisation",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Ministry of Labour — prior authorisation: LBP 2,000,000",
+      "description": "Quoted with the heading that says whose fee it is, because the amount alone does not say.",
+      "source_role": "requirements_168",
+      "source_excerpt": "1- the fees of the ministry of labor ... - previous authorization: 2.000.000 l.b.p",
+      "parameters": {
+        "amount": 2000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 260,
+      "source_excerpt_display": "1- The fees of the ministry of labor ... - Previous authorization: 2.000.000 L.B.P"
+    },
+    {
+      "requirement_code": "fee_working_permit",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Ministry of Labour — working permit: LBP 6,000,000",
+      "description": "From the same published list.",
+      "source_role": "requirements_168",
+      "source_excerpt": "- working permit: 6.000.000 l.b.p",
+      "parameters": {
+        "amount": 6000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 270,
+      "source_excerpt_display": "- Working permit: 6.000.000 L.B.P"
+    },
+    {
+      "requirement_code": "fee_residence_female",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "General Security — residence permit, female worker: LBP 18,000,000",
+      "description": "Quoted with the General Security heading above it.",
+      "source_role": "requirements_168",
+      "source_excerpt": "3- the fees of a residency permit at the general security ... - for one worker in domestic services: 18.000.000 l.b.p (female)",
+      "parameters": {
+        "amount": 18000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt_display": "3- The fees of a residency permit at the general security ... - For one worker in domestic services: 18.000.000 L.B.P (female)"
+    },
+    {
+      "requirement_code": "fee_residence_male",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "General Security — residence permit, male worker: LBP 24,000,000",
+      "description": "Six million more than the female fee, on the authority's own list.",
+      "source_role": "requirements_168",
+      "source_excerpt": "3- the fees of a residency permit at the general security ... - for one worker in domestic services: 24.000.000 l.b.p (male)",
+      "parameters": {
+        "amount": 24000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 290,
+      "source_excerpt_display": "3- The fees of a residency permit at the general security ... - For one worker in domestic services: 24.000.000 L.B.P (male)"
+    },
+    {
+      "requirement_code": "fee_visa_refused_if_overcharged",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "General Security refuses the visa if anyone charged fees beyond the list",
+      "description": "The consequence, stated by the authority, and it falls on the worker's visa rather than on the party that overcharged.",
+      "source_role": "requirements_168",
+      "source_excerpt": "the general security refuses to grant a visa to workers in domestic services, if the employment bureau, embassies or consulates have charged extra fees other than the above-mentioned.",
+      "display_order": 300,
+      "source_excerpt_display": "The general security refuses to grant a visa to workers in domestic services, if the employment bureau, embassies or consulates have charged extra fees other than the above-mentioned."
+    }
+  ]
+}

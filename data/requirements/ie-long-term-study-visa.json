@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ie-long-term-study-visa",
+  "extracted_at": "2026-08-22",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official ISD page listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "requirements": "https://www.irishimmigration.ie/coming-to-study-in-ireland/what-are-my-study-visa-options/how-to-apply-for-long-term-study-visa/"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "not_extracted": [
+    "The financial requirement AMOUNT. ISD links a separate financial-requirements page; the €6,000 recorded here is the course-FEE threshold, a different thing, and it IS stated on this page.",
+    "The policy on non-EEA nationals studying in Ireland. Linked, and it governs course eligibility rather than the visa application.",
+    "The English language requirements. ISD has a dedicated page not registered here.",
+    "The visa application fee amount. Same linked fees page as the short stay visa, with the same exemptions.",
+    "Approved student fee payment services beyond the single example ISD names."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "study_longer_than_3_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Study in Ireland for more than 3 months",
+      "source_role": "requirements",
+      "source_excerpt": "if you wish to come to ireland to study for more than 3 months, you need to apply for a long term study visa.",
+      "display_order": 10,
+      "source_excerpt_display": "If you wish to come to Ireland to study for more than 3 months, you need to apply for a long term study visa."
+    },
+    {
+      "requirement_code": "meet_study_policy",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Meet the policy on non-EEA nationals studying in Ireland",
+      "description": "ISD's own sentence is garbled ('you must make that you meet'); quoted as written. The policy is a separate document and not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you should first read our policy on non-eea nationals studying in ireland. you must make that you meet the policy requirements before you make your visa application.",
+      "display_order": 20,
+      "source_excerpt_display": "You should first read our Policy on Non-EEA Nationals studying in Ireland. You must make that you meet the policy requirements before you make your visa application."
+    },
+    {
+      "requirement_code": "apply_up_to_3_months_before",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply up to 3 months before you travel",
+      "source_role": "requirements",
+      "source_excerpt": "you should apply for a long term study visa up to 3 months before your date of travel to ireland.",
+      "display_order": 30,
+      "source_excerpt_display": "You should apply for a long term study visa up to 3 months before your date of travel to Ireland."
+    },
+    {
+      "requirement_code": "apply_from_home_or_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply from your home country or country of legal residence",
+      "source_role": "requirements",
+      "source_excerpt": "you must apply from your home country or where you are a legal resident.",
+      "display_order": 40,
+      "source_excerpt_display": "You must apply from your home country or where you are a legal resident."
+    },
+    {
+      "requirement_code": "transit_visa_before_applying",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Hold any visa needed for a state you transit before Ireland, before applying",
+      "source_role": "requirements",
+      "source_excerpt": "if you are visiting another state prior to travelling to ireland, you must have the relevant visa for that state in your passport before applying for an irish visa.",
+      "display_order": 50,
+      "source_excerpt_display": "If you are visiting another state prior to travelling to Ireland, you must have the relevant visa for that state in your passport before applying for an Irish visa."
+    },
+    {
+      "requirement_code": "avats_online_application",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create the application online in AVATS",
+      "source_role": "requirements",
+      "source_excerpt": "use the automated visa application and tracking system (avats) to apply for your visa online",
+      "display_order": 60,
+      "source_excerpt_display": "Use the Automated Visa Application and Tracking System (AVATS) to apply for your visa online"
+    },
+    {
+      "requirement_code": "passport_valid_12_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Current passport, valid at least 12 months after your planned arrival",
+      "description": "Twelve months, against six for the short stay 'C' visa. Quoted from each page rather than assumed to match.",
+      "source_role": "requirements",
+      "source_excerpt": "send us your current passport. this must be valid for at least twelve months after the date you plan to arrive in ireland.",
+      "display_order": 70,
+      "source_excerpt_display": "Send us your current passport. This must be valid for at least twelve months after the date you plan to arrive in Ireland."
+    },
+    {
+      "requirement_code": "previous_passports",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of every page of all previous passports",
+      "description": "Excerpt ends where ISD's own sentence runs into a link.",
+      "source_role": "requirements",
+      "source_excerpt": "include a photocopy of each page from all previous passports, if availa",
+      "display_order": 80,
+      "source_excerpt_display": "Include a photocopy of each page from all previous passports, if availa"
+    },
+    {
+      "requirement_code": "passport_photographs",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two passport photographs under 6 months old, signed and numbered on the back",
+      "source_role": "requirements",
+      "source_excerpt": "include two passport-sized colour photographs with your application. these must not be more than 6 months old. on the back of each photo: sign your name in your own handwriting and language write your visa application transaction number from avats",
+      "display_order": 90,
+      "source_excerpt_display": "Include two passport-sized colour photographs with your application. These must not be more than 6 months old. On the back of each photo: Sign your name in your own handwriting and language Write your Visa Application Transaction Number from AVATS"
+    },
+    {
+      "requirement_code": "course_fees_paid",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof the course fees were paid — in full under €6,000, or at least €6,000 above that",
+      "description": "ISD states plainly that this minimum is an immigration requirement, not just a college one — and warns the college may still demand full payment.",
+      "parameters": {
+        "fees_threshold_eur": 6000,
+        "currency": "EUR",
+        "read_at": "2026-08-22"
+      },
+      "source_role": "requirements",
+      "source_excerpt": "note: where the course fees are less than €6,000, you must pay fees in full to the college before to applying for your visa. where the course fees are more than €6,000, you must pay at least this amount before applying for your visa. evidence of this should be visible in your letter of acceptance. this minimum amount is an immigration requirement.",
+      "display_order": 100,
+      "source_excerpt_display": "Note: Where the course fees are less than €6,000, you must pay fees in full to the college before to applying for your visa. Where the course fees are more than €6,000, you must pay at least this amount before applying for your visa. Evidence of this should be visible in your Letter of Acceptance. This minimum amount is an immigration requirement."
+    },
+    {
+      "requirement_code": "electronic_transfer_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An electronic transfer of funds to the college, or a receipt from an approved fee payment service",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide a copy of an electronic transfer of funds (etf) to the irish bank account of the college. this must show: the beneficiary college’s name, address and bank details your name, address and bank details",
+      "display_order": 110,
+      "source_excerpt_display": "You must provide a copy of an Electronic Transfer of Funds (ETF) to the Irish bank account of the college. This must show: the beneficiary college’s name, address and bank details your name, address and bank details"
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Enough funds to support your stay without public funds or casual employment",
+      "description": "The amount is on a separate financial-requirements page ISD links to, which is not a registered source.",
+      "source_role": "requirements",
+      "source_excerpt": "you must show that you have enough funds to support your stay in ireland. this should be achieved without the need to access public funds or rely on casual employment.",
+      "display_order": 120,
+      "source_excerpt_display": "You must show that you have enough funds to support your stay in Ireland. This should be achieved without the need to access public funds or rely on casual employment."
+    },
+    {
+      "requirement_code": "summary_of_finances_form",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Summary of Finances form",
+      "source_role": "requirements",
+      "source_excerpt": "all applicants for long stay irish study visas must complete this form.",
+      "display_order": 130,
+      "source_excerpt_display": "All applicants for long stay Irish study visas must complete this form."
+    },
+    {
+      "requirement_code": "private_medical_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Private medical insurance",
+      "description": "Required WITH the application here, unlike the short stay 'C' visa where ISD asks for it at the border instead.",
+      "source_role": "requirements",
+      "source_excerpt": "private medical insurance cover is required. your college may arrange this on your behalf. if so, your letter of acceptance from the college must include details of this. if it is not arranged by the college, you must organise this yourself. you must provide evidence of this with your application.",
+      "display_order": 140,
+      "source_excerpt_display": "Private Medical Insurance cover is required. Your college may arrange this on your behalf. If so, your Letter of Acceptance from the college must include details of this. If it is not arranged by the college, you must organise this yourself. You must provide evidence of this with your application."
+    },
+    {
+      "requirement_code": "academic_ability",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence you can follow the chosen course",
+      "source_role": "requirements",
+      "source_excerpt": "you must provide evidence that you have the ability to follow your chosen course. examples of this are previous exam results or qualifications.",
+      "display_order": 150,
+      "source_excerpt_display": "You must provide evidence that you have the ability to follow your chosen course. Examples of this are previous exam results or qualifications."
+    },
+    {
+      "requirement_code": "employment_history",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Full details of your employment history",
+      "source_role": "requirements",
+      "source_excerpt": "you must give full details of your employment history. we need this to see where you have filled any gaps in your education with periods of employment.",
+      "display_order": 160,
+      "source_excerpt_display": "You must give full details of your employment history. We need this to see where you have filled any gaps in your education with periods of employment."
+    },
+    {
+      "requirement_code": "previous_visa_refusals",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Disclose every previous visa refusal, from any country",
+      "rule": {
+        "fact": "has_prior_refusal",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "requirements",
+      "source_excerpt": "if you have been refused a visa in the past for any country, you must provide the details in your current application.",
+      "display_order": 170,
+      "source_excerpt_display": "If you have been refused a visa in the past for any country, you must provide the details in your current application."
+    }
+  ]
+}

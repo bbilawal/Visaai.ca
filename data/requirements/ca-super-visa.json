@@ -1,0 +1,328 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-super-visa",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "THE FIRST ROUTE IN THIS REGISTRY WHERE HALF THE REQUIREMENTS BIND SOMEBODY ELSE. IRCC splits the eligibility page into 'host requirements' and 'applicant requirements', and the host — the child or grandchild in Canada — must be a citizen, permanent resident or registered Indian, be 18 or over, meet a published income floor, and write and sign the letter of invitation. An applicant who satisfies every applicant requirement is refused if the host does not qualify, and nothing on the applicant's side can fix that.\n\nSo the host conditions are stored as requirements in their own right, labelled as the host's. Folding them into the applicant's checklist would produce items nobody reading it can act on; leaving them out would produce a checklist that is complete and still leads to a refusal.\n\nFOUR PAGES, EACH CARRYING SOMETHING ONLY IT STATES. IRCC factors this route across a page set — who can apply, how long you can stay, forms and documents, proof of financial support — and the minimum-necessary-income table exists on exactly one of them. This is the same shape as Finland's two-page permits, one level deeper.\n\nTHE INCOME TABLE IS THE HOST'S, AND THE FAMILY SIZE IS NOT THE OBVIOUS ONE. It counts people who are not in Canada and may never have been: previously approved super visa holders on a still-applicable invitation, and previously sponsored individuals whose undertaking is still in effect. IRCC gives four worked examples precisely because the count is counter-intuitive.\n\nNO BOUNDS NEEDED, CHECKED. Each page is a single route; the section headings occur once each.",
+  "source_roles": {
+    "requirements": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/eligibility.html",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents.html",
+    "policy": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents/host-financial-support.html",
+    "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/length-stay-canada.html"
+  },
+  "page_dates": {
+    "requirements": "2026-07-06",
+    "documents": "2026-07-30",
+    "policy": "2026-07-06",
+    "landing": "2026-07-06"
+  },
+  "freshness_note": "Unlike Migri, IRCC publishes a dateline on every page — 2026-07-06 on three of these and 2026-07-30 on the documents page, all within two months. The income table carries its own separate stamp, 'updated july 29, 2025', which is the date the FIGURES took effect and not the page's age; it is stored as in_force_since for the same reason Finland's regional thresholds are.",
+  "not_extracted": [
+    "The per-country visa office instructions. IRCC serves them from a country picker listing ~200 territories, and they are additional requirements set by each office; there is no single statement to quote and inventing a general one would be false for most applicants.",
+    "The application fee. It is on the submit-your-application page and in IRCC's fee schedule, which is registered against ca-visitor-visa; it is not stated on any of the four pages registered here.",
+    "The full alternative-income document list under option 2. The obligation and both proof options are recorded; enumerating every acceptable substitute for a notice of assessment would reproduce the page.",
+    "The pre-22-June-2023 entry rules on the length-of-stay page. They describe stays that began before that date and cannot apply to a new application.",
+    "The immigration medical exam's own procedure and panel-physician list — a separate IRCC system.",
+    "The use-of-a-representative form and translation requirements, both general to IRCC applications rather than to this route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "host_is_child_or_grandchild",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "HOST: must be your biological or adopted child or grandchild",
+      "description": "The first of five conditions that bind the host, not the applicant. No document the applicant supplies can substitute for a host who does not qualify.",
+      "source_role": "requirements",
+      "source_excerpt": "to be eligible for a super visa, you must have a host who you can prove is your biological or adopted child or grandchild",
+      "display_order": 10,
+      "source_excerpt_display": "To be eligible for a super visa, you must have a host who you can prove is your biological or adopted child or grandchild"
+    },
+    {
+      "requirement_code": "host_status_and_age",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "HOST: Canadian citizen, permanent resident or registered Indian, at least 18, living in Canada",
+      "source_role": "requirements",
+      "source_excerpt": "is a canadian citizen, permanent resident of canada or registered indian is at least 18 years old and lives in canada",
+      "parameters": {
+        "host_minimum_age": 18
+      },
+      "display_order": 20,
+      "source_excerpt_display": "is a Canadian citizen, permanent resident of Canada or registered Indian is at least 18 years old and lives in Canada"
+    },
+    {
+      "requirement_code": "host_meets_minimum_necessary_income",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "HOST: meets or exceeds the minimum necessary income",
+      "description": "The figure depends on family size and is published on IRCC's proof-of-financial-support page — see the income entries below.",
+      "source_role": "requirements",
+      "source_excerpt": "meets or exceeds the minimum necessary income",
+      "display_order": 30,
+      "source_excerpt_display": "meets or exceeds the minimum necessary income"
+    },
+    {
+      "requirement_code": "host_letter_of_invitation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "HOST: writes and signs a letter of invitation",
+      "description": "A spouse or common-law partner who is a citizen, PR or registered Indian may co-sign. IRCC excludes other relatives by name — a sibling cannot.",
+      "source_role": "requirements",
+      "source_excerpt": "writes and signs a letter of invitation (opens in a new tab) for you to come canada",
+      "display_order": 40,
+      "source_excerpt_display": "writes and signs a letter of invitation (opens in a new tab) for you to come Canada"
+    },
+    {
+      "requirement_code": "applicant_outside_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must be outside Canada when you apply, and the visa is printed abroad",
+      "source_role": "requirements",
+      "source_excerpt": "to be eligible, you ( the applicant ) must be outside canada when you submit your application have your visa printed by a visa office outside canada (wait for visa office instructions) be allowed to enter canada",
+      "display_order": 50,
+      "source_excerpt_display": "To be eligible, you (the applicant) must be outside Canada when you submit your application have your visa printed by a visa office outside Canada (wait for visa office instructions) be allowed to enter Canada"
+    },
+    {
+      "requirement_code": "private_health_insurance_one_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Private health insurance valid at least 1 year from the date of entry",
+      "description": "From a Canadian insurer, or a foreign one approved by the Minister — see the policy conditions entry for what that approval means in practice.",
+      "source_role": "requirements",
+      "source_excerpt": "show proof that you have private health insurance valid for a minimum of 1 year from the date of entry from a canadian insurance company or from a company outside canada that has been approved by the minister",
+      "parameters": {
+        "minimum_validity_months": 12
+      },
+      "display_order": 60,
+      "source_excerpt_display": "show proof that you have private health insurance valid for a minimum of 1 year from the date of entry from a Canadian insurance company or from a company outside Canada that has been approved by the minister"
+    },
+    {
+      "requirement_code": "immigration_medical_exam",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Take an immigration medical exam",
+      "source_role": "requirements",
+      "source_excerpt": "take an immigration medical exam (opens in a new tab) meet certain other conditions",
+      "display_order": 70,
+      "source_excerpt_display": "take an immigration medical exam (opens in a new tab) meet certain other conditions"
+    },
+    {
+      "requirement_code": "genuine_visitor_assessment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must satisfy IRCC that you are a genuine visitor who will leave by choice",
+      "description": "Not a document but a judgement, and IRCC names what it weighs: ties to the home country, purpose of visit, family and finances. Worth stating because an application can be complete and still fail here.",
+      "source_role": "requirements",
+      "source_excerpt": "before we make a decision on your application, we’ll also consider whether you’re a genuine visitor to canada who will leave by choice at the end of your visit your ties to your home country the purpose of your visit your family and finances",
+      "display_order": 80,
+      "source_excerpt_display": "Before we make a decision on your application, we’ll also consider whether you’re a genuine visitor to Canada who will leave by choice at the end of your visit your ties to your home country the purpose of your visit your family and finances"
+    },
+    {
+      "requirement_code": "visa_exempt_still_needs_eta_by_air",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Visa-exempt applicants still get a super visa — and still need an eTA to fly",
+      "description": "Two facts that are easy to miss together: the route is open to visa-exempt nationals, and the eTA is a SEPARATE application linked to the passport used for it.",
+      "source_role": "requirements",
+      "source_excerpt": "even if you don’t need a visitor visa to enter canada, you can still get a super visa to stay in canada for 5 years. if we approve your application, we’ll issue you a letter to give to a border services officer when you arrive in canada. if you travel by air , you may also need to apply for an electronic travel authorization (eta) separately to allow you to travel to and enter canada.",
+      "display_order": 90,
+      "source_excerpt_display": "Even if you don’t need a visitor visa to enter Canada, you can still get a super visa to stay in Canada for 5 years. If we approve your application, we’ll issue you a letter to give to a border services officer when you arrive in Canada. If you travel by air, you may also need to apply for an electronic travel authorization (eTA) separately to allow you to travel to and enter Canada."
+    },
+    {
+      "requirement_code": "sponsorship_application_does_not_block",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A pending sponsorship application does not block a super visa",
+      "description": "Recorded because families in the parent-and-grandparent sponsorship queue routinely assume they must choose. IRCC says they may do both.",
+      "source_role": "requirements",
+      "source_excerpt": "if you’ve already submitted a sponsorship application , you can apply for a super visa while you wait for a decision or withdraw your sponsorship application at any time and apply for a super visa",
+      "display_order": 100,
+      "source_excerpt_display": "If you’ve already submitted a sponsorship application, you can apply for a super visa while you wait for a decision or withdraw your sponsorship application at any time and apply for a super visa"
+    },
+    {
+      "requirement_code": "stay_five_years_per_entry",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Five years per entry, since 22 June 2023 — with or without a passport stamp",
+      "description": "An outcome, and the reason this route exists. IRCC adds the detail that matters at the border: the five years apply even if the officer does not stamp the passport.",
+      "source_role": "landing",
+      "source_excerpt": "you’re eligible to stay for 5 years at a time. if a border officer grants you entry to canada, you can stay for 5 years, even if the border officer doesn’t stamp your passport.",
+      "parameters": {
+        "years_per_entry": 5
+      },
+      "display_order": 110,
+      "source_excerpt_display": "You’re eligible to stay for 5 years at a time. If a border officer grants you entry to Canada, you can stay for 5 years, even if the border officer doesn’t stamp your passport."
+    },
+    {
+      "requirement_code": "insurance_policy_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The policy must cover health care, hospitalisation and repatriation, with at least $100,000 emergency cover",
+      "description": "IRCC states a quote is not accepted — the policy must be paid in full or on instalments with a deposit — and it must be valid for EACH entry, not once. A foreign insurer's policy must carry a statement that it was issued while the company was doing insurance business in Canada.",
+      "source_role": "documents",
+      "source_excerpt": "the health insurance policy should include the insurance company name that issued the policy (sometimes known as “the insurer” or “the underwriter”) be valid for a minimum of 1 year from the date of entry be paid in full or in instalments with a deposit (quotes aren’t accepted) cover the applicant’s health care, hospitalization and repatriation provide a minimum emergency coverage of $100,000 be valid for each entry to canada be available for review by the border services officers on request",
+      "parameters": {
+        "minimum_emergency_cover_cad": 100000,
+        "currency": "CAD"
+      },
+      "display_order": 120,
+      "source_excerpt_display": "The health insurance policy should include the insurance company name that issued the policy (sometimes known as “the insurer” or “the underwriter”) be valid for a minimum of 1 year from the date of entry be paid in full or in instalments with a deposit (quotes aren’t accepted) cover the applicant’s health care, hospitalization and repatriation provide a minimum emergency coverage of $100,000 be valid for each entry to Canada be available for review by the border services officers on request"
+    },
+    {
+      "requirement_code": "insurer_must_be_osfi_listed_if_foreign",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A non-Canadian insurer must be OSFI-authorised and on OSFI's public list",
+      "description": "IRCC adds the trap explicitly: OSFI keeps no list of foreign insurers unless they are registered as Canadian branches or subsidiaries, and brokers and claims administrators are not insurers and will not appear.",
+      "source_role": "documents",
+      "source_excerpt": "your insurant must be from either a canadian insurance company or an insurance company outside canada that is authorized by the office of the superintendent of financial institutions (osfi) under the insurance companies act to provide accident and sickness insurance, and appears on osfi’s publicly available list of federally regulated financial institutions , and has issued or made the policy while doing insurance business in canada",
+      "display_order": 130,
+      "source_excerpt_display": "Your insurant must be from either a Canadian insurance company or an insurance company outside Canada that is authorized by the Office of the Superintendent of Financial Institutions (OSFI) under the Insurance Companies Act to provide accident and sickness insurance, and appears on OSFI’s publicly available list of federally regulated financial institutions, and has issued or made the policy while doing insurance business in Canada"
+    },
+    {
+      "requirement_code": "proof_of_medical_exam",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of a medical exam with an approved panel physician",
+      "source_role": "documents",
+      "source_excerpt": "you must provide proof that you had a medical exam with an approved panel physician .",
+      "display_order": 140,
+      "source_excerpt_display": "You must provide proof that you had a medical exam with an approved panel physician."
+    },
+    {
+      "requirement_code": "proof_of_host_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of the host's status: citizenship, PR document, or status card",
+      "description": "And of the host's spouse or common-law partner where one is involved.",
+      "source_role": "documents",
+      "source_excerpt": "you must provide proof that your host is one of the following: a canadian citizen provide a copy of canadian citizenship for your host (and their spouse or common-law partner if applicable). a permanent resident provide a copy of a permanent resident document for your host (and their spouse or common-law partner, if applicable). a registered indian provide a copy of a secure certificate of indian status or certificate of indian status (status card) for your host (and their spouse or common-law partner, if applicable).",
+      "display_order": 150,
+      "source_excerpt_display": "You must provide proof that your host is one of the following: a Canadian citizen Provide a copy of Canadian citizenship for your host (and their spouse or common-law partner if applicable). a permanent resident Provide a copy of a permanent resident document for your host (and their spouse or common-law partner, if applicable). a registered Indian Provide a copy of a Secure Certificate of Indian Status or Certificate of Indian Status (status card) for your host (and their spouse or common-law partner, if applicable)."
+    },
+    {
+      "requirement_code": "proof_of_relationship",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof you are the host's parent or grandparent",
+      "description": "IRCC accepts the HOST's birth or baptismal certificate — the document names the applicant as parent, which is the reverse of what most applicants expect to be asked for.",
+      "source_role": "documents",
+      "source_excerpt": "you must prove that you’re the parent or grandparent of your host. we accept the following documents as proof: a copy of the host’s birth certificate or baptismal certificate another official document naming you as the parent or grandparent of your host",
+      "display_order": 160,
+      "source_excerpt_display": "You must prove that you’re the parent or grandparent of your host. We accept the following documents as proof: a copy of the host’s birth certificate or baptismal certificate another official document naming you as the parent or grandparent of your host"
+    },
+    {
+      "requirement_code": "letter_of_invitation_contents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The invitation letter must state the family-size list, with each person's name and date of birth",
+      "description": "Not a free-form letter: it must show the same family-size count used to derive the income floor, person by person.",
+      "source_role": "documents",
+      "source_excerpt": "your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income",
+      "display_order": 170,
+      "source_excerpt_display": "Your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income"
+    },
+    {
+      "requirement_code": "co_signer_limited_to_spouse",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Only the host's spouse or common-law partner may co-sign — not a sibling",
+      "source_role": "documents",
+      "source_excerpt": "your host child’s or grandchild’s spouse or common-law partner may co-sign the letter of invitation and provide proof of income, if required, to meet the minimum necessary income. other family members of your host, such as siblings, can’t co-sign.",
+      "display_order": 180,
+      "source_excerpt_display": "Your host child’s or grandchild’s spouse or common-law partner may co-sign the letter of invitation and provide proof of income, if required, to meet the minimum necessary income. Other family members of your host, such as siblings, can’t co-sign."
+    },
+    {
+      "requirement_code": "local_visa_office_instructions",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Your local visa office may require additional documents",
+      "description": "IRCC serves those requirements from a per-country picker covering ~200 territories. The obligation to check is recorded; no country's list is quoted, because there is no general statement to quote.",
+      "source_role": "documents",
+      "source_excerpt": "your visa office may require additional documents. tell us where you’re applying from to get the visa office requirements for your country or territory.",
+      "display_order": 190,
+      "source_excerpt_display": "Your visa office may require additional documents. Tell us where you’re applying from to get the visa office requirements for your country or territory."
+    },
+    {
+      "requirement_code": "family_size_counts_people_outside_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Family size counts previously approved super visa holders and previously sponsored people",
+      "description": "THE COUNTER-INTUITIVE PART OF THE INCOME TEST. The count includes people who are not in Canada and may never have been — anyone on a still-applicable invitation, and anyone the host or co-signer sponsored whose undertaking is still in effect. IRCC gives four worked examples for exactly this reason.",
+      "source_role": "policy",
+      "source_excerpt": "to determine your host’s minimum necessary income, include the following people in the family size count: you and any other super visa applicants the host will be supporting (such as your spouse or common-law partner) the host child or grandchild the host’s spouse (which might include a separated spouse ) or common-law partner dependent children of the host and of their spouse or common-law partner",
+      "display_order": 200,
+      "source_excerpt_display": "To determine your host’s minimum necessary income, include the following people in the family size count: you and any other super visa applicants the host will be supporting (such as your spouse or common-law partner) the host child or grandchild the host’s spouse (which might include a separated spouse) or common-law partner dependent children of the host and of their spouse or common-law partner"
+    },
+    {
+      "requirement_code": "dependent_children_counted_regardless_of_custody",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Dependent children count regardless of custody or child-support arrangements",
+      "source_role": "policy",
+      "source_excerpt": "children who meet the definition of a dependent child must be included in the count, regardless of custody and child support arrangements.",
+      "display_order": 210,
+      "source_excerpt_display": "Children who meet the definition of a dependent child must be included in the count, regardless of custody and child support arrangements."
+    },
+    {
+      "requirement_code": "minimum_necessary_income_table",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Minimum necessary income by family size, from CAD 30,526 for one to CAD 80,784 for seven",
+      "description": "Each additional member beyond seven adds CAD 8,224. IRCC stamps the table 'updated july 29, 2025' — the date the figures took effect, stored as in_force_since rather than read as the page's age.",
+      "source_role": "policy",
+      "source_excerpt": "minimum income your host needs based on the size of the family updated july 29, 2025 number of family members minimum income the host needs (in canadian dollars) 1 $30,526 2 $38,002 3 $46,720 4 $56,724 5 $64,336 6 $72,560 7 $80,784 if more than 7 people, for each additional family member, add $8,224",
+      "parameters": {
+        "family_of_1_cad": 30526,
+        "family_of_2_cad": 38002,
+        "family_of_3_cad": 46720,
+        "family_of_4_cad": 56724,
+        "family_of_5_cad": 64336,
+        "family_of_6_cad": 72560,
+        "family_of_7_cad": 80784,
+        "each_additional_member_cad": 8224,
+        "currency": "CAD",
+        "in_force_since": "2025-07-29"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "Minimum income your host needs based on the size of the family Updated July 29, 2025 Number of family members Minimum income the host needs (in Canadian dollars) 1 $30,526 2 $38,002 3 $46,720 4 $56,724 5 $64,336 6 $72,560 7 $80,784 If more than 7 people, for each additional family member, add $8,224"
+    },
+    {
+      "requirement_code": "income_proof_option_one",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Option 1: host meets the full amount in either of the two tax years before applying",
+      "description": "Two tax years, not one — a host whose income dipped last year may still qualify on the year before.",
+      "source_role": "policy",
+      "source_excerpt": "option 1 your host can show that their total income (including the co-signer’s income, if applicable) meets or exceeds the minimum required amount in either of the 2 tax years before the application is submitted. documents to prove the income requirement your host, or their co-signer, must include their notice of assessment from the canada revenue agency (cra).",
+      "display_order": 230,
+      "source_excerpt_display": "Option 1 Your host can show that their total income (including the co-signer’s income, if applicable) meets or exceeds the minimum required amount in either of the 2 tax years before the application is submitted. Documents to prove the income requirement Your host, or their co-signer, must include their notice of assessment from the Canada Revenue Agency (CRA)."
+    },
+    {
+      "requirement_code": "income_proof_option_two",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Option 2: host reaches 75% of the amount and the applicant's own income covers the rest",
+      "description": "The applicant's income can count — and if it does, IRCC requires proof it will CONTINUE while they are in Canada, stated in the currency it is paid in.",
+      "source_role": "policy",
+      "source_excerpt": "option 2 your host can show that their total income (including the co-signer’s income, if applicable) in the year before the application is submitted was at least 75% of the minimum required amount. you can add your own income to cover the remaining amount, if needed. the combined amount must meet or exceed the minimum necessary income requirements .",
+      "parameters": {
+        "host_share_percent": 75
+      },
+      "display_order": 240,
+      "source_excerpt_display": "Option 2 Your host can show that their total income (including the co-signer’s income, if applicable) in the year before the application is submitted was at least 75% of the minimum required amount. You can add your own income to cover the remaining amount, if needed. The combined amount must meet or exceed the minimum necessary income requirements."
+    },
+    {
+      "requirement_code": "applicant_income_must_continue",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "If your income is counted, prove it continues while you are in Canada",
+      "source_role": "policy",
+      "source_excerpt": "you must provide proof that you’ll continue to earn an income while in canada. the document you use to prove this must include the currency you’re paid in.",
+      "display_order": 250,
+      "source_excerpt_display": "You must provide proof that you’ll continue to earn an income while in Canada. The document you use to prove this must include the currency you’re paid in."
+    }
+  ]
+}

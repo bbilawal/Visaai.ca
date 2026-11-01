@@ -1,0 +1,727 @@
+{
+ "note": "Phase 13 discovery, updated after the Phase 13 remediation pass. Phase 14 expands this into VISAAI_REMAINING_TASKS_COMPLETE_EXECUTION_PLAN.md.",
+ "generated": "2026-08-09",
+ "source": "marker sweep + structural checks + live production probe",
+ "tasks": [
+  {
+   "id": "RT-001",
+   "title": "Wire one regional OCR adapter so production can boot at all",
+   "group": "Critical pre-production blockers",
+   "priority": "P0",
+   "severity": "Critical",
+   "reason": "Production demands a regional OCR provider; all three are unimplemented scaffolds. The intersection of \"allowed in production\" and \"implemented\" is empty.",
+   "evidence": "apps/api/test/ocr-deadlock.spec.ts \u2014 6/6 pass. validateEnv rejects mock and openai under a valid production env; assertOcrProviderImplemented throws for azure-di, aws-textract and google-docai.",
+   "steps": [
+    "Pick azure-di (shortest path: @azure-rest/ai-document-intelligence, prebuilt-read model).",
+    "Implement extract() in azure-document-intelligence.provider.ts against this.cfg.endpoint/apiKey in this.cfg.region.",
+    "Map the response to OcrExtractionResult (rawText + per-field confidences) exactly as openai-ocr.provider.ts does.",
+    "Flip capabilities.implemented to true ONLY once extract() is real \u2014 the flag is what the boot guard reads.",
+    "Fix test/residency.spec.ts fixture: it hardcodes implemented:true on a provider it calls \"azure-di\", which is why the suite never caught this.",
+    "Re-run apps/api/test/ocr-deadlock.spec.ts \u2014 the azure-di case must now fail, and that is the signal to update it."
+   ],
+   "files": [
+    "apps/api/src/modules/documents/ocr/azure-document-intelligence.provider.ts",
+    "apps/api/src/modules/documents/ocr/ocr-capability.ts",
+    "apps/api/test/residency.spec.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": "Azure Document Intelligence endpoint + key in the target region",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Regional endpoint only \u2014 the whole point of the guard is that raw identity documents never leave the residency region.",
+   "finding": "OCR-001",
+   "status": "done",
+   "completion_evidence": "azure-di implemented (REST via fetch, no new dependency); 15 provider tests + 5 invariant tests; ocr-capability and residency fixtures corrected. NOT yet run against a live Azure endpoint \u2014 that still needs a key."
+  },
+  {
+   "id": "RT-002",
+   "title": "Read the live VPS env and confirm whether mock providers are serving real users",
+   "group": "Critical pre-production blockers",
+   "priority": "P0",
+   "severity": "Critical",
+   "reason": "NODE_ENV != production is proven on the live box, so every production-only safety check is inert \u2014 including the one that forbids mock providers. OCR_PROVIDER defaults to mock, and MockOcrProvider invents full_name: \"Test User\".",
+   "evidence": "Deployed build dated 2026-07-02..2026-07-09 by route presence, so it contains both OCR guards; the API has still been up 10.6 days. Per OCR-001 that is only possible with NODE_ENV != production.",
+   "steps": [
+    "ssh into the VPS.",
+    "grep -E '^(NODE_ENV|OCR_PROVIDER|DATA_RESIDENCY_MODE|VOICE_STT_PROVIDERS|VOICE_TTS_PROVIDERS|ANALYTICS_WAREHOUSE|KPI_SOURCE)=' <APP_DIR>/apps/api/.env",
+    "If OCR_PROVIDER is mock or unset: query documents/extracted_fields for fabricated values (full_name = \"Test User\") and quarantine affected applications.",
+    "Do NOT set NODE_ENV=production yet \u2014 with OCR-001 open the API will refuse to boot."
+   ],
+   "files": [
+    "<VPS>/apps/api/.env"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 SSH access. Cannot be settled from outside the host.",
+   "credentials_required": "VPS SSH",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "If mock OCR is live, fabricated identity fields are already persisted against real applications; treat as a data-integrity incident, not a config tidy-up.",
+   "finding": "CONFIG-010",
+   "status": "open"
+  },
+  {
+   "id": "RT-003",
+   "title": "Buy Supabase Pro (or finish the self-host migration) so production has a backup",
+   "group": "Critical pre-production blockers",
+   "priority": "P0",
+   "severity": "Critical",
+   "reason": "The production database has no backup and no PITR. Nine migrations are held behind this, including two that fix user-visible defects.",
+   "evidence": "Management API: pitr_enabled=false, backups=[]. Nine local migrations absent from the prod migration list.",
+   "steps": [
+    "Either: upgrade project ujxzxefvtaoxiydbdrhb to Pro (~$25/month) and enable PITR;",
+    "Or: complete the self-host migration \u2014 infra/self-hosted/runbook.md, whose backup.sh is already restore-tested (133 tables / 143 policies matched).",
+    "Take one verified backup and restore-test it before applying anything."
+   ],
+   "files": [],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 a purchase decision, or the self-host cutover.",
+   "credentials_required": "Supabase billing owner",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "BLK-1",
+   "status": "open"
+  },
+  {
+   "id": "RT-004",
+   "title": "Apply the nine pending migrations to production",
+   "group": "Database and Supabase",
+   "priority": "P0",
+   "severity": "High",
+   "reason": "Production is nine migrations behind. Two of them fix defects users hit today.",
+   "evidence": "Local 100 files vs 91 applied. Missing: feature_flags_and_beta_cohorts, beta_feedback, schengen_members_bg_ro, vri_unassessed_factors, revoke_unused_dml_grants, drop_redundant_indexes, hoist_rls_auth_calls, schema_hygiene_views, lockout_key_email_ip.",
+   "steps": [
+    "Confirm a restore-tested backup exists (RT-003).",
+    "Apply in version order via the Management API or supabase db push.",
+    "Re-run apps/api/test/schema-hygiene-db.spec.ts against production credentials \u2014 it fails if the views are missing.",
+    "Probe GET https://api.visaai.co/countries and assert BG and RO now appear."
+   ],
+   "files": [
+    "supabase/migrations/"
+   ],
+   "dependencies": [
+    "RT-003"
+   ],
+   "blocked_by": "EXTERNAL \u2014 gated on RT-003 (no backup exists).",
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": "all nine, in version order",
+   "security_considerations": "hoist_rls_auth_calls rewrites 113 policies; verify tenant isolation suites post-apply.",
+   "finding": "COUNTRY-004",
+   "status": "open"
+  },
+  {
+   "id": "RT-005",
+   "title": "Deploy main to production (5 weeks and 50+ commits behind)",
+   "group": "Critical pre-production blockers",
+   "priority": "P0",
+   "severity": "Critical",
+   "reason": "None of the Phase 6-13 remediation is running. The OCR deadlock that made deploying dangerous is now fixed, so the remaining gate is credentials and SSH.",
+   "evidence": "Deployed build bracketed to 2026-07-02..2026-07-09 (/admin/notification-templates present, /analytics/alerts absent). main is 50 commits ahead of origin/main, whose tip is 2026-07-11.",
+   "steps": [
+    "Resolve RT-001 first \u2014 deploying today trips the OCR deadlock and the API will not boot.",
+    "git push origin main.",
+    "SSH: git pull && pnpm --filter api build && pnpm --filter web build && pm2 restart.",
+    "Assert GET /health/ready returns 200 (it 404s today) \u2014 that is the marker that the new build is live."
+   ],
+   "files": [],
+   "dependencies": [
+    "RT-001",
+    "RT-002"
+   ],
+   "blocked_by": "EXTERNAL \u2014 VPS SSH access.",
+   "credentials_required": "VPS SSH",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "DEPLOY-001",
+   "status": "open"
+  },
+  {
+   "id": "RT-006",
+   "title": "Close the public plaintext API port :4000",
+   "group": "Security and privacy",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "The API origin port answers on the public internet without TLS, bypassing nginx.",
+   "evidence": "http://srv1584195.hstgr.cloud:4000/health -> 200; HTTPS handshake on :4000 fails. Same process as the TLS endpoint (identical uptime).",
+   "steps": [
+    "Bind the API to 127.0.0.1 in main.ts, or `ufw deny 4000/tcp`.",
+    "Repeat the check for the web port.",
+    "Re-probe from off-host to confirm refusal."
+   ],
+   "files": [
+    "apps/api/src/main.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 VPS/firewall access.",
+   "credentials_required": "VPS SSH",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Bearer JWTs and application PII currently traverse cleartext for any client pointed at the origin port.",
+   "finding": "DEPLOY-002",
+   "status": "open"
+  },
+  {
+   "id": "RT-007",
+   "title": "Add HSTS and the missing security headers at the nginx edge",
+   "group": "Security and privacy",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "The TLS endpoint sets CORS but no security headers.",
+   "evidence": "https://api.visaai.co/health returns only Server and Access-Control-Allow-Origin.",
+   "steps": [
+    "Add Strict-Transport-Security: max-age=15768000; includeSubDomains.",
+    "Add X-Content-Type-Options: nosniff and X-Frame-Options: DENY.",
+    "Reload nginx; re-probe."
+   ],
+   "files": [
+    "(nginx vhost)"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 VPS access.",
+   "credentials_required": "VPS SSH",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "DEPLOY-003",
+   "status": "open"
+  },
+  {
+   "id": "RT-008",
+   "title": "Implement the data-retention policy (documents and PII have no TTL)",
+   "group": "Security and privacy",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "COMPLIANCE.md \u00a77 documents a retention policy as a proposal; nothing enforces it. Identity documents are kept indefinitely.",
+   "evidence": "VISAAIDocs security/COMPLIANCE.md:158 \"Retention policy \u2014 proposal [gap: not implemented]\"; SECURITY-CHECKLIST.md row 5 marks it P1.",
+   "steps": [
+    "Define a per-data-class TTL (documents, OCR text, voice recordings, audit events).",
+    "Add a scheduled worker that deletes or anonymises past TTL.",
+    "Record each deletion in the privacy audit trail (the same path PRIV-002 fixed).",
+    "Reconcile the privacy policy text with what the worker actually does."
+   ],
+   "files": [
+    "apps/api/src/modules/privacy/"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Deletion must be irreversible and audited; a soft-delete is not retention.",
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-009",
+   "title": "Wire or remove the AV scan provider (SCAN_PROVIDER fails closed)",
+   "group": "High-priority stability work",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "Setting SCAN_PROVIDER to clamav or virustotal makes every document fail closed \u2014 the scan node is unimplemented.",
+   "evidence": "apps/api/src/modules/documents/graphs/nodes/scan-document.ts:176 TODO(F3); :179 throws \"AV provider ... is not implemented yet\".",
+   "steps": [
+    "Either implement the clamav path (clamd TCP scan of the fetched bytes, quarantine on hit),",
+    "or remove clamav/virustotal from the enum so the config cannot select a dead branch.",
+    "Whichever: keep fail-closed \u2014 a scanner that errors must never be treated as clean."
+   ],
+   "files": [
+    "apps/api/src/modules/documents/graphs/nodes/scan-document.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Fail-closed is correct and must survive the change.",
+   "finding": null,
+   "status": "done",
+   "completion_evidence": "SCAN_PROVIDER now refuses clamav/virustotal in validateEnv rather than failing per-document at the scan node."
+  },
+  {
+   "id": "RT-010",
+   "title": "Resolve the Track / post-submission monitoring stage (documented, absent)",
+   "group": "High-priority stability work",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "Step 8 of the user journey does not exist: no monitor module, no inbound-email webhook, postmark is an unused dependency, INBOUND_WEBHOOK_SECRET is read nowhere.",
+   "evidence": "CLAUDE.md:79 marks it NOT IMPLEMENTED; VISAAIDocs audit/INTEGRATION_INVENTORY.md:50 confirms the secret is dead.",
+   "steps": [
+    "Decide: build it, or cut it from the product surface.",
+    "If cutting: remove the postmark dependency and INBOUND_WEBHOOK_SECRET, and delete the stage from user-facing copy.",
+    "If building: inbound webhook with signature verification + encryption at rest for raw email."
+   ],
+   "files": [
+    "apps/api/src/modules/",
+    ".env.example"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "ARCH-002",
+   "status": "open"
+  },
+  {
+   "id": "RT-011",
+   "title": "Remove or implement the unconfigured AI providers (anthropic, gemini)",
+   "group": "High-priority stability work",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "The AI router advertises a provider chain but anthropic and gemini are UnconfiguredProvider instances that throw.",
+   "evidence": "apps/api/src/modules/shared/ai/ai.service.ts:91 \"provider not implemented\"; pricing docs 04 \u00a70 call them unimplemented stubs.",
+   "steps": [
+    "Either implement them (the token-cost ledger already reserves the enum slots),",
+    "or drop them from AI_PROVIDERS so a misconfiguration cannot select a throwing provider."
+   ],
+   "files": [
+    "apps/api/src/modules/shared/ai/ai.service.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "done",
+   "completion_evidence": "AI_PROVIDERS now refuses anthropic/gemini in validateEnv, naming the offending entry."
+  },
+  {
+   "id": "RT-012",
+   "title": "Replace the two admin-dashboard placeholder tiles",
+   "group": "Web UI/UX",
+   "priority": "P3",
+   "severity": "Low",
+   "reason": "Subscriptions and Support tickets render an explicit \"not yet implemented\" reason rather than a number.",
+   "evidence": "apps/api/src/modules/admin/dashboard.ts:35 and :39.",
+   "steps": [
+    "Implement the metrics, or remove the tiles.",
+    "Keep the current behaviour until then \u2014 an explicit reason string is correct and must not become a fabricated zero."
+   ],
+   "files": [
+    "apps/api/src/modules/admin/dashboard.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Do not substitute 0 for \"unknown\"; that is fabricated data.",
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-013",
+   "title": "Implement Stripe refund / claw-back reversal",
+   "group": "High-priority stability work",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "The refund path is documented in STRIPE-CONNECT \u00a75 but not built.",
+   "evidence": "VISAAIDocs roadmap/PROGRESS.md:53.",
+   "steps": [
+    "Implement reversal against the Connect transfer.",
+    "Reconcile the payout ledger.",
+    "Test against Stripe test mode before enabling in production."
+   ],
+   "files": [
+    "apps/api/src/modules/payments/"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": "Stripe test-mode keys",
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-014",
+   "title": "Configure Sentry in production (error tracking is a no-op today)",
+   "group": "Monitoring and operations",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "Sentry is wired in code but SENTRY_DSN is optional and unset, so production reports nothing.",
+   "evidence": "apps/api/src/config/configuration.ts:90-91 \"SENTRY_DSN unset -> error tracking is a no-op\"; .env.example:134 SENTRY_DSN= (empty).",
+   "steps": [
+    "Create Sentry projects for api, web and mobile.",
+    "Set SENTRY_DSN / EXPO_PUBLIC_SENTRY_DSN.",
+    "Verify one deliberate test exception arrives."
+   ],
+   "files": [
+    "apps/api/src/observability/sentry.ts",
+    "apps/mobile/src/observability/crash-reporting.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": "Sentry account + DSNs",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-015",
+   "title": "Wire the VPS backup-failure alert (the TODO hook is empty)",
+   "group": "Monitoring and operations",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "deploy.sh counts failures but the alert hook was never connected, so a silent backup failure stays silent.",
+   "evidence": "docs/production/vps-hardening/deploy.sh:111 \"# TODO: wire an alert here\".",
+   "steps": [
+    "Point the hook at a Slack webhook or email.",
+    "Test by forcing a failure."
+   ],
+   "files": [
+    "docs/production/vps-hardening/deploy.sh"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-016",
+   "title": "Supply the app-link credentials (Android fingerprint, Apple Team ID)",
+   "group": "iOS",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "assetlinks.json and the AASA route 404 until the real values are set. A wrong value fails as silently as a missing file, so no placeholder may be committed.",
+   "evidence": "apps/web/app/.well-known/*/route.ts read ANDROID_CERT_FINGERPRINTS and APPLE_TEAM_ID; both unset.",
+   "steps": [
+    "Get the release SHA-256 from Play Console -> App signing.",
+    "Get the Team ID from Apple Developer -> Membership.",
+    "Set both env vars and rebuild web.",
+    "Verify with Google's Digital Asset Links tester and Apple's AASA validator."
+   ],
+   "files": [
+    "apps/web/app/.well-known/assetlinks.json/route.ts",
+    "apps/web/app/.well-known/apple-app-site-association/route.ts"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 Play Console and Apple Developer accounts.",
+   "credentials_required": "Play Console + Apple Developer",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "MOB-001",
+   "status": "open"
+  },
+  {
+   "id": "RT-017",
+   "title": "Measure mobile startup time and memory on real devices",
+   "group": "iOS",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "Bundle size was measured in Phase 12 (iOS 4.8 MB / Android 5.1 MB Hermes); startup and memory still need hardware.",
+   "evidence": "Mobile performance scored 50/100 \u2014 bundle measured, runtime not.",
+   "steps": [
+    "Run on a physical low-end Android and an older iPhone.",
+    "Record cold start, TTI and peak memory.",
+    "Compare against PERFORMANCE_BUDGETS.md."
+   ],
+   "files": [
+    "apps/mobile/"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 physical devices.",
+   "credentials_required": null,
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-018",
+   "title": "Build mobile intake chat, or state its absence in-app",
+   "group": "Android",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "The conversational intake graph is not on mobile; applications cannot be started there.",
+   "evidence": "VISAAIDocs mobile/known-limitations.md:28 (L6).",
+   "steps": [
+    "Either implement the IntakeGateway WebSocket client,",
+    "or show an explicit \"start this on web\" message \u2014 not a dead-end screen."
+   ],
+   "files": [
+    "apps/mobile/"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-019",
+   "title": "Measure AI cost and latency against a live model",
+   "group": "Performance",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "AiUsageMeter exists but nothing has been measured; the category scores 40 because presence is not measurement.",
+   "evidence": "Phase 12 \u00a718.2 \u2014 no points for file existence.",
+   "steps": [
+    "Set a spend budget.",
+    "Record tokens/request, prompt size and time-to-first-token per agent path.",
+    "Write the numbers into PERFORMANCE_BENCHMARKS.csv."
+   ],
+   "files": [],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 a live model and a spend budget.",
+   "credentials_required": "model API key + budget",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "AI-001",
+   "status": "open"
+  },
+  {
+   "id": "RT-020",
+   "title": "Keep the credential-gated E2E suites running in CI",
+   "group": "Testing",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "Nine Playwright specs skip themselves when E2E credentials are absent. CI supplies them and asserts no suite skipped, but the gate exists and can silently widen.",
+   "evidence": "apps/web/e2e/*.spec.ts test.skip(...) x9; .github/workflows/agent-tests.yml step \"Assert the suites actually RAN\".",
+   "steps": [
+    "Keep the assert step.",
+    "Extend the same no-skip assertion to the web job, which does not have one."
+   ],
+   "files": [
+    ".github/workflows/agent-tests.yml"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "done",
+   "completion_evidence": "web-e2e-live seeds an e2e consultant, supplies the credentials and fails on any skipped test or fewer than 20 executed."
+  },
+  {
+   "id": "RT-021",
+   "title": "Self-host Supabase in Docker",
+   "group": "Infrastructure",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "Standing task; also the no-cost route out of RT-003.",
+   "evidence": "infra/self-hosted/runbook.md; backup.sh is restore-tested (133 tables / 143 policies matched source).",
+   "steps": [
+    "Follow infra/self-hosted/runbook.md.",
+    "Restore-test before cutover.",
+    "Repoint the API and web env."
+   ],
+   "files": [
+    "infra/self-hosted/"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": "host with Docker",
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-022",
+   "title": "Independent review of every closed finding",
+   "group": "Critical pre-production blockers",
+   "priority": "P1",
+   "severity": "High",
+   "reason": "Review was waived at program start (\"solo\"), so all 43 categories are capped at 95 and every closure carries only my own evidence.",
+   "evidence": "Phase 12 \u00a718.2 requires independent agreement for 100; SCORE_REMEDIATION_HISTORY.md records the ceiling.",
+   "steps": [
+    "Have a second engineer re-derive the evidence for each Critical/High closure.",
+    "Record agreement or dispute per finding in the reviewer field, which currently reads \"unreviewed (solo)\" throughout."
+   ],
+   "files": [
+    ".ai-audit/findings-register.json"
+   ],
+   "dependencies": [],
+   "blocked_by": "EXTERNAL \u2014 a second reviewer.",
+   "credentials_required": null,
+   "external_approval_required": true,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "open"
+  },
+  {
+   "id": "RT-023",
+   "title": "Correct the deployment documentation",
+   "group": "Documentation",
+   "priority": "P3",
+   "severity": "Low",
+   "reason": "CLAUDE.md points at the wrong host; :3000 there now serves a different product.",
+   "evidence": "Live: visaai.co / api.visaai.co. srv1584195.hstgr.cloud:3000 serves GoQA. api.visaai.app has no DNS record.",
+   "steps": [
+    "Update the CLAUDE.md deployment table.",
+    "Note that GoQA is co-hosted on the same VPS."
+   ],
+   "files": [
+    "CLAUDE.md"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": "DOC-010",
+   "status": "done",
+   "completion_evidence": "CLAUDE.md corrected to visaai.co / api.visaai.co with the GoQA co-hosting and :4000 warnings."
+  },
+  {
+   "id": "RT-024",
+   "title": "Add JSON-LD structured data",
+   "group": "Marketing and growth",
+   "priority": "P3",
+   "severity": "Low",
+   "reason": "Marked not implemented in the SEO plan.",
+   "evidence": "VISAAIDocs strategy/growth/seo-and-content-plan.md:38.",
+   "steps": [
+    "Add Organization and FAQPage JSON-LD to the marketing routes.",
+    "Validate with the Rich Results test."
+   ],
+   "files": [
+    "apps/web/app/"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": null,
+   "finding": null,
+   "status": "done",
+   "completion_evidence": "Organization + WebApplication JSON-LD in the locale layout; no fabricated ratings, reviews or prices."
+  },
+  {
+   "id": "RT-025",
+   "title": "Ratchet the 1,868 lint errors down instead of suppressing them",
+   "group": "Testing",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "Lint carries no signal at 1,868 errors \u2014 a genuine new error is invisible. That is how a broken money-path e2e went unnoticed.",
+   "evidence": "apps/api eslint: 1,868 errors / 562 warnings across 301 files, overwhelmingly @typescript-eslint/no-unsafe-* where `any` escapes Supabase and Stripe clients.",
+   "steps": [
+    "Commit the current error count as a baseline.",
+    "Add a CI step that fails when the count RISES \u2014 no new unsafe code, without a big-bang fix.",
+    "Type the Supabase boundary first (generated DB types already exist); it is the largest cluster and the one where a schema change becomes a silent runtime error.",
+    "Do NOT bulk-add eslint-disable \u2014 that destroys the signal rather than the debt.",
+    "Note the `lint` script runs eslint with --fix, so invoking it rewrites files; the ratchet step must use a non-fixing invocation."
+   ],
+   "files": [
+    "apps/api",
+    ".github/workflows/agent-tests.yml"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "ci",
+   "migration_required": null,
+   "security_considerations": "no-unsafe-* on database results is not style \u2014 it is where an unvalidated shape reaches business logic.",
+   "finding": "DEBT-001",
+   "status": "done",
+   "completion_evidence": "Ratchet built, self-tested both directions and wired into CI. Errors 1,865 -> 1,034 (-45%) by scoping no-unsafe-* to production code (71% of the count was in specs/fixtures, where a test double is an `any` on purpose). Baseline committed at apps/api/.lint-baseline.json."
+  },
+  {
+   "id": "RT-026",
+   "title": "Bind the generated Supabase types and clear the 59 errors they surface",
+   "group": "Testing",
+   "priority": "P2",
+   "severity": "Medium",
+   "reason": "The database boundary is the least type-safe part of the app. A column that becomes nullable in a migration currently produces no compile error anywhere.",
+   "evidence": "Types generated and committed (packages/types/src/database.types.ts, 140 tables). Flipping `Db = SupabaseClient<Database>` was MEASURED: 59 errors across 19 files. iam 16, provenance 13, verification 6, audit 4, then 1-2 each. They are real: provenance assigns `string | null` to `string`; kpi-rollup passes a `text` column where a `SubPlan` union is required.",
+   "steps": [
+    "Flip `Db` to `SupabaseClient<Database>` in supabase.service.ts.",
+    "Work file by file in the recorded order (iam is already done as the worked example).",
+    "Use CHECKED boundary mappers like iam.repository.impl.ts toRole/toOrganization \u2014 NOT `as` casts. A cast launders exactly the defect the change surfaces.",
+    "For each nullable-vs-non-null mismatch decide deliberately: widen the domain type, or handle the null at the boundary. Do not default it silently.",
+    "Regenerate types after every migration; add that to the migration checklist."
+   ],
+   "files": [
+    "apps/api/src/modules/shared/supabase/supabase.service.ts",
+    "packages/types/src/database.types.ts",
+    "apps/api/src/modules/{iam,provenance,verification,audit}/**"
+   ],
+   "dependencies": [],
+   "blocked_by": null,
+   "credentials_required": null,
+   "external_approval_required": false,
+   "repository": "VisaAI",
+   "environment": "all",
+   "migration_required": null,
+   "security_considerations": "Each narrowing must be validated, not asserted. An unrecognised role key flowing through the permission system typed as valid is the failure mode.",
+   "finding": "RT-026-FINDING",
+   "status": "open"
+  }
+ ]
+}

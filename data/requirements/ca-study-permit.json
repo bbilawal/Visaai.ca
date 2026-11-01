@@ -1,0 +1,348 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-study-permit",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/eligibility.html",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/get-documents.html",
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/apply.html",
+    "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1294.html",
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+  },
+  "page_dates": {
+    "eligibility": "2026-01-26",
+    "documents": "2026-01-26",
+    "application": "2026-07-19",
+    "forms": "2026-07-21"
+  },
+  "not_extracted": [
+    "The registered 'landing' source (study-permit.html) states no requirements of its own — it is a section index. It repeats the fee as 'study permit: $can 150', which is taken from the fees page instead, so the role is left out of source_roles rather than cited for a claim it does not originate.",
+    "The inside-Canada and port-of-entry application branches. The apply page carries all three routes (outside Canada / inside Canada / at a port of entry) in one document and the normalizer flattens the selector, so the eligibility lists for the inside-Canada and port-of-entry routes cannot be cleanly attributed. Everything extracted here is either stated unconditionally or belongs to the outside-Canada route, which is what IMM 1294 is titled for.",
+    "Quebec's Certificat d'acceptation du Québec (CAQ). The documents page states students in Quebec need one instead of a PAL/TAL, but VisaAI has no fact for the province of study, so the condition is stated in the PAL/TAL description rather than encoded as a rule.",
+    "The PAL/TAL exceptions list. The documents page says exceptions exist and links out to them; the exceptions themselves are on a separate page that was not read.",
+    "Letter-of-acceptance exception for family members of an approved study or work permit applicant. The page states it, but VisaAI has no fact for 'accompanying an approved permit holder', so it is described on the requirement rather than gated.",
+    "Visa-office-specific additional documents. The documents page states 'there may be other documents to submit that are specific to your local visa office', but the list is per-country and behind a selector.",
+    "U.S. citizen and U.S. lawful permanent resident proof-of-identity alternatives. Branch-specific and linked out to another page.",
+    "Venezuelan passport-extension instructions. A nationality-specific branch on both the documents and apply pages; not attributable to the general route.",
+    "Processing times — the landing page says only 'varies by country' and publishes no number.",
+    "Which countries or territories require biometrics. IRCC gates that list behind a separate checker tool. The biometrics step here is gated on the age range the apply page states (14 to 79), which is the only part of the condition the page makes explicit.",
+    "Third-party costs for medical exams, police certificates, language testing and visa application centre services. The apply page names them but publishes no amounts — 'you won’t pay these fees in your online account. you’ll pay them directly to the third party.'",
+    "IRM 0002 (request for a change of sex or gender identifier). Named on the IMM 1294 page, but it applies only where the chosen gender identifier differs from an existing or foreign document, which VisaAI has no fact for."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "enrolled_at_dli",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be enrolled at a designated learning institution (DLI)",
+      "source_role": "eligibility",
+      "source_excerpt": "you can come to canada to study if you are enrolled at a dli",
+      "display_order": 10,
+      "source_excerpt_display": "You can come to Canada to study if you are enrolled at a DLI"
+    },
+    {
+      "requirement_code": "sufficient_funds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Prove you have enough money for tuition, living expenses and return transportation",
+      "description": "IRCC names three things the money must cover: tuition fees, living expenses for you and any family members who come with you, and return transportation for you and any family members who come with you. The eligibility page states no fixed threshold.",
+      "source_role": "eligibility",
+      "source_excerpt": "prove you have enough money to pay for your tuition fees living expenses for yourself and any family members who come with you to canada and return transportation for yourself and any family members who come with you to canada",
+      "display_order": 20,
+      "source_excerpt_display": "prove you have enough money to pay for your tuition fees living expenses for yourself and any family members who come with you to Canada and return transportation for yourself and any family members who come with you to Canada"
+    },
+    {
+      "requirement_code": "no_criminal_record",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Obey the law and have no criminal record",
+      "description": "IRCC pairs this with a police certificate, which it marks '(if required)'. See the separate police certificate step.",
+      "source_role": "eligibility",
+      "source_excerpt": "obey the law, have no criminal record and get a police certificate (if required)",
+      "display_order": 30,
+      "source_excerpt_display": "obey the law, have no criminal record and get a police certificate (if required)"
+    },
+    {
+      "requirement_code": "good_health",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Be in good health",
+      "description": "IRCC pairs this with a medical exam, which it marks '(if required)'. See the separate medical exam step.",
+      "source_role": "eligibility",
+      "source_excerpt": "are in good health and get a medical exam (if required) and",
+      "display_order": 40,
+      "source_excerpt_display": "are in good health and get a medical exam (if required) and"
+    },
+    {
+      "requirement_code": "will_leave_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Prove to an officer that you will leave Canada when your study permit expires",
+      "source_role": "eligibility",
+      "source_excerpt": "prove to an officer that you will leave canada when your study permit expires",
+      "display_order": 50,
+      "source_excerpt_display": "prove to an officer that you will leave Canada when your study permit expires"
+    },
+    {
+      "requirement_code": "letter_of_acceptance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter of acceptance from your designated learning institution",
+      "description": "IRCC marks this 'always required'. Your school gives it to you and you upload it to your online application. Post-secondary schools are asked to confirm the letter is valid; if the school does not respond by the deadline IRCC returns the application and refunds the processing fee. IRCC states one exception: family members of someone whose study or work permit application was approved in writing before they come to Canada do not need a letter of acceptance.",
+      "source_role": "documents",
+      "source_excerpt": "get your letter of acceptance always required your school will give you a letter of acceptance. upload this to your online application.",
+      "display_order": 100,
+      "source_excerpt_display": "Get your letter of acceptance Always required Your school will give you a letter of acceptance. Upload this to your online application."
+    },
+    {
+      "requirement_code": "provincial_attestation_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Provincial attestation letter (PAL) or territorial attestation letter (TAL)",
+      "description": "IRCC marks this 'needed in most cases'. In most cases you must accept your offer and pay your tuition fees, in part or in full, to get one. If you are studying in Quebec you need a Quebec acceptance certificate (certificat d’acceptation du Québec, CAQ) instead. IRCC states that exceptions to the PAL/TAL requirement exist; they are published on a separate page.",
+      "source_role": "documents",
+      "source_excerpt": "apply for a provincial or territorial attestation letter needed in most cases get a provincial or territorial attestation letter (pal/tal) from your school. in most cases, you need to accept your offer and pay your tuition fees, either in part or in full, to get your pal/tal. if you’re studying in quebec , you need a quebec acceptance certificate ( certificat d’acceptation du québec [caq] ).",
+      "display_order": 110,
+      "source_excerpt_display": "Apply for a provincial or territorial attestation letter Needed in most cases Get a provincial or territorial attestation letter (PAL/TAL) from your school. In most cases, you need to accept your offer and pay your tuition fees, either in part or in full, to get your PAL/TAL. If you’re studying in Quebec, you need a Quebec Acceptance Certificate (Certificat d’acceptation du Québec [CAQ])."
+    },
+    {
+      "requirement_code": "passport_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Copy of a valid passport or travel document",
+      "description": "IRCC marks proof of identity 'always required', and requires it from you and from each family member who comes with you. Upload a copy of the information page when you apply online. If you are approved you must send IRCC your original passport.",
+      "source_role": "documents",
+      "source_excerpt": "show proof of identity always required to show proof of identity, you (and each family member who comes with you) must have a copy of a valid passport or travel document",
+      "display_order": 120,
+      "source_excerpt_display": "Show proof of identity Always required To show proof of identity, you (and each family member who comes with you) must have a copy of a valid passport or travel document"
+    },
+    {
+      "requirement_code": "passport_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two recent passport-size photos",
+      "description": "The name and date of birth of the person must be written on the back of each photo. IRCC lists this under proof of identity, which it marks 'always required'.",
+      "parameters": {
+        "quantity": 2
+      },
+      "source_role": "documents",
+      "source_excerpt": "2 recent passport size photos the name and date of birth of the person must be written on the back of each photo.",
+      "display_order": 130,
+      "source_excerpt_display": "2 recent passport size photos The name and date of birth of the person must be written on the back of each photo."
+    },
+    {
+      "requirement_code": "proof_of_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of funds",
+      "description": "IRCC marks this 'always required'. The money must support you and any family members coming with you. The documents page publishes no amount and links out to a separate proof-of-funds page.",
+      "source_role": "documents",
+      "source_excerpt": "show proof of funds always required to support yourself and any family members coming with you, you must show proof of funds .",
+      "display_order": 140,
+      "source_excerpt_display": "Show proof of funds Always required To support yourself and any family members coming with you, you must show proof of funds."
+    },
+    {
+      "requirement_code": "custodianship_proof_of_care",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of care for a minor child (appointed custodian)",
+      "description": "IRCC marks this 'check if needed'. It applies to children under 17 who are not coming to Canada with a parent or legal guardian. IRCC publishes what to submit on a separate page.",
+      "rule": {
+        "fact": "age",
+        "op": "lt",
+        "value": 17
+      },
+      "source_role": "documents",
+      "source_excerpt": "proof of care (for minor children in canada) check if needed children under the age of 17 who are not coming to canada with a parent or legal guardian must have an appointed custodian.",
+      "display_order": 150,
+      "source_excerpt_display": "Proof of care (for minor children in Canada) Check if needed Children under the age of 17 who are not coming to Canada with a parent or legal guardian must have an appointed custodian."
+    },
+    {
+      "requirement_code": "marriage_certificate_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of your marriage licence or certificate",
+      "description": "Required by the IMM 1294 instructions where the applicant is married.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "married"
+        ]
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you are married, you must send a photocopy of your marriage licence or certificate with your application.",
+      "display_order": 160,
+      "source_excerpt_display": "If you are married, you must send a photocopy of your marriage licence or certificate with your application."
+    },
+    {
+      "requirement_code": "imm1294",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Application for a Study Permit Made Outside of Canada",
+      "official_form_code": "IMM 1294",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1294.html",
+      "description": "IRCC states each person requiring a study permit to come to Canada must complete this form, and that you download and complete it whether you apply in the IRCC secure account or on paper. The form is titled for applications made outside Canada; applicants applying from inside Canada or at a port of entry follow a different route, which was not extracted.",
+      "source_role": "forms",
+      "source_excerpt": "application for study permit made outside of canada (imm 1294) who must fill out this application form? each person requiring a study permit to come to canada must complete this form.",
+      "display_order": 200,
+      "source_excerpt_display": "Application for Study Permit Made Outside of Canada (IMM 1294) Who must fill out this application form? Each person requiring a study permit to come to Canada must complete this form."
+    },
+    {
+      "requirement_code": "imm5409",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Statutory Declaration of Common-Law Union",
+      "official_form_code": "IMM 5409",
+      "description": "Required by the IMM 1294 instructions where the applicant is in a common-law union.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "common_law",
+          "de_facto",
+          "partnered"
+        ]
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you are in a common-law union, you must also fill out the statutory declaration of common-law union [imm 5409] (opens in a new tab) form and include it with your application.",
+      "display_order": 210,
+      "source_excerpt_display": "If you are in a common-law union, you must also fill out the Statutory Declaration of Common-law Union [IMM 5409] (opens in a new tab) form and include it with your application."
+    },
+    {
+      "requirement_code": "imm5476",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Use of a Representative",
+      "official_form_code": "IMM 5476",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the use of a representative imm 5476 (opens in a new tab) form.",
+      "display_order": 220,
+      "source_excerpt_display": "If you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the Use of a Representative IMM 5476 (opens in a new tab) form."
+    },
+    {
+      "requirement_code": "apply_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply online",
+      "description": "IRCC states study permit applications must be submitted online whether you are outside Canada or already in Canada. It names two exceptions: a disability that prevents applying online, or holding an identity or travel document for non-national residents, refugees or stateless persons.",
+      "source_role": "application",
+      "source_excerpt": "if you’re applying for a study permit, you must apply online , whether you’re outside of canada or already in canada. you’re only eligible to apply on paper if you have a disability that prevents you from applying online hold an identity or travel document for non-national residents, refugees or stateless persons",
+      "display_order": 300,
+      "source_excerpt_display": "If you’re applying for a study permit, you must apply online, whether you’re outside of Canada or already in Canada. You’re only eligible to apply on paper if you have a disability that prevents you from applying online hold an identity or travel document for non-national residents, refugees or stateless persons"
+    },
+    {
+      "requirement_code": "ircc_online_account",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Create an IRCC secure account",
+      "description": "IRCC states an account is needed to pay fees, submit the application and check its status.",
+      "source_role": "application",
+      "source_excerpt": "you need an account to apply online. you can use your account to: pay your fees submit your application check the status of your application",
+      "display_order": 310,
+      "source_excerpt_display": "You need an account to apply online. You can use your account to: pay your fees submit your application check the status of your application"
+    },
+    {
+      "requirement_code": "biometrics",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Give your biometrics (fingerprints and photograph)",
+      "description": "IRCC states applicants between 14 and 79 probably need to give biometrics, and that they are only given once every 10 years. Once IRCC sends the letter telling you to give biometrics you have 30 days to do so. Whether you need to give them also depends on your citizenship; IRCC publishes a separate tool to check, and that country list has not been extracted.",
+      "rule": {
+        "all": [
+          {
+            "fact": "age",
+            "op": "gte",
+            "value": 14
+          },
+          {
+            "fact": "age",
+            "op": "lte",
+            "value": 79
+          }
+        ]
+      },
+      "source_role": "application",
+      "source_excerpt": "if you’re between 14 and 79 years old, you probably need to give your fingerprints and photo (biometrics).you only need to give your biometrics once every 10 years to make repeat trips to canada easier.",
+      "display_order": 320,
+      "source_excerpt_display": "If you’re between 14 and 79 years old, you probably need to give your fingerprints and photo (biometrics).You only need to give your biometrics once every 10 years to make repeat trips to Canada easier."
+    },
+    {
+      "requirement_code": "medical_exam",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Immigration medical exam",
+      "description": "IRCC marks this 'check if needed' and names three triggers: planning to stay in Canada for more than 6 months, recently spending time in certain countries, or planning to work in certain jobs where public health must be protected. Only the first is expressible from the facts VisaAI collects, and gating on it alone would hide the requirement from applicants caught by the other two, so no rule is attached.",
+      "source_role": "documents",
+      "source_excerpt": "get a medical exam check if needed you may need a medical exam if any of these situations apply to you: you plan to stay in canada for more than 6 months. you recently spent time in certain countries. you plan to work in certain jobs where public health must be protected.",
+      "display_order": 330,
+      "source_excerpt_display": "Get a medical exam Check if needed You may need a medical exam if any of these situations apply to you: You plan to stay in Canada for more than 6 months. You recently spent time in certain countries. You plan to work in certain jobs where public health must be protected."
+    },
+    {
+      "requirement_code": "police_certificate",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Police certificate",
+      "description": "IRCC marks this 'check if needed' and states only that it may ask for one in some cases. It advises applying as early as possible if you think you might need one.",
+      "source_role": "documents",
+      "source_excerpt": "get a police certificate check if needed in some cases, we may ask you for a police certificate . if you think you might need one, you should apply for one as early as possible .",
+      "display_order": 340,
+      "source_excerpt_display": "Get a police certificate Check if needed In some cases, we may ask you for a police certificate. If you think you might need one, you should apply for one as early as possible."
+    },
+    {
+      "requirement_code": "study_permit_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Study permit processing fee",
+      "description": "CAD 150.00 per person. IRCC lists the same amount for study permit extensions.",
+      "parameters": {
+        "amount": 150,
+        "currency": "CAD",
+        "unit": "per person",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "study permits (including extensions) fees $can study permit (including extensions) – per person 150.00",
+      "display_order": 400,
+      "source_excerpt_display": "Study Permits (including extensions) Fees $CAN Study permit (including extensions) – per person 150.00"
+    },
+    {
+      "requirement_code": "biometrics_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Biometrics fee",
+      "description": "CAD 85.00 per individual, with a maximum of CAD 170.00 for a family of 2 or more eligible people applying at the same time. Payable only if you must give biometrics — see the biometrics step above.",
+      "parameters": {
+        "amount": 85,
+        "currency": "CAD",
+        "unit": "per individual",
+        "family_maximum": 170,
+        "family_minimum_size": 2,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "biometrics – per individual 85.00 biometrics – per family of 2 or more eligible people maximum fee for a family of 2 or more people applying at the same time family members eligible for this fee are your spouse or common-law partner your dependent children and their dependent children check if your child is a dependant . 170.00",
+      "display_order": 410,
+      "source_excerpt_display": "Biometrics – per individual 85.00 Biometrics – per family of 2 or more eligible people Maximum fee for a family of 2 or more people applying at the same time Family members eligible for this fee are your spouse or common-law partner your dependent children and their dependent children Check if your child is a dependant. 170.00"
+    },
+    {
+      "requirement_code": "letter_of_explanation",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Letter of explanation",
+      "description": "IRCC marks this 'recommended' rather than required, though the sentence itself reads 'you must explain'. It should explain why you want to study in Canada and that you understand your responsibilities as an international student.",
+      "source_role": "documents",
+      "source_excerpt": "write a letter of explanation recommended you must explain why you want to study in canada, and that you understand your responsibilities as an international student in canada.",
+      "display_order": 500,
+      "source_excerpt_display": "Write a letter of explanation Recommended You must explain why you want to study in Canada, and that you understand your responsibilities as an international student in Canada."
+    }
+  ]
+}

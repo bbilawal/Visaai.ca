@@ -1,0 +1,61 @@
+# =============================================================================
+# EXAMPLE — REVIEW BEFORE USE. API (HTTP) Deployment.
+# =============================================================================
+# Runs the api image with APP_ROLE=api (HTTP only, no workers). replicas>1 is
+# ONLY safe after the horizontal-scaling blockers are fixed (README §5):
+# socket.io Redis adapter + DB-persisted progress dedup. Until then keep
+# replicas: 1 and rely on the worker Deployment for async throughput.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visaai-api
+  namespace: visaai
+  labels: { app: visaai-api }
+spec:
+  replicas: 1                     # see note above before raising
+  selector:
+    matchLabels: { app: visaai-api }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  template:
+    metadata:
+      labels: { app: visaai-api }
+    spec:
+      # Give in-flight requests / WS a chance to drain on SIGTERM. Requires the
+      # app to call app.enableShutdownHooks() (README §5 graceful-shutdown).
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: api
+          image: registry.example.com/visaai/api:GIT_SHA   # immutable tag = the git SHA
+          imagePullPolicy: IfNotPresent
+          ports:
+            - { name: http, containerPort: 4000 }
+          env:
+            - { name: APP_ROLE, value: "api" }
+          envFrom:
+            - configMapRef: { name: visaai-api-config }
+            - secretRef:    { name: visaai-api-secrets }
+          # Liveness: existing GET /health (liveness-only: {status,uptime,timestamp}).
+          livenessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          # Readiness: SHOULD be a /ready that pings Redis + Supabase and 503s when
+          # a dependency is down (README §5 recommends adding it). Falling back to
+          # /health here means a pod can be marked Ready while Redis is down — fix
+          # by shipping /ready, then point this at it.
+          readinessProbe:
+            httpGet: { path: /health, port: http }   # TODO: change to /ready once it exists
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests: { cpu: "250m", memory: "512Mi" }
+            limits:   { cpu: "1",    memory: "1Gi" }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }

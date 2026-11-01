@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "pt-estatuto-residente-longa-duracao",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the AIMA page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Portuguese. Labels and descriptions are VisaAI's English and are ours, not the authority's. AIMA decides residence permits and does NOT issue visas; the MFA visa portal drops our production source address at the TCP level and is neither registered nor read, so where a route requires a residence visa we can state that it is required and not what it takes to get one.",
+  "structure_note": "NOT THE SAME AS PERMANENT RESIDENCE, AND THE DIFFERENCE IS THE EU. ERLD is the EU long-term resident status: five years of legal and UNINTERRUPTED residence, stable and regular resources sufficient for the applicant AND their family, health insurance, and basic Portuguese where applicable. Absences for cross-border posting are documented separately rather than counted against the five years, which is the provision most likely to save an otherwise-broken record.",
+  "source_roles": {
+    "requirements": "https://aima.gov.pt/pt/viver/aquisicao-do-estatuto-de-residente-de-longa-duracao-erld-art-125-o"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "AIMA publishes no dateModified in its markup and no body dateline; reported as unknown, never as fresh. Where a figure carries its own reference year — the highly qualified salary thresholds do — that year is recorded with the figure.",
+  "not_extracted": [
+    "Everything about obtaining the residence VISA that several of these routes require. Issued by the MFA through consular posts, published on vistos.mne.gov.pt, which resets our connection after ClientHello from the production address and answers 200 from a second egress. Not registered, not read, and the dependency is stated on each route that carries it.",
+    "The fees. Every page links a single fee schedule ('tabela de taxas e demais encargos a cobrar pelos procedimentos administrativos') rather than stating amounts, so no figure is recorded for any route.",
+    "Processing times. Not stated on any page.",
+    "How to prove means of subsistence. The pages link Portaria n.º 1563/2007 rather than stating a figure."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "five_years_legal_uninterrupted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Proof of legal and uninterrupted residence in Portugal for the 5 years immediately before the application",
+      "parameters": {
+        "years": 5
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "comprovativo de residência legal e ininterrupta em território nacional durante os cinco anos imediatamente anteriores à apresentação do requerimento.",
+      "source_excerpt_display": "Comprovativo de residência legal e ininterrupta em território nacional durante os cinco anos imediatamente anteriores à apresentação do requerimento."
+    },
+    {
+      "requirement_code": "stable_resources_for_self_and_family",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Proof of stable and regular resources sufficient for your own subsistence and that of your family members",
+      "description": "Wider than the permanent residence test, which asks only about the applicant.",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "comprovativo da disponibilidade de recursos estáveis e regulares , suficientes para a sua própria subsistência e para a dos seus familiares;",
+      "source_excerpt_display": "Comprovativo da disponibilidade de recursos estáveis e regulares, suficientes para a sua própria subsistência e para a dos seus familiares;"
+    },
+    {
+      "requirement_code": "health_insurance_or_sns",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the health insurance contract, or proof of coverage by the national health system",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "cópia do contrato de seguro de saúde ou comprovativo de que se encontra abrangido pelo sistema nacional de saúde;",
+      "source_excerpt_display": "Cópia do contrato de seguro de saúde ou comprovativo de que se encontra abrangido pelo Sistema Nacional de Saúde;"
+    },
+    {
+      "requirement_code": "basic_portuguese_where_applicable",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Where applicable, demonstration of fluency in basic Portuguese, by the same six certificates",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "quando aplicável, demonstração de fluência no português básico, mediante apresentação de:",
+      "source_excerpt_display": "Quando aplicável, demonstração de fluência no português básico, mediante apresentação de:"
+    },
+    {
+      "requirement_code": "posting_absences_documented_separately",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Where applicable, documentary proof of absences due to work posting, including cross-border provision of services",
+      "description": "Recorded because it is what preserves an otherwise-uninterrupted record, and it sits in the middle of a document list.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "quando aplicável, documento comprovativo das ausências devido a destacamento por razões de trabalho, nomeadamente no quadro de uma prestação de serviços transfronteiriços;",
+      "source_excerpt_display": "Quando aplicável, documento comprovativo das ausências devido a destacamento por razões de trabalho, nomeadamente no quadro de uma prestação de serviços transfronteiriços;"
+    },
+    {
+      "requirement_code": "blue_card_holders_may_also_qualify",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "EU Blue Card holders may also obtain long-term resident status if they meet Art. 121.º-I",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "podem, igualmente, beneficiar do estatuto de residente de longa duração os titulares de cartão azul ue desde que preencham as condições previstas no art. 121.º-i da lei de estrangeiros.",
+      "source_excerpt_display": "Podem, igualmente, beneficiar do estatuto de residente de longa duração os titulares de cartão azul UE desde que preencham as condições previstas no art. 121.º-I da Lei de Estrangeiros."
+    },
+    {
+      "requirement_code": "tax_and_social_security_compliance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of compliance with obligations to the tax authority and social security",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "comprovativo de cumprimento das obrigações perante a autoridade tributária e perante a segurança social;",
+      "source_excerpt_display": "Comprovativo de cumprimento das obrigações perante a Autoridade Tributária e perante a Segurança Social;"
+    }
+  ]
+}

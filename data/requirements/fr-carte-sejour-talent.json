@@ -1,0 +1,272 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-talent",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French. Where the authority publishes a formula as well as a figure, both are recorded — a figure alone goes stale silently, a formula alone cannot be checked against a payslip.",
+  "structure_note": "ONE PAGE, SEVEN CARDS. The 'talent' page publishes seven distinct tracks — salarié qualifié, carte bleue européenne, mandataire social, porteur de projet, profession artistique et culturelle, professions médicales et de la pharmacie, and renommée nationale ou internationale — each with its own eligibility, its own card duration and its own document list. They share an opening paragraph, a fee and a filing calendar, which is exactly what makes them look like one thing.\n\nTWO of the seven are extracted here: salarié qualifié (with its three parcours) and the EU Blue Card. Every requirement below names which track it belongs to. The other five are listed in not_extracted rather than summarised, because a requirement quoted from the artistic track and rendered on a page about qualified employees would verify perfectly against the page and be false for the reader.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16922"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth. NOTE ON THE TWO SALARY FIGURES: €39,582 (salarié qualifié) is published as a bare amount with no formula and no reference year. €59,373.00 (EU Blue Card) is published WITH its formula — 1.5 times the average annual gross reference salary — and also without a year. The Blue Card figure will move when the reference salary moves; the formula is what makes that detectable.",
+  "not_extracted": [
+    "Five of the seven talent tracks: mandataire social, porteur de projet, profession artistique et culturelle, professions médicales et de la pharmacie, and renommée nationale ou internationale. Each has its own conditions on the same page. They are named here so a reader knows the card is wider than what is published on this route, and none of their conditions is quoted or paraphrased.",
+    "The reference year for €39,582 and for €59,373.00. The page states neither.",
+    "The list of professions for which the EU Blue Card experience requirement drops to 3 years. The page states the reduction exists and that the list is fixed by ministerial order, without reproducing it.",
+    "The full per-track document lists. The common documents and the two extracted tracks' specific documents are recorded; the remaining tracks' lists are not.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "one_year_threshold_decides_card_or_vls_ts",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "All talent tracks: a stay of at least 1 year needs the card; under 1 year a 'talent' VLS-TS suffices",
+      "description": "Stated before any track's conditions, and it decides which document to apply for at all.",
+      "parameters": {
+        "card_required_from_months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous devez demander une carte de séjour talent si la durée de séjour envisagée est d'au moins 1 an . si la durée de séjour est inférieure à 1 an, un visa de long séjour valant titre de séjour (vl-ts ) mention talent suffit.",
+      "source_excerpt_display": "Vous devez demander une carte de séjour talent si la durée de séjour envisagée est d'au moins 1 an. Si la durée de séjour est inférieure à 1 an, un visa de long séjour valant titre de séjour (VL-TS) mention talent suffit."
+    },
+    {
+      "requirement_code": "salarie_qualifie_employer_exempt_and_four_year_cap",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié: no employer work authorisation, no foreign-worker tax, and the card matches the contract up to 4 years",
+      "description": "The employer relief is the practical value of the card. The duration is derived from the contract, not fixed.",
+      "parameters": {
+        "card_duration_years_max": 4
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "la carte de séjour « talent-salarié qualifié » vous autorise à séjourner en france et vous autorise à exercer une activité professionnelle salariée. votre employeur n'a pas à demander d'autorisation de travail et est exonéré du paiement de la taxe pour l’emploi d’un ressortissant étranger. la carte est valable pour une durée identique à celle du contrat de travail dans la limite d'une durée maximale de 4 ans.",
+      "source_excerpt_display": "La carte de séjour «talent-salarié qualifié» vous autorise à séjourner en France et vous autorise à exercer une activité professionnelle salariée. Votre employeur n'a pas à demander d'autorisation de travail et est exonéré du paiement de la taxe pour l’emploi d’un ressortissant étranger. La carte est valable pour une durée identique à celle du contrat de travail dans la limite d'une durée maximale de 4 ans."
+    },
+    {
+      "requirement_code": "parcours_salarie_qualifie_french_masters_and_39582",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié, parcours 'salarié qualifié': a French master's-level degree AND a contract over 3 months paying at least €39,582 gross a year",
+      "description": "The degree must have been obtained IN FRANCE on this parcours — a master's from elsewhere does not qualify here, and that is the condition applicants most often assume away.",
+      "parameters": {
+        "annual_gross_salary_minimum_eur": 39582,
+        "contract_minimum_months": 3
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "avoir obtenu en france un diplôme au moins équivalent au master ... ou un diplôme de niveau 1 labellisé par la conférence des grandes écoles et délivré par un établissement supérieur habilité au niveau national avoir un contrat de travail de plus de 3 mois qui prévoit une rémunération brute annuelle supérieure ou égale à 39 582 € .",
+      "source_excerpt_display": "Avoir obtenu en France un diplôme au moins équivalent au master ... ou un diplôme de niveau 1 labellisé par la Conférence des grandes écoles et délivré par un établissement supérieur habilité au niveau national Avoir un contrat de travail de plus de 3 mois qui prévoit une rémunération brute annuelle supérieure ou égale à 39 582 €."
+    },
+    {
+      "requirement_code": "parcours_entreprise_innovante",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié, parcours 'entreprise innovante': recruitment by a recognised innovative company, in a role tied to its R&D, at €39,582 or more",
+      "description": "No degree requirement on this parcours — the innovation status of the EMPLOYER replaces it, and that status must be recognised by the Ministry of the Economy.",
+      "parameters": {
+        "annual_gross_salary_minimum_eur": 39582
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "être recruté dans une jeune entreprise innovante ou une entreprise reconnue innovante par le ministère de l'économie avoir des fonctions en lien direct avec le projet de recherche et de développement de cette entreprise avoir un contrat de travail qui prévoit une rémunération brute annuelle supérieure ou égale à 39 582 € .",
+      "source_excerpt_display": "Être recruté dans une jeune entreprise innovante ou une entreprise reconnue innovante par le ministère de l'économie Avoir des fonctions en lien direct avec le projet de recherche et de développement de cette entreprise Avoir un contrat de travail qui prévoit une rémunération brute annuelle supérieure ou égale à 39 582 €."
+    },
+    {
+      "requirement_code": "parcours_salarie_en_mission",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié, parcours 'salarié en mission': intra-group mobility, 3 months' seniority, a French contract, and €39,582 or more",
+      "description": "Note the contrast with the ICT card: here the employment contract must be with the company employing you IN FRANCE, where the ICT route requires the contract to be with the company abroad.",
+      "parameters": {
+        "group_seniority_months_minimum": 3,
+        "annual_gross_salary_minimum_eur": 39582
+      },
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "être salarié d'une entreprise établie à l'étranger et venir en france pour exercer une activité salariée dans le cadre d'une mobilité entre établissements d'une même entreprise ou entre entreprises d'un même groupe (mobilité intragroupe) avoir une ancienneté d'au moins 3 mois dans le groupe qui vous emploie avoir un contrat de travail avec l'entreprise qui vous emploie en france percevoir une rémunération brute annuelle supérieure ou égale à 39 582 € .",
+      "source_excerpt_display": "Être salarié d'une entreprise établie à l'étranger et venir en France pour exercer une activité salariée dans le cadre d'une mobilité entre établissements d'une même entreprise ou entre entreprises d'un même groupe (mobilité intragroupe) Avoir une ancienneté d'au moins 3 mois dans le groupe qui vous emploie Avoir un contrat de travail avec l'entreprise qui vous emploie en France Percevoir une rémunération brute annuelle supérieure ou égale à 39 582 €."
+    },
+    {
+      "requirement_code": "blue_card_qualification_or_experience",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-carte bleue européenne: three years of higher education, or five years of comparable professional experience",
+      "description": "The experience alternative is real and is reduced to three years, acquired within the previous seven, for professions fixed by ministerial order. That list is not published on this page.",
+      "parameters": {
+        "higher_education_years": 3,
+        "experience_years": 5,
+        "experience_years_listed_professions": 3,
+        "experience_lookback_years": 7
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "avoir un diplôme sanctionnant au moins 3 années d'études supérieures ou 5 années d'expérience professionnelle de niveau comparable à celui obtenu à la suite d’un diplôme d’enseignement supérieur et qui sont pertinentes pour le secteur ou la profession dans laquelle vous souhaitez exercer. cette durée d’expérience professionnelle est réduite à 3 ans acquis au cours des 7 années précédant votre demande si vous souhaitez exercer dans l’une des professions fixées par arrêté du ministre en charge de l’immigration.",
+      "source_excerpt_display": "Avoir un diplôme sanctionnant au moins 3 années d'études supérieures ou 5 années d'expérience professionnelle de niveau comparable à celui obtenu à la suite d’un diplôme d’enseignement supérieur et qui sont pertinentes pour le secteur ou la profession dans laquelle vous souhaitez exercer. Cette durée d’expérience professionnelle est réduite à 3 ans acquis au cours des 7 années précédant votre demande si vous souhaitez exercer dans l’une des professions fixées par arrêté du ministre en charge de l’immigration."
+    },
+    {
+      "requirement_code": "blue_card_salary_formula_and_snapshot",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-carte bleue européenne: a 6-month contract minimum and 1.5× the average reference salary — €59,373.00 gross a year",
+      "description": "FRANCE'S OWN THRESHOLD. The EU Blue Card is one instrument and every member state sets its own salary floor, so this figure must never be crossed with the Dutch or Swedish Blue Card figures already in this registry. The formula is recorded alongside the amount because the amount moves when the reference salary does.",
+      "parameters": {
+        "contract_minimum_months": 6,
+        "salary_formula": "1.5 x average annual gross reference salary",
+        "annual_gross_salary_minimum_eur": 59373
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "avoir un contrat de travail de 6 mois minimum avoir une rémunération annuelle brute supérieure ou égale à 1,5 fois le salaire brut moyen annuel de référence, soit 59 373,00 € brut annuel.",
+      "source_excerpt_display": "Avoir un contrat de travail de 6 mois minimum Avoir une rémunération annuelle brute supérieure ou égale à 1,5 fois le salaire brut moyen annuel de référence, soit 59 373,00 € brut annuel."
+    },
+    {
+      "requirement_code": "blue_card_duration_depends_on_contract_length",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-carte bleue européenne: contract of 2 years or more gives up to 4 years; a shorter contract gives its length plus 3 months, capped at 2 years",
+      "description": "Two different rules either side of a two-year contract, and the shorter one adds three months rather than matching the contract exactly.",
+      "parameters": {
+        "long_contract_threshold_years": 2,
+        "long_contract_card_years_max": 4,
+        "short_contract_extra_months": 3,
+        "short_contract_card_years_max": 2
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "lorsque le contrat de travail a une durée d’au moins 2 ans, la carte est délivrée pour une durée égale à celle du contrat, dans la limite de 4 ans lorsque le contrat de travail a une durée inférieure à 2 ans, la carte est délivrée pour une durée égale à celle du contrat, augmentée de 3 mois, dans la limite de 2 ans.",
+      "source_excerpt_display": "Lorsque le contrat de travail a une durée d’au moins 2 ans, la carte est délivrée pour une durée égale à celle du contrat, dans la limite de 4 ans Lorsque le contrat de travail a une durée inférieure à 2 ans, la carte est délivrée pour une durée égale à celle du contrat, augmentée de 3 mois, dans la limite de 2 ans."
+    },
+    {
+      "requirement_code": "blue_card_mobility_from_another_member_state",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Talent-carte bleue européenne: a year holding a Blue Card in another EU state qualifies you, if you apply within 1 month of entering France",
+      "description": "The window is one month, not two, and the qualifying period drops to six months from the second mobility onward.",
+      "parameters": {
+        "prior_residence_months": 12,
+        "prior_residence_months_from_second_mobility": 6,
+        "application_deadline_months_after_entry": 1
+      },
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "cette carte vous est aussi accordée si vous avez séjourné au moins 1 an dans un autre pays de l'ue avec une carte bleue européenne. vous devez faire la demande dans le mois de votre entrée en france. cette durée minimum de séjour est réduite à 6 mois à partir de la 2 e mobilité dans un état membre de l’union européenne.",
+      "source_excerpt_display": "Cette carte vous est aussi accordée si vous avez séjourné au moins 1 an dans un autre pays de l'UE avec une carte bleue européenne. Vous devez faire la demande dans le mois de votre entrée en France. Cette durée minimum de séjour est réduite à 6 mois à partir de la 2 e mobilité dans un état membre de l’Union européenne."
+    },
+    {
+      "requirement_code": "under_twelve_months_visa_validated_within_three_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "All talent tracks: for a stay under 12 months, the consulate issues a 'talent' VLS-TS to be validated online within 3 months of arrival",
+      "parameters": {
+        "validation_deadline_months_after_arrival": 3
+      },
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "si la durée de votre séjour est inférieure à 12 mois , le consulat vous délivre un visa de long séjour valant titre de séjour portant la mention \"talent\". à votre arrivée en france, vous devez faire valider votre visa de long séjour valant titre de séjour sur internet dans un délai de 3 mois :",
+      "source_excerpt_display": "Si la durée de votre séjour est inférieure à 12 mois, le consulat vous délivre un visa de long séjour valant titre de séjour portant la mention \"talent\". À votre arrivée en France, vous devez faire valider votre visa de long séjour valant titre de séjour sur internet dans un délai de 3 mois:"
+    },
+    {
+      "requirement_code": "one_year_or_more_gets_a_three_month_visa_then_a_card",
+      "kind": "step",
+      "officially_required": true,
+      "label": "All talent tracks: for a stay of 1 year or more, the consulate issues a 3-month 'talent' visa and the card is applied for online",
+      "parameters": {
+        "entry_visa_validity_months": 3
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "si la durée de votre séjour est égale ou supérieure à 1 an , le consulat vous délivre un visa de long séjour portant la mention \"talent\" d'une durée de 3 mois.",
+      "source_excerpt_display": "Si la durée de votre séjour est égale ou supérieure à 1 an, le consulat vous délivre un visa de long séjour portant la mention \"talent\" d'une durée de 3 mois."
+    },
+    {
+      "requirement_code": "filing_windows_two_months_or_four_to_two",
+      "kind": "step",
+      "officially_required": true,
+      "label": "All talent tracks: two months from entry on a long-stay visa; four-to-two months before expiry on a VLS-TS or existing permit",
+      "parameters": {
+        "long_stay_visa_deadline_months_after_entry": 2,
+        "renewal_window_earliest_months_before_expiry": 4,
+        "renewal_window_latest_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "vous devez déposer votre demande sur internet dans les 2 mois suivants votre entrée en france si vous êtes titulaire d’un visa de long séjour. ... au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour",
+      "source_excerpt_display": "Vous devez déposer votre demande sur internet dans les 2 mois suivants votre entrée en France si vous êtes titulaire d’un visa de long séjour. ... au plus tôt 4 mois et au plus tard 2 mois avant la fin de validité de votre document de séjour"
+    },
+    {
+      "requirement_code": "common_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required across the talent tracks",
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "visa de long séjour ou titre de séjour en cours de validité passeport (pages concernant l'état civil, les dates de validité, les cachets d'entrée et les visas) ... justificatif de domicile datant de moins de 6 mois",
+      "source_excerpt_display": "Visa de long séjour ou titre de séjour en cours de validité Passeport (pages concernant l'état civil, les dates de validité, les cachets d'entrée et les visas) ... Justificatif de domicile datant de moins de 6 mois"
+    },
+    {
+      "requirement_code": "regulated_profession_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "If the profession is regulated, evidence that you meet the conditions to practise it",
+      "description": "A second gate behind the immigration one: a qualifying salary and degree do not permit practice in a regulated profession without the professional authorisation itself.",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "respect des conditions réglementaires d’exercice de la profession (autorisation d’exercice, diplôme, titre, certification, habilitation, déclaration, inscription, etc).",
+      "source_excerpt_display": "respect des conditions réglementaires d’exercice de la profession (autorisation d’exercice, diplôme, titre, certification, habilitation, déclaration, inscription, etc)."
+    },
+    {
+      "requirement_code": "salarie_en_mission_seniority_and_secondment_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié, parcours 'salarié en mission': a social security secondment certificate and employer-issued proof of 3 months' group seniority",
+      "description": "The seniority proof must come FROM the employer abroad — the applicant cannot self-certify it.",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "certificat de détachement sécurité sociale (ou attestation sur l'honneur de demande d'immatriculation à la sécurité sociale française) lettre détaillant les fonctions exercées et l'objet de la mission à effectuer attestation de l’employeur justificatif d’une ancienneté professionnelle d’au moins 3 mois du demandeur dans le groupe ou l’entreprise établi à l’étranger, produit par l’employeur à l’étranger",
+      "source_excerpt_display": "Certificat de détachement sécurité sociale (ou attestation sur l'honneur de demande d'immatriculation à la sécurité sociale française) Lettre détaillant les fonctions exercées et l'objet de la mission à effectuer Attestation de l’employeur Justificatif d’une ancienneté professionnelle d’au moins 3 mois du demandeur dans le groupe ou l’entreprise établi à l’étranger, produit par l’employeur à l’étranger"
+    },
+    {
+      "requirement_code": "innovative_company_evidence",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Talent-salarié qualifié, parcours 'entreprise innovante': ministry attestation of the company's innovative status, and employer proof the role ties to its R&D",
+      "description": "Both documents are about the EMPLOYER. An applicant cannot assemble this file alone.",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "documents concernant l'entreprise : attestation du ministère de l'économie reconnaissant le caractère innovant de l'entreprise ou document fiscal établissant la qualité de jeune entreprise innovante",
+      "source_excerpt_display": "Documents concernant l'entreprise: attestation du ministère de l'économie reconnaissant le caractère innovant de l'entreprise ou document fiscal établissant la qualité de jeune entreprise innovante"
+    },
+    {
+      "requirement_code": "blue_card_documents",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Talent-carte bleue européenne: a Blue Card from another EU state counts as the entry document where the mobility rule applies",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "visa de long séjour ou titre de séjour en cours de validité ou carte bleue européenne délivrée par un autre pays de l'ue si vous avez résidé pendant 1 an (ou 6 mois) dans cet autre etat",
+      "source_excerpt_display": "Visa de long séjour ou titre de séjour en cours de validité ou carte bleue européenne délivrée par un autre pays de l'UE si vous avez résidé pendant 1 an (ou 6 mois) dans cet autre Etat"
+    },
+    {
+      "requirement_code": "cost_350_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The card costs €350 — a €50 stamp duty plus a €300 tax",
+      "parameters": {
+        "total_eur": 350,
+        "stamp_duty_eur": 50,
+        "tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "si la carte de séjour vous est attribuée, vous devez régler 350 € (droit de timbre de 50 € + taxe de 300 € ) par timbres fiscaux .",
+      "source_excerpt_display": "Si la carte de séjour vous est attribuée, vous devez régler 350 € (droit de timbre de 50 € + taxe de 300 €) par timbres fiscaux."
+    }
+  ]
+}

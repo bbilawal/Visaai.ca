@@ -1,0 +1,56 @@
+import type {
+  ConfidenceBand,
+  FieldProvenance,
+  NewOcrRunInput,
+  OcrRun,
+  ProvenanceOrigin,
+} from '@visaai/types';
+
+/** A fully-resolved new field version (value already hashed by the service). */
+export interface CreateVersionInput {
+  applicationId: string;
+  fieldKey: string;
+  origin: ProvenanceOrigin;
+  valueSnapshot: string | null;
+  valueHash: string | null;
+  sourceDocumentId: string | null;
+  sourcePage: number | null;
+  sourceBBox: unknown | null;
+  ocrRunId: string | null;
+  confidence: number | null;
+  confidenceBand: ConfidenceBand | null;
+}
+
+/**
+ * Data-access contract for ocr_runs + field_provenance.
+ *
+ * Field provenance is APPEND-ONLY and versioned: createVersion performs an
+ * atomic "supersede current -> insert new current" (one current per field).
+ * There is NO method to update or delete a value/source column; the only
+ * mutation is the lineage pointer (superseded_by) set during createVersion.
+ */
+export interface IProvenanceRepository {
+  insertOcrRun(
+    input: NewOcrRunInput,
+    rawTextHash: string | null,
+  ): Promise<OcrRun>;
+
+  /** Atomic: supersede the existing current row (if any) and insert the new current. */
+  createVersion(input: CreateVersionInput): Promise<FieldProvenance>;
+
+  getCurrent(
+    applicationId: string,
+    fieldKey: string,
+  ): Promise<FieldProvenance | null>;
+
+  /** Full version history for a field, oldest -> newest. */
+  getHistory(
+    applicationId: string,
+    fieldKey: string,
+  ): Promise<FieldProvenance[]>;
+
+  /** All current rows sourced from a document (cascade source). */
+  getByDocument(documentId: string): Promise<FieldProvenance[]>;
+}
+
+export const PROVENANCE_REPOSITORY = Symbol('IProvenanceRepository');

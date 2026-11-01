@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-salarie",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THE TYPE OF EMPLOYMENT CONTRACT DECIDES WHICH CARD YOU GET, and the applicant does not choose. A permanent contract yields the 'salarié' card; a fixed-term contract yields 'travailleur temporaire'. That matters far beyond the name: the temporary-worker card is one of the five permits that cannot lead to a multi-year card on the same ground, so a fixed-term contract closes a door a permanent one leaves open.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F15898"
+  },
+  "page_dates": {
+    "requirements": "2026-05-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 mai 2026'. Self-declared; evidence, not truth.",
+  "not_extracted": [
+    "The European and Algerian regimes. The page states other rules apply and routes away without stating them.",
+    "The work authorisation criteria themselves. The employer's application is registered as its own route (fr-autorisation-travail-salarie); nothing about how it is decided is quoted here.",
+    "The document list. The page's list branches by contract type and residence; nothing is quoted from it here.",
+    "The stamp duty amount. The €300 VLS-TS validation tax IS published and recorded; the residence card's own stamp duty is not stated in the section read."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "contract_type_decides_the_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A permanent contract yields the 'salarié' card; a fixed-term contract yields 'travailleur temporaire'",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "si vous êtes en cdi ... il vous est délivré un titre de séjour salarié . si vous êtes en cdd ... il vous est délivré un titre de séjour travailleur temporaire.",
+      "source_excerpt_display": "Si vous êtes en CDI ... il vous est délivré un titre de séjour salarié. Si vous êtes en CDD ... il vous est délivré un titre de séjour travailleur temporaire."
+    },
+    {
+      "requirement_code": "three_cumulative_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three conditions: be in France to work as an employee, hold a work authorisation, and hold a 'salarié' VLS-TS on first admission",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "vous êtes concerné si vous remplissez l'ensemble des conditions suivantes : être étranger en france et souhaiter travailler comme salarié avoir une autorisation de travail avoir un visa de long séjour valant titre de séjour (vls-ts) salarié si vous êtes admis pour la 1 re fois au séjour en france.",
+      "source_excerpt_display": "Vous êtes concerné si vous remplissez l'ensemble des conditions suivantes: Être étranger en France et souhaiter travailler comme salarié Avoir une autorisation de travail Avoir un visa de long séjour valant titre de séjour (VLS-TS) salarié si vous êtes admis pour la 1 re fois au séjour en France."
+    },
+    {
+      "requirement_code": "employer_must_apply_before_you_enter_france",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Your employer must apply online for the work authorisation BEFORE you enter France",
+      "description": "The first step of the route belongs to the employer, and the applicant cannot start without it.",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "votre employeur doit faire sur internet la demande d'autorisation de travail avant votre entrée en france .",
+      "source_excerpt_display": "Votre employeur doit faire sur internet la demande d'autorisation de travail avant votre entrée en France."
+    },
+    {
+      "requirement_code": "authorisation_reaches_you_through_your_employer",
+      "kind": "step",
+      "officially_required": true,
+      "label": "If granted, the administration tells your employer, who must then tell you, before you can apply for the visa",
+      "description": "The applicant is never notified directly. A silent employer is indistinguishable from a refusal.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "en cas d'accord, l'administration en informe votre employeur qui, par la suite, doit vous prévenir.",
+      "source_excerpt_display": "En cas d'accord, l'administration en informe votre employeur qui, par la suite, doit vous prévenir."
+    },
+    {
+      "requirement_code": "may_start_work_on_arrival",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "You may start work as soon as you arrive in France",
+      "description": "No waiting period once the VLS-TS is issued — recorded because the validation deadline three months later is often mistaken for a start condition.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous pouvez commencer à travailler dès votre arrivée en france.",
+      "source_excerpt_display": "Vous pouvez commencer à travailler dès votre arrivée en France."
+    },
+    {
+      "requirement_code": "validate_vls_ts_within_three_months",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Validate the VLS-TS online within 3 months of arriving and pay the tax",
+      "description": "Without validation you are not in regular status and cannot re-cross the Schengen border.",
+      "parameters": {
+        "validation_deadline_months_after_arrival": 3
+      },
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "dans les 3 mois suivant votre arrivée en france, vous devez valider votre vls-ts et payer une taxe qui s'ajoute aux droits de visa.",
+      "source_excerpt_display": "Dans les 3 mois suivant votre arrivée en France, vous devez valider votre VLS-TS et payer une taxe qui s'ajoute aux droits de visa."
+    },
+    {
+      "requirement_code": "validation_tax_300_euros",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "The VLS-TS validation tax is €300",
+      "parameters": {
+        "validation_tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "le montant de la taxe est de 300 € .",
+      "source_excerpt_display": "Le montant de la taxe est de 300 €."
+    },
+    {
+      "requirement_code": "file_at_latest_two_months_before_vls_ts_expires",
+      "kind": "step",
+      "officially_required": true,
+      "label": "File for the residence card at the préfecture no later than 2 months before your VLS-TS expires",
+      "parameters": {
+        "filing_deadline_months_before_expiry": 2
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "vous devez déposer la demande de titre de séjour à la préfecture ou la sous-préfecture de votre domicile, au plus tard 2 mois avant la date de fin de validité de votre vls-ts .",
+      "source_excerpt_display": "Vous devez déposer la demande de titre de séjour à la préfecture ou la sous-préfecture de votre domicile, au plus tard 2 mois avant la date de fin de validité de votre VLS-TS."
+    },
+    {
+      "requirement_code": "prefecture_may_refuse_on_conduct_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The préfecture may refuse the card for an unfulfilled removal order or for named offences",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "la préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (oqtf) ou si vous avez commis l'un des faits suivants : faux et usage de faux documents",
+      "source_excerpt_display": "La préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (OQTF) ou si vous avez commis l'un des faits suivants: Faux et usage de faux documents"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "jp-researcher",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Immigration Services Agency page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in Japanese. Labels and descriptions are VisaAI's English and are ours, not the authority's — the Sweden precedent, where the authority's own language is quoted and English labels are marked as translations. The Ministry of Foreign Affairs issues the visa and refuses our monitor; nothing about the visa application procedure is recorded here.",
+  "structure_note": "The definition excludes activities belonging to the Professor status, which is where university-employed researchers sit. The boundary is the employing institution, not the work.",
+  "source_roles": {
+    "requirements": "https://www.moj.go.jp/isa/applications/status/researcher.html"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "The page publishes no dateModified in its markup and is reported as unknown, never as fresh.",
+  "not_extracted": [
+    "The visa application procedure and the visa fee. Japan splits status from visa: the Immigration Services Agency grants the residence status, the Ministry of Foreign Affairs issues the visa at an embassy or consulate, and www.mofa.go.jp returns HTTP 403 on robots.txt to our monitor. Nothing about obtaining the visa is recorded.",
+    "The 上陸許可基準 (landing permission criteria). Linked from the page as a PDF rather than stated in the served HTML. Not fetched and not paraphrased.",
+    "The per-category document lists. ISA sorts employing organisations or institutions into categories and the required documents differ by category; those lists run to dozens of branching items and are not enumerated here.",
+    "Processing times. Not stated on the page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "qualifying_activity_definition",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The qualifying activity: research under a contract with a Japanese public or private body, excluding activities under the Professor status",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "本邦の公私の機関との契約に基づいて研究を行う業務に従事する活動（入管法別表第一の一の表の教授の項に掲げる活動を除く。）",
+      "source_excerpt_display": "本邦の公私の機関との契約に基づいて研究を行う業務に従事する活動（入管法別表第一の一の表の教授の項に掲げる活動を除く。）"
+    },
+    {
+      "requirement_code": "examples",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examples the authority gives: researchers at government-related institutions and private companies",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "該当例としては、政府関係機関や私企業等の研究者。",
+      "source_excerpt_display": "該当例としては、政府関係機関や私企業等の研究者。"
+    },
+    {
+      "requirement_code": "period_of_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Period of stay: 5 years, 3 years, 1 year or 3 months",
+      "parameters": {
+        "period_options": [
+          "5 years",
+          "3 years",
+          "1 year",
+          "3 months"
+        ]
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "在留期間 ５年、３年、１年又は３月",
+      "source_excerpt_display": "在留期間 ５年、３年、１年又は３月"
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "sg-student-pass",
+  "extracted_at": "2026-08-23",
+  "extraction_method": "manual",
+  "extractor": "read directly from the four official Immigration & Checkpoints Authority pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "structure_note": "WHERE YOU STUDY DECIDES WHETHER THE PASS EXISTS FOR YOU. ICA splits the Student's Pass across one hub and six institution-type pages. Two of those are registered here — Institutes of Higher Learning and Approved Private Education Institutions — because they differ in a way that decides applications rather than in wording.\n\nTHE EDUTRUST RULE. A private education institution that is not EduTrust-certified cannot offer a place to a foreign student, and ICA says outright that a Student's Pass will not be issued to a foreigner enrolled in one. An offer from an uncertified school is worth nothing to an applicant who does not already hold another qualifying pass. That is a fact about the SCHOOL, published only by the immigration authority, and no prospectus will lead with it.\n\nTHE EXEMPTIONS ARE CONTINGENT, NOT PERMANENT. A Dependant's Pass, Long-Term Visit Pass or Immigration Exemption Order removes the need for a Student's Pass — until the underlying pass expires or is cancelled mid-course, when the holder must apply and 'the prevailing student's pass eligibility criteria will apply'. The exemption depends on somebody else's immigration status holding for the length of a degree.\n\nRELIGIOUS STUDY INVERTS IT. For an approved religious school the Dependant's Pass and Long-Term Visit Pass exemptions do not apply and those holders DO need a Student's Pass, while the Immigration Exemption Order still exempts. Same three passes, opposite effect, decided by the subject.\n\nBOUNDS CHECKED. The IHL and PEI pages share most of their document list and their S$45 fee; every excerpt is quoted from the page whose role it is registered under, and the two processing-time rules are quoted from their own pages because they differ (one week for an IHL, one month for a PEI, two weeks for an EduTrust-accredited PEI).",
+  "source_roles": {
+    "requirements": "https://www.ica.gov.sg/reside/STP/apply",
+    "eligibility": "https://www.ica.gov.sg/reside/STP/apply/ihl",
+    "policy": "https://www.ica.gov.sg/reside/STP/apply/pei",
+    "application": "https://www.ica.gov.sg/reside/STP/collect"
+  },
+  "page_dates": {
+    "requirements": null,
+    "eligibility": null,
+    "policy": null,
+    "application": null
+  },
+  "freshness_note": "ICA prints a body dateline on its entry-visa hub but not on these four pages, so their freshness reads as unknown rather than fresh. What they do carry is dated policy that a stale page could not: digital-only issuance 'from 27 february 2023', the vaccination rule 'with effect from 1 february 2019', and an institution list including Assas International School (Singapore), which opened its Singapore campus recently enough that a years-old page would not name it. The registry records that as corroboration, not as a dateline.",
+  "not_extracted": [
+    "The four institution-type pages that are not registered — Foreign System Schools and Privately-Funded Schools, Government/Government-Aided/Independent Schools, Institutes of Technical Education, and Kindergartens and Childcare Centres. Each has its own document list and processing time. They are real routes and they are simply not extracted yet; the two registered pages are not claimed to represent them.",
+    "The 17 named institutes of higher learning as a stored list. ICA names them on its own page and revises the list as campuses open and close; a snapshot in a requirement row would be wrong silently. The rule — full-time matriculated or registered admission at a named IHL — is stored, and the page is linked.",
+    "Renewal and transfer applications, and the separate one-week processing time for them. This route covers a first Student's Pass.",
+    "Loss, damage and cancellation of the pass, and change of passport particulars or address.",
+    "Whether a Student's Pass holder may work. ICA defers that to MOM's work-pass exemption for foreign students, which is a MOM rule on a MOM page.",
+    "The medical examination report's contents. ICA publishes field guides in English and Chinese and says the report is required 'if applicable' without stating who it applies to on this page."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "full_time_acceptance_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must already be accepted for a full-time course",
+      "description": "The pass follows the offer, not the other way round. ICA states plainly that part-time, evening and weekend courses are not eligible.",
+      "source_role": "requirements",
+      "source_excerpt": "to apply for a student’s pass, you must be accepted into an approved full-time course in singapore. part-time courses and courses conducted in the evening or on weekends are not eligible.",
+      "display_order": 10,
+      "source_excerpt_display": "To apply for a Student’s Pass, you must be accepted into an approved full-time course in Singapore. Part-time courses and courses conducted in the evening or on weekends are not eligible."
+    },
+    {
+      "requirement_code": "exempt_if_holding_another_pass",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A Dependant's Pass, Long-Term Visit Pass or Immigration Exemption Order removes the need — for now",
+      "description": "The exemption covers full-time non-religious study for as long as the other pass lasts. It is somebody else's immigration status doing the work.",
+      "source_role": "requirements",
+      "source_excerpt": "^holders of valid long-term visit pass, dependant's pass and immigration exemption order are not required to obtain a student's pass to pursue full time, non-religious related studies. they may enrol in any school within the duration of their existing pass.",
+      "display_order": 20,
+      "source_excerpt_display": "^Holders of valid Long-Term Visit Pass, Dependant's Pass and Immigration Exemption Order are not required to obtain a Student's Pass to pursue full time, non-religious related studies. They may enrol in any school within the duration of their existing pass."
+    },
+    {
+      "requirement_code": "exemption_lapses_mid_course",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If that other pass expires or is cancelled mid-course, you must apply and be assessed afresh",
+      "description": "The criteria applied are the ones in force on that day, not the ones that were in force when the course started.",
+      "source_role": "requirements",
+      "source_excerpt": "if the existing pass expires or is cancelled during the duration of their studies, the foreigner will need to submit an application for a student's pass to continue his/her studies. the prevailing student's pass eligibility criteria will apply.",
+      "display_order": 30,
+      "source_excerpt_display": "If the existing pass expires or is cancelled during the duration of their studies, the foreigner will need to submit an application for a Student's Pass to continue his/her studies. The prevailing Student's Pass eligibility criteria will apply."
+    },
+    {
+      "requirement_code": "short_course_exemption_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The short-course exemption has three cumulative conditions, and the module rule is the one that catches people",
+      "description": "A course split into several programme modules needs a Student's Pass however short each module is. The other two conditions are the 30-day/visit-pass limit and the bar on practical training involving walk-in customers or premises that are also places of business.",
+      "source_role": "requirements",
+      "source_excerpt": "*foreigners attending short-term courses that meet the following criteria are exempted from requiring a student's pass. the course must: ... be completed during the validity of the short-term visit pass or within 30 days, whichever is shorter ... be a complete and stand-alone module; a student's pass is required to undertake courses with multiple programme modules",
+      "display_order": 40,
+      "parameters": {
+        "max_days": 30,
+        "must_be_standalone_module": true
+      },
+      "source_excerpt_display": "*Foreigners attending short-term courses that meet the following criteria are exempted from requiring a Student's Pass. The course must: ... Be completed during the validity of the Short-Term Visit Pass or within 30 days, whichever is shorter ... Be a complete and stand-alone module; a Student's Pass is required to undertake courses with multiple programme modules"
+    },
+    {
+      "requirement_code": "ihl_full_time_matriculated",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "At an institute of higher learning you must be admitted as a full-time matriculated or registered student",
+      "description": "ICA names the institutions on its own page — six local universities, five polytechnics and six offshore campuses as at 2026-08-23. The list is not reproduced here because ICA revises it.",
+      "source_role": "eligibility",
+      "source_excerpt": "you will need to apply for a student’s pass if you are a foreigner who has been accepted for admission as a full-time matriculated or registered student at one of the following institutes of higher learning (ihl) in singapore.",
+      "display_order": 50,
+      "source_excerpt_display": "You will need to apply for a Student’s Pass if you are a foreigner who has been accepted for admission as a full-time matriculated or registered student at one of the following Institutes of Higher Learning (IHL) in Singapore."
+    },
+    {
+      "requirement_code": "pei_must_be_edutrust_certified",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A private education institution must be EduTrust-certified before it can take you at all",
+      "description": "The single most consequential rule on this route, and it is about the school rather than the student. An offer from an uncertified PEI cannot produce a Student's Pass.",
+      "source_role": "policy",
+      "source_excerpt": "non-edutrust-certified peis: peis that are not edutrust-certified cannot offer placements to foreign students. only foreign students who hold an existing and valid dependant's pass, long-term visit pass or immigration exemption order may enrol for full-time, non-religious studies in such peis. you will need to ensure that your immigration pass is valid for the entire duration of your studies. a student's pass will not be issued to foreigners enrolled in peis that are not edutrust-certified.",
+      "display_order": 60,
+      "source_excerpt_display": "Non-EduTrust-certified PEIs: PEIs that are not EduTrust-certified cannot offer placements to foreign students. Only foreign students who hold an existing and valid Dependant's Pass, Long-Term Visit Pass or Immigration Exemption Order may enrol for full-time, non-religious studies in such PEIs. You will need to ensure that your immigration pass is valid for the entire duration of your studies. A Student's Pass will not be issued to foreigners enrolled in PEIs that are not EduTrust-certified."
+    },
+    {
+      "requirement_code": "religious_study_inverts_exemptions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "For religious study the pass exemptions invert",
+      "description": "Dependant's Pass and Long-Term Visit Pass holders, who are exempt for ordinary study, DO need a Student's Pass for an approved religious school. Immigration Exemption Order holders remain exempt.",
+      "source_role": "policy",
+      "source_excerpt": "religious studies: a student's pass is required if you wish to study in an approved religious school. this includes holders of a valid long-term visit pass and dependant's pass. holders of a valid immigration exemption order are exempted.",
+      "display_order": 70,
+      "source_excerpt_display": "Religious Studies: A Student's Pass is required if you wish to study in an approved religious school. This includes holders of a valid Long-Term Visit Pass and Dependant's Pass. Holders of a valid Immigration Exemption Order are exempted."
+    },
+    {
+      "requirement_code": "registration_acknowledgement_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "The registration acknowledgement letter from your school",
+      "description": "Issued by the institution once it has registered you; the application cannot be made without it.",
+      "source_role": "eligibility",
+      "source_excerpt": "the registration acknowledgement letter from the school you plan to attend",
+      "display_order": 80,
+      "source_excerpt_display": "The Registration Acknowledgement Letter from the school you plan to attend"
+    },
+    {
+      "requirement_code": "travel_document_and_birth_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your travel document biodata page, and a birth certificate where applicable",
+      "description": null,
+      "source_role": "eligibility",
+      "source_excerpt": "your travel document biodata page and birth certificate (if applicable)",
+      "display_order": 90,
+      "source_excerpt_display": "Your travel document biodata page and birth certificate (if applicable)"
+    },
+    {
+      "requirement_code": "residence_education_employment_history",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Every country you have lived in, plus your education, employment and financial support",
+      "description": "A residence history rather than a current address, so gaps have to be accounted for.",
+      "source_role": "eligibility",
+      "source_excerpt": "your personal information, including the list of countries / places you have previously resided in, your educational background, employment history and financial support",
+      "display_order": 100,
+      "source_excerpt_display": "Your personal information, including the list of countries / places you have previously resided in, your educational background, employment history and financial support"
+    },
+    {
+      "requirement_code": "family_personal_information",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your parents', spouse's and siblings' personal information, where applicable",
+      "description": null,
+      "source_role": "eligibility",
+      "source_excerpt": "your parents’, spouse's, and/or siblings’ personal information (if applicable)",
+      "display_order": 110,
+      "source_excerpt_display": "Your parents’, spouse's, and/or siblings’ personal information (if applicable)"
+    },
+    {
+      "requirement_code": "singapore_address_and_email",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A Singapore residential address, contact details and an email address",
+      "description": "The email address matters beyond correspondence: the pass itself is issued to it.",
+      "source_role": "eligibility",
+      "source_excerpt": "your residential address and contact details in singapore ... your email address",
+      "display_order": 120,
+      "source_excerpt_display": "Your residential address and contact details in Singapore ... Your email address"
+    },
+    {
+      "requirement_code": "photograph_three_months",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A digital passport-sized colour photograph taken within the last three months",
+      "description": null,
+      "source_role": "eligibility",
+      "source_excerpt": "your recent, passport-sized, digital, colour photograph taken within the last three months.",
+      "display_order": 130,
+      "source_excerpt_display": "Your recent, passport-sized, digital, colour photograph taken within the last three months."
+    },
+    {
+      "requirement_code": "originals_and_official_translations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Originals plus official translations, and copies for ICA to keep",
+      "description": "ICA names who may translate and says it endorses no translation company. Insufficient documentation may mean the application is not accepted.",
+      "source_role": "eligibility",
+      "source_excerpt": "you will need to provide original documents and official translations (for documents in languages other than english), as well as copies of the documents for ica to retain.",
+      "display_order": 140,
+      "source_excerpt_display": "You will need to provide original documents and official translations (for documents in languages other than English), as well as copies of the documents for ICA to retain."
+    },
+    {
+      "requirement_code": "vaccination_information_under_12",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Applicants aged 12 or under must submit vaccination information to the Communicable Diseases Agency",
+      "description": "In force since 1 February 2019, and it applies to foreign-born applicants aged 12 years 0 days or below.",
+      "source_role": "policy",
+      "source_excerpt": "foreign-born applicants aged 12 years 0 day or below, are required to submit their vaccination information to communicable diseases agency (cda) with effect from 1 february 2019.",
+      "display_order": 150,
+      "parameters": {
+        "max_age_years": 12,
+        "in_force_from": "2019-02-01"
+      },
+      "source_excerpt_display": "Foreign-born applicants aged 12 years 0 day or below, are required to submit their vaccination information to Communicable Diseases Agency (CDA) with effect from 1 February 2019."
+    },
+    {
+      "requirement_code": "apply_two_to_three_months_before",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply between three months and two months before the course begins",
+      "description": "A window with both ends closed. Applying four months out is as wrong as applying one month out.",
+      "source_role": "eligibility",
+      "source_excerpt": "you will need to apply online using the e-service at least two months and not more than three months before course begins.",
+      "display_order": 160,
+      "parameters": {
+        "earliest_months_before_course": 3,
+        "latest_months_before_course": 2
+      },
+      "source_excerpt_display": "You will need to apply online using the e-Service at least two months and not more than three months before course begins."
+    },
+    {
+      "requirement_code": "apply_before_arriving",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Apply before you arrive — you cannot extend a visit pass while the application is processed",
+      "description": "ICA's own recommendation, and it names the reason. You do not need to be in Singapore for processing.",
+      "source_role": "eligibility",
+      "source_excerpt": "you do not need to be in singapore while your application is being processed. as such, we recommend you apply for a student’s pass before arriving in singapore as you cannot extend your stay while processing is underway.",
+      "display_order": 170,
+      "source_excerpt_display": "You do not need to be in Singapore while your application is being processed. As such, we recommend you apply for a Student’s Pass before arriving in Singapore as you cannot extend your stay while processing is underway."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "A non-refundable S$45 processing fee",
+      "description": "Payable whether or not the pass is granted. ICA takes Visa, Mastercard, Amex, internet direct debit from four Singapore banks, or PayNow.",
+      "source_role": "eligibility",
+      "source_excerpt": "a non-refundable s$45 processing fee is payable.",
+      "display_order": 180,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 45,
+        "refundable": false
+      },
+      "source_excerpt_display": "A non-refundable S$45 processing fee is payable."
+    },
+    {
+      "requirement_code": "processing_time_ihl_one_week",
+      "kind": "step",
+      "officially_required": true,
+      "label": "An IHL application is processed within one week, or two if a visa is needed",
+      "description": "The submission day does not count, and ICA warns some applications take longer.",
+      "source_role": "eligibility",
+      "source_excerpt": "the processing time for application is within one week (and within two weeks if visa is required) (excluding the date of submission). some applications may take longer time to process.",
+      "display_order": 190,
+      "parameters": {
+        "working_time": "1 week",
+        "if_visa_required": "2 weeks",
+        "excludes_submission_day": true
+      },
+      "source_excerpt_display": "The processing time for application is within one week (and within two weeks if Visa is required) (excluding the date of submission). Some applications may take longer time to process."
+    },
+    {
+      "requirement_code": "processing_time_pei_one_month",
+      "kind": "step",
+      "officially_required": true,
+      "label": "A PEI application takes up to a month — two weeks if the school is EduTrust-accredited",
+      "description": "Four times the IHL figure at worst, which is why the two are quoted from their own pages rather than merged.",
+      "source_role": "policy",
+      "source_excerpt": "the processing time for a new student’s pass application is within one month (and within two weeks for an edutrust-accredited pei) (excluding the date of submission). some applications may take longer time to process.",
+      "display_order": 200,
+      "parameters": {
+        "working_time": "1 month",
+        "if_edutrust_accredited": "2 weeks",
+        "excludes_submission_day": true
+      },
+      "source_excerpt_display": "The processing time for a new Student’s Pass application is within one month (and within two weeks for an EduTrust-accredited PEI) (excluding the date of submission). Some applications may take longer time to process."
+    },
+    {
+      "requirement_code": "ipa_carries_the_visa",
+      "kind": "step",
+      "officially_required": true,
+      "label": "The approval letter carries your entry visa, and still does not guarantee entry",
+      "description": "If you need a visa to enter Singapore it is included in the in-principle approval automatically. ICA states in the same breath that the letter does not guarantee entry — the officer at the checkpoint decides.",
+      "source_role": "application",
+      "source_excerpt": "you must be in singapore on a valid immigration pass for the completion of formalities for the student’s pass to be issued. if you require a visa to enter singapore, the visa will be automatically included in your ipa letter. you are to produce the ipa letter at the immigration checkpoint. however, the letter does not guarantee entry into or stay in singapore.",
+      "display_order": 210,
+      "source_excerpt_display": "You must be in Singapore on a valid immigration pass for the completion of formalities for the Student’s Pass to be issued. If you require a visa to enter Singapore, the visa will be automatically included in your IPA letter. You are to produce the IPA letter at the immigration checkpoint. However, the letter does not guarantee entry into or stay in Singapore."
+    },
+    {
+      "requirement_code": "medical_examination_report",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A medical examination report before the pass is issued, where applicable",
+      "description": "Submitted at the formalities stage, not with the application.",
+      "source_role": "application",
+      "source_excerpt": "before your student’s pass can be issued, you will need to download and submit medical examination report (if applicable).",
+      "display_order": 220,
+      "source_excerpt_display": "Before your Student’s Pass can be issued, you will need to download and submit Medical Examination Report (if applicable)."
+    },
+    {
+      "requirement_code": "formalities_by_appointment",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Completion of formalities is strictly by appointment, unless your school arranges offsite enrolment",
+      "description": "ICA gives the address — 2 Crawford Street, Level 3 — and says there is no walk-in. Some schools run offsite biometric enrolment instead; if yours has not scheduled one, you must book at the services centre yourself.",
+      "source_role": "application",
+      "source_excerpt": "the completion of formalities for the student’s pass is strictly by appointment. visit ica e-service to select an appropriate date and time for your appointment.",
+      "display_order": 230,
+      "source_excerpt_display": "The completion of formalities for the Student’s Pass is strictly by appointment. Visit ICA e-Service to select an appropriate date and time for your appointment."
+    },
+    {
+      "requirement_code": "issuance_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "S$60 to issue the pass, plus S$30 for a multiple journey visa if you need one",
+      "description": "A second fee after approval, on top of the non-refundable S$45.",
+      "source_role": "application",
+      "source_excerpt": "a s$60 issuance fee for student’s pass and a s$30 for multiple journey visa (if applicable) are payable via internet banking, amex, a visa or mastercard credit/debit card online.",
+      "display_order": 240,
+      "parameters": {
+        "currency": "SGD",
+        "amount": 60,
+        "multiple_journey_visa": 30
+      },
+      "source_excerpt_display": "A S$60 issuance fee for Student’s Pass and a S$30 for Multiple Journey Visa (if applicable) are payable via Internet Banking, AMEX, a Visa or MasterCard credit/debit card online."
+    },
+    {
+      "requirement_code": "digital_pass_only",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The pass is digital only — there is no card",
+      "description": "Since 27 February 2023. It arrives by email from no-reply@file.gov.sg to the address given in the application, appears in the Singpass app after three working days, and can be verified by anyone on FileSG.",
+      "source_role": "application",
+      "source_excerpt": "from 27 february 2023, ica will issue the student's pass in digital form only. a digital student's pass will be issued in place of a physical student's pass card.",
+      "display_order": 250,
+      "parameters": {
+        "digital_only_from": "2023-02-27"
+      },
+      "source_excerpt_display": "From 27 February 2023, ICA will issue the Student's Pass in digital form only. A digital Student's Pass will be issued in place of a physical Student's Pass card."
+    }
+  ]
+}

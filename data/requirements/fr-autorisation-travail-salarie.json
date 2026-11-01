@@ -1,0 +1,319 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-autorisation-travail-salarie",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THIS ROUTE IS NOT A PERMIT AND THE APPLICANT IS NOT THE FOREIGN NATIONAL. The work authorisation is obtained by the EMPLOYER, before the employee may work, and it gates several of the other French routes in this registry. It is registered as its own route because the ordering is what people get wrong: a valid residence permit does not by itself entitle its holder to take a job.\n\nThe page's central content is a MATRIX — permit by permit, whether an authorisation is needed. That matrix is the substance and it is recorded permit by permit rather than summarised, because every row is a different answer and 'it depends on your permit' helps nobody.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2728"
+  },
+  "page_dates": {
+    "requirements": "2026-06-18"
+  },
+  "freshness_note": "Body dateline 'vérifié le 18 juin 2026' — the most recently verified of the eighteen French routes. Self-declared; evidence, not truth. None of the four salary figures carries a stated reference year.",
+  "not_extracted": [
+    "The Algerian regime. The page states at the top that it does not concern Algerian nationals.",
+    "The 'liste des métiers en tension'. Named as a qualifying condition; the list itself is fixed elsewhere and is not published on this page.",
+    "The remaining permit rows of the matrix. The rows recorded here are the ones tied to routes this registry publishes; the page continues into protection, statelessness and several other statuses that are not registered destinations for us.",
+    "The reference year for €1,867.02, €2,800.53, €4,667.54 and €2,567.15.",
+    "How the employer tax is paid. The page has a section on it that is not quoted here."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "employer_must_obtain_authorisation_first",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must obtain a work authorisation before hiring a non-European employee — unless the permit exempts them",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "l'employeur qui souhaite embaucher un salarié étranger non européen (ue + eee + suisse) ... en france doit préalablement obtenir une autorisation de travail. cependant, certains visas ou titres de séjour dispensent de faire cette démarche.",
+      "source_excerpt_display": "L'employeur qui souhaite embaucher un salarié étranger non européen (UE + EEE + Suisse) ... en France doit préalablement obtenir une autorisation de travail. Cependant, certains visas ou titres de séjour dispensent de faire cette démarche."
+    },
+    {
+      "requirement_code": "matrix_vie_privee_familiale_exempt",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Vie privée et familiale' card or VLS-TS: no authorisation needed",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "le vls-ts ou la carte de séjour « vie privée et familiale » permet de travailler en tant que salarié. l'employeur est dispensé de demander une autorisation de travail.",
+      "source_excerpt_display": "Le VLS-TS ou la carte de séjour «vie privée et familiale» permet de travailler en tant que salarié. L'employeur est dispensé de demander une autorisation de travail."
+    },
+    {
+      "requirement_code": "matrix_vpf_from_another_eu_state_no_work_first_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Exception: a 'vie privée et familiale' card obtained as family of an EU long-term resident from another member state does NOT permit work in the first year",
+      "description": "A one-year bar hidden inside an otherwise unrestricted card. An employer relying on the card alone would be employing someone unlawfully.",
+      "parameters": {
+        "no_work_first_years": 1
+      },
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "si la carte a été obtenue en tant qu'époux ou épouse ou enfant d'un étranger qui avait le statut de résident de longue durée-ue dans un autre pays membre de l' union européenne (ue) ... elle ne permet pas de travailler la 1 re année.",
+      "source_excerpt_display": "Si la carte a été obtenue en tant qu'époux ou épouse ou enfant d'un étranger qui avait le statut de résident de longue durée-UE dans un autre pays membre de l' Union européenne (UE) ... elle ne permet pas de travailler la 1 re année."
+    },
+    {
+      "requirement_code": "employer_must_verify_permit_authenticity",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Before hiring, the employer must ask the préfecture to verify the permit's authenticity at least 2 working days ahead",
+      "description": "An obligation on the employer with its own deadline, and silence discharges it: no answer in two working days and the duty is treated as fulfilled.",
+      "parameters": {
+        "verification_lead_working_days": 2
+      },
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "avant de procéder à l'embauche d'un ressortissant étranger, l’employeur doit vérifier l'authenticité du titre de séjour l'autorisant à travailler en france, auprès de la préfecture du lieu d'embauche au moins 2 jours ouvrables ... avant la date effective de celle-ci.",
+      "source_excerpt_display": "Avant de procéder à l'embauche d'un ressortissant étranger, l’employeur doit vérifier l'authenticité du titre de séjour l'autorisant à travailler en France, auprès de la préfecture du lieu d'embauche au moins 2 jours ouvrables ... avant la date effective de celle-ci."
+    },
+    {
+      "requirement_code": "matrix_salarie_needs_authorisation_per_contract",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Salarié' or 'travailleur temporaire': an authorisation IS required, and a new one for every new contract",
+      "description": "The permit authorises one job, not employment in general. Changing employer restarts the process.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "le vls-ts ou la carte de séjour permet d'exercer seulement l'activité salariée pour laquelle une autorisation de travail a été obtenue. ... une autorisation de travail doit être demandée pour chaque nouveau contrat de travail .",
+      "source_excerpt_display": "Le VLS-TS ou la carte de séjour permet d'exercer seulement l'activité salariée pour laquelle une autorisation de travail a été obtenue. ... Une autorisation de travail doit être demandée pour chaque nouveau contrat de travail."
+    },
+    {
+      "requirement_code": "matrix_talent_exempt_for_the_qualifying_activity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Talent' card: no authorisation needed, but only for the activity that qualified you for it",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "la carte de séjour « talent » permet d'exercer l'activité professionnelle qui a permis de l'obtenir. l'employeur est dispensé de demander une autorisation de travail.",
+      "source_excerpt_display": "La carte de séjour «talent» permet d'exercer l'activité professionnelle qui a permis de l'obtenir. L'employeur est dispensé de demander une autorisation de travail."
+    },
+    {
+      "requirement_code": "matrix_student_964_hours",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Étudiant': work without authorisation up to 60% of annual working time — 964 hours; beyond that an authorisation is required",
+      "parameters": {
+        "annual_hours_without_authorisation": 964,
+        "annual_share_percent": 60
+      },
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "le vls-ts ou la carte de séjour « étudiant » ou « étudiant programme de mobilité » permet de travailler en tant que salarié, sans autorisation de travail, pour maximum 60 % de la durée annuelle de travail (964 heures) .",
+      "source_excerpt_display": "Le VLS-TS ou la carte de séjour «étudiant» ou «étudiant programme de mobilité» permet de travailler en tant que salarié, sans autorisation de travail, pour maximum 60 % de la durée annuelle de travail (964 heures)."
+    },
+    {
+      "requirement_code": "matrix_student_apprenticeship_exemption",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "'Étudiant': a validated apprenticeship contract exempts the employer even above 964 hours, but a named declaration is still due 2 working days before hiring",
+      "description": "Relieves the authorisation and replaces it with a lighter obligation — which is easy to overlook entirely.",
+      "parameters": {
+        "declaration_lead_working_days": 2
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "l'employeur doit faire une déclaration nominative à la préfecture 2 jours ouvrables ... avant la date d'embauche de l'étudiant étranger.",
+      "source_excerpt_display": "L'employeur doit faire une déclaration nominative à la préfecture 2 jours ouvrables ... avant la date d'embauche de l'étudiant étranger."
+    },
+    {
+      "requirement_code": "matrix_job_search_card_exempt_with_two_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Recherche d'emploi/création d'entreprise': no authorisation, provided the job matches the studies and pays more than €2,800.53",
+      "parameters": {
+        "monthly_salary_minimum_eur": 2800.53
+      },
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "la carte de séjour « recherche d'emploi/création d'entreprise » permet de travailler en tant que salarié. l'employeur est dispensé de demander une autorisation de travail. cependant, l'emploi doit obligatoirement correspondre à la formation ou aux recherches de l'étranger et la rémunération doit être supérieure à 2 800,53 € .",
+      "source_excerpt_display": "La carte de séjour «recherche d'emploi/création d'entreprise» permet de travailler en tant que salarié. L'employeur est dispensé de demander une autorisation de travail. Cependant, l'emploi doit obligatoirement correspondre à la formation ou aux recherches de l'étranger et la rémunération doit être supérieure à 2 800,53 €."
+    },
+    {
+      "requirement_code": "matrix_visitor_card_cannot_work_at_all",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Visiteur': no work is possible and no authorisation can even be applied for",
+      "description": "An absolute bar, not a hurdle. The page says the application itself is not available.",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "le vls-ts ou la carte de séjour « visiteur » ne permet pas de travailler. il n'est pas possible de faire une demande d' autorisation de travail .",
+      "source_excerpt_display": "Le VLS-TS ou la carte de séjour «visiteur» ne permet pas de travailler. Il n'est pas possible de faire une demande d' autorisation de travail."
+    },
+    {
+      "requirement_code": "matrix_eu_long_term_card_from_another_state_cannot_work",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An EU long-term residence card issued by ANOTHER member state does not permit work in France; a permit must be applied for within 3 months of entry",
+      "description": "The mirror image of the French-issued card, which does permit work. Same card name, opposite answer.",
+      "parameters": {
+        "permit_application_deadline_months_after_entry": 3
+      },
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "la carte de résident longue durée-ue obtenue dans un autre pays de l' union européenne ... ne permet pas de travailler en france. l'étranger doit, au plus tard dans les 3 mois après son entrée en france , faire une demande de titre de séjour.",
+      "source_excerpt_display": "La carte de résident longue durée-UE obtenue dans un autre pays de l' Union européenne ... ne permet pas de travailler en France. L'étranger doit, au plus tard dans les 3 mois après son entrée en France, faire une demande de titre de séjour."
+    },
+    {
+      "requirement_code": "matrix_article_50_tue_british_nationals_exempt",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Article 50 TUE' cards, issued to British nationals: no authorisation needed",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "la carte de séjour « article 50 tue » ou la carte de séjour permanent « article 50 tue », délivrée aux ressortissants britanniques permet de travailler en tant que salarié. l’employeur est dispensé de demander une autorisation de travail.",
+      "source_excerpt_display": "La carte de séjour «Article 50 TUE» ou la carte de séjour permanent «Article 50 TUE», délivrée aux ressortissants britanniques permet de travailler en tant que salarié. L’employeur est dispensé de demander une autorisation de travail."
+    },
+    {
+      "requirement_code": "matrix_seasonal_worker_needs_authorisation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "'Travailleur saisonnier': an authorisation is required, work is limited to the authorised activity, and to 6 months a year",
+      "parameters": {
+        "months_per_year_max": 6
+      },
+      "source_role": "requirements",
+      "display_order": 130,
+      "source_excerpt": "si l'étranger a une carte de séjour « travailleur saisonnier » , une autorisation de travail est obligatoire pour qu'il puisse travailler. la carte de séjour permet d'exercer seulement l'activité salariée pour laquelle une autorisation de travail a été obtenue. l'exercice de travaux saisonniers est limité à 6 mois par an.",
+      "source_excerpt_display": "Si l'étranger a une carte de séjour «travailleur saisonnier», une autorisation de travail est obligatoire pour qu'il puisse travailler. La carte de séjour permet d'exercer seulement l'activité salariée pour laquelle une autorisation de travail a été obtenue. L'exercice de travaux saisonniers est limité à 6 mois par an."
+    },
+    {
+      "requirement_code": "job_must_be_shortage_listed_or_advertised_three_weeks",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must either be on the shortage-occupation list, or have been advertised for 3 consecutive weeks in the previous 6 months with no valid application received",
+      "description": "The labour-market test. The advertisement must have run BEFORE the application is filed, so an employer who applies first cannot cure it afterwards.",
+      "parameters": {
+        "advertisement_weeks": 3,
+        "advertisement_lookback_months": 6
+      },
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "pour demander l'autorisation de travail, l'emploi proposé doit remplir l'une des conditions suivantes : figurer sur la liste des métiers en tension avoir été publié pendant 3 semaines consécutives dans les 6 mois précédant le dépôt de la demande auprès des organismes concourant au service public de l'emploi . par exemple, france travail (anciennement pôle emploi). aucune candidature valable n'a été reçue.",
+      "source_excerpt_display": "Pour demander l'autorisation de travail, l'emploi proposé doit remplir l'une des conditions suivantes: Figurer sur la liste des métiers en tension Avoir été publié pendant 3 semaines consécutives dans les 6 mois précédant le dépôt de la demande auprès des organismes concourant au service public de l'emploi. Par exemple, France Travail (anciennement Pôle emploi). Aucune candidature valable n'a été reçue."
+    },
+    {
+      "requirement_code": "masters_graduate_exemption_diploma_within_the_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A master's-level graduate is exempt from the labour-market test if the job matches the training and the degree was obtained within the year",
+      "description": "The one-year clock is the binding half of this exemption and is easy to miss beside the pay threshold.",
+      "parameters": {
+        "monthly_salary_minimum_eur": 2800.53,
+        "diploma_obtained_within_months": 12
+      },
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "étranger ayant obtenu un master ou un diplôme de niveau i labellisés par la conférence des grandes écoles ou un diplôme de licence professionnelle, à condition que le contrat de travail proposé soit en relation avec sa formation et prévoit une rémunération au moins égale à 2 800,53 €",
+      "source_excerpt_display": "Étranger ayant obtenu un master ou un diplôme de niveau I labellisés par la Conférence des grandes écoles ou un diplôme de licence professionnelle, à condition que le contrat de travail proposé soit en relation avec sa formation et prévoit une rémunération au moins égale à 2 800,53 €"
+    },
+    {
+      "requirement_code": "employer_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The employer must meet its social obligations and must not have been penalised for illegal work, safety breaches, or facilitating irregular entry",
+      "description": "Conditions about the EMPLOYER's past conduct, which the employee cannot satisfy or usually discover.",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "l'employeur, le donneur d'ordre, l'entreprise utilisatrice ou d'accueil doivent remplir l'ensemble des conditions suivantes : respecter les obligations sociales liées à leur statut ou à leur activité ne pas avoir été condamnés pénalement ou fait l'objet de sanctions administratives pour les faits suivants : travail illégal ou infractions aux règles générales de santé et de sécurité",
+      "source_excerpt_display": "L'employeur, le donneur d'ordre, l'entreprise utilisatrice ou d'accueil doivent remplir l'ensemble des conditions suivantes: Respecter les obligations sociales liées à leur statut ou à leur activité Ne pas avoir été condamnés pénalement ou fait l'objet de sanctions administratives pour les faits suivants: Travail illégal ou infractions aux règles générales de santé et de sécurité"
+    },
+    {
+      "requirement_code": "salary_not_below_smic_or_collective_agreement",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Pay may not fall below the SMIC, or below the applicable collective agreement rate where that is higher",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "la rémunération ne peut pas être inférieure au smic ... (ou au salaire prévu dans la convention collective ... applicable à l'entreprise, si cette rémunération est plus élevée que le smic).",
+      "source_excerpt_display": "La rémunération ne peut pas être inférieure au Smic ... (ou au salaire prévu dans la convention collective ... applicable à l'entreprise, si cette rémunération est plus élevée que le Smic)."
+    },
+    {
+      "requirement_code": "disproportionate_recruitment_may_be_refused",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The authorisation may be refused if the recruitment is manifestly disproportionate to the employer's economic activity",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "l'autorisation de travail peut être refusée si le projet de recrutement est manifestement disproportionné au regard de l'activité économique du demandeur.",
+      "source_excerpt_display": "L'autorisation de travail peut être refusée si le projet de recrutement est manifestement disproportionné au regard de l'activité économique du demandeur."
+    },
+    {
+      "requirement_code": "two_month_silence_is_an_implicit_refusal",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "No answer from the préfecture within 2 months is an implicit refusal, appealable within 2 months",
+      "parameters": {
+        "implicit_refusal_after_months": 2,
+        "appeal_window_months": 2
+      },
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "si la préfecture n'a pas répondu au bout de 2 mois, il s'agit d'un refus implicite.",
+      "source_excerpt_display": "Si la préfecture n'a pas répondu au bout de 2 mois, il s'agit d'un refus implicite."
+    },
+    {
+      "requirement_code": "employer_tax_due_once_on_first_admission",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "An employer tax is due once, on first admission, and only from the first employer — but becomes due again if the worker leaves and returns",
+      "description": "Payable for authorisations longer than three months, except for agricultural seasonal workers where it is due from day one.",
+      "parameters": {
+        "threshold_months": 3
+      },
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "la taxe est due pour les autorisations de travail pour des durées supérieures à 3 mois, sauf pour les travailleurs saisonniers agricoles où elle est due dès le 1 er jour.",
+      "source_excerpt_display": "La taxe est due pour les autorisations de travail pour des durées supérieures à 3 mois, sauf pour les travailleurs saisonniers agricoles où elle est due dès le 1 er jour."
+    },
+    {
+      "requirement_code": "employer_tax_short_contract_bands",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Contracts of 3 to 12 months: employer tax of €74, €210 or €300 by salary band",
+      "parameters": {
+        "band_1_max_eur": 1867.02,
+        "band_1_tax_eur": 74,
+        "band_2_tax_eur": 210,
+        "band_3_over_eur": 2800.53,
+        "band_3_tax_eur": 300
+      },
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "montant du salaire mensuel brut montant de la taxe inférieur ou égal à 1 867,02 € ... 74 € entre 1 867,02 € et 2 800,53 € 210 € supérieur à 2 800,53 € 300 €",
+      "source_excerpt_display": "Montant du salaire mensuel brut Montant de la taxe Inférieur ou égal à 1 867,02 € ... 74 € Entre 1 867,02 € et 2 800,53 € 210 € Supérieur à 2 800,53 € 300 €"
+    },
+    {
+      "requirement_code": "employer_tax_long_contract_is_percentage_of_salary",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Contracts of 12 months or more: 55% of gross monthly salary, capped at €2,567.15",
+      "description": "An order of magnitude above the short-contract bands, and a percentage rather than a flat charge.",
+      "parameters": {
+        "rate_percent_of_monthly_gross": 55,
+        "cap_threshold_eur": 4667.54,
+        "cap_amount_eur": 2567.15
+      },
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "montant du salaire montant de la taxe inférieur à 4 667,54 € 55 % du salaire mensuel brut supérieur ou égal à 4 667,54 € 2 567,15 €",
+      "source_excerpt_display": "Montant du salaire Montant de la taxe Inférieur à 4 667,54 € 55 % du salaire mensuel brut Supérieur ou égal à 4 667,54 € 2 567,15 €"
+    },
+    {
+      "requirement_code": "employer_tax_seasonal_and_young_professionals",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Seasonal contracts: €50 per month of work, per contract. Bilateral young-professional exchanges: €72",
+      "parameters": {
+        "seasonal_tax_per_month_eur": 50,
+        "young_professional_tax_eur": 72
+      },
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "le montant de la taxe employeur est de 50 € par mois d’activité salariée, complet ou incomplet. elle est due pour chaque contrat saisonnier.",
+      "source_excerpt_display": "Le montant de la taxe employeur est de 50 € par mois d’activité salariée, complet ou incomplet. Elle est due pour chaque contrat saisonnier."
+    }
+  ]
+}

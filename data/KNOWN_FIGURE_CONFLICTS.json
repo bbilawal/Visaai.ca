@@ -1,0 +1,43 @@
+{
+  "_comment": [
+    "Figure conflicts that have been READ AND ACCEPTED, not suppressed.",
+    "scripts/detect-figure-conflicts.ts fails on any conflict absent from this list.",
+    "An entry here means: a human compared the two sources and decided the",
+    "disagreement is a real fact about the authority's site rather than an",
+    "extraction error. The conflict still prints on every run.",
+    "Remove an entry when the authority corrects its pages - the script reports",
+    "allowlist entries that no longer match anything, so stale ones surface."
+  ],
+  "conflicts": [
+    {
+      "key": "se:per_month_single_adult_sek:6243",
+      "reason": "Migrationsverket publishes the same six maintenance amounts on two pages under different years: the EU Blue Card page introduces them with 'for 2025, the amount you must have left after paying your rent is:', while the maintenance word-explanation page uses 'in 2026, the amount you must have left over after tax and the rent is paid is:'. Verified by re-fetching both pages and matching all six amounts on each. RESOLVED 2026-08-22 as a stale YEAR LABEL, not stale amounts: the Blue Card page's own body reads 'since 15 july 2026, the salary threshold is sek 53,625 per month', so that page was edited in or after July 2026 and still labels the maintenance amounts 'for 2025' - the label was not refreshed with the rest of the page. The six values are identical on both pages, so no figure shown to a user is wrong; only the year attribution on the Blue Card page lags. Each extraction quotes its own page. NOTE: an earlier attempt to resolve this by comparing rek:moddate (2025-02-19 vs 2026-03-18) was UNSOUND - Migrationsverket does not maintain that metadata, which is exactly why the Blue Card page's moddate predates content it demonstrably contains. See scripts/check-source-freshness.ts.",
+      "reviewed": "2026-08-22"
+    },
+    {
+      "key": "se:per_month_cohabiting_partners_sek:10314",
+      "reason": "Same Migrationsverket 2025-vs-2026 disagreement as se:per_month_single_adult_sek:6243 (resolved as a stale year label; identical amounts on both pages).",
+      "reviewed": "2026-08-22"
+    },
+    {
+      "key": "se:per_month_child_0_6_sek:3336",
+      "reason": "Same Migrationsverket 2025-vs-2026 disagreement as se:per_month_single_adult_sek:6243 (resolved as a stale year label; identical amounts on both pages).",
+      "reviewed": "2026-08-22"
+    },
+    {
+      "key": "se:per_month_child_7_10_sek:4004",
+      "reason": "Same Migrationsverket 2025-vs-2026 disagreement as se:per_month_single_adult_sek:6243 (resolved as a stale year label; identical amounts on both pages).",
+      "reviewed": "2026-08-22"
+    },
+    {
+      "key": "se:per_month_child_11_14_sek:4672",
+      "reason": "Same Migrationsverket 2025-vs-2026 disagreement as se:per_month_single_adult_sek:6243 (resolved as a stale year label; identical amounts on both pages).",
+      "reviewed": "2026-08-22"
+    },
+    {
+      "key": "se:per_month_child_15_plus_sek:5339",
+      "reason": "Same Migrationsverket 2025-vs-2026 disagreement as se:per_month_single_adult_sek:6243 (resolved as a stale year label; identical amounts on both pages).",
+      "reviewed": "2026-08-22"
+    }
+  ]
+}

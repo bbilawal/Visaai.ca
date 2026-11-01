@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "fr-carte-sejour-visiteur",
+  "extracted_at": "2026-08-24",
+  "extraction_method": "manual",
+  "extractor": "read from the Service-Public.gouv.fr page registered in source_roles, fetched from the VPS with the source monitor's own User-Agent",
+  "policy": "Every entry quotes the official page it was read from, verbatim and in French.",
+  "structure_note": "THE PAGE PUBLISHES TWO RESOURCE FIGURES AND THEY DO NOT MULTIPLY. The eligibility section states €1,477.93 net per month 'sur 1 année'; the document list asks for evidence of an annual €17,735.19. Twelve times the monthly figure is €17,735.16 — three cents short. Both are quoted exactly as the authority states them and NEITHER is derived from the other, because silently correcting a government figure to make our arithmetic work is how a wrong number gets published with a real citation behind it. If the authority reconciles them, the change monitor will see it.",
+  "source_roles": {
+    "requirements": "https://www.service-public.gouv.fr/particuliers/vosdroits/F302"
+  },
+  "page_dates": {
+    "requirements": "2026-06-01"
+  },
+  "freshness_note": "Body dateline 'vérifié le 01 juin 2026'. Self-declared; evidence, not truth. Neither resource figure carries a stated reference year, so none is recorded.",
+  "not_extracted": [
+    "The Algerian and European regimes. The page routes both away to different documents — Algerians to a 'certificat de résidence visiteur', Europeans to an EU/EEA/Swiss card — and states plainly that neither can hold this card. Nothing is extracted for them here.",
+    "The reference year for €1,477.93 and €17,735.19. Not stated on the page.",
+    "The tax and stamp duty amount. The document list requires proof of payment and the page does not state the amount on this route.",
+    "Processing times."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "three_conditions_for_the_visitor_card",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Three conditions: sufficient resources, health insurance for the whole stay, and no work of any kind",
+      "description": "The third is absolute and unusually broad — it names employment, trading, auto-entrepreneur status, craft trades and the liberal professions together.",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "vous devez remplir les 3 conditions suivantes : avoir des ressources suffisantes pour vivre pendant toute la durée de votre séjour avoir une assurance maladie couvrant la durée de votre séjour ne pas travailler en france que ce soit en tant que salarié, commerçant, auto-entrepreneur, artisan, profession libérale etc.",
+      "source_excerpt_display": "Vous devez remplir les 3 conditions suivantes: Avoir des ressources suffisantes pour vivre pendant toute la durée de votre séjour Avoir une assurance maladie couvrant la durée de votre séjour Ne pas travailler en France que ce soit en tant que salarié, commerçant, auto-entrepreneur, artisan, profession libérale etc."
+    },
+    {
+      "requirement_code": "minimum_monthly_resources_1477_93",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Minimum resources for a single person: €1,477.93 net per month, over one year",
+      "description": "Quoted as published. See structure_note: the document list states a different annual total and the two are not reconciled here.",
+      "parameters": {
+        "monthly_net_resources_eur": 1477.93
+      },
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "le montant minimal des ressources exigé pour une personne seule est de 1 477,93 € nets mensuels, sur 1 année.",
+      "source_excerpt_display": "Le montant minimal des ressources exigé pour une personne seule est de 1 477,93 € nets mensuels, sur 1 année."
+    },
+    {
+      "requirement_code": "resources_may_be_a_family_members",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The resources may be your own or a family member's, evidenced by bank statements, guarantees or proof of income",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "il peut s'agir de vos propres ressources (rentes ou pensions, revenus immobiliers, etc.) ou de celles d'un membre de votre famille. vous pouvez présenter des attestations bancaires, des cautions ou des preuves de revenus fournies par des personnes solvables.",
+      "source_excerpt_display": "Il peut s'agir de vos propres ressources (rentes ou pensions, revenus immobiliers, etc.) ou de celles d'un membre de votre famille. Vous pouvez présenter des attestations bancaires, des cautions ou des preuves de revenus fournies par des personnes solvables."
+    },
+    {
+      "requirement_code": "family_allowances_do_not_count",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Family allowances do not count toward the resource requirement",
+      "description": "An exclusion with a stated reason: they are paid for the upkeep of children, not the applicant. Housing conditions, by contrast, ARE taken into account.",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "les allocations familiales ne sont pas prises en compte, car elles sont versées pour assurer l'entretien des enfants. les conditions de logement sont également prises en compte dans l'évaluation de vos ressources, et éventuellement les cautions fournies par des personnes solvables (votre famille notamment).",
+      "source_excerpt_display": "Les allocations familiales ne sont pas prises en compte, car elles sont versées pour assurer l'entretien des enfants. Les conditions de logement sont également prises en compte dans l'évaluation de vos ressources, et éventuellement les cautions fournies par des personnes solvables (votre famille notamment)."
+    },
+    {
+      "requirement_code": "typical_qualifying_situations",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Situations the authority names as typical for this card",
+      "description": "An open list. Note the PACS partner qualifier — under one year of shared life — which sends longer-established partners to a different route.",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "vous pouvez notamment demander ce titre si vous êtes : parent à charge de vos enfants qui résident légalement en france partenaire de pacs ... (ayant moins d'1 an de vie commune) religieux (prêtre, imam, etc.) et que vous venez pour exercer vos fonctions en france.",
+      "source_excerpt_display": "Vous pouvez notamment demander ce titre si vous êtes: Parent à charge de vos enfants qui résident légalement en France Partenaire de Pacs ... (ayant moins d'1 an de vie commune) Religieux (prêtre, imam, etc.) et que vous venez pour exercer vos fonctions en France."
+    },
+    {
+      "requirement_code": "prefecture_may_refuse_on_conduct_grounds",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The préfecture may refuse the card for an unfulfilled removal order or for named offences",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "la préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (oqtf) ou si vous avez commis l'un des faits suivants : faux et usage de faux documents",
+      "source_excerpt_display": "La préfecture peut refuser de vous délivrer votre carte de séjour si vous n'avez pas respecté une obligation de quitter le territoire (OQTF) ou si vous avez commis l'un des faits suivants: Faux et usage de faux documents"
+    },
+    {
+      "requirement_code": "documents_required",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Documents required for the 'visiteur' residence card",
+      "description": "The authority's own published list. Three items are specific to this route and easy to miss: a handwritten sworn statement that you will not work, an OFII medical certificate handed over when the card is issued, and — for married applicants from countries permitting it — a sworn declaration of non-polygamy.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "justificatif d’état civil (sauf si vous avez déjà une carte de séjour) : copie intégrale d’acte de naissance comportant les mentions les plus récentes ... justificatif de domicile datant de moins de 6 mois déclaration sur l’honneur de non polygamie ... en france si vous êtes marié et originaire d’un pays l’autorisant",
+      "source_excerpt_display": "Justificatif d’état civil (sauf si vous avez déjà une carte de séjour): copie intégrale d’acte de naissance comportant les mentions les plus récentes ... Justificatif de domicile datant de moins de 6 mois Déclaration sur l’honneur de non polygamie ... en France si vous êtes marié et originaire d’un pays l’autorisant"
+    },
+    {
+      "requirement_code": "annual_resources_evidence_17735_19",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Evidence of resources reaching an annual €17,735.19",
+      "description": "The document list's own figure. It is not twelve times the monthly figure the same page states — see structure_note.",
+      "parameters": {
+        "annual_resources_eur": 17735.19
+      },
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "justificatifs de vos ressources atteignant un montant annuel égal à 17 735,19 € (attestations bancaires, cautions de personnes solvables, titre de pension pour les retraités, etc.)",
+      "source_excerpt_display": "Justificatifs de vos ressources atteignant un montant annuel égal à 17 735,19 € (attestations bancaires, cautions de personnes solvables, titre de pension pour les retraités, etc.)"
+    },
+    {
+      "requirement_code": "handwritten_undertaking_not_to_work",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A handwritten sworn statement that you will not work in France",
+      "description": "Handwritten specifically. A typed or signed form does not satisfy what the page asks for.",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "attestation sur l'honneur manuscrite de ne pas travailler en france",
+      "source_excerpt_display": "Attestation sur l'honneur manuscrite de ne pas travailler en France"
+    },
+    {
+      "requirement_code": "ofii_medical_certificate_at_issue",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "An OFII medical certificate, handed over when the card is issued",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "certificat médical délivré par l' ofii ... (à remettre au moment de la remise du titre)",
+      "source_excerpt_display": "Certificat médical délivré par l' Ofii ... (à remettre au moment de la remise du titre)"
+    },
+    {
+      "requirement_code": "signed_republican_principles_undertaking",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A signed copy of the undertaking to respect the principles of the Republic",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "exemplaire signé de l'engagement à respecter les principes de la république",
+      "source_excerpt_display": "Exemplaire signé de l'engagement à respecter les principes de la République"
+    },
+    {
+      "requirement_code": "card_valid_one_year_renewable",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The card is valid for at most 1 year and is renewable",
+      "parameters": {
+        "validity_years_max": 1
+      },
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "elle vous permet de séjourner en france plus de 3 mois sans pouvoir travailler. elle concerne notamment les étrangers venant exercer des fonctions religieuses en france. la carte est délivrée sous conditions de ressources. elle est valable 1 an maximum et est renouvelable.",
+      "source_excerpt_display": "Elle vous permet de séjourner en France plus de 3 mois sans pouvoir travailler. Elle concerne notamment les étrangers venant exercer des fonctions religieuses en France. La carte est délivrée sous conditions de ressources. Elle est valable 1 an maximum et est renouvelable."
+    }
+  ]
+}

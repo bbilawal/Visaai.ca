@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "visaai_id": "lb-religious-student-visa",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "_registration": {
+    "category": "religious",
+    "official_name": "Visas and Residency for Students of Religion, Missionaries, Volunteers and Men of Religion",
+    "slug": "religious-student-visa",
+    "purpose": "Lebanese entry visas and residence permits for students of religion at accredited institutions, and for men of religion, missionaries and volunteers hosted by a religious, charitable or university institution — including the nationalities temporarily excluded and the fees for each group.",
+    "source_titles": {
+      "requirements_239": "Visas or residency permits for students in religions, volunteers, missionaries and men of religion"
+    }
+  },
+  "policy": "Every requirement below is bound to a verbatim excerpt from the Lebanese General Directorate of General Security page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. Every excerpt was taken by line offset out of a NUMBERED dump of text this project’s own fetcher retrieved and this project’s own normaliser processed, then re-verified against a fresh fetch.",
+  "structure_note": "The page is explicit that its rules apply REGARDLESS OF RELIGION, and it is quoted saying so rather than paraphrased.\n\nTwo separate regimes share it. Students of religion get an entry visa and then a residence permit, with conditions numbered 111-115 and 211-213. Men of religion, missionaries and volunteers enter on a request from a host institution, and their visas are assimilated to TOURIST visas that cannot become residency — a distinction that decides whether somebody can stay.\n\nThe temporarily excluded nationalities are published as a list of fourteen and are quoted whole. Naming some and not others would be the worst possible summary of that sentence.",
+  "source_roles": {
+    "requirements_239": "https://www.general-security.gov.lb/en/posts/239"
+  },
+  "page_dates": {
+    "requirements_239": null
+  },
+  "freshness_note": "The page publishes no dateline and no Last-Modified header, and its body references 2026. Freshness therefore rests on a body-year rather than a publication date — the same state check-source-freshness already reports for Singapore's MOM pages, the US ESTA pages and all of Austria's migration.gv.at. The daily sync is what will notice if the text moves.",
+  "not_extracted": [
+    "Residence Permits for Iraqi Nationals in Lebanon (posts/428). The served page carries five lines that refer to \"the residency mentioned in item (2) above\" and \"residency applications mentioned in item (1) above\" — and items (1) and (2) are NOT on the page in any form, in the normalised text or in the raw HTML. Publishing a cross-reference to a list the reader cannot see would be worse than publishing nothing.",
+    "The Arabic-language tree. This authority publishes English and Arabic separately; only the English tree is read, and no claim is made that the two say the same thing.",
+    "Routes still enumerated on the index and not yet extracted: sponsorship transfer applications, the complaint procedure for an escaping foreign worker, temporary residence renewal via LibanPost, applying for a visa renewal via Liban Post, the kafala-transfer regularisation, entry of nationals from labour-supplying countries, work permits for foreign artists and musicians, entry of artists in nightclubs, and the Syrian and Palestinian arrangements. Named so the gap is a known quantity rather than an impression of completeness."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "scope",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Who this covers: religious men, students, missionaries and volunteers",
+      "description": "The authority's own framing of the page.",
+      "source_role": "requirements_239",
+      "source_excerpt": "the requirements regarding the applicants for a lebanese visa or residency permit for religious men, students, missionaries or volunteers will be highlighted in the following section.",
+      "display_order": 10,
+      "source_excerpt_display": "The requirements regarding the applicants for a Lebanese visa or residency permit for religious men, students, missionaries or volunteers will be highlighted in the following section."
+    },
+    {
+      "requirement_code": "student_entry_visa_one_month_ahead",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Students of religion, ANY religion, get an entry visa a month before entry",
+      "description": "Applies whether or not the institution or the studies are religious, which the authority states explicitly.",
+      "source_role": "requirements_239",
+      "source_excerpt": "11- the students in religion regardless of their religion, and whether they are enrolled in an accredited universities or accredited religious institutions in lebanon (even those whose studies or universities are not religious), are granted an entry visa for a month prior to their entry",
+      "display_order": 20,
+      "source_excerpt_display": "11- The students in religion regardless of their religion, and whether they are enrolled in an accredited universities or accredited religious institutions in Lebanon (even those whose studies or universities are not religious), are granted an entry visa for a month prior to their entry"
+    },
+    {
+      "requirement_code": "student_prior_authorisation",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Condition 111: prior authorisation from General Security, requested BY the institution",
+      "description": "The applicant cannot apply through a Lebanese mission abroad — the institution must request it.",
+      "source_role": "requirements_239",
+      "source_excerpt": "111- an authorization prior to the entrance granted by the general security in virtue of a requested presented by the university or the institution in question. the latter can’t apply via a lebanese delegation abroad",
+      "display_order": 30,
+      "source_excerpt_display": "111- An authorization prior to the entrance granted by the general security in virtue of a requested presented by the university or the institution in question. The latter can’t apply via a Lebanese delegation abroad"
+    },
+    {
+      "requirement_code": "student_minimum_age_18",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition 112: the applicant must be 18 or older",
+      "description": "A hard floor.",
+      "source_role": "requirements_239",
+      "source_excerpt": "112- the interested party has to be 18 years old or more",
+      "parameters": {
+        "minimum_age": 18,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 40,
+      "source_excerpt_display": "112- The interested party has to be 18 years old or more"
+    },
+    {
+      "requirement_code": "student_enrollment_attestation",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Condition 113: an enrolment attestation naming the degree, period and semesters",
+      "description": "Three things the attestation must state.",
+      "source_role": "requirements_239",
+      "source_excerpt": "113- attestation of enrollment in an accredited university or an accredited religious institution in lebanon. the type of degree has to be specified in the attestation, as well as the period and semesters indicated.",
+      "display_order": 50,
+      "source_excerpt_display": "113- Attestation of enrollment in an accredited university or an accredited religious institution in Lebanon. The type of degree has to be specified in the attestation, as well as the period and semesters indicated."
+    },
+    {
+      "requirement_code": "student_enter_at_start_of_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition 114: entry at the start of the academic year, applying a month before",
+      "description": "A timing rule that is easy to miss and expensive to miss.",
+      "source_role": "requirements_239",
+      "source_excerpt": "114- the interested party has to enter lebanese territories in the beginning of the academic year (the visa have to be applied for, a month before the beginning of the academic year).",
+      "display_order": 60,
+      "source_excerpt_display": "114- The interested party has to enter Lebanese territories in the beginning of the academic year (the visa have to be applied for, a month before the beginning of the academic year)."
+    },
+    {
+      "requirement_code": "student_apply_from_country_of_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition 115: the applicant must come from the country of their nationality",
+      "description": "Stated as an absolute — otherwise entry is refused.",
+      "source_role": "requirements_239",
+      "source_excerpt": "115- the interested party has to come the country of which he holds the nationality. if this is not the case, he cannot enter lebanese authorities.",
+      "display_order": 70,
+      "source_excerpt_display": "115- The interested party has to come the country of which he holds the nationality. If this is not the case, he cannot enter Lebanese authorities."
+    },
+    {
+      "requirement_code": "institution_departure_attestation",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The institution must sign a departure attestation and ensure departure on breach or crime",
+      "description": "An obligation on the host, not the student.",
+      "source_role": "requirements_239",
+      "source_excerpt": "13- the universities and religious institutions have to sing an attestation of departure when the interested party finished the required academic years or semesters indicated. his departure has to be ensured if there is an infraction regarding his visa, or if he committed a crime.",
+      "display_order": 80,
+      "source_excerpt_display": "13- The universities and religious institutions have to sing an attestation of departure when the interested party finished the required academic years or semesters indicated. His departure has to be ensured if there is an infraction regarding his visa, or if he committed a crime."
+    },
+    {
+      "requirement_code": "excluded_nationalities",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Fourteen nationalities are TEMPORARILY excluded",
+      "description": "Quoted whole. The authority gives security concerns for Lebanon and for the students' own countries as the reason, and naming only some of the fourteen would be the worst possible summary.",
+      "source_role": "requirements_239",
+      "source_excerpt": "14- in virtue of security concerns regarding both lebanon and the countries of origin of the students in question, only the following nationalities are temporarily excluded: pakistan, afghanistan, albanian, bosnian, indian, sri lankans, philippine, sudan, egyptian, chechen, bangladesh, algerian, somalian, iraqi.",
+      "display_order": 90,
+      "source_excerpt_display": "14- In virtue of security concerns regarding both Lebanon and the countries of origin of the students in question, only the following nationalities are temporarily excluded: Pakistan, Afghanistan, Albanian, Bosnian, Indian, Sri Lankans, Philippine, Sudan, Egyptian, Chechen, Bangladesh, Algerian, Somalian, Iraqi."
+    },
+    {
+      "requirement_code": "student_residence_apply_within_month",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Condition 211: apply for the residence permit at a regional bureau within a month of entry",
+      "description": "A deadline that starts on entry.",
+      "source_role": "requirements_239",
+      "source_excerpt": "211- after a month of his entry in lebanon, the interested party has to show up at a regional bureau of the general security, where he will apply for a residency permit, handing out the application and the required documents.",
+      "parameters": {
+        "deadline_months": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 100,
+      "source_excerpt_display": "211- After a month of his entry in Lebanon, the interested party has to show up at a regional bureau of the general security, where he will apply for a residency permit, handing out the application and the required documents."
+    },
+    {
+      "requirement_code": "student_must_pass_the_year",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition 212: an attestation of passing the previous year; a year may be repeated only once",
+      "description": "Failing twice ends the right to remain, which the authority states plainly.",
+      "source_role": "requirements_239",
+      "source_excerpt": "212- the interested party has to hand out an attestation establishing that he has passed the previous year. the student cannot repeat his year more than once. if he fails to do so, he will have to leave the lebanese territory.",
+      "display_order": 110,
+      "source_excerpt_display": "212- The interested party has to hand out an attestation establishing that he has passed the previous year. The student cannot repeat his year more than once. If he fails to do so, he will have to leave the Lebanese territory."
+    },
+    {
+      "requirement_code": "student_children_no_derivative_residency",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Condition 213: children of married students get no residency of their own and cannot live with them",
+      "description": "A rule that decides whether a family can come at all.",
+      "source_role": "requirements_239",
+      "source_excerpt": "213- if the students are married, their children will not have a residency permit in virtue of their own, and cannot hence live with them.",
+      "display_order": 120,
+      "source_excerpt_display": "213- If the students are married, their children will not have a residency permit in virtue of their own, and cannot hence live with them."
+    },
+    {
+      "requirement_code": "student_multiple_entry_three_months",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A multiple-entry residence permit: once a year, for 3 months only",
+      "description": "Both limits are in one sentence.",
+      "source_role": "requirements_239",
+      "source_excerpt": "22- a residency permit – multiple entries can be requested one time a year and for 3months only.",
+      "parameters": {
+        "max_months": 3,
+        "times_per_year": 1,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt_display": "22- A residency permit – multiple entries can be requested one time a year and for 3months only."
+    },
+    {
+      "requirement_code": "clergy_entry_on_institution_request",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Men of religion, missionaries and volunteers enter on the host institution’s request",
+      "description": "A different route from the student one.",
+      "source_role": "requirements_239",
+      "source_excerpt": "3- men of religion, missionaries, and volunteers are permitted to enter in virtue of a request done by the religious institution, the charitable institution or the university in question:",
+      "display_order": 140,
+      "source_excerpt_display": "3- Men of religion, missionaries, and volunteers are permitted to enter in virtue of a request done by the religious institution, the charitable institution or the university in question:"
+    },
+    {
+      "requirement_code": "clergy_conditions_by_nationality",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Their conditions depend on the applicant’s nationality",
+      "description": "The authority does not enumerate them on this page and none is invented.",
+      "source_role": "requirements_239",
+      "source_excerpt": "31- the requested conditions are based on the nationality of each applicant.",
+      "display_order": 150,
+      "source_excerpt_display": "31- The requested conditions are based on the nationality of each applicant."
+    },
+    {
+      "requirement_code": "clergy_visa_is_touristic_not_convertible",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Those visas are TOURISTIC and cannot become residency — the holder must leave at expiry",
+      "description": "The single most consequential sentence on the page for this group.",
+      "source_role": "requirements_239",
+      "source_excerpt": "32- the visas granted according to the article 31 are assimilated to touristic visas that cannot be transformed into residency visas. the interested party has to leave when the validity period of the visa comes to an end.",
+      "display_order": 160,
+      "source_excerpt_display": "32- The visas granted according to the article 31 are assimilated to touristic visas that cannot be transformed into residency visas. The interested party has to leave when the validity period of the visa comes to an end."
+    },
+    {
+      "requirement_code": "clergy_prior_authorisation_to_reside",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "To reside, they need prior authorisation from General Security via the host institution",
+      "description": "The route out of the tourist-visa limitation.",
+      "source_role": "requirements_239",
+      "source_excerpt": "33- men of religion, volunteers, and missionaries that wish to reside in lebanon have to request a previous authorization delivered by the general security in virtue of a requested addressed by the host institution.",
+      "display_order": 170,
+      "source_excerpt_display": "33- Men of religion, volunteers, and missionaries that wish to reside in Lebanon have to request a previous authorization delivered by the general security in virtue of a requested addressed by the host institution."
+    },
+    {
+      "requirement_code": "clergy_host_must_meet_student_conditions",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The host institution must satisfy conditions 111, 112, 115, 211 and 213",
+      "description": "The authority cross-references its own numbered conditions, and they are published above.",
+      "source_role": "requirements_239",
+      "source_excerpt": "34- the host institution has to ensure the above-mentioned conditions 111, 112, 115, 211, and 213, for an entry visa or a residency permit.",
+      "display_order": 180,
+      "source_excerpt_display": "34- The host institution has to ensure the above-mentioned conditions 111, 112, 115, 211, and 213, for an entry visa or a residency permit."
+    },
+    {
+      "requirement_code": "clergy_activity_and_departure_attestations",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Two attestations: the activity, location and period; and the date of departure",
+      "description": "Both signed by the host institution and filed with General Security.",
+      "source_role": "requirements_239",
+      "source_excerpt": "35- the host institution has to sign an attestation that specifies the type of activity in question, the location of the project and the period indicated for the latter. the date of departures has to be specified in a second attestation that will also be signed by the host institution. these attestations will have to be handed out to the general security.",
+      "display_order": 190,
+      "source_excerpt_display": "35- The host institution has to sign an attestation that specifies the type of activity in question, the location of the project and the period indicated for the latter. The date of departures has to be specified in a second attestation that will also be signed by the host institution. These attestations will have to be handed out to the general security."
+    },
+    {
+      "requirement_code": "host_institution_defined",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "What counts as a host institution",
+      "description": "Religious leaders, universities or legally accredited charitable institutions.",
+      "source_role": "requirements_239",
+      "source_excerpt": "the host institution: religious leaders, universities, or charitable institutions that are legally accredited in lebanon.",
+      "display_order": 200,
+      "source_excerpt_display": "The host institution: Religious leaders, universities, or charitable institutions that are legally accredited in Lebanon."
+    },
+    {
+      "requirement_code": "fee_students",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Students of religion: LBP 15,000,000",
+      "description": "Quoted with the \"the costs\" heading above it, because the amount alone does not say what it buys.",
+      "source_role": "requirements_239",
+      "source_excerpt": "4- the costs: ... students in religion: 15.000.000 l.b.p",
+      "parameters": {
+        "amount": 15000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 210,
+      "source_excerpt_display": "4- The costs: ... Students in religion: 15.000.000 L.B.P"
+    },
+    {
+      "requirement_code": "fee_clergy",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Men of religion, missionaries and volunteers: LBP 18,000,000",
+      "description": "Quoted as the authority writes it, spacing included.",
+      "source_role": "requirements_239",
+      "source_excerpt": "4- the costs: ... men of religion, missionaries and volunteers: 18.000 000l.b.p",
+      "parameters": {
+        "amount": 18000000,
+        "currency": "LBP",
+        "read_at": "2026-08-26"
+      },
+      "display_order": 220,
+      "source_excerpt_display": "4- The costs: ... Men of religion, missionaries and volunteers: 18.000 000L.B.P"
+    },
+    {
+      "requirement_code": "applies_to_women",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The instructions apply equally to nuns and to women students, volunteers and missionaries",
+      "description": "Stated by the authority as its closing line.",
+      "source_role": "requirements_239",
+      "source_excerpt": "5- the above-mentioned instructions are also related to nuns, and students, volunteers, or missionaries that are women.",
+      "display_order": 230,
+      "source_excerpt_display": "5- The above-mentioned instructions are also related to nuns, and students, volunteers, or missionaries that are women."
+    }
+  ]
+}

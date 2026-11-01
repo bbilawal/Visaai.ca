@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "visaai_id": "dk-researcher",
+  "extracted_at": "2026-08-26",
+  "extraction_method": "manual",
+  "extractor": "v4",
+  "policy": "Every requirement below is bound to a verbatim excerpt from the SIRI page named in source_roles. Nothing is paraphrased into an excerpt and nothing is inferred. No excerpt text was typed: each is resolved from LINE NUMBERS out of a numbered dump by scripts/visa-registry/excerpts-from-lines.mjs, which fails the file unless both the display and lowercase forms occur literally in the normalized text.",
+  "structure_note": "The researcher permit is the most PERMISSIVE Danish work route, and every one of its exemptions is the reverse of a rule that holds elsewhere. Publishing it from the shape of the other schemes would get four things backwards:\n\n  * Sideline employment needs a separate permit on the Pay Limit and Positive List routes. A researcher is EXEMPT from a work permit for it.\n  * Full-time work is expected elsewhere. The authority states outright that full-time employment is not a requirement here.\n  * Six months abroad lapses a permit elsewhere. A researcher is exempt from the lapsing rules, and so is the accompanying family.\n  * Changing position needs a new permit on the Positive Lists. A researcher may change job content within the same university or company.\n\nAND THE PASSPORT RULE IS WORDED DIFFERENTLY HERE. This page says a permit can only be valid until '90 days' before the passport expires; the Pay Limit and Positive List pages say '3 months'. They are not the same span, and neither is quoted in place of the other.",
+  "source_roles": {
+    "requirements": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Researcher"
+  },
+  "page_dates": {
+    "requirements": null
+  },
+  "freshness_note": "No dateline; the body references 2026. The daily sync is what will notice a change.",
+  "not_extracted": [
+    "Guest researchers and PhD students, which the page explicitly routes to separate pages with separate regulations. Guest PhD and employed PhD are separate enumerated routes.",
+    "The Fast-Track Scheme researcher track, which is a separate registered route.",
+    "The step-by-step portal walkthrough and the document checklists.",
+    "The rules for accompanying family members beyond the lapsing exemption, which are a separate route."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "paid_research_position_offered",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A paid position as a researcher must have been offered",
+      "source_role": "requirements",
+      "display_order": 10,
+      "source_excerpt": "if you have been offered a paid position as a researcher, you can apply for a residence and work permit.",
+      "source_excerpt_display": "If you have been offered a paid position as a researcher, you can apply for a residence and work permit."
+    },
+    {
+      "requirement_code": "research_related_reasons",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "There must be particular research-related reasons for the position",
+      "source_role": "requirements",
+      "display_order": 20,
+      "source_excerpt": "to be able to obtain a permit as a researcher, there must be particular research related reasons for offering you the position as a researcher.",
+      "source_excerpt_display": "To be able to obtain a permit as a researcher, there must be particular research related reasons for offering you the position as a researcher."
+    },
+    {
+      "requirement_code": "job_linked_to_the_individual",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The job must be closely linked to you as an individual, with research as the main purpose of the stay",
+      "source_role": "requirements",
+      "display_order": 30,
+      "source_excerpt": "this means that the job must be closely linked to you as an individual and that the main purpose of your stay is research.",
+      "source_excerpt_display": "This means that the job must be closely linked to you as an individual and that the main purpose of your stay is research."
+    },
+    {
+      "requirement_code": "salary_and_terms_danish_standards",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Salary and terms of employment must correspond to Danish standards",
+      "source_role": "requirements",
+      "display_order": 40,
+      "source_excerpt": "your salary and terms of employment must correspond to danish standards . this means that y our salary, holiday entitlements, terms of notice etc. must not be inferior to the standards within the professional field in which you are going to work.",
+      "source_excerpt_display": "Your salary and terms of employment must correspond to Danish standards . This means that y our salary, holiday entitlements, terms of notice etc. must not be inferior to the standards within the professional field in which you are going to work."
+    },
+    {
+      "requirement_code": "salary_components_counted",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Only liquid assets and labour-market pension payments count towards the wage level",
+      "source_role": "requirements",
+      "display_order": 50,
+      "source_excerpt": "only salary in the form of liquid assets can be included in the assessment of the wage level.\n\npayment to labour market pension schemes can be included in the assessment of the wage level.",
+      "source_excerpt_display": "Only salary in the form of liquid assets can be included in the assessment of the wage level.\n\nPayment to labour market pension schemes can be included in the assessment of the wage level."
+    },
+    {
+      "requirement_code": "salary_components_excluded",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Housing, per diems, car, phone, internet, benefits in kind and subscriptions are excluded",
+      "source_role": "requirements",
+      "display_order": 60,
+      "source_excerpt": "the value of other salary components such as mentioned below cannot be included in the assessment of the wage level:\n\npaid living and housing expenses\n\nper diems\n\nfree use of car\n\npaid phone\n\npaid internet\n\nbenefits in kind\n\nsubscriptions\n\nother services offered to you by your employer",
+      "source_excerpt_display": "The value of other salary components such as mentioned below cannot be included in the assessment of the wage level:\n\nPaid living and housing expenses\n\nPer Diems\n\nFree use of car\n\nPaid phone\n\nPaid internet\n\nBenefits in kind\n\nSubscriptions\n\nOther services offered to you by your employer"
+    },
+    {
+      "requirement_code": "excluded_components_may_still_be_received",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "You may receive the excluded components; they simply do not count towards the assessment",
+      "description": "Registered because the exclusion list alone reads as a prohibition.",
+      "source_role": "requirements",
+      "display_order": 70,
+      "source_excerpt": "you are allowed to received such salary components but they will not be taken into account when it is assessed whether your salary- and employment conditions correspond to danish standards.",
+      "source_excerpt_display": "You are allowed to received such salary components but they will not be taken into account when it is assessed whether your salary- and employment conditions correspond to Danish standards."
+    },
+    {
+      "requirement_code": "full_time_not_required",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Full-time employment as a researcher is NOT a requirement",
+      "description": "The opposite of the hours conditions on the Pay Limit and Positive List routes.",
+      "source_role": "requirements",
+      "display_order": 80,
+      "source_excerpt": "it is not a requirement that you are employed full time as a researcher.",
+      "source_excerpt_display": "It is not a requirement that you are employed full time as a researcher."
+    },
+    {
+      "requirement_code": "employment_contract_must_be_attached",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "A copy of the employment contract or job offer must be attached, stating all terms",
+      "source_role": "requirements",
+      "display_order": 90,
+      "source_excerpt": "when you apply, you must attach a copy of your employment contract or job offer. all terms of employment must be stated in the contract or the job offer.",
+      "source_excerpt_display": "When you apply, you must attach a copy of your employment contract or job offer. All terms of employment must be stated in the contract or the job offer."
+    },
+    {
+      "requirement_code": "short_stay_under_90_days_may_not_need_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A stay of 90 days or less may not need a residence and work permit",
+      "source_role": "requirements",
+      "display_order": 100,
+      "source_excerpt": "the same applies if you are going to work as a researcher at a university or company in denmark, and the total duration of your stay is 90 days or less counted from your date of entry.",
+      "source_excerpt_display": "The same applies if you are going to work as a researcher at a university or company in Denmark, and the total duration of your stay is 90 days or less counted from your date of entry."
+    },
+    {
+      "requirement_code": "visa_still_required_for_short_stays",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A visa-required national must still obtain a visa covering the full stay before travelling",
+      "description": "Registered next to the permit exemption, because the exemption alone reads as needing no document at all.",
+      "source_role": "requirements",
+      "display_order": 110,
+      "source_excerpt": "if you are required to have a visa [link til ordbogsopslag] in order to enter denmark, you must obtain a visa valid for the full duration of your stay before you travel to denmark.",
+      "source_excerpt_display": "If you are required to have a visa [link til ordbogsopslag] in order to enter Denmark, you must obtain a visa valid for the full duration of your stay before you travel to Denmark."
+    },
+    {
+      "requirement_code": "over_90_days_permit_covers_first_90",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "If the stay will exceed 90 days, the residence permit must cover the first 90 days too",
+      "source_role": "requirements",
+      "display_order": 120,
+      "source_excerpt": "if you know beforehand that you will be staying in denmark for longer than 90 days, you must apply for a residence permit covering the first 90 days as well.",
+      "source_excerpt_display": "If you know beforehand that you will be staying in Denmark for longer than 90 days, you must apply for a residence permit covering the first 90 days as well."
+    },
+    {
+      "requirement_code": "processing_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Processing fee",
+      "source_role": "requirements",
+      "parameters": {
+        "currency": "DKK",
+        "amount": 6810,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 130,
+      "source_excerpt": "processing fee\ndkk 6,810,-",
+      "source_excerpt_display": "Processing fee\nDKK 6,810,-"
+    },
+    {
+      "requirement_code": "processing_time",
+      "kind": "step",
+      "officially_required": false,
+      "label": "Normal processing time, and the longer time if information is missing",
+      "source_role": "requirements",
+      "display_order": 140,
+      "source_excerpt": "normal processing time\n1 month\n\nif further information is needed, the processing time can be up to\n2 months",
+      "source_excerpt_display": "Normal processing time\n1 month\n\nIf further information is needed, the processing time can be up to\n2 months"
+    },
+    {
+      "requirement_code": "sideline_employment_exempt_from_work_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A researcher is EXEMPT from needing a work permit for sideline employment",
+      "description": "The reverse of the Pay Limit and Positive List rule, which requires a separate permit.",
+      "source_role": "requirements",
+      "display_order": 150,
+      "source_excerpt": "as a researcher you are exempt for work permit for sideline employment. this means that the residence permit also allows you to take up sideline employment with other employers without applying for a specific work permit.",
+      "source_excerpt_display": "As a researcher you are exempt for work permit for sideline employment. This means that the residence permit also allows you to take up sideline employment with other employers without applying for a specific work permit."
+    },
+    {
+      "requirement_code": "external_examiner_without_permit",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Examination work at another university needs no separate work permit",
+      "source_role": "requirements",
+      "display_order": 160,
+      "source_excerpt": "as a researcher you may be allocated as an examiner or do examination tasks at another university than the one employing you, without needing to apply for a work permit for sideline employment.",
+      "source_excerpt_display": "As a researcher you may be allocated as an examiner or do examination tasks at another university than the one employing you, without needing to apply for a work permit for sideline employment."
+    },
+    {
+      "requirement_code": "change_of_job_content_allowed",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Job position may change within the same university or company without a new work permit",
+      "source_role": "requirements",
+      "display_order": 170,
+      "source_excerpt": "with a permit as a researcher, you can change your job position within the same university or company without having to apply for a new work permit. this applies, for instance, if you are promoted or if you change your research project.",
+      "source_excerpt_display": "With a permit as a researcher, you can change your job position within the same university or company without having to apply for a new work permit. This applies, for instance, if you are promoted or if you change your research project."
+    },
+    {
+      "requirement_code": "change_of_workplace_needs_new_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Changing your place of work requires a new permit",
+      "description": "Registered alongside the job-content allowance, which it bounds.",
+      "source_role": "requirements",
+      "display_order": 180,
+      "source_excerpt": "if you change your place of work, you must apply for a new permit.",
+      "source_excerpt_display": "If you change your place of work, you must apply for a new permit."
+    },
+    {
+      "requirement_code": "must_inform_siri_of_worsened_terms",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "SIRI must be informed if salary or employment conditions are affected negatively",
+      "source_role": "requirements",
+      "display_order": 190,
+      "source_excerpt": "you must inform siri if your salary and terms of employment conditions are affected negatively.",
+      "source_excerpt_display": "You must inform SIRI if your salary and terms of employment conditions are affected negatively."
+    },
+    {
+      "requirement_code": "exempt_from_lapse_rules",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "A researcher is exempt from the rules on a permit lapsing after six months abroad",
+      "description": "Quoted with the sentence stating the ordinary rule, so the exemption is legible as an exemption.",
+      "source_role": "requirements",
+      "display_order": 200,
+      "source_excerpt": "normally, as a holder of a danish residence permit, you are not allowed to give up your danish address or reside outside of denmark for more than six successive months. a violation will result in the lapse of your permit .\n\nwith a permit as a researcher, you are exempt from these rules on lapsing. thus, you are allowed to give up your danish address during periods where you are residing abroad.",
+      "source_excerpt_display": "Normally, as a holder of a Danish residence permit, you are not allowed to give up your Danish address or reside outside of Denmark for more than six successive months. A violation will result in the lapse of your permit .\n\nWith a permit as a researcher, you are exempt from these rules on lapsing. Thus, you are allowed to give up your Danish address during periods where you are residing abroad."
+    },
+    {
+      "requirement_code": "documentation_when_residing_abroad",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Residing abroad without the stated salary requires documentation from you and your employer",
+      "source_role": "requirements",
+      "display_order": 210,
+      "source_excerpt": "if you are residing abroad and do not receive the salary stated when you applied for a residence and work permit, you and your employer must be able to provide documentation that you have not been residing in denmark during the period in question.",
+      "source_excerpt_display": "If you are residing abroad and do not receive the salary stated when you applied for a residence and work permit, you and your employer must be able to provide documentation that you have not been residing in Denmark during the period in question."
+    },
+    {
+      "requirement_code": "family_exempt_from_lapse_rules",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Accompanying family are also exempt from the lapsing rules",
+      "source_role": "requirements",
+      "display_order": 220,
+      "source_excerpt": "your family will also be exempt from the rules that can cause their permits to lapse. they are allowed to give up their danish address in periods when staying abroad, and they are allowed to stay abroad with you for longer than 6 successive months.",
+      "source_excerpt_display": "Your family will also be exempt from the rules that can cause their permits to lapse. They are allowed to give up their Danish address in periods when staying abroad, and they are allowed to stay abroad with you for longer than 6 successive months."
+    },
+    {
+      "requirement_code": "no_public_benefits",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You must support yourself and may not receive benefits under the Active Social Policy Act",
+      "source_role": "requirements",
+      "display_order": 230,
+      "source_excerpt": "you must be able to support yourself and your family during your stay. for instance, you are not allowed to receive benefits under the terms of the active social policy act – and there might be other benefits that you cannot receive.",
+      "source_excerpt_display": "You must be able to support yourself and your family during your stay. For instance, you are not allowed to receive benefits under the terms of the Active Social Policy Act – and there might be other benefits that you cannot receive."
+    },
+    {
+      "requirement_code": "no_work_in_other_schengen_countries",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The permit does not allow work in other Schengen countries",
+      "source_role": "requirements",
+      "display_order": 240,
+      "source_excerpt": "in addition, a permit allows you to stay in the schengen area for up to 90 days within the latest 180 days period. the permit, however, does not allow you to work in other schengen countries.",
+      "source_excerpt_display": "In addition, a permit allows you to stay in the Schengen area for up to 90 days within the latest 180 days period. The permit, however, does not allow you to work in other Schengen countries."
+    },
+    {
+      "requirement_code": "entry_permit_before_starting_work",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "One month before starting work — but only if you declare you can support yourself",
+      "source_role": "requirements",
+      "display_order": 250,
+      "source_excerpt": "if you apply from abroad, you can be granted a residence permit valid for 1 month before you start working. it will give you the time to settle in denmark. when you apply, you must declare that you can support yourself and any accompanying family members during this time. if you do not declare this, your residence permit will be valid for 14 days before you start working.",
+      "source_excerpt_display": "If you apply from abroad, you can be granted a residence permit valid for 1 month before you start working. It will give you the time to settle in Denmark. When you apply, you must declare that you can support yourself and any accompanying family members during this time. If you do not declare this, your residence permit will be valid for 14 days before you start working."
+    },
+    {
+      "requirement_code": "duration_employment_four_years_or_more",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Four-year permit where the employment is four years or longer",
+      "source_role": "requirements",
+      "display_order": 260,
+      "source_excerpt": "if your employment is for a period of 4 years or more, you will normally be granted a permit valid for 4 years. if you wish to continue to work after the first 4 year,",
+      "source_excerpt_display": "If your employment is for a period of 4 years or more, you will normally be granted a permit valid for 4 years. If you wish to continue to work after the first 4 year,"
+    },
+    {
+      "requirement_code": "duration_under_four_years",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "Shorter employment gives a permit for the period of the employment",
+      "source_role": "requirements",
+      "display_order": 270,
+      "source_excerpt": "if you are employed for a shorter period than 4 years, your residence and work permit will normally be valid for the period of your employment. if you wish to continue working in denmark after this time, you must apply for an extension of your residence and work permit.",
+      "source_excerpt_display": "If you are employed for a shorter period than 4 years, your residence and work permit will normally be valid for the period of your employment. If you wish to continue working in Denmark after this time, you must apply for an extension of your residence and work permit."
+    },
+    {
+      "requirement_code": "passport_shortens_permit_90_days",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A residence permit can only be valid until 90 days before the passport expires",
+      "description": "This page says 90 days where the Pay Limit and Positive List pages say 3 months. Quoted as written.",
+      "source_role": "requirements",
+      "parameters": {
+        "days_before_passport_expiry": 90,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 280,
+      "source_excerpt": "a residence permit can only be valid until 90 days before the expiry date of your passport.",
+      "source_excerpt_display": "A residence permit can only be valid until 90 days before the expiry date of your passport."
+    },
+    {
+      "requirement_code": "work_limited_to_the_named_employment",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "The work permit is limited to the employment it was granted for",
+      "source_role": "requirements",
+      "display_order": 290,
+      "source_excerpt": "your work permit is limited to the employment that is the basis for your permit. you are not allowed to work in other positions than the one stated in your permit.",
+      "source_excerpt_display": "Your work permit is limited to the employment that is the basis for your permit. You are not allowed to work in other positions than the one stated in your permit."
+    },
+    {
+      "requirement_code": "permit_revoked_on_job_loss",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Losing the job revokes the permit",
+      "source_role": "requirements",
+      "display_order": 300,
+      "source_excerpt": "you must inform siri if you lose your job. your residence and work permit will be revoked as it is based on this exact job.",
+      "source_excerpt_display": "You must inform SIRI if you lose your job. Your residence and work permit will be revoked as it is based on this exact job."
+    },
+    {
+      "requirement_code": "sideline_job_can_become_the_basis",
+      "kind": "condition",
+      "officially_required": false,
+      "label": "An existing sideline job can be applied for as the new basis of a permit",
+      "source_role": "requirements",
+      "display_order": 310,
+      "source_excerpt": "if you have a sideline employment, you can apply for a residence permit based on this job instead.",
+      "source_excerpt_display": "If you have a sideline employment, you can apply for a residence permit based on this job instead."
+    },
+    {
+      "requirement_code": "job_seeking_permit_two_day_deadline",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Apply for a job-seeking permit no later than two days after employment ends",
+      "source_role": "requirements",
+      "parameters": {
+        "days_after_employment_ends": 2,
+        "read_at": "2026-08-26"
+      },
+      "display_order": 320,
+      "source_excerpt": "you must apply for a job seeking permit no later than two days after your employment ends.",
+      "source_excerpt_display": "You must apply for a job seeking permit no later than two days after your employment ends."
+    },
+    {
+      "requirement_code": "no_work_during_job_seeking_period",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You are not allowed to work while you have a job-seeking permit",
+      "source_role": "requirements",
+      "display_order": 330,
+      "source_excerpt": "you are not allowed to work while you have a job seeking permit.",
+      "source_excerpt_display": "You are not allowed to work while you have a job seeking permit."
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+country_code,visaai_id,role,authority,authority_rank,source_url,language,robots_state,active,failure_streak,last_success_at,versions
+AE,ae-blue-residency,landing,"Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)",1,https://icp.gov.ae/en/services/uae-blue-residency/,en,allowed,t,0,2026-08-25,2
+AE,ae-golden-residency,landing,"Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)",1,https://icp.gov.ae/en/services/uae-golden-residency/,en,allowed,t,0,2026-08-25,2
+AE,ae-green-residency,landing,"Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)",1,https://icp.gov.ae/en/services/uae-green-residency/,en,allowed,t,0,2026-08-25,2
+AT,at-eu-blue-card,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/eubluecard/,en,allowed,t,0,2026-08-25,1
+AT,at-family-reunification,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/family-reunification/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-graduates,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/graduates/,en,allowed,t,0,2026-08-25,1
+AT,at-other-forms-of-settlement,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/other-forms-of-settlement/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-other-key-workers,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/other-key-workers/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-card-plus,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/redwhiteredcardplus/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-regular-workers-seasonal,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/regular-workers-in-tourism-agriculture-and-forestry/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-self-employed-key-workers,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/self-employedkeyworkers/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-skilled-shortage,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/skilled-workers-in-shortage-occupations/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-start-up-founders,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/start-up-founders/,en,allowed,t,0,2026-08-25,1
+AT,at-rwr-very-highly-qualified,requirements,Migration Platform of the Austrian Federal Government,1,https://www.migration.gv.at/en/types-of-immigration/permanent-immigration/very-highly-qualified-workers/,en,allowed,t,0,2026-08-25,1
+AU,,index,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas,en,unknown,t,56,2026-08-20,0
+AU,au-electronic-travel-authority-subclass-601,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-skilled-independent-visa-subclass-189,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-working-holiday-visa-subclass-417,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-student-visa-subclass-500,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-temporary-graduate-visa-subclass-485,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-visitor-visa-subclass-600-business-visitor-stream,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-partner-visa-apply-in-australia-subclass-820-and-801,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-business-innovation-and-investment-provisional-visa-subclass-188,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-skills-in-demand-visa-subclass-482,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,au-visitor-visa-subclass-600,fees,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges/current-visa-pricing,en,unknown,t,56,2026-08-20,0
+AU,,index,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder,en,unknown,t,56,2026-08-20,0
+AU,,index,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing,en,unknown,t,56,2026-08-20,0
+AU,au-business-innovation-and-investment-provisional-visa-subclass-188,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/business-innovation-and-investment-188,en,unknown,t,56,2026-08-20,0
+AU,au-electronic-travel-authority-subclass-601,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601,en,unknown,t,56,2026-08-20,0
+AU,au-partner-visa-apply-in-australia-subclass-820-and-801,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore,en,unknown,t,56,2026-08-20,0
+AU,au-partner-visa-apply-in-australia-subclass-820-and-801,eligibility,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820,en,unknown,t,56,2026-08-20,0
+AU,au-skilled-independent-visa-subclass-189,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189,en,unknown,t,56,2026-08-20,0
+AU,au-skills-in-demand-visa-subclass-482,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482,en,unknown,t,56,2026-08-20,0
+AU,au-skills-in-demand-visa-subclass-482,eligibility,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream,en,unknown,t,56,2026-08-20,0
+AU,au-student-visa-subclass-500,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500,en,unknown,t,56,2026-08-20,0
+AU,au-student-visa-subclass-500,documents,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/disclaimer-for-document-checklist,en,unknown,t,56,2026-08-20,0
+AU,au-student-visa-subclass-500,eligibility,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500/genuine-student-requirement,en,unknown,t,56,2026-08-20,0
+AU,au-temporary-graduate-visa-subclass-485,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-graduate-485,en,unknown,t,56,2026-08-20,0
+AU,au-visitor-visa-subclass-600,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600,en,unknown,t,56,2026-08-20,0
+AU,au-visitor-visa-subclass-600-business-visitor-stream,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/business-visitor-stream,en,unknown,t,56,2026-08-20,0
+AU,au-visitor-visa-subclass-600,eligibility,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/tourist-stream-overseas,en,unknown,t,56,2026-08-20,0
+AU,au-working-holiday-visa-subclass-417,landing,Department of Home Affairs,1,https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/work-holiday-417,en,unknown,t,56,2026-08-20,0
+AU,au-student-visa-subclass-500,forms,Department of Home Affairs,1,https://online.immi.gov.au/lusc/login,en,disallowed,t,0,2026-08-20,0
+AU,au-partner-visa-apply-in-australia-subclass-820-and-801,forms,Department of Home Affairs,1,https://online.immi.gov.au/lusc/login,en,disallowed,t,0,2026-08-20,0
+AU,au-visitor-visa-subclass-600,forms,Department of Home Affairs,1,https://online.immi.gov.au/lusc/login,en,disallowed,t,0,2026-08-20,0
+AU,au-skills-in-demand-visa-subclass-482,forms,Department of Home Affairs,1,https://online.immi.gov.au/lusc/login,en,disallowed,t,0,2026-08-20,0
+CA,ca-work-permit,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-study-permit,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-sponsor-your-spouse-partner-or-child,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-express-entry,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-visitor-visa-temporary-resident-visa,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-electronic-travel-authorization-eta,fees,"Immigration, Refugees and Citizenship Canada",1,https://ircc.canada.ca/english/information/fees/fees.asp,en,allowed,t,0,2026-08-25,1
+CA,ca-study-permit,forms,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1294.html,en,allowed,t,0,2026-08-25,2
+CA,ca-work-permit,forms,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html,en,allowed,t,0,2026-08-25,2
+CA,ca-sponsor-your-spouse-partner-or-child,forms,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1344.html,en,allowed,t,0,2026-08-25,2
+CA,ca-visitor-visa-temporary-resident-visa,forms,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html,en,allowed,t,0,2026-08-25,2
+CA,ca-visitor-visa-temporary-resident-visa,documents,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5484.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/come-canada-tool.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-express-entry,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html,en,allowed,t,0,2026-08-25,2
+CA,ca-express-entry,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/works.html,en,allowed,t,0,2026-08-25,2
+CA,ca-sponsor-your-spouse-partner-or-child,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children.html,en,allowed,t,0,2026-08-25,2
+CA,ca-sponsor-your-spouse-partner-or-child,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/apply.html,en,allowed,t,0,2026-08-25,2
+CA,ca-sponsor-your-spouse-partner-or-child,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-study-permit,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit.html,en,allowed,t,0,2026-08-25,2
+CA,ca-study-permit,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/apply.html,en,allowed,t,0,2026-08-25,2
+CA,ca-study-permit,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,ca-study-permit,documents,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/get-documents.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-visitor-visa-temporary-resident-visa,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html,en,allowed,t,0,2026-08-25,2
+CA,ca-business-visitors,documents,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/business/bring-business-guests/letter-invitation.html,en,allowed,t,0,2026-08-25,2
+CA,ca-business-visitors,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/business/visitors-events-conferences.html,en,allowed,t,0,2026-08-25,2
+CA,ca-visitor-visa-temporary-resident-visa,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,ca-electronic-travel-authorization-eta,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta.html,en,allowed,t,0,2026-08-25,2
+CA,ca-electronic-travel-authorization-eta,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html,en,allowed,t,0,2026-08-25,2
+CA,ca-electronic-travel-authorization-eta,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,ca-super-visa,requirements,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,ca-super-visa,documents,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents.html,en,allowed,t,0,2026-08-25,2
+CA,ca-super-visa,policy,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents/host-financial-support.html,en,allowed,t,0,2026-08-25,2
+CA,ca-super-visa,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/length-stay-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-visitor-visa-temporary-resident-visa,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/visitor-visa.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-work-permit,landing,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html,en,allowed,t,0,2026-08-25,2
+CA,ca-work-permit,application,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html,en,allowed,t,0,2026-08-25,2
+CA,ca-work-permit,eligibility,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside/eligibility.html,en,allowed,t,0,2026-08-25,2
+CA,,index,"Immigration, Refugees and Citizenship Canada",1,https://www.canada.ca/en/services/immigration-citizenship.html,en,allowed,t,0,2026-08-25,1
+CN,,index,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/index.html,en,allowed,t,0,2026-08-25,2
+CN,cn-visa-extension-change-reissuance,requirements,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/n147715/c158249/content.html,en,allowed,t,0,2026-08-25,2
+CN,cn-travel-permit,requirements,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/n147715/c158260/content.html,en,allowed,t,0,2026-08-25,1
+CN,cn-residence-permit,requirements,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/n147715/c158270/content.html,en,allowed,t,0,2026-08-25,2
+CN,cn-exit-entry-permit,requirements,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/n147715/c158281/content.html,en,allowed,t,0,2026-08-25,1
+CN,cn-permanent-residence,requirements,National Immigration Administration (NIA),1,https://en.nia.gov.cn/n147423/n147478/n147715/c158291/content.html,en,allowed,t,0,2026-08-25,2
+DK,dk-family-spouse-partner,requirements,Danish Immigration Service (Udlændingestyrelsen),1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Family/Family-reunification/Spouse-or-cohabiting-partner,en,allowed,t,0,2026-08-25,1
+DK,dk-permanent-residence,requirements,Danish Immigration Service (Udlændingestyrelsen),1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Permanent-residence-permit/Permanent-residence,en,allowed,t,0,2026-08-25,1
+DK,dk-employed-phd,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/PhD/Phd-studies,en,allowed,t,0,2026-08-25,1
+DK,dk-short-stay-visa,requirements,Danish Immigration Service (Udlændingestyrelsen),1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Short-stay-visa/Private-visits-and-tourist-visits-,en,allowed,t,0,2026-08-25,1
+DK,dk-student-higher-education,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Study/Higher-Education,en,allowed,t,0,2026-08-25,1
+DK,dk-fast-track-scheme,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Fast-track,en,unknown,t,4,2026-08-25,1
+DK,dk-pay-limit-scheme,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Pay-limit-scheme,en,allowed,t,0,2026-08-25,1
+DK,dk-positive-list-higher-education,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Positive-List-Higher-Education,en,allowed,t,0,2026-08-25,1
+DK,dk-researcher,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/Researcher,en,allowed,t,0,2026-08-25,1
+DK,dk-positive-list-skilled-work,requirements,SIRI — the Danish Agency for International Recruitment and Integration,1,https://www.nyidanmark.dk/en-GB/You-want-to-apply/Work/The-Positive-Lists/Positive-List-for-skilled-work,en,allowed,t,0,2026-08-25,1
+EG,eg-tourism-evisa,requirements,Ministry of Interior — Arab Republic of Egypt,1,https://visa2egypt.gov.eg/eVisa/FAQ,en,allowed,t,0,2026-08-25,1
+FI,fi-entrepreneur,requirements,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/entrepreneur,en,unknown,t,31,,0
+FI,fi-entrepreneur,eligibility,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/first-residence-permit,en,unknown,t,31,,0
+FI,fi-employed-person,eligibility,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/first-residence-permit,en,unknown,t,31,,0
+FI,fi-residence-permit-studies,eligibility,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/first-residence-permit,en,unknown,t,31,,0
+FI,fi-family-spouse,eligibility,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/first-residence-permit,en,unknown,t,31,,0
+FI,fi-specialist,eligibility,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/first-residence-permit,en,unknown,t,31,,0
+FI,fi-family-spouse,policy,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/income-requirement-for-family-members-of-a-person-who-has-been-granted-a-residence-permit-in-finland,en,unknown,t,31,,0
+FI,fi-family-spouse,fees,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/processing-fees-and-payment-methods,en,unknown,t,31,,0
+FI,fi-residence-permit-studies,requirements,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/residence-permit-application-for-studies,en,unknown,t,31,,0
+FI,fi-employed-person,requirements,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/residence-permit-for-an-employed-person,en,unknown,t,31,,0
+FI,fi-specialist,requirements,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/specialist,en,unknown,t,31,,0
+FI,fi-family-spouse,requirements,"Maahanmuuttovirasto (Finnish Immigration Service, Migri)",1,https://migri.fi/en/spouse-in-finland-with-a-residence-permit,en,unknown,t,31,,0
+FR,fr-carte-sejour-salarie,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F15898,fr,allowed,t,0,2026-08-25,1
+FR,fr-visa-court-sejour,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F16146,fr,allowed,t,0,2026-08-25,1
+FR,fr-visa-long-sejour,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F16162,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-talent,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F16922,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-stagiaire,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F17312,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-recherche-emploi,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F17319,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-resident-longue-duree-ue,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F17359,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-travailleur-saisonnier,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F21516,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-resident,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F2208,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-vie-privee-familiale,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F2209,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-etudiant,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F2231,fr,allowed,t,0,2026-08-25,1
+FR,fr-transit-visa,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F2672,fr,allowed,t,0,2026-08-25,1
+FR,fr-autorisation-travail-salarie,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F2728,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-visiteur,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F302,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-salarie-detache-ict,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F33952,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-talent-famille,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F35792,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-entrepreneur,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F35795,fr,allowed,t,0,2026-08-25,1
+FR,fr-carte-sejour-pluriannuelle-generale,requirements,Service-Public.gouv.fr — Direction de l'information légale et administrative (DILA),1,https://www.service-public.gouv.fr/particuliers/vosdroits/F35799,fr,allowed,t,0,2026-08-25,1
+GB,gb-standard-visitor-visa-visit-on-business,forms,UK Visas and Immigration,1,https://visas-immigration.service.gov.uk/product/uk-visit-visa,en,disallowed,t,0,2026-08-20,0
+GB,gb-standard-visitor-visa,forms,UK Visas and Immigration,1,https://visas-immigration.service.gov.uk/product/uk-visit-visa,en,disallowed,t,0,2026-08-20,0
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/apply-to-come-to-the-uk,en,allowed,t,0,2026-08-25,2
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/browse/visas-immigration,en,allowed,t,0,2026-08-25,2
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/browse/visas-immigration/family-visas,en,allowed,t,0,2026-08-25,2
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/browse/visas-immigration/student-visas,en,allowed,t,0,2026-08-25,2
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/browse/visas-immigration/tourist-short-stay-visas,en,allowed,t,0,2026-08-25,2
+GB,,index,UK Visas and Immigration,1,https://www.gov.uk/browse/visas-immigration/work-visas,en,allowed,t,0,2026-08-25,2
+GB,gb-electronic-travel-authorisation-eta,landing,UK Visas and Immigration,1,https://www.gov.uk/eta,en,allowed,t,0,2026-08-25,2
+GB,gb-electronic-travel-authorisation-eta,application,UK Visas and Immigration,1,https://www.gov.uk/eta/apply,en,allowed,t,0,2026-08-25,2
+GB,gb-electronic-travel-authorisation-eta,eligibility,UK Visas and Immigration,1,https://www.gov.uk/eta/when-not-need-eta,en,allowed,t,0,2026-08-25,2
+GB,gb-student-visa,fees,UK Visas and Immigration,1,https://www.gov.uk/government/publications/visa-regulations-revised-table,en,allowed,t,0,2026-08-25,2
+GB,gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,fees,UK Visas and Immigration,1,https://www.gov.uk/government/publications/visa-regulations-revised-table,en,allowed,t,0,2026-08-25,2
+GB,gb-skilled-worker-visa,landing,UK Visas and Immigration,1,https://www.gov.uk/skilled-worker-visa,en,allowed,t,0,2026-08-25,2
+GB,gb-skilled-worker-visa,application,UK Visas and Immigration,1,https://www.gov.uk/skilled-worker-visa/apply-from-outside-the-uk,en,allowed,t,0,2026-08-25,2
+GB,gb-skilled-worker-visa,documents,UK Visas and Immigration,1,https://www.gov.uk/skilled-worker-visa/documents-you-must-provide,en,allowed,t,0,2026-08-25,2
+GB,gb-skilled-worker-visa,fees,UK Visas and Immigration,1,https://www.gov.uk/skilled-worker-visa/how-much-it-costs,en,allowed,t,0,2026-08-25,2
+GB,gb-skilled-worker-visa,eligibility,UK Visas and Immigration,1,https://www.gov.uk/skilled-worker-visa/your-job,en,allowed,t,0,2026-08-25,2
+GB,gb-standard-visitor-visa,landing,UK Visas and Immigration,1,https://www.gov.uk/standard-visitor,en,allowed,t,0,2026-08-25,2
+GB,gb-standard-visitor-visa,application,UK Visas and Immigration,1,https://www.gov.uk/standard-visitor/apply-standard-visitor-visa,en,allowed,t,0,2026-08-25,2
+GB,gb-standard-visitor-visa-visit-on-business,application,UK Visas and Immigration,1,https://www.gov.uk/standard-visitor/apply-standard-visitor-visa,en,allowed,t,0,2026-08-25,2
+GB,gb-standard-visitor-visa-visit-on-business,landing,UK Visas and Immigration,1,https://www.gov.uk/standard-visitor/visit-on-business,en,allowed,t,0,2026-08-25,2
+GB,gb-student-visa,landing,UK Visas and Immigration,1,https://www.gov.uk/student-visa,en,allowed,t,0,2026-08-25,2
+GB,gb-student-visa,application,UK Visas and Immigration,1,https://www.gov.uk/student-visa/apply-online,en,allowed,t,0,2026-08-25,2
+GB,gb-student-visa,eligibility,UK Visas and Immigration,1,https://www.gov.uk/student-visa/course,en,allowed,t,0,2026-08-25,2
+GB,gb-student-visa,documents,UK Visas and Immigration,1,https://www.gov.uk/student-visa/documents-you-must-provide,en,allowed,t,0,2026-08-25,2
+GB,gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,landing,UK Visas and Immigration,1,https://www.gov.uk/uk-family-visa,en,allowed,t,0,2026-08-25,2
+GB,gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,eligibility,UK Visas and Immigration,1,https://www.gov.uk/uk-family-visa/partner-spouse,en,allowed,t,0,2026-08-25,2
+GB,gb-family-visas-apply-extend-or-switch-apply-as-a-partner-or-spouse,documents,UK Visas and Immigration,1,https://www.gov.uk/uk-family-visa/provide-information,en,allowed,t,0,2026-08-25,2
+GB,gb-youth-mobility-scheme,landing,UK Visas and Immigration,1,https://www.gov.uk/youth-mobility,en,allowed,t,0,2026-08-25,2
+GB,gb-youth-mobility-scheme,documents,UK Visas and Immigration,1,https://www.gov.uk/youth-mobility/documents-you-must-provide,en,allowed,t,0,2026-08-25,2
+GB,gb-youth-mobility-scheme,requirements,UK Visas and Immigration,1,https://www.gov.uk/youth-mobility/eligibility,en,allowed,t,0,2026-08-25,2
+HK,hk-general-employment-policy,requirements,Immigration Department of the Hong Kong Special Administrative Region,1,https://www.immd.gov.hk/eng/services/visas/GEP.html,en,allowed,t,0,2026-08-25,2
+HK,hk-non-local-graduates,requirements,Immigration Department of the Hong Kong Special Administrative Region,1,https://www.immd.gov.hk/eng/services/visas/IANG.html,en,allowed,t,0,2026-08-25,2
+HK,hk-quality-migrant-admission-scheme,requirements,Immigration Department of the Hong Kong Special Administrative Region,1,https://www.immd.gov.hk/eng/services/visas/quality_migrant_admission_scheme.html,en,allowed,t,0,2026-08-25,2
+HK,hk-residence-as-dependant,requirements,Immigration Department of the Hong Kong Special Administrative Region,1,https://www.immd.gov.hk/eng/services/visas/residence_as_dependant.html,en,allowed,t,0,2026-08-25,2
+IE,ie-family-reunification-non-eea,policy,Immigration Service Delivery,1,https://www.irishimmigration.ie/coming-to-join-family-in-ireland/financial-thresholds/,en,allowed,t,0,2026-08-25,1
+IE,ie-family-reunification-non-eea,requirements,Immigration Service Delivery,1,https://www.irishimmigration.ie/coming-to-join-family-in-ireland/joining-an-irish-national/,en,allowed,t,0,2026-08-25,1
+IE,ie-long-term-study-visa,requirements,Immigration Service Delivery,1,https://www.irishimmigration.ie/coming-to-study-in-ireland/what-are-my-study-visa-options/how-to-apply-for-long-term-study-visa/,en,allowed,t,0,2026-08-25,2
+IE,ie-short-stay-c-visa,landing,Immigration Service Delivery,1,https://www.irishimmigration.ie/coming-to-visit-ireland/,en,allowed,t,0,2026-08-25,1
+IE,ie-short-stay-business-visa,requirements,Immigration Service Delivery,1,https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-options-for-working-in-ireland/coming-to-work-for-less-than-90-days/short-stay-business-visa/,en,allowed,t,0,2026-08-25,2
+IE,ie-long-stay-employment-visa,requirements,Immigration Service Delivery (ISD),1,https://www.irishimmigration.ie/coming-to-work-in-ireland/what-are-my-work-visa-options/applying-for-a-long-stay-employment-visa/employment-visa/,en,allowed,t,0,2026-08-25,2
+IE,ie-short-stay-c-visa,requirements,Immigration Service Delivery,1,https://www.irishimmigration.ie/how-to-apply-for-a-short-stay-c-visit-tourist-visa/,en,allowed,t,0,2026-08-25,2
+IE,ie-long-stay-employment-visa,fees,Immigration Service Delivery (ISD),1,https://www.irishimmigration.ie/preclearance-and-entry-visas-fees/,en,allowed,t,0,2026-08-25,1
+JO,jo-tourist-visa,requirements,Government of Jordan — national eGovernment portal,1,https://jordan.gov.jo/AR/Pages/%d8%aa%d8%a3%d8%b4%d9%8a%d8%b1%d8%a7%d8%aa_%d8%a7%d9%84%d8%b3%d9%81%d8%b1,ar,allowed,t,0,2026-08-25,1
+JP,jp-business-manager,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/businessmanager.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-dependent,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/dependent.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-highly-skilled-professional,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/designatedactivities02_00004.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-engineer-specialist-humanities-international-services,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/gijinkoku.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-instructor,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/instructor.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-intra-company-transferee,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/intracompanytransfee.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-medical-services,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/medicalservices.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-nursing-care,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/nursingcare.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-researcher,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/researcher.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-specified-skilled-worker,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/specifiedskilledworker.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-spouse-or-child-of-permanent-resident,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/spouseorchildofpermanentresident.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-student,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/student.html,ja,allowed,t,0,2026-08-25,1
+JP,jp-temporary-visitor,requirements,Immigration Services Agency (出入国在留管理庁),1,https://www.moj.go.jp/isa/applications/status/temporaryvisitor.html,ja,allowed,t,0,2026-08-25,1
+LB,,index,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en,en,allowed,t,0,2026-08-25,2
+LB,lb-entry-visa,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/159,en,allowed,t,0,2026-08-25,2
+LB,lb-domestic-worker,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/168,en,allowed,t,0,2026-08-25,2
+LB,lb-annual-residence,fees,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/169,en,allowed,t,0,2026-08-25,2
+LB,lb-domestic-worker,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/171,en,allowed,t,0,2026-08-25,2
+LB,lb-domestic-worker,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/23,en,allowed,t,0,2026-08-25,2
+LB,lb-religious-student-visa,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/239,en,allowed,t,0,2026-08-25,2
+LB,lb-annual-residence,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/241,en,allowed,t,0,2026-08-25,2
+LB,lb-artist-visa,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/413,en,allowed,t,0,2026-08-25,2
+LB,lb-artist-visa,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/48,en,allowed,t,0,2026-08-25,2
+LB,lb-six-month-bank-statement-residence,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/497,en,allowed,t,0,2026-08-25,2
+LB,lb-permanent-residence,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/5,en,allowed,t,0,2026-08-25,2
+LB,lb-artist-visa,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/526,en,allowed,t,0,2026-08-25,2
+LB,lb-courtesy-residence,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/6,en,allowed,t,0,2026-08-25,2
+LB,lb-foreign-expert-at-port,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/65,en,allowed,t,0,2026-08-25,2
+LB,lb-passport-renewal-temporary-residence,requirements,General Directorate of General Security (Lebanon),1,https://www.general-security.gov.lb/en/posts/68,en,allowed,t,0,2026-08-25,2
+MY,my-residence-pass,requirements,Jabatan Imigresen Malaysia (Immigration Department of Malaysia),1,https://www.imi.gov.my/index.php/en/main-services/pass/residence-pass/,en,allowed,t,0,2026-08-25,2
+MY,my-student-pass,requirements,Jabatan Imigresen Malaysia (Immigration Department of Malaysia),1,https://www.imi.gov.my/index.php/en/main-services/pass/student-pass/,en,allowed,t,0,2026-08-25,2
+MY,my-long-term-social-visit-pass,requirements,Jabatan Imigresen Malaysia (Immigration Department of Malaysia),1,https://www.imi.gov.my/index.php/en/main-services/pass/visitor-pass/social-visit-pass/long-term-social-visit-pass/,en,allowed,t,0,2026-08-25,2
+NL,nl-partner-residence-permit,requirements,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/family-and-partner/residence-permit-for-partner,en,allowed,t,0,2026-08-25,3
+NL,nl-student-residence-permit-higher-education,landing,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/study,en,allowed,t,0,2026-08-25,1
+NL,nl-student-residence-permit-higher-education,requirements,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/study/student-residence-permit-for-university-or-higher-professional-education,en,allowed,t,0,2026-08-25,2
+NL,nl-european-blue-card,requirements,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/work/european-blue-card-residence-permit,en,allowed,t,0,2026-08-25,2
+NL,nl-highly-skilled-migrant,requirements,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/work/highly-skilled-migrant,en,allowed,t,0,2026-08-25,2
+NL,nl-orientation-year,requirements,Immigratie- en Naturalisatiedienst (IND),1,https://ind.nl/en/residence-permits/work/residence-permit-for-orientation-year,en,allowed,t,0,2026-08-25,2
+NO,no-family-cohabitant,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/family-immigration/family-immigration-with-norwegian-or-nordic-citizen/,en,allowed,t,0,2026-08-25,2
+NO,no-family-spouse,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/family-immigration/family-immigration-with-norwegian-or-nordic-citizen/,en,allowed,t,0,2026-08-25,2
+NO,no-study-permit,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/studies/studietillatelse/,en,allowed,t,0,2026-08-25,2
+NO,no-visitor-visa,landing,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/visit-and-holiday/,en,allowed,t,0,2026-08-25,1
+NO,no-visitor-visa,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/visit-and-holiday/visitors-visa-to-norway/?c=ind,en,allowed,t,0,2026-08-25,1
+NO,no-skilled-worker,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/want-to-apply/work-immigration/skilled-workers/,en,allowed,t,0,2026-08-25,2
+NO,no-family-cohabitant,fees,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/word-definitions/fees/family-immigration/,en,allowed,t,0,2026-08-25,3
+NO,no-family-spouse,fees,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/word-definitions/fees/family-immigration/,en,allowed,t,0,2026-08-25,2
+NO,no-family-cohabitant,eligibility,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/word-definitions/requirement-to-be-at-least-24-years-old-in-applications-for-family-immigration/,en,allowed,t,0,2026-08-25,2
+NO,no-family-spouse,requirements,Utlendingsdirektoratet (UDI),1,https://www.udi.no/en/word-definitions/requirement-to-be-at-least-24-years-old-in-applications-for-family-immigration/,en,allowed,t,0,2026-08-25,2
+NZ,nz-accredited-employer-work-visa,requirements,Immigration New Zealand,1,https://www.immigration.govt.nz/new-zealand-visas/visas/visa/accredited-employer-work-visa,en,allowed,t,0,2026-08-25,3
+NZ,nz-exchange-student-visa,requirements,Immigration New Zealand,1,https://www.immigration.govt.nz/new-zealand-visas/visas/visa/exchange-student-visa,en,allowed,t,0,2026-08-25,4
+NZ,nz-post-study-work-visa,requirements,Immigration New Zealand (INZ),1,https://www.immigration.govt.nz/new-zealand-visas/visas/visa/post-study-work-visa,en,allowed,t,0,2026-08-25,3
+NZ,nz-visitor-visa,requirements,Immigration New Zealand,1,https://www.immigration.govt.nz/new-zealand-visas/visas/visa/visitor-visa,en,allowed,t,0,2026-08-25,4
+NZ,nz-visitor-visa,landing,Immigration New Zealand,1,https://www.immigration.govt.nz/visit/,en,allowed,t,0,2026-08-25,3
+NZ,nz-working-holiday-visa,landing,Immigration New Zealand,1,https://www.immigration.govt.nz/work/working-holiday-visas/,en,allowed,t,0,2026-08-25,3
+NZ,nz-working-holiday-visa,requirements,Immigration New Zealand,1,https://www.immigration.govt.nz/work/working-holiday-visas/who-can-apply-for-a-working-holiday-visa/,en,allowed,t,0,2026-08-25,3
+NZ,nz-working-holiday-visa,policy,Immigration New Zealand,1,https://www.immigration.govt.nz/work/working-holiday-visas/working-holiday-visa-medical-requirements/,en,allowed,t,0,2026-08-25,3
+OM,om-work-permit-cancellation,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Cancellation-of-Work-Permit-individuals-285,ar,allowed,t,0,2026-08-25,1
+OM,om-commercial-work-permit,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Commercial-Work-Permit-establishments-284,ar,allowed,t,0,2026-08-25,1
+OM,om-heat-work-permit,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Heat-WorkPermit-Application-348,ar,allowed,t,0,2026-08-25,1
+OM,om-private-work-permit,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Private-Work-Permit-individuals-290,ar,allowed,t,0,2026-08-25,1
+OM,om-work-permit-renewal,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Renewal-individuals-288,ar,allowed,t,0,2026-08-25,1
+OM,om-work-permit-transfer,requirements,Ministry of Labour (وزارة العمل),1,https://www.mol.gov.om/ManpowerAllEServices/Details/Work-Permit-Transfer-individuals-286,ar,allowed,t,0,2026-08-25,1
+PT,pt-autorizacao-residencia-investimento,eligibility,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/a-aima/perguntas-frequentes-faqs/autorizacao-de-residencia-para-investimento-ari/faq-residence-permit-for-investment-activity-ari,en,allowed,t,0,2026-08-25,1
+PT,pt-estudantes-ensino-superior,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/estudar/autorizacao-de-residencia-emitida-a-estudantes-do-ensino-superior-art-o-91,pt,allowed,t,0,2026-08-25,1
+PT,pt-atividade-altamente-qualificada,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-atividade-altamente-qualificada-art-90-o,pt,allowed,t,0,2026-08-25,1
+PT,pt-tech-visa,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-atividade-altamente-qualificada-exercida-para-empresa-certificada-art-90-o-tech-visa,pt,allowed,t,0,2026-08-25,1
+PT,pt-trabalho-independente-com-visto,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-independente-com-visto-de-residencia-art-89-o-n-o1,pt,allowed,t,0,2026-08-25,1
+PT,pt-trabalho-subordinado-sem-visto,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-subordinada-com-dispensa-de-visto-de-residencia-art-88-o-n-o-,pt,allowed,t,0,2026-08-25,1
+PT,pt-trabalho-subordinado-com-visto,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-subordinada-com-visto-de-residencia-art-88-o-n-o-1,pt,allowed,t,0,2026-08-25,1
+PT,pt-trabalho-visto-procura-emprego,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-exercicio-de-atividade-profissional-subordinada-com-visto-para-procura-de-trabalho-art-88-o-n-o7,pt,allowed,t,0,2026-08-25,1
+PT,pt-nomadas-digitais,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/trabalhar/autorizacao-de-residencia-para-o-exercicio-de-atividade-profissional-prestada-de-forma-remota-com-visto-de-residencia-para-o-exe,pt,allowed,t,0,2026-08-25,1
+PT,pt-estatuto-residente-longa-duracao,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/aquisicao-do-estatuto-de-residente-de-longa-duracao-erld-art-125-o,pt,allowed,t,0,2026-08-25,1
+PT,pt-startup-visa,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/autorizacao-de-residencia-para-imigrantes-empreendedores-startup-visa-art-89-o-n-o-4,pt,allowed,t,0,2026-08-25,1
+PT,pt-autorizacao-residencia-investimento,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/autorizacao-de-residencia-para-investimento-art-90-o-a,pt,allowed,t,0,2026-08-25,1
+PT,pt-autorizacao-residencia-permanente,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/autorizacao-de-residencia-permanente-art-80-o,pt,allowed,t,0,2026-08-25,1
+PT,pt-autorizacao-residencia-geral,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/autorizacao-de-residencia-regime-e-requisitos-gerais-art-o-77-o-n-o-1,pt,allowed,t,0,2026-08-25,1
+PT,pt-cartao-azul-ue,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/concessao-de-cartao-azul-ue-e-autorizacao-de-residencia-para-titulares-de-cartao-azul-ue-noutro-estado-membro-art-121-o-a-e-segu,pt,allowed,t,0,2026-08-25,1
+PT,pt-reagrupamento-familiar-em-territorio,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/reagrupamento-familiar-com-familiar-em-territorio-nacional-art-98-o-n-o-2,pt,allowed,t,0,2026-08-25,1
+PT,pt-reagrupamento-familiar-fora,requirements,"AIMA — Agência para a Integração, Migrações e Asilo",1,https://aima.gov.pt/pt/viver/reagrupamento-familiar-com-familiar-fora-de-territorio-nacional-art-98-o-n-o-1,pt,allowed,t,0,2026-08-25,1
+QA,qa-mission-issued-visas,requirements,Ministry of Foreign Affairs — Consular Affairs Department,1,https://mofa.gov.qa/en/consular-services/visas,en,allowed,t,0,2026-08-25,1
+SE,se-work-permit-employed,requirements,Migrationsverket (Swedish Migration Agency),1,https://www.migrationsverket.se/du-vill-ansoka/arbeta/anstalld-eller-egen-foretagare/anstalld.html,sv,allowed,t,0,2026-08-25,1
+SE,se-schengen-visa,landing,Migrationsverket (Swedish Migration Agency),1,https://www.migrationsverket.se/du-vill-ansoka/besoka-sverige.html,sv,allowed,t,0,2026-08-25,1
+SE,se-schengen-visa,requirements,Migrationsverket (Swedish Migration Agency),1,https://www.migrationsverket.se/du-vill-ansoka/besoka-sverige/besoka-sverige-upp-till-90-dagar-visum.html,sv,allowed,t,0,2026-08-25,1
+SE,se-higher-education-study-permit,requirements,Migrationsverket (Swedish Migration Agency),1,https://www.migrationsverket.se/du-vill-ansoka/studera/studier-vid-hogre-utbildning.html,sv,allowed,t,0,2026-08-25,1
+SE,se-family-partner,eligibility,Migrationsverket,1,https://www.migrationsverket.se/en/word-explanations/maintenance-requirement-for-the-person-in-sweden.html,en,allowed,t,0,2026-08-25,1
+SE,se-family-partner,requirements,Migrationsverket,1,https://www.migrationsverket.se/en/you-want-to-apply/live-with-someone/live-with-a-partner-child-or-other-relative/live-with-a-partner.html,en,allowed,t,0,2026-08-25,1
+SE,se-eu-blue-card,requirements,Migrationsverket,1,https://www.migrationsverket.se/en/you-want-to-apply/work/employee-or-self-employed/eu-blue-cards.html,en,allowed,t,0,2026-08-25,1
+SG,sg-entry-visa,requirements,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements,en,allowed,t,0,2026-08-25,2
+SG,sg-entry-visa,documents,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/india,en,allowed,t,0,2026-08-25,2
+SG,sg-entry-visa,forms,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/pakistan,en,allowed,t,0,2026-08-25,2
+SG,sg-long-term-visit-pass,requirements,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/LTVP/apply,en,allowed,t,0,2026-08-25,2
+SG,sg-long-term-visit-pass,eligibility,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/LTVP/apply/spouse-of-a-singapore-citizen-(sc),en,allowed,t,0,2026-08-25,2
+SG,sg-long-term-visit-pass,application,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/LTVP/cof-and-issue-new,en,allowed,t,0,2026-08-25,2
+SG,sg-student-pass,requirements,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/STP/apply,en,allowed,t,0,2026-08-25,2
+SG,sg-student-pass,eligibility,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/STP/apply/ihl,en,allowed,t,0,2026-08-25,2
+SG,sg-student-pass,policy,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/STP/apply/pei,en,allowed,t,0,2026-08-25,2
+SG,sg-student-pass,application,Immigration & Checkpoints Authority (ICA),1,https://www.ica.gov.sg/reside/STP/collect,en,allowed,t,0,2026-08-25,2
+SG,sg-dependants-pass,application,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/dependants-pass/apply-for-a-pass,en,allowed,t,0,2026-08-25,3
+SG,sg-dependants-pass,documents,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/dependants-pass/documents-required,en,allowed,t,0,2026-08-25,3
+SG,sg-dependants-pass,requirements,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/dependants-pass/eligibility,en,allowed,t,0,2026-08-25,3
+SG,sg-dependants-pass,eligibility,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/dependants-pass/key-facts,en,allowed,t,0,2026-08-25,3
+SG,sg-dependants-pass,policy,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/dependants-pass/working-in-singapore,en,allowed,t,0,2026-08-25,3
+SG,sg-employment-pass,application,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/employment-pass/apply-for-a-pass,en,allowed,t,0,2026-08-25,2
+SG,sg-employment-pass,documents,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/employment-pass/documents-required,en,allowed,t,0,2026-08-25,2
+SG,sg-employment-pass,requirements,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility,en,allowed,t,0,2026-08-25,2
+SG,sg-employment-pass,eligibility,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/employment-pass/key-facts,en,allowed,t,0,2026-08-25,2
+SG,sg-entrepass,application,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/entrepass/apply-for-a-pass,en,allowed,t,0,2026-08-25,2
+SG,sg-entrepass,documents,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/entrepass/documents-required,en,allowed,t,0,2026-08-25,2
+SG,sg-entrepass,requirements,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/entrepass/eligibility,en,allowed,t,0,2026-08-25,2
+SG,sg-entrepass,eligibility,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/entrepass/key-facts,en,allowed,t,0,2026-08-25,2
+SG,sg-one-pass,application,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/apply-for-a-pass,en,allowed,t,0,2026-08-25,2
+SG,sg-one-pass,documents,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/documents-required,en,allowed,t,0,2026-08-25,2
+SG,sg-one-pass,requirements,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/eligibility,en,allowed,t,0,2026-08-25,2
+SG,sg-one-pass,eligibility,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/overseas-networks-expertise-pass/key-facts,en,allowed,t,0,2026-08-25,2
+SG,sg-s-pass,application,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/s-pass/apply-for-a-pass,en,allowed,t,0,2026-08-25,2
+SG,sg-s-pass,documents,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/s-pass/documents-required,en,allowed,t,0,2026-08-25,2
+SG,sg-s-pass,requirements,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/s-pass/eligibility,en,allowed,t,0,2026-08-25,2
+SG,sg-s-pass,eligibility,Ministry of Manpower (MOM),1,https://www.mom.gov.sg/passes-and-permits/s-pass/key-facts,en,allowed,t,0,2026-08-25,2
+TH,th-non-immigrant-visa,requirements,"Department of Consular Affairs, Ministry of Foreign Affairs (กรมการกงสุล)",1,https://consular.mfa.go.th/th/publicservice/%e0%b8%84%e0%b8%99%e0%b8%ad%e0%b8%a2%e0%b8%b9%e0%b9%88%e0%b8%8a%e0%b8%b1%e0%b9%88%e0%b8%a7%e0%b8%84%e0%b8%a3%e0%b8%b2%e0%b8%a7-%e0%b9%8cnon-immigrant-visa?page=5ddcb94a01330918812bbf22&menu=5ddcb8b29b1e8a30447d6f22,th,allowed,t,0,2026-08-25,1
+TH,th-transit-visa,requirements,"Department of Consular Affairs, Ministry of Foreign Affairs (กรมการกงสุล)",1,https://consular.mfa.go.th/th/publicservice/%e0%b8%84%e0%b8%99%e0%b9%80%e0%b8%94%e0%b8%b4%e0%b8%99%e0%b8%97%e0%b8%b2%e0%b8%87%e0%b8%9c%e0%b9%88%e0%b8%b2%e0%b8%99%e0%b8%a3%e0%b8%b2%e0%b8%8a%e0%b8%ad%e0%b8%b2%e0%b8%93%e0%b8%b2%e0%b8%88%e0%b8%b1%e0%b8%81%e0%b8%a3-transit-visa?page=5ddcb94a01330918812bbf22&menu=5ddcb8b29b1e8a30447d6f22,th,allowed,t,0,2026-08-25,1
+TH,th-tourist-visa,requirements,"Department of Consular Affairs, Ministry of Foreign Affairs (กรมการกงสุล)",1,https://consular.mfa.go.th/th/publicservice/%e0%b8%99%e0%b8%b1%e0%b8%81%e0%b8%97%e0%b9%88%e0%b8%ad%e0%b8%87%e0%b9%80%e0%b8%97%e0%b8%b5%e0%b9%88%e0%b8%a2%e0%b8%a7-tourist-visa?page=5ddcb94a01330918812bbf22&menu=5ddcb8b29b1e8a30447d6f22,th,allowed,t,0,2026-08-25,1
+TR,tr-family-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-student-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-human-trafficking-victim-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-long-term-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-short-term-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-humanitarian-residence-permit,fees,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/documents-for-residence-permit-fee-amount,en,allowed,t,0,2026-08-25,1
+TR,tr-short-term-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-long-term-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-student-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-human-trafficking-victim-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-family-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-humanitarian-residence-permit,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-permit-types,en,allowed,t,0,2026-08-25,1
+TR,tr-foreign-mission-personnel,requirements,Presidency of Migration Management (Göç İdaresi Başkanlığı),1,https://en.goc.gov.tr/residence-procedures-for-foreign-mission-personnel-and-their-family-members,en,allowed,t,0,2026-08-25,1
+TR,tr-tour-operator-representative-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-religious-foundation-personnel,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-archaeological-documentary-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-internship-work-permit-exemption,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-working-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-transportation-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-e-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-tourist-visa,requirements,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/general-information-about-turkish-visas.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-tourist-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-tour-operator-representative-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-transportation-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-internship-work-permit-exemption,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-working-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-archaeological-documentary-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-religious-foundation-personnel,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+TR,tr-e-visa,policy,Ministry of Foreign Affairs of the Republic of Türkiye,1,https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa,en,allowed,t,0,2026-08-25,1
+US,us-business-visitor,application,U.S. Citizenship and Immigration Services,2,https://ceac.state.gov/genniv/,en,unknown,t,56,2026-08-20,0
+US,us-temporary-worker-visas,application,U.S. Citizenship and Immigration Services,2,https://ceac.state.gov/genniv/,en,unknown,t,56,2026-08-20,0
+US,us-student-visa-academic-f-vocational-m,application,U.S. Citizenship and Immigration Services,2,https://ceac.state.gov/genniv/,en,unknown,t,56,2026-08-20,0
+US,us-visitor-visa-b-1-business-b-2-tourism,application,U.S. Citizenship and Immigration Services,2,https://ceac.state.gov/genniv/,en,unknown,t,56,2026-08-20,0
+US,us-visa-waiver-program-esta,application,U.S. Citizenship and Immigration Services,1,https://esta.cbp.dhs.gov/,en,unknown,t,56,2026-08-20,0
+US,us-student-visa-academic-f-vocational-m,eligibility,U.S. Immigration and Customs Enforcement — Student and Exchange Visitor Program,1,https://studyinthestates.dhs.gov/students/maintaining-status,en,allowed,t,0,2026-08-25,1
+US,us-student-visa-academic-f-vocational-m,documents,U.S. Immigration and Customs Enforcement — Student and Exchange Visitor Program,1,https://studyinthestates.dhs.gov/students/prepare/students-and-the-form-i-20,en,allowed,t,0,2026-08-25,1
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas.html,en,unknown,t,56,2026-08-20,0
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/employment.html,en,unknown,t,56,2026-08-20,0
+US,us-temporary-worker-visas,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/employment/temporary-worker-visas.html,en,unknown,t,56,2026-08-20,0
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/immigrate.html,en,unknown,t,56,2026-08-20,0
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/immigrate/family-immigration.html,en,unknown,t,56,2026-08-20,0
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,eligibility,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition.html,en,unknown,t,56,2026-08-20,0
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,application,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing.html,en,unknown,t,56,2026-08-20,0
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/study.html,en,unknown,t,56,2026-08-20,0
+US,us-student-visa-academic-f-vocational-m,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html,en,unknown,t,56,2026-08-20,0
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/tourism-visit.html,en,unknown,t,56,2026-08-20,0
+US,us-visa-waiver-program-esta,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html,en,unknown,t,56,2026-08-20,0
+US,us-business-visitor,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html,en,unknown,t,56,2026-08-20,0
+US,us-visitor-visa-b-1-business-b-2-tourism,landing,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html,en,unknown,t,56,2026-08-20,0
+US,,index,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html,en,unknown,t,56,2026-08-20,0
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-business-visitor,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-visitor-visa-b-1-business-b-2-tourism,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-visa-waiver-program-esta,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-student-visa-academic-f-vocational-m,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-temporary-worker-visas,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-exchange-visitor,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-treaty-trader-treaty-investor,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-transiting-the-united-states,fees,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html,en,unknown,t,56,2026-08-20,0
+US,us-visitor-visa-b-1-business-b-2-tourism,forms,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html,en,unknown,t,56,2026-08-20,0
+US,us-business-visitor,forms,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html,en,unknown,t,56,2026-08-20,0
+US,us-student-visa-academic-f-vocational-m,forms,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html,en,unknown,t,56,2026-08-20,0
+US,us-temporary-worker-visas,forms,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html,en,unknown,t,56,2026-08-20,0
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,forms,U.S. Citizenship and Immigration Services,2,https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/online-immigrant-visa-forms/ds-260-faqs.html,en,unknown,t,56,2026-08-20,0
+US,us-visitor-visa-b-1-business-b-2-tourism,policy,U.S. Customs and Border Protection,1,https://www.cbp.gov/travel/international-visitors,en,allowed,t,0,2026-08-25,1
+US,us-transiting-the-united-states,policy,U.S. Customs and Border Protection,1,https://www.cbp.gov/travel/international-visitors,en,allowed,t,0,2026-08-25,1
+US,us-visa-waiver-program-esta,requirements,U.S. Customs and Border Protection,1,https://www.cbp.gov/travel/international-visitors/esta,en,allowed,t,0,2026-08-25,1
+US,us-visa-waiver-program-esta,eligibility,U.S. Customs and Border Protection,1,https://www.cbp.gov/travel/international-visitors/visa-waiver-program,en,allowed,t,0,2026-08-25,1
+US,,index,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/family/family-of-us-citizens,en,allowed,t,0,2026-08-25,1
+US,us-temporary-worker-visas,forms,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/i-129,en,allowed,t,0,2026-08-25,2
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,forms,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/i-130,en,allowed,t,0,2026-08-25,1
+US,us-family-immigration-immediate-relative-and-family-preference-immigrant-visas,forms,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/i-485,en,allowed,t,0,2026-08-25,1
+US,us-temporary-worker-visas,forms,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/i-765,en,allowed,t,0,2026-08-25,1
+US,us-transiting-the-united-states,application,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/visit-the-united-states/extend-your-stay,en,allowed,t,0,2026-08-25,1
+US,us-visitor-visa-b-1-business-b-2-tourism,application,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/visit-the-united-states/extend-your-stay,en,allowed,t,0,2026-08-25,1
+US,,index,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states,en,allowed,t,0,2026-08-25,1
+US,us-exchange-visitor,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/exchange-visitors,en,allowed,t,0,2026-08-25,1
+US,us-student-visa-academic-f-vocational-m,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment,en,allowed,t,0,2026-08-25,1
+US,us-student-visa-academic-f-vocational-m,application,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/students-and-employment/changing-to-a-nonimmigrant-f-or-m-student-status,en,allowed,t,0,2026-08-25,1
+US,us-business-visitor,landing,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business,en,allowed,t,0,2026-08-25,1
+US,us-transiting-the-united-states,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business/b-1-temporary-business-visitor,en,allowed,t,0,2026-08-25,1
+US,us-business-visitor,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business/b-1-temporary-business-visitor,en,allowed,t,0,2026-08-25,1
+US,us-visitor-visa-b-1-business-b-2-tourism,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-visitors-for-business/b-1-temporary-business-visitor,en,allowed,t,0,2026-08-25,1
+US,us-treaty-trader-treaty-investor,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-workers/e-1-treaty-traders,en,allowed,t,0,2026-08-25,1
+US,us-treaty-trader-treaty-investor,requirements,U.S. Citizenship and Immigration Services,1,https://www.uscis.gov/working-in-the-united-states/temporary-workers/e-2-treaty-investors,en,allowed,t,0,2026-08-25,1

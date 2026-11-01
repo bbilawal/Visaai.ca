@@ -1,0 +1,11 @@
+[Unit]
+Description=Run VisaAI off-host encrypted backup daily
+
+[Timer]
+# Daily at 03:20 UTC with jitter; catch up if the host was off at the scheduled time.
+OnCalendar=*-*-* 03:20:00 UTC
+RandomizedDelaySec=1200
+Persistent=true
+
+[Install]
+WantedBy=timers.target

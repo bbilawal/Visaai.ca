@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0.0",
+  "visaai_id": "ca-work-permit",
+  "extracted_at": "2026-08-21",
+  "extraction_method": "manual",
+  "extractor": "read directly from the official IRCC pages listed in source_roles",
+  "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
+  "source_roles": {
+    "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html",
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html",
+    "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html",
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+  },
+  "page_dates": {
+    "landing": "2026-06-01",
+    "application": "2026-03-31",
+    "forms": "2026-07-21"
+  },
+  "not_extracted": [
+    "The work permit eligibility criteria. No eligibility page is registered as a source for this visa type. The registered 'application' page (permit-outside.html) is a section index whose 'check if you can apply' section links out to a page that was not read, so this extraction states no eligibility conditions beyond what those four pages carry. This is the single largest gap in this file.",
+    "Medical exams and police certificates. Neither is mentioned on any of the four registered pages. IRCC may require them for some work permits, but nothing read here says so, so nothing is claimed.",
+    "The employment contract or employment letter content list (name of employer, address, job title, salary, hours of work). On the IMM 1295 page this sentence sits inside the branch answering 'who should select \"other\"?' — applicants working for a foreign mission or international organization, a foreign government, or a bridge or tunnel authority. The normalizer flattens the collapsed branches, and attributing that document list to every work permit applicant would be wrong.",
+    "The inside-Canada and port-of-entry application routes. The apply page opens by pointing them elsewhere ('not outside canada? check if you can apply from inside canada or at a port of entry'). IMM 1295 is titled for applications made outside Canada.",
+    "Work permits with special instructions: post-graduation work permit, working as a student, International Experience Canada, working while waiting for permanent residence, and open work permits for family members of foreign workers. The landing page names them and links each to its own page.",
+    "The Labour Market Impact Assessment process itself. The employer applies for the LMIA; IRCC publishes that process on the employer pages, which were not read.",
+    "Local visa office requirements. The apply page names them as part of 'what forms and documents you need', but the list is per-country and behind a selector.",
+    "Which countries or territories require biometrics. IRCC gates that list behind a separate checker tool.",
+    "Processing times. The apply page links to a tool and publishes no number.",
+    "Venezuelan passport-extension instructions on the IMM 1295 page — a nationality-specific branch.",
+    "IRM 0002 (request for a change of sex or gender identifier). Named on the IMM 1295 page, but it applies only where the chosen gender identifier differs from an existing or foreign document, which VisaAI has no fact for.",
+    "The work permit fee exemption. The apply page writes the fee as '$155 (unless exempt)' and links the exemption list out; the exempt categories were not read."
+  ],
+  "requirements": [
+    {
+      "requirement_code": "work_permit_required",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Most foreign nationals need a work permit to work in Canada",
+      "description": "IRCC states you may be eligible for an employer-specific or an open work permit.",
+      "source_role": "application",
+      "source_excerpt": "most foreign nationals need a work permit to work in canada. you may be eligible for an employer-specific or an open work permit.",
+      "display_order": 10,
+      "source_excerpt_display": "Most foreign nationals need a work permit to work in Canada. You may be eligible for an employer-specific or an open work permit."
+    },
+    {
+      "requirement_code": "job_offer_for_employer_specific_permit",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "An employer-specific work permit requires a job offer; an open work permit does not",
+      "description": "IRCC publishes this as the defining difference between the two permit types.",
+      "source_role": "landing",
+      "source_excerpt": "types of work permits employer-specific work permit job offer required open work permit job offer not required",
+      "display_order": 20,
+      "source_excerpt_display": "Types of work permits Employer-specific work permit Job offer required Open work permit Job offer not required"
+    },
+    {
+      "requirement_code": "permit_duration_within_passport_validity",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "A work permit cannot be issued for longer than your passport is valid",
+      "description": "Stated on the IMM 1295 instructions where you enter the expected start and end dates of your work in Canada. IRCC also states those dates should match the LMIA, the offer of employment, or the duration allowed in the work permit category for an open work permit.",
+      "source_role": "forms",
+      "source_excerpt": "note: a work permit cannot be issued for a duration that is longer than the validity of your passport.",
+      "display_order": 30,
+      "source_excerpt_display": "Note: A work permit cannot be issued for a duration that is longer than the validity of your passport."
+    },
+    {
+      "requirement_code": "lmia_and_employment_contract",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Original employment contract and Labour Market Impact Assessment (LMIA)",
+      "description": "Required by the IMM 1295 instructions where you need an LMIA to get a work permit. Applicants who do not need an LMIA give the name of the employer who provided the offer of employment number instead. VisaAI has no fact for whether an LMIA is needed, so this is stated rather than gated.",
+      "source_role": "forms",
+      "source_excerpt": "a) if you need an lmia to get a work permit, type the name of the employer as shown on the lmia. attach original employment contract and lmia.",
+      "display_order": 100,
+      "source_excerpt_display": "a) If you need an LMIA to get a work permit, type the name of the employer as shown on the LMIA. Attach original employment contract and LMIA."
+    },
+    {
+      "requirement_code": "lmia_or_offer_of_employment_number",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your LMIA number or offer of employment number",
+      "description": "IRCC states the LMIA number is seven digits, and the LMIA-exempt offer of employment number begins with the letter 'a' followed by seven numbers.",
+      "source_role": "forms",
+      "source_excerpt": "type the seven-digit number of your valid lmia or the alpha numeric combination of the offer of employment number (lmia exempt). this number begins with the letter “a” and is followed by seven numbers.",
+      "display_order": 110,
+      "source_excerpt_display": "Type the seven-digit number of your valid LMIA or the alpha numeric combination of the offer of employment number (LMIA Exempt). This number begins with the letter “A” and is followed by seven numbers."
+    },
+    {
+      "requirement_code": "marriage_certificate_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of your marriage licence or certificate",
+      "description": "Required by the IMM 1295 instructions where the applicant is married.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "married"
+        ]
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you are married, you must send a photocopy of your marriage licence or certificate with your application.",
+      "display_order": 120,
+      "source_excerpt_display": "If you are married, you must send a photocopy of your marriage licence or certificate with your application."
+    },
+    {
+      "requirement_code": "imm1295",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Application for a Work Permit Made Outside of Canada",
+      "official_form_code": "IMM 1295",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html",
+      "description": "IRCC states each person who needs a work permit must fill out this form. It is titled for applications made outside Canada; the inside-Canada and port-of-entry routes were not extracted.",
+      "source_role": "forms",
+      "source_excerpt": "application for work permit made outside of canada (imm 1295) who must fill out this application form? each person who needs a work permit must fill out this form.",
+      "display_order": 200,
+      "source_excerpt_display": "Application for Work Permit Made Outside of Canada (IMM 1295) Who must fill out this application form? Each person who needs a work permit must fill out this form."
+    },
+    {
+      "requirement_code": "imm5409",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Statutory Declaration of Common-Law Union",
+      "official_form_code": "IMM 5409",
+      "description": "Required by the IMM 1295 instructions where the applicant is in a common-law union.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "in",
+        "value": [
+          "common_law",
+          "de_facto",
+          "partnered"
+        ]
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you are in a common-law union, you must also fill out the statutory declaration of common-law union [imm 5409] (opens in a new tab) form and include it with your application.",
+      "display_order": 210,
+      "source_excerpt_display": "If you are in a common-law union, you must also fill out the Statutory Declaration of Common-law Union [IMM 5409] (opens in a new tab) form and include it with your application."
+    },
+    {
+      "requirement_code": "imm5476",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Use of a Representative",
+      "official_form_code": "IMM 5476",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "forms",
+      "source_excerpt": "if you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the use of a representative [imm 5476] (opens in a new tab) form.",
+      "display_order": 220,
+      "source_excerpt_display": "If you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the Use of a Representative [IMM 5476] (opens in a new tab) form."
+    },
+    {
+      "requirement_code": "submit_application_online",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Sign in to your account, upload documents, pay fees and give biometrics",
+      "description": "IRCC's own summary of the submission step on the apply-from-outside-Canada page.",
+      "source_role": "application",
+      "source_excerpt": "submit your application sign in to your account, upload documents, pay fees, give biometrics",
+      "display_order": 300,
+      "source_excerpt_display": "Submit your application Sign in to your account, upload documents, pay fees, give biometrics"
+    },
+    {
+      "requirement_code": "validate_form_barcode_page",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Validate the form to generate the barcode page",
+      "description": "IRCC requires validation when the form is completed on a computer. Paper applicants must print the barcode page (page 5 of 5) and place it on top of the application, or on top of each individual application package when applying as a group.",
+      "source_role": "forms",
+      "source_excerpt": "note: if this application form is completed on a computer it must be validated to generate a barcode page . if you apply on paper, print and place the barcode page (page 5 of 5) on the top of your application (or if applying as a group, each individual application package).",
+      "display_order": 310,
+      "source_excerpt_display": "Note: If this application form is completed on a computer it must be validated to generate a barcode page. If you apply on paper, print and place the barcode page (page 5 of 5) on the top of your application (or if applying as a group, each individual application package)."
+    },
+    {
+      "requirement_code": "original_passport_for_visa_counterfoil",
+      "kind": "step",
+      "officially_required": true,
+      "label": "Send IRCC your original passport if you also need a temporary resident visa",
+      "description": "Applies after approval, and only where a temporary resident visa is needed, so that IRCC can issue the visa counterfoil.",
+      "source_role": "forms",
+      "source_excerpt": "note: if you need a temporary resident visa (trv) and your work permit application is approved, you must give us your original passport so we can issue the visa counterfoil.",
+      "display_order": 320,
+      "source_excerpt_display": "Note: If you need a Temporary Resident Visa (TRV) and your work permit application is approved, you must give us your original passport so we can issue the visa counterfoil."
+    },
+    {
+      "requirement_code": "work_permit_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Work permit processing fee",
+      "description": "CAD 155.00 per person, the same amount as for an extension. A group of 3 or more performing artists and their staff applying at the same time and place pays a maximum of CAD 465.00. IRCC's apply page writes the fee as '$155 (unless exempt)'; the exemption list was not read.",
+      "parameters": {
+        "amount": 155,
+        "currency": "CAD",
+        "unit": "per person",
+        "group_maximum": 465,
+        "group_condition": "3 or more performing artists and their staff applying at the same time and place",
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "work permits (including extensions) fees $can work permit (including extensions) – per person 155.00 work permit (including extensions) – per group (3 or more performing artists) maximum fee for a group of 3 or more performing artists applying at the same time and place 465.00",
+      "display_order": 400,
+      "source_excerpt_display": "Work Permits (including extensions) Fees $CAN Work permit (including extensions) – per person 155.00 Work permit (including extensions) – per group (3 or more performing artists) Maximum fee for a group of 3 or more performing artists applying at the same time and place 465.00"
+    },
+    {
+      "requirement_code": "biometrics_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Biometrics fee",
+      "description": "CAD 85.00 per individual, with a maximum of CAD 170.00 for a family of 2 or more eligible people applying at the same time, and CAD 255.00 for a group of 3 or more performing artists applying for a work permit at the same time. Payable only if your citizenship requires biometrics; IRCC publishes a separate tool to check, and that country list has not been extracted.",
+      "parameters": {
+        "amount": 85,
+        "currency": "CAD",
+        "unit": "per individual",
+        "family_maximum": 170,
+        "family_minimum_size": 2,
+        "performing_artist_group_maximum": 255,
+        "read_at": "2026-08-21"
+      },
+      "source_role": "fees",
+      "source_excerpt": "biometrics – per individual 85.00 biometrics – per family of 2 or more eligible people maximum fee for a family of 2 or more people applying at the same time family members eligible for this fee are your spouse or common-law partner your dependent children and their dependent children check if your child is a dependant . 170.00 biometrics – per group of 3 or more performing artists maximum fee for a group of 3 or more performing artists applying for a work permit at the same time 255.00",
+      "display_order": 410,
+      "source_excerpt_display": "Biometrics – per individual 85.00 Biometrics – per family of 2 or more eligible people Maximum fee for a family of 2 or more people applying at the same time Family members eligible for this fee are your spouse or common-law partner your dependent children and their dependent children Check if your child is a dependant. 170.00 Biometrics – per group of 3 or more performing artists Maximum fee for a group of 3 or more performing artists applying for a work permit at the same time 255.00"
+    }
+  ]
+}
