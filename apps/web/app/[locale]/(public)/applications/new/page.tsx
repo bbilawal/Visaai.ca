@@ -56,6 +56,9 @@ export default function NewApplicationPage() {
 
       if (!res.ok) throw new Error(t('errCreateFailed'))
       const { applicationId } = await res.json() as { applicationId: string }
+      if (SITE_CONFIG.mode === 'canada') {
+        window.sessionStorage.setItem('visaai.ca.activeApplicationId', applicationId)
+      }
       router.push(`/intake/${applicationId}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errUnknown'))
@@ -66,6 +69,11 @@ export default function NewApplicationPage() {
   useEffect(() => {
     if (SITE_CONFIG.mode !== 'canada' || startedCanadaApplication.current) return
     startedCanadaApplication.current = true
+    const existingId = window.sessionStorage.getItem('visaai.ca.activeApplicationId')
+    if (existingId) {
+      router.replace(`/intake/${existingId}`)
+      return
+    }
     void handleCreate('CA')
   }, [])
 
