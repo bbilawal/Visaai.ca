@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Headers,
+  Optional,
   Param,
   Post,
   Query,
@@ -13,6 +14,9 @@ import type { ConsultantCard, ConsultantReview } from '@visaai/types';
 import { AllowAnonymous, JwtGuard } from '../auth/jwt.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { ConfigService } from '@nestjs/config';
+import type { Env } from '../../config/configuration';
+import { readSiteMode, siteDefaultCountry } from '../../config/site-scope';
 import { DiscoveryService } from './discovery.service';
 import {
   CreateReviewDto,
@@ -38,7 +42,10 @@ function bearer(authHeader: string | undefined): string {
 @Controller('marketplace/consultants')
 @UseGuards(JwtGuard)
 export class DiscoveryController {
-  constructor(private readonly discovery: DiscoveryService) {}
+  constructor(
+    private readonly discovery: DiscoveryService,
+    @Optional() private readonly config?: ConfigService<Env>,
+  ) {}
 
   @Get()
   @AllowAnonymous()
@@ -50,7 +57,9 @@ export class DiscoveryController {
     if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
     return this.discovery.listConsultants(bearer(auth), {
       visaType: parsed.data.visa_type,
-      country: parsed.data.country,
+      // Canada-only site: browsing is always pinned to Canadian consultants.
+      country:
+        siteDefaultCountry(readSiteMode(this.config)) ?? parsed.data.country,
       language: parsed.data.language,
     });
   }

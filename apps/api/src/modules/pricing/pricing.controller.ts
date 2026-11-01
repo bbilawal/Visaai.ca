@@ -3,11 +3,19 @@ import {
   Body,
   Controller,
   Get,
+  Optional,
   Param,
   Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import type { Env } from '../../config/configuration';
+import {
+  isCountryInSiteScope,
+  readSiteMode,
+  type SiteMode,
+} from '../../config/site-scope';
 import { JwtGuard } from '../auth/jwt.guard';
 import { RolesGuard, RequireRole } from '../auth/roles.guard';
 import { PricingService } from './pricing.service';
@@ -24,7 +32,19 @@ export class PricingController {
   constructor(
     private readonly pricing: PricingService,
     private readonly admin: PricingAdminService,
+    @Optional() private readonly config?: ConfigService<Env>,
   ) {}
+
+  private get siteMode(): SiteMode {
+    return readSiteMode(this.config);
+  }
+
+  /** Canada-only site: refuse any country outside the site's scope. */
+  private assertInScope(code: string): void {
+    if (!isCountryInSiteScope(this.siteMode, code)) {
+      throw new BadRequestException(`Country not served by this site: ${code}`);
+    }
+  }
 
   // ---- public (no auth — prices show pre-login, 09) ---------------------
 
@@ -32,6 +52,7 @@ export class PricingController {
   quote(@Query() query: unknown) {
     const parsed = QuoteQueryDto.safeParse(query);
     if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
+    this.assertInScope(parsed.data.country);
     return this.pricing.getPublicQuote(
       parsed.data.visaType,
       parsed.data.country,
@@ -39,13 +60,19 @@ export class PricingController {
   }
 
   @Get('quotes')
-  quotes() {
-    return this.pricing.listPublicQuotes();
+  async quotes() {
+    const quotes = await this.pricing.listPublicQuotes();
+    return quotes.filter((q) =>
+      isCountryInSiteScope(this.siteMode, q.country_code),
+    );
   }
 
   @Get('countries')
-  countries() {
-    return this.pricing.listCountries();
+  async countries() {
+    const countries = await this.pricing.listCountries();
+    return countries.filter((c) =>
+      isCountryInSiteScope(this.siteMode, c.country_code),
+    );
   }
 
   @Get('visas')
@@ -80,6 +107,7 @@ export class PricingController {
     @Param('countryCode') countryCode: string,
     @Body() body: unknown,
   ) {
+    this.assertInScope(countryCode);
     const parsed = UpdateCountryFactorDto.safeParse(body);
     if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
     return this.admin.updateCountryFactor(countryCode, parsed.data);

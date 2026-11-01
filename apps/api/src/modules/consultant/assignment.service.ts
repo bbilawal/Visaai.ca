@@ -27,6 +27,14 @@ import {
   type AssignmentMeta,
 } from './assignment.repository';
 import type { IAssignmentRepository } from './assignment.repository';
+import { ConfigService } from '@nestjs/config';
+import type { Env } from '../../config/configuration';
+import {
+  isCountryInSiteScope,
+  readSiteMode,
+  siteDefaultCountry,
+  type SiteMode,
+} from '../../config/site-scope';
 import { consultantCoversCountry, strategyRegistry } from '../../strategies';
 
 /** Default consultant review window (SLA) granted on every (re)assignment. */
@@ -58,7 +66,13 @@ export class AssignmentService {
     // NotificationBusModule in the running app; omitted in unit tests (no-op).
     @Optional() private readonly notifBus?: NotificationEventBus,
     @Optional() private readonly analytics?: AnalyticsEventBus,
+    // @Optional: SITE_MODE source. Absent in unit tests → global (unscoped).
+    @Optional() private readonly config?: ConfigService<Env>,
   ) {}
+
+  private get siteMode(): SiteMode {
+    return readSiteMode(this.config);
+  }
 
   /**
    * Notify the application owner that a consultant is now on their case.
@@ -101,6 +115,12 @@ export class AssignmentService {
     codes: string[],
   ): Promise<string[]> {
     for (const code of codes) {
+      // The Canada-only site never maps a consultant outside its scope.
+      if (!isCountryInSiteScope(this.siteMode, code)) {
+        throw new BadRequestException(
+          `country not served by this site: ${code}`,
+        );
+      }
       // Registry covers selectable ISO-2 codes + the resolvable SCHENGEN bloc,
       // matching consultantCoversCountry's coverage semantics.
       if (!strategyRegistry.getCountry(code)) {
@@ -118,12 +138,14 @@ export class AssignmentService {
     // Lazy SLA sweep: release past-due, not-completed assignments so expired
     // applications reappear in the queue (no cron — runs on portal reads).
     await this.releaseExpired();
-    const countries = await this.repo.getConsultantCountries(consultantId);
+    const countries = (
+      await this.repo.getConsultantCountries(consultantId)
+    ).filter((code) => isCountryInSiteScope(this.siteMode, code));
     const [queue, mine] = await Promise.all([
       this.repo.listUnassignedByCountries(countries),
       this.repo.listMyAssignedApplications(consultantId),
     ]);
-    return { queue, mine };
+    return { queue, mine: this.withinSiteScope(mine) };
   }
 
   /** Admin portal: all applications + derived status + assignee + date. */
@@ -132,12 +154,34 @@ export class AssignmentService {
   ): Promise<AdminApplicationView[]> {
     // Sweep first so the admin sees expired apps as UNASSIGNED (re-assignable).
     await this.releaseExpired();
-    return this.repo.listAllApplicationsAdmin(filter);
+    // Canada-only site: the admin list is pinned to Canada whatever the query.
+    const pinned = siteDefaultCountry(this.siteMode);
+    return this.repo.listAllApplicationsAdmin(
+      pinned ? { ...filter, country: pinned } : filter,
+    );
   }
 
   /** Applicant portal: own applications + assigned consultant + status. */
-  getApplicantView(userId: string): Promise<ApplicantApplicationView[]> {
-    return this.repo.listApplicantApplications(userId);
+  async getApplicantView(userId: string): Promise<ApplicantApplicationView[]> {
+    return this.withinSiteScope(
+      await this.repo.listApplicantApplications(userId),
+    );
+  }
+
+  /**
+   * Drops rows whose destination is outside this site's scope (a Canada-only
+   * site sharing data with the global one). Rows with no destination yet are
+   * kept. Global mode returns the input unchanged.
+   */
+  private withinSiteScope<T extends { destination_country: string | null }>(
+    rows: T[],
+  ): T[] {
+    if (this.siteMode === 'global') return rows;
+    return rows.filter(
+      (r) =>
+        r.destination_country === null ||
+        isCountryInSiteScope(this.siteMode, r.destination_country),
+    );
   }
 
   // ---- mutations -------------------------------------------------------
