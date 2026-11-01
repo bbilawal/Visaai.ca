@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { getSession } from '@/lib/supabase/client'
 import { useToast } from '@/components/providers/toast-provider'
+import { SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 import {
   createConsultantProfile,
   getMyConsultantProfile,
@@ -40,7 +41,8 @@ export function ConsultantSignupForm() {
   const [yearsExperience, setYearsExperience] = useState('')
   const [licenseNumber, setLicenseNumber] = useState('')
   const [licenseAuthority, setLicenseAuthority] = useState('')
-  const [licenseCountry, setLicenseCountry] = useState('')
+  // Canada site: consultants are licensed in Canada; the field is fixed.
+  const [licenseCountry, setLicenseCountry] = useState(SITE_DEFAULT_COUNTRY ?? '')
   const [hourlyRate, setHourlyRate] = useState('')
   const [visaTypes, setVisaTypes] = useState('')
   const [languages, setLanguages] = useState('')
@@ -64,7 +66,7 @@ export function ConsultantSignupForm() {
         setYearsExperience(p.years_experience?.toString() ?? '')
         setLicenseNumber(p.license_number ?? '')
         setLicenseAuthority(p.license_authority ?? '')
-        setLicenseCountry(p.license_country ?? '')
+        setLicenseCountry(SITE_DEFAULT_COUNTRY ?? p.license_country ?? '')
         setHourlyRate(p.hourly_rate_usd?.toString() ?? '')
         setVisaTypes((bundle.skills?.visa_types ?? []).join(', '))
         setLanguages((bundle.skills?.languages ?? []).join(', '))
@@ -240,6 +242,7 @@ export function ConsultantSignupForm() {
             className="input"
             value={licenseCountry}
             maxLength={2}
+            readOnly={SITE_DEFAULT_COUNTRY !== null}
             onChange={(e) => setLicenseCountry(e.target.value)}
             placeholder="CA"
           />

@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation'
 import { CountryFlag } from '@/components/ui/country-flag'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { isCountryInSiteScope, SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 
 export interface PublicQuote {
   visa_type: string
@@ -49,7 +50,10 @@ export function PricingGrid({ quotes }: { quotes: PublicQuote[] }) {
   const countryName = (code: string) => regionNames?.of(code) ?? code
 
   const countries = useMemo(
-    () => [...new Set(quotes.map((q) => q.country_code))].sort(),
+    () =>
+      [...new Set(quotes.map((q) => q.country_code))]
+        .filter((c) => isCountryInSiteScope(c))
+        .sort(),
     [quotes],
   )
   const [country, setCountry] = useState(() =>
@@ -69,23 +73,28 @@ export function PricingGrid({ quotes }: { quotes: PublicQuote[] }) {
 
   return (
     <div>
-      <p className="mb-3 text-center text-[13px] font-medium text-rich-black">
-        {t('selectCountry')}
-      </p>
-      <div role="tablist" className="mb-8 flex flex-wrap justify-center gap-2">
-        {countries.map((c) => (
-          <button
-            key={c}
-            type="button"
-            role="tab"
-            aria-selected={c === country}
-            onClick={() => setCountry(c)}
-            className={cn('btn btn-xs', c === country ? 'btn-primary' : 'btn-outline')}
-          >
-            <CountryFlag code={c} size="sm" decorative /> {countryName(c)}
-          </button>
-        ))}
-      </div>
+      {/* Canada site: one destination, so no corridor switcher. */}
+      {!SITE_DEFAULT_COUNTRY && (
+        <>
+          <p className="mb-3 text-center text-[13px] font-medium text-rich-black">
+            {t('selectCountry')}
+          </p>
+          <div role="tablist" className="mb-8 flex flex-wrap justify-center gap-2">
+            {countries.map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="tab"
+                aria-selected={c === country}
+                onClick={() => setCountry(c)}
+                className={cn('btn btn-xs', c === country ? 'btn-primary' : 'btn-outline')}
+              >
+                <CountryFlag code={c} size="sm" decorative /> {countryName(c)}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((q) => {

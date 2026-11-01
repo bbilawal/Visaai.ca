@@ -11,6 +11,7 @@ import { loadAllProgress } from '@/lib/progress'
 import { ResumeBanner } from '@/components/dashboard/resume-banner'
 import { ProgressRing } from '@/components/dashboard/progress-ring'
 import { CountryFlag } from '@/components/ui/country-flag'
+import { filterToSiteScope } from '@/lib/site-config'
 import { localeAlternates } from '@/lib/seo/alternates'
 
 // Canonical is this locale's own root ('/' for en, '/fr' for fr), never the
@@ -66,7 +67,11 @@ export default async function DashboardPage() {
     throw new Error(`Could not load your applications: ${appsError.message}`)
   }
 
-  const apps = (applications as Application[] | null) ?? []
+  // Canada site: applications for other destinations belong to the global site.
+  const apps = filterToSiteScope(
+    (applications as Application[] | null) ?? [],
+    (a) => a.destination_country,
+  )
   const progressMap = await loadAllProgress(apps.map(a => a.id))
 
   return (

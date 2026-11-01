@@ -18,3 +18,27 @@ export const SITE_CONFIG: SiteConfig = {
 export function isCountryInSiteScope(code: string): boolean {
   return SITE_CONFIG.countryScope === null || SITE_CONFIG.countryScope.includes(code.toUpperCase())
 }
+
+/** Brand name for titles, metadata and generated text. */
+export const SITE_BRAND: string = mode === 'canada' ? 'VisaAI Canada' : 'VisaAI'
+
+/**
+ * The single destination a scoped site is pinned to (Canada site: 'CA'), or
+ * null on the global site, where the user picks a destination.
+ */
+export const SITE_DEFAULT_COUNTRY: string | null = mode === 'canada' ? 'CA' : null
+
+/**
+ * Drops rows whose destination is outside the site scope. Rows with no
+ * destination yet are kept. A no-op on the global site.
+ */
+export function filterToSiteScope<T>(
+  rows: readonly T[],
+  getCode: (row: T) => string | null | undefined,
+): T[] {
+  if (SITE_CONFIG.countryScope === null) return [...rows]
+  return rows.filter((row) => {
+    const code = getCode(row)
+    return !code || isCountryInSiteScope(code)
+  })
+}

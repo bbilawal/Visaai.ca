@@ -11,6 +11,7 @@ import { Alert } from '@/components/ui/alert'
 import { getUser, getSession } from '@/lib/supabase/client'
 import { markOnboarded } from '@/lib/onboarding/complete'
 import { useSupportedCountries } from '@/lib/use-supported-countries'
+import { SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 
 export default function OnboardingApplicationPage() {
   const t = useTranslations('onboarding')
@@ -18,7 +19,8 @@ export default function OnboardingApplicationPage() {
   const router = useRouter()
   const LABELS = [t('stepWelcome'), t('stepProfile'), t('stepFirstApp')]
   const [userId, setUserId] = useState<string | null>(null)
-  const [country, setCountry] = useState('')
+  // Canada site: the destination is fixed, so no picker is shown.
+  const [country, setCountry] = useState(SITE_DEFAULT_COUNTRY ?? '')
   const [state, setState] = useState('')
   const [loading, setLoading] = useState(false)
   const [skipping, setSkipping] = useState(false)
@@ -90,21 +92,23 @@ export default function OnboardingApplicationPage() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div>
-          <label htmlFor="country" className="block text-[13px] font-medium text-rich-black mb-2">
-            {ta('destinationCountry')} <span className="text-callout-red">*</span>
-          </label>
-          <CountryCombobox
-            id="country"
-            name="country"
-            value={country || null}
-            onChange={code => setCountry(code ?? '')}
-            countries={countries}
-            loading={countriesLoading}
-            error={countriesError ? ta('countriesLoadError') : null}
-            placeholder={ta('searchCountries')}
-          />
-        </div>
+        {!SITE_DEFAULT_COUNTRY && (
+          <div>
+            <label htmlFor="country" className="block text-[13px] font-medium text-rich-black mb-2">
+              {ta('destinationCountry')} <span className="text-callout-red">*</span>
+            </label>
+            <CountryCombobox
+              id="country"
+              name="country"
+              value={country || null}
+              onChange={code => setCountry(code ?? '')}
+              countries={countries}
+              loading={countriesLoading}
+              error={countriesError ? ta('countriesLoadError') : null}
+              placeholder={ta('searchCountries')}
+            />
+          </div>
+        )}
 
         <div>
           <label htmlFor="state" className="block text-[13px] font-medium text-rich-black mb-2">

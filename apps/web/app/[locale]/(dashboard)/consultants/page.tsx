@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { listConsultants } from '@/lib/api/marketplace'
 import type { ConsultantCard } from '@visaai/types'
+import { SITE_DEFAULT_COUNTRY } from '@/lib/site-config'
 
 /** Browse licensed consultants. Filters mirror the API's discovery query. */
 export default async function ConsultantsPage({
@@ -19,7 +20,8 @@ export default async function ConsultantsPage({
   try {
     consultants = await listConsultants({
       visa_type: params.visa_type,
-      country: params.country,
+      // Canada site: only Canadian consultants are browsable.
+      country: SITE_DEFAULT_COUNTRY ?? params.country,
       language: params.language,
     })
   } catch {
