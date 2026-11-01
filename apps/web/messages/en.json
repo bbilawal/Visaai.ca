@@ -766,7 +766,8 @@
       "citizenship": "Citizenship",
       "family_sponsorship": "Family sponsorship",
       "permanent_residency": "Permanent residency",
-      "express_entry": "Express Entry"
+      "express_entry": "Express Entry",
+      "eta": "Electronic travel authorization (eTA)"
     }
   },
   "adminDashboard": {

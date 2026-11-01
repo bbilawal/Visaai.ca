@@ -13,6 +13,7 @@ import { ConfigService } from '@nestjs/config';
 import type { Env } from '../../config/configuration';
 import {
   isCountryInSiteScope,
+  isVisaTierInSiteScope,
   readSiteMode,
   type SiteMode,
 } from '../../config/site-scope';
@@ -62,8 +63,10 @@ export class PricingController {
   @Get('quotes')
   async quotes() {
     const quotes = await this.pricing.listPublicQuotes();
-    return quotes.filter((q) =>
-      isCountryInSiteScope(this.siteMode, q.country_code),
+    return quotes.filter(
+      (q) =>
+        isCountryInSiteScope(this.siteMode, q.country_code) &&
+        isVisaTierInSiteScope(this.siteMode, q.visa_type),
     );
   }
 

@@ -18,6 +18,7 @@ export interface PublicQuote {
 // Display order (simple → complex). The "most popular" card is visually anchored (09 §2.1).
 const VISA_ORDER = [
   'visitor',
+  'eta',
   'tourist',
   'digital_nomad',
   'open_work_permit',

@@ -696,7 +696,8 @@
       "citizenship": "Citizenship",
       "family_sponsorship": "Family sponsorship",
       "permanent_residency": "Permanent residency",
-      "express_entry": "Express Entry"
+      "express_entry": "Express Entry",
+      "eta": "Autorisation de voyage électronique (AVE)"
     }
   },
   "adminDashboard": {

@@ -10,6 +10,9 @@ function make(mode?: 'canada') {
     listPublicQuotes: jest.fn().mockResolvedValue([
       { visa_type: 'visitor', country_code: 'CA' },
       { visa_type: 'visitor', country_code: 'US' },
+      { visa_type: 'digital_nomad', country_code: 'CA' },
+      { visa_type: 'citizenship', country_code: 'CA' },
+      { visa_type: 'eta', country_code: 'CA' },
     ]),
     listCountries: jest
       .fn()
@@ -31,9 +34,11 @@ function make(mode?: 'canada') {
 describe('PricingController — Canada site scope', () => {
   it('canada: quotes and countries are limited to CA', async () => {
     const { controller } = make('canada');
-    expect((await controller.quotes()).map((q) => q.country_code)).toEqual([
-      'CA',
-    ]);
+    expect(
+      (await controller.quotes()).map(
+        (q) => `${q.visa_type}:${q.country_code}`,
+      ),
+    ).toEqual(['visitor:CA', 'eta:CA']);
     expect((await controller.countries()).map((c) => c.country_code)).toEqual([
       'CA',
     ]);
@@ -41,7 +46,7 @@ describe('PricingController — Canada site scope', () => {
 
   it('global: quotes and countries are unfiltered', async () => {
     const { controller } = make();
-    expect(await controller.quotes()).toHaveLength(2);
+    expect(await controller.quotes()).toHaveLength(5);
     expect(await controller.countries()).toHaveLength(2);
   });
 

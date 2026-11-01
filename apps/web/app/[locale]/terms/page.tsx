@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Link } from '@/i18n/navigation'
 import { localeAlternates } from '@/lib/seo/alternates'
-import { SITE_BRAND } from '@/lib/site-config'
+import { SITE_BRAND, SITE_CONFIG } from '@/lib/site-config'
 
 export async function generateMetadata({
   params,
@@ -23,6 +23,11 @@ export default function TermsPage() {
     <main className="mx-auto max-w-[760px] px-5 py-12 md:py-16">
       <p className="eyebrow mb-2">Legal</p>
       <h1 className="type-h1 mb-2">Terms of Service</h1>
+      {SITE_CONFIG.mode === 'canada' && (
+        <p className="text-midtone-gray mb-2">
+          {SITE_BRAND} helps you prepare applications for Canadian visas and permits (IRCC). These terms apply to visaai.ca.
+        </p>
+      )}
       <p className="text-[13px] text-midtone-gray mb-8">
         Template pending legal review. Last updated: 2026-06-04.
       </p>

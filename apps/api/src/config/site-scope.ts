@@ -38,3 +38,27 @@ export function siteDefaultCountry(mode: SiteMode): string | null {
   const scope = siteCountryScope(mode);
   return scope && scope.length === 1 ? scope[0] : null;
 }
+
+/**
+ * Pricing tiers a scoped site sells. The quote catalogue is tier x country, so
+ * filtering by country alone left tiers Canada has no route for (digital
+ * nomad, citizenship, generic tourist/PR) on the visaai.ca pricing page.
+ * Super Visa and business visitors are priced on the visitor tier.
+ */
+const CANADA_VISA_TIERS: readonly string[] = [
+  'visitor',
+  'eta',
+  'student',
+  'work_permit',
+  'open_work_permit',
+  'express_entry',
+  'family_sponsorship',
+];
+
+export function isVisaTierInSiteScope(
+  mode: SiteMode,
+  visaType: string | null | undefined,
+): boolean {
+  if (mode !== 'canada') return true;
+  return !!visaType && CANADA_VISA_TIERS.includes(visaType);
+}

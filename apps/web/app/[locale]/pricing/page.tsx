@@ -7,7 +7,7 @@ import {
   robotsForCoverage,
   translationCoverage,
 } from '@/lib/seo/translation-coverage'
-import { SITE_BRAND } from '@/lib/site-config'
+import { SITE_BRAND, SITE_CONFIG } from '@/lib/site-config'
 
 /**
  * Revalidated, not force-dynamic.
@@ -83,7 +83,11 @@ export default async function PricingPage() {
       <section className="mb-10 text-center">
         <p className="eyebrow mb-2">{t('eyebrow')}</p>
         <h1 className="type-h1 mb-3">{t('heroTitle')}</h1>
-        <p className="lede mx-auto mb-6 max-w-[560px]">{t('heroLede')}</p>
+        <p className="lede mx-auto mb-6 max-w-[560px]">
+          {SITE_CONFIG.mode === 'canada'
+            ? 'Transparent, per-application pricing for Canadian visa and permit applications.'
+            : t('heroLede')}
+        </p>
         <Link href="/applications/new" className="btn btn-primary btn-lg">
           {t('assessCta')}
         </Link>
