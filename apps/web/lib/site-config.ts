@@ -26,6 +26,9 @@ export const SITE_BRAND: string = mode === 'canada' ? 'VisaAI Canada' : 'VisaAI'
  * The single destination a scoped site is pinned to (Canada site: 'CA'), or
  * null on the global site, where the user picks a destination.
  */
+/** Wordmark artwork: the Canada site shows "VisaAI.ca" instead of "VisaAI.co". */
+export const SITE_WORDMARK: string = mode === 'canada' ? '/brand/wordmark-v3-ca.png' : '/brand/wordmark-v3.png'
+
 export const SITE_DEFAULT_COUNTRY: string | null = mode === 'canada' ? 'CA' : null
 
 /**

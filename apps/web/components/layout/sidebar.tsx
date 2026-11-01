@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { SITE_BRAND, SITE_WORDMARK } from '@/lib/site-config'
 import { useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
@@ -38,8 +39,8 @@ export function Sidebar({ userEmail, userFullName }: SidebarProps) {
             adds the light backing the artwork needs on the dark canvas — see
             globals.css. */}
         <Image
-          src="/brand/wordmark-v3.png"
-          alt="VisaAI"
+          src={SITE_WORDMARK}
+          alt={SITE_BRAND}
           width={1109}
           height={325}
           priority

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { SITE_BRAND, SITE_WORDMARK } from '@/lib/site-config'
 import { Link } from '@/i18n/navigation'
 import { ShieldIcon, CheckIcon } from '@/components/ui/icons'
 import { LanguageSelector } from '@/components/language-selector'
@@ -15,7 +16,7 @@ export function AuthSplitLayout({ children }: { children: React.ReactNode }) {
       <aside aria-label="VisaAI features" className="hidden md:flex flex-col justify-between bg-bg-2 border-r border-hairline-2 p-12">
         <div>
           <Link href="/" aria-label="VisaAI" className="inline-block">
-            <Image src="/brand/wordmark-v3.png" alt="VisaAI" width={1109} height={325} priority className="brand-plate h-9 w-auto" />
+            <Image src={SITE_WORDMARK} alt={SITE_BRAND} width={1109} height={325} priority className="brand-plate h-9 w-auto" />
           </Link>
           <p className="mt-6 font-serif text-[32px] leading-[1.1] tracking-[-1px] text-deep-black max-w-[15ch]">Your AI immigration copilot</p>
           <ul className="mt-8 flex flex-col gap-3">
@@ -43,7 +44,7 @@ export function AuthSplitLayout({ children }: { children: React.ReactNode }) {
           {/* Mobile brand lockup — the split panel that carries it on md+ is
               hidden here, so this is the only branding on a phone. */}
           <div className="mb-8 flex justify-center md:hidden">
-            <Image src="/brand/wordmark-v3.png" alt="VisaAI" width={1109} height={325} priority className="brand-plate h-10 w-auto" />
+            <Image src={SITE_WORDMARK} alt={SITE_BRAND} width={1109} height={325} priority className="brand-plate h-10 w-auto" />
           </div>
           {children}
         </div>
