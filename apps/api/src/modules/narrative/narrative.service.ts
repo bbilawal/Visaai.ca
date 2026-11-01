@@ -9,10 +9,11 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseService } from '../shared/supabase/supabase.service';
 import { AiUsageMeter } from '../shared/ai/ai-usage.meter';
 import { buildNarrativeGraph } from './graphs/narrative.graph';
+import { LETTER_TYPES, offeredGenTypesForRoute } from '@visaai/types';
 import type { DocType } from './graphs/narrative.state';
 import type { Env } from '../../config/configuration';
 
-const VALID_DOC_TYPES: DocType[] = ['loe', 'itinerary', 'cover_letter'];
+export const VALID_DOC_TYPES: readonly DocType[] = LETTER_TYPES;
 
 @Injectable()
 export class NarrativeService {
@@ -26,18 +27,33 @@ export class NarrativeService {
     this.openaiKey = this.config.get('OPENAI_API_KEY', { infer: true })!;
   }
 
+  /** Ownership check; returns the application's route for the letter gate. */
   private async verifyOwnership(
     db: SupabaseClient,
     applicationId: string,
     userId: string,
-  ) {
+  ): Promise<{ country: string | null; visaaiId: string | null }> {
     const { data } = await db
       .from('applications')
-      .select('id')
+      .select('id, destination_country, visa_types(visaai_id)')
       .eq('id', applicationId)
       .eq('user_id', userId)
       .single();
     if (!data) throw new ForbiddenException('Access denied');
+    const row = data as {
+      destination_country?: string | null;
+      visa_types?:
+        | { visaai_id?: string | null }
+        | { visaai_id?: string | null }[]
+        | null;
+    };
+    const vt = Array.isArray(row.visa_types)
+      ? row.visa_types[0]
+      : row.visa_types;
+    return {
+      country: row.destination_country ?? null,
+      visaaiId: vt?.visaai_id ?? null,
+    };
   }
 
   /** Best-effort read of the user's preferred UI language (drives AI response
@@ -72,7 +88,17 @@ export class NarrativeService {
         `Invalid docType. Must be one of: ${VALID_DOC_TYPES.join(', ')}`,
       );
     }
-    await this.verifyOwnership(db, applicationId, userId);
+    const route = await this.verifyOwnership(db, applicationId, userId);
+    // A letter the route does not use is refused, not drafted: Canada's eTA
+    // takes no letters, and an LOE written for it read "applying for a
+    // visitor visa" (dry run 2026-10-16). See @visaai/types route-letters.
+    if (!offeredGenTypesForRoute(route).includes(docType)) {
+      throw new BadRequestException(
+        offeredGenTypesForRoute(route).length === 0
+          ? 'This route needs no supporting letters: an eTA is a short online form with nowhere to attach one.'
+          : `This route does not use a ${docType} letter.`,
+      );
+    }
     const language = await this.getUserLanguage(db, userId);
 
     // F1: graph built per-request with the scoped client (RLS-enforced nodes).

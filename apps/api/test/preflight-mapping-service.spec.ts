@@ -2,6 +2,7 @@ import { PreflightMappingService } from '../src/modules/preflight/preflight-mapp
 import type { PrefillFormStore } from '../src/modules/preflight/prefill-form.store';
 import type { SupabaseService } from '../src/modules/shared/supabase/supabase.service';
 import '../src/modules/automation/portal-fills/canada-ircc';
+import '../src/modules/automation/portal-fills/canada-ircc-super-visa';
 
 /** Table-routed service-role stub: `.single()` resolves the row for that table. */
 function fakeSupabase(rows: Record<string, unknown>): SupabaseService {
@@ -128,5 +129,70 @@ describe('PreflightMappingService — consultant "not applicable" fields', () =>
     expect(m.some((x) => x.fieldKey === 'purpose_of_visit')).toBe(false);
     expect(m).toEqual(all.filter((x) => x.fieldKey !== 'purpose_of_visit'));
     expect(consultant.notApplicableFieldKeys).toHaveBeenCalledWith('app-1');
+  });
+});
+
+/**
+ * A super visa (registry `ca-super-visa`) is filled on the same IRCC portal as
+ * the visitor visa, with its own /purpose answers: the mapping follows the
+ * application's registry visa type, not only its destination.
+ */
+describe('PreflightMappingService — the route picks the portal mapping', () => {
+  const svc = (visaaiId: string | null) =>
+    new PreflightMappingService(
+      fakeSupabase({
+        applications: {
+          destination_country: 'CA',
+          visa_types: visaaiId ? { visaai_id: visaaiId } : null,
+        },
+        application_profiles: { profile_json: PROFILE },
+      }),
+      {
+        load: jest.fn().mockResolvedValue(null),
+      } as unknown as PrefillFormStore,
+      noneNotApplicable,
+    );
+  const purposeRadio = (m: { fieldKey: string }[]) =>
+    m.some((x) => x.fieldKey === 'ircc_visa_purpose');
+
+  it('a super visa application answers the super visa purpose', async () => {
+    expect(purposeRadio(await svc('ca-super-visa').forApplication('a'))).toBe(
+      true,
+    );
+    const cov = await svc('ca-super-visa').coverage('a');
+    expect(cov?.pages.some((p) => p.page === '/doc-upload')).toBe(true);
+  });
+
+  it('a visitor visa (or no visa type) keeps the visitor mapping', async () => {
+    expect(
+      purposeRadio(
+        await svc('ca-visitor-visa-temporary-resident-visa').forApplication(
+          'a',
+        ),
+      ),
+    ).toBe(false);
+    expect(purposeRadio(await svc(null).forApplication('a'))).toBe(false);
+  });
+});
+
+describe('PreflightMappingService — a failed application read is not "no portal fill"', () => {
+  it('throws instead of returning no mappings (the approval gate must refuse)', async () => {
+    const from = () => {
+      const chain: Record<string, unknown> = {};
+      for (const m of ['select', 'eq']) chain[m] = () => chain;
+      chain.single = () =>
+        Promise.resolve({ data: null, error: { message: 'connection reset' } });
+      return chain;
+    };
+    const svc = new PreflightMappingService(
+      { admin: { from } } as unknown as SupabaseService,
+      {
+        load: jest.fn().mockResolvedValue(null),
+      } as unknown as PrefillFormStore,
+      noneNotApplicable,
+    );
+    await expect(svc.forApplication('app-1')).rejects.toThrow(
+      /Could not read the application/,
+    );
   });
 });

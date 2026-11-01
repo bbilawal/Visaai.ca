@@ -169,7 +169,9 @@ describe('Schengen coverage', () => {
     ).toEqual(['IMM 1294']);
     expect(
       requiredFormsFor('CA', 'work_permit').map((f) => f.formCode),
-    ).toEqual(['IMM 1295']);
+      // IMM 5645 Family Information: each applicant 18+ for a work permit
+      // made outside Canada (2026-10-29).
+    ).toEqual(['IMM 1295', 'IMM 5645']);
     expect(
       requiredFormsFor('CA', 'family_sponsorship').map((f) => f.formCode),
     ).toEqual(['IMM 5257', 'IMM 5645']);

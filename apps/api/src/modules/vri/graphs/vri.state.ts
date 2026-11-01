@@ -31,6 +31,8 @@ export interface VriInputData {
   }>;
   destinationCountry: string | null;
   currentVisaType: string | null;
+  /** Registry route (`visa_types.visaai_id`); picks route weight overrides and route-specific scoring. */
+  visaaiId?: string | null;
 }
 
 export interface FactorScores {

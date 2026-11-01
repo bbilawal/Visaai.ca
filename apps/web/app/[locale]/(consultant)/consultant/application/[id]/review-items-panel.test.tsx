@@ -18,6 +18,13 @@ vi.mock('@/lib/supabase/client', () => ({
 }))
 vi.mock('@/components/providers/toast-provider', () => ({ useToast: () => ({ toast: () => {} }) }))
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh: () => {} }) }))
+// The real English copy, so the assertions read like the page.
+vi.mock('next-intl', async () => {
+  const en = (await import('@/messages/en.json')).default as { consultant: Record<string, string> }
+  // One translator for every render, as next-intl gives: it is an effect dependency.
+  const t = (key: string) => en.consultant[key] ?? key
+  return { useTranslations: () => t }
+})
 vi.mock('@/lib/api/review-items-client', () => ({
   getReviewItems: (...a: unknown[]) => getReviewItems(...a),
   getDocumentUrl: (...a: unknown[]) => getDocumentUrl(...a),
@@ -29,6 +36,7 @@ vi.mock('@/lib/api/preflight-client', () => ({
 }))
 
 import ReviewItemsPanel from './review-items-panel'
+import { onReviewItemDecided } from '@/lib/preflight-events'
 
 const ITEMS = {
   applicationId: 'app-1',
@@ -107,6 +115,89 @@ describe('ReviewItemsPanel', () => {
     expect(await within(row).findByText("Needs re-upload — cut off")).toBeInTheDocument()
   })
 
+  // Owner, 2026-10-20: "when i click on approve then that button should get
+  // disabled". The buttons never knew the current decision, so an approved
+  // row looked exactly like an unreviewed one and the one open re-upload
+  // request among seven rows was easy to miss.
+  it('disables the button for the decision already recorded, and keeps the others', async () => {
+    decideReviewItem.mockResolvedValue({ decision: { decision: 'approved', note: null, reviewerId: 'c', reviewerRole: 'consultant', createdAt: 'x' }, notified: false })
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    const row = (await screen.findByText('passport.pdf')).closest('li') as HTMLElement
+    const approve = within(row).getByRole('button', { name: 'Approve' })
+    expect(approve).toBeEnabled()
+    expect(approve).toHaveAttribute('aria-pressed', 'false')
+    fireEvent.click(approve)
+    const approved = await within(row).findByRole('button', { name: 'Approved' })
+    expect(approved).toBeDisabled()
+    expect(approved).toHaveAttribute('aria-pressed', 'true')
+    // Changing the decision stays possible.
+    expect(within(row).getByRole('button', { name: 'Needs re-upload' })).toBeEnabled()
+    expect(within(row).getByRole('button', { name: 'Rejected' })).toBeEnabled()
+  })
+
+  it('a document with an open re-upload request cannot be asked again, but can be approved', async () => {
+    getReviewItems.mockResolvedValue({
+      ...ITEMS,
+      documents: [{ ...ITEMS.documents[0], decision: { decision: 'needs_reupload', note: 'cut off', reviewerId: 'c', reviewerRole: 'consultant', createdAt: '2026-10-10' } }],
+    })
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    const row = (await screen.findByText('passport.pdf')).closest('li') as HTMLElement
+    expect(within(row).getByRole('button', { name: 'Needs re-upload' })).toBeDisabled()
+    expect(within(row).getByRole('button', { name: 'Approve' })).toBeEnabled()
+  })
+
+  it('tells the application decision controls that a document decision changed', async () => {
+    decideReviewItem.mockResolvedValue({ decision: { decision: 'approved', note: null, reviewerId: 'c', reviewerRole: 'consultant', createdAt: 'x' }, notified: false })
+    const heard = vi.fn()
+    const off = onReviewItemDecided('app-1', heard)
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    const row = (await screen.findByText('passport.pdf')).closest('li') as HTMLElement
+    fireEvent.click(within(row).getByRole('button', { name: 'Approve' }))
+    await waitFor(() => expect(heard).toHaveBeenCalledTimes(1))
+    off()
+  })
+
+  it('a refused decision keeps the typed note and does not announce a change', async () => {
+    decideReviewItem.mockRejectedValue(new Error('not the active assignee'))
+    const heard = vi.fn()
+    const off = onReviewItemDecided('app-1', heard)
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    const row = (await screen.findByText('passport.pdf')).closest('li') as HTMLElement
+    fireEvent.click(within(row).getByRole('button', { name: 'Needs re-upload' }))
+    fireEvent.change(within(row).getByRole('textbox', { name: 'Note for the applicant' }), { target: { value: 'cut off' } })
+    fireEvent.click(within(row).getByRole('button', { name: 'Send decision' }))
+    expect(await screen.findByText(/not the active assignee/)).toBeInTheDocument()
+    expect(within(row).getByRole('textbox', { name: 'Note for the applicant' })).toHaveValue('cut off')
+    expect(heard).not.toHaveBeenCalled()
+    off()
+  })
+
+  // Re-review of #258: a requested file the applicant deleted blocked approval
+  // with no way for the consultant to close it.
+  it('a deleted requested document can only be approved (closes the request), with nothing to open', async () => {
+    getReviewItems.mockResolvedValue({
+      ...ITEMS,
+      documents: [
+        ...ITEMS.documents,
+        {
+          id: 'd9', type: null, name: null, uploadStatus: 'deleted', ocrStatus: null, createdAt: null,
+          verifications: [], extractedFields: [], deleted: true,
+          decision: { decision: 'needs_reupload', note: 'cut off', reviewerId: 'c', reviewerRole: 'consultant', createdAt: '2026-10-10' },
+        },
+      ],
+    })
+    decideReviewItem.mockResolvedValue({ decision: { decision: 'approved', note: null, reviewerId: 'c', reviewerRole: 'consultant', createdAt: 'x' }, notified: false })
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    const row = (await screen.findByText('Deleted by the applicant')).closest('li') as HTMLElement
+    expect(within(row).getByText(/deleted this file while your request was open/)).toBeInTheDocument()
+    expect(within(row).queryByRole('button', { name: /^Open / })).not.toBeInTheDocument()
+    expect(within(row).queryByRole('button', { name: 'Needs re-upload' })).not.toBeInTheDocument()
+    fireEvent.click(within(row).getByRole('button', { name: 'Approve' }))
+    await waitFor(() =>
+      expect(decideReviewItem).toHaveBeenCalledWith('t', 'app-1', { itemKind: 'document', itemId: 'd9', decision: 'approved' }),
+    )
+  })
+
   it('renders letters as formatted text, not raw markdown, with the current decision', async () => {
     const { container } = render(<ReviewItemsPanel applicationId="app-1" />)
     expect(await screen.findByText('Letter of explanation')).toBeInTheDocument()
@@ -147,5 +238,61 @@ describe('ReviewItemsPanel', () => {
     getReviewItems.mockRejectedValue(new Error('consultant c2 is not the active assignee'))
     render(<ReviewItemsPanel applicationId="app-1" />)
     expect(await screen.findByText(/not the active assignee/)).toBeInTheDocument()
+  })
+})
+
+describe('ReviewItemsPanel — a passport held on its name', () => {
+  beforeEach(() => {
+    for (const f of [getReviewItems, getDocumentUrl, decideReviewItem, editGeneratedItem, editPreflightField]) f.mockReset()
+  })
+  const withIdentity = (details: Record<string, unknown>) => ({
+    ...ITEMS,
+    documents: [
+      {
+        ...ITEMS.documents[0],
+        verifications: [{ verificationType: 'identity', result: 'pass', details, verifiedAt: null }],
+      },
+    ],
+  })
+
+  it('says it is held and shows the identity check as needing confirmation, not pass', async () => {
+    getReviewItems.mockResolvedValue(
+      withIdentity({ holder_mismatch: { holder: 'QUEBEC ZULU', applicant: 'Romeo Kilo', message: 'm', needs_confirmation: true } }),
+    )
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    expect(await screen.findByText(/Held: the passport's name \(QUEBEC ZULU\)/)).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Details for passport.pdf' }))
+    expect(screen.getByText(/identity: needs confirmation/)).toBeTruthy()
+  })
+
+  it('shows that the applicant confirmed it, from the confirmations table (audit trail)', async () => {
+    getReviewItems.mockResolvedValue({
+      ...withIdentity({}),
+      documents: [
+        {
+          ...withIdentity({}).documents[0],
+          applicantConfirmation: {
+            confirmedBy: 'owner-1',
+            confirmedAt: '2026-10-30T10:00:00Z',
+            holderName: 'QUEBEC ZULU',
+            statedName: 'Romeo Kilo',
+          },
+        },
+      ],
+    })
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    expect(await screen.findByText(/Applicant confirmed this passport is theirs/)).toBeTruthy()
+    expect(screen.getByText(/passport name QUEBEC ZULU; name they gave Romeo Kilo/)).toBeTruthy()
+  })
+
+  it('ignores a confirmation claimed only in the owner-writable verification details', async () => {
+    getReviewItems.mockResolvedValue(
+      withIdentity({
+        holder_confirmation: { confirmed_at: '2026-10-30T10:00:00Z', holder: 'QUEBEC ZULU', stated_name: 'Romeo Kilo' },
+      }),
+    )
+    render(<ReviewItemsPanel applicationId="app-1" />)
+    expect(await screen.findByText('passport.pdf')).toBeTruthy()
+    expect(screen.queryByText(/Applicant confirmed this passport is theirs/)).toBeNull()
   })
 })

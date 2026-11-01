@@ -1,3 +1,4 @@
+import { IRCC_PORTAL_ANSWERS } from '../../../../../test/fixtures/ircc-portal-answers';
 import { AIMessage, HumanMessage } from '@langchain/core/messages';
 import { checkComplete } from './check-complete';
 import type { IntakeState } from '../intake.state';
@@ -18,6 +19,7 @@ function state(over: Partial<IntakeState>): IntakeState {
     isComplete: false,
     currentQuestion: null,
     checklistBuiltAt: null,
+    profileChanges: [],
     ...over,
   };
 }
@@ -37,6 +39,7 @@ const ALL_TRV_ANSWERS = {
   has_valid_us_visa: false,
   previously_visited_canada: false,
   uses_representative: false,
+  ...IRCC_PORTAL_ANSWERS,
 };
 
 describe('checkComplete', () => {

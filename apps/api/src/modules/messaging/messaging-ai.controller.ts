@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { MessagingAiService } from './messaging-ai.service';
@@ -32,6 +33,7 @@ export class MessagingAiController {
   /** Staff-only: draft a suggested reply (the service enforces isStaff → 403 for users). */
   @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @Post(':applicationId/ai-draft')
+  @UseGuards(ApplicationAccessGuard)
   draft(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import type { ConsultantNote } from '@visaai/types';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { ConsultantNotesService } from './consultant-notes.service';
@@ -27,6 +28,7 @@ export class ConsultantNotesController {
   constructor(private readonly svc: ConsultantNotesService) {}
 
   @Get(':applicationId/notes')
+  @UseGuards(ApplicationAccessGuard)
   list(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -36,6 +38,7 @@ export class ConsultantNotesController {
   }
 
   @Post(':applicationId/notes')
+  @UseGuards(ApplicationAccessGuard)
   create(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

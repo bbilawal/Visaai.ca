@@ -159,3 +159,57 @@ describe('NarrativeClient — the prefilled form reads as a form, not JSON', () 
     expect(within(card).getByRole('link', { name: 'formOpen' })).toHaveAttribute('href', '/prefill/app-1')
   })
 })
+
+describe('NarrativeClient — the super visa gets the host invitation letter (dry run 2026-10-16)', () => {
+  it('offers the invitation letter first on a super visa, and generates it', async () => {
+    docs = []
+    render(
+      <NarrativeClient
+        applicationId="app-1"
+        offeredTypes={['invitation_letter', 'cover_letter', 'loe', 'itinerary']}
+      />,
+    )
+    const buttons = await screen.findAllByRole('button', { name: /^\+ / })
+    expect(buttons.map(b => b.textContent)).toEqual([
+      '+ docInvitation',
+      '+ docCoverLetter',
+      '+ docLoe',
+      '+ docItinerary',
+    ])
+    fireEvent.click(buttons[0])
+    await waitFor(() => expect(pendingGenerates).toHaveLength(1))
+    expect(pendingGenerates[0].body).toEqual({ docType: 'invitation_letter' })
+  })
+
+  it('shows a stored invitation letter as a letter', async () => {
+    docs = [{ ...LOE, id: 'g7', doc_type: 'invitation_letter', content_md: 'I, Host, invite my mother.' }]
+    render(<NarrativeClient applicationId="app-1" />)
+    expect(await screen.findByText('I, Host, invite my mother.')).toBeInTheDocument()
+  })
+
+  it('without a route the three usual letters are offered', async () => {
+    render(<NarrativeClient applicationId="app-1" />)
+    const buttons = await screen.findAllByRole('button', { name: /^\+ / })
+    expect(buttons.map(b => b.textContent)).toEqual([
+      '+ docLoe',
+      '+ docItinerary',
+      '+ docCoverLetter',
+    ])
+  })
+})
+
+describe('NarrativeClient — letters the route uses (dry run 2026-10-16)', () => {
+  it('offers no Generate buttons for a route with no letters, and says why', async () => {
+    docs = []
+    render(<NarrativeClient applicationId="app-1" offeredTypes={[]} />)
+    expect(await screen.findByTestId('no-letters-for-route')).toHaveTextContent('noLettersForRoute')
+    expect(screen.queryByRole('button', { name: /docLoe|docCoverLetter|docItinerary/ })).not.toBeInTheDocument()
+  })
+
+  it('offers all three letters by default', async () => {
+    render(<NarrativeClient applicationId="app-1" />)
+    expect(await screen.findByRole('button', { name: '+ docLoe' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '+ docCoverLetter' })).toBeInTheDocument()
+    expect(screen.queryByTestId('no-letters-for-route')).not.toBeInTheDocument()
+  })
+})

@@ -277,6 +277,17 @@
       "source_excerpt": "recommended documents travel history if you’ve travelled to canada or to other countries, this can show that you’ve been able to get a visa in the past.",
       "display_order": 500,
       "source_excerpt_display": "Recommended documents Travel history If you’ve travelled to Canada or to other countries, this can show that you’ve been able to get a visa in the past."
+    },
+    {
+      "requirement_code": "bank_statement",
+      "kind": "recommended",
+      "officially_required": false,
+      "label": "Bank account statement (proof of funds)",
+      "description": "IRCC lists this under a heading it labels \"recommended documents\", not as a requirement. It shows you have enough money to support yourself during your stay.",
+      "source_role": "application",
+      "source_excerpt": "bank account statement this can help us understand if you have enough money to support yourself during your stay in canada.",
+      "display_order": 510,
+      "source_excerpt_display": "Bank account statement This can help us understand if you have enough money to support yourself during your stay in Canada."
     }
   ],
   "extraction_note": "Nine excerpts in this file were repaired on 2026-08-21 after scripts/verify-excerpts.ts was written. They had been assembled rather than quoted: block joins were punctuated into sentences, the accessibility text '(opens in a new tab)' was silently dropped, and one fee excerpt used a literal '...' to elide the interleaved \"what's this?\" expander. Every claim was correct; none of those quotes were verbatim. The claims are unchanged - only the evidence now matches the page."

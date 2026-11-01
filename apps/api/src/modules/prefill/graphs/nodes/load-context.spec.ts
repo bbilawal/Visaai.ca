@@ -249,6 +249,125 @@ describe('collectDocumentFields — subject attribution', () => {
 });
 
 /**
+ * Prod 2026-10-30 (after #299): sync_profile holds a passport whose holder does
+ * not match the applicant (holder_mismatch.needs_confirmation) or marks it as
+ * clearly someone else's (clearly_other), and writes nothing from it. The
+ * prefill still read every verification row, took the FIRST passport's holder
+ * as the applicant, and put that person's name, DOB and number on the form.
+ */
+describe('collectDocumentFields — held / foreign passports', () => {
+  const held = (
+    id: string,
+    extracted: Record<string, unknown>,
+    flag: object,
+  ) => ({
+    ...identityRow('passport', extracted, {
+      holder_mismatch: { holder: 'X', applicant: 'Y', message: 'm', ...flag },
+    }),
+    document_id: id,
+  });
+  const strangerPassport = {
+    full_name: 'QUEBEC ZULU',
+    passport_number: 'XQ0000001',
+    date_of_birth: '1970-01-01',
+    place_of_birth: 'NOWHERESVILLE',
+  };
+  const ownPassport = {
+    full_name: 'VICTOR WHISKEY',
+    passport_number: 'VW7654321',
+    date_of_birth: '1992-05-06',
+  };
+
+  it.each([
+    ['held for confirmation', { needs_confirmation: true }],
+    ['clearly someone else', { clearly_other: true }],
+  ])(
+    'a passport %s never anchors the applicant or fills their fields',
+    (_l, flag) => {
+      const out = collectDocumentFields(
+        [
+          held('doc-held', strangerPassport, flag),
+          { ...identityRow('passport', ownPassport), document_id: 'doc-own' },
+        ],
+        'Victor Whiskey',
+      );
+      expect(out.applicantName).toBe('VICTOR WHISKEY');
+      expect(out.documentFields.passport_number).toBe('VW7654321');
+      expect(out.documentFields.date_of_birth).toBe('1992-05-06');
+      const values = JSON.stringify([
+        out.documentFields,
+        out.documentFieldsByType,
+      ]);
+      expect(values).not.toContain('QUEBEC ZULU');
+      expect(values).not.toContain('XQ0000001');
+      expect(values).not.toContain('1970-01-01');
+      expect(values).not.toContain('NOWHERESVILLE');
+      expect(out.otherPartyDocuments.map((d) => d.holderName)).toEqual([
+        'QUEBEC ZULU',
+      ]);
+    },
+  );
+
+  it('falls back to the stated name when the only passport is held', () => {
+    const out = collectDocumentFields(
+      [held('doc-held', strangerPassport, { needs_confirmation: true })],
+      'Victor Whiskey',
+    );
+    expect(out.applicantName).toBe('Victor Whiskey');
+    expect(out.documentFields).toEqual({});
+  });
+
+  it('a held passport the consultant approved counts again', () => {
+    const out = collectDocumentFields(
+      [held('doc-held', ownPassport, { needs_confirmation: true })],
+      'Vic Whiskey',
+      new Set(['doc-held']),
+    );
+    expect(out.applicantName).toBe('VICTOR WHISKEY');
+    expect(out.documentFields.passport_number).toBe('VW7654321');
+  });
+
+  it('an applicant-confirmed passport the consultant then rejected is held again, and reported as held', () => {
+    const confirmedRow = {
+      ...identityRow('passport', strangerPassport, {
+        holder_confirmation: { confirmed_at: '2026-10-30T10:00:00Z' },
+      }),
+      document_id: 'doc-conf',
+    };
+    const released = collectDocumentFields([confirmedRow], 'Romeo Kilo');
+    expect(released.documentFields.passport_number).toBe('XQ0000001');
+    expect(released.heldDocumentIds).toEqual([]);
+
+    const out = collectDocumentFields(
+      [confirmedRow],
+      'Romeo Kilo',
+      new Set(),
+      new Set(['doc-conf']),
+    );
+    expect(out.documentFields).toEqual({});
+    expect(out.applicantName).toBe('Romeo Kilo');
+    expect(out.heldDocumentIds).toEqual(['doc-conf']);
+  });
+
+  it('approval does not rescue a clearly-foreign passport', () => {
+    const out = collectDocumentFields(
+      [held('doc-held', strangerPassport, { clearly_other: true })],
+      'Victor Whiskey',
+      new Set(['doc-held']),
+    );
+    expect(out.documentFields).toEqual({});
+  });
+
+  it('a plain name-spelling warning (no hold) still fills', () => {
+    const out = collectDocumentFields(
+      [held('doc-own', ownPassport, {})],
+      'Victor Whiskey',
+    );
+    expect(out.documentFields.passport_number).toBe('VW7654321');
+  });
+});
+
+/**
  * Account-detail enrichment.
  *
  * All four pipeline modules that read `users` selected `preferred_language`

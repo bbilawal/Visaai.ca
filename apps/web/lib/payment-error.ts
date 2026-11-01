@@ -1,20 +1,19 @@
 import { getSession } from '@/lib/supabase/client'
 
-/**
- * Handle a fetch Response on a paid action (download / portal auto-fill). If
- * the API returns HTTP 402, the one-time form fee for this visa hasn't been
- * paid: open a Stripe checkout for it and redirect. Returns true so the caller
- * can bail out of its own success path.
+/*
+ * The one-time form fee depends on the visa type (the Canada eTA is cheaper).
+ * Display it with formatPrefillPrice(visaaiId) from @visaai/types — the same
+ * table the API charges from — never a literal.
  */
-export async function handlePaymentRequired(
-  res: Response,
+
+/**
+ * Open a Stripe checkout for this application's one-time form fee and
+ * redirect to it. Toasts (and resolves) when checkout could not be started.
+ */
+export async function startFormFeeCheckout(
   applicationId: string,
   toast: (msg: string, type?: 'success' | 'error' | 'info') => void,
-): Promise<boolean> {
-  if (res.status !== 402) return false
-
-  toast('Unlock downloads & auto-submit — redirecting to checkout…', 'info')
-
+): Promise<void> {
   try {
     const { data: { session } } = await getSession()
     if (!session) throw new Error('Not authenticated')
@@ -39,5 +38,22 @@ export async function handlePaymentRequired(
   } catch {
     toast('Could not start checkout. Please try again.', 'error')
   }
+}
+
+/**
+ * Handle a fetch Response on a paid action (download / portal auto-fill). If
+ * the API returns HTTP 402, the one-time form fee for this visa hasn't been
+ * paid: open a Stripe checkout for it and redirect. Returns true so the caller
+ * can bail out of its own success path.
+ */
+export async function handlePaymentRequired(
+  res: Response,
+  applicationId: string,
+  toast: (msg: string, type?: 'success' | 'error' | 'info') => void,
+): Promise<boolean> {
+  if (res.status !== 402) return false
+
+  toast('Unlock downloads & auto-submit — redirecting to checkout…', 'info')
+  await startFormFeeCheckout(applicationId, toast)
   return true
 }

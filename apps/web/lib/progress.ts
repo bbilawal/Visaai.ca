@@ -1,4 +1,4 @@
-import { computeProgress, isIntakeAnswered, type AppProgress, type ProgressInput } from '@visaai/types'
+import { computeProgress, isIntakeAnswered, requiredGenTypesForRoute, type AppProgress, type ProgressInput } from '@visaai/types'
 import { createClient } from '@/lib/supabase/server'
 
 export async function loadProgress(applicationId: string): Promise<AppProgress | null> {
@@ -79,7 +79,11 @@ export async function loadProgress(applicationId: string): Promise<AppProgress |
         meta?: { kind?: string | null } | null
       }) => ({ status: c.status, meta: c.meta ?? null }),
     ),
-    requiredGenTypes: ['loe', 'cover_letter'],
+    // The route's letters — none for Canada's eTA (@visaai/types route-letters).
+    requiredGenTypes: requiredGenTypesForRoute({
+      country: appRow.destination_country,
+      visaaiId: visaType?.visaai_id ?? null,
+    }),
     approvedGenTypes,
     hasVriScore: !!vri.data,
     hasPrefill: !!prefill.data,

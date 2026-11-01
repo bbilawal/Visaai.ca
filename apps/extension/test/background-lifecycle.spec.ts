@@ -47,6 +47,80 @@ afterEach(() => {
   jest.restoreAllMocks()
 })
 
+describe('Launch brings the portal tab to the front (live 2026-10-17)', () => {
+  it('switches to the IRCC tab in the window Launch was clicked in', async () => {
+    const mock = load()
+    const update = jest.fn(async () => ({}))
+    ;(mock.chrome.tabs as any).update = update
+    mock.chrome.tabs.query = jest.fn(async () => [
+      { id: 1, url: 'https://visaai.co/submission/x', active: true },
+      { id: 2, url: 'https://tr-rt.apps.cic.gc.ca/doc-upload?x=1', active: false },
+    ]) as any
+    const r = await deliver(
+      mock.listeners.onMessageExternal,
+      { type: 'session', token: 't', apiUrl: 'https://api.visaai.co', readbackToken: 'rb' },
+      { origin: 'https://visaai.co', tab: { id: 1, windowId: 9 } },
+    )
+    expect(r).toEqual({ ok: true })
+    expect(mock.chrome.tabs.query).toHaveBeenCalledWith({ windowId: 9 })
+    expect(update).toHaveBeenCalledWith(2, { active: true })
+  })
+
+  it("uses the application's pages: a leftover eTA tab is skipped", async () => {
+    const mock = load()
+    const update = jest.fn(async () => ({}))
+    ;(mock.chrome.tabs as any).update = update
+    mock.chrome.tabs.query = jest.fn(async () => [
+      { id: 1, url: 'https://visaai.co/submission/x', active: true },
+      { id: 2, url: 'https://portal-portail.apps.cic.gc.ca/home', lastAccessed: 10 },
+      { id: 3, url: 'https://eta.onlineservices-servicesenligne.apps.cic.gc.ca/eta/welcome', lastAccessed: 50 },
+    ]) as any
+    await deliver(
+      mock.listeners.onMessageExternal,
+      { type: 'session', token: 't', apiUrl: 'https://api.visaai.co', readbackToken: 'rb', portalPages: ['/purpose', 42, '/doc-upload'] },
+      { origin: 'https://visaai.co', tab: { id: 1, windowId: 9 } },
+    )
+    expect(update).toHaveBeenCalledWith(2, { active: true })
+  })
+})
+
+describe('Launch opens the side panel from the click (live 2026-10-17)', () => {
+  it('opens the panel in the window Launch was clicked in, with no await first', async () => {
+    const mock = load()
+    const open = jest.fn(async () => undefined)
+    ;(mock.chrome.sidePanel as any).open = open
+    const r = await deliver(
+      mock.listeners.onMessageExternal,
+      { type: 'open-panel' },
+      { origin: 'https://visaai.co', tab: { id: 1, windowId: 9 } },
+    )
+    expect(open).toHaveBeenCalledWith({ windowId: 9 })
+    expect(r).toEqual({ ok: true })
+  })
+
+  it('reports a refusal instead of throwing (the GO badge remains)', async () => {
+    const mock = load()
+    ;(mock.chrome.sidePanel as any).open = jest.fn(async () => {
+      throw new Error('`sidePanel.open()` may only be called in response to a user gesture.')
+    })
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined)
+    const r = await deliver(
+      mock.listeners.onMessageExternal,
+      { type: 'open-panel' },
+      { origin: 'https://visaai.co', tab: { id: 1, windowId: 9 } },
+    )
+    expect(r).toMatchObject({ ok: false })
+  })
+
+  it('refuses an untrusted page', async () => {
+    const mock = load()
+    const open = jest.fn(async () => undefined)
+    ;(mock.chrome.sidePanel as any).open = open
+    await deliver(mock.listeners.onMessageExternal, { type: 'open-panel' }, { origin: 'https://evil.test', tab: { id: 1, windowId: 9 } })
+    expect(open).not.toHaveBeenCalled()
+  })
+})
+
 describe('53 — pendingSession is purged, not merely ignored', () => {
   it('schedules a purge alarm at receivedAt + TTL when a session is handed off', async () => {
     const mock = load()
@@ -171,5 +245,28 @@ describe('59 — onMessage acts only on this extension', () => {
       { id: EXT_ID },
     )
     expect(r).toEqual({ ok: true })
+  })
+})
+
+// Review of b196f0c0: the web page retries a hand-off it got no answer to.
+// When the first reply was only slow, the same single-use token arrives twice;
+// storing it again made an open panel reconnect with a spent token.
+describe('a retried hand-off of the same launch is not stored twice', () => {
+  it('acknowledges the repeat without storing pendingSession again', async () => {
+    const mock = load()
+    mock.chrome.tabs.query = jest.fn(async () => []) as any
+    const msg = { type: 'session', token: 'tok-1', apiUrl: 'https://api.visaai.co', readbackToken: 'rb' }
+    const from = { origin: 'https://visaai.co', tab: { id: 1, windowId: 9 } }
+    expect(await deliver(mock.listeners.onMessageExternal, msg, from)).toEqual({ ok: true })
+    expect(mock.store.pendingSession).toMatchObject({ token: 'tok-1' })
+    // The panel took it.
+    delete mock.store.pendingSession
+    expect(await deliver(mock.listeners.onMessageExternal, msg, from)).toEqual({ ok: true })
+    expect(mock.store.pendingSession).toBeUndefined()
+    // Only a hash is kept, never the token.
+    expect(JSON.stringify(mock.store.handledSessionTokens)).not.toContain('tok-1')
+    // A new launch (new token) is stored as before.
+    expect(await deliver(mock.listeners.onMessageExternal, { ...msg, token: 'tok-2' }, from)).toEqual({ ok: true })
+    expect(mock.store.pendingSession).toMatchObject({ token: 'tok-2' })
   })
 })

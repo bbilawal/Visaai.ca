@@ -29,6 +29,9 @@ import type { IFieldExecutor } from './field-executor.port';
  * passes the executionId + signed intents. The concrete executor port is a
  * placeholder until the extension round-trip ships.
  */
+/** Upper bound on "look again" rounds in one run (a progressive page). */
+export const MAX_REVEAL_ROUNDS = 25;
+
 @Injectable()
 export class PortalFillOrchestrator {
   constructor(
@@ -41,70 +44,89 @@ export class PortalFillOrchestrator {
     executionId: string,
     intents: SignedWriteIntent[],
     actor: ActorRef,
+    /**
+     * A progressive page (one path, questions revealed as earlier ones are
+     * answered): asked, once the queued intents are verified, for signed
+     * intents whose targets have appeared since. They run in the same
+     * single-cursor loop under the same first-mismatch halt. An empty answer
+     * — or a lookup that fails — ends the run; it never makes it fail.
+     */
+    more?: () => Promise<SignedWriteIntent[]>,
   ): Promise<OrchestrationResult> {
     await this.emit(applicationId, executionId, 'PORTAL_FILL_STARTED', actor);
 
     const verified: string[] = [];
+    let queue = intents;
 
-    for (const intent of intents) {
-      // EXECUTING
-      await this.emit(
-        applicationId,
-        executionId,
-        'FIELD_WRITE_ATTEMPT',
-        actor,
-        intent.fieldKey,
-        undefined,
-        intent.selector,
-      );
-
-      let res;
-      try {
-        res = await this.executor.executeField(intent);
-      } catch {
-        // Infrastructure failure — fail closed.
-        return this.fail(
+    for (let round = 0; queue.length > 0; round++) {
+      for (const intent of queue) {
+        // EXECUTING
+        await this.emit(
           applicationId,
           executionId,
+          'FIELD_WRITE_ATTEMPT',
           actor,
           intent.fieldKey,
           undefined,
-          verified,
+          intent.selector,
         );
-      }
 
-      // VERIFYING
-      await this.emit(
-        applicationId,
-        executionId,
-        'READBACK_COMPARE',
-        actor,
-        intent.fieldKey,
-        res.actualValueHash,
-        intent.selector,
-      );
+        let res;
+        try {
+          res = await this.executor.executeField(intent);
+        } catch {
+          // Infrastructure failure — fail closed.
+          return this.fail(
+            applicationId,
+            executionId,
+            actor,
+            intent.fieldKey,
+            undefined,
+            verified,
+          );
+        }
 
-      if (res.outcome === 'failed') {
-        return this.fail(
+        // VERIFYING
+        await this.emit(
           applicationId,
           executionId,
+          'READBACK_COMPARE',
           actor,
           intent.fieldKey,
-          res.reason,
-          verified,
+          res.actualValueHash,
+          intent.selector,
         );
-      }
 
-      await this.emit(
-        applicationId,
-        executionId,
-        'FIELD_VERIFIED',
-        actor,
-        intent.fieldKey,
-        res.actualValueHash,
-        intent.selector,
-      );
-      verified.push(intent.fieldKey);
+        if (res.outcome === 'failed') {
+          return this.fail(
+            applicationId,
+            executionId,
+            actor,
+            intent.fieldKey,
+            res.reason,
+            verified,
+          );
+        }
+
+        await this.emit(
+          applicationId,
+          executionId,
+          'FIELD_VERIFIED',
+          actor,
+          intent.fieldKey,
+          res.actualValueHash,
+          intent.selector,
+        );
+        verified.push(intent.fieldKey);
+      }
+      queue = [];
+      if (more && round < MAX_REVEAL_ROUNDS) {
+        try {
+          queue = await more();
+        } catch {
+          queue = [];
+        }
+      }
     }
 
     await this.emit(applicationId, executionId, 'PORTAL_FILL_COMPLETED', actor);

@@ -11,6 +11,8 @@
  * employment letter, which are legitimately in another person's name.
  */
 
+import { isPhotoDocumentType } from '../../ocr/extraction-schema';
+
 export type IdentityRole = 'identity' | 'generic' | 'supporting';
 
 /**
@@ -56,6 +58,8 @@ export function identityRole(
 ): IdentityRole {
   const t = (documentType ?? '').toLowerCase().trim();
   if (GENERIC_TYPES.has(t)) return 'generic';
+  // `passport_photo` is a photograph, not the passport (prod 2026-10-24).
+  if (isPhotoDocumentType(t)) return 'supporting';
   if (IDENTITY_PREFIXES.some((p) => t === p || t.startsWith(`${p}_`))) {
     return 'identity';
   }

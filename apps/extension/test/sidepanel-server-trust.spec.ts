@@ -103,7 +103,7 @@ describe('the side panel applies the same trust rule as the background worker', 
     // Consumed after the bind, a second `started` delivered while the first
     // awaited resolvePortalTab/pf-bind-session passed the same check.
     expect(src).toMatch(
-      /if \(!startRequested\) \{[\s\S]*?return\s*\}\s*(\/\/[^\n]*\n\s*)*startRequested = false\s*\n\s*const tabId = await resolvePortalTab\(\)/,
+      /if \(!startRequested\) \{[\s\S]*?return\s*\}\s*(\/\/[^\n]*\n\s*)*startRequested = false\s*\n(\s*\/\/[^\n]*\n)*\s*(const|let) tabId = await resolvePortalTab\(\)/,
     )
   })
 

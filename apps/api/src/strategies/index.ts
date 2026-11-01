@@ -71,11 +71,15 @@ export {
 } from './form-mapping/form-renderer.registry';
 export {
   portalFor,
+  portalForRoute,
+  embeddedVisaaiId,
   assistedFillPortals,
 } from './portal-integration/portal-registry';
 export {
   registerPortalFill,
+  registerPortalFillVariant,
   resolvePortalFill,
+  resolvePortalFillFor,
   isPortalFillRegistered,
 } from './portal-integration/portal-fill.registry';
 export type {

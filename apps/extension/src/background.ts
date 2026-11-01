@@ -1,3 +1,5 @@
+import { sendToPortalTab } from './portal-messaging'
+import { pickPortalTabToFocus } from './portal-tab'
 import type {
   ExtMessage,
   FillInstruction,
@@ -14,7 +16,7 @@ import {
 } from './shared'
 
 interface ExternalMessage {
-  type: 'ping' | 'session'
+  type: 'ping' | 'session' | 'open-panel'
   token?: string
   apiUrl?: string
   portalUrl?: string
@@ -25,6 +27,11 @@ interface ExternalMessage {
    * older web build still hands off a review-only session.
    */
   readbackToken?: string
+  /**
+   * The portal pages this application's fill covers (e.g. '/doc-upload' or
+   * '/eta/welcome'). Only used to pick which tab Launch brings to the front.
+   */
+  portalPages?: unknown
 }
 
 interface PendingSession {
@@ -35,14 +42,47 @@ interface PendingSession {
   receivedAt: number
 }
 
-// Clicking the toolbar icon opens the side panel. setPanelBehavior is the only
-// reliable path — sidePanel.open() from runtime.onMessageExternal does not carry
-// the user gesture across the message boundary, so we prompt the user to click
-// the icon (via the badge below) and Chrome handles the open. Don't also
+// Clicking the toolbar icon opens the side panel. A session handoff arrives
+// after the page's network calls, too late to carry the Launch click's
+// gesture, so it badges the icon instead; the 'open-panel' message below is
+// sent at the click and opens the panel directly when Chrome allows it. Don't also
 // register chrome.action.onClicked: when both are registered the auto-open
 // consumes the gesture, then onClicked fires and our manual sidePanel.open()
 // fails with "may only be called in response to a user gesture".
 void chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
+
+// ── hand-offs already handled ────────────────────────────────────────────────
+/**
+ * SHA-256 of the last few session tokens stored (never the token itself), so a
+ * retried hand-off of the same launch is recognised across a worker restart.
+ */
+const HANDLED_KEY = 'handledSessionTokens'
+const HANDLED_MAX = 10
+
+async function tokenHash(token: string): Promise<string> {
+  const bytes = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token)))
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+/** True when this token was stored before (a retried hand-off of the same launch). */
+async function wasHandled(token: string): Promise<boolean> {
+  const h = await tokenHash(token)
+  const stored = await chrome.storage.local.get(HANDLED_KEY)
+  const list = Array.isArray(stored[HANDLED_KEY]) ? (stored[HANDLED_KEY] as string[]) : []
+  return list.includes(h)
+}
+
+/**
+ * Record a token as stored — only AFTER pendingSession was written, so a
+ * hand-off that failed part-way is retried for real instead of acknowledged
+ * with nothing stored.
+ */
+async function markHandled(token: string): Promise<void> {
+  const h = await tokenHash(token)
+  const stored = await chrome.storage.local.get(HANDLED_KEY)
+  const list = Array.isArray(stored[HANDLED_KEY]) ? (stored[HANDLED_KEY] as string[]) : []
+  if (!list.includes(h)) await chrome.storage.local.set({ [HANDLED_KEY]: [...list, h].slice(-HANDLED_MAX) })
+}
 
 // ── pendingSession expiry ────────────────────────────────────────────────────
 // The handoff carries a readbackToken holding the applicant's mapped values
@@ -93,6 +133,13 @@ function isTrustedSenderOrigin(origin: string | undefined): boolean {
   }
 }
 
+/** At most 50 paths, each starting with '/'; anything else is ignored. */
+function portalPagesOf(v: unknown): string[] | undefined {
+  if (!Array.isArray(v)) return undefined
+  const pages = v.filter((p): p is string => typeof p === 'string' && p.startsWith('/') && p.length <= 200).slice(0, 50)
+  return pages.length ? pages : undefined
+}
+
 // Messages from the VisaAI web app (allowed origins listed in manifest.json
 // "externally_connectable"). Two message types: a presence ping the page uses
 // to detect that the extension is installed, and a session handoff that stores
@@ -103,6 +150,27 @@ chrome.runtime.onMessageExternal.addListener((msg: ExternalMessage, _sender, sen
   if (!isTrustedSenderOrigin(senderOrigin)) {
     sendResponse({ ok: false, detail: 'untrusted sender' })
     return false
+  }
+
+  // Sent by the Launch click itself, before the page's own awaits, so Chrome
+  // still counts it as the applicant's click: the side panel opens with no
+  // toolbar click (live 2026-10-17: "it's not loading extension
+  // automatically"). Called synchronously — any await first loses the
+  // gesture. If Chrome refuses, the GO badge is the fallback as before.
+  if (msg.type === 'open-panel') {
+    const windowId = _sender.tab?.windowId
+    if (windowId == null) {
+      sendResponse({ ok: false, detail: 'no window' })
+      return false
+    }
+    chrome.sidePanel
+      .open({ windowId })
+      .then(() => sendResponse({ ok: true }))
+      .catch((err: unknown) => {
+        console.warn('[VisaAI ext] side panel did not open from Launch:', err)
+        sendResponse({ ok: false, detail: err instanceof Error ? err.message : 'not opened' })
+      })
+    return true
   }
 
   if (msg.type === 'ping') {
@@ -128,7 +196,16 @@ chrome.runtime.onMessageExternal.addListener((msg: ExternalMessage, _sender, sen
     }
     void (async () => {
       try {
+        // The web page retries a hand-off it got no answer to (a reply that
+        // was slow, not lost). Storing the same single-use token again would
+        // make an open panel drop its live socket and reconnect with a spent
+        // token. A token already handled is acknowledged, not stored again.
+        if (await wasHandled(pending.token)) {
+          sendResponse({ ok: true })
+          return
+        }
         await chrome.storage.local.set({ pendingSession: pending })
+        await markHandled(pending.token)
         // Replaces any earlier alarm of the same name.
         await chrome.alarms.create(PENDING_PURGE_ALARM, { when: pending.receivedAt + PENDING_SESSION_TTL_MS })
         // Badge prompts the user to click the toolbar icon — that click carries
@@ -137,6 +214,13 @@ chrome.runtime.onMessageExternal.addListener((msg: ExternalMessage, _sender, sen
         await chrome.action.setBadgeBackgroundColor({ color: '#10c22b' })
         await chrome.action.setBadgeText({ text: 'GO' })
         console.log('[VisaAI ext] session stored, badge set, version', chrome.runtime.getManifest().version)
+        // Switch to the portal tab in the window Launch was clicked in: the
+        // panel fills only the portal tab in front.
+        const windowId = _sender.tab?.windowId
+        if (windowId != null) {
+          const target = pickPortalTabToFocus(await chrome.tabs.query({ windowId }), portalPagesOf(msg.portalPages))
+          if (target != null) await chrome.tabs.update(target, { active: true }).catch(() => undefined)
+        }
         sendResponse({ ok: true })
       } catch (err) {
         console.error('[VisaAI ext] session handoff failed:', err)
@@ -181,7 +265,29 @@ chrome.runtime.onMessage.addListener((msg: ExtMessage, sender, sendResponse) => 
     return false
   }
   if (msg.type === 'pf-probe') {
-    void pfProbe(msg.selectors, msg.ops).then(sendResponse)
+    void pfProbe(msg.selectors, msg.ops, msg.awaitOptions).then(sendResponse)
+    return true
+  }
+  if (msg.type === 'pf-page-rows') {
+    // Bound tab only, read-only, same tab-scoping as the probe.
+    if (!pfSession) {
+      sendResponse([])
+      return false
+    }
+    void pfWithTimeout(sendToPortalTab<string[]>(pfSession.tabId, { type: 'page-rows' }), PF_TIMEOUT_MS)
+      .then((rows) => sendResponse(Array.isArray(rows) ? rows : []))
+      .catch(() => sendResponse([]))
+    return true
+  }
+  if (msg.type === 'pf-upload-status') {
+    // Bound tab only, read-only, like pf-page-rows.
+    if (!pfSession) {
+      sendResponse([])
+      return false
+    }
+    void pfWithTimeout(sendToPortalTab<unknown[]>(pfSession.tabId, { type: 'upload-status' }), PF_TIMEOUT_MS)
+      .then((rows) => sendResponse(Array.isArray(rows) ? rows : []))
+      .catch(() => sendResponse([]))
     return true
   }
   if (msg.type === 'pf-execute-field') {
@@ -241,15 +347,31 @@ function pfFail(command: PortalFillWriteCommand, reason: PortalFillFailReason): 
 async function pfProbe(
   selectors: string[],
   ops?: Array<PortalFillOp | null>,
-): Promise<{ results: { selector: string; found: boolean }[]; page: string | null } | { error: string }> {
+  awaitOptions?: boolean[],
+): Promise<
+  { results: { selector: string; found: boolean; optionMissing?: boolean }[]; page: string | null } | { error: string }
+> {
   if (!pfSession) return { error: 'no_session' }
   try {
     const raw = (await pfWithTimeout(
-      chrome.tabs.sendMessage(pfSession.tabId, { type: 'readback', selectors, ...(ops ? { ops } : {}) }),
+      sendToPortalTab(pfSession.tabId, {
+        type: 'readback',
+        selectors,
+        ...(ops ? { ops } : {}),
+        ...(awaitOptions ? { awaitOptions } : {}),
+      }),
       PF_TIMEOUT_MS,
-    )) as Array<{ selector: string; found: boolean }> | undefined
+    )) as Array<{ selector: string; found: boolean; optionMissing?: boolean }> | undefined
     if (!Array.isArray(raw)) return { error: 'unreachable' }
-    return { results: raw.map((r) => ({ selector: r.selector, found: r.found })), page: await boundTabPath() }
+    return {
+      results: raw.map((r) => ({
+        selector: r.selector,
+        found: r.found,
+        // Presence only: "its list lacks the answer" carries no value.
+        ...(r.optionMissing === true && !r.found ? { optionMissing: true } : {}),
+      })),
+      page: await boundTabPath(),
+    }
   } catch {
     return { error: 'unreachable' }
   }
@@ -276,7 +398,7 @@ async function pfDispatch(command: PortalFillWriteCommand): Promise<PortalFillFi
   if (!isPortalFillProtocolCompatible(command.protocol)) return pfFail(command, 'dom_change') // protocol mismatch
   try {
     const res = await pfWithTimeout(
-      chrome.tabs.sendMessage(pfSession.tabId, { type: 'execute-field-intent', command } satisfies ExtMessage),
+      sendToPortalTab(pfSession.tabId, { type: 'execute-field-intent', command } satisfies ExtMessage),
       PF_TIMEOUT_MS,
     )
     return res as PortalFillFieldResult

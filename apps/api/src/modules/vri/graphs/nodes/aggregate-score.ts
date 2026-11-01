@@ -5,6 +5,7 @@ import {
   DEFAULT_THRESHOLDS,
   type EscalationThresholds,
   type RiskWeights,
+  routeRiskWeights,
 } from '../../risk-config.types';
 
 /**
@@ -51,12 +52,29 @@ export function makeAggregateScoreNode(
   return async function aggregateScore(
     state: VriState,
   ): Promise<Partial<VriState>> {
+    const routeWeights = routeRiskWeights(
+      weights,
+      state.data?.destinationCountry,
+      state.data?.visaaiId,
+    );
     const overallScore = computeOverallScore(
       state.scores,
-      weights,
+      routeWeights,
       state.unassessedFactors ?? [],
     );
     const { escalate, reason } = decideEscalation(overallScore, thresholds);
-    return { overallScore, escalate, escalationReason: reason };
+    // A factor the route does not weigh is not assessed for it. Without this
+    // the readiness page showed Express Entry "Home Country Ties 7% · At
+    // risk" and the category suggestions called it a weakness, for a
+    // permanent-residence file (prod 2026-10-19). The reducer unions.
+    const unweighted = (
+      Object.keys(routeWeights) as (keyof FactorScores)[]
+    ).filter((k) => routeWeights[k] === 0);
+    return {
+      overallScore,
+      escalate,
+      escalationReason: reason,
+      ...(unweighted.length ? { unassessedFactors: unweighted } : {}),
+    };
   };
 }

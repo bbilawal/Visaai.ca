@@ -50,6 +50,7 @@ function make() {
       reasons: ['provenance_or_mapping_changed'],
     }),
     getActive: jest.fn().mockResolvedValue({ id: RID, status: 'in_review' }),
+    getActiveFor: jest.fn().mockResolvedValue({ id: RID, status: 'in_review' }),
   };
   const mappingSvc = {
     forApplication: jest.fn().mockResolvedValue(MAPPINGS),
@@ -167,6 +168,7 @@ describe('PreflightController — thin delegation (Phase 3D)', () => {
         op: 'radio' as const,
         reveal: true,
         dialog: true,
+        awaitOptions: true,
         declaration: true,
       },
     ];
@@ -184,10 +186,13 @@ describe('PreflightController — thin delegation (Phase 3D)', () => {
     });
   });
 
-  it('getActive delegates', async () => {
+  it('getActive delegates with the caller, so it can say who may lock', async () => {
     const { ctrl, svc } = make();
-    await ctrl.getActive(APP);
-    expect(svc.getActive).toHaveBeenCalledWith(APP);
+    await ctrl.getActive(APP, USER);
+    expect(svc.getActiveFor).toHaveBeenCalledWith(APP, {
+      id: USER.id,
+      role: 'consultant',
+    });
   });
 
   // The original form of this guard counted the controller's injected deps and

@@ -1,0 +1,73 @@
+[harness] mode=matrix queued=68 skipped=3 workers=4 base=http://localhost:3100
+[1/68] MTX-004 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[2/68] MTX-007 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[3/68] MTX-008 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[4/68] MTX-006 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[5/68] MTX-010 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[6/68] MTX-011 AU/visitor_visa → FAIL (2 findings)
+[7/68] MTX-005 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[8/68] MTX-012 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[9/68] MTX-009 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[10/68] MTX-016 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[11/68] MTX-014 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[12/68] MTX-018 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[13/68] MTX-020 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[14/68] MTX-015 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[15/68] MTX-013 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[16/68] MTX-017 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[17/68] MTX-022 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[18/68] MTX-019 BG/business_visa → PASS_WITH_FINDINGS (1 findings)
+[19/68] MTX-026 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[20/68] MTX-024 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+gs)
+[21/68] MTX-023 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[22/68] MTX-018 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[23/68] MTX-024 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[24/68] MTX-037 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[25/68] MTX-028 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[26/68] MTX-041 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[27/68] MTX-027 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[28/68] MTX-022 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[29/68] MTX-032 DE/tourist_visa → ERROR
+[30/68] MTX-045 LI/business_visa → ERROR
+[31/68] MTX-031 FR/business_visa → ERROR
+[32/68] MTX-026 EE/tourist_visa → ERROR
+[33/68] MTX-036 HU/tourist_visa → ERROR
+[34/68] MTX-049 LU/business_visa → ERROR
+[35/68] MTX-035 GR/business_visa → ERROR
+[36/68] MTX-030 FR/tourist_visa → ERROR
+[37/68] MTX-040 IT/tourist_visa → ERROR
+[38/68] MTX-053 NL/business_visa → ERROR
+[39/68] MTX-039 IS/business_visa → ERROR
+[40/68] MTX-034 GR/tourist_visa → ERROR
+[41/68] MTX-044 LI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[42/68] MTX-057 PL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[43/68] MTX-038 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[44/68] MTX-043 LV/business_visa → PASS_WITH_FINDINGS (1 findings)
+[45/68] MTX-048 LU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[46/68] MTX-061 RO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[47/68] MTX-042 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[48/68] MTX-047 LT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[49/68] MTX-065 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[50/68] MTX-051 MT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[51/68] MTX-052 NL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[52/68] MTX-055 NO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[53/68] MTX-056 PL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[54/68] MTX-069 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[55/68] MTX-046 LT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[56/68] MTX-059 PT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[57/68] MTX-060 RO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[58/68] MTX-050 MT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[59/68] MTX-064 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[60/68] MTX-063 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[61/68] MTX-054 NO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[62/68] MTX-068 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[63/68] MTX-067 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[64/68] MTX-058 PT/tourist_visa → FAIL (2 findings)
+[65/68] MTX-071 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[66/68] MTX-062 SK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[67/68] MTX-066 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[68/68] MTX-070 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[harness] done. counts={"PASS_WITH_FINDINGS":54,"FAIL":2,"ERROR":12}
+[harness] mode=matrix queued=0 skipped=71 workers=4 base=http://localhost:3100
+[harness] done. counts={}

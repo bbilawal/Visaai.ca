@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "visaai_id": "ca-work-permit",
-  "extracted_at": "2026-08-21",
+  "extracted_at": "2026-10-29",
   "extraction_method": "manual",
   "extractor": "read directly from the official IRCC pages listed in source_roles",
   "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
@@ -9,26 +9,47 @@
     "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html",
     "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html",
     "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1295.html",
-    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp",
+    "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside/eligibility.html",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside/forms-documents.html",
+    "guide": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/guide-5487-applying-work-permit-outside-canada.html",
+    "family_form": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5645.html",
+    "medical_countries": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/medical-police/medical-exams/requirements-temporary-residents/country-requirements.html",
+    "family_owp": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/special-instructions/spouses-dependent-children/apply.html"
   },
   "page_dates": {
     "landing": "2026-06-01",
     "application": "2026-03-31",
-    "forms": "2026-07-21"
+    "forms": "2026-07-21",
+    "eligibility": "2026-05-25",
+    "documents": "2026-07-17",
+    "guide": "2026-10-06",
+    "family_form": "2024-06-21",
+    "medical_countries": "2026-07-16",
+    "family_owp": "2026-05-28"
   },
   "not_extracted": [
-    "The work permit eligibility criteria. No eligibility page is registered as a source for this visa type. The registered 'application' page (permit-outside.html) is a section index whose 'check if you can apply' section links out to a page that was not read, so this extraction states no eligibility conditions beyond what those four pages carry. This is the single largest gap in this file.",
-    "Medical exams and police certificates. Neither is mentioned on any of the four registered pages. IRCC may require them for some work permits, but nothing read here says so, so nothing is claimed.",
     "The employment contract or employment letter content list (name of employer, address, job title, salary, hours of work). On the IMM 1295 page this sentence sits inside the branch answering 'who should select \"other\"?' — applicants working for a foreign mission or international organization, a foreign government, or a bridge or tunnel authority. The normalizer flattens the collapsed branches, and attributing that document list to every work permit applicant would be wrong.",
     "The inside-Canada and port-of-entry application routes. The apply page opens by pointing them elsewhere ('not outside canada? check if you can apply from inside canada or at a port of entry'). IMM 1295 is titled for applications made outside Canada.",
-    "Work permits with special instructions: post-graduation work permit, working as a student, International Experience Canada, working while waiting for permanent residence, and open work permits for family members of foreign workers. The landing page names them and links each to its own page.",
     "The Labour Market Impact Assessment process itself. The employer applies for the LMIA; IRCC publishes that process on the employer pages, which were not read.",
     "Local visa office requirements. The apply page names them as part of 'what forms and documents you need', but the list is per-country and behind a selector.",
     "Which countries or territories require biometrics. IRCC gates that list behind a separate checker tool.",
     "Processing times. The apply page links to a tool and publishes no number.",
     "Venezuelan passport-extension instructions on the IMM 1295 page — a nationality-specific branch.",
     "IRM 0002 (request for a change of sex or gender identifier). Named on the IMM 1295 page, but it applies only where the chosen gender identifier differs from an existing or foreign document, which VisaAI has no fact for.",
-    "The work permit fee exemption. The apply page writes the fee as '$155 (unless exempt)' and links the exemption list out; the exempt categories were not read."
+    "The work permit fee exemption. The apply page writes the fee as '$155 (unless exempt)' and links the exemption list out; the exempt categories were not read.",
+    "Work permits with special instructions other than the family open work permit: post-graduation work permit, working as a student, International Experience Canada (a separate pool with its own invitation) and working while waiting for permanent residence. The landing page names them and links each to its own page; they are inside-Canada or separate-pool products.",
+    "The open work permit rows for the family of a STUDENT. The family-member page read here (spouses-dependent-children/apply.html) is for family members of foreign workers; the page for a student's spouse was not read, so the principal's-permit and occupation rows are gated on open_permit_principal = worker. A student's spouse is asked for neither, and only the marriage certificate / IMM 5409 rows apply to them.",
+    "The family open work permit's eligibility tests (the principal's TEER category, the 16-month authorization for a high-skilled principal not on a permanent residence pathway, the 2025-01-21 changes). They are stated on the eligibility page for that permit, which was not read; the document rows quote the page's 'family members of high-skilled workers who are on a pathway to permanent residence' set and their descriptions name the variants. VisaAI does not decide eligibility.",
+    "A police certificate as an UPLOAD. Both the eligibility page ('we may ask for a police certificate') and guide 5487 ('you may be asked to give us a police clearance certificate') make it something IRCC asks for, not something every applicant sends. It is recorded as a condition (police_certificate_if_asked), never a checklist slot.",
+    "Family Information (IMM 5707). The forms-and-documents page and guide 5487 name IMM 5707; the IMM 5645 form page states it 'must be completed by each person, 18 years of age or older, applying for a temporary resident visa, a study or work permit outside canada', and IRCC's secure-account checklist asked for IMM 5645 on the study permit (recorded live 2026-10-20). The form row is IMM 5645, from its own page; the live work permit checklist has not been recorded.",
+    "IRCC's document checklist (IMM 5488) and IRCC's personalised secure-account checklist for a work permit. The first is a PDF the sync cannot store as text; the second has not been recorded live. The rows are quoted from the readable forms-and-documents page, guide 5487, the IMM 1295 and IMM 5645 pages, the eligibility page, the family open work permit page and the medical-exam country table.",
+    "IMM 5475 (authority to release personal information) and certified translations. The forms-and-documents page lists both among documents 'you might need' with conditions VisaAI has no fact for beyond the ones it already gates (a designated individual; a document not in English or French).",
+    "The re-entry permit (guide 5487: 'if the government that issued your passport or travel document requires a re-entry permit'). VisaAI has no fact for it.",
+    "Visa-office-specific documents. The forms-and-documents page puts them behind a 'where are you applying from?' selector.",
+    "The employer compliance fee ($230) and the Employer Portal step. They are the employer's, paid before the worker applies, not part of the worker's application.",
+    "Travel to (rather than residence in) an IME country is read from the interview's designated_country_six_months answer (ime_country_six_months) only when it is a plain yes or no; a reply that only names countries leaves it unset. The residence branch tests the current country of residence against IRCC's table, as for the study permit.",
+    "The work interview asks ONE question for a public-health job and agriculture. A reply naming only agriculture is read as agricultural_occupation; a bare 'yes' is read as a public-health job, so an agricultural worker who answers just 'yes' is shown the medical exam slot (which never blocks preparing the forms) even outside the listed countries."
   ],
   "requirements": [
     {
@@ -65,26 +86,305 @@
       "source_excerpt_display": "Note: A work permit cannot be issued for a duration that is longer than the validity of your passport."
     },
     {
+      "requirement_code": "enough_money_for_stay",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show you have enough money for yourself and your family during your stay and to return home",
+      "description": "Stated as a requirement to apply from outside Canada. IRCC publishes no fixed amount: it depends on family size, the community and the work permit program, and IRCC points to the low income cut-offs as a general reference.",
+      "source_role": "eligibility",
+      "source_excerpt": "to apply for a work permit from outside canada, you must: show that you have enough money to take care of yourself and your family members during your stay in canada and to return home",
+      "display_order": 40,
+      "source_excerpt_display": "To apply for a work permit from outside Canada, you must: show that you have enough money to take care of yourself and your family members during your stay in Canada and to return home"
+    },
+    {
+      "requirement_code": "will_leave_canada",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "Show that you will leave Canada before your work permit expires",
+      "source_role": "eligibility",
+      "source_excerpt": "to apply for a work permit from outside canada, you must: ... show that you will leave canada before your work permit expires",
+      "display_order": 45,
+      "source_excerpt_display": "To apply for a work permit from outside Canada, you must: ... show that you will leave Canada before your work permit expires"
+    },
+    {
+      "requirement_code": "police_certificate_if_asked",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "IRCC may ask you for a police certificate",
+      "description": "Not a document every applicant sends: IRCC asks for it where criminal history is in question (guide 5487: 'you may be asked to give us a police clearance certificate'). Get one only if IRCC or your visa office asks.",
+      "source_role": "eligibility",
+      "source_excerpt": "your application may be refused if you: are medically inadmissible have a record of criminal activity (we may ask for a police certificate)",
+      "display_order": 50,
+      "source_excerpt_display": "Your application may be refused if you: are medically inadmissible have a record of criminal activity (we may ask for a police certificate)"
+    },
+    {
+      "requirement_code": "ime_country_of_residence",
+      "kind": "condition",
+      "officially_required": true,
+      "label": "You need an immigration medical exam if you lived 6 or more months in a row, in the year before coming, in a country or territory IRCC lists",
+      "description": "IRCC's country table marks each country or territory 'yes' or 'no'. The rule carries every 'yes' row as an ISO country code (128 rows, 121 codes: duplicate names such as Cabo Verde / Cape Verde and Hong Kong share a code), read on 2026-10-29 from the page dated 2026-07-16.",
+      "rule": {
+        "all": [
+          {
+            "fact": "stay_duration_days",
+            "op": "gt",
+            "value": 183
+          },
+          {
+            "fact": "residence_country",
+            "op": "in",
+            "value": [
+              "AF",
+              "AO",
+              "AR",
+              "AZ",
+              "BD",
+              "BF",
+              "BI",
+              "BJ",
+              "BN",
+              "BO",
+              "BR",
+              "BT",
+              "BW",
+              "BY",
+              "CD",
+              "CF",
+              "CG",
+              "CI",
+              "CM",
+              "CN",
+              "CO",
+              "CV",
+              "DJ",
+              "DO",
+              "DZ",
+              "EC",
+              "ER",
+              "ET",
+              "FJ",
+              "FM",
+              "GA",
+              "GE",
+              "GH",
+              "GL",
+              "GM",
+              "GN",
+              "GQ",
+              "GT",
+              "GU",
+              "GW",
+              "GY",
+              "HK",
+              "HN",
+              "HT",
+              "ID",
+              "IN",
+              "KE",
+              "KG",
+              "KH",
+              "KI",
+              "KM",
+              "KP",
+              "KR",
+              "KZ",
+              "LA",
+              "LK",
+              "LR",
+              "LS",
+              "LY",
+              "MA",
+              "MD",
+              "MG",
+              "MH",
+              "ML",
+              "MM",
+              "MN",
+              "MO",
+              "MP",
+              "MR",
+              "MV",
+              "MW",
+              "MY",
+              "MZ",
+              "NA",
+              "NE",
+              "NG",
+              "NI",
+              "NP",
+              "NR",
+              "PA",
+              "PE",
+              "PG",
+              "PH",
+              "PK",
+              "PW",
+              "PY",
+              "QA",
+              "RO",
+              "RU",
+              "RW",
+              "SB",
+              "SD",
+              "SG",
+              "SL",
+              "SN",
+              "SO",
+              "SS",
+              "ST",
+              "SV",
+              "SZ",
+              "TD",
+              "TG",
+              "TH",
+              "TJ",
+              "TL",
+              "TM",
+              "TN",
+              "TV",
+              "TZ",
+              "UA",
+              "UG",
+              "UY",
+              "UZ",
+              "VE",
+              "VN",
+              "VU",
+              "XK",
+              "YE",
+              "ZA",
+              "ZM",
+              "ZW"
+            ]
+          }
+        ]
+      },
+      "source_role": "medical_countries",
+      "source_excerpt": "you want to come to canada for more than 6 months and have lived in, or travelled to, certain countries or territories, for 6 months or more in a row, in the year before you come to canada, or ... you need an ime if there is a “ yes ” in the second column.",
+      "display_order": 55,
+      "source_excerpt_display": "you want to come to Canada for more than 6 months and have lived in, or travelled to, certain countries or territories, for 6 months or more in a row, in the year before you come to Canada, or ... You need an IME if there is a “ yes ” in the second column."
+    },
+    {
+      "requirement_code": "passport_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Photocopy of your valid passport or travel document",
+      "description": "IRCC lists it for all applicants. It must not be expired. A work permit cannot be issued for longer than the passport is valid. If you are approved and need a visitor visa, IRCC will ask for the original passport.",
+      "source_role": "documents",
+      "source_excerpt": "all applicants need to include: application for work permit made outside of canada (imm 1295) ... a photocopy of your valid (not expired) passport or travel document",
+      "display_order": 90,
+      "source_excerpt_display": "All applicants need to include: Application For Work Permit Made Outside of Canada (IMM 1295) ... a photocopy of your valid (not expired) passport or travel document"
+    },
+    {
+      "requirement_code": "passport_photos",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "1 photo meeting the visa photo specifications",
+      "description": "IRCC lists it for all applicants. When you apply online you upload a digital photo; if you give biometrics, guide 5487 says not to include paper photos.",
+      "parameters": {
+        "quantity": 1
+      },
+      "source_role": "documents",
+      "source_excerpt": "all applicants need to include: application for work permit made outside of canada (imm 1295) ... 1 photo meeting the visa photo specifications",
+      "display_order": 95,
+      "source_excerpt_display": "All applicants need to include: Application For Work Permit Made Outside of Canada (IMM 1295) ... 1 photo meeting the visa photo specifications"
+    },
+    {
       "requirement_code": "lmia_and_employment_contract",
       "kind": "evidence",
       "officially_required": true,
       "label": "Original employment contract and Labour Market Impact Assessment (LMIA)",
-      "description": "Required by the IMM 1295 instructions where you need an LMIA to get a work permit. Applicants who do not need an LMIA give the name of the employer who provided the offer of employment number instead. VisaAI has no fact for whether an LMIA is needed, so this is stated rather than gated.",
+      "description": "Required by the IMM 1295 instructions where you need an LMIA to get a work permit, including the Seasonal Agricultural Worker Program. The forms-and-documents page names the same two documents for an LMIA-required job: a copy of the positive LMIA (with its file number) and an employment contract, both given to you by your employer. Not asked of an LMIA-exempt or open work permit applicant.",
       "source_role": "forms",
       "source_excerpt": "a) if you need an lmia to get a work permit, type the name of the employer as shown on the lmia. attach original employment contract and lmia.",
       "display_order": 100,
-      "source_excerpt_display": "a) If you need an LMIA to get a work permit, type the name of the employer as shown on the LMIA. Attach original employment contract and LMIA."
+      "source_excerpt_display": "a) If you need an LMIA to get a work permit, type the name of the employer as shown on the LMIA. Attach original employment contract and LMIA.",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "eq",
+        "value": "lmia"
+      }
+    },
+    {
+      "requirement_code": "job_offer_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Job offer letter from your Canadian employer",
+      "description": "Needed when your job requires an LMIA. Your employer gives it to you; it sets out your pay and deductions, your duties and conditions of employment such as hours of work.",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "eq",
+        "value": "lmia"
+      },
+      "source_role": "documents",
+      "source_excerpt": "job offer letter you need a job offer letter if your job requires an lmia.",
+      "display_order": 102,
+      "source_excerpt_display": "Job offer letter You need a job offer letter if your job requires an LMIA."
+    },
+    {
+      "requirement_code": "quebec_acceptance_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Quebec acceptance certificate (CAQ)",
+      "description": "For an LMIA-required job in Quebec, paid, for more than 30 days. Your employer applies for it with you to Quebec's immigration ministry (MIFI). Guide 5487: 'if you do not need an lmia you will usually not need a caq.'",
+      "rule": {
+        "all": [
+          {
+            "fact": "work_permit_type",
+            "op": "eq",
+            "value": "lmia"
+          },
+          {
+            "fact": "works_in_quebec",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "fact": "stay_duration_days",
+            "op": "gt",
+            "value": 30
+          }
+        ]
+      },
+      "source_role": "documents",
+      "source_excerpt": "if your job requires an lmia, your employer must give you: ... a quebec acceptance certificate (caq) (if you plan to work a paid job in quebec for more than 30 days )",
+      "display_order": 104,
+      "source_excerpt_display": "If your job requires an LMIA, your employer must give you: ... a Quebec Acceptance Certificate (CAQ) (if you plan to work a paid job in Quebec for more than 30 days)"
+    },
+    {
+      "requirement_code": "employment_contract_lmia_exempt",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Employment contract (LMIA-exempt job)",
+      "description": "Your employer gives you the contract together with the offer of employment number it got from IRCC's Employer Portal. For an LMIA job the contract goes with the LMIA (see that item).",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "eq",
+        "value": "lmia_exempt"
+      },
+      "source_role": "documents",
+      "source_excerpt": "if your job is lmia-exempt, your employer must give you: an employment contract an offer of employment number",
+      "display_order": 106,
+      "source_excerpt_display": "If your job is LMIA-exempt, your employer must give you: an employment contract an offer of employment number"
     },
     {
       "requirement_code": "lmia_or_offer_of_employment_number",
       "kind": "evidence",
       "officially_required": true,
       "label": "Your LMIA number or offer of employment number",
-      "description": "IRCC states the LMIA number is seven digits, and the LMIA-exempt offer of employment number begins with the letter 'a' followed by seven numbers.",
+      "description": "For an employer-specific work permit only. IRCC states the LMIA number is seven digits, and the LMIA-exempt offer of employment number begins with the letter 'a' followed by seven numbers. Your employer gives you the one that applies; an open work permit has neither.",
       "source_role": "forms",
       "source_excerpt": "type the seven-digit number of your valid lmia or the alpha numeric combination of the offer of employment number (lmia exempt). this number begins with the letter “a” and is followed by seven numbers.",
       "display_order": 110,
-      "source_excerpt_display": "Type the seven-digit number of your valid LMIA or the alpha numeric combination of the offer of employment number (LMIA Exempt). This number begins with the letter “A” and is followed by seven numbers."
+      "source_excerpt_display": "Type the seven-digit number of your valid LMIA or the alpha numeric combination of the offer of employment number (LMIA Exempt). This number begins with the letter “A” and is followed by seven numbers.",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      }
     },
     {
       "requirement_code": "marriage_certificate_copy",
@@ -105,6 +405,510 @@
       "source_excerpt_display": "If you are married, you must send a photocopy of your marriage licence or certificate with your application."
     },
     {
+      "requirement_code": "current_employer_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter from your current employer",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      },
+      "description": "For an employer-specific work permit (LMIA or LMIA-exempt). IRCC: 'you’ll always be asked to include' it. An open work permit applicant asked for employment documents uploads a page reading 'not applicable'.",
+      "source_role": "documents",
+      "source_excerpt": "if you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... you’ll always be asked to include the following documents: a letter from your current employer",
+      "display_order": 130,
+      "source_excerpt_display": "If you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... You’ll always be asked to include the following documents: a letter from your current employer"
+    },
+    {
+      "requirement_code": "past_employer_reference_letters",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Reference letters from past employers",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      },
+      "description": "For an employer-specific work permit (LMIA or LMIA-exempt).",
+      "source_role": "documents",
+      "source_excerpt": "if you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... you’ll always be asked to include the following documents: a letter from your current employer a reference letter from past employers",
+      "display_order": 131,
+      "source_excerpt_display": "If you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... You’ll always be asked to include the following documents: a letter from your current employer a reference letter from past employers"
+    },
+    {
+      "requirement_code": "proof_of_past_work_experience",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of past work experience (for example, pay stubs)",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      },
+      "description": "For an employer-specific work permit (LMIA or LMIA-exempt).",
+      "source_role": "documents",
+      "source_excerpt": "if you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... you’ll always be asked to include the following documents: ... proof of past work experience (for example, pay stubs)",
+      "display_order": 132,
+      "source_excerpt_display": "If you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... You’ll always be asked to include the following documents: ... proof of past work experience (for example, pay stubs)"
+    },
+    {
+      "requirement_code": "proof_of_job_requirements",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof you meet the requirements of the job (licence or certification)",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      },
+      "description": "For an employer-specific work permit: the licence or certification if the job is regulated in Canada, or education or experience the job asks for (guide 5487: 'a valid canadian provincial or territorial trade certificate, educational requirements or past work experience'). If the job needs no licence or certification, IRCC asks you to upload a blank page reading 'not applicable'.",
+      "source_role": "documents",
+      "source_excerpt": "if you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... you’ll always be asked to include the following documents: ... proof that you meet the requirements of the job (for example, the license or certification if your job is regulated) upload a blank sheet of paper with “not applicable” written on it if your job doesn’t require a license or certification",
+      "display_order": 133,
+      "source_excerpt_display": "If you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... You’ll always be asked to include the following documents: ... proof that you meet the requirements of the job (for example, the license or certification if your job is regulated) Upload a blank sheet of paper with “Not applicable” written on it if your job doesn’t require a license or certification"
+    },
+    {
+      "requirement_code": "resume",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Résumé",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "in",
+        "value": [
+          "lmia",
+          "lmia_exempt"
+        ]
+      },
+      "description": "For an employer-specific work permit (LMIA or LMIA-exempt).",
+      "source_role": "documents",
+      "source_excerpt": "if you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... you’ll always be asked to include the following documents: ... upload a blank sheet of paper with “not applicable” written on it if your job doesn’t require a license or certification a résumé",
+      "display_order": 134,
+      "source_excerpt_display": "If you're applying for an employer-specific work permit, you have to include some additional documents with your application. ... You’ll always be asked to include the following documents: ... Upload a blank sheet of paper with “Not applicable” written on it if your job doesn’t require a license or certification a résumé"
+    },
+    {
+      "requirement_code": "proof_of_relationship_to_principal",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of your relationship to the worker you are joining",
+      "description": "For an open work permit as the family member of a foreign worker. A spouse gives a copy of the marriage certificate, a common-law partner the Statutory Declaration of Common-law Union (IMM 5409); a dependent child a birth certificate or adoption papers (both, if adopted). The marriage certificate or IMM 5409 already on your list counts.",
+      "rule": {
+        "all": [
+          {
+            "fact": "work_permit_type",
+            "op": "eq",
+            "value": "open"
+          },
+          {
+            "fact": "open_permit_principal",
+            "op": "eq",
+            "value": "worker"
+          }
+        ]
+      },
+      "source_role": "family_owp",
+      "source_excerpt": "proof of your relationship to the principal applicant spouses and common-law partners examples: a copy of your marriage certificate statutory declaration of common-law union (imm 5409) other dependants examples: birth certificate adoption papers",
+      "display_order": 140,
+      "source_excerpt_display": "Proof of your relationship to the principal applicant Spouses and common-law partners Examples: a copy of your marriage certificate Statutory Declaration of Common-Law Union (IMM 5409) Other dependants Examples: birth certificate adoption papers"
+    },
+    {
+      "requirement_code": "principal_work_permit_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Copy of the worker’s work permit or letter of introduction, showing its expiry",
+      "description": "For an open work permit as the family member of a foreign worker: proof they can or will work in Canada, and for how long. IRCC asks that the worker can work at least 6 months after it receives your application, or at least 16 months for the spouse of a high-skilled worker who is not on a permanent residence pathway. Some applicants applying at the same time as an employer-specific permit holder (or a CSQ or PGWP holder) do not need the authorization proof.",
+      "rule": {
+        "all": [
+          {
+            "fact": "work_permit_type",
+            "op": "eq",
+            "value": "open"
+          },
+          {
+            "fact": "open_permit_principal",
+            "op": "eq",
+            "value": "worker"
+          }
+        ]
+      },
+      "source_role": "family_owp",
+      "source_excerpt": "proof that the principal applicant can or will be legally authorized to work in canada examples: a copy of the work permit or a copy of the letter of introduction ... proof that the principal applicant can work in canada for at least 6 months after we receive the family member’s work permit application examples: a copy of the work permit with the expiry date a copy of the letter of introduction (port of entry letter)",
+      "display_order": 141,
+      "source_excerpt_display": "Proof that the principal applicant can or will be legally authorized to work in Canada Examples: a copy of the work permit or a copy of the letter of introduction ... Proof that the principal applicant can work in Canada for at least 6 months after we receive the family member’s work permit application Examples: a copy of the work permit with the expiry date a copy of the letter of introduction (port of entry letter)"
+    },
+    {
+      "requirement_code": "principal_occupation_letter",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Letter from the worker’s employer showing their occupation and NOC/TEER",
+      "description": "For an open work permit as the family member of a foreign worker: the employer letter (employment details, occupation, duties and NOC or TEER category) or a copy of the worker's offer of employment. IRCC does not ask it of the family of an IMP+ permit holder. The TEER categories that qualify differ by situation; IRCC decides eligibility.",
+      "rule": {
+        "all": [
+          {
+            "fact": "work_permit_type",
+            "op": "eq",
+            "value": "open"
+          },
+          {
+            "fact": "open_permit_principal",
+            "op": "eq",
+            "value": "worker"
+          }
+        ]
+      },
+      "source_role": "family_owp",
+      "source_excerpt": "proof that the principal applicant is or will be working in an occupation in teer category 0, 1, 2 or 3 of the national occupation classification system for most open work permit holders, such as those under the pgwp program or international experience canada, the proof should be a letter from the principal applicant’s current employer that shows their employment details their occupation a description of their duties the noc or teer category their job is classified under or a copy of the letter of offer of employment",
+      "display_order": 142,
+      "source_excerpt_display": "Proof that the principal applicant is or will be working in an occupation in TEER category 0, 1, 2 or 3 of the National Occupation Classification system For most open work permit holders, such as those under the PGWP program or International Experience Canada, the proof should be a letter from the principal applicant’s current employer that shows their employment details their occupation a description of their duties the NOC or TEER category their job is classified under or a copy of the letter of offer of employment"
+    },
+    {
+      "requirement_code": "proof_of_medical_exam",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Immigration medical exam (upfront exam with a panel physician)",
+      "description": "Needed when you will work in Canada for more than 6 months and have lived for 6 or more months in a row, in the year before you come, in a country or territory on IRCC's medical-exam list (Pakistan, India, Bangladesh, Nigeria, the Philippines and others); whatever the length of stay, for a job where public health must be protected (health services, work with children, schools, hospital or laboratory staff, caregiving); and for agricultural work after living in a listed country. Guide 5487 lets you either have an upfront exam with a panel physician and upload proof of it with your application, or wait for the visa office's medical instructions, so this slot does not block preparing your forms.",
+      "rule": {
+        "any": [
+          {
+            "all": [
+              {
+                "fact": "stay_duration_days",
+                "op": "gt",
+                "value": 183
+              },
+              {
+                "fact": "residence_country",
+                "op": "in",
+                "value": [
+                  "AF",
+                  "AO",
+                  "AR",
+                  "AZ",
+                  "BD",
+                  "BF",
+                  "BI",
+                  "BJ",
+                  "BN",
+                  "BO",
+                  "BR",
+                  "BT",
+                  "BW",
+                  "BY",
+                  "CD",
+                  "CF",
+                  "CG",
+                  "CI",
+                  "CM",
+                  "CN",
+                  "CO",
+                  "CV",
+                  "DJ",
+                  "DO",
+                  "DZ",
+                  "EC",
+                  "ER",
+                  "ET",
+                  "FJ",
+                  "FM",
+                  "GA",
+                  "GE",
+                  "GH",
+                  "GL",
+                  "GM",
+                  "GN",
+                  "GQ",
+                  "GT",
+                  "GU",
+                  "GW",
+                  "GY",
+                  "HK",
+                  "HN",
+                  "HT",
+                  "ID",
+                  "IN",
+                  "KE",
+                  "KG",
+                  "KH",
+                  "KI",
+                  "KM",
+                  "KP",
+                  "KR",
+                  "KZ",
+                  "LA",
+                  "LK",
+                  "LR",
+                  "LS",
+                  "LY",
+                  "MA",
+                  "MD",
+                  "MG",
+                  "MH",
+                  "ML",
+                  "MM",
+                  "MN",
+                  "MO",
+                  "MP",
+                  "MR",
+                  "MV",
+                  "MW",
+                  "MY",
+                  "MZ",
+                  "NA",
+                  "NE",
+                  "NG",
+                  "NI",
+                  "NP",
+                  "NR",
+                  "PA",
+                  "PE",
+                  "PG",
+                  "PH",
+                  "PK",
+                  "PW",
+                  "PY",
+                  "QA",
+                  "RO",
+                  "RU",
+                  "RW",
+                  "SB",
+                  "SD",
+                  "SG",
+                  "SL",
+                  "SN",
+                  "SO",
+                  "SS",
+                  "ST",
+                  "SV",
+                  "SZ",
+                  "TD",
+                  "TG",
+                  "TH",
+                  "TJ",
+                  "TL",
+                  "TM",
+                  "TN",
+                  "TV",
+                  "TZ",
+                  "UA",
+                  "UG",
+                  "UY",
+                  "UZ",
+                  "VE",
+                  "VN",
+                  "VU",
+                  "XK",
+                  "YE",
+                  "ZA",
+                  "ZM",
+                  "ZW"
+                ]
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "fact": "stay_duration_days",
+                "op": "gt",
+                "value": 183
+              },
+              {
+                "fact": "ime_country_six_months",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "fact": "public_health_occupation",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "all": [
+              {
+                "fact": "agricultural_occupation",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "any": [
+                  {
+                    "fact": "residence_country",
+                    "op": "in",
+                    "value": [
+                      "AF",
+                      "AO",
+                      "AR",
+                      "AZ",
+                      "BD",
+                      "BF",
+                      "BI",
+                      "BJ",
+                      "BN",
+                      "BO",
+                      "BR",
+                      "BT",
+                      "BW",
+                      "BY",
+                      "CD",
+                      "CF",
+                      "CG",
+                      "CI",
+                      "CM",
+                      "CN",
+                      "CO",
+                      "CV",
+                      "DJ",
+                      "DO",
+                      "DZ",
+                      "EC",
+                      "ER",
+                      "ET",
+                      "FJ",
+                      "FM",
+                      "GA",
+                      "GE",
+                      "GH",
+                      "GL",
+                      "GM",
+                      "GN",
+                      "GQ",
+                      "GT",
+                      "GU",
+                      "GW",
+                      "GY",
+                      "HK",
+                      "HN",
+                      "HT",
+                      "ID",
+                      "IN",
+                      "KE",
+                      "KG",
+                      "KH",
+                      "KI",
+                      "KM",
+                      "KP",
+                      "KR",
+                      "KZ",
+                      "LA",
+                      "LK",
+                      "LR",
+                      "LS",
+                      "LY",
+                      "MA",
+                      "MD",
+                      "MG",
+                      "MH",
+                      "ML",
+                      "MM",
+                      "MN",
+                      "MO",
+                      "MP",
+                      "MR",
+                      "MV",
+                      "MW",
+                      "MY",
+                      "MZ",
+                      "NA",
+                      "NE",
+                      "NG",
+                      "NI",
+                      "NP",
+                      "NR",
+                      "PA",
+                      "PE",
+                      "PG",
+                      "PH",
+                      "PK",
+                      "PW",
+                      "PY",
+                      "QA",
+                      "RO",
+                      "RU",
+                      "RW",
+                      "SB",
+                      "SD",
+                      "SG",
+                      "SL",
+                      "SN",
+                      "SO",
+                      "SS",
+                      "ST",
+                      "SV",
+                      "SZ",
+                      "TD",
+                      "TG",
+                      "TH",
+                      "TJ",
+                      "TL",
+                      "TM",
+                      "TN",
+                      "TV",
+                      "TZ",
+                      "UA",
+                      "UG",
+                      "UY",
+                      "UZ",
+                      "VE",
+                      "VN",
+                      "VU",
+                      "XK",
+                      "YE",
+                      "ZA",
+                      "ZM",
+                      "ZW"
+                    ]
+                  },
+                  {
+                    "fact": "ime_country_six_months",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "parameters": {
+        "may_follow_application": true
+      },
+      "source_role": "guide",
+      "source_excerpt": "if you plan to work, visit or study in canada for more than six months: you will need a medical exam if you: have lived temporarily for six or more months in a row: in any of these countries or territories in the one year immediately before the date you want to enter canada. ... regardless of the length of time you are in canada, you will need a medical exam if you wish to work in one of the following fields: a designated occupation, such as the field of health services or with children. ... to work in agricultural occupations, you will need a medical exam if you have lived in certain countries or territories . ... if you have an upfront medical exam, you must submit proof that you completed the medical exam with your application.",
+      "display_order": 150,
+      "source_excerpt_display": "If you plan to work, visit or study in Canada for more than six months: You will need a medical exam if you: have lived temporarily for six or more months in a row: in any of these countries or territories in the one year immediately before the date you want to enter Canada. ... Regardless of the length of time you are in Canada, you will need a medical exam if you wish to work in one of the following fields: a designated occupation, such as the field of health services or with children. ... to work in agricultural occupations, you will need a medical exam if you have lived in certain countries or territories. ... If you have an upfront medical exam, you must submit proof that you completed the medical exam with your application."
+    },
+    {
+      "requirement_code": "proof_of_status_in_residence_country",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of your immigration status in the country where you live",
+      "description": "Only if you are not a citizen of the country or territory you are applying from: for example a residence permit or visa for that country.",
+      "rule": {
+        "fact": "resident_non_citizen",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "documents",
+      "source_excerpt": "if you’re not a citizen of the country or territory where you’re applying, you must send proof of your present immigration status in that country or territory.",
+      "display_order": 160,
+      "source_excerpt_display": "If you’re not a citizen of the country or territory where you’re applying, you must send proof of your present immigration status in that country or territory."
+    },
+    {
       "requirement_code": "imm1295",
       "kind": "form",
       "officially_required": true,
@@ -116,6 +920,24 @@
       "source_excerpt": "application for work permit made outside of canada (imm 1295) who must fill out this application form? each person who needs a work permit must fill out this form.",
       "display_order": 200,
       "source_excerpt_display": "Application for Work Permit Made Outside of Canada (IMM 1295) Who must fill out this application form? Each person who needs a work permit must fill out this form."
+    },
+    {
+      "requirement_code": "imm5645",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Family Information Form – Visitors, Students and Workers",
+      "official_form_code": "IMM 5645",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5645.html",
+      "description": "Each applicant 18 or older fills it out: details of the applicant, spouse or common-law partner, parents, all children and all brothers and sisters.",
+      "rule": {
+        "fact": "age",
+        "op": "gte",
+        "value": 18
+      },
+      "source_role": "family_form",
+      "source_excerpt": "this form must be completed by each person, 18 years of age or older, applying for a temporary resident visa, a study or work permit outside canada.",
+      "display_order": 205,
+      "source_excerpt_display": "This form must be completed by each person, 18 years of age or older, applying for a Temporary Resident Visa, a study or work permit outside Canada."
     },
     {
       "requirement_code": "imm5409",
@@ -152,7 +974,8 @@
       "source_role": "forms",
       "source_excerpt": "if you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the use of a representative [imm 5476] (opens in a new tab) form.",
       "display_order": 220,
-      "source_excerpt_display": "If you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the Use of a Representative [IMM 5476] (opens in a new tab) form."
+      "source_excerpt_display": "If you wish to have a representative who can conduct business on your behalf, you must give us their email and mailing addresses in this section and fill out the Use of a Representative [IMM 5476] (opens in a new tab) form.",
+      "description": "Required when anyone — paid or unpaid, including a friend or relative — represents you on this application. Complete and sign IMM 5476, have your representative sign it, and upload it with your application. A paid representative must be authorized (a licensed immigration consultant, a lawyer or a Quebec notary in good standing). Your representative can never sign the application for you."
     },
     {
       "requirement_code": "submit_application_online",
@@ -205,6 +1028,29 @@
       "source_excerpt": "work permits (including extensions) fees $can work permit (including extensions) – per person 155.00 work permit (including extensions) – per group (3 or more performing artists) maximum fee for a group of 3 or more performing artists applying at the same time and place 465.00",
       "display_order": 400,
       "source_excerpt_display": "Work Permits (including extensions) Fees $CAN Work permit (including extensions) – per person 155.00 Work permit (including extensions) – per group (3 or more performing artists) Maximum fee for a group of 3 or more performing artists applying at the same time and place 465.00"
+    },
+    {
+      "requirement_code": "open_work_permit_holder_fee",
+      "kind": "fee",
+      "officially_required": true,
+      "label": "Open work permit holder fee",
+      "description": "CAD 100.00, paid on top of the CAD 155.00 work permit fee when you apply for an open work permit. Guide 5487: refunded if the application is refused.",
+      "rule": {
+        "fact": "work_permit_type",
+        "op": "eq",
+        "value": "open"
+      },
+      "parameters": {
+        "amount": 100,
+        "currency": "CAD",
+        "unit": "per person",
+        "in_addition_to": "work_permit_fee",
+        "read_at": "2026-10-29"
+      },
+      "source_role": "guide",
+      "source_excerpt": "if you are applying for an open work permit, you must pay the $100 open work permit holder fee in addition to the work permit fee of $155.",
+      "display_order": 405,
+      "source_excerpt_display": "If you are applying for an Open Work Permit, you must pay the $100 Open Work Permit Holder fee in addition to the Work Permit fee of $155."
     },
     {
       "requirement_code": "biometrics_fee",

@@ -11,16 +11,26 @@ import { ConfigService } from '@nestjs/config';
 import { createHash } from 'node:crypto';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import {
+  openRequestSlots,
+  withOpenRequestSlots,
+} from '../review-items/open-document-requests';
+import {
   documentsCompletion,
   type PrefilledFormField,
   type PrefilledFormPayload,
 } from '@visaai/types';
 import { SupabaseService } from '../shared/supabase/supabase.service';
+import { safeLog } from '../shared/log/redact';
 import { AiUsageMeter } from '../shared/ai/ai-usage.meter';
 import type { Env } from '../../config/configuration';
 import { buildPrefillGraph } from './graphs/prefill.graph';
+import {
+  ROUTE_UNANSWERED_NOTE,
+  UNANSWERED_NOTE,
+} from './graphs/nodes/finalize-fields';
 import { renderPrefilledFormPdf } from './prefill-pdf';
 import { tryRenderOfficialForm, isOfficialFormSupported } from './forms';
+import { preparedFormNote } from '../../strategies/form-mapping/prepared-forms';
 import { PreflightFieldEditService } from '../preflight/preflight-field-edit.service';
 
 const FORM_CHANGED_MESSAGE =
@@ -109,13 +119,29 @@ export class PrefillService {
     const admin = this.supabase.admin;
     const { data: items } = await admin
       .from('checklist_items')
-      .select('status, required, meta')
+      .select('id, status, required, meta')
       .eq('application_id', applicationId);
+
+    // A slot whose document the consultant sent back does not count (same
+    // rule as the vault and progress). Unreadable: do not auto-generate yet —
+    // the next processed upload tries again.
+    let requestSlots: Set<string>;
+    try {
+      requestSlots = await openRequestSlots(admin, applicationId);
+    } catch (err) {
+      safeLog.warn(
+        'prefill.auto',
+        `skipped for ${applicationId}: open document requests unreadable: ${(err as Error).message}`,
+      );
+      return false;
+    }
 
     // Shared with the documents page's Generate gate and computeProgress —
     // see documentsCompletion in @visaai/types. A local copy of this rule would
     // let the button say "ready" while the server disagrees.
-    const { complete } = documentsCompletion(items ?? []);
+    const { complete } = documentsCompletion(
+      withOpenRequestSlots(items ?? [], requestSlots),
+    );
     if (!complete) return false;
 
     // Don't overwrite an existing prefill (which the user may have edited).
@@ -204,19 +230,30 @@ export class PrefillService {
         const prev = storedByKey.get(key);
         const changed = !prev || prev.value !== value;
         if (changed && key) changedKeys.push(key);
+        // The source is the SERVER's record of who set the value. A client
+        // could otherwise label its own value "consultant". Unchanged keeps
+        // the stored source (none, for a question nobody has answered yet);
+        // a changed or new value is the applicant's.
+        const source: PrefilledFormField['source'] = changed
+          ? 'applicant'
+          : prev
+            ? prev.source
+            : 'profile';
+        // An IRCC question VisaAI added unanswered stops asking once the
+        // applicant answers it.
+        const answered =
+          (f.note === UNANSWERED_NOTE || f.note === ROUTE_UNANSWERED_NOTE) &&
+          value.trim() !== '';
         return {
           key,
           label: String(f.label ?? f.key ?? ''),
           value,
           group: f.group ? String(f.group) : undefined,
-          // The source is the SERVER's record of who set the value. A client
-          // could otherwise label its own value "consultant". Unchanged keeps
-          // the stored source; a changed or new value is the applicant's.
-          source: changed ? 'applicant' : (prev?.source ?? 'profile'),
+          ...(source ? { source } : {}),
           // Keep the review note on save: a host's email the applicant left in
           // place is still the host's email.
-          ...(f.note ? { note: String(f.note) } : {}),
-          ...(f.needsReview === true ? { needsReview: true } : {}),
+          ...(f.note && !answered ? { note: String(f.note) } : {}),
+          ...(f.needsReview === true && !answered ? { needsReview: true } : {}),
         };
       })
       .filter((f) => f.key);
@@ -280,7 +317,32 @@ export class PrefillService {
     const record = await this.loadRecord(db, applicationId);
     if (!record) throw new NotFoundException('No prefilled form yet');
 
-    const filled = await tryRenderOfficialForm(formCode, record.payload);
+    // Some forms are prepared from answers the saved form never carried
+    // (IMM 5476's representative), so the renderer also gets the profile.
+    const { data: profileRow } = await db
+      .from('application_profiles')
+      .select('profile_json')
+      .eq('application_id', applicationId)
+      .maybeSingle();
+    const rawProfile = (profileRow as { profile_json?: unknown } | null)
+      ?.profile_json;
+    const profile =
+      rawProfile && typeof rawProfile === 'object' && !Array.isArray(rawProfile)
+        ? (rawProfile as Record<string, unknown>)
+        : {};
+
+    const filled = await tryRenderOfficialForm(formCode, record.payload, {
+      profile,
+    });
+    if (!filled && preparedFormNote(formCode)) {
+      // IMM 5476 is skipped when no representative is used; IMM 1294 always
+      // renders, so a null there is a failure to prepare it.
+      throw new NotFoundException(
+        /5476/.test(formCode)
+          ? `${formCode} is not needed: your application does not record a representative`
+          : `${formCode} could not be prepared from your application — fill in the official form from your IRCC account`,
+      );
+    }
     if (!filled) {
       throw new HttpException(
         `Official template for ${formCode} is not available — download the formatted summary instead`,
@@ -330,6 +392,9 @@ export class PrefillService {
         form_name: f.form_name ?? f.form_code,
         owner: f.owner === 'sponsor' ? 'sponsor' : 'applicant',
         official_supported: isOfficialFormSupported(f.form_code),
+        // Set for forms VisaAI prepares from the application (IMM 5476):
+        // the download is an answer sheet to copy, print and sign.
+        prepared_note: preparedFormNote(f.form_code) ?? null,
       })),
     };
   }

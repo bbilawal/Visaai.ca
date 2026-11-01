@@ -3,11 +3,26 @@ import type { SignedWriteIntent } from '@visaai/types';
 export interface SelectorProbeResult {
   selector: string;
   found: boolean;
+  /** On the screen, but its list has no option for the reviewed answer. */
+  optionMissing?: boolean;
 }
 
 export type PageGroupSelection =
-  | { ok: true; intents: SignedWriteIntent[]; pages: string[] }
-  | { ok: false; reason: 'none_present' | 'partial_page'; missing: string[] };
+  | {
+      ok: true;
+      intents: SignedWriteIntent[];
+      pages: string[];
+      /**
+       * Progressive page only: its targets not on the page yet (revealed by
+       * an answer in this run, or behind the portal's own Next button).
+       */
+      waiting?: SignedWriteIntent[];
+    }
+  | {
+      ok: false;
+      reason: 'none_present' | 'partial_page' | 'option_missing';
+      missing: string[];
+    };
 
 /**
  * Probed = present when the page loads. A revealed target (a follow-up
@@ -18,12 +33,27 @@ export function isProbed(i: Pick<SignedWriteIntent, 'reveal' | 'dialog'>) {
   return !i.reveal && !i.dialog;
 }
 
-/** Does the tab's URL path name this mapping page? ("/x/nationality" ↔ "/nationality") */
+/**
+ * Does the tab's URL path name this mapping page? ("/x/nationality" ↔ "/nationality")
+ *
+ * A `*` segment in the page stands for exactly one path segment: IRCC's
+ * Permanent Residence Portal puts the application's id in the path
+ * (/en/application/profile/4989734), so its profile page is registered as
+ * "/application/profile/*". Still a suffix match, segment by segment.
+ */
 export function pageMatches(path: string, page: string): boolean {
   const norm = (s: string) => s.replace(/\/+$/, '') || '/';
   const p = norm(path);
   const g = norm(page);
-  return p === g || p.endsWith(g.startsWith('/') ? g : `/${g}`);
+  if (!g.split('/').includes('*'))
+    return p === g || p.endsWith(g.startsWith('/') ? g : `/${g}`);
+  const want = g.replace(/^\//, '').split('/');
+  const have = p.replace(/^\//, '').split('/');
+  if (have.length < want.length) return false;
+  const tail = have.slice(have.length - want.length);
+  return want.every((seg, i) =>
+    seg === '*' ? tail[i] !== '' : seg === tail[i],
+  );
 }
 
 /**
@@ -44,15 +74,25 @@ export function pageMatches(path: string, page: string): boolean {
  * for, and writing the matching half would put the applicant's data in someone
  * else's fields. With a single page-less group this is exactly the old
  * all-or-nothing rule.
+ *
+ * A PROGRESSIVE page (`isProgressive(page)`; IRCC eTA — one path whose
+ * questions appear as earlier ones are answered and as the applicant presses
+ * the form's Next) cannot be all-or-nothing: most of its targets are not on
+ * the page yet. Its targets present now run; the rest are `waiting`. The
+ * path still decides the page, so nothing of another page ever runs.
  */
 export function selectPageGroups(
   intents: SignedWriteIntent[],
   probe: SelectorProbeResult[],
   currentPage?: string | null,
+  isProgressive: (page: string) => boolean = () => false,
 ): PageGroupSelection {
   // Nothing to write is not a mismatch (and was never refused before).
   if (intents.length === 0) return { ok: true, intents: [], pages: [] };
   const found = new Map(probe.map((p) => [p.selector, p.found]));
+  const optionMissing = new Set(
+    probe.filter((p) => p.optionMissing === true).map((p) => p.selector),
+  );
   const missingIn = (group: SignedWriteIntent[]) =>
     group
       .filter((i) => isProbed(i) && found.get(i.selector) !== true)
@@ -63,6 +103,29 @@ export function selectPageGroups(
       (i) => i.page != null && pageMatches(currentPage, i.page),
     );
     if (group.length > 0) {
+      const page = group[0].page as string;
+      if (isProgressive(page)) {
+        // A question on this screen whose list lacks the reviewed answer:
+        // refuse the whole screen before anything on it is written.
+        const noOption = group
+          .filter((i) => optionMissing.has(i.selector))
+          .map((i) => i.selector);
+        if (noOption.length > 0)
+          return { ok: false, reason: 'option_missing', missing: noOption };
+        const now = group.filter((i) => found.get(i.selector) === true);
+        if (now.length === 0)
+          return {
+            ok: false,
+            reason: 'none_present',
+            missing: group.map((i) => i.selector),
+          };
+        return {
+          ok: true,
+          intents: now,
+          pages: [page],
+          waiting: group.filter((i) => !now.includes(i)),
+        };
+      }
       const missing = missingIn(group);
       if (missing.length > 0)
         return { ok: false, reason: 'partial_page', missing };

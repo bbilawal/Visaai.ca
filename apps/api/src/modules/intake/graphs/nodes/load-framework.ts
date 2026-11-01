@@ -103,7 +103,7 @@ async function loadFromRegistry(
       .from('visa_requirements')
       .select(
         'requirement_code, kind, officially_required, label, description, ' +
-          'official_form_code, official_form_url, rule, display_order',
+          'official_form_code, official_form_url, rule, display_order, parameters',
       )
       .eq('visa_type_id', (visaType as { id: string }).id)
       .eq('status', 'active')

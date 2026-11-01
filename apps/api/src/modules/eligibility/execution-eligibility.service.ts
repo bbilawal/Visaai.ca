@@ -54,7 +54,12 @@ export class ExecutionEligibilityService {
     const anyStale = rollup.fields.some((f) => f.stale);
     let consultantApprovalValid = false;
     if (!assignment) reasons.add('consultant_missing');
-    else if (anyStale) reasons.add('consultant_stale');
+    else if (rollup.approvalCheckUnavailable)
+      reasons.add('approval_check_unavailable');
+    else if (rollup.approvalBlockers?.length)
+      reasons.add('document_review_open');
+    else if (anyStale || rollup.applicationApprovalStale)
+      reasons.add('consultant_stale');
     else if (!rollup.applicationApproved) reasons.add('consultant_missing');
     else consultantApprovalValid = true;
 

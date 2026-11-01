@@ -194,6 +194,38 @@ describe('table rows added through a dialog', () => {
     expect(document.querySelector('mat-dialog-container')).toBeNull()
   })
 
+  it('a row already on the page is not added again; its dialog steps pass without opening it (dry run 2026-10-16)', async () => {
+    const tr = document.createElement('tr')
+    tr.innerHTML = '<td>Pakistan</td><td>Citizen</td><td>1980-01-01</td>'
+    document.getElementById('t')!.appendChild(tr)
+    const summary = 'Pakistan — Citizen since 1980-01-01'
+    expect((await run(await cmd({ op: 'dialog_open', selector: '#otherCountriesResidences_add_button', mappedValue: summary }))).outcome).toBe('verified')
+    expect(document.querySelector('mat-dialog-container')).toBeNull()
+    expect((await run(await cmd({ dialog: true, selector: '#countryOfResidence_select', mappedValue: '209' }))).outcome).toBe('verified')
+    expect((await run(await cmd({ op: 'dialog_save', dialog: true, selector: '::dialog-save', mappedValue: summary }))).outcome).toBe('verified')
+    expect(document.querySelectorAll('#t tr')).toHaveLength(2)
+    // The skip ends with the row: the next ordinary field is written normally.
+    expect((await run(await cmd({ selector: '#lastName_input', mappedValue: 'Khan' }))).outcome).toBe('verified')
+  })
+
+  it('a page warning marked role="dialog" does not block the row skip or the Save check (dry run 2026-10-16)', async () => {
+    const warn = document.createElement('div')
+    warn.className = 'warning alert'
+    warn.setAttribute('role', 'dialog')
+    warn.textContent = 'You must complete this entire section'
+    document.querySelector('main')!.prepend(warn)
+    const summary = 'Pakistan — Citizen since 1980-01-01'
+    expect((await run(await cmd({ op: 'dialog_open', selector: '#otherCountriesResidences_add_button', mappedValue: summary }))).outcome).toBe('verified')
+    expect((await run(await cmd({ dialog: true, selector: '#countryOfResidence_select', mappedValue: '209' }))).outcome).toBe('verified')
+    expect((await run(await cmd({ op: 'dialog_save', dialog: true, selector: '::dialog-save', mappedValue: summary }))).outcome).toBe('verified')
+    expect(document.querySelectorAll('#t tr')).toHaveLength(2)
+    // IRCC shows the saved row's cells; the fixture only adds the country.
+    document.querySelector('#t tr:last-child')!.innerHTML = '<td>Pakistan</td><td>Citizen</td><td>1980-01-01</td>'
+    // Run again: the row is now on the page and is not added a second time.
+    expect((await run(await cmd({ op: 'dialog_open', selector: '#otherCountriesResidences_add_button', mappedValue: summary }))).outcome).toBe('verified')
+    expect(document.querySelector('mat-dialog-container')).toBeNull()
+  })
+
   it('a Save the portal refuses (dialog stays open, no row) fails the step', async () => {
     await run(await cmd({ op: 'dialog_open', selector: '#otherCountriesResidences_add_button', mappedValue: 'row' }))
     const r = await run(await cmd({ op: 'dialog_save', dialog: true, selector: '#countryOfResidence_save_button', mappedValue: 'row' }), 9000)

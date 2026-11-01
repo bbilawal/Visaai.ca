@@ -1,6 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { DocumentState } from '../document.state';
 import { makeClassifyDocumentNode } from './classify-document.node';
+import {
+  CNIC_SPOUSE,
+  NIKAH_NAMA,
+  PUNJAB_BIRTH_CERT_BILAWAL,
+} from '../../ocr/__fixtures__/civil-records.fixtures';
 
 function makeSupabase(error: { message: string } | null = null) {
   const updates: Array<{ table: string; values: unknown; id: unknown }> = [];
@@ -162,5 +167,161 @@ AB12345670PAK6106155M3001019<<<<<<<<<<<<<<02`,
     );
     expect(out).toEqual({});
     expect(updates).toEqual([]);
+  });
+
+  /**
+   * Dry run 2026-10-15: a NADRA birth registration certificate dropped into
+   * the sponsor's proof-of-relationship slot was stored as
+   * `sponsor_proof_of_relationship`, so nothing downstream knew it was a
+   * birth certificate.
+   */
+  describe('civil records in relationship slots', () => {
+    it('stores a birth certificate in a relationship slot as birth_certificate', async () => {
+      const { client, updates } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({
+          documentType: 'sponsor_proof_of_relationship',
+          rawOcrText: PUNJAB_BIRTH_CERT_BILAWAL,
+          verificationResult: 'pass',
+        }),
+      );
+      expect(out.documentType).toBe('birth_certificate');
+      expect(out.classifiedFromContent).toBe(true);
+      expect(out.slotMismatch).toBeNull();
+      expect(out.verificationResult).toBeUndefined();
+      // Only the type changes: the document stays linked to its slot.
+      expect(updates).toEqual([
+        {
+          table: 'documents',
+          values: { document_type: 'birth_certificate' },
+          id: 'doc-1',
+        },
+      ]);
+    });
+
+    it('stores a nikah nama in a family-documents slot as marriage_certificate', async () => {
+      const { client, updates } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({
+          documentType: 'proof_of_relationship',
+          rawOcrText: NIKAH_NAMA,
+        }),
+      );
+      expect(out.documentType).toBe('marriage_certificate');
+      expect(updates[0].values).toEqual({
+        document_type: 'marriage_certificate',
+      });
+    });
+
+    it('still re-types a civil record uploaded as a generic document', async () => {
+      const { client } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({ rawOcrText: PUNJAB_BIRTH_CERT_BILAWAL }),
+      );
+      expect(out.documentType).toBe('birth_certificate');
+    });
+
+    it('leaves a relationship slot holding an identity card alone (#101)', async () => {
+      const { client, updates } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({
+          documentType: 'sponsor_proof_of_relationship',
+          rawOcrText: CNIC_SPOUSE,
+        }),
+      );
+      expect(out.documentType).toBe('sponsor_proof_of_relationship');
+      expect(out.slotMismatch).toBeNull();
+      expect(updates).toEqual([]);
+    });
+
+    it('never re-types a narrow slot: a birth certificate in the bank-statement slot keeps that type', async () => {
+      const { client, updates } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({
+          documentType: 'bank_statement',
+          rawOcrText: PUNJAB_BIRTH_CERT_BILAWAL,
+        }),
+      );
+      expect(out.documentType).toBe('bank_statement');
+      expect(updates).toEqual([]);
+    });
+
+    it('keeps an already-civil type unchanged', async () => {
+      const { client, updates } = makeSupabase();
+      const out = await makeClassifyDocumentNode(client)(
+        state({
+          documentType: 'birth_certificate',
+          rawOcrText: PUNJAB_BIRTH_CERT_BILAWAL,
+        }),
+      );
+      expect(out.documentType).toBe('birth_certificate');
+      expect(out.classifiedFromContent).toBe(false);
+      expect(updates).toEqual([]);
+    });
+  });
+});
+
+describe('classify_document — readable supporting documents (super visa, 2026-10-16)', () => {
+  // Prod app 61f16bb5: the host's 4,305-character invitation letter got
+  // "identity ✗ Fail" because the grade counts extracted IDENTITY fields and a
+  // letter has none; the host's T4 got "warn" for having one. Neither is an
+  // identity document, so neither slot could ever reach "verified" and the
+  // counter stuck at "2 of 6" while the slot badge said Verified.
+  const LETTER = `To the Visa Officer, High Commission of Canada.
+I, Mian Muhammad Sajawal, a Canadian citizen living in Milton, Ontario, invite my
+mother Sumera Ahmad to visit me under the parent and grandparent super visa.
+My family size is 4: myself, my spouse and our two children, listed below with
+dates of birth. I meet the minimum necessary income for a family of 5.`;
+
+  it('grades a readable host letter in its own slot as pass', async () => {
+    const { client } = makeSupabase();
+    const out = await makeClassifyDocumentNode(client)(
+      state({
+        documentType: 'host_letter_of_invitation',
+        rawOcrText: LETTER,
+        extractedFields: {},
+        verificationResult: 'fail',
+      }),
+    );
+    expect(out.verificationResult).toBe('pass');
+  });
+
+  it('grades the host T4 (one name field) as pass, not an identity warning', async () => {
+    const { client } = makeSupabase();
+    const out = await makeClassifyDocumentNode(client)(
+      state({
+        documentType: 'income_proof_option_one',
+        rawOcrText: `${LETTER} Statement of Remuneration Paid T4 2024 employment income 98,000`,
+        extractedFields: { full_name: 'SAJAWAL, MIAN MUHAMMAD' },
+        verificationResult: 'warn',
+      }),
+    );
+    expect(out.verificationResult).toBe('pass');
+  });
+
+  it('does not upgrade an identity document that yielded no fields', async () => {
+    const { client } = makeSupabase();
+    const out = await makeClassifyDocumentNode(client)(
+      state({
+        documentType: 'passport_copy',
+        rawOcrText: LETTER,
+        extractedFields: {},
+        verificationResult: 'fail',
+      }),
+    );
+    expect(out.verificationResult).toBeUndefined();
+  });
+
+  it('does not upgrade a near-empty read', async () => {
+    const { client } = makeSupabase();
+    const out = await makeClassifyDocumentNode(client)(
+      state({
+        documentType: 'host_letter_of_invitation',
+        rawOcrText: 'blurry',
+        extractedFields: {},
+        verificationResult: 'fail',
+      }),
+    );
+    expect(out.verificationResult).toBeUndefined();
   });
 });

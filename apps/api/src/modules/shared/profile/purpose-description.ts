@@ -1,4 +1,9 @@
-import { formatLongDate, intakeAnswerIsYes, plannedStay } from '@visaai/types';
+import {
+  formatLongDate,
+  intakeAnswerIsYes,
+  plannedStay,
+  stayLengthPhrase,
+} from '@visaai/types';
 
 /**
  * The purpose-of-visit TEXT a government form receives, composed from the
@@ -132,7 +137,25 @@ export function composePurposeOfVisit(
 
   const from = formatLongDate(stay.entryDate);
   const to = formatLongDate(stay.departureDate);
-  const detail = detailOf(p);
-  const head = `${sentenceCase(purpose)} from ${from} to ${to} (${stay.days} day${stay.days === 1 ? '' : 's'})`;
+  // A detail that only repeats the phrase ("Business; meeting suppliers…"
+  // after "Business visit to X for meeting suppliers…") adds nothing.
+  const rawDetail = detailOf(p);
+  const core = rawDetail
+    ?.replace(/^[a-z ]{2,30}[;:]\s*/i, '')
+    .trim()
+    .toLowerCase();
+  // Only a substantial repeat (three words or more, whole words) counts.
+  const repeats =
+    !!core &&
+    core.split(/\s+/).length >= 3 &&
+    new RegExp(`\\b${core.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(
+      purpose.toLowerCase(),
+    );
+  const detail = rawDetail && repeats ? null : rawDetail;
+  // A short visit is a day count; a long stay (a super visa year) is months.
+  const length =
+    stayLengthPhrase(stay.entryDate, stay.departureDate) ??
+    `${stay.days} day${stay.days === 1 ? '' : 's'}`;
+  const head = `${sentenceCase(purpose)} from ${from} to ${to} (${length})`;
   return `${head}${detail ? `: ${detail}` : ''}. I will return home on ${to}.`;
 }

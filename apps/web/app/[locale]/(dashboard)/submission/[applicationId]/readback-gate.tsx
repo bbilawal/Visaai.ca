@@ -20,6 +20,7 @@ import {
 } from '@/lib/api/preflight-client'
 import { getConsultantApproval } from '@/lib/api/consultant-client'
 import { approvalBlockText, lockReasonText, readbackKey } from '@/lib/readback-reasons'
+import { isApiUnavailable } from '@/lib/api-unavailable'
 
 export interface ReadbackState {
   /** Ready to request execution: a completed lock plus the user's confirmation. */
@@ -57,10 +58,13 @@ export default function ReadbackGate({
   applicationId,
   onChange,
   readOnly = false,
+  isEta = false,
 }: {
   applicationId: string
   onChange: (state: ReadbackState) => void
   readOnly?: boolean
+  /** Canada eTA: one page revealed step by step, nothing fills on its own. */
+  isEta?: boolean
 }) {
   const [review, setReview] = useState<PreflightReview | null>(null)
   const [mappings, setMappings] = useState<PreflightMappingInput[] | null>(null)
@@ -117,7 +121,14 @@ export default function ReadbackGate({
       setApproval(a)
       setCoverage(c ?? null)
     } catch (err) {
-      if (!silent) setError(err instanceof Error ? err.message : 'Could not load the review')
+      // A deploy restart reads as "GET /preflight/... -> 502" otherwise.
+      if (!silent) {
+        setError(
+          isApiUnavailable(err)
+            ? 'VisaAI is restarting — try again in a minute.'
+            : err instanceof Error ? err.message : 'Could not load the review',
+        )
+      }
     } finally {
       if (!silent) setLoading(false)
     }
@@ -227,8 +238,10 @@ export default function ReadbackGate({
         submission yourself.
       </p>
       <p className="mono text-muted" style={{ fontSize: '0.75rem', marginTop: 6 }}>
-        Each launch fills the IRCC page that is open. Save that page on IRCC, continue to
-        the next page, and launch again.
+        {isEta
+          ? `One launch covers the whole eTA form: keep the assistant's side panel open. After you press the form's Next and new questions appear, click "Fill newly shown questions" in the panel.`
+          : <>One launch covers the whole application: keep the assistant&apos;s side panel
+        open, and each IRCC page fills as you open it. You press Save and continue.</>}
       </p>
 
       {declarations.length > 0 && (

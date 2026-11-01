@@ -14,10 +14,12 @@
     "start:prod": "NODE_ENV=production node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
+    "test:all": "jest && pnpm run test:sql",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:sql": "NODE_OPTIONS=--experimental-vm-modules jest --config ./test/jest-sql.json",
     "openapi:partner": "ts-node -P tsconfig.json scripts/export-partner-openapi.ts"
   },
   "dependencies": {
@@ -63,6 +65,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.2.17",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
@@ -99,6 +102,10 @@
     ],
     "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/test/sql/"
+    ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },

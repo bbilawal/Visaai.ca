@@ -68,9 +68,20 @@ describe('intake graph — the reply path', () => {
         'update_profile',
         'check_complete',
         'ask_question',
+        // The reply to a message sent after the intake is complete (a
+        // correction). It runs INSTEAD of ask_question, never beside it, so a
+        // turn still waits on exactly one generation.
+        'confirm_update',
         '__end__',
       ]),
     );
+  });
+
+  it('a complete intake replies with confirm_update, never ask_question as well', () => {
+    expect(targetsOf('check_complete')).toEqual(
+      expect.arrayContaining(['ask_question', 'confirm_update']),
+    );
+    expect(targetsOf('confirm_update')).toEqual(['__end__']);
   });
 
   it('still serves the first question without waiting on an answer to process', () => {

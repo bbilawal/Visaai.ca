@@ -5,7 +5,7 @@ const body = { tag: 'body' } as unknown as Element
 const input = { tag: 'input' } as unknown as Element
 const link = { tag: 'a' } as unknown as Element
 
-const base = { isLoading: false, isComplete: false, body, input }
+const base = { isLoading: false, body, input }
 
 describe('shouldReclaimFocus', () => {
   it('takes focus back when the disable dropped it on <body>', () => {
@@ -25,11 +25,10 @@ describe('shouldReclaimFocus', () => {
     ).toBe(false)
   })
 
-  it('leaves focus alone once the interview is over', () => {
-    // A finished intake must not keep stealing the caret from the page.
-    expect(
-      shouldReclaimFocus({ ...base, isComplete: true, active: body }),
-    ).toBe(false)
+  it('takes focus back after a reply to a correction, once the interview is over', () => {
+    // A complete intake still takes corrections (dry run 2026-10-15), so the
+    // box stays usable — and the reclaim is still limited to focus on <body>.
+    expect(shouldReclaimFocus({ ...base, active: body })).toBe(true)
   })
 
   it('does not yank the caret out of something the applicant chose', () => {

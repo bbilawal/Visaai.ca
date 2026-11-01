@@ -1,5 +1,7 @@
+import { mergePersonFields } from './store-prefill';
 import { ChatOpenAI } from '@langchain/openai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
+import { routeFormQuestionKeys } from '@visaai/types';
 import type { PrefilledFormField } from '@visaai/types';
 import type { PrefillState } from '../prefill.state';
 import { finalizeFields } from './finalize-fields';
@@ -17,7 +19,7 @@ Rules:
 - Cover ALL standard sections an official form for this visa would request: personal info, identity documents, contact, address, family/marital, employment/education, travel/purpose, financial, immigration history.
 - Use ONLY the supplied profile + document data for values. If a field is genuinely unknown, set value to "" (empty string) so the user can fill it in during review.
 - NEVER fabricate passport numbers, dates, addresses, employer names, or any other factual data.
-- Format dates as YYYY-MM-DD. Format currency as plain numbers (no symbols). Use ISO country names.
+- Format dates as YYYY-MM-DD. When the data gives only a month ("2012-06") or only a year, copy it as given (YYYY-MM or YYYY) — never leave such a date empty and never invent a day. Format currency as plain numbers (no symbols). Use ISO country names.
 - Use clear, human-readable labels (e.g. "Date of birth", not "dob").
 - Group related fields with the "group" key (e.g. "Personal", "Passport", "Travel", "Employment", "Financial", "Family", "Contact").
 - Set "source" to "profile" if pulled from the intake profile or the applicant's account details, "document" if from extracted documents, or "inferred" if reasonably derived.
@@ -78,7 +80,7 @@ ${asUntrustedData("The APPLICANT's own documents by document type", context.docu
 
 ${asUntrustedData("Documents that are NOT the applicant's (sponsor / host / third party / unnamed financial) — sponsor or host fields only, never applicant fields", context.otherPartyDocuments ?? [])}
 
-Generate the prefilled form fields now.`;
+${routeKeysDirective(context.countryCode, context.visaaiId ?? null)}Generate the prefilled form fields now.`;
 
     const response = await llm.invoke([
       new SystemMessage(SYSTEM_PROMPT + prefillLanguageDirective(language)),
@@ -100,18 +102,24 @@ Generate the prefilled form fields now.`;
       );
     }
 
-    const fields = finalizeFields(parsed, {
-      applicantName: context.applicantName ?? null,
-      profile: context.profile,
-      documentFields: context.documentFields,
-      documentFieldsByType: context.documentFieldsByType ?? {},
-      otherPartyDocuments: context.otherPartyDocuments ?? [],
-      accountProfile: context.accountProfile ?? {},
-      route: {
-        country: context.countryCode,
-        visaaiId: context.visaaiId ?? null,
+    // Start from what people already entered, so the IRCC questions step
+    // sees the applicant's typed answers (father's name → father questions).
+    const fields = finalizeFields(
+      mergePersonFields(parsed, context.personFields ?? []),
+      {
+        applicantName: context.applicantName ?? null,
+        profile: context.profile,
+        documentFields: context.documentFields,
+        documentFieldsByType: context.documentFieldsByType ?? {},
+        otherPartyDocuments: context.otherPartyDocuments ?? [],
+        accountProfile: context.accountProfile ?? {},
+        insurancePolicies: context.insurancePolicies ?? [],
+        route: {
+          country: context.countryCode,
+          visaaiId: context.visaaiId ?? null,
+        },
       },
-    });
+    );
     return { fields };
   };
 }
@@ -177,4 +185,23 @@ function completeObjects(raw: string): Record<string, unknown>[] {
     } else if (c === ']' && depth === 0) break;
   }
   return out;
+}
+
+/**
+ * On a route that asks its questions on the Forms page, the generator is
+ * told their keys so it does not invent a second key for the same question
+ * (live E2E 2026-10-30: employer_name beside work_employer_name). Empty on
+ * every other route.
+ */
+export function routeKeysDirective(
+  country: string | null | undefined,
+  visaaiId: string | null,
+): string {
+  const qs = routeFormQuestionKeys({ country: country ?? '', visaaiId });
+  if (qs.length === 0) return '';
+  return (
+    'For any field that is one of these questions, use exactly this key (the label is for you; keep your own clear label). Do not add a field just because it is listed:\n' +
+    qs.map((q) => `- ${q.key}: ${q.label}`).join('\n') +
+    '\n\n'
+  );
 }

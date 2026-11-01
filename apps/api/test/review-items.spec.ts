@@ -5,6 +5,7 @@ import type {
   DecisionRow,
   DocumentRow,
   GeneratedRow,
+  HolderConfirmationRow,
   IReviewItemsRepository,
 } from '../src/modules/review-items/review-items.repository';
 import { FakeAuditRepository } from './fakes/audit-repository.fake';
@@ -114,6 +115,10 @@ class FakeRepo implements IReviewItemsRepository {
   async logDocumentAccess(row: unknown) {
     this.access.push(row);
   }
+  confirmations: HolderConfirmationRow[] = [];
+  async listHolderConfirmations(a: string) {
+    return this.confirmations.filter((c) => c.application_id === a);
+  }
 }
 
 function make() {
@@ -218,6 +223,62 @@ describe('ReviewItemsService — list', () => {
       key: 'given_name',
       value: 'MUZAFFAR',
     });
+  });
+});
+
+describe("ReviewItemsService — the applicant's own passport confirmation", () => {
+  it('comes from document_holder_confirmations (latest), never from the owner-writable details_json', async () => {
+    const { svc, repo } = make();
+    repo.confirmations.push(
+      {
+        application_id: APP,
+        document_id: 'd1',
+        confirmed_by: 'owner-1',
+        holder_name: 'OLD',
+        stated_name: 'Old',
+        created_at: '2026-10-29T10:00:00Z',
+      },
+      {
+        application_id: APP,
+        document_id: 'd1',
+        confirmed_by: 'owner-1',
+        holder_name: 'QUEBEC ZULU',
+        stated_name: 'Romeo Kilo',
+        created_at: '2026-10-30T10:00:00Z',
+      },
+      {
+        application_id: 'app-OTHER',
+        document_id: 'dX',
+        confirmed_by: 'x',
+        holder_name: 'X',
+        stated_name: 'X',
+        created_at: '2026-10-30T10:00:00Z',
+      },
+    );
+    const out = await svc.list(APP, CONS);
+    expect(out.documents[0].applicantConfirmation).toEqual({
+      confirmedBy: 'owner-1',
+      confirmedAt: '2026-10-30T10:00:00Z',
+      holderName: 'QUEBEC ZULU',
+      statedName: 'Romeo Kilo',
+    });
+  });
+
+  it('is null without a row, whatever details_json claims', async () => {
+    const { svc, repo } = make();
+    repo.listVerifications = async () => [
+      {
+        document_id: 'd1',
+        verification_type: 'identity',
+        result: 'pass',
+        details_json: {
+          holder_confirmation: { confirmed_at: '2026-10-30T10:00:00Z' },
+        },
+        verified_at: null,
+      },
+    ];
+    const out = await svc.list(APP, CONS);
+    expect(out.documents[0].applicantConfirmation).toBeNull();
   });
 });
 
@@ -448,5 +509,175 @@ describe('ReviewItemsController — route guards', () => {
     const guards = Reflect.getMetadata('__guards__', ReviewItemsController) as unknown[];
     expect(guards).toEqual([JwtGuard, ApplicationAccessGuard, RolesGuard]);
     expect(Reflect.getMetadata(REQUIRED_ROLES_KEY, ReviewItemsController)).toEqual(['consultant']);
+  });
+});
+
+/**
+ * Live 2026-10-20: an application was approvable while one of its documents
+ * was marked "Needs re-upload". The review module registers an approval
+ * blocker with ConsultantApprovalService.
+ */
+describe('ReviewItemsService — approval blocker', () => {
+  const reupload = (at: string) => ({
+    application_id: APP,
+    item_kind: 'document' as const,
+    item_id: 'd1',
+    decision: 'needs_reupload' as const,
+    note: 'blurry' as string | null,
+    reviewer_id: CONS.id,
+    reviewer_role: 'consultant' as const,
+    created_at: at,
+  });
+
+  it('registers itself with the approval service at module init', () => {
+    const register = jest.fn();
+    const svc = new ReviewItemsService(
+      new FakeRepo(),
+      { registerApplicationApprovalBlocker: register } as never,
+      new AuditService(new FakeAuditRepository()),
+      {} as never,
+      {} as never,
+    );
+    svc.onModuleInit();
+    expect(register).toHaveBeenCalledTimes(1);
+  });
+
+  it('is clear with no decisions', async () => {
+    const { svc } = make();
+    await expect(svc.approvalBlocker(APP)).resolves.toBeNull();
+  });
+
+  it('names a document with an open re-upload request', async () => {
+    const { svc, repo } = make();
+    repo.docs[0].checklist_item_id = 'slot-1';
+    repo.decisions.push(reupload('2026-10-10T10:00:00Z'));
+    const reason = await svc.approvalBlocker(APP);
+    expect(reason).toMatch(/Cannot approve yet/);
+    expect(reason).toContain('pp.pdf (re-upload requested)');
+  });
+
+  it('names a rejected document', async () => {
+    const { svc, repo } = make();
+    repo.decisions.push({
+      ...reupload('2026-10-10T10:00:00Z'),
+      decision: 'rejected' as never,
+    });
+    expect(await svc.approvalBlocker(APP)).toContain('pp.pdf (rejected)');
+  });
+
+  it('clears once the consultant approves the document', async () => {
+    const { svc, repo } = make();
+    repo.decisions.push(reupload('2026-10-10T10:00:00Z'), {
+      ...reupload('2026-10-11T10:00:00Z'),
+      decision: 'approved' as never,
+      note: null,
+    });
+    await expect(svc.approvalBlocker(APP)).resolves.toBeNull();
+  });
+
+  it('a multi-file slot: a file uploaded before the request does not clear it', async () => {
+    const { svc, repo } = make();
+    repo.docs[0].checklist_item_id = 'slot-1';
+    repo.docs[0].created_at = '2026-10-01T09:00:00Z';
+    repo.docs.push({
+      ...repo.docs[0],
+      id: 'd2',
+      file_name: 'statement-b.pdf',
+      created_at: '2026-10-02T09:00:00Z',
+    });
+    repo.decisions.push(reupload('2026-10-10T10:00:00Z'));
+    expect(await svc.approvalBlocker(APP)).toContain('pp.pdf (re-upload requested)');
+  });
+
+  it('deleting the requested document keeps the request open', async () => {
+    const { svc, repo } = make();
+    repo.decisions.push(reupload('2026-10-10T10:00:00Z'));
+    repo.docs = repo.docs.filter((d) => d.id !== 'd1');
+    expect(await svc.approvalBlocker(APP)).toContain(
+      'a document the applicant deleted (re-upload requested)',
+    );
+  });
+
+  describe('a requested document the applicant deleted', () => {
+    function deletedSetup() {
+      const ctx = make();
+      ctx.repo.decisions.push(reupload('2026-10-10T10:00:00Z'));
+      ctx.repo.docs = ctx.repo.docs.filter((d) => d.id !== 'd1');
+      return ctx;
+    }
+
+    it('is listed for the consultant as deleted, with its decision', async () => {
+      const { svc } = deletedSetup();
+      const items = await svc.list(APP, CONS);
+      const d = items.documents.find((x) => x.id === 'd1');
+      expect(d).toMatchObject({
+        deleted: true,
+        uploadStatus: 'deleted',
+        decision: expect.objectContaining({ decision: 'needs_reupload' }),
+      });
+    });
+
+    it('the consultant can approve it, which closes the request and the blocker', async () => {
+      const { svc, messaging } = deletedSetup();
+      expect(await svc.approvalBlocker(APP)).toMatch(/Deleted by the applicant/);
+      await svc.decide(
+        APP,
+        CONS,
+        { itemKind: 'document', itemId: 'd1', decision: 'approved' },
+        'tok',
+      );
+      await expect(svc.approvalBlocker(APP)).resolves.toBeNull();
+      expect(messaging.postMessage).not.toHaveBeenCalled();
+      expect(
+        (await svc.list(APP, CONS)).documents.some((x) => x.id === 'd1'),
+      ).toBe(false);
+    });
+
+    it('only an approval applies to a deleted document', async () => {
+      const { svc } = deletedSetup();
+      await expect(
+        svc.decide(
+          APP,
+          CONS,
+          {
+            itemKind: 'document',
+            itemId: 'd1',
+            decision: 'rejected',
+            note: 'still wrong',
+          },
+          'tok',
+        ),
+      ).rejects.toThrow(/deleted by the applicant/);
+    });
+
+    it('a document id with no decision and no row is still not found', async () => {
+      const { svc } = make();
+      await expect(
+        svc.decide(
+          APP,
+          CONS,
+          {
+            itemKind: 'document',
+            itemId: '00000000-0000-0000-0000-000000000000',
+            decision: 'approved',
+          },
+          'tok',
+        ),
+      ).rejects.toThrow(/document not found/);
+    });
+  });
+
+  it('clears once a newer document is uploaded into the same slot', async () => {
+    const { svc, repo } = make();
+    repo.docs[0].checklist_item_id = 'slot-1';
+    repo.docs[0].created_at = '2026-10-01T09:00:00Z';
+    repo.docs.push({
+      ...repo.docs[0],
+      id: 'd2',
+      file_name: 'pp-new.pdf',
+      created_at: '2026-10-12T09:00:00Z',
+    });
+    repo.decisions.push(reupload('2026-10-10T10:00:00Z'));
+    await expect(svc.approvalBlocker(APP)).resolves.toBeNull();
   });
 });

@@ -262,6 +262,74 @@ describe('SocketExtensionTransport', () => {
       expect(sock.sent[0].payload).toMatchObject({ ops: ['radio', null] });
     });
 
+    it('probePage sends awaitOptions only when a target has it', async () => {
+      const reply = {
+        protocol: PORTAL_FILL_PROTOCOL_VERSION,
+        kind: 'probe_result',
+        executionId: EXEC,
+        results: SEL.map((selector) => ({ selector, found: true })),
+        page: '/eta/welcome',
+      };
+      const t = new SocketExtensionTransport();
+      const sock = new FakeSocket('s1', reply);
+      t.bind(EXEC, sock);
+      await t.probePage(EXEC, SEL, ['select_text', null], [true, false]);
+      expect(sock.sent[0].payload).toMatchObject({
+        awaitOptions: [true, false],
+      });
+      await t.probePage(EXEC, SEL, ['select_text', null], [false, false]);
+      expect(sock.sent[1].payload).not.toHaveProperty('awaitOptions');
+    });
+
+    it('a write command carries awaitOptions only for the intent that has it', async () => {
+      const t = new SocketExtensionTransport();
+      const sock = new FakeSocket('s1', {
+        protocol: PORTAL_FILL_PROTOCOL_VERSION,
+        kind: 'field_result',
+        executionId: EXEC,
+        fieldKey: 'job_title',
+        outcome: 'verified',
+        actualValueHash: 'h',
+        selectorFound: true,
+      });
+      t.bind(EXEC, sock);
+      const base = {
+        executionId: EXEC,
+        fieldKey: 'job_title',
+        selector: '#t',
+        mappedValue: 'v',
+        expectedValueHash: 'h',
+        category: 'employment' as const,
+        op: 'select_text' as const,
+        lockedDiffHash: 'l',
+        sig: 's',
+      };
+      await t.send({ ...base, awaitOptions: true });
+      await t.send(base);
+      expect(sock.sent[0].payload).toMatchObject({ awaitOptions: true });
+      expect(sock.sent[1].payload).not.toHaveProperty('awaitOptions');
+    });
+
+    it('keeps "its list lacks the answer" (eapp), only on a not-found row', async () => {
+      const t = new SocketExtensionTransport();
+      t.bind(
+        EXEC,
+        new FakeSocket('s1', {
+          protocol: PORTAL_FILL_PROTOCOL_VERSION,
+          kind: 'probe_result',
+          executionId: EXEC,
+          results: [
+            { selector: '#givenName', found: true, optionMissing: true },
+            { selector: '#surname', found: false, optionMissing: true },
+          ],
+        }),
+      );
+      await expect(t.probeSelectors(EXEC, SEL)).resolves.toEqual([
+        { selector: '#givenName', found: true },
+        { selector: '#surname', found: false, optionMissing: true },
+      ]);
+    });
+
     it('probePage ignores a page that is not a path', async () => {
       const t = new SocketExtensionTransport();
       t.bind(

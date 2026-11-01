@@ -14,6 +14,13 @@ export interface FamilySponsorshipOpts {
   extraDocuments?: DocumentRequirement[];
   compliance?: ComplianceRequirement[];
   forms?: FormSpec[];
+  /**
+   * Registry routes (`visa_types.visaai_id`) this program IS. A claimed route
+   * is served this program's own official artifacts, not the union of every
+   * program in the country (a Canada visitor-visa route was handed the study
+   * and work permit checklists).
+   */
+  registryVisaaiIds?: readonly string[];
 }
 
 /**
@@ -27,6 +34,9 @@ export function familySponsorshipProgram(
   return {
     id: 'family_sponsorship',
     country,
+    ...(opts.registryVisaaiIds
+      ? { registryVisaaiIds: opts.registryVisaaiIds }
+      : {}),
     label: opts.label ?? 'Family Sponsorship',
     requiredDocuments: () => [
       ...docs(

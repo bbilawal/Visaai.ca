@@ -296,3 +296,89 @@ describe('convertRegistryToFramework — form guidance (#50)', () => {
     ]);
   });
 });
+
+describe('convertRegistryToFramework — who supplies a document, and for how long it must be valid', () => {
+  // Super visa (prod app 61f16bb5, 2026-10-16): the host's invitation letter,
+  // proof of status and income proof were filed under the APPLICANT, so the
+  // vault never said that a son in Canada had to produce them.
+  it('files evidence the registry marks as the sponsor/host document under the sponsor', () => {
+    const { framework } = convertRegistryToFramework('ca-super-visa', [
+      req({
+        requirement_code: 'host_letter_of_invitation',
+        label: 'Letter of invitation from your host',
+        parameters: { document_owner: 'sponsor' },
+      }),
+    ]);
+    expect(framework.base_documents[0]).toEqual(
+      expect.objectContaining({
+        type: 'host_letter_of_invitation',
+        owner: 'sponsor',
+      }),
+    );
+  });
+
+  it('leaves the applicant as owner when the registry says nothing', () => {
+    const { framework } = convertRegistryToFramework('ca-super-visa', [
+      req({ parameters: { colour: true } }),
+    ]);
+    expect(framework.base_documents[0].owner).toBeUndefined();
+  });
+
+  it('carries a minimum validity (months) so expiry is checked against it', () => {
+    const { framework } = convertRegistryToFramework('ca-super-visa', [
+      req({
+        requirement_code: 'medical_insurance',
+        label: 'Proof of Canadian medical insurance',
+        parameters: { minimum_validity_months: 12, currency: 'CAD' },
+      }),
+    ]);
+    expect(framework.base_documents[0].validity_months).toBe(12);
+  });
+
+  it('ignores a malformed validity rather than inventing one', () => {
+    const { framework } = convertRegistryToFramework('ca-super-visa', [
+      req({ parameters: { minimum_validity_months: 'twelve' } }),
+    ]);
+    expect(framework.base_documents[0].validity_months).toBeUndefined();
+  });
+});
+
+describe('convertRegistryToFramework — evidence that may follow the application', () => {
+  // Super visa IME: IRCC requires it, but a super visa applicant without an
+  // upfront exam is told what to do by the visa office AFTER applying. It
+  // blocked "Generate my forms" on prod app 61f16bb5.
+  it('keeps it on the list but does not let it gate preparation', () => {
+    const { framework } = convertRegistryToFramework('ca-super-visa', [
+      req({
+        requirement_code: 'proof_of_medical_exam',
+        parameters: { may_follow_application: true },
+      }),
+    ]);
+    expect(framework.base_documents[0]).toEqual(
+      expect.objectContaining({
+        type: 'proof_of_medical_exam',
+        required: false,
+      }),
+    );
+  });
+});
+
+describe('convertRegistryToFramework — a government fee receipt is obtained at submission', () => {
+  it('lists the receipt but never makes it a gating slot', () => {
+    const { framework } = convertRegistryToFramework('ca-sponsor-your-spouse-partner-or-child', [
+      req({ requirement_code: 'processing_fee_receipt', label: 'Proof of payment (fee receipt)' }),
+      req({}),
+    ]);
+    const byType = Object.fromEntries(framework.base_documents.map((d) => [d.type, d]));
+    expect(byType.processing_fee_receipt.required).toBe(false);
+    expect(byType.passport_copy.required).toBeUndefined();
+  });
+
+  it('does not loosen other evidence whose code merely mentions a fee', () => {
+    const { framework } = convertRegistryToFramework('x', [
+      req({ requirement_code: 'tuition_fee_paid_letter', label: 'Letter showing tuition paid' }),
+      req({ requirement_code: 'endorsement_fee_receipt_copy', label: 'Endorsement fee receipt' }),
+    ]);
+    expect(framework.base_documents.map((d) => d.required)).toEqual([undefined, undefined]);
+  });
+});

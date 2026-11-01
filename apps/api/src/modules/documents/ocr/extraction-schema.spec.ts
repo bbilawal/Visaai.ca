@@ -44,6 +44,25 @@ describe('resolveExtractionType', () => {
     );
   });
 
+  it('reads a job offer or LMIA as a job offer, never as a school admission letter (live E2E 2026-10-30)', () => {
+    for (const t of [
+      'job_offer_letter',
+      'job_offer',
+      'signed_job_offer',
+      'lmia',
+      'lmia_and_employment_contract',
+      'employment_contract_lmia_exempt',
+      'lmia_or_offer_of_employment_number',
+    ])
+      expect(resolveExtractionType(t)).toBe('job_offer');
+    // A school's offer letter is still an admission letter.
+    expect(resolveExtractionType('offer_letter')).toBe('admission_letter');
+    const keys = extractionFieldsFor('job_offer_letter').map((f) => f.key);
+    expect(keys).toEqual(expect.arrayContaining(['offered_employer_name', 'lmia_number', 'offered_start_date']));
+    for (const k of ['institution_name', 'program_start_date', 'tuition_amount', 'employer', 'job_title'])
+      expect(keys).not.toContain(k);
+  });
+
   it('gives national ID cards their own schema, not the passport one (#34)', () => {
     for (const t of ['national_id', 'cnic', 'id_card', 'nicop']) {
       expect(resolveExtractionType(t)).toBe('national_id');

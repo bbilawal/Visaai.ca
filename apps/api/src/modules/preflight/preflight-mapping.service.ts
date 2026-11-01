@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import type { PortalFillCoverage, PreflightMappingInput } from '@visaai/types';
 import { SupabaseService } from '../shared/supabase/supabase.service';
-import { strategyRegistry } from '../../strategies';
+import { embeddedVisaaiId, portalForRoute } from '../../strategies';
 import {
-  resolvePortalFill,
+  resolvePortalFillFor,
   type PortalFillMapping,
 } from '../../strategies/portal-integration/portal-fill.registry';
 import {
@@ -12,6 +12,16 @@ import {
   portalFillCoverage,
 } from '../automation/fill-instructions';
 import { PrefillFormStore } from './prefill-form.store';
+import { loadPortalDocuments } from './portal-documents';
+import { PORTAL_DOCUMENTS_KEY } from '../automation/portal-fills/ircc-uploads';
+// Side effects: the portal mappings this service resolves by portal id.
+import '../automation/portal-fills/canada-ircc';
+import '../automation/portal-fills/canada-ircc-eta';
+import '../automation/portal-fills/canada-ircc-study-eapp';
+import '../automation/portal-fills/canada-ircc-work-eapp';
+import '../automation/portal-fills/canada-ircc-pr-family';
+import '../automation/portal-fills/canada-ircc-super-visa';
+import '../automation/portal-fills/canada-ircc-business-visitor';
 import { ConsultantApprovalService } from '../consultant/consultant-approval.service';
 
 /**
@@ -52,8 +62,10 @@ export class PreflightMappingService {
   ) {}
 
   /**
-   * Resolve the portal mappings for an application. Returns an empty array when
-   * the destination country has no registered portal mapping — a country we
+   * Resolve the portal mappings for an application. The portal is the
+   * destination country's, narrowed by the application's route
+   * (visa_types.visaai_id). Returns an empty array when that portal has no
+   * registered mapping — a country we
    * cannot auto-fill yields nothing to review rather than a partial plan.
    */
   async forApplication(
@@ -80,21 +92,34 @@ export class PreflightMappingService {
     values: Record<string, unknown>;
     notApplicable: Set<string>;
   }> {
-    const [{ data: app }, { data: profile }, form, notApplicable] =
-      await Promise.all([
-        this.supabase.admin
-          .from('applications')
-          .select('destination_country')
-          .eq('id', applicationId)
-          .single(),
-        this.supabase.admin
-          .from('application_profiles')
-          .select('profile_json')
-          .eq('application_id', applicationId)
-          .single(),
-        this.forms.load(applicationId),
-        this.consultant.notApplicableFieldKeys(applicationId),
-      ]);
+    const [
+      { data: app, error: appError },
+      { data: profile },
+      form,
+      notApplicable,
+    ] = await Promise.all([
+      this.supabase.admin
+        .from('applications')
+        .select('destination_country, visa_types(visaai_id)')
+        .eq('id', applicationId)
+        .single(),
+      this.supabase.admin
+        .from('application_profiles')
+        .select('profile_json')
+        .eq('application_id', applicationId)
+        .single(),
+      this.forms.load(applicationId),
+      this.consultant.notApplicableFieldKeys(applicationId),
+    ]);
+
+    // A failed read is not "this route has no portal fill": treating it as
+    // such returned no mappings, which would let an application be approved
+    // with nothing locked (ApprovalLockGate). Fail closed.
+    if (appError) {
+      throw new ServiceUnavailableException(
+        `Could not read the application to derive its portal fill: ${appError.message}`,
+      );
+    }
 
     const raw = profile?.profile_json;
     const safeProfile =
@@ -104,10 +129,15 @@ export class PreflightMappingService {
 
     const countryCode = (app as { destination_country?: string } | null)
       ?.destination_country;
-    const portalId = countryCode
-      ? strategyRegistry.getCountry(countryCode)?.portal().portalId
+    // The route narrows the portal: a Canada eTA fills the eTA form, every
+    // other Canada route IRCC tr-rt.
+    // The route then picks its own mapping on that portal, when it has one
+    // (IRCC tr-rt: the super visa answers /purpose differently).
+    const visaaiId = embeddedVisaaiId(app);
+    const portalId = portalForRoute(countryCode, visaaiId)?.portalId;
+    const mapping = portalId
+      ? resolvePortalFillFor(portalId, visaaiId)
       : undefined;
-    const mapping = portalId ? resolvePortalFill(portalId) : undefined;
     if (!mapping)
       return { mapping: undefined, inputs: [], values: {}, notApplicable };
 
@@ -115,6 +145,12 @@ export class PreflightMappingService {
       mapping,
       safeProfile,
       form?.payload.fields,
+    );
+    // The documents a portal's upload page may receive (IRCC /doc-upload).
+    // Server state, so the derivation and the lock hash stay reproducible.
+    values[PORTAL_DOCUMENTS_KEY] = await loadPortalDocuments(
+      this.supabase.admin as never,
+      applicationId,
     );
     // A field the consultant marked 'not applicable' is never written. Server
     // state, so the derivation stays deterministic; marking one changes the

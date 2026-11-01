@@ -109,6 +109,8 @@ export interface PreflightFieldEditResult {
   mappings: PreflightMappingInput[]
   review: PreflightReview | null
   formUpdated: boolean
+  /** No saved form: the correction went to the interview profile. */
+  profileUpdated?: boolean
   provenanceUpdated: boolean
 }
 

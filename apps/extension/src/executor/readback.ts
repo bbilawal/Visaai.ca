@@ -15,7 +15,7 @@
  *    '' — so verification compares the answer the server expects with the
  *    answer the page now shows.
  */
-import { resolveTarget } from './resolve-target'
+import { optionKey, resolveTarget } from './resolve-target'
 
 export interface ReadbackOutcome {
   found: boolean
@@ -48,7 +48,8 @@ export async function readField(
     const text = (opt?.text ?? '').replace(/\s+/g, ' ').trim()
     // Same comparison the writer chose the option by (case-folded): the
     // reviewed "Family member" is the option IRCC labels "Family Member".
-    raw = text.toLowerCase() === answer.replace(/\s+/g, ' ').trim().toLowerCase() ? answer : text
+    // "05" reads back as the reviewed "5" (optionKey).
+    raw = optionKey(text) === optionKey(answer) ? answer : text
   } else {
     raw = (el as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).value ?? ''
   }

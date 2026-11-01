@@ -15,6 +15,7 @@ import type {
   DocumentRequestStatus,
 } from '@visaai/types';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { DocumentRequestService } from './document-request.service';
@@ -45,6 +46,7 @@ export class DocumentRequestController {
   constructor(private readonly svc: DocumentRequestService) {}
 
   @Get(':applicationId/document-requests')
+  @UseGuards(ApplicationAccessGuard)
   list(
     @Param('applicationId') applicationId: string,
     @Headers('authorization') auth?: string,
@@ -53,6 +55,7 @@ export class DocumentRequestController {
   }
 
   @Post(':applicationId/document-requests')
+  @UseGuards(ApplicationAccessGuard)
   create(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

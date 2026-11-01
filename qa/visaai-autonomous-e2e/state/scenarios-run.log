@@ -1,0 +1,469 @@
+[harness] mode=scenarios queued=1000 skipped=71 workers=2 base=http://localhost:3100
+[1/1000] SC-0001 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[2/1000] SC-0002 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[3/1000] SC-0004 CA/work_permit → ERROR
+[4/1000] SC-0006 US/business_visa → ERROR
+[5/1000] SC-0003 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[6/1000] SC-0008 GB/visitor_visa → ERROR
+[7/1000] SC-0005 US/visitor_visa → ERROR
+[8/1000] SC-0010 AU/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[9/1000] SC-0007 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[10/1000] SC-0012 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[11/1000] SC-0009 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[12/1000] SC-0014 AT/business_visa → ERROR
+[13/1000] SC-0011 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[14/1000] SC-0016 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[15/1000] SC-0018 BG/business_visa → PASS_WITH_FINDINGS (1 findings)
+[16/1000] SC-0013 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[17/1000] SC-0020 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[18/1000] SC-0015 BE/tourist_visa → ERROR
+[19/1000] SC-0022 CZ/business_visa → ERROR
+[20/1000] SC-0017 BG/tourist_visa → ERROR
+[21/1000] SC-0024 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[22/1000] SC-0019 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[23/1000] SC-0026 EE/business_visa → ERROR
+[24/1000] SC-0021 CZ/tourist_visa → ERROR
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.newPage: Protocol error (Target.createTarget): Not supported
+    at runScenario (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:237:30)
+    at worker (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:393:23)
+    at async file:///Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:410:1 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.14.1
+[harness] mode=scenarios queued=986 skipped=85 workers=6 base=http://localhost:3100
+[1/986] SC-0014 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[2/986] SC-0015 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[3/986] SC-0004 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[4/986] SC-0008 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[5/986] SC-0005 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[6/986] SC-0006 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[7/986] SC-0021 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[8/986] SC-0023 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[9/986] SC-0022 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[10/986] SC-0028 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[11/986] SC-0030 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[12/986] SC-0026 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[13/986] SC-0029 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[14/986] SC-0017 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[15/986] SC-0034 GR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[16/986] SC-0027 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[17/986] SC-0025 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[18/986] SC-0032 DE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[19/986] SC-0036 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[20/986] SC-0035 HU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[21/986] SC-0031 DE/tourist_visa → ERROR
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.newPage: Protocol error (Target.createTarget): Not supported
+    at runScenario (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:237:30)
+    at worker (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:397:23)
+    at async file:///Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:414:1 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.14.1
+[harness] mode=scenarios queued=966 skipped=105 workers=6 base=http://localhost:3100
+[1/966] SC-0551 NO/business_visa → ERROR
+[2/966] SC-0801 HR/business_visa → ERROR
+[3/966] SC-0351 SE/tourist_visa → ERROR
+[4/966] SC-0701 SK/business_visa → ERROR
+[5/966] SC-0352 SE/business_visa → ERROR
+[6/966] SC-0552 PL/tourist_visa → ERROR
+[7/966] SC-0802 CZ/tourist_visa → ERROR
+[8/966] SC-0702 SI/tourist_visa → ERROR
+[9/966] SC-0901 MT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[10/966] SC-0951 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[11/966] SC-0353 CH/tourist_visa → ERROR
+[12/966] SC-0553 PL/business_visa → ERROR
+[13/966] SC-0803 CZ/business_visa → ERROR
+[14/966] SC-0703 SI/business_visa → ERROR
+[15/966] SC-0902 MT/business_visa → ERROR
+[16/966] SC-0952 FR/tourist_visa → ERROR
+[17/966] SC-0354 CH/business_visa → ERROR
+[18/966] SC-0554 PT/tourist_visa → ERROR
+[19/966] SC-0903 NL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[20/966] SC-0704 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[21/966] SC-0804 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[22/966] SC-0953 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[23/966] SC-0555 PT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[24/966] SC-0904 NL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[25/966] SC-0705 ES/business_visa → ERROR
+[26/966] SC-0954 DE/tourist_visa → ERROR
+[27/966] SC-0805 DK/business_visa → ERROR
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.newPage: Protocol error (Target.createTarget): Not supported
+    at runScenario (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:237:30)
+    at worker (/Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:412:23)
+    at async file:///Users/bilawalmuzaffar/Desktop/VisaAI/VisaAI/qa/visaai-autonomous-e2e/harness/run-scenarios.mjs:429:1 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.14.1
+[harness] mode=scenarios queued=958 skipped=113 workers=4 base=http://localhost:3100
+[1/958] SC-0701 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[2/958] SC-0801 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[3/958] SC-0551 NO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[4/958] SC-0351 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[5/958] SC-0552 PL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[6/958] SC-0802 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[7/958] SC-0702 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[8/958] SC-0352 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[9/958] SC-0902 MT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[10/958] SC-0353 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[11/958] SC-0952 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[12/958] SC-0553 PL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[13/958] SC-0703 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[14/958] SC-0354 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[15/958] SC-0554 PT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[16/958] SC-0705 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[17/958] SC-0803 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[18/958] SC-0805 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[19/958] SC-0356 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[20/958] SC-0355 CA/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[21/958] SC-0954 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[22/958] SC-0556 RO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[23/958] SC-0906 NO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[24/958] SC-0905 NO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[25/958] SC-0956 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[26/958] SC-0955 DE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[27/958] SC-0707 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[28/958] SC-0706 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[29/958] SC-0807 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[30/958] SC-0806 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[31/958] SC-0357 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[32/958] SC-0558 SK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[33/958] SC-0557 RO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[34/958] SC-0907 PL/tourist_visa → ERROR
+[35/958] SC-0958 HU/tourist_visa → ERROR
+[36/958] SC-0358 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[37/958] SC-0957 GR/business_visa → ERROR
+[38/958] SC-0708 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[39/958] SC-0809 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[40/958] SC-0359 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[41/958] SC-0908 PL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[42/958] SC-0808 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[43/958] SC-0560 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[44/958] SC-0909 PT/tourist_visa → ERROR
+[45/958] SC-0709 CH/business_visa → ERROR
+[46/958] SC-0559 SK/business_visa → ERROR
+[47/958] SC-0960 IS/tourist_visa → ERROR
+[48/958] SC-0710 CA/visitor_visa → ERROR
+[49/958] SC-0360 US/visitor_visa → ERROR
+[50/958] SC-0811 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[51/958] SC-0959 HU/business_visa → ERROR
+[52/958] SC-0361 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[53/958] SC-0910 PT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[54/958] SC-0562 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[55/958] SC-0810 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[56/958] SC-0911 RO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[57/958] SC-0962 IT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[58/958] SC-0561 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[59/958] SC-0711 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[60/958] SC-0813 DE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[61/958] SC-0961 IS/business_visa → PASS_WITH_FINDINGS (1 findings)
+[62/958] SC-0362 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[63/958] SC-0712 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[64/958] SC-0363 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[65/958] SC-0564 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[66/958] SC-0912 RO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[67/958] SC-0812 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[68/958] SC-0913 SK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[69/958] SC-0713 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[70/958] SC-0563 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[71/958] SC-0364 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[72/958] SC-0963 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[73/958] SC-0714 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[74/958] SC-0964 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[75/958] SC-0914 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[76/958] SC-0814 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[77/958] SC-0365 AU/visitor_visa → ERROR
+[78/958] SC-0815 GR/business_visa → ERROR
+[79/958] SC-0715 US/visitor_visa → ERROR
+[80/958] SC-0915 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[81/958] SC-0565 SE/business_visa → ERROR
+[82/958] SC-0566 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[83/958] SC-0716 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[84/958] SC-0366 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[85/958] SC-0965 LV/business_visa → PASS_WITH_FINDINGS (1 findings)
+[86/958] SC-0966 LI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[87/958] SC-0367 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[88/958] SC-0916 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[89/958] SC-0817 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[90/958] SC-0816 HU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[91/958] SC-0717 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[92/958] SC-0917 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[93/958] SC-0567 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[94/958] SC-0568 CA/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[95/958] SC-0718 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[96/958] SC-0967 LI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[97/958] SC-0368 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[98/958] SC-0968 LT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[99/958] SC-0818 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[100/958] SC-0369 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[101/958] SC-0918 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[102/958] SC-0569 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[103/958] SC-0919 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[104/958] SC-0819 IS/business_visa → PASS_WITH_FINDINGS (1 findings)
+[105/958] SC-0969 LT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[106/958] SC-0720 AU/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[107/958] SC-0820 IT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[108/958] SC-0719 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[109/958] SC-0570 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[110/958] SC-0371 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[111/958] SC-0970 LU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[112/958] SC-0571 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[113/958] SC-0921 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[114/958] SC-0370 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[115/958] SC-0971 LU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[116/958] SC-0821 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[117/958] SC-0722 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[118/958] SC-0920 SE/business_visa → ERROR
+[119/958] SC-0822 LV/tourist_visa → ERROR
+[120/958] SC-0572 CA/work_permit → ERROR
+[121/958] SC-0721 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[122/958] SC-0373 BG/business_visa → ERROR
+[123/958] SC-0573 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[124/958] SC-0972 MT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[125/958] SC-0372 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[126/958] SC-0923 CA/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[127/958] SC-0973 MT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[128/958] SC-0823 LV/business_visa → PASS_WITH_FINDINGS (1 findings)
+[129/958] SC-0922 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[130/958] SC-0724 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[131/958] SC-0574 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[132/958] SC-0824 LI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[133/958] SC-0723 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[134/958] SC-0375 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[135/958] SC-0974 NL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[136/958] SC-0575 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[137/958] SC-0374 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[138/958] SC-0825 LI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[139/958] SC-0925 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[140/958] SC-0924 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[141/958] SC-0576 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[142/958] SC-0726 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[143/958] SC-0725 BE/tourist_visa → ERROR
+[144/958] SC-0975 NL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[145/958] SC-0976 NO/tourist_visa → ERROR
+[146/958] SC-0377 CZ/business_visa → ERROR
+[147/958] SC-0376 CZ/tourist_visa → ERROR
+[148/958] SC-0827 LT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[149/958] SC-0826 LT/tourist_visa → ERROR
+[150/958] SC-0927 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[151/958] SC-0926 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[152/958] SC-0578 AU/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[153/958] SC-0728 BG/business_visa → PASS_WITH_FINDINGS (1 findings)
+[154/958] SC-0577 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[155/958] SC-0727 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[156/958] SC-0978 PL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[157/958] SC-0379 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[158/958] SC-0977 NO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[159/958] SC-0378 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[160/958] SC-0829 LU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[161/958] SC-0929 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[162/958] SC-0828 LU/tourist_visa → ERROR
+[163/958] SC-0928 US/visitor_visa → ERROR
+[164/958] SC-0580 AU/business_visa → ERROR
+[165/958] SC-0579 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[166/958] SC-0730 HR/business_visa → ERROR
+[167/958] SC-0729 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[168/958] SC-0980 PT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[169/958] SC-0979 PL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[170/958] SC-0031 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[171/958] SC-0380 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[172/958] SC-0731 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[173/958] SC-0830 MT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[174/958] SC-0831 MT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[175/958] SC-0930 US/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[176/958] SC-0382 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[177/958] SC-0581 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[178/958] SC-0381 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[179/958] SC-0932 GB/student_visa → PASS_WITH_FINDINGS (1 findings)
+[180/958] SC-0931 GB/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[181/958] SC-0981 PT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[182/958] SC-0583 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[183/958] SC-0732 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[184/958] SC-0582 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[185/958] SC-0983 RO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[186/958] SC-0982 RO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[187/958] SC-0033 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[188/958] SC-0834 NO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[189/958] SC-0833 NL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[190/958] SC-0832 NL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[191/958] SC-0585 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[192/958] SC-0733 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[193/958] SC-0584 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[194/958] SC-0384 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[195/958] SC-0383 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[196/958] SC-0985 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[197/958] SC-0934 AU/student_visa → PASS_WITH_FINDINGS (1 findings)
+[198/958] SC-0933 AU/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[199/958] SC-0836 PL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[200/958] SC-0984 SK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[201/958] SC-0734 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[202/958] SC-0735 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[203/958] SC-0387 DE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[204/958] SC-0386 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[205/958] SC-0835 NO/business_visa → PASS_WITH_FINDINGS (1 findings)
+[206/958] SC-0385 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[207/958] SC-0937 AT/business_visa → ERROR
+[208/958] SC-0936 AT/tourist_visa → ERROR
+[209/958] SC-0586 BG/business_visa → ERROR
+[210/958] SC-0935 AU/business_visa → ERROR
+[211/958] SC-0587 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[212/958] SC-0986 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[213/958] SC-0736 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[214/958] SC-0987 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[215/958] SC-0588 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[216/958] SC-0737 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[217/958] SC-0037 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[218/958] SC-0738 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[219/958] SC-0038 IS/business_visa → PASS_WITH_FINDINGS (1 findings)
+[220/958] SC-0988 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[221/958] SC-0039 IT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[222/958] SC-0838 PT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[223/958] SC-0837 PL/business_visa → PASS_WITH_FINDINGS (1 findings)
+[harness] mode=scenarios queued=766 skipped=305 workers=4 base=http://localhost:3100
+[1/766] SC-0957 GR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[2/766] SC-0907 PL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[3/766] SC-0958 HU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[4/766] SC-0559 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[5/766] SC-0709 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[6/766] SC-0909 PT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[7/766] SC-0360 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[8/766] SC-0959 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[9/766] SC-0710 CA/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[10/766] SC-0960 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[11/766] SC-0565 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[12/766] SC-0365 AU/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[13/766] SC-0715 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[14/766] SC-0815 GR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[15/766] SC-0572 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[16/766] SC-0920 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[17/766] SC-0822 LV/tourist_visa → ERROR
+[18/766] SC-0373 BG/business_visa → ERROR
+[19/766] SC-0376 CZ/tourist_visa → ERROR
+[20/766] SC-0725 BE/tourist_visa → ERROR
+[21/766] SC-0826 LT/tourist_visa → ERROR
+[22/766] SC-0976 NO/tourist_visa → ERROR
+[23/766] SC-0828 LU/tourist_visa → ERROR
+[24/766] SC-0377 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[25/766] SC-0928 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[26/766] SC-0580 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[27/766] SC-0935 AU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[28/766] SC-0730 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[29/766] SC-0586 BG/business_visa → PASS_WITH_FINDINGS (1 findings)
+[30/766] SC-0936 AT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[31/766] SC-0937 AT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[32/766] SC-0388 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[33/766] SC-0938 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[34/766] SC-0389 GR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[35/766] SC-0739 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[36/766] SC-0839 PT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[37/766] SC-0589 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[harness] mode=scenarios queued=736 skipped=335 workers=2 base=http://localhost:3100
+[1/736] SC-0822 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[2/736] SC-0373 BG/business_visa → PASS_WITH_FINDINGS (1 findings)
+[3/736] SC-0725 BE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[4/736] SC-0376 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[5/736] SC-0826 LT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[6/736] SC-0976 NO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[7/736] SC-0828 LU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[8/736] SC-0939 BE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[9/736] SC-0989 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[10/736] SC-0040 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[11/736] SC-0390 HU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[12/736] SC-0590 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[13/736] SC-0740 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[14/736] SC-0840 RO/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[15/736] SC-0940 BG/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[16/736] SC-0990 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[17/736] SC-0041 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[18/736] SC-0391 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[19/736] SC-0591 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[20/736] SC-0741 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[21/736] SC-0841 RO/business_visa → ERROR
+[22/736] SC-0941 BG/business_visa → ERROR
+[23/736] SC-0991 SE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[24/736] SC-0042 LV/business_visa → PASS_WITH_FINDINGS (1 findings)
+[25/736] SC-0392 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[26/736] SC-0592 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[27/736] SC-0842 SK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[28/736] SC-0742 DE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[29/736] SC-0992 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[30/736] SC-0942 HR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[31/736] SC-0393 IS/business_visa → PASS_WITH_FINDINGS (1 findings)
+[32/736] SC-0043 LI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[33/736] SC-0593 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[34/736] SC-0743 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[35/736] SC-0843 SK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[36/736] SC-0943 HR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[37/736] SC-0993 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[38/736] SC-0044 LI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[39/736] SC-0394 IT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[40/736] SC-0594 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[41/736] SC-0744 GR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[42/736] SC-0844 SI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[43/736] SC-0944 CZ/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[44/736] SC-0994 CA/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[45/736] SC-0045 LT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[46/736] SC-0395 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[47/736] SC-0595 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[48/736] SC-0745 HU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[49/736] SC-0845 SI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[50/736] SC-0945 CZ/business_visa → PASS_WITH_FINDINGS (1 findings)
+[51/736] SC-0995 CA/family_sponsorship → PASS_WITH_FINDINGS (1 findings)
+[52/736] SC-0046 LT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[53/736] SC-0396 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[54/736] SC-0596 FI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[55/736] SC-0746 HU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[56/736] SC-0846 ES/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[57/736] SC-0946 DK/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[58/736] SC-0996 CA/business_visa → PASS_WITH_FINDINGS (1 findings)
+[59/736] SC-0047 LU/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[60/736] SC-0397 LV/business_visa → PASS_WITH_FINDINGS (1 findings)
+[61/736] SC-0597 FR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[62/736] SC-0747 IS/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[63/736] SC-0847 ES/business_visa → PASS_WITH_FINDINGS (1 findings)
+[64/736] SC-0947 DK/business_visa → PASS_WITH_FINDINGS (1 findings)
+[65/736] SC-0997 CA/student_visa → PASS_WITH_FINDINGS (1 findings)
+[66/736] SC-0048 LU/business_visa → PASS_WITH_FINDINGS (1 findings)
+[67/736] SC-0398 LI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[68/736] SC-0598 FR/business_visa → PASS_WITH_FINDINGS (1 findings)
+[69/736] SC-0748 IS/business_visa → PASS_WITH_FINDINGS (1 findings)
+[70/736] SC-0848 SE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[71/736] SC-0948 EE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[72/736] SC-0998 CA/work_permit → PASS_WITH_FINDINGS (1 findings)
+[73/736] SC-0049 MT/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[74/736] SC-0399 LI/business_visa → PASS_WITH_FINDINGS (1 findings)
+[75/736] SC-0599 DE/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[76/736] SC-0749 IT/tourist_visa → ERROR
+[77/736] SC-0849 SE/business_visa → ERROR
+[78/736] SC-0949 EE/business_visa → PASS_WITH_FINDINGS (1 findings)
+[79/736] SC-0999 US/visitor_visa → PASS_WITH_FINDINGS (1 findings)
+[80/736] SC-0050 MT/business_visa → ERROR
+[81/736] SC-0400 LT/tourist_visa → ERROR
+[82/736] SC-0600 DE/business_visa → ERROR
+[83/736] SC-0750 IT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[84/736] SC-0850 CH/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[85/736] SC-0950 FI/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[86/736] SC-1000 US/business_visa → PASS_WITH_FINDINGS (1 findings)
+[87/736] SC-0401 LT/business_visa → PASS_WITH_FINDINGS (1 findings)
+[88/736] SC-0051 NL/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[89/736] SC-0751 LV/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[90/736] SC-0601 GR/tourist_visa → PASS_WITH_FINDINGS (1 findings)
+[91/736] SC-0851 CH/business_visa → PASS_WITH_FINDINGS (1 findings)
+[92/736] SC-0052 NL/business_visa → PASS_WITH_FINDINGS (1 findings)

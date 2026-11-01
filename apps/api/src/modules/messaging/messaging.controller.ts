@@ -21,6 +21,7 @@ import type {
   MessagePage,
 } from '@visaai/types';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { MessagingService } from './messaging.service';
@@ -91,6 +92,7 @@ export class MessagingController {
   }
 
   @Get(':applicationId/search')
+  @UseGuards(ApplicationAccessGuard)
   search(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -106,6 +108,7 @@ export class MessagingController {
   }
 
   @Get(':applicationId/messages')
+  @UseGuards(ApplicationAccessGuard)
   olderMessages(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -123,6 +126,7 @@ export class MessagingController {
   }
 
   @Get(':applicationId')
+  @UseGuards(ApplicationAccessGuard)
   thread(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -132,6 +136,7 @@ export class MessagingController {
   }
 
   @Post(':applicationId/messages')
+  @UseGuards(ApplicationAccessGuard)
   postMessage(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -166,6 +171,7 @@ export class MessagingController {
   }
 
   @Post(':applicationId/read')
+  @UseGuards(ApplicationAccessGuard)
   async markRead(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -176,6 +182,7 @@ export class MessagingController {
   }
 
   @Patch(':applicationId/status')
+  @UseGuards(ApplicationAccessGuard)
   async setStatus(
     @Param('applicationId') applicationId: string,
     @Body() body: { status?: string },
@@ -194,6 +201,7 @@ export class MessagingController {
   }
 
   @Patch(':applicationId/consultant-state')
+  @UseGuards(ApplicationAccessGuard)
   async setConsultantState(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -213,6 +221,7 @@ export class MessagingController {
   }
 
   @Post(':applicationId/typing')
+  @UseGuards(ApplicationAccessGuard)
   async typing(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

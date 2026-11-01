@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
-import { useApplicationStream } from '@/hooks/use-application-stream'
+import { useApplicationStream, NOT_SENT_ERROR } from '@/hooks/use-application-stream'
 import { useAuthGate } from '@/components/auth/auth-gate-provider'
 import { GatedRegion } from '@/components/auth/gated-region'
 import { track } from '@/lib/analytics'
@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { VisaTypeSelector } from '@/components/intake/visa-type-selector'
+import { useToast } from '@/components/providers/toast-provider'
 
 interface Props {
   applicationId: string
@@ -34,11 +35,12 @@ export default function IntakeChatClient({
   applicationId,
   visaTypeId,
 }: Props) {
-  const { messages, streamingContent, isLoading, isComplete, error, needsAuth, retry, sendMessage } =
+  const { messages, streamingContent, isLoading, isComplete, error, needsAuth, canSend, retry, sendMessage, resend } =
     useApplicationStream({ applicationId })
   const t = useTranslations('intake')
   const tAuth = useTranslations('auth')
   const router = useRouter()
+  const { toast } = useToast()
   const { status, isGated, openAuthModal } = useAuthGate()
   const [input, setInput] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -55,6 +57,16 @@ export default function IntakeChatClient({
    * looks like: stay here.
    */
   const followRef = useRef(true)
+
+  /**
+   * The message count as of the last settled turn. The visa selector re-reads
+   * each route's eligibility when it changes — once per reply, not per token.
+   */
+  const [settledCount, setSettledCount] = useState(messages.length)
+  // Derived during render (React's "adjusting state when a prop changes").
+  if (!isLoading && settledCount !== messages.length) {
+    setSettledCount(messages.length)
+  }
 
   const documentsHref = `/documents/${applicationId}`
   // Gate the jump to documents: a guest/logged-out user gets the auth modal
@@ -128,7 +140,9 @@ export default function IntakeChatClient({
     const el = scrollerRef.current
     if (!el || !followRef.current) return
     el.scrollTop = el.scrollHeight
-  }, [messages, streamingContent])
+    // `error` too: the banner renders below the last message, and a failure
+    // that lands off-screen is a failure the applicant never sees.
+  }, [messages, streamingContent, error])
 
   /**
    * Put the caret back in the box when the answer lands.
@@ -143,7 +157,6 @@ export default function IntakeChatClient({
     if (
       shouldReclaimFocus({
         isLoading,
-        isComplete,
         active: document.activeElement,
         body: document.body,
         input: inputRef.current,
@@ -151,17 +164,23 @@ export default function IntakeChatClient({
     ) {
       inputRef.current?.focus()
     }
-  }, [isLoading, isComplete])
+  }, [isLoading])
 
   function handleSend(e: React.FormEvent) {
     e.preventDefault()
     const text = input.trim()
-    if (!text || isLoading || isComplete) return
-    setInput('')
+    // A complete intake still takes messages: they are corrections or updates
+    // to earlier answers (dry run 2026-10-15 — a wrong marriage date could not
+    // be fixed once the input locked).
+    if (!text || isLoading) return
     // Sending is the one moment the applicant unambiguously wants to see the
-    // bottom: it is their own message going in.
+    // bottom: it is their own message going in (or the reason it cannot).
     followRef.current = true
-    sendMessage(text)
+    // The session cannot take it (no access, signed out, never opened): keep
+    // the text where it was typed. The input used to clear first and the
+    // message vanished behind the error already on screen (prod 2026-10-24).
+    if (!sendMessage(text)) return
+    setInput('')
     track('question_answered', { applicationId })
   }
 
@@ -187,33 +206,49 @@ export default function IntakeChatClient({
                 publishes 13 routes and Türkiye 15 — as a list it was taller
                 than the conversation beside it. */}
             <div className="w-[240px] max-w-[60vw]">
-              {/* Naming the route is the answer to the only question the
-                  interview needed the applicant for before it can say what to
-                  upload, so it goes straight to the documents.
+              {/* Choosing a route STAYS on the interview.
 
-                  Staying here was worse than it looks. `setVisaType` deletes
-                  the graph checkpoint on purpose, so the interview restarts
-                  and re-asks generic country questions — an Express Entry
-                  applicant who had just named their route was asked "what is
-                  the purpose of your visit to Canada? (tourism, work, study,
-                  family)". The documents page rebuilds the checklist on
-                  arrival, which is where that work now belongs.
+                  It used to jump straight to the documents page, on the
+                  reasoning that `setVisaType` deletes the graph checkpoint and
+                  the interview would restart from the top. That restart was
+                  fixed (INTAKE-004: startOrResume restores the transcript and
+                  resumes the pending question), so the jump only cost the
+                  applicant their place: on 2026-10-16 a super visa applicant
+                  picked her route mid-interview and landed on Documents with
+                  the super visa questions — host, income, insurance — unasked,
+                  and an eTA applicant the same way before any eTA question.
 
-                  Only on a real choice: clearing the selection back to "no
-                  route chosen" leaves them here, and re-picking the same route
-                  never fires (VisaTypeSelector returns early). The interview
-                  stays reachable from the stage nav. */}
+                  So: while the new route still has questions
+                  (`intakeComplete: false`) — or the API does not say — the
+                  interview carries on with them, and a toast says the route
+                  was saved. Only a route whose questions are all answered
+                  goes on to Documents. Clearing the selection back to "no
+                  route chosen" does nothing. */}
               <VisaTypeSelector
                 applicationId={applicationId}
                 initialVisaTypeId={visaTypeId ?? null}
-                onChange={(chosen) => {
+                onChange={(chosen, saved) => {
                   if (!chosen) return
                   track('visa_type_chosen', {
                     applicationId,
                     visaTypeId: chosen,
                   })
-                  goToDocuments()
+                  // A route the applicant may not be able to use (eligibility
+                  // still depends on their passport, or already ruled out)
+                  // keeps them here, where the selector says so and the
+                  // interview can ask — not on a Documents page for the
+                  // wrong route (prod 2026-10-16, app 5d3a17a4).
+                  if (saved?.eligibility && saved.eligibility.status !== 'eligible') return
+                  if (saved?.intakeComplete === true) {
+                    goToDocuments()
+                    return
+                  }
+                  toast(t('routeSaved'), 'success')
                 }}
+                // Re-read each route's fit once a reply lands: an answer may
+                // have ruled the chosen route out (a Pakistani passport on
+                // the eTA), and the selector is where that is shown.
+                refreshKey={settledCount}
               />
             </div>
             <button
@@ -235,17 +270,32 @@ export default function IntakeChatClient({
           {messages.map((msg) => (
             <div
               key={msg.msgId}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
             >
               <div
                 className={`max-w-[75%] rounded-[14px] px-4 py-3 text-[14px] leading-[1.5] whitespace-pre-wrap ${
                   msg.role === 'user'
                     ? 'bg-deep-black text-canvas-white'
                     : 'bg-ghost-gray text-rich-black'
-                }`}
+                } ${msg.status === 'failed' ? 'opacity-60' : ''}`}
               >
                 {msg.content}
               </div>
+              {/* An undelivered message stays where it was typed, with its
+                  own way to send it again — it used to vanish silently. */}
+              {msg.status === 'failed' && (
+                <p className="mt-1 flex items-center gap-2 text-[12px] text-callout-red" role="alert">
+                  {t('notSent')}
+                  <button
+                    type="button"
+                    onClick={() => resend(msg.msgId)}
+                    disabled={isLoading}
+                    className="underline text-midtone-gray hover:text-ink disabled:opacity-50"
+                  >
+                    {t('retry')}
+                  </button>
+                </p>
+              )}
             </div>
           ))}
 
@@ -294,7 +344,7 @@ export default function IntakeChatClient({
           {error && (
             <div className="flex flex-col items-center gap-2">
               <p className="text-[13px] text-callout-red text-center">
-                {needsAuth ? t('sessionEnded') : error}
+                {needsAuth ? t('sessionEnded') : error === NOT_SENT_ERROR ? t('notSentDetail') : error}
               </p>
               {/* The error used to be the end of the road: the session was
                   never opened and nothing on screen said so, so the applicant
@@ -319,14 +369,23 @@ export default function IntakeChatClient({
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder={isComplete ? t('complete') : t('inputPlaceholder')}
-            disabled={isLoading || isComplete}
+            placeholder={isComplete ? t('correctionPlaceholder') : t('inputPlaceholder')}
+            // Closed while the session cannot take messages: typing into it
+            // only to have the text go nowhere is what this replaced (prod
+            // 2026-10-24). Anything already typed stays in the box.
+            disabled={isLoading || !canSend}
+            aria-describedby={!canSend ? 'intake-send-blocked' : undefined}
             className="flex-1"
           />
-          <Button type="submit" disabled={isLoading || isComplete || !input.trim()}>
+          <Button type="submit" disabled={isLoading || !canSend || !input.trim()}>
             {t('send')}
           </Button>
         </form>
+        {!canSend && (
+          <p id="intake-send-blocked" className="pt-2 text-[12px] text-midtone-gray">
+            {t('sendBlocked')}
+          </p>
+        )}
       </div>
 
       {/* No full-width "Upload your documents" button here any more. The

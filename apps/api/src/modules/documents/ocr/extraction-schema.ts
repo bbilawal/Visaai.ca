@@ -386,6 +386,70 @@ const TYPE_FIELDS: Record<string, ExtractionField[]> = {
     },
   ],
 
+  // A job offer, offer of employment or LMIA for work IN THE DESTINATION
+  // country. Its own keys: the employment letter's are the CURRENT job, and
+  // `job_offer_letter` used to resolve to the admission letter through
+  // `offer_letter` — a work permit's job offer became institution_name /
+  // program_start_date / tuition_amount (the wage) on the profile (live E2E
+  // 2026-10-30).
+  job_offer: [
+    {
+      key: 'offered_employer_name',
+      hint: 'name of the employer making the job offer',
+      type: 'string',
+    },
+    {
+      key: 'offered_employer_address',
+      hint: 'full address of that employer',
+      type: 'string',
+    },
+    {
+      key: 'offered_job_title',
+      hint: 'job title or position offered',
+      type: 'string',
+    },
+    {
+      key: 'offered_noc_code',
+      hint: 'NOC / occupation code of the offered job, if printed',
+      type: 'string',
+    },
+    {
+      key: 'offered_wage',
+      hint: 'wage or salary offered as a number',
+      type: 'number',
+    },
+    {
+      key: 'offered_wage_period',
+      hint: 'period of that wage (hour, week, month, year)',
+      type: 'string',
+    },
+    {
+      key: 'offered_currency',
+      hint: 'ISO currency code of the wage',
+      type: 'string',
+    },
+    {
+      key: 'offered_start_date',
+      hint: 'start date of the offered employment',
+      type: 'date',
+    },
+    {
+      key: 'offered_end_date',
+      hint: 'end date of the offered employment, if stated',
+      type: 'date',
+    },
+    {
+      key: 'lmia_number',
+      hint: 'Labour Market Impact Assessment (LMIA) number, if printed',
+      type: 'string',
+    },
+    {
+      key: 'offer_of_employment_number',
+      hint: 'offer of employment number (the letter A and 7 digits), if printed',
+      type: 'string',
+    },
+  ],
+
   pay_stubs: [
     { key: 'employer', hint: 'employer / company name', type: 'string' },
     {
@@ -473,6 +537,38 @@ const TYPE_FIELDS: Record<string, ExtractionField[]> = {
       type: 'date',
     },
     { key: 'visit_end_date', hint: 'intended end of the visit', type: 'date' },
+    // A business visitor's letter comes from a company, not a person: these
+    // are null on a family letter.
+    {
+      key: 'organization_name',
+      hint: 'name of the company or organization inviting the applicant, if the letter is from one',
+      type: 'string',
+    },
+    {
+      key: 'contact_name',
+      hint: 'full name of the contact person who signs for that company or organization',
+      type: 'string',
+    },
+    {
+      key: 'contact_phone',
+      hint: "contact person's telephone number",
+      type: 'string',
+    },
+    {
+      key: 'contact_email',
+      hint: "contact person's email address",
+      type: 'string',
+    },
+    {
+      key: 'organization_address',
+      hint: 'full address of the company or organization, with postal code',
+      type: 'string',
+    },
+    {
+      key: 'event_code',
+      hint: 'IRCC event code for a conference, convention or trade fair, if stated',
+      type: 'string',
+    },
   ],
 
   travel_itinerary: [
@@ -591,6 +687,12 @@ const TYPE_ALIASES: Record<string, string> = {
   i20: 'admission_letter',
   loa: 'admission_letter',
   offer_letter: 'admission_letter',
+  // Work, not study (exact aliases win over the `offer_letter` suffix match).
+  job_offer_letter: 'job_offer',
+  lmia: 'job_offer',
+  lmia_and_employment_contract: 'job_offer',
+  employment_contract_lmia_exempt: 'job_offer',
+  lmia_or_offer_of_employment_number: 'job_offer',
   proof_of_funds_bank: 'bank_statement',
   passport_biographic_page: 'passport',
   id_card: 'national_id',
@@ -611,6 +713,81 @@ const TYPE_ALIASES: Record<string, string> = {
 };
 
 /**
+ * A photograph slot — `photo`, `passport_photo(s)`, `digital_photo`,
+ * `applicant_photo`. Prod 2026-10-24: a study-permit `passport_photos` upload
+ * prefix-matched `passport`, so the photo was graded as a passport with no
+ * fields (identity fail) and no readable expiry (expiry warn), and its slot
+ * never reached verified.
+ *
+ * Whole tokens only, and never a type that also names an identity document
+ * or a copy: `passport_photo_page` is the bio page, `photo_id` / `photo_card` /
+ * `cnic_photo` an ID, `photo_of_passport` a scan of one, `passport_photocopy`
+ * and `passport_photo_copy` a copy. Those keep their passport / ID handling.
+ * `photos_of_you_together` is still a photo.
+ */
+const PHOTO_TOKENS = new Set([
+  'photo',
+  'photos',
+  'photograph',
+  'photographs',
+  'picture',
+  'pictures',
+]);
+const IDENTITY_TOKENS = new Set([
+  'page',
+  'id',
+  'ids',
+  'cnic',
+  'nic',
+  'nicop',
+  'licence',
+  'license',
+  'card',
+  'identity',
+  'identification',
+  'copy',
+  'copies',
+  'stat',
+]);
+
+export function isPhotoDocumentType(
+  documentType: string | undefined | null,
+): boolean {
+  const tokens = (documentType ?? '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
+  if (!tokens.some((t) => PHOTO_TOKENS.has(t))) return false;
+  if (tokens.some((t) => IDENTITY_TOKENS.has(t))) return false;
+  // `photo_of_passport`: a picture OF an identity document is that document.
+  return !tokens.some(
+    (t, i) =>
+      PHOTO_TOKENS.has(t) &&
+      tokens[i + 1] === 'of' &&
+      (tokens[i + 2] === 'passport' || IDENTITY_TOKENS.has(tokens[i + 2])),
+  );
+}
+
+/**
+ * The applicant's own photograph — the one a visa form asks for — as opposed
+ * to `wedding_photos`, `photos_together` or `sponsor_photo`. Only these fit
+ * one another across names; any other photo slot takes only its own type.
+ */
+const APPLICANT_PHOTO =
+  /^(?:(?:passport|digital|applicant)_)?photo(?:s|graphs?)?$/;
+
+export function isApplicantPhotoType(
+  documentType: string | undefined | null,
+): boolean {
+  return APPLICANT_PHOTO.test(
+    (documentType ?? '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '_'),
+  );
+}
+
+/**
  * Longest-prefix resolution so discovery-generated types keep their schema:
  * `bank_statement_3mo` → `bank_statement`, `sponsor_employment_letter` →
  * `employment_letter`, `passport_biographic_page` → `passport`.
@@ -625,6 +802,8 @@ export function resolveExtractionType(
   if (!documentType) return null;
   const normalized = documentType.toLowerCase().trim();
   if (!normalized) return null;
+  // A photo carries no fields; `passport_photo` is not a passport.
+  if (isPhotoDocumentType(normalized)) return null;
   if (TYPE_FIELDS[normalized]) return normalized;
   if (TYPE_ALIASES[normalized]) return TYPE_ALIASES[normalized];
 

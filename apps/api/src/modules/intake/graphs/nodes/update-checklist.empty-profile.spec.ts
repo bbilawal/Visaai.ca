@@ -103,6 +103,7 @@ const BASE: IntakeState = {
   isComplete: false,
   currentQuestion: null,
   checklistBuiltAt: null,
+  profileChanges: [],
 };
 
 describe('updateChecklist — empty profile', () => {

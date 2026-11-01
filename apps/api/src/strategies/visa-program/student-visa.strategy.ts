@@ -10,6 +10,8 @@ export function studentVisaProgram(
   /** Country-specific display label, e.g. 'Student visa (subclass 500)'. */
   label = 'Student Visa',
   forms: FormSpec[] = [],
+  /** A country's own route, interview and readiness settings on top. */
+  overrides: Partial<VisaProgramStrategy> = {},
 ): VisaProgramStrategy {
   return {
     id: 'student_visa',
@@ -42,5 +44,6 @@ export function studentVisaProgram(
     riskSignals: () =>
       risks('insufficient_funds', 'unclear_purpose', 'weak_home_ties'),
     complianceRequirements: () => compliance,
+    ...overrides,
   };
 }

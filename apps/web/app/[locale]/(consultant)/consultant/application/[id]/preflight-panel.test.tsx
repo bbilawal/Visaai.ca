@@ -15,8 +15,16 @@ const startPreflight = vi.fn()
 const validatePreflightLock = vi.fn()
 const refresh = vi.fn()
 const completePreflight = vi.fn()
+const recordPreflightCheck = vi.fn()
 
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh }) }))
+// The real English copy, so the assertions read like the page.
+vi.mock('next-intl', async () => {
+  const en = (await import('@/messages/en.json')).default as { consultant: Record<string, string> }
+  // One translator for every render, as next-intl gives: it is an effect dependency.
+  const t = (key: string) => en.consultant[key] ?? key
+  return { useTranslations: () => t }
+})
 
 vi.mock('@/lib/supabase/client', () => ({
   getSession: () => Promise.resolve({ data: { session: { access_token: 't' } } }),
@@ -28,7 +36,7 @@ vi.mock('@/lib/api/preflight-client', () => ({
   getPreflightMappings: (...a: unknown[]) => getPreflightMappings(...a),
   getActivePreflight: (...a: unknown[]) => getActivePreflight(...a),
   startPreflight: (...a: unknown[]) => startPreflight(...a),
-  recordPreflightCheck: vi.fn(),
+  recordPreflightCheck: (...a: unknown[]) => recordPreflightCheck(...a),
   completePreflight: (...a: unknown[]) => completePreflight(...a),
   validatePreflightLock: (...a: unknown[]) => validatePreflightLock(...a),
   editPreflightField: (...a: unknown[]) => editPreflightField(...a),
@@ -83,6 +91,47 @@ describe('PreflightPanel — categories with nothing to fill', () => {
 
     const button = await screen.findByRole('button', { name: /Complete & lock/ })
     expect(button).toBeEnabled()
+  })
+
+  // Live 2026-10-19: an admin who opened the review saw an enabled button the
+  // server refused; the reason was small red text after the click.
+  it('disables Complete & lock and says why when this viewer cannot lock', async () => {
+    getActivePreflight.mockResolvedValue({
+      ...REVIEW,
+      passport_reviewed: true,
+      dates_reviewed: true,
+      travel_history_reviewed: true,
+      addresses_reviewed: true,
+      employment_reviewed: true,
+      final_approval: true,
+      can_lock: false,
+    })
+    render(<PreflightPanel applicationId="app-1" />)
+
+    expect(await screen.findByRole('button', { name: /Complete & lock/ })).toBeDisabled()
+    expect(screen.getByText(/Only the assigned consultant can lock this review/)).toBeInTheDocument()
+  })
+
+  it('still cannot lock after a tick: the check response does not carry can_lock', async () => {
+    const ticked = {
+      ...REVIEW,
+      passport_reviewed: true,
+      dates_reviewed: true,
+      travel_history_reviewed: true,
+      addresses_reviewed: true,
+      employment_reviewed: true,
+    }
+    getActivePreflight.mockResolvedValue({ ...ticked, can_lock: false })
+    recordPreflightCheck.mockReset().mockResolvedValue({ ...ticked, final_approval: true })
+    render(<PreflightPanel applicationId="app-1" />)
+
+    fireEvent.click(await screen.findByRole('checkbox', { name: /I have reviewed every field above/ }))
+    await waitFor(() => expect(recordPreflightCheck).toHaveBeenCalled())
+    await waitFor(() =>
+      expect(screen.getByRole('checkbox', { name: /I have reviewed every field above/ })).toBeChecked(),
+    )
+    expect(screen.getByRole('button', { name: /Complete & lock/ })).toBeDisabled()
+    expect(screen.getByText(/Only the assigned consultant can lock this review/)).toBeInTheDocument()
   })
 })
 
@@ -169,19 +218,89 @@ describe('PreflightPanel — a locked review', () => {
     render(<PreflightPanel applicationId="app-1" />)
     expect(await screen.findByText(/changed since this review was locked/i)).toBeInTheDocument()
     expect(validatePreflightLock).toHaveBeenCalledWith('t', 'app-1', 'r-1', MAPPINGS)
+    // Live 2026-10-19: the badge still read "Locked" over the new values.
+    expect(screen.getByText('Lock out of date')).toBeInTheDocument()
+    expect(screen.queryByText('Locked')).not.toBeInTheDocument()
   })
 
-  it('starting a new review (after confirming) opens an editable in-review review', async () => {
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
+  // Dry run 2026-10-18: a native confirm() blocked automation and was easy to
+  // miss. The question is asked in the page now.
+  it('starting a new review asks in the page (no window.confirm), then opens an editable review', async () => {
+    const confirm = vi.spyOn(window, 'confirm')
     startPreflight.mockResolvedValue({ ...REVIEW, id: 'r-2' })
     render(<PreflightPanel applicationId="app-1" />)
     fireEvent.click(await screen.findByRole('button', { name: /Start a new review/ }))
+    expect(startPreflight).not.toHaveBeenCalled()
+    const ask = screen.getByRole('group', { name: /current lock is retired/ })
+    const yes = screen.getByRole('button', { name: 'Yes, start a new review' })
+    expect(ask).toContainElement(yes)
+    expect(yes).toHaveFocus()
+    fireEvent.click(yes)
     await waitFor(() => expect(startPreflight).toHaveBeenCalledWith('t', 'app-1', MAPPINGS))
     expect(await screen.findByRole('button', { name: 'Edit duration_of_stay_days' })).toBeInTheDocument()
+    expect(confirm).not.toHaveBeenCalled()
     confirm.mockRestore()
+  })
+
+  it('cancelling the new-review question keeps the lock', async () => {
+    render(<PreflightPanel applicationId="app-1" />)
+    fireEvent.click(await screen.findByRole('button', { name: /Start a new review/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
+    expect(startPreflight).not.toHaveBeenCalled()
+    expect(screen.getByRole('button', { name: /Start a new review/ })).toHaveFocus()
   })
 })
 
+
+// Live 2026-10-21: an admin (not the assignee) pressed "Start a new review"
+// and nothing happened. The UI now follows the API: admins and assignees may
+// start; anyone else sees the buttons disabled with the reason.
+describe('PreflightPanel — who may run the review', () => {
+  const LOCKED = { ...REVIEW, status: 'completed', locked_diff_hash: 'lh' }
+  beforeEach(() => {
+    getPreflightMappings.mockReset().mockResolvedValue(MAPPINGS)
+    getActivePreflight.mockReset().mockResolvedValue(LOCKED)
+    validatePreflightLock.mockReset().mockResolvedValue({ valid: true, reasons: [] })
+    startPreflight.mockReset()
+  })
+
+  // Review of b196f0c0: in review, the server's can_lock decides.
+  it('the admin note is not shown on an open review the admin may lock', async () => {
+    getActivePreflight.mockResolvedValue({ ...REVIEW, can_lock: true })
+    render(<PreflightPanel applicationId="app-1" viewerIsAdmin />)
+    await screen.findByRole('button', { name: /Complete & lock/ })
+    expect(screen.queryByText(/only the\s+assigned consultant can lock it/)).not.toBeInTheDocument()
+  })
+
+  it('a viewer the API would refuse: Start a new review is disabled, with the reason', async () => {
+    render(<PreflightPanel applicationId="app-1" canReview={false} />)
+    expect(await screen.findByText(/Only the assigned consultant \(or an admin\) can run/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Start a new review/ })).toBeDisabled()
+  })
+
+  it('no review yet: Start review is disabled for that viewer too', async () => {
+    getActivePreflight.mockResolvedValue(null)
+    render(<PreflightPanel applicationId="app-1" canReview={false} />)
+    expect(await screen.findByRole('button', { name: 'Start review' })).toBeDisabled()
+  })
+
+  it('an admin who is not the assignee may start, and is told only the assignee can lock', async () => {
+    startPreflight.mockResolvedValue({ ...REVIEW, id: 'r-2' })
+    render(<PreflightPanel applicationId="app-1" viewerIsAdmin />)
+    expect(await screen.findByText(/only the\s+assigned consultant can lock it/)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: /Start a new review/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Yes, start a new review' }))
+    await waitFor(() => expect(startPreflight).toHaveBeenCalledWith('t', 'app-1', MAPPINGS))
+  })
+
+  it('values that did not load: the panel says so (no silent Start)', async () => {
+    getPreflightMappings.mockRejectedValue(new Error('down'))
+    render(<PreflightPanel applicationId="app-1" />)
+    expect(await screen.findByText('down')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Start review' })).not.toBeInTheDocument()
+    expect(startPreflight).not.toHaveBeenCalled()
+  })
+})
 
 describe('PreflightPanel — values moved before the lock', () => {
   it('shows the refusal and reloads the current values and checks', async () => {

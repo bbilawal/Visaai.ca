@@ -144,12 +144,20 @@ export async function scoreConsistency(
   }
 
   // Stated stay vs dates.
-  const { statedDays, datedDays } = stayFacts(p);
+  const { statedDays, statedMonths, datedDays } = stayFacts(p);
   if (statedDays && datedDays) {
     if (Math.abs(statedDays - datedDays) > 3) {
       tally('mismatch');
       notes.push(
         `Stated stay of ${statedDays} days does not match the planned dates (${datedDays} days) — officers check this.`,
+      );
+    } else tally('match');
+  } else if (statedMonths && datedDays) {
+    // A stay stated in months is compared in months (half a month either way).
+    if (Math.abs(statedMonths - datedDays / 30.44) > 0.5) {
+      tally('mismatch');
+      notes.push(
+        `Stated stay of ${statedMonths} months does not match the planned dates (${datedDays} days) — officers check this.`,
       );
     } else tally('match');
   }

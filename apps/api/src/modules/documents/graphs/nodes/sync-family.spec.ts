@@ -188,6 +188,45 @@ describe('birth certificates → children', () => {
     expect(next.children).toBeUndefined();
   });
 
+  it("never takes the children's certificate for the applicant's own when her name was polluted to a prefix of both (prod 2026-10-16)", () => {
+    // The host's passport had filled full_name "MIAN MUHAMMAD" — a subset of
+    // BOTH sons' names — and the certificate filled her sex, parents and
+    // place of birth from her son's record.
+    const { next, applicantOwnRecord } = mergeFamilyDocument(
+      input('birth_certificate', PUNJAB_BIRTH_CERTS_TWO_CHILDREN, {
+        full_name: 'MIAN MUHAMMAD',
+      }),
+    );
+    expect(applicantOwnRecord).toBe(false);
+    expect(next.father_name).toBeUndefined();
+    expect(next.mother_name).toBeUndefined();
+    expect(next.sex).toBeUndefined();
+  });
+
+  it('never files a certificate naming the applicant as a parent as her own', () => {
+    const { next } = mergeFamilyDocument(
+      input('birth_certificate', PUNJAB_BIRTH_CERTS_TWO_CHILDREN, {
+        full_name: 'Sumera Ahmad',
+      }),
+    );
+    expect(next.father_name).toBeUndefined();
+    expect((next.children as unknown[]).length).toBe(2);
+  });
+
+  it("never files the applicant's own certificate from a third-party slot", () => {
+    const { next } = mergeFamilyDocument(
+      input(
+        'birth_certificate',
+        PUNJAB_BIRTH_CERTS_TWO_CHILDREN,
+        { full_name: 'Mian Muhammad Sajawal' },
+        {},
+        { applicantOwnAllowed: false },
+      ),
+    );
+    expect(next.date_of_birth).toBeUndefined();
+    expect(next.father_name).toBeUndefined();
+  });
+
   it('recognises a birth certificate in a broad slot by its text', () => {
     const { handled, next } = mergeFamilyDocument(
       input('proof_of_relationship', PUNJAB_BIRTH_CERTS_TWO_CHILDREN, FATHER),
@@ -327,6 +366,20 @@ describe("spouse's identity card → spouse_date_of_birth", () => {
     });
     expect(next.date_of_birth).toBeUndefined();
     expect(next.national_id_number).toBeUndefined();
+  });
+
+  it("fills spouse_date_of_birth from the spouse's card uploaded to the family request slot (spouse_national_id)", () => {
+    const { handled, next } = mergeFamilyDocument(
+      input(
+        'spouse_national_id',
+        CNIC_SPOUSE,
+        { ...FATHER, spouse_name: 'Sumera Ahmad' },
+        spouseCard,
+      ),
+    );
+    expect(handled).toBe(true);
+    expect(next.spouse_date_of_birth).toBe('1968-10-09');
+    expect(next.date_of_birth).toBeUndefined();
   });
 
   it('recognises the spouse by spouse_name too', () => {

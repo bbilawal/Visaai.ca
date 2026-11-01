@@ -342,6 +342,17 @@ describe('updateChecklist — IMM 5476 when a representative is used (#50)', () 
       form_code: 'IMM 5476',
       specs: { note: GUIDANCE },
     });
+    // VisaAI prepares it: the item says where to download it and what to do.
+    expect((row.meta as { specs: { visaai: string } }).specs.visaai).toMatch(
+      /IMM 5476 - pre-filled, print and sign/,
+    );
+    // IMM 5257 is not prepared from the application: no such note.
+    const trv = inserted
+      .flat()
+      .find((r) => r.document_type === 'form_imm_5257')!;
+    expect(
+      (trv.meta as { specs?: { visaai?: string } }).specs?.visaai,
+    ).toBeUndefined();
   });
 
   it('promotes the "may be required" IMM 5476 once the applicant names a representative', async () => {
@@ -384,7 +395,12 @@ describe('updateChecklist — IMM 5476 when a representative is used (#50)', () 
         id: 'row-5476',
         values: expect.objectContaining({
           required: true,
-          meta: expect.objectContaining({ specs: { note: GUIDANCE } }),
+          meta: expect.objectContaining({
+            specs: {
+              note: GUIDANCE,
+              visaai: expect.stringMatching(/pre-filled, print and sign/),
+            },
+          }),
         }),
       },
     ]);
@@ -611,5 +627,61 @@ describe('updateChecklist — optional (recommended) sourced documents', () => {
     });
 
     expect(updated).toEqual([]);
+  });
+});
+
+describe('updateChecklist — routes that opt out of discovery (eTA)', () => {
+  // Dry run 2026-10-16: an eTA applicant was offered an invitation letter and
+  // their son's proof of funds and accommodation. A thin sourced list is the
+  // CORRECT list for an eTA — IRCC asks for a passport, an email and a card —
+  // so discovery has nothing to add and must not run.
+  const ETA_REQUIREMENTS = {
+    source: 'visa_registry',
+    visaai_id: 'ca-electronic-travel-authorization-eta',
+    base_forms: [],
+    base_documents: [
+      {
+        type: 'passport_from_visa_exempt_country',
+        label: 'A valid passport from a visa-exempt country or territory',
+      },
+    ],
+    branch_rules: [],
+    undetermined: [],
+  };
+
+  it('does not supplement a thin eTA list', async () => {
+    const { db } = makeDb();
+    const node = makeUpdateChecklistNode(db, forbiddenLlm, null);
+    const result = await node({
+      ...BASE,
+      visaTypeId: 'visa-eta',
+      requirementsJson: ETA_REQUIREMENTS,
+    });
+    expect((result.checklistItems ?? []).map((i) => i.document_type)).toEqual([
+      'passport_from_visa_exempt_country',
+    ]);
+  });
+
+  it('does not fall back to full discovery when the eTA list is empty', async () => {
+    const { db } = makeDb();
+    const node = makeUpdateChecklistNode(db, forbiddenLlm, null);
+    await expect(
+      node({
+        ...BASE,
+        visaTypeId: 'visa-eta',
+        requirementsJson: {
+          ...ETA_REQUIREMENTS,
+          base_documents: [],
+          undetermined: [
+            {
+              requirement_code: 'passport_from_visa_exempt_country',
+              label: 'A valid passport from a visa-exempt country or territory',
+              dependsOn: ['nationality'],
+              kind: 'evidence',
+            },
+          ],
+        },
+      }),
+    ).resolves.toBeDefined();
   });
 });

@@ -8,6 +8,8 @@ export function workPermitProgram(
   country: CountryCode,
   compliance: ComplianceRequirement[] = [],
   forms: FormSpec[] = [],
+  /** A country's own route, interview and readiness settings on top. */
+  overrides: Partial<VisaProgramStrategy> = {},
 ): VisaProgramStrategy {
   return {
     id: 'work_permit',
@@ -39,5 +41,6 @@ export function workPermitProgram(
     evidenceRules: () => evidence('employment'),
     riskSignals: () => risks('inconsistent_info', 'unclear_purpose'),
     complianceRequirements: () => compliance,
+    ...overrides,
   };
 }

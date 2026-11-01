@@ -25,13 +25,19 @@ export class UsaStrategy extends BaseCountryStrategy {
   }
   programs(): VisaProgramStrategy[] {
     return [
-      visitorVisaProgram('US', { label: 'B-2 Visitor (Tourism)' }),
-      businessVisaProgram('US'),
+      visitorVisaProgram('US', {
+        label: 'B-2 Visitor (Tourism)',
+        registryVisaaiIds: ['us-visitor-visa-b-1-business-b-2-tourism'],
+      }),
+      businessVisaProgram('US', [], [], ['us-business-visitor']),
       // The B-1/B-2 application (DS-160) is submitted online and has no
       // downloadable blank form. The family route does: USCIS publishes
       // I-130 as a real PDF.
       familySponsorshipProgram('US', {
         label: 'Family sponsorship (Form I-130)',
+        registryVisaaiIds: [
+          'us-family-immigration-immediate-relative-and-family-preference-immigrant-visas',
+        ],
         forms: [
           {
             formCode: 'I-130',

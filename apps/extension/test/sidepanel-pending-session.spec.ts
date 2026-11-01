@@ -54,3 +54,42 @@ describe('53 — the side panel purges a stale pendingSession', () => {
     expect(io).toHaveBeenCalledTimes(1)
   })
 })
+
+describe('an open panel takes the next launch (dry run 2026-10-16)', () => {
+  it('connects when VisaAI hands off a new session while the panel is open', async () => {
+    const mock = load({})
+    await flush(10)
+    expect(io).not.toHaveBeenCalled()
+    const pending = { token: 't2', apiUrl: 'https://api.visaai.co', readbackToken: 'rb2', receivedAt: Date.now() }
+    mock.store.pendingSession = pending
+    for (const fn of mock.listeners.storageChanged) fn({ pendingSession: { newValue: pending } }, 'local')
+    await flush(10)
+    expect(io).toHaveBeenCalledTimes(1)
+    expect(mock.store.pendingSession).toBeUndefined()
+  })
+
+  it('ignores the removal of a consumed session', async () => {
+    const mock = load({})
+    await flush(10)
+    for (const fn of mock.listeners.storageChanged) fn({ pendingSession: { oldValue: {} } }, 'local')
+    await flush(10)
+    expect(io).not.toHaveBeenCalled()
+  })
+})
+
+// Review of b196f0c0: a slow-but-delivered first hand-off and the page's retry
+// carry the same token. The open panel must not drop its live socket for it.
+describe('the same launch handed off twice', () => {
+  it('connects once; the repeated token is consumed without reconnecting', async () => {
+    const mock = load({})
+    await flush(10)
+    const pending = { token: 'same', apiUrl: 'https://api.visaai.co', readbackToken: 'rb', receivedAt: Date.now() }
+    for (let i = 0; i < 2; i++) {
+      mock.store.pendingSession = { ...pending }
+      for (const fn of mock.listeners.storageChanged) fn({ pendingSession: { newValue: pending } }, 'local')
+      await flush(10)
+    }
+    expect(io).toHaveBeenCalledTimes(1)
+    expect(mock.store.pendingSession).toBeUndefined()
+  })
+})

@@ -211,4 +211,28 @@ export const IRCC_COUNTRY_CODES: Readonly<Record<string, string>> = {
   YEM: '273',
   ZMB: '112',
   ZWE: '113',
+  // NOT read off the live portal. Taken from IRCC's country table as
+  // Statistics Canada republishes it (Longitudinal Administrative Databank
+  // dictionary 2016, table 9c — immigrant landing records), whose every code
+  // above matches what the portal showed (PAK 209, CHN 202, TWN 203, RKS 064,
+  // PSE 213, GBR 003…): 198 "Macau (SAR)", 200 "Hong Kong (SAR)", 979
+  // "Stateless". No code collides with another country, so if the live select
+  // lacks one the write fails closed (the select keeps no value, readback
+  // mismatches). TODO(recording): confirm against #codePassport_select.
+  HKG: '200',
+  MAC: '198',
+  XXA: '979',
+};
+
+/**
+ * United Kingdom passports that are not a British citizen's (ICAO 9303
+ * nationality codes), from the same table: 004 "British Overseas Citizen",
+ * 005 "British Dependent Territories Citizen", 010 "British National
+ * Overseas". GBS (British subject) and GBP (British protected person) have no
+ * certain match and resolve to nothing — never to 003, "British Citizen".
+ */
+export const IRCC_UK_NATIONALITY_CODES: Readonly<Record<string, string>> = {
+  GBO: '004',
+  GBD: '005',
+  GBN: '010',
 };

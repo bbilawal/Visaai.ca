@@ -52,6 +52,7 @@ function client(auth: Record<string, unknown>) {
 function gateway(svc: SessionTokenService, resumable = true) {
   const automation = {
     getSessionPortalUrl: jest.fn().mockResolvedValue('https://x.canada.ca'),
+    getApplicationPortalId: jest.fn().mockResolvedValue('ircc'),
     isSessionResumable: jest.fn().mockResolvedValue(resumable),
   };
   const g = new AutomationGateway(
@@ -94,7 +95,7 @@ describe('automation reconnect (item 60)', () => {
     await g.handleConnection(second as never);
     const r2 = ready(second);
     expect(r2).toMatchObject({ sessionId: 's1', resumed: true });
-    expect(second.data).toEqual(PAYLOAD);
+    expect(second.data).toMatchObject(PAYLOAD);
     // Rotated: a new token each connection.
     expect(r2.resumeToken).not.toBe(r1.resumeToken);
   });

@@ -10,7 +10,9 @@
     "requirements": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/eligibility.html",
     "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents.html",
     "policy": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/forms-documents/host-financial-support.html",
-    "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/length-stay-canada.html"
+    "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/length-stay-canada.html",
+    "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/parent-grandparent-super-visa/apply/start-application.html",
+    "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html"
   },
   "page_dates": {
     "requirements": "2026-07-06",
@@ -25,9 +27,34 @@
     "The full alternative-income document list under option 2. The obligation and both proof options are recorded; enumerating every acceptable substitute for a notice of assessment would reproduce the page.",
     "The pre-22-June-2023 entry rules on the length-of-stay page. They describe stays that began before that date and cannot apply to a new application.",
     "The immigration medical exam's own procedure and panel-physician list — a separate IRCC system.",
-    "The use-of-a-representative form and translation requirements, both general to IRCC applications rather than to this route."
+    "The digital photo and the Family Information form (IMM 5645). Neither is stated on any of the super visa pages registered here or on the IMM 5257 page; IRCC's personalized portal checklist may ask for them, but there is no super-visa source to quote.",
+    "Translation requirements, which are general to IRCC applications rather than to this route."
   ],
   "requirements": [
+    {
+      "requirement_code": "imm5257",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Application for Visitor Visa (Temporary Resident Visa)",
+      "official_form_code": "IMM 5257",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5257.html",
+      "description": "The super visa is applied for on the visitor visa application: choose “Super visa — Parents and grandparents” as the purpose of your visit.",
+      "source_role": "forms",
+      "source_excerpt": "this form must be completed by each person applying for a temporary resident visa to visit canada. ... super visa — parents and grandparents",
+      "display_order": 1,
+      "source_excerpt_display": "This form must be completed by each person applying for a Temporary Resident Visa to visit Canada. ... Super visa — Parents and grandparents"
+    },
+    {
+      "requirement_code": "passport_copy",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Your passport (valid, with a blank page for the visa)",
+      "description": "A clear copy of the bio page of the passport you will travel on. IRCC needs at least one blank page, other than the last page, to place the visa.",
+      "source_role": "application",
+      "source_excerpt": "there must be at least one blank page (other than the last page) available on your passport so we can stamp it.",
+      "display_order": 5,
+      "source_excerpt_display": "There must be at least one blank page (other than the last page) available on your passport so we can stamp it."
+    },
     {
       "requirement_code": "host_is_child_or_grandchild",
       "kind": "condition",
@@ -67,12 +94,15 @@
       "requirement_code": "host_letter_of_invitation",
       "kind": "evidence",
       "officially_required": true,
-      "label": "HOST: writes and signs a letter of invitation",
-      "description": "A spouse or common-law partner who is a citizen, PR or registered Indian may co-sign. IRCC excludes other relatives by name — a sibling cannot.",
+      "label": "Letter of invitation from your host (your child or grandchild)",
+      "description": "Written and signed by your host. IRCC requires it to include proof that the host meets or exceeds the minimum necessary income, and the list and number of people counted in the host's family size, with each person's name and date of birth. The host's spouse or common-law partner may co-sign if they are a Canadian citizen, permanent resident or registered Indian; other relatives, such as a sibling, cannot.",
       "source_role": "requirements",
       "source_excerpt": "writes and signs a letter of invitation (opens in a new tab) for you to come canada",
       "display_order": 40,
-      "source_excerpt_display": "writes and signs a letter of invitation (opens in a new tab) for you to come Canada"
+      "source_excerpt_display": "writes and signs a letter of invitation (opens in a new tab) for you to come Canada",
+      "parameters": {
+        "document_owner": "sponsor"
+      }
     },
     {
       "requirement_code": "applicant_outside_canada",
@@ -97,6 +127,22 @@
       },
       "display_order": 60,
       "source_excerpt_display": "show proof that you have private health insurance valid for a minimum of 1 year from the date of entry from a Canadian insurance company or from a company outside Canada that has been approved by the minister"
+    },
+    {
+      "requirement_code": "medical_insurance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of Canadian medical insurance (the policy, not a quote)",
+      "description": "From a Canadian insurer, or a foreign insurer authorized by OSFI and on its public list. The policy must name the insurer, be valid at least 1 year from your date of entry and for each entry, cover health care, hospitalization and repatriation with at least $100,000 emergency coverage, and be paid in full or in instalments with a deposit. Quotes are not accepted.",
+      "source_role": "documents",
+      "source_excerpt": "you must have proof of a health insurance policy on each entry to canada.",
+      "parameters": {
+        "minimum_validity_months": 12,
+        "minimum_emergency_cover_cad": 100000,
+        "currency": "CAD"
+      },
+      "display_order": 65,
+      "source_excerpt_display": "You must have proof of a health insurance policy on each entry to Canada."
     },
     {
       "requirement_code": "immigration_medical_exam",
@@ -185,28 +231,35 @@
       "requirement_code": "proof_of_medical_exam",
       "kind": "evidence",
       "officially_required": true,
-      "label": "Proof of a medical exam with an approved panel physician",
+      "label": "Proof of your immigration medical exam (upfront exam with a panel physician)",
       "source_role": "documents",
       "source_excerpt": "you must provide proof that you had a medical exam with an approved panel physician .",
       "display_order": 140,
-      "source_excerpt_display": "You must provide proof that you had a medical exam with an approved panel physician."
+      "source_excerpt_display": "You must provide proof that you had a medical exam with an approved panel physician.",
+      "description": "The confirmation sheet a panel physician gives you after an upfront immigration medical exam. IRCC's medical exam page tells super visa applicants to get the exam before applying; if you have not had one, the visa office tells you what to do next after you apply. It does not block preparing your forms.",
+      "parameters": {
+        "may_follow_application": true
+      }
     },
     {
       "requirement_code": "proof_of_host_status",
       "kind": "evidence",
       "officially_required": true,
-      "label": "Proof of the host's status: citizenship, PR document, or status card",
-      "description": "And of the host's spouse or common-law partner where one is involved.",
+      "label": "Host's proof of status: Canadian citizenship, permanent resident document, or status card",
+      "description": "IRCC asks for a copy of the host's Canadian citizenship (for example the citizenship certificate), permanent resident document, or Secure Certificate of Indian Status / status card, and the same for the host's spouse or common-law partner if they co-sign.",
       "source_role": "documents",
       "source_excerpt": "you must provide proof that your host is one of the following: a canadian citizen provide a copy of canadian citizenship for your host (and their spouse or common-law partner if applicable). a permanent resident provide a copy of a permanent resident document for your host (and their spouse or common-law partner, if applicable). a registered indian provide a copy of a secure certificate of indian status or certificate of indian status (status card) for your host (and their spouse or common-law partner, if applicable).",
       "display_order": 150,
-      "source_excerpt_display": "You must provide proof that your host is one of the following: a Canadian citizen Provide a copy of Canadian citizenship for your host (and their spouse or common-law partner if applicable). a permanent resident Provide a copy of a permanent resident document for your host (and their spouse or common-law partner, if applicable). a registered Indian Provide a copy of a Secure Certificate of Indian Status or Certificate of Indian Status (status card) for your host (and their spouse or common-law partner, if applicable)."
+      "source_excerpt_display": "You must provide proof that your host is one of the following: a Canadian citizen Provide a copy of Canadian citizenship for your host (and their spouse or common-law partner if applicable). a permanent resident Provide a copy of a permanent resident document for your host (and their spouse or common-law partner, if applicable). a registered Indian Provide a copy of a Secure Certificate of Indian Status or Certificate of Indian Status (status card) for your host (and their spouse or common-law partner, if applicable).",
+      "parameters": {
+        "document_owner": "sponsor"
+      }
     },
     {
       "requirement_code": "proof_of_relationship",
       "kind": "evidence",
       "officially_required": true,
-      "label": "Proof you are the host's parent or grandparent",
+      "label": "Proof you are the host's parent or grandparent (e.g. the host's birth certificate)",
       "description": "IRCC accepts the HOST's birth or baptismal certificate — the document names the applicant as parent, which is the reverse of what most applicants expect to be asked for.",
       "source_role": "documents",
       "source_excerpt": "you must prove that you’re the parent or grandparent of your host. we accept the following documents as proof: a copy of the host’s birth certificate or baptismal certificate another official document naming you as the parent or grandparent of your host",
@@ -215,14 +268,14 @@
     },
     {
       "requirement_code": "letter_of_invitation_contents",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
-      "label": "The invitation letter must state the family-size list, with each person's name and date of birth",
-      "description": "Not a free-form letter: it must show the same family-size count used to derive the income floor, person by person.",
+      "label": "The invitation letter must include the host's income proof and the family-size list, with each person's name and date of birth",
+      "description": "A rule about what the host's letter says, not a separate document: the letter shows the same family-size count used to set the income floor, person by person.",
       "source_role": "documents",
-      "source_excerpt": "your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income",
+      "source_excerpt": "your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income ... the list and number of people included when your child or grandchild calculated their family size to determine the minimum necessary income the letter must also include the name and date of birth of each person.",
       "display_order": 170,
-      "source_excerpt_display": "Your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income"
+      "source_excerpt_display": "Your letter of invitation, written and signed by your host child or grandchild, must include proof that they meet or exceed the minimum necessary income ... the list and number of people included when your child or grandchild calculated their family size to determine the minimum necessary income The letter must also include the name and date of birth of each person."
     },
     {
       "requirement_code": "co_signer_limited_to_spouse",
@@ -293,19 +346,22 @@
       "requirement_code": "income_proof_option_one",
       "kind": "evidence",
       "officially_required": true,
-      "label": "Option 1: host meets the full amount in either of the two tax years before applying",
-      "description": "Two tax years, not one — a host whose income dipped last year may still qualify on the year before.",
+      "label": "Host's proof of income: CRA notice of assessment (or T4/T1, pay stubs, employer letter)",
+      "description": "IRCC prefers the host's (or co-signer's) notice of assessment from the Canada Revenue Agency. If it is unavailable, IRCC accepts their T4 or T1 for the last tax year, pay stubs for the most recent 12 months, an original employer letter stating job title, job description and salary, bank statements from the last calendar year, or other income proof such as pension statements or rental contracts. Option 1: the host's income meets the full minimum in either of the 2 tax years before you apply. Option 2: it reached at least 75% in the year before you apply and your own income covers the rest.",
       "source_role": "policy",
       "source_excerpt": "option 1 your host can show that their total income (including the co-signer’s income, if applicable) meets or exceeds the minimum required amount in either of the 2 tax years before the application is submitted. documents to prove the income requirement your host, or their co-signer, must include their notice of assessment from the canada revenue agency (cra).",
       "display_order": 230,
-      "source_excerpt_display": "Option 1 Your host can show that their total income (including the co-signer’s income, if applicable) meets or exceeds the minimum required amount in either of the 2 tax years before the application is submitted. Documents to prove the income requirement Your host, or their co-signer, must include their notice of assessment from the Canada Revenue Agency (CRA)."
+      "source_excerpt_display": "Option 1 Your host can show that their total income (including the co-signer’s income, if applicable) meets or exceeds the minimum required amount in either of the 2 tax years before the application is submitted. Documents to prove the income requirement Your host, or their co-signer, must include their notice of assessment from the Canada Revenue Agency (CRA).",
+      "parameters": {
+        "document_owner": "sponsor"
+      }
     },
     {
       "requirement_code": "income_proof_option_two",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": false,
       "label": "Option 2: host reaches 75% of the amount and the applicant's own income covers the rest",
-      "description": "The applicant's income can count — and if it does, IRCC requires proof it will CONTINUE while they are in Canada, stated in the currency it is paid in.",
+      "description": "An alternative to Option 1, not a separate upload: the host's income proof goes in the host income slot, and the applicant's own income proof in its own optional slot. If the applicant's income is counted, IRCC requires proof it will CONTINUE while they are in Canada, stated in the currency it is paid in.",
       "source_role": "policy",
       "source_excerpt": "option 2 your host can show that their total income (including the co-signer’s income, if applicable) in the year before the application is submitted was at least 75% of the minimum required amount. you can add your own income to cover the remaining amount, if needed. the combined amount must meet or exceed the minimum necessary income requirements .",
       "parameters": {
@@ -318,11 +374,31 @@
       "requirement_code": "applicant_income_must_continue",
       "kind": "evidence",
       "officially_required": false,
-      "label": "If your income is counted, prove it continues while you are in Canada",
+      "label": "Your own income proof: only if your host uses Option 2 (75%)",
       "source_role": "policy",
       "source_excerpt": "you must provide proof that you’ll continue to earn an income while in canada. the document you use to prove this must include the currency you’re paid in.",
       "display_order": 250,
-      "source_excerpt_display": "You must provide proof that you’ll continue to earn an income while in Canada. The document you use to prove this must include the currency you’re paid in."
+      "source_excerpt_display": "You must provide proof that you’ll continue to earn an income while in Canada. The document you use to prove this must include the currency you’re paid in.",
+      "description": "Pay stubs, an employer letter, bank statements or pension statements, showing the income continues while you are in Canada and stating the currency you are paid in."
+    },
+    {
+      "requirement_code": "imm5476",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Use of a Representative",
+      "official_form_code": "IMM 5476",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5476.html",
+      "description": "Required when anyone — paid or unpaid, including a friend or relative — represents you on this application. Complete and sign IMM 5476, have your representative sign it, and upload it with your application. A paid representative must be authorized (a licensed immigration consultant, a lawyer or a Quebec notary in good standing). Your representative can never sign the application for you.",
+      "rule": {
+        "fact": "uses_representative",
+        "op": "eq",
+        "value": true
+      },
+      "source_role": "documents",
+      "source_excerpt": "you must also fill out the use of a representative (imm 5476) form",
+      "display_order": 260,
+      "source_excerpt_display": "You must also fill out the Use of a Representative (IMM 5476) form"
     }
-  ]
+  ],
+  "revision_note": "2026-10-16: checklist correction (prod app 61f16bb5). Passport, medical insurance proof, IMM 5257 and IMM 5476 added; the invitation-letter contents rule and Option 2 reclassified as conditions; host documents marked document_owner=sponsor; medical exam marked may_follow_application."
 }

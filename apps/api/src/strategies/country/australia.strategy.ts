@@ -30,6 +30,7 @@ export class AustraliaStrategy extends BaseCountryStrategy {
       visitorVisaProgram('AU', {
         label: 'Visitor visa (subclass 600)',
         compliance: this.compliance(),
+        registryVisaaiIds: ['au-visitor-visa-subclass-600'],
       }),
       // COUNTRY-003: Australia was the only launch corridor registering a
       // single program. Subclass 500 is the Australian Student visa.
@@ -37,6 +38,8 @@ export class AustraliaStrategy extends BaseCountryStrategy {
         'AU',
         this.compliance(),
         'Student visa (subclass 500)',
+        [],
+        { registryVisaaiIds: ['au-student-visa-subclass-500'] },
       ),
       // Subclass 600, Business Visitor stream — the ONLY Australian route that
       // still publishes a downloadable blank form. The tourist stream's form
@@ -52,17 +55,22 @@ export class AustraliaStrategy extends BaseCountryStrategy {
       // sourceUrl is the PDF itself, not a landing page: Home Affairs form
       // URLs are stable and unversioned, and its forms index is JS-rendered
       // with no hrefs to discover. See au-home-affairs.discovery.ts.
-      businessVisaProgram('AU', this.compliance(), [
-        {
-          formCode: '1415',
-          formName:
-            'Visitor visa (subclass 600) — Business Visitor stream. ' +
-            'Paper form: use only if Home Affairs has told you to apply on ' +
-            'paper; otherwise apply online through ImmiAccount.',
-          sourceUrl:
-            'https://immi.homeaffairs.gov.au/form-listing/forms/1415.pdf',
-        },
-      ]),
+      businessVisaProgram(
+        'AU',
+        this.compliance(),
+        [
+          {
+            formCode: '1415',
+            formName:
+              'Visitor visa (subclass 600) — Business Visitor stream. ' +
+              'Paper form: use only if Home Affairs has told you to apply on ' +
+              'paper; otherwise apply online through ImmiAccount.',
+            sourceUrl:
+              'https://immi.homeaffairs.gov.au/form-listing/forms/1415.pdf',
+          },
+        ],
+        ['au-visitor-visa-subclass-600-business-visitor-stream'],
+      ),
     ];
   }
 }

@@ -37,6 +37,10 @@
 const NOT_MONEY = new Set([
   'family_minimum_size',
   'held_for_days',
+  // A validity period, not a price: Canada's super visa insurance must run 12
+  // months from entry, beside its CAD 100,000 cover. Rendered as "CAD 12
+  // minimum validity months" until the coverage sweep caught it.
+  'minimum_validity_months',
   // The year an authority stamps on its own figures. Sweden's maintenance
   // thresholds carry stated_for_year: 2026, and this rendered as
   // "SEK 2,026 stated for year" -- an invented price, printed in the same line

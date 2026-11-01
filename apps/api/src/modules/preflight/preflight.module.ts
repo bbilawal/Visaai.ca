@@ -3,6 +3,7 @@ import { PreflightService } from './preflight.service';
 import { PreflightMappingService } from './preflight-mapping.service';
 import { PrefillFormStore } from './prefill-form.store';
 import { PreflightFieldEditService } from './preflight-field-edit.service';
+import { ApprovalLockGate } from './approval-lock.gate';
 import { PreflightController } from './preflight.controller';
 import { PREFLIGHT_REPOSITORY } from './preflight.repository';
 import { PreflightRepository } from './preflight.repository.impl';
@@ -24,6 +25,9 @@ import { ConsultantModule } from '../consultant/consultant.module';
     PreflightMappingService,
     PrefillFormStore,
     PreflightFieldEditService,
+    // Registers the 'approve needs a valid lock' precondition on
+    // ConsultantApprovalService (no import cycle: see the gate).
+    ApprovalLockGate,
     { provide: PREFLIGHT_REPOSITORY, useClass: PreflightRepository },
   ],
   exports: [

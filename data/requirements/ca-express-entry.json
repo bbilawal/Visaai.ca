@@ -1,18 +1,20 @@
 {
   "schema_version": "1.0.0",
   "visaai_id": "ca-express-entry",
-  "extracted_at": "2026-08-21",
+  "extracted_at": "2026-10-19",
   "extraction_method": "manual",
   "extractor": "read directly from the official IRCC pages listed in source_roles",
   "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
   "source_roles": {
     "landing": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html",
     "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/works.html",
-    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/documents.html"
   },
   "page_dates": {
     "landing": "2026-06-22",
-    "eligibility": "2026-06-22"
+    "eligibility": "2026-06-22",
+    "documents": "2026-10-16"
   },
   "not_extracted": [
     "Express Entry is not one program. It is an application-management system for three: the Canadian Experience Class, the Federal Skilled Worker Program and the Federal Skilled Trades Program, each with its own criteria. IRCC publishes those criteria as a side-by-side comparison, so each eligibility requirement below quotes all three columns and names the program each rule belongs to in its own text. None carries a machine rule: VisaAI has no fact for which of the three programs an applicant is pursuing, and gating on a guess would silently hide the criteria that actually apply to them.",
@@ -20,12 +22,15 @@
     "The cut-off score for any round of invitations. IRCC publishes those per round on a separate page.",
     "Full eligibility detail for each of the three programs. Each has its own page (canadian experience class, federal skilled worker program, federal skilled trades program) linked from the navigation but not registered as a source. Only the comparison table on works.html was read.",
     "The Federal Skilled Trades Program's full NOC group list beyond the lead-in. IRCC names major groups 72, 73, 82, 83, 92 and 93, minor group 6320 and unit group 62200, with exclusions for sub-major groups 726 and 932; those are recorded in the requirement description rather than turned into rules, because VisaAI has no NOC fact.",
-    "Settlement-funds amounts. IRCC's landing page names 'funds' among the documents to get ready but publishes no threshold on either page read; the amounts live on the get-your-documents-ready page, which is not a registered source.",
-    "Language test, education assessment, job offer and police certificate specifics. Same reason — the landing page names the categories, the detail is on a page that is not a registered source.",
+    "Settlement-funds amounts. The get-your-documents-ready page (registered as 'documents') lists 'proof of funds' but publishes no threshold; the amounts, and which programs are exempt, live on its proof-of-funds sub-page, which is not a registered source.",
+    "Language test, education assessment, job offer and police certificate specifics (approved tests, minimum scores, designated assessment organizations, which countries' certificates are needed). The get-your-documents-ready page names each document; the detail is on its sub-pages, which are not registered sources.",
     "Provincial Nominee Program eligibility. IRCC states a nomination gives extra points, but PNP criteria are set by each province and published elsewhere.",
     "Fees as shown on the Express Entry landing page. Its fee widget failed server-side at read time — it renders 'your application: [error loading fee. check the fee list .]' — so all amounts below come from the fee list instead.",
     "A biometrics fee for Express Entry. The landing page states biometrics are part of the after-you-apply stage, but the fee list's biometrics section qualifies the requirement as applying when you apply for 'a visitor visa, study permit or work permit'. That sentence does not cover a permanent residence application, so no biometrics fee is claimed here.",
-    "Processing times. The landing page says only 'varies by program'."
+    "Processing times. The landing page says only 'varies by program'.",
+    "The get-your-documents-ready page frames its list as documents 'you may need information from ... when you create a profile'. It does not say which documents IRCC later asks to be uploaded after an invitation to apply; nothing here claims that.",
+    "The Venezuelan-passport validity rules on the get-your-documents-ready page (passports issued before June 7, 2019 extended 5 years, with a letter of explanation). VisaAI has no fact for passport issuing country and issue date together, and a rule would have to guess; the passport row's description points to the page instead.",
+    "Which programs each document applies to beyond what the page says in its own wording. Only the education item names a program (Federal Skilled Workers); the job offer, trade certificate and provincial nomination items say '(if you have one)' or '(if you applied for the Provincial Nominee Program)', so those four are optional here and carry no rule (VisaAI has no fact for program, job offer, trade certificate or nomination). The other five carry no qualifier on the page and are recorded as required."
   ],
   "requirements": [
     {
@@ -96,14 +101,113 @@
     },
     {
       "requirement_code": "documents_to_get_ready",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
-      "label": "Get your documents ready",
-      "description": "IRCC names five document categories for an Express Entry application: language test, education, job offer, funds and police certificates. The requirements and thresholds for each are on a separate get-your-documents-ready page that is not a registered source, so nothing further is claimed about them here.",
+      "label": "IRCC's summary of the documents to get ready",
+      "description": "The Express Entry landing page names five document categories: language test, education, job offer, funds and police certificates. This is that summary, not an upload: each document is its own checklist item, quoted from the get-your-documents-ready page.",
       "source_role": "landing",
       "source_excerpt": "get your documents ready language test, education, job offer, funds, police certificates",
       "display_order": 100,
       "source_excerpt_display": "Get your documents ready Language test, education, job offer, funds, police certificates"
+    },
+    {
+      "requirement_code": "passport_or_travel_document",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport or travel document",
+      "description": "The passport (or travel document) you will use for your profile and application. IRCC advises that if it expires within 6 months of the day you apply, you should renew it, and then update the passport details in your application. Venezuelan passport holders with an expired passport have extra rules on the same page.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: a passport or travel document if your passport expires within 6 months from the day you apply, you should renew it.",
+      "display_order": 110,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: a passport or travel document If your passport expires within 6 months from the day you apply, you should renew it."
+    },
+    {
+      "requirement_code": "language_test_results",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Language test results",
+      "description": "Results of an approved language test. The minimum scores for each program are set out in the language-ability requirement.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... language test results",
+      "display_order": 120,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... language test results"
+    },
+    {
+      "requirement_code": "education_credential_proof",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Proof of Canadian education or an educational credential assessment (ECA) report: Federal Skilled Worker applicants, or to claim points for education outside Canada",
+      "description": "Needed if you are applying through the Federal Skilled Worker Program, or if you want points for education you got outside Canada. Either proof of your Canadian education, or an educational credential assessment report for immigration purposes.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... proof of canadian education or an educational credential assessment report for immigration purposes if: you’re applying through the federal skilled workers program, or you want to get points for the education you got outside canada",
+      "display_order": 130,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... proof of Canadian education or an educational credential assessment report for immigration purposes if: you’re applying through the Federal Skilled Workers Program, or you want to get points for the education you got outside Canada"
+    },
+    {
+      "requirement_code": "written_job_offer",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Written job offer from an employer in Canada (if you have one)",
+      "description": "Only if you have a job offer from an employer in Canada.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... written job offer from an employer in canada (if you have one)",
+      "display_order": 140,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... written job offer from an employer in Canada (if you have one)"
+    },
+    {
+      "requirement_code": "proof_of_work_experience",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of work experience (e.g. a reference or experience letter from an employer)",
+      "description": "For example a reference or experience letter from an employer.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... proof of work experience (such as a reference or experience letter from an employer)",
+      "display_order": 150,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... proof of work experience (such as a reference or experience letter from an employer)"
+    },
+    {
+      "requirement_code": "trade_certificate_of_qualification",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Certificate of qualification in a trade, issued by a Canadian province or territory (if you have one)",
+      "description": "Only if you hold a certificate of qualification in a trade occupation issued by a Canadian province or territory.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... certificate of qualification in a trade occupation issued by a canadian province or territory (if you have one)",
+      "display_order": 160,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... certificate of qualification in a trade occupation issued by a Canadian province or territory (if you have one)"
+    },
+    {
+      "requirement_code": "proof_of_funds",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of funds",
+      "description": "Proof of the money you have available. The amounts are published on IRCC's proof-of-funds page, which is not quoted here.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... proof of funds",
+      "display_order": 170,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... proof of funds"
+    },
+    {
+      "requirement_code": "police_certificates",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Police certificates",
+      "description": "Which countries you need police certificates from is explained on IRCC's police-certificates page, which is not quoted here.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... police certificates",
+      "display_order": 180,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... police certificates"
+    },
+    {
+      "requirement_code": "provincial_nomination",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Provincial nomination (if you applied for the Provincial Nominee Program)",
+      "description": "Only if you applied for the Provincial Nominee Program.",
+      "source_role": "documents",
+      "source_excerpt": "you may need information from some or all of these documents when you create a profile: ... provincial nomination (if you applied for the provincial nominee program)",
+      "display_order": 190,
+      "source_excerpt_display": "You may need information from some or all of these documents when you create a profile: ... provincial nomination (if you applied for the Provincial Nominee Program)"
     },
     {
       "requirement_code": "eligibility_questionnaire",
@@ -251,10 +355,10 @@
     },
     {
       "requirement_code": "provincial_nominee_program",
-      "kind": "recommended",
+      "kind": "condition",
       "officially_required": false,
       "label": "Consider applying through the Provincial Nominee Program",
-      "description": "IRCC presents this as an option, not a requirement: a candidate eligible for one of the three Express Entry programs may also apply through Express Entry for the Provincial Nominee Program, and a nomination earns extra points. PNP criteria are set by each province and were not read.",
+      "description": "IRCC presents this as an option, not a requirement: a candidate eligible for one of the three Express Entry programs may also apply through Express Entry for the Provincial Nominee Program, and a nomination earns extra points. PNP criteria are set by each province and were not read. A route to consider, not a document: the nomination itself is the upload slot provincial_nomination.",
       "source_role": "eligibility",
       "source_excerpt": "if you’re eligible for one of these programs, you can also apply through express entry for the provincial nominee program. if you’re nominated, you’ll get extra points so you can be invited to apply quickly.",
       "display_order": 500,

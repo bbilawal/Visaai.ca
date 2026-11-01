@@ -481,9 +481,12 @@ const MONTHS: Record<string, number> = {
  * government form accepts, and the prefill contract is YYYY-MM-DD.
  *
  * Only UNAMBIGUOUS forms are converted:
- *   - already ISO                        2026-07-31
+ *   - already ISO                        2026-07-31 (also 2026-07-31T00:00:00+05:00)
  *   - a spelled-out month, either order  31 July 2026 / July 31, 2026
  *   - year-first numeric                 2026/07/31
+ *
+ * A year outside 1900..(this year + 15) is another calendar (Persian
+ * 1400/03/25, Thai Buddhist 2504) and gives undefined, never a date.
  *
  * A bare numeric date like 03/04/2026 is deliberately NOT converted: it is
  * 3 April or 4 March depending on the country that printed it, and this is an
@@ -495,8 +498,14 @@ export function normalizeDate(value: string | undefined): string | undefined {
   const v = value.trim();
   if (!v) return undefined;
 
-  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
-  if (iso) return v;
+  // ISO, also as a timestamp with an offset ("1990-05-14T00:00:00+05:00"):
+  // the date part is the date as printed — converting the instant to UTC
+  // would move a midnight birth date back a day.
+  const iso =
+    /^(\d{4})-(\d{2})-(\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/.exec(
+      v,
+    );
+  if (iso) return pad(+iso[1], +iso[2], +iso[3]);
 
   const yearFirst = /^(\d{4})[/.](\d{1,2})[/.](\d{1,2})$/.exec(v);
   if (yearFirst) {
@@ -520,14 +529,26 @@ export function normalizeDate(value: string | undefined): string | undefined {
   // Civil-record prints: 14-October-1989, SEPTEMBER 02,1995, and a numeric
   // date whose order is unambiguous (16-9-1988 — 16 cannot be a month).
   const civil = parseCivilDate(v);
-  if (civil) return civil;
+  if (civil)
+    return pad(+civil.slice(0, 4), +civil.slice(5, 7), +civil.slice(8));
 
   // Ambiguous or polluted ("to 31 July 2026"): keep the raw text rather than
   // invent a date. It is shown to the applicant for review before filing.
   return v;
 }
 
+/**
+ * Years a birth, issue or expiry date can have: 1900 to fifteen years ahead
+ * (a passport or ID card issued today expires within ten). Anything else is
+ * another calendar read as Gregorian — a Persian (Solar Hijri) 1400/03/25, a
+ * Thai Buddhist 2504-… — and is never a date to file.
+ */
+function plausibleYear(y: number): boolean {
+  return y >= 1900 && y <= new Date().getUTCFullYear() + 15;
+}
+
 function pad(y: number, m: number, d: number): string | undefined {
+  if (!plausibleYear(y)) return undefined;
   if (m < 1 || m > 12 || d < 1 || d > 31) return undefined;
   return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
 }
@@ -584,6 +605,17 @@ export function mapIdDocumentFields(
   const last = str(raw.LastName);
   const full = [first, last].filter(Boolean).join(' ');
   if (full) fields.full_name = full;
+  // The halves as the document prints them. Joined into full_name only, they
+  // were split again downstream on the LAST word: MARIA JOSE / GARCIA LOPEZ
+  // came back as family name "LOPEZ" (audit 2026-10-18). A single name is
+  // the family name (IRCC: "if you have only one name, enter it as your
+  // last name"; the given name stays blank), whichever half Azure put it in.
+  if (first && last) {
+    fields.given_name = first;
+    fields.family_name = last;
+  } else if (first || last) {
+    fields.family_name = (first ?? last)!;
+  }
 
   const dob = str(raw.DateOfBirth);
   if (dob) fields.date_of_birth = dob;
@@ -617,6 +649,11 @@ export function mapIdDocumentFields(
   // explicit one and fall back rather than merging them.
   const nat = str(raw.Nationality) ?? str(raw.CountryRegion);
   if (nat) fields.nationality = nat;
+
+  // Printed on passports (and some ID cards); IRCC asks for the city and
+  // country of birth.
+  const pob = str(raw.PlaceOfBirth);
+  if (pob) fields.place_of_birth = pob;
 
   return fields;
 }

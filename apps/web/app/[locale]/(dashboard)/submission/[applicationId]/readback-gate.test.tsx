@@ -64,6 +64,20 @@ describe('ReadbackGate when the review cannot be loaded', () => {
     expect(screen.queryByText(/Could not reach the sign-in service/)).not.toBeInTheDocument()
     expect(getPreflightMappings).toHaveBeenCalledWith('t', 'app-1')
   })
+
+  // Dry run 2026-10-18: during a deploy restart the gate printed
+  // "GET /preflight/... -> 502".
+  it('says VisaAI is restarting when the API answers 502', async () => {
+    const { ApiError } = await import('@/lib/api/client')
+    getSession.mockResolvedValueOnce({ data: { session: { access_token: 't' } } })
+    getPreflightMappings.mockRejectedValueOnce(new ApiError(502, 'GET /preflight/app-1/mappings -> 502'))
+    getActivePreflight.mockResolvedValueOnce(null)
+    render(<ReadbackGate applicationId="app-1" onChange={() => {}} />)
+
+    expect(await screen.findByText(/VisaAI is restarting/)).toBeInTheDocument()
+    expect(screen.queryByText(/-> 502/)).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeEnabled()
+  })
 })
 
 /**
@@ -104,6 +118,14 @@ describe('ReadbackGate when the lock was broken by a later change', () => {
     expect(await screen.findByText('Confirm what will be entered')).toBeInTheDocument()
     expect(screen.getByRole('checkbox')).toBeInTheDocument()
   })
+
+  // Dry run 2026-10-18: the eTA is one page — nothing fills "as you open" it.
+  it('on the eTA tells the applicant to press Next, then "Fill newly shown questions"', async () => {
+    validatePreflightLock.mockResolvedValue({ valid: true, reasons: [] })
+    render(<ReadbackGate applicationId="app-1" onChange={() => {}} isEta />)
+    expect(await screen.findByText(/Fill newly shown questions/)).toBeInTheDocument()
+    expect(screen.queryByText(/Save and continue/)).not.toBeInTheDocument()
+  })
 })
 
 /**
@@ -128,6 +150,15 @@ describe('ReadbackGate explains exactly what is blocking auto-fill', () => {
     const onChange = vi.fn()
     render(<ReadbackGate applicationId="app-1" onChange={onChange} />)
     expect(await screen.findByText(/Approve application/)).toBeInTheDocument()
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
+    expect(onChange).not.toHaveBeenCalledWith(expect.objectContaining({ confirmed: true }))
+  })
+
+  it('approval older than the current lock: asks the consultant to lock and approve again (live 2026-10-19)', async () => {
+    getConsultantApproval.mockResolvedValue({ ...APPROVED, applicationApproved: false, applicationApprovalStale: true })
+    const onChange = vi.fn()
+    render(<ReadbackGate applicationId="app-1" onChange={onChange} />)
+    expect(await screen.findByText(/lock the new review and approve it again/)).toBeInTheDocument()
     expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
     expect(onChange).not.toHaveBeenCalledWith(expect.objectContaining({ confirmed: true }))
   })

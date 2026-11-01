@@ -7,7 +7,9 @@ function baseInput(over: Partial<ProgressInput> = {}): ProgressInput {
     hasProfile: false,
     intakeDone: false,
     requiredChecklist: [],
-    requiredGenTypes: [],
+    // The default route's letters. [] now means "this route needs none"
+    // (Canada's eTA) and completes the stage — see route-letters.ts.
+    requiredGenTypes: ['loe', 'cover_letter'],
     approvedGenTypes: [],
     hasVriScore: false,
     hasPrefill: false,

@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -29,9 +30,15 @@ import {
   buildUploadInstructions,
 } from './fill-instructions';
 import type { FillInstruction } from './automation.types';
-import { strategyRegistry } from '../../strategies';
-import { resolvePortalFill } from '../../strategies/portal-integration/portal-fill.registry';
+import { resolvePortalFillFor } from '../../strategies/portal-integration/portal-fill.registry';
 import './portal-fills/canada-ircc'; // side-effect: registers the IRCC fill mapping
+import './portal-fills/canada-ircc-eta'; // side-effect: registers the IRCC eTA fill mapping
+import './portal-fills/canada-ircc-study-eapp'; // side-effect: the study permit questionnaire ('ircc-study')
+import './portal-fills/canada-ircc-work-eapp'; // side-effect: the work permit questionnaire ('ircc-work')
+import './portal-fills/canada-ircc-pr-family'; // side-effect: the spousal sponsorship PR portal ('ircc-pr-family')
+import './portal-fills/canada-ircc-super-visa'; // side-effect: the super visa variant of 'ircc'
+import './portal-fills/canada-ircc-business-visitor'; // side-effect: the business visitor variant of 'ircc'
+import { embeddedVisaaiId, portalForRoute } from '../../strategies';
 
 const DOWNLOAD_URL_TTL_SECONDS = 10 * 60;
 
@@ -161,6 +168,24 @@ export class AutomationService {
   }
 
   /**
+   * The portal this application's route files on ('ircc' for tr-rt, 'ircc-eta',
+   * 'ircc-study', …), sent to the extension in automation:ready so its panel
+   * can tell a page of another IRCC application flow from this one's (live
+   * 2026-10-30). Null when unknown — a read error is never a guess.
+   */
+  async getApplicationPortalId(applicationId: string): Promise<string | null> {
+    const { data, error } = await this.supabase.admin
+      .from('applications')
+      .select('destination_country, visa_types(visaai_id)')
+      .eq('id', applicationId)
+      .maybeSingle();
+    if (error || !data) return null;
+    const country = (data as { destination_country?: string | null })
+      .destination_country;
+    return portalForRoute(country, embeddedVisaaiId(data))?.portalId ?? null;
+  }
+
+  /**
    * Whether a reconnect may resume this session: it must still exist and not
    * have finished. Fails closed on a read error.
    */
@@ -197,7 +222,7 @@ export class AutomationService {
     const [{ data: app }, { data: profile }] = await Promise.all([
       this.supabase.admin
         .from('applications')
-        .select('destination_country')
+        .select('destination_country, visa_types(visaai_id)')
         .eq('id', applicationId)
         .single(),
       this.supabase.admin
@@ -218,10 +243,15 @@ export class AutomationService {
     // pre-filled steps (the applicant fills those fields manually).
     const countryCode = (app as { destination_country?: string } | null)
       ?.destination_country;
-    const portalId = countryCode
-      ? strategyRegistry.getCountry(countryCode)?.portal().portalId
+    // The route narrows the portal: a Canada eTA fills the eTA form, every
+    // other Canada route IRCC tr-rt.
+    // The route then picks its own mapping on that portal, when it has one
+    // (IRCC tr-rt: the super visa answers /purpose differently).
+    const visaaiId = embeddedVisaaiId(app);
+    const portalId = portalForRoute(countryCode, visaaiId)?.portalId;
+    const mapping = portalId
+      ? resolvePortalFillFor(portalId, visaaiId)
       : undefined;
-    const mapping = portalId ? resolvePortalFill(portalId) : undefined;
     if (!mapping) return [];
 
     return buildInstructionsFromMapping(mapping, safeProfile);
@@ -336,11 +366,19 @@ export class AutomationService {
   }
 
   async getSession(db: SupabaseClient, sessionId: string, userId: string) {
-    const { data } = await db
+    const { data, error } = await db
       .from('submission_sessions')
       .select('*, applications!inner(user_id)')
       .eq('id', sessionId)
-      .single();
+      .maybeSingle();
+
+    // A failed read is not "not yours": a swallowed PostgREST error used to
+    // answer 403 "Access denied", and the Submit page took the applicant for
+    // someone else. No row (or someone else's) stays 403.
+    if (error)
+      throw new ServiceUnavailableException(
+        'Could not read the submission session. Try again.',
+      );
 
     if (
       !data ||

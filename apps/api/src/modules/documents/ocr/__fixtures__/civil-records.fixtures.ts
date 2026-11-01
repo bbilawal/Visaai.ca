@@ -253,3 +253,37 @@ Identity Number Date of Birth
 Date of Issue Date of Expiry
 24.04.2017 24.04.2027
 Holder's Signature`;
+
+/**
+ * The same nikah nama as Azure prebuilt-read actually returns it (prod
+ * 2026-10-16, trimmed): Form No. 4's printed questions and their handwritten
+ * answers come out in different places, so no date sits beside its label. The
+ * date is repeated in several spellings (16.9.1988, 16-9-1988, 16/9/88,
+ * "16 - 9 - 1988"); a registration-stamp date (07-1-91) appears once. The
+ * model's "1999" is nowhere in the text.
+ */
+export const NIKAH_NAMA_AZURE_READ = `شادى سا كوا الحل كم نام معد ولدّيت فى مكونت)
+16.9.1988
+٢٣- شادى مراتجام است كى تاريخ- ٣ :- عبدك رقم/ مبلغ
+24. The date when the marriage was registered
+25 The fees of registration paid ..
+The signature of the bridegroom along with the signature of his attorney ......... Sd ....
+Form No. 4
+(See Rule No. 8, 10)
+Nikah Nama
+. Ward No .... ..................... Town/Union ..................... The Police Station .............................. the District ............. Rawalpindi ..... ...... Where the Marriage was held.
+2. The name of the bridegroom? Muzaffar Ahmad S/O Mian Abdul Rashid his father along with his residence .. H/AQ ;. 138 ... Millet. . Coloney .... Rawalpindi ..............
+3 The bridegroom age ........... ... .. 25 .. Y.car ......................................
+The name of the bride & her fathers
+Whether bride is a vergin, vidow or divorced .........................
+6 The bride age ... .... ..... 20.Years .. Baby Mohammad Bansir S/O Mohammad Din
+12. T
+The date when the marriage was celebrated
+13. The amount of Mahar,
+14 The amount of Mahar Moajja! and the amount of Mahar Mowajjal
+07-1-91
+16/9/88
+Hafiz Mohammad Hasrat Razvi S/O Rehmat Khan, mandi Ravalo in Khatib. Janah . Masjid. Niemand, Gawalmandi, Rawalpindi .16-9-1988 .....
+The Registrar of the Nikah ......... Sd ...................
+Sumera Bano D/O Mohammad Ali H/NO:2/1115, Mohallah Taza Gul, Dhoke Ratta ......... Rawalpindi
+1.Prof .... Abdul. Latif. Khaki .. S/Q. Mohammad. Aziz, IV/391, Muslim Town, Rawalpinds 2 / Haji Mohammad Hayat-Yaqub. S/O-Mohammad Ya 16 - 9 - 1988 .- K/535, Millat Colon RIP .Millat Col`;

@@ -208,3 +208,75 @@ describe('PortalFillOrchestrator (Phase 7G)', () => {
     );
   });
 });
+
+/**
+ * A single-page portal reveals questions as earlier ones are answered (IRCC
+ * eTA). After the planned writes the caller is asked for targets that have
+ * appeared since; they run in the same single-cursor loop, under the same
+ * first-mismatch halt, and the run completes once nothing new appears.
+ */
+describe('PortalFillOrchestrator — targets revealed during the run', () => {
+  it('runs what each round reveals, then completes once', async () => {
+    const exec = {
+      executeField: jest.fn((i: SignedWriteIntent) =>
+        Promise.resolve(ok(i.fieldKey)),
+      ),
+    };
+    const { svc, auditRepo } = make(exec);
+    const rounds = [[intent('country')], [intent('nationality')], []];
+    const more = jest.fn(() => Promise.resolve(rounds.shift() ?? []));
+    const r = await svc.run(APP, EXEC, [intent('doc_type')], ACTOR, more);
+    expect(r).toMatchObject({
+      state: 'COMPLETED',
+      verified: ['doc_type', 'country', 'nationality'],
+    });
+    expect(more).toHaveBeenCalledTimes(3);
+    expect(
+      types(auditRepo).filter((t) => t === 'EXECUTION_COMPLETED'),
+    ).toHaveLength(1);
+  });
+
+  it('a revealed target that fails halts the run like any other', async () => {
+    const exec = {
+      executeField: jest
+        .fn()
+        .mockResolvedValueOnce(ok('doc_type'))
+        .mockResolvedValueOnce(fail('country', 'value_mismatch')),
+    };
+    const { svc } = make(exec);
+    const more = jest
+      .fn()
+      .mockResolvedValueOnce([intent('country')])
+      .mockResolvedValue([intent('never')]);
+    const r = await svc.run(APP, EXEC, [intent('doc_type')], ACTOR, more);
+    expect(r).toMatchObject({ state: 'FAILED', failedField: 'country' });
+    expect(more).toHaveBeenCalledTimes(1);
+  });
+
+  it('a failing lookup ends the run with what was verified (writes nothing more)', async () => {
+    const exec = {
+      executeField: jest.fn((i: SignedWriteIntent) =>
+        Promise.resolve(ok(i.fieldKey)),
+      ),
+    };
+    const { svc } = make(exec);
+    const more = jest.fn().mockRejectedValue(new Error('probe failed'));
+    const r = await svc.run(APP, EXEC, [intent('doc_type')], ACTOR, more);
+    expect(r).toMatchObject({ state: 'COMPLETED', verified: ['doc_type'] });
+    expect(exec.executeField).toHaveBeenCalledTimes(1);
+  });
+
+  it('stops asking after a bounded number of rounds', async () => {
+    const exec = {
+      executeField: jest.fn((i: SignedWriteIntent) =>
+        Promise.resolve(ok(i.fieldKey)),
+      ),
+    };
+    const { svc } = make(exec);
+    let n = 0;
+    const more = jest.fn(() => Promise.resolve([intent(`f${++n}`)]));
+    const r = await svc.run(APP, EXEC, [intent('doc_type')], ACTOR, more);
+    expect(r.state).toBe('COMPLETED');
+    expect(more.mock.calls.length).toBeLessThanOrEqual(50);
+  });
+});

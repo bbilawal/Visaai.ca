@@ -11,6 +11,7 @@ import {
 import { makeProcessAnswerNode } from './nodes/process-answer';
 import { makeUpdateProfileNode } from './nodes/update-profile';
 import { checkComplete, intakeRouter } from './nodes/check-complete';
+import { makeConfirmUpdateNode } from './nodes/confirm-update';
 
 /**
  * Wraps a node so its wall-clock cost lands in the logs.
@@ -97,6 +98,13 @@ export function buildIntakeGraph(
       timed('update_profile', makeUpdateProfileNode(supabase)),
     )
     .addNode('check_complete', timed('check_complete', checkComplete))
+    .addNode(
+      'confirm_update',
+      timed(
+        'confirm_update',
+        makeConfirmUpdateNode(llm, language, questionHooks),
+      ),
+    )
     .addConditionalEdges('__start__', entryRouter, {
       load_framework: 'load_framework',
       process_answer: 'process_answer',
@@ -125,8 +133,9 @@ export function buildIntakeGraph(
     .addEdge('update_profile', 'check_complete')
     .addConditionalEdges('check_complete', intakeRouter, {
       ask_question: 'ask_question',
-      __end__: END,
-    });
+      confirm_update: 'confirm_update',
+    })
+    .addEdge('confirm_update', END);
 
   return graph.compile();
 }

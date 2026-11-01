@@ -1,7 +1,13 @@
+import { personFieldsOf } from './store-prefill';
 import { SupabaseClient } from '@supabase/supabase-js';
 import type { PrefillState, PrefillContext } from '../prefill.state';
 import { classifyDocumentSubject, holderNameOf } from './subject-attribution';
 import { sanitizeProfile, type OtherPartyDocument } from './applicant-guards';
+import {
+  holdOf,
+  loadDocumentHolds,
+  withoutHeldDocumentValues,
+} from './held-identity';
 
 /**
  * Keys that live alongside `extracted_fields` inside `details_json` but describe
@@ -20,6 +26,7 @@ const NON_APPLICANT_KEYS = new Set([
 ]);
 
 type VerificationRow = {
+  document_id?: string | null;
   verification_type?: string | null;
   details_json?: unknown;
   documents?: { document_type?: string | null } | null;
@@ -55,24 +62,36 @@ export function makeLoadContextNode(supabase: SupabaseClient) {
       .eq('application_id', state.applicationId)
       .single();
 
-    const rawProfile = profile?.profile_json;
-    // `_`-prefixed keys are document-pipeline bookkeeping (provenance), not
-    // facts for a form.
-    const safeProfile =
-      rawProfile && typeof rawProfile === 'object' && !Array.isArray(rawProfile)
-        ? Object.fromEntries(
-            Object.entries(rawProfile as Record<string, unknown>).filter(
-              ([k]) => !k.startsWith('_'),
-            ),
-          )
-        : {};
-
     const { data: verifications } = await supabase
       .from('document_verifications')
       .select(
-        'verification_type, details_json, documents!inner(application_id, document_type)',
+        'document_id, verification_type, details_json, documents!inner(application_id, document_type)',
       )
       .eq('documents.application_id', state.applicationId);
+    const holds = await loadDocumentHolds(supabase, state.applicationId);
+
+    const rawProfile = profile?.profile_json;
+    const collected = collectDocumentFields(
+      (verifications ?? []) as VerificationRow[],
+      null,
+      holds.released,
+      holds.revoked,
+    );
+    // What a held document wrote to the profile (an applicant-confirmed
+    // passport the consultant has since rejected) does not reach the form
+    // either. `_`-prefixed keys are document-pipeline bookkeeping
+    // (provenance), not facts for a form.
+    const safeProfile =
+      rawProfile && typeof rawProfile === 'object' && !Array.isArray(rawProfile)
+        ? Object.fromEntries(
+            Object.entries(
+              withoutHeldDocumentValues(
+                rawProfile as Record<string, unknown>,
+                new Set(collected.heldDocumentIds),
+              ),
+            ).filter(([k]) => !k.startsWith('_')),
+          )
+        : {};
 
     const userId = (app as { user_id?: string | null }).user_id ?? null;
     const accountProfile = await loadAccountProfile(supabase, userId);
@@ -82,9 +101,12 @@ export function makeLoadContextNode(supabase: SupabaseClient) {
       documentFieldsByType,
       otherPartyDocuments,
       applicantName,
+      insurancePolicies,
     } = collectDocumentFields(
       (verifications ?? []) as VerificationRow[],
       profileApplicantName(safeProfile),
+      holds.released,
+      holds.revoked,
     );
 
     // The intake profile can itself have absorbed a sponsor's employment facts
@@ -101,14 +123,27 @@ export function makeLoadContextNode(supabase: SupabaseClient) {
       framework,
     );
 
+    // What people already entered on the stored form (see PrefillContext).
+    const { data: stored } = await supabase
+      .from('generated_documents')
+      .select('content_md')
+      .eq('application_id', state.applicationId)
+      .eq('doc_type', 'prefilled_form_json')
+      .maybeSingle();
+    const personFields = personFieldsOf(
+      (stored as { content_md?: string } | null)?.content_md,
+    );
+
     const context: PrefillContext = {
       ...header,
+      personFields,
       profile: cleanProfile,
       documentFields,
       documentFieldsByType,
       otherPartyDocuments,
       applicantName,
       accountProfile,
+      insurancePolicies,
     };
 
     return { context };
@@ -284,14 +319,24 @@ function isFilled(v: unknown): boolean {
 export function collectDocumentFields(
   rows: VerificationRow[],
   fallbackApplicantName?: string | null,
+  approvedDocumentIds: ReadonlySet<string> = new Set(),
+  revokedDocumentIds: ReadonlySet<string> = new Set(),
 ): {
   documentFields: Record<string, unknown>;
   documentFieldsByType: Record<string, Record<string, unknown>>;
   otherPartyDocuments: OtherPartyDocument[];
   applicantName: string | null;
+  /** Each insurance document's fields, kept apart (the merge keeps one). */
+  insurancePolicies: Array<Record<string, unknown>>;
+  /** Documents withheld by holdOf (held, revoked or clearly someone else's). */
+  heldDocumentIds: string[];
 } {
   const extracted: Array<{ docType: string; fields: Record<string, unknown> }> =
     [];
+  // Documents sync_profile held or marked as someone else's: never the
+  // applicant's, and never the name the others are judged against.
+  const withheld: OtherPartyDocument[] = [];
+  const heldDocumentIds: string[] = [];
 
   for (const row of rows) {
     // Only the identity row carries document data. Duplicate/expiry rows
@@ -313,10 +358,26 @@ export function collectDocumentFields(
       if (NON_APPLICANT_KEYS.has(key)) continue;
       fields[key] = value;
     }
-    extracted.push({
-      docType: row.documents?.document_type?.trim() || 'document',
-      fields,
-    });
+    const docType = row.documents?.document_type?.trim() || 'document';
+    const hold = holdOf(
+      details,
+      row.document_id,
+      approvedDocumentIds,
+      revokedDocumentIds,
+    );
+    if (hold) {
+      if (row.document_id) heldDocumentIds.push(row.document_id);
+      if (Object.keys(fields).length > 0) {
+        withheld.push({
+          documentType: docType,
+          subject: hold,
+          holderName: holderNameOf(fields),
+          fields,
+        });
+      }
+      continue;
+    }
+    extracted.push({ docType, fields });
   }
 
   const applicantName =
@@ -328,7 +389,7 @@ export function collectDocumentFields(
 
   const documentFields: Record<string, unknown> = {};
   const documentFieldsByType: Record<string, Record<string, unknown>> = {};
-  const otherPartyDocuments: OtherPartyDocument[] = [];
+  const otherPartyDocuments: OtherPartyDocument[] = [...withheld];
 
   for (const { docType, fields } of extracted) {
     const subject = classifyDocumentSubject(docType, fields, applicantName);
@@ -361,10 +422,18 @@ export function collectDocumentFields(
     }
   }
 
+  // A policy covers the applicant whoever bought it, and an applicant may
+  // upload several (prod 2026-10-16: an expired one and the covering one).
+  const insurancePolicies = extracted
+    .filter((d) => /insurance/.test(d.docType))
+    .map((d) => d.fields);
+
   return {
     documentFields,
     documentFieldsByType,
     otherPartyDocuments,
     applicantName,
+    insurancePolicies,
+    heldDocumentIds,
   };
 }

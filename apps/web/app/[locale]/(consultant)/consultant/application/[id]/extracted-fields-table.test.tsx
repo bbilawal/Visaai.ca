@@ -15,6 +15,13 @@ const markFieldNotApplicable = vi.fn()
 const refresh = vi.fn()
 
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh }) }))
+// The real English copy, so the assertions read like the page.
+vi.mock('next-intl', async () => {
+  const en = (await import('@/messages/en.json')).default as { consultant: Record<string, string> }
+  // One translator for every render, as next-intl gives: it is an effect dependency.
+  const t = (key: string) => en.consultant[key] ?? key
+  return { useTranslations: () => t }
+})
 vi.mock('@/lib/supabase/client', () => ({
   getSession: () => Promise.resolve({ data: { session: { access_token: 't' } } }),
 }))
@@ -60,6 +67,17 @@ describe('ExtractedFieldsTable', () => {
     render(<ExtractedFieldsTable applicationId="app-1" fields={FIELDS} />)
     fireEvent.click(screen.getByRole('button', { name: 'Approve currency' }))
     await waitFor(() => expect(approveField).toHaveBeenCalledWith('t', 'app-1', 'currency', 'h-v'))
+  })
+
+  // Owner, 2026-10-20: a viewer who is not the active assignee (e.g. an admin)
+  // got 403 on every field decision. Correct goes through the review edit
+  // endpoint and stays.
+  it('disables field decisions for a viewer who cannot decide', () => {
+    render(<ExtractedFieldsTable applicationId="app-1" fields={FIELDS} canDecide={false} />)
+    expect(screen.getByRole('button', { name: 'Approve currency' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Reject currency' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Not applicable currency' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Correct currency' })).toBeEnabled()
   })
 
   it('offers re-approval for a stale approval', () => {

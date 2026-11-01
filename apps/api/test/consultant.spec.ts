@@ -25,6 +25,13 @@ function make() {
       creditExpertReview: () => Promise.resolve({ recorded: false }),
     } as unknown as PlanReviewPayoutService,
   );
+  // The pre-submission lock gate is PreflightModule's (approval-lock.gate.spec);
+  // approval fails closed without one, so register a pass-through here. Same
+  // for the lock an approval must postdate: no portal fill, nothing to cover.
+  svc.registerApplicationApprovalGate(() => Promise.resolve());
+  svc.registerApplicationApprovalLockSource(() =>
+    Promise.resolve({ requiresLock: false, lockedAt: null }),
+  );
   return { svc, repo, prov, auditRepo };
 }
 
@@ -279,5 +286,23 @@ describe('ConsultantApprovalService — not applicable (G)', () => {
     // A later approval supersedes the not-applicable call (latest wins).
     await svc.approveField(APP, C1, 'given_name', vh);
     expect([...(await svc.notApplicableFieldKeys(APP))]).toEqual(['currency']);
+  });
+});
+
+describe('an application decision stops the SLA clock (dry run 2026-10-16)', () => {
+  it('approving stamps completed_at, so the expiry sweep cannot release it', async () => {
+    const { svc, repo } = make();
+    await svc.assign(APP, C1);
+    await svc.approveApplication(APP, C1);
+    const mine = await repo.getActiveAssignmentFor(APP, C1);
+    expect(mine?.completed_at).toEqual(expect.any(String));
+  });
+
+  it('rejecting stamps completed_at too', async () => {
+    const { svc, repo } = make();
+    await svc.assign(APP, C1);
+    await svc.rejectApplication(APP, C1, 'missing documents');
+    const mine = await repo.getActiveAssignmentFor(APP, C1);
+    expect(mine?.completed_at).toEqual(expect.any(String));
   });
 });

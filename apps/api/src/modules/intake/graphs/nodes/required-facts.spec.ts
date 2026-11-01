@@ -1,3 +1,4 @@
+import { IRCC_PORTAL_ANSWERS } from '../../../../../test/fixtures/ircc-portal-answers';
 import { HumanMessage } from '@langchain/core/messages';
 import type { ChatOpenAI } from '@langchain/openai';
 import { makeAskQuestionNode } from './ask-question';
@@ -19,6 +20,7 @@ const TRV: IntakeState = {
   isComplete: false,
   currentQuestion: null,
   checklistBuiltAt: null,
+  profileChanges: [],
 };
 
 describe('the interviewer is told what the official form still needs (#50)', () => {
@@ -49,6 +51,7 @@ describe('the interviewer is told what the official form still needs (#50)', () 
           has_valid_us_visa: false,
           previously_visited_canada: false,
           uses_representative: false,
+          ...IRCC_PORTAL_ANSWERS,
         },
       }),
     ).toBe('');

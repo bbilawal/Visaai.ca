@@ -97,4 +97,45 @@ export class FakeProvenanceRepository implements IProvenanceRepository {
       (r) => r.source_document_id === documentId && r.superseded_by === null,
     );
   }
+  /** Mirrors field_provenance_retire (no approval check): splice, by id order. */
+  async retireDocumentFieldsExcept(
+    app: string,
+    documentId: string,
+    keep: string[],
+  ): Promise<{ field_key: string; retired: number; skipped_approved: boolean }[]> {
+    const live = (r: FieldProvenance) => r.superseded_by !== r.id;
+    const keys = [
+      ...new Set(
+        this.rows
+          .filter(
+            (r) =>
+              r.application_id === app &&
+              r.source_document_id === documentId &&
+              live(r) &&
+              !keep.includes(r.field_key),
+          )
+          .map((r) => r.field_key),
+      ),
+    ].sort();
+    const out: { field_key: string; retired: number; skipped_approved: boolean }[] = [];
+    for (const key of keys) {
+      const doomed = this.rows
+        .filter(
+          (r) =>
+            r.application_id === app &&
+            r.field_key === key &&
+            r.source_document_id === documentId &&
+            live(r),
+        )
+        .sort((a, b) => (a.id < b.id ? -1 : 1));
+      for (const r of doomed) {
+        const next = r.superseded_by;
+        r.superseded_by = r.id;
+        for (const p of this.rows)
+          if (p.superseded_by === r.id && p.id !== r.id) p.superseded_by = next;
+      }
+      out.push({ field_key: key, retired: doomed.length, skipped_approved: false });
+    }
+    return out;
+  }
 }

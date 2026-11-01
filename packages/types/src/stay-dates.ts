@@ -104,3 +104,47 @@ export function formatLongDate(iso: string): string {
   const d = new Date(t)
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
 }
+
+/** Up to this many days a stay reads naturally as a day count; beyond it, in months. */
+const DAY_COUNT_LIMIT = 183
+
+function addMonthsUtc(t: number, months: number): number {
+  const d = new Date(t)
+  const y = d.getUTCFullYear()
+  const m = d.getUTCMonth() + months
+  const day = d.getUTCDate()
+  // Clamp to the last day of the target month (Jan 31 + 1 month = Feb 28/29).
+  const last = new Date(Date.UTC(y, m + 1, 0)).getUTCDate()
+  return Date.UTC(y, m, Math.min(day, last))
+}
+
+/**
+ * The length of a stay as a letter or form should say it.
+ *
+ * A short visit is a day count ("61 days", inclusive — the IRCC reading). A
+ * long one is not: a super visa parent staying from 1 March 2027 to
+ * 28 February 2028 is staying "12 months", and a letter that says "a visit
+ * of 365 days" reads like a tourist trip that forgot to end. Within three days
+ * of a whole number of months the months are stated plainly; otherwise they
+ * are "about N months".
+ *
+ * Null unless both dates are readable and in order.
+ */
+export function stayLengthPhrase(entry: unknown, departure: unknown): string | null {
+  const days = stayDaysInclusive(entry, departure)
+  if (days === null) return null
+  if (days <= DAY_COUNT_LIMIT) return `${days} day${days === 1 ? '' : 's'}`
+  const start = isoDayMs(entry)!
+  // The stay ends at the close of the departure day.
+  const end = isoDayMs(departure)! + DAY_MS
+  let whole = 0
+  while (addMonthsUtc(start, whole + 1) <= end) whole++
+  const floor = addMonthsUtc(start, whole)
+  const ceil = addMonthsUtc(start, whole + 1)
+  const toFloor = Math.round((end - floor) / DAY_MS)
+  const toCeil = Math.round((ceil - end) / DAY_MS)
+  const months = toCeil < toFloor ? whole + 1 : whole
+  const off = Math.min(toFloor, toCeil)
+  const unit = months === 1 ? 'month' : 'months'
+  return off <= 3 ? `${months} ${unit}` : `about ${months} ${unit}`
+}

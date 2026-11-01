@@ -10,7 +10,7 @@ export function makeLoadVriDataNode(supabase: SupabaseClient) {
     const { data: application } = await supabase
       .from('applications')
       .select(
-        'destination_country, plan_tier, framework_id, country_frameworks(visa_type)',
+        'destination_country, plan_tier, framework_id, country_frameworks(visa_type), visa_types(visaai_id, official_name)',
       )
       .eq('id', state.applicationId)
       .single();
@@ -21,6 +21,10 @@ export function makeLoadVriDataNode(supabase: SupabaseClient) {
           country_frameworks?: { visa_type?: string } | null;
         } | null
       )?.country_frameworks ?? null;
+    const vtRaw = (application as { visa_types?: unknown } | null)?.visa_types;
+    const registry = (Array.isArray(vtRaw) ? vtRaw[0] : vtRaw) as {
+      official_name?: string | null;
+    } | null;
     const planTier = ((application as { plan_tier?: string } | null)
       ?.plan_tier ?? 'none') as PlanTier;
 
@@ -74,9 +78,19 @@ export function makeLoadVriDataNode(supabase: SupabaseClient) {
       destinationCountry:
         (application as { destination_country?: string | null } | null)
           ?.destination_country ?? null,
-      currentVisaType: framework?.visa_type ?? null,
+      // A registry route has no framework row; name its registry visa type.
+      currentVisaType: framework?.visa_type ?? registry?.official_name ?? null,
+      visaaiId: visaaiIdOf(application),
     };
 
     return { data, planTier };
   };
+}
+
+function visaaiIdOf(application: unknown): string | null {
+  const raw = (application as { visa_types?: unknown } | null)?.visa_types;
+  const vt = (Array.isArray(raw) ? raw[0] : raw) as {
+    visaai_id?: string | null;
+  } | null;
+  return vt?.visaai_id ?? null;
 }

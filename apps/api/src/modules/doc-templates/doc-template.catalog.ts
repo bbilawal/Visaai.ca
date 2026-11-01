@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { strategyRegistry, documentTemplatesFor } from '../../strategies';
 import type { DocumentTemplateSpec } from '../../strategies/types';
+import type { VisaProgramStrategy } from '../../strategies/visa-program/base-visa-program.strategy';
 import { programIdForVisaType } from '../forms/form-catalog';
 
 const log = new Logger('DocumentTemplateCatalog');
@@ -64,6 +65,63 @@ export function documentTemplatesForApplication(
   if (!country) return [];
   return forProgram(countryCode, program, country.portal().portalId);
 }
+
+/**
+ * The artifacts of the program that claims a registry route: that program's
+ * own list (its `documentTemplates` hook, else its row of the country table),
+ * never the union of every program in the country. A program that needs none
+ * says so with an empty hook (the Canada eTA).
+ */
+export function documentTemplatesForRoute(
+  countryCode: string,
+  program: VisaProgramStrategy,
+  visaaiId: string,
+): RequiredDocumentTemplate[] {
+  const country = strategyRegistry.getCountry(countryCode);
+  if (!country) return [];
+  const portalId = (country.portalForRoute?.(visaaiId) ?? country.portal())
+    .portalId;
+  return forProgram(countryCode, program.id, portalId);
+}
+
+/**
+ * The artifacts for a registry route NO program claims: only the country's
+ * wildcard entries — the ones that apply to every program it registers — never
+ * one program's own list.
+ *
+ * The route is known, so the union below is the wrong answer here: it handed
+ * a UK Skilled Worker the visit and student guidance and an Australian
+ * partner-visa applicant the visitor and student forms. A route that should
+ * get program-specific artifacts claims itself (`registryVisaaiIds`).
+ *
+ * Keyed under the country's first program: wildcard artifacts are cached once
+ * per program (allCatalogedDocumentTemplates), so any program's row is the
+ * same artifact and the cache lookup still hits.
+ */
+export function documentTemplatesForUnclaimedRoute(
+  countryCode: string,
+): RequiredDocumentTemplate[] {
+  const country = strategyRegistry.getCountry(countryCode);
+  if (!country) return [];
+  const first = country.programs()[0];
+  if (!first) return [];
+  const wildcard = new Set(
+    documentTemplatesFor(countryCode, UNCLAIMED_PROGRAM).map(
+      (t) => t.templateCode,
+    ),
+  );
+  return documentTemplatesFor(countryCode, first.id)
+    .filter((t) => wildcard.has(t.templateCode))
+    .map((spec) => ({
+      ...spec,
+      countryCode: countryCode.toUpperCase(),
+      program: first.id,
+      portalId: country.portal().portalId,
+    }));
+}
+
+/** No program has this id, so documentTemplatesFor returns the wildcard rows alone. */
+const UNCLAIMED_PROGRAM = '\u0000unclaimed';
 
 /**
  * Every artifact required by ANY program the country registers, deduped by

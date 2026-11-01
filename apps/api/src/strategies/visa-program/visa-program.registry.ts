@@ -12,6 +12,9 @@ import { businessVisaProgram } from './business-visa.strategy';
 import { studentVisaProgram } from './student-visa.strategy';
 import { workPermitProgram } from './work-permit.strategy';
 import { familySponsorshipProgram } from './family-sponsorship.strategy';
+import { etaProgram } from './eta.strategy';
+import { expressEntryProgram } from './express-entry.strategy';
+import { spousalSponsorshipProgram } from './spousal-sponsorship.strategy';
 
 export interface ProgramBuildOpts {
   label?: string;
@@ -73,4 +76,13 @@ visaProgramRegistry.register('student_visa', (c, o) =>
 );
 visaProgramRegistry.register('work_permit', (c, o) =>
   workPermitProgram(c, o.compliance ?? []),
+);
+visaProgramRegistry.register('eta', (c, o) =>
+  etaProgram(c, { label: o.label, compliance: o.compliance }),
+);
+visaProgramRegistry.register('express_entry', (c, o) =>
+  expressEntryProgram(c, { label: o.label, compliance: o.compliance }),
+);
+visaProgramRegistry.register('spousal_sponsorship', (c, o) =>
+  spousalSponsorshipProgram(c, { label: o.label, compliance: o.compliance }),
 );

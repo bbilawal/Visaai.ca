@@ -3,15 +3,27 @@ import type { VisaProgramStrategy } from './base-visa-program.strategy';
 import { docs, COMMON_DOCS } from '../document-requirements/common-documents';
 import { risks, evidence } from '../risk-assessment/common-risks';
 
-/** Business visa (meetings/conferences). Generic, reused across countries. */
+/**
+ * Business visa (meetings/conferences). Generic, reused across countries.
+ *
+ * `registryVisaaiIds`: the registry routes this program IS (Canada:
+ * `ca-business-visitors`). A claimed route is served this program's own
+ * official artifacts instead of the union of every program in the country
+ * (an unclaimed business route was offered the super visa's IMM 5409 and the
+ * study and work permit checklists).
+ */
 export function businessVisaProgram(
   country: CountryCode,
   compliance: ComplianceRequirement[] = [],
   forms: FormSpec[] = [],
+  registryVisaaiIds?: readonly string[],
+  assessEligibility?: VisaProgramStrategy['assessEligibility'],
 ): VisaProgramStrategy {
   return {
     id: 'business_visa',
     country,
+    ...(registryVisaaiIds ? { registryVisaaiIds } : {}),
+    ...(assessEligibility ? { assessEligibility } : {}),
     forms: () => forms,
     label: 'Business Visa',
     requiredDocuments: () => [

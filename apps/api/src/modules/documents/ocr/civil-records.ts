@@ -138,6 +138,20 @@ function firstDate(text: string, opts: CivilDateOptions): string | undefined {
   return undefined;
 }
 
+/** Every date in `text`, parsed, in order (repeats kept). */
+export function datesInText(
+  text: string | null | undefined,
+  opts: CivilDateOptions = {},
+): string[] {
+  const out: string[] = [];
+  const re = new RegExp(DATE_IN_TEXT.source, 'g');
+  for (const m of (text ?? '').matchAll(re)) {
+    const d = parseCivilDate(m[0], opts);
+    if (d) out.push(d);
+  }
+  return out;
+}
+
 // ─── Shared text helpers ─────────────────────────────────────────────────────
 
 const CNIC = /(?<![\d-])(\d{5})[-\s]?(\d{7})[-\s]?(\d)(?![\d-])/;
@@ -478,7 +492,11 @@ export interface MarriageRecord {
   /** YYYY-MM-DD from the printed English label, when one is readable. */
   marriage_date?: string;
   /** Which printed line the date came from. */
-  marriage_date_label?: 'solemnized' | 'registered' | 'date_of_marriage';
+  marriage_date_label?:
+    | 'solemnized'
+    | 'registered'
+    | 'date_of_marriage'
+    | 'repeated';
   /** Set when two labelled lines print different dates. */
   marriage_date_conflict?: string[];
   /** The husband / bridegroom. */
@@ -510,8 +528,13 @@ const GROOM_LABEL =
 const BRIDE_LABEL =
   /name\s+of\s+the\s+bride(?!\s*groom)|bride'?s\s+name(?!\s*groom)|name\s+of\s+(?:the\s+)?wife|wife'?s\s+name|^bride\b(?!\s*groom)\s*[:-]?/i;
 
+/** A printed form question, not an answer ("Whether bride is a virgin…"). */
+const FORM_QUESTION =
+  /\?|\b(?:whether|name\s+of|age\b|signature|amount|date\s+when|attorney|witness)/i;
+
 /** Strip the label's own continuation ("& her fathers", "his father along with…"). */
 function partyValue(raw: string): string | undefined {
+  if (FORM_QUESTION.test(raw.replace(/^[\s?.:-]+/, ''))) return undefined;
   const v = raw
     .replace(/^[\s?.:-]+/, '')
     .replace(
@@ -598,6 +621,36 @@ export function parseMarriageCertificate(
     rec.marriage_date_label = chosen.label;
     const distinct = [...new Set(found.map((f) => f.date))];
     if (distinct.length > 1) rec.marriage_date_conflict = distinct;
+  } else {
+    // Azure read returns Form No. 4's printed questions and the handwritten
+    // answers in different places (prod 2026-10-16), so no date sits beside its
+    // label. A nikah nama repeats the marriage date (registrar, witnesses,
+    // Urdu side): take the date printed at least twice and more often than any
+    // other. Never a guess between equally common dates.
+    const counts = new Map<string, number>();
+    for (const d of datesInText(t, dateOpts)) {
+      counts.set(d, (counts.get(d) ?? 0) + 1);
+    }
+    const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+    const [top, next] = ranked;
+    if (top && top[1] >= 2 && (!next || top[1] > next[1])) {
+      rec.marriage_date = top[0];
+      rec.marriage_date_label = 'repeated';
+    }
+  }
+
+  // Same layout problem for the bride: her answer is printed away from the
+  // question, as "<name> D/O <father>".
+  if (!rec.bride_name) {
+    for (const line of lines) {
+      const m = /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+D\s*\/\s*O\b/.exec(
+        line.trim(),
+      );
+      if (m) {
+        rec.bride_name = cleanPersonName(m[1]);
+        break;
+      }
+    }
   }
   return rec;
 }

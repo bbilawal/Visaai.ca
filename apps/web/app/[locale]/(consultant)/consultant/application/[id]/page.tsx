@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { getConsultantReview } from '@/lib/api/consultant'
+import { serverApi } from '@/lib/api/server'
+import type { Me } from '@/lib/api/me'
 import { CountryFlag } from '@/components/ui/country-flag'
 import { DecisionActions } from './decision-actions'
 import PreflightPanel from './preflight-panel'
@@ -29,6 +31,33 @@ export default async function ConsultantReviewPage({ params }: Props) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Only an ACTIVE assignee (primary or backup) may approve, reject or decide
+  // a field; the API answers 403 to anyone else, admins included. Checked for
+  // every viewer: role is not the rule, and app_metadata.role misses most
+  // admins. The viewer can always read their own assignment rows (RLS).
+  // Unreadable → leave the buttons on; the API still decides.
+  let canDecide = true
+  if (user) {
+    const { data, error } = await supabase
+      .from('consultant_assignments')
+      .select('id')
+      .eq('application_id', id)
+      .eq('consultant_id', user.id)
+      .eq('status', 'active')
+      .limit(1)
+    if (!error) canDecide = (data?.length ?? 0) > 0
+  }
+
+  // The API lets an admin run the pre-submission review even when they are
+  // not the assignee (assertReviewer); the role comes from GET /me, the
+  // source of truth. Unreadable → treated as not admin.
+  let viewerIsAdmin = false
+  try {
+    viewerIsAdmin = (await serverApi<Me>('/me')).appRole === 'admin'
+  } catch {
+    viewerIsAdmin = false
+  }
+
   let review
   try {
     review = await getConsultantReview(id)
@@ -57,13 +86,13 @@ export default async function ConsultantReviewPage({ params }: Props) {
         </p>
       )}
 
-      <DecisionActions applicationId={id} />
+      <DecisionActions applicationId={id} canDecide={canDecide} />
 
       {/* Pre-submission review. Locking this is what unblocks portal auto-fill
           for the applicant — without a completed lock the execution request has
           no trust anchor and the fill cannot start. */}
       <section style={{ marginTop: 28 }}>
-        <PreflightPanel applicationId={id} />
+        <PreflightPanel applicationId={id} canReview={canDecide || viewerIsAdmin} viewerIsAdmin={viewerIsAdmin && !canDecide} />
       </section>
 
       {review && (
@@ -77,7 +106,7 @@ export default async function ConsultantReviewPage({ params }: Props) {
                 {t('noFields')}
               </p>
             ) : (
-              <ExtractedFieldsTable applicationId={id} fields={review.fields} />
+              <ExtractedFieldsTable applicationId={id} fields={review.fields} canDecide={canDecide} />
             )}
           </section>
 

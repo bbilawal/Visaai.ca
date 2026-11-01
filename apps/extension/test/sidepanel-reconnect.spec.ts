@@ -83,9 +83,10 @@ describe('60 — side panel reconnect', () => {
 
     sock.handlers['disconnect']('transport close')
     sock.handlers['automation:ready']({ resumeToken: 'r2', resumed: true })
+    // Never restarted by itself; the cut-off run is offered to continue on
+    // the applicant's click (sidepanel-resume-after-drop.spec.ts).
     expect(starts()).toHaveLength(1)
-    expect(document.getElementById('status')!.textContent).toBe('Reconnected.')
-    expect(document.getElementById('error')!.textContent).toMatch(/fill was stopped/)
+    expect(document.getElementById('status')!.textContent).toMatch(/Continue filling/)
   })
 
   it('falls back to the connect token shape only when the server issued no resume token', async () => {

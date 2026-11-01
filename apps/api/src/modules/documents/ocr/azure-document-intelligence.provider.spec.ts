@@ -215,6 +215,8 @@ describe('mapIdDocumentFields — never invent a field', () => {
       }),
     ).toEqual({
       full_name: 'Grace Hopper',
+      given_name: 'Grace',
+      family_name: 'Hopper',
       passport_number: 'P1234567',
       date_of_birth: '1906-12-09',
       expiry_date: '2030-01-01',
@@ -250,7 +252,26 @@ describe('mapIdDocumentFields — never invent a field', () => {
   it('builds full_name from whichever name parts exist', () => {
     expect(
       mapIdDocumentFields({ LastName: { valueString: 'Lovelace' } }),
-    ).toEqual({ full_name: 'Lovelace' });
+    ).toEqual({ full_name: 'Lovelace', family_name: 'Lovelace' });
+  });
+
+  it('keeps multi-word given and family names as printed (audit 2026-10-18)', () => {
+    expect(
+      mapIdDocumentFields({
+        FirstName: { valueString: 'MARIA JOSE' },
+        LastName: { valueString: 'GARCIA LOPEZ' },
+      }),
+    ).toEqual({
+      full_name: 'MARIA JOSE GARCIA LOPEZ',
+      given_name: 'MARIA JOSE',
+      family_name: 'GARCIA LOPEZ',
+    });
+  });
+
+  it('a single name is the family name, the given name left blank', () => {
+    const out = mapIdDocumentFields({ FirstName: { valueString: 'SUKARNO' } });
+    expect(out).toEqual({ full_name: 'SUKARNO', family_name: 'SUKARNO' });
+    expect('given_name' in out).toBe(false);
   });
 
   it('prefers Nationality over CountryRegion but accepts either', () => {
@@ -577,6 +598,42 @@ describe('normalizeDate', () => {
   it('rejects an impossible month or day', () => {
     expect(normalizeDate('2026/13/01')).toBeUndefined();
     expect(normalizeDate('2026/01/45')).toBeUndefined();
+  });
+
+  // Audit 2026-10-18: other calendars were read as Gregorian.
+  it('rejects a Persian (Solar Hijri) date instead of reading it as 1400 AD', () => {
+    expect(normalizeDate('1400/03/25')).toBeUndefined();
+  });
+
+  it('rejects a Thai Buddhist year', () => {
+    expect(normalizeDate('2504-05-14')).toBeUndefined();
+    expect(normalizeDate('14 May 2504')).toBeUndefined();
+  });
+
+  it('accepts an expiry up to fifteen years ahead, not further', () => {
+    const y = new Date().getUTCFullYear();
+    expect(normalizeDate(`${y + 10}-01-09`)).toBe(`${y + 10}-01-09`);
+    expect(normalizeDate(`${y + 16}-01-09`)).toBeUndefined();
+    expect(normalizeDate('1899-12-31')).toBeUndefined();
+    expect(normalizeDate('1900-01-01')).toBe('1900-01-01');
+  });
+
+  it('takes the date part of an ISO timestamp with an offset', () => {
+    expect(normalizeDate('1990-05-14T00:00:00+05:00')).toBe('1990-05-14');
+    expect(normalizeDate('1990-05-14T00:00:00Z')).toBe('1990-05-14');
+    expect(normalizeDate('1990-05-14T00:00:00.000-0800')).toBe('1990-05-14');
+  });
+
+  it('still leaves an ambiguous day / month order unguessed', () => {
+    expect(normalizeDate('05/06/1990')).toBe('05/06/1990');
+  });
+});
+
+describe('mapIdDocumentFields — place of birth (audit 2026-10-18)', () => {
+  it('maps PlaceOfBirth', () => {
+    expect(
+      mapIdDocumentFields({ PlaceOfBirth: { valueString: 'HONG KONG' } }),
+    ).toEqual({ place_of_birth: 'HONG KONG' });
   });
 });
 

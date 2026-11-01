@@ -9,6 +9,7 @@
  * unreachable DB) can never crash the VRI pipeline.
  */
 import type { FactorScores } from './graphs/vri.state';
+import { strategyRegistry } from '../../strategies';
 
 /** Weights keyed by the FactorScores `*_pct` keys so they plug straight into the
  *  aggregate math with no remapping. */
@@ -72,3 +73,30 @@ export const DEFAULT_RISK_SNAPSHOT: RiskConfigSnapshot = {
   weights: DEFAULT_RISK_WEIGHTS,
   thresholds: DEFAULT_THRESHOLDS,
 };
+
+/**
+ * The configured weights with the ROUTE's overrides applied.
+ *
+ * The global weights put 40% of readiness on funds and home ties — what a
+ * visitor-visa officer weighs. Canada's eTA form asks about neither, so an eTA
+ * applicant was scored down for, and told to strengthen, evidence nobody will
+ * ask for (dry run 2026-10-16). A program states its overrides
+ * (VisaProgramStrategy.riskWeightOverrides); a route no program claims keeps
+ * the configured weights unchanged.
+ */
+export function routeRiskWeights(
+  base: RiskWeights,
+  country: string | null | undefined,
+  visaaiId: string | null | undefined,
+): RiskWeights {
+  const overrides = strategyRegistry
+    .resolveRoute(country, visaaiId)
+    ?.program.riskWeightOverrides?.();
+  if (!overrides) return base;
+  const out: RiskWeights = { ...base };
+  for (const k of Object.keys(out) as (keyof RiskWeights)[]) {
+    const v = overrides[k];
+    if (typeof v === 'number' && Number.isFinite(v) && v >= 0) out[k] = v;
+  }
+  return out;
+}

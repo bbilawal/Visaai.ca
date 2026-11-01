@@ -1,3 +1,5 @@
+import { resolveExtractionType } from '../ocr/extraction-schema';
+
 /**
  * Type-aware document-expiry policy + deterministic evaluation (GAPS.md §B).
  *
@@ -110,7 +112,39 @@ export function resolveExpiryPolicy(
 ): ExpiryPolicy {
   if (!documentType) return DEFAULT_POLICY;
   const t = documentType.toLowerCase().trim();
-  return POLICIES[t] ?? POLICIES[POLICY_ALIASES[t] ?? ''] ?? DEFAULT_POLICY;
+  // Registry slot names (`proof_of_medical_exam`, `passport_copy`) resolve
+  // through the same vocabulary the extractor uses; without this the super
+  // visa IME slot fell to the default policy.
+  const viaSchema = resolveExtractionType(t);
+  return (
+    POLICIES[t] ??
+    POLICIES[POLICY_ALIASES[t] ?? ''] ??
+    (viaSchema ? POLICIES[viaSchema] : undefined) ??
+    DEFAULT_POLICY
+  );
+}
+
+/** IRCC immigration medical exam results are valid 12 months from the exam. */
+const MEDICAL_EXAM_VALIDITY_MONTHS = 12;
+
+/**
+ * The expiry a document states in other words, when it has no expiry_date:
+ * an insurance policy's coverage end, a medical exam's exam date + 12 months.
+ * Prod app 61f16bb5: a policy with coverage_end_date 2028-03-01 was reported
+ * "expiry date could not be read".
+ */
+export function expiryFromFields(
+  policyId: string,
+  fields: Record<string, unknown>,
+): Date | null {
+  const read = (k: string) =>
+    typeof fields[k] === 'string' ? parseDate(fields[k]) : null;
+  if (policyId === 'medical_insurance') return read('coverage_end_date');
+  if (policyId === 'medical_exam') {
+    const exam = read('exam_date');
+    return exam ? addMonths(exam, MEDICAL_EXAM_VALIDITY_MONTHS) : null;
+  }
+  return null;
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -142,15 +176,51 @@ export function evaluateExpiry(args: {
   travelDate: Date | null;
   now: Date;
   policy: ExpiryPolicy;
+  /**
+   * A route's own minimum validity after entry, in months, when it is stricter
+   * than the type default — super visa medical insurance must run at least 12
+   * months from entry. Carried on the checklist slot from the registry.
+   */
+  minValidityMonths?: number | null;
 }): ExpiryVerdict {
   const { expiry, travelDate, now, policy } = args;
+  const months =
+    typeof args.minValidityMonths === 'number' && args.minValidityMonths > 0
+      ? args.minValidityMonths
+      : null;
   const daysUntilExpiry = Math.floor(
     (expiry.getTime() - now.getTime()) / DAY_MS,
   );
   const refDate = travelDate ?? now;
-  const requiredValidUntil = travelDate
+  let requiredValidUntil = travelDate
     ? addDays(travelDate, policy.minValidityDaysPastTravel)
     : null;
+  if (travelDate && months) {
+    const byMonths = addMonths(travelDate, months);
+    if (!requiredValidUntil || byMonths > requiredValidUntil) {
+      requiredValidUntil = byMonths;
+    }
+  }
+
+  // A policy is cover for a STAY, so measured against a known stay the
+  // finding is "does not cover it", whether it lapsed already or lapses
+  // early — "expired" alone told the super visa applicant nothing about what
+  // to buy (prod app 61f16bb5).
+  if (
+    COVERAGE_POLICIES.has(policy.id) &&
+    requiredValidUntil &&
+    expiry < requiredValidUntil
+  ) {
+    const until = requiredValidUntil.toISOString().slice(0, 10);
+    return {
+      status: 'fail',
+      daysUntilExpiry,
+      requiredValidUntil: until,
+      basis:
+        `policy does not cover your planned stay: it must be valid until ${until}` +
+        (months ? ` (${months} months from your planned entry)` : ''),
+    };
+  }
 
   if (expiry < now) {
     return {
@@ -194,11 +264,22 @@ export function evaluateExpiry(args: {
   };
 }
 
+/** Types that are cover for a stay, judged against the whole stay. */
+const COVERAGE_POLICIES = new Set(['medical_insurance']);
+
+function addMonths(d: Date, months: number): Date {
+  const out = new Date(d.getTime());
+  out.setUTCMonth(out.getUTCMonth() + months);
+  return out;
+}
+
 // Candidate profile_json keys that may hold the intended travel/entry date.
 const TRAVEL_DATE_KEYS = [
   'intended_arrival_date',
   'intended_travel_date',
   'intended_entry_date',
+  // The IRCC visitor intake writes this one (prod app 61f16bb5).
+  'planned_entry_date',
   'arrival_date',
   'travel_date',
   'date_of_travel',

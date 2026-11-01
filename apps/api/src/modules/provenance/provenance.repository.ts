@@ -51,6 +51,22 @@ export interface IProvenanceRepository {
 
   /** All current rows sourced from a document (cascade source). */
   getByDocument(documentId: string): Promise<FieldProvenance[]>;
+
+  /**
+   * Retire a document's versions of every field NOT in `keep`, in one
+   * transaction under the per-field lock (`field_provenance_retire`). A
+   * retired row points at itself, so "current" readers drop it while the
+   * read history keeps it; it is spliced out of its chain, so the field falls
+   * back to its previous version or has none. A consultant-approved current
+   * value is left alone and reported `skipped_approved`. Returns how many
+   * versions each field lost.
+   */
+  retireDocumentFieldsExcept(
+    applicationId: string,
+    documentId: string,
+    keep: string[],
+  ): Promise<{ field_key: string; retired: number; skipped_approved: boolean }[]>;
 }
 
 export const PROVENANCE_REPOSITORY = Symbol('IProvenanceRepository');
+

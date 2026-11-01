@@ -17,6 +17,10 @@
     .tips { background: #f2f2f2; border-radius: 10px; padding: 10px 12px; font-size: 12px; margin: 0 0 16px; }
     .tips p { margin: 0 0 4px; font-weight: 600; }
     .tips ul { margin: 0; padding-left: 16px; line-height: 1.5; }
+    .next-actions { position: sticky; top: 0; z-index: 1; background: #ffffff; padding-bottom: 8px; }
+    .auto-advance { display: none; margin-top: 8px; font-size: 13px; }
+    .auto-advance label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
+    .auto-advance input[type=checkbox] { width: auto; margin: 2px 0 0; flex: none; }
     .next { border: 1px solid #10c22b; border-radius: 10px; padding: 8px 10px; font-size: 13px; margin-top: 8px; display: none; }
   </style>
 </head>
@@ -28,7 +32,15 @@
     <ul>
       <li>IRCC signs you out after about 20 minutes without activity, and anything not saved on that page is lost. Save each IRCC page before you switch to VisaAI or another tab.</li>
       <li>If your session expired, sign in again and open your application from your IRCC account with <strong>Continue</strong> on the draft. Bookmarked or deep links to a form page go to an error page.</li>
-      <li>The assistant fills the IRCC page that is open. Launch it again on each page you want filled; you press <strong>Save and continue</strong> yourself.</li>
+      <li>Launch once and keep this panel open: each IRCC page fills as you reach it. You press <strong>Save and continue</strong> yourself — unless you turn on <strong>Auto-advance</strong>, which presses it for you after a page fills cleanly and stops at the Summary. It never submits, signs or pays.</li>
+    </ul>
+  </div>
+  <div class="tips" id="eta-tips" role="note" aria-label="eTA form tips" style="display:none">
+    <p>On the eTA form</p>
+    <ul>
+      <li>The eTA form is one page and needs no IRCC account. It starts over if left idle too long, so keep this tab and the panel open until you finish.</li>
+      <li>New questions appear as you answer. Press the form's <strong>Next</strong> yourself, then <strong>Fill newly shown questions</strong> here.</li>
+      <li>The declaration, your signature and the payment are yours — the assistant never does them.</li>
     </ul>
   </div>
   <div id="connect">
@@ -37,9 +49,23 @@
     <button id="connectBtn">Connect</button>
   </div>
   <div id="session" style="display:none">
+    <!-- What to do next sits right under the portal tips, above the step list:
+         at the bottom, under every filled step, applicants never saw the
+         button and did not know how to fill the questions a page revealed. -->
+    <div id="nextActions" class="next-actions">
+      <div id="next" class="next" role="status"></div>
+      <button id="fillAgain" style="display:none; margin-top:8px">Fill newly shown questions</button>
+      <!-- Opt-in, OFF by default, this launch only; IRCC Portal (tr-rt) sessions only. -->
+      <div id="autoAdvanceWrap" class="auto-advance">
+        <label><input type="checkbox" id="autoAdvance" /> <span>Auto-advance: press Save and continue for me after each page is filled (stops at Summary, never submits)</span></label>
+        <div id="autoAdvanceNote" class="next" role="status" style="display:none"></div>
+      </div>
+    </div>
     <div id="status"></div>
     <div id="steps"></div>
-    <div id="next" class="next" role="status"></div>
+  <div id="stale" class="next" style="display:none"></div>
+  <div id="uploads" class="next" style="display:none"></div>
+  <div id="sessionWarning" class="error" role="alert" style="display:none"></div>
   </div>
   <div id="error" class="err"></div>
   <script type="module" src="sidepanel.js"></script>

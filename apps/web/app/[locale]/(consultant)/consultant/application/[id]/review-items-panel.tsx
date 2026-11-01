@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import type {
   ConsultantReviewItems,
   PrefilledFormField,
@@ -15,6 +16,8 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { MarkdownView } from '@/components/ui/markdown-view'
 import { useToast } from '@/components/providers/toast-provider'
+import { consultantActionError } from '@/lib/api/consultant-action-error'
+import { holderMismatchOf, identityResultOf } from '@/lib/holder-mismatch'
 import {
   decideReviewItem,
   editGeneratedItem,
@@ -22,7 +25,7 @@ import {
   getReviewItems,
 } from '@/lib/api/review-items-client'
 import { editPreflightField } from '@/lib/api/preflight-client'
-import { notifyPreflightChanged } from '@/lib/preflight-events'
+import { notifyPreflightChanged, notifyReviewItemDecided } from '@/lib/preflight-events'
 
 /**
  * Consultant review of everything the applicant uploaded or the app generated.
@@ -44,6 +47,7 @@ const LETTER_LABEL: Record<string, string> = {
   loe: 'Letter of explanation',
   itinerary: 'Travel itinerary',
   cover_letter: 'Cover letter',
+  invitation_letter: 'Letter of invitation',
 }
 
 const DECISION_TEXT: Record<ReviewItemDecision, string> = {
@@ -84,14 +88,22 @@ function DecisionBadge({ d }: { d: ReviewItemDecisionRecord | null }) {
   )
 }
 
-/** Approve / other-decision controls; non-approvals require a note. */
+/**
+ * Approve / other-decision controls; non-approvals require a note. The button
+ * for the decision already recorded is pressed and disabled (re-sending it
+ * would only repeat the note to the applicant); the others stay available so
+ * the consultant can change their mind.
+ */
 function DecisionControls({
   options,
+  current,
   onDecide,
   busy,
 }: {
   options: ReviewItemDecision[]
-  onDecide: (decision: ReviewItemDecision, note?: string) => Promise<void>
+  current: ReviewItemDecision | null
+  /** Resolves true once the server recorded the decision. */
+  onDecide: (decision: ReviewItemDecision, note?: string) => Promise<boolean>
   busy: boolean
 }) {
   const [pending, setPending] = useState<ReviewItemDecision | null>(null)
@@ -113,7 +125,7 @@ function DecisionControls({
           <Button
             size="sm"
             disabled={busy || !note.trim()}
-            onClick={() => void onDecide(pending, note.trim()).then(() => { setPending(null); setNote('') })}
+            onClick={() => void onDecide(pending, note.trim()).then((ok) => { if (ok) { setPending(null); setNote('') } })}
           >
             Send decision
           </Button>
@@ -124,15 +136,18 @@ function DecisionControls({
   }
   return (
     <span style={{ display: 'inline-flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
-      {options.map((o) =>
-        o === 'approved' ? (
-          <Button key={o} size="sm" disabled={busy} onClick={() => void onDecide('approved')}>Approve</Button>
+      {options.map((o) => {
+        const chosen = o === current
+        return o === 'approved' ? (
+          <Button key={o} size="sm" aria-pressed={chosen} disabled={busy || chosen} onClick={() => void onDecide('approved')}>
+            {chosen ? 'Approved' : 'Approve'}
+          </Button>
         ) : (
-          <Button key={o} size="sm" variant="secondary" disabled={busy} onClick={() => setPending(o)}>
+          <Button key={o} size="sm" variant="secondary" aria-pressed={chosen} disabled={busy || chosen} onClick={() => setPending(o)}>
             {DECISION_TEXT[o]}
           </Button>
-        ),
-      )}
+        )
+      })}
     </span>
   )
 }
@@ -140,6 +155,11 @@ function DecisionControls({
 export default function ReviewItemsPanel({ applicationId }: { applicationId: string }) {
   const router = useRouter()
   const { toast } = useToast()
+  const tc = useTranslations('consultant')
+  // Read through a ref: router.refresh() hands the provider new messages and
+  // so a new translator, which as a dependency would re-run the load.
+  const tcRef = useRef(tc)
+  useEffect(() => { tcRef.current = tc }, [tc])
   const [items, setItems] = useState<ConsultantReviewItems | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -155,7 +175,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
       .then(
         (v) => { if (!cancelled) setItems(v) },
         (err: unknown) => {
-          if (!cancelled) setLoadError(err instanceof Error ? err.message : 'Could not load the documents for review')
+          if (!cancelled) setLoadError(consultantActionError(err, tcRef.current('loadReviewItemsFailed')))
         },
       )
     return () => { cancelled = true }
@@ -168,17 +188,18 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
       if (done) toast(done, 'success')
       return out
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That action failed')
+      setError(consultantActionError(err, tc('actionFailed')))
       return undefined
     } finally { setBusy(null) }
   }
 
-  async function decide(kind: ReviewItemKind, id: string, decision: ReviewItemDecision, note?: string) {
+  async function decide(kind: ReviewItemKind, id: string, decision: ReviewItemDecision, note?: string): Promise<boolean> {
     const out = await act(`decide:${id}`, (t) =>
       decideReviewItem(t, applicationId, note ? { itemKind: kind, itemId: id, decision, note } : { itemKind: kind, itemId: id, decision }),
-      decision === 'approved' ? 'Approved' : 'Decision sent to the applicant',
+      decision === 'approved' ? tc('toastItemApproved') : tc('toastDecisionSent'),
     )
-    if (!out) return
+    if (!out) return false // keep the typed note: nothing was recorded
+    notifyReviewItemDecided(applicationId)
     setItems((cur) => {
       if (!cur) return cur
       const d = out.decision
@@ -189,6 +210,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
         form: cur.form && kind === 'generated' && cur.form.id === id ? { ...cur.form, decision: d } : cur.form,
       }
     })
+    return true
   }
 
   async function openDoc(id: string) {
@@ -211,7 +233,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
     const { id, text, note } = letterEdit
     const out = await act(`letter:${id}`, (t) =>
       editGeneratedItem(t, applicationId, id, text, note.trim() || undefined),
-      'Letter saved — the applicant will need to approve it again',
+      tc('toastLetterSaved'),
     )
     if (!out) return
     setItems((cur) => cur && { ...cur, generated: cur.generated.map((g) => (g.id === id ? out : g)) })
@@ -221,7 +243,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
   async function saveField(key: string) {
     if (!fieldEdit) return
     const value = fieldEdit.value
-    const out = await act(`field:${key}`, (t) => editPreflightField(t, applicationId, key, value, undefined), 'Field saved')
+    const out = await act(`field:${key}`, (t) => editPreflightField(t, applicationId, key, value, undefined), tc('toastFieldSaved'))
     if (!out) return
     setItems((cur) => cur && cur.form ? {
       ...cur,
@@ -259,7 +281,18 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
         ) : (
           <ul style={{ display: 'grid', gap: 8, listStyle: 'none', padding: 0, marginTop: 10 }}>
             {items.documents.map((d) => {
-              const label = d.name ?? d.type ?? d.id.slice(0, 8)
+              const label = d.deleted ? 'Deleted by the applicant' : (d.name ?? d.type ?? d.id.slice(0, 8))
+              // The identity row, in the vault's shape, for the holder note and
+              // the applicant's own "this passport is mine" (audit trail).
+              const identityRows = d.verifications.map((v) => ({
+                verification_type: v.verificationType ?? '',
+                result: v.result ?? '',
+                details_json: (v.details ?? null) as Record<string, unknown> | null,
+              }))
+              const heldNote = holderMismatchOf(identityRows)
+              // From document_holder_confirmations via the review API — never
+              // from details_json, which the applicant's own client can edit.
+              const applicantConfirmed = d.applicantConfirmation ?? null
               return (
                 <li key={d.id} style={{ border, borderRadius: 8, padding: '8px 12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
@@ -271,6 +304,30 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
                     </span>
                     <DecisionBadge d={d.decision} />
                   </div>
+                  {heldNote?.held && (
+                    <p className="mono" style={{ ...small, marginTop: 4, color: '#b45309' }}>
+                      Held: the passport&apos;s name ({heldNote.holder}) doesn&apos;t match the name the applicant gave ({heldNote.applicant}). Not used for the form or the portal until you approve it or the applicant confirms it.
+                    </p>
+                  )}
+                  {heldNote?.clearlyOther && (
+                    <p className="mono" style={{ ...small, marginTop: 4, color: 'var(--color-rose, #b53030)' }}>
+                      Not the applicant&apos;s: this document names {heldNote.holder}. Never used.
+                    </p>
+                  )}
+                  {applicantConfirmed && (
+                    <p className="mono" style={{ ...small, marginTop: 4 }}>
+                      Applicant confirmed this passport is theirs
+                      {applicantConfirmed.confirmedAt ? ` on ${new Date(applicantConfirmed.confirmedAt).toLocaleDateString()}` : ''}
+                      {applicantConfirmed.holderName ? ` (passport name ${applicantConfirmed.holderName}` : ''}
+                      {applicantConfirmed.holderName && applicantConfirmed.statedName ? `; name they gave ${applicantConfirmed.statedName})` : applicantConfirmed.holderName ? ')' : ''}
+                      {applicantConfirmed.confirmedBy ? ` — user ${applicantConfirmed.confirmedBy.slice(0, 8)}` : ''}.
+                    </p>
+                  )}
+                  {d.deleted ? (
+                    <p className="mono text-muted" style={{ ...small, marginTop: 4 }}>
+                      The applicant deleted this file while your request was open. Approve to close the request, or wait for a replacement upload.
+                    </p>
+                  ) : (
                   <div style={{ marginTop: 4 }}>
                     <button type="button" className="mono" style={linkBtn} aria-label={`Open ${label}`} disabled={busy != null} onClick={() => void openDoc(d.id)}>
                       Open
@@ -279,6 +336,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
                       {details === d.id ? 'Hide details' : 'Details'}
                     </button>
                   </div>
+                  )}
                   {details === d.id && (
                     <div className="mono" style={{ ...small, marginTop: 6 }}>
                       <strong>Read from this document</strong>
@@ -300,14 +358,18 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
                       ) : (
                         <ul style={{ margin: '4px 0 0 16px' }}>
                           {d.verifications.map((v, i) => (
-                            <li key={i}>{v.verificationType ?? 'check'}: {v.result ?? '—'}</li>
+                            <li key={i}>{v.verificationType ?? 'check'}: {(() => {
+                              const shown = identityResultOf(identityRows[i])
+                              return shown === 'needs_confirmation' ? 'needs confirmation' : shown === 'not_yours' ? "not the applicant's" : (v.result ?? '—')
+                            })()}</li>
                           ))}
                         </ul>
                       )}
                     </div>
                   )}
                   <DecisionControls
-                    options={['approved', 'needs_reupload', 'rejected']}
+                    options={d.deleted ? ['approved'] : ['approved', 'needs_reupload', 'rejected']}
+                    current={d.decision?.decision ?? null}
                     busy={busy != null}
                     onDecide={(dec, note) => decide('document', d.id, dec, note)}
                   />
@@ -368,6 +430,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
               )}
               <DecisionControls
                 options={['approved', 'changes_requested']}
+                current={g.decision?.decision ?? null}
                 busy={busy != null}
                 onDecide={(dec, note) => decide('generated', g.id, dec, note)}
               />
@@ -435,6 +498,7 @@ export default function ReviewItemsPanel({ applicationId }: { applicationId: str
             ))}
             <DecisionControls
               options={['approved', 'changes_requested']}
+              current={items.form.decision?.decision ?? null}
               busy={busy != null}
               onDecide={(dec, note) => decide('generated', items.form!.id, dec, note)}
             />

@@ -157,17 +157,25 @@ function utc(y: number, mo: number, d: number): Date | undefined {
   return dt.getUTCMonth() === mo - 1 ? dt : undefined;
 }
 
+const STATED_STAY = [
+  /duration_of_stay/,
+  /length_of_stay/,
+  /stay_(length|duration)/,
+  /^trip_duration/,
+];
+
 export function stayFacts(p: Profile): {
   statedDays?: number;
+  /** A stay stated in months (`planned_stay_duration_months`), never read as days. */
+  statedMonths?: number;
   datedDays?: number;
   days?: number;
 } {
-  const statedDays = numFacts(p, [
-    /duration_of_stay/,
-    /length_of_stay/,
-    /stay_(length|duration)/,
-    /^trip_duration/,
-  ])[0]?.value;
+  const statedDays = numFacts(p, STATED_STAY, [/_(months?|weeks?|years?)$/])[0]
+    ?.value;
+  const statedMonths = numFacts(p, STATED_STAY, [/insurance/]).find((x) =>
+    /_months?$/.test(x.key),
+  )?.value;
   const entry = parseDate(
     strFact(
       p,
@@ -186,7 +194,15 @@ export function stayFacts(p: Profile): {
     entry && exit && exit > entry
       ? Math.round((exit.getTime() - entry.getTime()) / 86_400_000)
       : undefined;
-  return { statedDays, datedDays, days: datedDays ?? statedDays };
+  return {
+    statedDays,
+    statedMonths,
+    datedDays,
+    days:
+      datedDays ??
+      statedDays ??
+      (statedMonths ? Math.round(statedMonths * 30.44) : undefined),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -255,7 +271,12 @@ export function refusalFacts(p: Profile): RefusalFacts {
 export interface DocEvidence {
   id: string;
   type: string;
-  /** OCR produced text and at least one extracted field. */
+  /**
+   * OCR read the document: it produced extracted fields, or text (a letter of
+   * invitation or an income summary can be read in full and still yield no
+   * identity field — prod 2026-10-16, app 61f16bb5, 4,305 characters read and
+   * reported as "could not be read").
+   */
   readable: boolean;
   /** OCR ran and failed (rate limit, unreadable scan...). */
   failed: boolean;
@@ -264,12 +285,14 @@ export interface DocEvidence {
 
 export function documentEvidence(data: VriInputData): DocEvidence[] {
   const fieldsByDoc = new Map<string, Record<string, unknown>>();
+  const textRead = new Set<string>();
   for (const v of data.verifications ?? []) {
     if (!v.document_id) continue;
-    const f = (v.details_json?.extracted_fields ?? {}) as Record<
-      string,
-      unknown
-    >;
+    const details: Record<string, unknown> = v.details_json ?? {};
+    const ocrLength = asNumber(details.raw_ocr_length);
+    if (ocrLength !== undefined && ocrLength > 0 && !details.error)
+      textRead.add(v.document_id);
+    const f = (details.extracted_fields ?? {}) as Record<string, unknown>;
     if (f && typeof f === 'object' && Object.keys(f).length > 0) {
       fieldsByDoc.set(v.document_id, {
         ...(fieldsByDoc.get(v.document_id) ?? {}),
@@ -280,7 +303,8 @@ export function documentEvidence(data: VriInputData): DocEvidence[] {
   return (data.documents ?? []).map((d) => {
     const fields = fieldsByDoc.get(d.id) ?? {};
     const readable =
-      d.ocr_status === 'complete' && Object.keys(fields).length > 0;
+      d.ocr_status === 'complete' &&
+      (Object.keys(fields).length > 0 || textRead.has(d.id));
     return {
       id: d.id,
       type: (d.document_type ?? 'document').toLowerCase(),

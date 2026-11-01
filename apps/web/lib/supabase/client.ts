@@ -185,6 +185,11 @@ export async function ensureSession(): Promise<Session | null> {
   return data.session
 }
 
+/** Refresh the access token now (a 401 from the API on a session that should still be valid). */
+export function refreshSession(): Promise<AuthSessionResponse> {
+  return runAuthOperation(() => createClient().auth.refreshSession())
+}
+
 export function getUser() {
   return runAuthOperation(() => createClient().auth.getUser())
 }

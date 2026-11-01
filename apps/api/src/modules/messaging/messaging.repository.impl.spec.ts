@@ -1,3 +1,4 @@
+import { ForbiddenException } from '@nestjs/common';
 import { MessagingRepository } from './messaging.repository.impl';
 
 /**
@@ -72,14 +73,24 @@ describe('MessagingRepository.insertConversation — concurrent get-or-create ra
     );
   });
 
-  it('still throws for non-conflict insert errors (e.g. RLS denial 42501)', async () => {
+  it('maps an RLS denial (42501) to ForbiddenException, not a 500', async () => {
     const db = makeDb({
       insertError: { code: '42501', message: 'rls denied' },
       selectRow: null,
     });
-    await expect(repo.insertConversation(db, 'app-1')).rejects.toThrow(
-      'rls denied',
+    await expect(repo.insertConversation(db, 'app-1')).rejects.toBeInstanceOf(
+      ForbiddenException,
     );
+  });
+
+  it('still throws a plain Error for other insert errors', async () => {
+    const db = makeDb({
+      insertError: { code: '23502', message: 'not null' },
+      selectRow: null,
+    });
+    const err = await repo.insertConversation(db, 'app-1').catch((e) => e);
+    expect(err).not.toBeInstanceOf(ForbiddenException);
+    expect(err.message).toBe('not null');
   });
 
   it('returns the inserted row on the happy path', async () => {

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import type { EscalationRecord, EscalationType } from '@visaai/types';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { EscalationService } from './escalation.service';
@@ -34,6 +35,7 @@ export class EscalationController {
   constructor(private readonly svc: EscalationService) {}
 
   @Get(':applicationId/escalations')
+  @UseGuards(ApplicationAccessGuard)
   list(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -43,6 +45,7 @@ export class EscalationController {
   }
 
   @Post(':applicationId/escalations')
+  @UseGuards(ApplicationAccessGuard)
   escalate(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

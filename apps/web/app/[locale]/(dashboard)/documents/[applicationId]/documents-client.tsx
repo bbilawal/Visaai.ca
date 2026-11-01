@@ -16,12 +16,22 @@ import { groupByOwner, specsOf, isForm as isFormItem } from '@/lib/checklist-gro
 import { ExternalLinkIcon, LockIcon, ShieldIcon, TrashIcon } from '@/components/ui/icons'
 import { OfficialForms } from '@/components/forms/official-forms'
 import { OfficialDocuments } from './official-documents'
+import { formCodeKey, withoutOfficialDuplicates } from '@/lib/official-form-dedupe'
 import { DocumentsProgress } from './documents-progress'
-import { documentsCompletion, requiredDocumentItems, isChecklistItemSatisfied } from '@visaai/types'
-import { isOptionalItem } from '@/lib/required-docs'
+import { documentsCompletion } from '@visaai/types'
+import { isOptionalItem, nextUploadItem, slotIsVerified } from '@/lib/required-docs'
 import type { ChecklistItem } from '@visaai/types'
 import { latestVerifications } from '@/lib/latest-verifications'
 import { slotMismatchOf } from '@/lib/slot-mismatch'
+import { confirmHolder, holderConfirmationOf, holderMismatchOf, identityResultOf } from '@/lib/holder-mismatch'
+import { attentionOf, canReread, requestReread } from '@/lib/document-reread'
+import {
+  openRequestIn,
+  requestOf,
+  withConsultantRequests,
+  type ConsultantDocumentReview,
+  type ConsultantRequest,
+} from '@/lib/consultant-requests'
 
 interface AccessLogEntry {
   id: string
@@ -45,6 +55,8 @@ interface DocumentRecord {
     details_json: Record<string, unknown>
     verified_at?: string | null
   }>
+  /** The consultant's latest decision on this file (decision, note, date). */
+  consultant_review?: ConsultantDocumentReview | null
 }
 
 interface CrossVerification {
@@ -68,6 +80,8 @@ const STATUS_COLORS: Record<string, string> = {
   fail: 'text-callout-red',
   match: 'text-success-green',
   mismatch: 'text-callout-red',
+  needs_confirmation: 'text-[#b45309]',
+  not_yours: 'text-callout-red',
 }
 
 /** One line of the NDJSON rebuild stream. */
@@ -109,11 +123,21 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
   const [accessLog, setAccessLog] = useState<AccessLogEntry[]>([])
   const [showPrivacy, setShowPrivacy] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [rereadingId, setRereadingId] = useState<string | null>(null)
   // Official sections stay hidden until every required document is verified —
   // or until we learn a prefill already exists from a previous visit (below),
   // which keeps the material reachable for a returning applicant even if a
   // checklist item has since regressed.
   const [hasPrefill, setHasPrefill] = useState(false)
+  // Form codes the two official sections below already hand the applicant,
+  // keyed per section so one reload never wipes the other's codes.
+  const [officialCodes, setOfficialCodes] = useState<{ forms: string[]; documents: string[] }>({ forms: [], documents: [] })
+  const handleOfficialFormCodes = useCallback((codes: string[]) => {
+    setOfficialCodes(prev => ({ ...prev, forms: codes }))
+  }, [])
+  const handleOfficialDocumentCodes = useCallback((codes: string[]) => {
+    setOfficialCodes(prev => ({ ...prev, documents: codes }))
+  }, [])
 
   // Failure is silent on purpose: the worst case is the reference sections
   // staying hidden until the checklist completes, not a broken page.
@@ -387,6 +411,50 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
     }
   }, [toast, t])
 
+  // Re-read a stored document with the current extraction (e.g. after a
+  // parser fix). The card shows "processing" again until the new read lands.
+  const handleReread = useCallback(async (doc: DocumentRecord) => {
+    setRereadingId(doc.id)
+    try {
+      const { data: { session } } = await getSession()
+      if (!session) throw new Error(t('notAuthenticated'))
+      const result = await requestReread(process.env.NEXT_PUBLIC_API_URL, session.access_token, doc.id)
+      toast(result === 'already_queued' ? t('rereadAlreadyQueued') : t('rereadQueued'), 'success')
+      setLoadTrigger(tr => tr + 1)
+    } catch (err) {
+      const code = err instanceof Error ? err.message : ''
+      toast(
+        code === 'rate_limited' ? t('rereadRateLimited') : code === 'failed' || !code ? t('errReread') : code,
+        'error',
+      )
+    } finally {
+      setRereadingId(null)
+    }
+  }, [toast, t])
+
+  // "This is my passport": the applicant confirms a passport held because its
+  // name doesn't match the name they gave. The API records it and re-syncs
+  // the profile; the reload shows the confirmation in place of the hold.
+  const [confirmingId, setConfirmingId] = useState<string | null>(null)
+  const handleConfirmHolder = useCallback(async (doc: DocumentRecord) => {
+    setConfirmingId(doc.id)
+    try {
+      const { data: { session } } = await getSession()
+      if (!session) throw new Error(t('notAuthenticated'))
+      await confirmHolder(process.env.NEXT_PUBLIC_API_URL, session.access_token, doc.id)
+      toast(t('holderConfirmedToast'), 'success')
+      setLoadTrigger(tr => tr + 1)
+    } catch (err) {
+      const code = err instanceof Error ? err.message : ''
+      toast(
+        code === 'rate_limited' ? t('rereadRateLimited') : code === 'not_confirmable' ? t('holderNotConfirmable') : code === 'unavailable' ? t('holderConfirmUnavailable') : code === 'failed' || !code ? t('holderConfirmFailed') : code,
+        'error',
+      )
+    } finally {
+      setConfirmingId(null)
+    }
+  }, [toast, t])
+
   // Upload a file and link it to a specific checklist item. `itemKey` is the
   // checklist item id, or 'other' for an unassigned additional upload.
   const handleFileUpload = useCallback(async (file: File, itemKey: string, checklistItemId?: string) => {
@@ -470,14 +538,32 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
     }
   }
 
-  const groups = groupByOwner(checklist)
+  // A slot whose document the consultant sent back is not verified, whatever
+  // its stored status says, until a replacement is uploaded into it. The
+  // server applies the same rule (open-document-requests.ts: progress and the
+  // auto-generated prefill), so the count below still matches it.
+  const viewChecklist = withConsultantRequests(checklist, documents)
+  const groups = groupByOwner(viewChecklist)
   const multiParty = groups.length > 1
 
   // Same rule the API uses to auto-generate (documentsCompletion in
   // @visaai/types), so this page never claims ready while the server disagrees.
-  const completion = documentsCompletion(checklist)
-  const nextItem = requiredDocumentItems(checklist).find(i => !isChecklistItemSatisfied(i))
+  const completion = documentsCompletion(viewChecklist)
+  const nextItem = nextUploadItem(viewChecklist)
   const officialUnlocked = completion.complete || hasPrefill
+
+  // A form the official sections already list is not repeated as a "Required
+  // Forms" slot. Only while those sections are actually rendered: before they
+  // unlock, the slot is the applicant's only pointer to the form.
+  const officialKeys = new Set(
+    officialUnlocked && loaded
+      ? [...officialCodes.forms, ...officialCodes.documents].map(formCodeKey).filter(Boolean)
+      : [],
+  )
+  const visibleGroups = groups.map(group => ({
+    ...group,
+    forms: withoutOfficialDuplicates(group.forms, officialKeys, item => (docsByItem.get(item.id)?.length ?? 0) > 0),
+  }))
 
   return (
     <div>
@@ -638,7 +724,7 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
         </Card>
       ) : (
         <div className="flex flex-col gap-8">
-          {groups.map(group => (
+          {visibleGroups.map(group => (
             <section key={group.owner}>
               {multiParty && (
                 <div className="flex items-center gap-3 mb-4">
@@ -665,6 +751,10 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
                         deletingId={deletingId}
                         onUpload={file => handleFileUpload(file, item.id, item.id)}
                         onDelete={handleDelete}
+              onReread={handleReread}
+              rereadingId={rereadingId}
+              onConfirmHolder={handleConfirmHolder}
+              confirmingId={confirmingId}
                       />
                     ))}
                   </div>
@@ -688,6 +778,10 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
                       deletingId={deletingId}
                       onUpload={file => handleFileUpload(file, item.id, item.id)}
                       onDelete={handleDelete}
+              onReread={handleReread}
+              rereadingId={rereadingId}
+              onConfirmHolder={handleConfirmHolder}
+              confirmingId={confirmingId}
                     />
                   ))}
                 </div>
@@ -712,6 +806,10 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
                         deletingId={deletingId}
                         onUpload={file => handleFileUpload(file, item.id, item.id)}
                         onDelete={handleDelete}
+              onReread={handleReread}
+              rereadingId={rereadingId}
+              onConfirmHolder={handleConfirmHolder}
+              confirmingId={confirmingId}
                       />
                     ))}
                   </div>
@@ -724,13 +822,17 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
           <section>
             <p className="text-[13px] font-medium text-midtone-gray uppercase tracking-[0.5px] mb-2">{t('otherDocuments')}</p>
             <UploadSlot
-              item={{ id: 'other', label: t('additionalDocument'), status: 'missing', meta: null }}
+              item={{ id: 'other', label: t('additionalDocument'), status: 'missing', required: false, meta: null }}
               docs={unlinkedDocs}
               country={country}
               uploading={uploadingItemId === 'other'}
               deletingId={deletingId}
               onUpload={file => handleFileUpload(file, 'other')}
               onDelete={handleDelete}
+              onReread={handleReread}
+              rereadingId={rereadingId}
+              onConfirmHolder={handleConfirmHolder}
+              confirmingId={confirmingId}
             />
           </section>
         </div>
@@ -754,11 +856,13 @@ export default function DocumentsClient({ applicationId, initialChecklist, count
               applicationId={applicationId}
               country={country}
               enabled
+              onCodes={handleOfficialFormCodes}
             />
             <OfficialDocuments
               applicationId={applicationId}
               country={country}
               enabled
+              onCodes={handleOfficialDocumentCodes}
             />
           </div>
         </div>
@@ -795,6 +899,8 @@ interface SlotItem {
   id: string
   label: string
   status: string
+  /** Only an explicit false makes a slot optional ("Optional", not "Needed"). */
+  required?: boolean | null
   meta?: ChecklistItem['meta']
 }
 
@@ -806,6 +912,12 @@ interface UploadSlotProps {
   deletingId: string | null
   onUpload: (file: File) => void
   onDelete: (doc: DocumentRecord) => void
+  /** Absent on read-only previews. */
+  onReread?: (doc: DocumentRecord) => void
+  rereadingId?: string | null
+  /** "This is my passport" on a held passport. Absent on read-only previews. */
+  onConfirmHolder?: (doc: DocumentRecord) => void
+  confirmingId?: string | null
 }
 
 /**
@@ -813,7 +925,7 @@ interface UploadSlotProps {
  * preparation requirements (specs), a drop/browse zone, and the list of files
  * already uploaded against it with their verification results.
  */
-function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDelete }: UploadSlotProps) {
+function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDelete, onReread, rereadingId = null, onConfirmHolder, confirmingId = null }: UploadSlotProps) {
   const t = useTranslations('documents')
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -828,6 +940,8 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
   // items, not only strengthening evidence — none of them is "Needed".
   const optional = isOptionalItem(item)
   const hasUploads = docs.length > 0
+  const attention = attentionOf(item)
+  const request = openRequestIn(docs)
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
@@ -846,9 +960,14 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
 
   // Aggregate state badge for the slot. A document the pipeline found to be
   // the wrong kind for this slot never counts as verifying it.
-  const verified = docs.some(d => d.ocr_status === 'complete' && !slotMismatchOf(d.document_verifications))
+  const verified = !request && slotIsVerified(
+    item,
+    docs.some(d => d.ocr_status === 'complete' && !slotMismatchOf(d.document_verifications) && !requestOf(d)?.open),
+  )
   const processing = docs.some(d => d.ocr_status === 'pending')
-  const slotBadge = verified
+  const slotBadge = request
+    ? { label: requestBadgeLabel(request, t), variant: 'neutral' as const }
+    : verified
     ? { label: t('statusVerified'), variant: 'inverse' as const }
     : processing
     ? { label: t('statusProcessing'), variant: 'neutral' as const }
@@ -881,6 +1000,12 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
               <ExternalLinkIcon size={12} />
               {t('openOfficialForm')}
             </a>
+          )}
+          {attention && (
+            <p role="alert" className="mt-1 text-[12px] text-callout-red">{attention}</p>
+          )}
+          {request && (
+            <p role="alert" className="mt-1 text-[12px] text-callout-red">{requestMessage(request, t)}</p>
           )}
           {specs.length > 0 && (
             <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
@@ -939,6 +1064,13 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
         <div className="mt-3 flex flex-col gap-2">
           {docs.map(doc => {
             const mismatch = slotMismatchOf(doc.document_verifications)
+            // The decision belongs to this file even after a newer upload
+            // closed the request on the slot.
+            const docRequest = requestOf(doc)
+            // Non-blocking: a personal document that seems to name someone
+            // other than the applicant. The document still counts.
+            const otherHolder = holderMismatchOf(latestVerifications(doc.document_verifications))
+            const confirmedHolder = otherHolder ? null : holderConfirmationOf(latestVerifications(doc.document_verifications))
             return (
             <div key={doc.id} className="rounded-[10px] border border-subtle-ash px-3 py-2">
               <div className="flex items-start justify-between gap-2">
@@ -947,9 +1079,21 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
                   <p className="text-[11px] text-midtone-gray">{new Date(doc.created_at).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <Badge variant={doc.ocr_status === 'complete' && !mismatch ? 'inverse' : 'neutral'}>
-                    {mismatch ? t('statusWrongDocument') : doc.ocr_status === 'complete' ? t('statusVerified') : doc.ocr_status === 'failed' ? t('statusFailed') : t('statusProcessing')}
+                  <Badge variant={doc.ocr_status === 'complete' && !mismatch && !docRequest ? 'inverse' : 'neutral'}>
+                    {docRequest ? requestBadgeLabel(docRequest, t) : mismatch ? t('statusWrongDocument') : doc.ocr_status === 'complete' ? t('statusVerified') : doc.ocr_status === 'failed' ? t('statusFailed') : t('statusProcessing')}
                   </Badge>
+                  {onReread && canReread(doc) && (
+                    <button
+                      type="button"
+                      onClick={() => onReread(doc)}
+                      disabled={rereadingId === doc.id}
+                      aria-label={t('rereadLabel', { name: doc.file_name })}
+                      title={t('rereadTitle')}
+                      className="inline-flex items-center h-7 px-2 rounded-md text-[12px] font-medium text-midtone-gray hover:text-deep-black hover:bg-ghost-gray disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rich-black/30"
+                    >
+                      {t('reread')}
+                    </button>
+                  )}
                   <button
                     type="button"
                     onClick={() => onDelete(doc)}
@@ -965,16 +1109,57 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
               {mismatch && (
                 <p role="alert" className="mt-2 text-[12px] text-callout-red">{mismatch.message}</p>
               )}
+              {docRequest && !docRequest.open && (
+                <p className="mt-2 text-[12px] text-midtone-gray">{requestMessage(docRequest, t)}</p>
+              )}
+              {otherHolder && (
+                <p role="status" className="mt-2 text-[12px] text-amber">
+                  {t(otherHolder.held ? 'holderMismatchHeld' : 'holderMismatch', { holder: otherHolder.holder, applicant: otherHolder.applicant })}
+                </p>
+              )}
+              {otherHolder?.held && !otherHolder.clearlyOther && onConfirmHolder && (
+                <button
+                  type="button"
+                  onClick={() => onConfirmHolder(doc)}
+                  disabled={confirmingId === doc.id}
+                  aria-label={t('holderConfirmLabel', { name: doc.file_name })}
+                  className="mt-2 inline-flex items-center h-7 px-3 rounded-md border border-subtle-ash text-[12px] font-medium text-deep-black hover:bg-ghost-gray disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rich-black/30"
+                >
+                  {confirmingId === doc.id ? t('holderConfirming') : t('holderConfirmButton')}
+                </button>
+              )}
+              {confirmedHolder && (
+                <p role="status" className="mt-2 text-[12px] text-midtone-gray">
+                  {t('holderConfirmed')}
+                </p>
+              )}
               {doc.document_verifications.length > 0 && (
                 <div className="flex flex-col gap-1 mt-2 pt-2 border-t border-subtle-ash">
-                  {latestVerifications(doc.document_verifications).map(v => (
-                    <div key={v.id} className="flex items-center justify-between">
-                      <span className="text-[12px] text-midtone-gray capitalize">{v.verification_type}</span>
-                      <span className={`text-[12px] font-medium ${STATUS_COLORS[v.result] ?? 'text-rich-black'}`}>
-                        {v.result === 'pass' ? t('resultPass') : v.result === 'warn' ? t('resultWarn') : t('resultFail')}
-                      </span>
-                    </div>
-                  ))}
+                  {latestVerifications(doc.document_verifications).map(v => {
+                    // An expiry finding says WHY ("policy does not cover your
+                    // planned stay: it must be valid until …"); a bare ✗ does not.
+                    const basis =
+                      v.verification_type === 'expiry' && v.result !== 'pass' && typeof v.details_json?.basis === 'string'
+                        ? (v.details_json.basis as string)
+                        : null
+                    return (
+                      <div key={v.id}>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[12px] text-midtone-gray capitalize">{v.verification_type}</span>
+                          {(() => {
+                            // A held / someone-else's passport is never "✓ Pass".
+                            const shown = identityResultOf(v)
+                            return (
+                              <span className={`text-[12px] font-medium ${STATUS_COLORS[shown] ?? 'text-rich-black'}`}>
+                                {shown === 'needs_confirmation' ? t('resultNeedsConfirmation') : shown === 'not_yours' ? t('resultNotYours') : shown === 'pass' ? t('resultPass') : shown === 'warn' ? t('resultWarn') : t('resultFail')}
+                              </span>
+                            )
+                          })()}
+                        </div>
+                        {basis && <p className="text-[12px] text-rich-black mt-0.5 first-letter:uppercase">{basis}</p>}
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </div>
@@ -984,4 +1169,16 @@ function UploadSlot({ item, docs, country, uploading, deletingId, onUpload, onDe
       )}
     </Card>
   )
+}
+
+type DocumentsT = ReturnType<typeof useTranslations<'documents'>>
+
+function requestBadgeLabel(r: ConsultantRequest, t: DocumentsT): string {
+  return r.decision === 'rejected' ? t('statusRejectedByConsultant') : t('statusReuploadRequested')
+}
+
+/** "Your consultant asked for a new upload: <note>" — the note is required server-side. */
+function requestMessage(r: ConsultantRequest, t: DocumentsT): string {
+  const note = r.note?.trim() || '—'
+  return r.decision === 'rejected' ? t('consultantRejectedDocument', { note }) : t('consultantAskedReupload', { note })
 }

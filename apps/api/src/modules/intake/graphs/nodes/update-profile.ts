@@ -1,5 +1,15 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import type { IntakeState } from '../intake.state';
+import { applyConsistencyFlags } from '../../../documents/graphs/nodes/sync-family';
+import {
+  childrenUpdate,
+  dedupePlaceholderChildren,
+  removedChildFlatKeys,
+  mergeChildLists,
+} from '../../../shared/profile/intake-children';
+import { withoutRemovedChildren } from '../../../shared/profile/family-members';
+import { canonicalGapFill } from '../../../shared/profile/canonical-fact-keys';
+import { routeFactKeys } from './required-facts';
 
 const DOCUMENT_OWNED_KEYS = ['_document_sources', 'document_consistency_flags'];
 
@@ -41,6 +51,53 @@ export function makeUpdateProfileNode(supabase: SupabaseClient) {
       if (key in current) merged[key] = current[key];
       else delete merged[key];
     }
+
+    // Children are people, matched by name — not a value the checkpoint may
+    // overwrite. A birth certificate processed since the checkpoint was taken
+    // added a child, or a child's full date of birth, to the row; a plain
+    // spread would have replaced that list with the interview's older one.
+    if (Array.isArray(current.children) && Array.isArray(merged.children)) {
+      merged.children = mergeChildLists(
+        current.children as Record<string, unknown>[],
+        merged.children as Record<string, unknown>[],
+      );
+    }
+    // A child the applicant removed (family-members.ts) is still on the row's
+    // list; the by-name merge above keeps him, so drop him here.
+    if (Array.isArray(merged.children)) {
+      merged.children = withoutRemovedChildren(
+        merged,
+        merged.children as Record<string, unknown>[],
+      );
+    }
+    // Children named in the interview under ad-hoc keys (`youngest_son_name`)
+    // join `children`, where the forms read them. Gap-fill only here: a
+    // detail the applicant gave this turn was already applied by
+    // process_answer.
+    const folded = childrenUpdate(merged);
+    if (folded) Object.assign(merged, folded);
+    // "Unknown" sons intake recorded before it learned their names fold into
+    // the named ones (prod 2026-10-16: four sons in Canada for two).
+    if (Array.isArray(merged.children)) {
+      merged.children = dedupePlaceholderChildren(merged.children);
+    }
+
+    // A fact held only under a synonym (`birthplace_city` next to a null
+    // `place_of_birth`, prod 2026-10-17) is copied onto the key the forms
+    // read. Gap-fill only; the synonym stays.
+    Object.assign(merged, canonicalGapFill(merged, routeFactKeys(state)));
+
+    // The family consistency flags are derived from marriage_date and the
+    // children's dates of birth. An applicant correcting the marriage date
+    // (dry run 2026-10-15: 1999 → 1988-09-16) resolves the "marriage after
+    // child's birth" flags it caused, so recompute them from the profile
+    // being written. Same function the document pipeline uses; flags of any
+    // other kind are left exactly as the row had them.
+    // A removed child's flat interview keys go with him; the checkpoint still
+    // carries them (its reducer cannot delete), so this runs on every write.
+    for (const k of removedChildFlatKeys(merged)) delete merged[k];
+
+    applyConsistencyFlags(merged);
 
     await supabase.from('application_profiles').upsert(
       {

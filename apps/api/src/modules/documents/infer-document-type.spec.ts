@@ -31,6 +31,15 @@ describe('inferDocumentType', () => {
     // filed as a medical exam.
     ['Medical Insurance_compressed.pdf', 'medical_insurance'],
     ['health insurance.pdf', 'medical_insurance'],
+    // Prod 2026-10-19: shop rent deeds were filed as national ID cards.
+    ['Shop Rent Agreement.pdf', 'lease_agreement'],
+    ['lease deed 2023.pdf', 'lease_agreement'],
+    ['tenancy_agreement.pdf', 'lease_agreement'],
+    ['kirayanama.pdf', 'lease_agreement'],
+    ['release form.pdf', 'document'],
+    ['bank statement rent.pdf', 'bank_statement'],
+    ['rental income proof.pdf', 'document'],
+    ['rent receipts.pdf', 'document'],
   ])('files %s as %s', (fileName, expected) => {
     expect(inferDocumentType(fileName)).toBe(expected);
   });

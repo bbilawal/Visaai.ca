@@ -36,3 +36,27 @@ export function docsGateItemsText(missing: Array<Pick<ChecklistItem, 'label'>>, 
   const rest = missing.length - max
   return rest > 0 ? `${shown} +${rest}` : shown
 }
+
+/**
+ * The single next document to upload: the first required, non-form,
+ * non-optional slot still missing. A slot already uploaded is with the
+ * pipeline, not with the applicant — naming it as "next" after they uploaded
+ * it (super visa, prod app 61f16bb5) read as if the upload had failed.
+ */
+export function nextUploadItem<T extends GateItem & { meta?: GateItem['meta'] }>(items: T[]): T | null {
+  return (
+    items.find(
+      i => i.meta?.kind !== 'form' && !isOptionalItem(i) && i.required === true && i.status === 'missing',
+    ) ?? null
+  )
+}
+
+/**
+ * Whether a slot shows "Verified". A real slot follows its checklist row —
+ * the same status the progress counter counts — so the badge and the count
+ * can never disagree. The catch-all slot has no row and follows its files.
+ */
+export function slotIsVerified(item: GateItem & { id: string }, filesVerified: boolean): boolean {
+  if (item.id === 'other') return filesVerified
+  return item.status === 'verified' || item.status === 'waived'
+}

@@ -194,3 +194,21 @@ describe('AssignmentService.setConsultantCountries — registry validation', () 
     expect(setConsultantCountries).toHaveBeenCalledWith('c-1', []);
   });
 });
+
+describe('AssignmentService — a consultant is never assigned to their own application', () => {
+  // getApplicationMeta's default owner is 'u-1'.
+  const own = 'u-1';
+
+  it.each([
+    ['adminAssign', (s: AssignmentService) => s.adminAssign('app-1', own, 'admin-1')],
+    ['adminReassign', (s: AssignmentService) => s.adminReassign('app-1', own, 'admin-1')],
+    ['adminAddBackup', (s: AssignmentService) => s.adminAddBackup('app-1', own, 'admin-1')],
+    ['adminPromote', (s: AssignmentService) => s.adminPromote('app-1', own, 'admin-1')],
+    ['selfAssign', (s: AssignmentService) => s.selfAssign('app-1', own)],
+  ])('%s refuses the applicant as consultant (live 2026-10-20)', async (_name, call) => {
+    const insertAssignment = jest.fn();
+    const { service } = makeService(makeRepo({ insertAssignment } as never));
+    await expect(call(service)).rejects.toThrow(/own application/);
+    expect(insertAssignment).not.toHaveBeenCalled();
+  });
+});

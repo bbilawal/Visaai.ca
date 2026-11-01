@@ -1,11 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import type { DocumentState } from '../document.state';
+import { linkOrphanDocuments } from '../../slot-link';
 
 /**
  * Jobs after OCR finishes (0 only for a wrong-slot upload):
  *   0. Re-open the slot when the upload is not the document it asks for.
  *   1. Promote the linked checklist item from 'uploaded' to 'verified' when the
- *      document passed identity extraction.
+ *      document passed identity extraction and did not fail its expiry check.
  *   2. Once every supporting document on the checklist is uploaded/verified,
  *      mark official forms (meta.kind === 'form') as 'verified' too — the data
  *      needed to fill them is now on file.
@@ -33,11 +34,25 @@ export function makeSyncChecklistNode(supabase: SupabaseClient) {
       }
     }
 
+    // 0b. A file with no slot (uploaded to "Additional document", typed from
+    //     its text) goes into the missing slot of its kind, if there is one.
+    //     Best-effort, never throws. Runs before step 1 so a just-linked
+    //     document is promoted by the same pass.
+    if (!state.error && !state.slotMismatch) {
+      await linkOrphanDocuments(supabase, state.applicationId);
+    }
+
     // 1. Flip the document's checklist item to 'verified' on a clean OCR pass.
+    //    An expired document is not a clean pass: prod app 61f16bb5's
+    //    medical_insurance slot read 'verified' on a policy that expired
+    //    2026-05-31. Step 0b has already settled such a slot from ALL its
+    //    files ('verified' if another one is valid, else 'uploaded' with the
+    //    reason), so here it is simply not promoted.
     if (
       !state.error &&
       !state.slotMismatch &&
-      state.verificationResult === 'pass'
+      state.verificationResult === 'pass' &&
+      state.expiryStatus !== 'fail'
     ) {
       const { data: doc } = await supabase
         .from('documents')

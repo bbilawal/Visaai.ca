@@ -7,7 +7,17 @@
  * registers its renderers, so adding a country's form = a registration, not a
  * change to the prefill pipeline.
  */
-export type FormRenderer = (payload: unknown) => Promise<Uint8Array | null>;
+/**
+ * Context a renderer may use beyond the saved form: the live profile, for forms
+ * whose answers the saved form never carried (IMM 5476's representative).
+ */
+export interface FormRenderContext {
+  profile?: Record<string, unknown>;
+}
+export type FormRenderer = (
+  payload: unknown,
+  ctx?: FormRenderContext,
+) => Promise<Uint8Array | null>;
 
 const renderers = new Map<string, FormRenderer>();
 

@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import type { ConsultantReviewField } from '@visaai/types'
 import { getSession } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/providers/toast-provider'
+import { consultantActionError } from '@/lib/api/consultant-action-error'
 import { editPreflightField } from '@/lib/api/preflight-client'
 import { approveField, markFieldNotApplicable, rejectField } from '@/lib/api/consultant-client'
 import { notifyPreflightChanged } from '@/lib/preflight-events'
@@ -57,12 +59,16 @@ type Mode = { key: string; kind: 'correct' | 'reject' | 'not_applicable' } | nul
 export default function ExtractedFieldsTable({
   applicationId,
   fields,
+  canDecide = true,
 }: {
   applicationId: string
   fields: ConsultantReviewField[]
+  /** False for a viewer who is not an active assignee: the API refuses field decisions (403). */
+  canDecide?: boolean
 }) {
   const router = useRouter()
   const { toast } = useToast()
+  const tc = useTranslations('consultant')
   const [mode, setMode] = useState<Mode>(null)
   const [value, setValue] = useState('')
   const [reason, setReason] = useState('')
@@ -82,7 +88,7 @@ export default function ExtractedFieldsTable({
       notifyPreflightChanged(applicationId)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'That action failed')
+      setError(consultantActionError(err, tc('actionFailed')))
     } finally { setBusy(null) }
   }
 
@@ -165,7 +171,7 @@ export default function ExtractedFieldsTable({
                             void run(
                               f.fieldKey,
                               (t) => editPreflightField(t, applicationId, f.fieldKey, value, reason.trim() || undefined),
-                              'Value corrected',
+                              tc('toastValueCorrected'),
                             )
                           }
                         >
@@ -197,7 +203,7 @@ export default function ExtractedFieldsTable({
                             aria-label="Confirm reject"
                             disabled={isBusy || !reason.trim()}
                             onClick={() =>
-                              void run(f.fieldKey, (t) => rejectField(t, applicationId, f.fieldKey, reason.trim()), 'Field rejected')
+                              void run(f.fieldKey, (t) => rejectField(t, applicationId, f.fieldKey, reason.trim()), tc('toastFieldRejected'))
                             }
                           >
                             {isBusy ? 'Rejecting…' : 'Reject'}
@@ -232,7 +238,7 @@ export default function ExtractedFieldsTable({
                               void run(
                                 f.fieldKey,
                                 (t) => markFieldNotApplicable(t, applicationId, f.fieldKey, reason.trim() || undefined),
-                                'Marked not applicable',
+                                tc('toastMarkedNotApplicable'),
                               )
                             }
                           >
@@ -254,15 +260,15 @@ export default function ExtractedFieldsTable({
                           style={linkBtn}
                           className="mono"
                           aria-label={`Approve ${f.fieldKey}`}
-                          disabled={busy != null || !f.valueHash || f.approved}
+                          disabled={!canDecide || busy != null || !f.valueHash || f.approved}
                           title={f.approved ? 'Already approved' : undefined}
                           onClick={() =>
-                            void run(f.fieldKey, (t) => approveField(t, applicationId, f.fieldKey, f.valueHash as string), 'Field approved')
+                            void run(f.fieldKey, (t) => approveField(t, applicationId, f.fieldKey, f.valueHash as string), tc('toastFieldApproved'))
                           }
                         >
                           Approve
                         </button>
-                        <button type="button" style={linkBtn} className="mono" aria-label={`Reject ${f.fieldKey}`} disabled={busy != null} onClick={() => open(f, 'reject')}>
+                        <button type="button" style={linkBtn} className="mono" aria-label={`Reject ${f.fieldKey}`} disabled={!canDecide || busy != null} onClick={() => open(f, 'reject')}>
                           Reject
                         </button>
                         <button
@@ -270,7 +276,7 @@ export default function ExtractedFieldsTable({
                           style={linkBtn}
                           className="mono"
                           aria-label={`Not applicable ${f.fieldKey}`}
-                          disabled={busy != null || f.decision === 'not_applicable'}
+                          disabled={!canDecide || busy != null || f.decision === 'not_applicable'}
                           title={f.decision === 'not_applicable' ? 'Already marked not applicable' : 'Leave this value out of auto-fill without blocking it'}
                           onClick={() => open(f, 'not_applicable')}
                         >

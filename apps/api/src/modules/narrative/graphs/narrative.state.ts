@@ -1,7 +1,9 @@
 import { Annotation } from '@langchain/langgraph';
+import type { LetterType } from '@visaai/types';
 import type { StayFromDates } from '../../shared/stay-duration';
+import type { NarrativeEvidence } from './nodes/document-evidence';
 
-export type DocType = 'loe' | 'itinerary' | 'cover_letter';
+export type DocType = LetterType;
 
 export interface NarrativeContext {
   profile: Record<string, unknown>;
@@ -9,6 +11,11 @@ export interface NarrativeContext {
   countryCode: string;
   visaType: string;
   purpose: string;
+  /** Registry visa type (`visa_types.visaai_id`), e.g. 'ca-super-visa'; null
+   *  for a legacy framework application. Selects route-specific letter text. */
+  visaaiId?: string | null;
+  /** What the applicant's verified documents establish (name, insurance). */
+  evidence?: NarrativeEvidence | null;
   /** Trip dates + inclusive length when both planned dates are known. The
    *  profile's stated duration is already overwritten with `days`. */
   stay?: StayFromDates | null;

@@ -333,3 +333,50 @@ describe('VRI recommendations address the refusal grounds', () => {
     for (const r of out.recommendations!) expect(r.factor).toMatch(/_pct$/);
   });
 });
+
+describe('VRI employment — status given as text (Express Entry E2E, prod 2026-10-19)', () => {
+  const letter = {
+    documents: [
+      { id: 'w', document_type: 'proof_of_work_experience', ocr_status: 'complete' },
+    ],
+    verifications: [
+      {
+        document_id: 'w',
+        verification_type: 'identity',
+        result: 'pass',
+        details_json: {
+          extracted_fields: { full_name: 'Ahmed Raza', employer: 'Max Trading' },
+        },
+      },
+    ],
+  };
+
+  it('occupation "self-employed" is scored as self-employed, with the work letter', async () => {
+    const out = await scoreEmployment(
+      st({
+        profile: { occupation: 'self-employed', full_name: 'Ahmed Raza' },
+        ...letter,
+      } as Partial<VriInputData>),
+    );
+    expect(out.unassessedFactors ?? []).not.toContain('employment_pct');
+    expect(out.scores?.employment_pct).toBe(60);
+    expect(evidenceText(out)).toMatch(/self-employed/i);
+  });
+
+  it('employed: "Full-time" text plus a proof-of-work-experience letter counts the letter', async () => {
+    const out = await scoreEmployment(
+      st({
+        profile: { employed: 'Full-time', full_name: 'Ahmed Raza' },
+        ...letter,
+      } as Partial<VriInputData>),
+    );
+    expect(out.scores?.employment_pct).toBe(80);
+  });
+
+  it('unclear text stays unassessed', async () => {
+    const out = await scoreEmployment(
+      st({ profile: { occupation: 'engineer' } }),
+    );
+    expect(out.unassessedFactors).toContain('employment_pct');
+  });
+});

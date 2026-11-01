@@ -43,6 +43,20 @@ export class FakeConsultantRepository implements IConsultantRepository {
     this.assignments.push(row);
     return row;
   }
+  async markCompleted(
+    app: string,
+    consultant: string,
+    completedAt: string,
+  ): Promise<void> {
+    const r = this.assignments.find(
+      (x) =>
+        x.application_id === app &&
+        x.consultant_id === consultant &&
+        x.status === 'active',
+    );
+    if (!r) throw new Error('markCompleted: no active assignment');
+    r.completed_at = completedAt;
+  }
   async releaseAssignment(app: string, consultant: string): Promise<void> {
     const r = this.assignments.find(
       (x) =>

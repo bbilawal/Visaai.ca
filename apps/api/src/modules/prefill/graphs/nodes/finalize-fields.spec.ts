@@ -200,15 +200,79 @@ describe('finalizeFields — identity facts from identity documents', () => {
     expect(byKey(out, 'passport_type')?.value).toBe('Regular');
   });
 
-  it('finds a CNIC-shaped number anywhere in an applicant ID document', () => {
+  // Was: any CNIC-shaped run in ANY field of ANY document, re-hyphenated.
+  it("reads a Pakistani's CNIC from the ID number field, exactly as printed", () => {
+    const out = finalizeFields(
+      [f('national_id_number', '')],
+      ctx({
+        profile: { nationality: 'Pakistan' },
+        documentFieldsByType: {
+          document: {
+            full_name: 'Karim Haddad',
+            identity_number: 'CNIC No. 12345 1234567 1',
+          },
+        },
+      }),
+    );
+    expect(byKey(out, 'national_id_number')?.value).toBe('12345 1234567 1');
+  });
+
+  it("an Indian bank statement's account number is never a national ID", () => {
+    const out = finalizeFields(
+      [f('national_id_number', '')],
+      ctx({
+        profile: { nationality: 'India' },
+        documentFieldsByType: {
+          bank_statement: {
+            account_holder: 'Karim Haddad',
+            account_number: '5010012345678',
+          },
+          passport_copy: { passport_number: 'Z1234567' },
+        },
+      }),
+    );
+    expect(byKey(out, 'national_id_number')?.value).toBe('');
+  });
+
+  it('a CNIC-shaped number outside an ID field is ignored, even for a Pakistani', () => {
+    const out = finalizeFields(
+      [f('national_id_number', '')],
+      ctx({
+        profile: { nationality: 'PAK' },
+        documentFieldsByType: {
+          national_id: { full_name: 'Karim Haddad', serial: '12345-1234567-1' },
+          bank_statement: { account_number: '12345-1234567-1' },
+        },
+      }),
+    );
+    expect(byKey(out, 'national_id_number')?.value).toBe('');
+  });
+
+  it('a non-Pakistani ID number keeps its own punctuation (Brazil CPF)', () => {
+    const out = finalizeFields(
+      [f('national_id_number', '')],
+      ctx({
+        profile: { nationality: 'Brazil' },
+        documentFieldsByType: {
+          national_id: {
+            full_name: 'Karim Haddad',
+            id_number: '123.456.789-09',
+          },
+        },
+      }),
+    );
+    expect(byKey(out, 'national_id_number')?.value).toBe('123.456.789-09');
+  });
+
+  it('knows a Pakistani from the passport MRZ', () => {
     const out = finalizeFields(
       [f('national_id_number', '')],
       ctx({
         documentFieldsByType: {
-          document: {
-            full_name: 'Karim Haddad',
-            identity_number: '12345 1234567 1',
+          passport: {
+            mrz: 'P<PAKHADDAD<<KARIM<<<<<<<<<<<<<<<<<<<<<<<<<<\nAB12345674PAK6106150M3308064<<<<<<<<<<<<<<02',
           },
+          national_id: { cnic_number: 'Identity No 12345-1234567-1 Haddad' },
         },
       }),
     );
@@ -249,6 +313,27 @@ describe('finalizeFields — travel history and contact ownership', () => {
     expect(e.note).toMatch(/Omar Haddad/);
   });
 
+  it("replaces the account holder's email with the applicant's own from the profile", () => {
+    const out = finalizeFields(
+      [f('email_address', 'host@example.com', 'profile', 'Contact')],
+      ctx({ profile: { email: 'karim@example.com' } }),
+    );
+    const e = byKey(out, 'email_address')!;
+    expect(e.value).toBe('karim@example.com');
+    expect(e.needsReview).toBeUndefined();
+  });
+
+  it("never rewrites someone else's contact field, only flags it", () => {
+    for (const key of ['host_email', 'representative_email']) {
+      const out = finalizeFields(
+        [f(key, 'host@example.com', 'profile', 'Contact')],
+        ctx({ profile: { email: 'karim@example.com' } }),
+      );
+      expect(byKey(out, key)?.value).toBe('host@example.com');
+      expect(byKey(out, key)?.needsReview).toBe(true);
+    }
+  });
+
   it("does not flag the applicant's own account email", () => {
     const out = finalizeFields(
       [f('email', 'me@example.com', 'profile', 'Contact')],
@@ -261,6 +346,24 @@ describe('finalizeFields — travel history and contact ownership', () => {
 });
 
 describe('finalizeFields — purpose of visit (#51)', () => {
+  it('writes a thin business purpose as the company and activity (live E2E 2026-10-18)', () => {
+    const out = finalizeFields(
+      [f('purpose_of_visit', 'Other', 'profile', 'Travel')],
+      ctx({
+        route: { country: 'CA', visaaiId: 'ca-business-visitors' },
+        profile: {
+          planned_entry_date: '2027-03-10',
+          planned_departure_date: '2027-03-17',
+          canadian_business_name: 'TEST Metals Recycling Inc.',
+          business_activity: 'Meeting suppliers and negotiating purchase contracts',
+        },
+      }),
+    );
+    expect(out[0].value).toMatch(
+      /^Business visit to TEST Metals Recycling Inc\. for meeting suppliers and negotiating purchase contracts from March 10, 2027/,
+    );
+  });
+
   it('turns a short purpose phrase into a description with the dates and derived duration', () => {
     const out = finalizeFields(
       [f('purpose_of_visit', 'Family visit', 'profile', 'Travel')],
@@ -306,6 +409,48 @@ describe('finalizeFields — purpose of visit (#51)', () => {
       }),
     );
     expect(out[0].value).toBe(v);
+  });
+});
+
+describe('finalizeFields — a child with no name (Express Entry E2E, prod 2026-10-19)', () => {
+  const profile = {
+    children: [{ name: 'Unknown', relationship: 'daughter', sex: 'Female' }],
+  };
+
+  it('fills the generator\'s unnamed child row instead of adding an "Unknown" child', () => {
+    const out = finalizeFields(
+      [
+        f('child_1_given_name', '', 'profile', 'Family'),
+        f('child_1_sex', 'Female', 'profile', 'Family'),
+      ],
+      ctx({ profile }),
+    );
+    expect(out.some((x) => /unknown/i.test(`${x.label} ${x.value}`))).toBe(false);
+    expect(out.some((x) => x.key.startsWith('child_2'))).toBe(false);
+    expect(out.find((x) => x.key === 'child_1_relationship')).toMatchObject({
+      value: 'daughter',
+      label: 'Child 1 — relationship',
+    });
+  });
+
+  it('matches the generator\'s dependent_child_1 rows too', () => {
+    const out = finalizeFields(
+      [
+        f('dependent_child_1_given_name', '', 'profile', 'Family'),
+        f('dependent_child_1_sex', 'Female', 'profile', 'Family'),
+        f('dependent_child_1_relationship', 'Daughter', 'profile', 'Family'),
+      ],
+      ctx({ profile }),
+    );
+    expect(out.some((x) => x.key.startsWith('child_'))).toBe(false);
+  });
+
+  it('with no generator row, adds one labelled by position and no name row', () => {
+    const out = finalizeFields([], ctx({ profile }));
+    expect(out.find((x) => x.key === 'child_1_name')).toBeUndefined();
+    expect(out.find((x) => x.key === 'child_1_relationship')?.label).toBe(
+      'Child 1 — relationship',
+    );
   });
 });
 
@@ -413,6 +558,21 @@ describe('finalizeFields — IMM 5257 answers reach the form (#50)', () => {
     );
     expect(out.find((x) => x.key === 'representative_name')).toBeUndefined();
     expect(out.find((x) => x.key === 'uses_representative')?.value).toBe('No');
+  });
+});
+
+describe('finalizeFields — numbers stay numbers (Express Entry, prod 2026-10-19)', () => {
+  it('settlement funds and family size show the amount, not "Yes"', () => {
+    const out = finalizeFields(
+      [],
+      ctx({
+        profile: { settlement_funds_cad: 23500, family_members_count: 3 },
+        route: { country: 'CA', visaaiId: 'ca-express-entry' },
+      }),
+    );
+    const byKey = Object.fromEntries(out.map((x) => [x.key, x]));
+    expect(byKey.settlement_funds_cad.value).toBe('23500');
+    expect(byKey.family_members_count.value).toBe('3');
   });
 });
 

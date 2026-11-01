@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type {
   AppNotification,
@@ -14,9 +14,16 @@ import {
   type NotificationInsert,
 } from './messaging.repository';
 
+/** RLS denial (Postgres 42501) is the caller's fault: 403, never a 500. */
+function dbError(error: { code?: string; message?: string }): Error {
+  if (error.code === '42501') return new ForbiddenException('Access denied');
+  return new Error(error.message);
+}
+
 function unwrap<T>(res: { data: unknown; error: unknown }, ctx: string): T {
   if (res.error) {
-    throw new Error((res.error as { message?: string }).message ?? ctx);
+    const err = res.error as { code?: string; message?: string };
+    throw dbError({ code: err.code, message: err.message ?? ctx });
   }
   return res.data as T;
 }
@@ -32,7 +39,7 @@ export class MessagingRepository implements IMessagingRepository {
       .select('*')
       .eq('application_id', applicationId)
       .maybeSingle();
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as Conversation) ?? null;
   }
 
@@ -58,7 +65,7 @@ export class MessagingRepository implements IMessagingRepository {
         );
         if (existing) return existing;
       }
-      throw new Error(res.error.message);
+      throw dbError(res.error);
     }
     return res.data as Conversation;
   }
@@ -72,7 +79,7 @@ export class MessagingRepository implements IMessagingRepository {
       .select('*, message_attachments(*), voice_messages(*)')
       .eq('conversation_id', conversationId)
       .order('created_at', { ascending: true });
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as Message[]) ?? [];
   }
 
@@ -90,7 +97,7 @@ export class MessagingRepository implements IMessagingRepository {
       .limit(limit);
     if (before) q = q.lt('created_at', before);
     const res = await q;
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as Message[]) ?? [];
   }
 
@@ -127,7 +134,7 @@ export class MessagingRepository implements IMessagingRepository {
       .eq('sender_id', senderId)
       .eq('client_id', clientId)
       .maybeSingle();
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as Message | null) ?? null;
   }
 
@@ -140,7 +147,7 @@ export class MessagingRepository implements IMessagingRepository {
       .from('conversations')
       .update({ last_message_at: at })
       .eq('id', conversationId);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async setStatus(
@@ -166,7 +173,7 @@ export class MessagingRepository implements IMessagingRepository {
       .from('conversations')
       .update({ consultant_state: state })
       .eq('id', conversationId);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async advanceLastRead(
@@ -180,7 +187,7 @@ export class MessagingRepository implements IMessagingRepository {
       .update({ last_read_at: at })
       .eq('conversation_id', conversationId)
       .eq('user_id', userId);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async advanceDelivered(
@@ -195,7 +202,7 @@ export class MessagingRepository implements IMessagingRepository {
       .update({ delivered_at: at })
       .eq('conversation_id', conversationId)
       .in('user_id', userIds);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async advanceDeliveredForUser(
@@ -207,7 +214,7 @@ export class MessagingRepository implements IMessagingRepository {
       .from('conversation_participants')
       .update({ delivered_at: at })
       .eq('user_id', userId);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async getLastRead(
@@ -221,7 +228,7 @@ export class MessagingRepository implements IMessagingRepository {
       .eq('conversation_id', conversationId)
       .eq('user_id', userId)
       .maybeSingle();
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return res.data?.last_read_at ?? null;
   }
 
@@ -238,7 +245,7 @@ export class MessagingRepository implements IMessagingRepository {
       .neq('sender_id', recipientId);
     if (watermark) q = q.gt('created_at', watermark);
     const res = await q;
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return res.count ?? 0;
   }
 
@@ -251,7 +258,7 @@ export class MessagingRepository implements IMessagingRepository {
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as AppNotification[]) ?? [];
   }
 
@@ -265,7 +272,7 @@ export class MessagingRepository implements IMessagingRepository {
       .update({ read_at: at })
       .eq('user_id', userId)
       .is('read_at', null);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async upsertParticipant(
@@ -280,7 +287,7 @@ export class MessagingRepository implements IMessagingRepository {
         { conversation_id: conversationId, user_id: userId, role },
         { onConflict: 'conversation_id,user_id' },
       );
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async insertNotifications(
@@ -296,7 +303,7 @@ export class MessagingRepository implements IMessagingRepository {
         message_id: r.messageId,
       })),
     );
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
   }
 
   async getApplicationParties(
@@ -308,13 +315,13 @@ export class MessagingRepository implements IMessagingRepository {
       .select('user_id')
       .eq('id', applicationId)
       .maybeSingle();
-    if (appRes.error) throw new Error(appRes.error.message);
+    if (appRes.error) throw dbError(appRes.error);
     const assignRes = await admin
       .from('consultant_assignments')
       .select('consultant_id')
       .eq('application_id', applicationId)
       .eq('status', 'active');
-    if (assignRes.error) throw new Error(assignRes.error.message);
+    if (assignRes.error) throw dbError(assignRes.error);
     return {
       ownerId: (appRes.data as { user_id?: string } | null)?.user_id ?? null,
       consultantIds: (
@@ -331,7 +338,7 @@ export class MessagingRepository implements IMessagingRepository {
       .from('conversation_participants')
       .select('*')
       .eq('conversation_id', conversationId);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as ConversationParticipant[]) ?? [];
   }
 
@@ -348,7 +355,7 @@ export class MessagingRepository implements IMessagingRepository {
       .textSearch('search_tsv', query, { type: 'websearch', config: 'simple' })
       .order('created_at', { ascending: false })
       .limit(limit);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
     return (res.data as Message[]) ?? [];
   }
 
@@ -367,7 +374,7 @@ export class MessagingRepository implements IMessagingRepository {
       .textSearch('search_tsv', query, { type: 'websearch', config: 'simple' })
       .order('created_at', { ascending: false })
       .limit(limit);
-    if (res.error) throw new Error(res.error.message);
+    if (res.error) throw dbError(res.error);
 
     // PostgREST returns to-one embeds as objects, but defend against arrays too.
     const one = (v: unknown): Record<string, unknown> | null =>

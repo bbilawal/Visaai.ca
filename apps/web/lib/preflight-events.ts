@@ -31,3 +31,51 @@ export function onPreflightChanged(applicationId: string, fn: () => void): () =>
   window.addEventListener(PREFLIGHT_CHANGED_EVENT, handler)
   return () => window.removeEventListener(PREFLIGHT_CHANGED_EVENT, handler)
 }
+
+/**
+ * "The pre-submission review's lock changed" (locked, or retired by a new
+ * review). Separate from PREFLIGHT_CHANGED_EVENT because the review panel
+ * emits it and must not re-read itself in response (that would overwrite the
+ * review it just started). The decision controls listen: Approve needs a lock.
+ */
+export const PREFLIGHT_LOCK_CHANGED_EVENT = 'visaai:preflight-lock-changed'
+
+export function notifyPreflightLockChanged(applicationId: string): void {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(
+    new CustomEvent<PreflightChangedDetail>(PREFLIGHT_LOCK_CHANGED_EVENT, { detail: { applicationId } }),
+  )
+}
+
+export function onPreflightLockChanged(applicationId: string, fn: () => void): () => void {
+  const handler = (e: Event) => {
+    const detail = (e as CustomEvent<PreflightChangedDetail>).detail
+    if (detail?.applicationId === applicationId) fn()
+  }
+  window.addEventListener(PREFLIGHT_LOCK_CHANGED_EVENT, handler)
+  return () => window.removeEventListener(PREFLIGHT_LOCK_CHANGED_EVENT, handler)
+}
+
+/**
+ * "A consultant decided an uploaded document or generated item." The decision
+ * controls listen: a refused approval names an open document request, and once
+ * the consultant decides documents that refusal no longer describes the state
+ * (live 2026-10-20 — it stayed on screen and read as current).
+ */
+export const REVIEW_ITEM_DECIDED_EVENT = 'visaai:review-item-decided'
+
+export function notifyReviewItemDecided(applicationId: string): void {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(
+    new CustomEvent<PreflightChangedDetail>(REVIEW_ITEM_DECIDED_EVENT, { detail: { applicationId } }),
+  )
+}
+
+export function onReviewItemDecided(applicationId: string, fn: () => void): () => void {
+  const handler = (e: Event) => {
+    const detail = (e as CustomEvent<PreflightChangedDetail>).detail
+    if (detail?.applicationId === applicationId) fn()
+  }
+  window.addEventListener(REVIEW_ITEM_DECIDED_EVENT, handler)
+  return () => window.removeEventListener(REVIEW_ITEM_DECIDED_EVENT, handler)
+}

@@ -7,6 +7,7 @@ import type { AssignmentStatus } from '@visaai/types'
 import { getSession } from '@/lib/supabase/client'
 import { useToast } from '@/components/providers/toast-provider'
 import { SearchableSelect } from '@/components/ui/searchable-select'
+import { InlineConfirm } from '@/components/ui/inline-confirm'
 import {
   adminAddBackup,
   adminAssign,
@@ -130,7 +131,7 @@ export function AdminAssignmentControls({
       toast(t('pickConsultantFirst'), 'error')
       return
     }
-    if (action === 'unassign' && !window.confirm(t('confirmUnassign'))) return
+    // 'unassign' is confirmed in the page by InlineConfirm below, not window.confirm.
     setBusy(true)
     try {
       const {
@@ -196,9 +197,17 @@ export function AdminAssignmentControls({
           <button className="btn btn-outline btn-xs" disabled={busy} onClick={() => void run('reassign')}>
             {t('btnReassign')}
           </button>
-          <button className="btn btn-ghost btn-xs" disabled={busy} onClick={() => void run('unassign')}>
-            {t('btnUnassign')}
-          </button>
+          <InlineConfirm
+            triggerClassName="btn btn-ghost btn-xs"
+            confirmClassName="btn btn-danger btn-xs"
+            cancelClassName="btn btn-ghost btn-xs"
+            label={t('btnUnassign')}
+            question={t('confirmUnassign')}
+            confirmLabel={t('confirmUnassignYes')}
+            cancelLabel={t('cancelConfirm')}
+            onConfirm={() => void run('unassign')}
+            disabled={busy}
+          />
           {/* P3c multi-consultant: act on the selected consultant above. */}
           <button className="btn btn-outline btn-xs" disabled={busy} onClick={() => void run('addBackup')}>
             + Backup

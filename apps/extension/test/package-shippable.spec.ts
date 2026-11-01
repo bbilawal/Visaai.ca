@@ -51,6 +51,23 @@ describe('production extension package', () => {
     ) as Record<string, unknown>
   }
 
+  it('content scripts carry no ES module syntax — Chrome loads them as classic scripts', () => {
+    // 0.1.12 shipped `export { rowSummaryPresent }` at the end of content.js:
+    // a syntax error, so the script never ran on any portal page and every
+    // fill failed with "Could not read the portal page" (dry run 2026-10-16).
+    const scripts = (
+      (manifest().content_scripts as Array<{ js?: string[] }> | undefined) ?? []
+    ).flatMap((c) => c.js ?? [])
+    expect(scripts.length).toBeGreaterThan(0)
+    for (const dir of [dist, selfhostDist]) {
+      for (const file of scripts) {
+        const code = readFileSync(join(dir, file), 'utf8')
+        expect(code).not.toMatch(/^\s*export\s*[{*]|^\s*export\s+(const|function|class|default)\b/m)
+        expect(code).not.toMatch(/^\s*import\s+[^(]/m)
+      }
+    }
+  })
+
   it('carries no `key` — the Web Store issues the id', () => {
     expect(manifest()).not.toHaveProperty('key')
   })

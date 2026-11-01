@@ -2,9 +2,9 @@
   "manifest_version": 3,
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmLG5ta+t/WNawHvBYN8/EdezPa53ZL0fMDHTC8N9IY5QCu4AV4rzG+v1T5hTe3VhActnoeXF+6lN/ZZtVMADy4d9Rz8ChHNExBALpoRuylJeV2c4QYhMf3w5ZXZId3sdiHT5I7FVOTSOGavr4EDrU8bdhKlRbDKXWDn4rkkE1JC3wSs1uuaVNHkCzvViTKVE1y43juSlqUlNM2TIzjtaFULZvzMoj/wU+oCdcQnZxsfRid/lyCtZcgnYbSXpil4ADW6AsZtjBaxyBFNZiN/l7SC3IQe/x3G3Dkvyz4jVD0TwbIsk78i2l2ZL7V8+UrnGXCCvglwnEkSWeTC6SFPxSQIDAQAB",
   "name": "VisaAI Portal Assistant",
-  "version": "0.1.7",
+  "version": "0.1.61",
   "description": "Enters answers you approved in VisaAI on Canada's IRCC portal only if every field is found, and verifies each. You submit and pay.",
-  "permissions": ["storage", "sidePanel", "activeTab", "alarms"],
+  "permissions": ["storage", "sidePanel", "activeTab", "alarms", "scripting"],
   "host_permissions": ["https://*.cic.gc.ca/*", "https://*.canada.ca/*"],
   "externally_connectable": {
     "matches": [

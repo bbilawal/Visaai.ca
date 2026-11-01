@@ -12,6 +12,8 @@ interface ErrorEnvelope {
   statusCode: number;
   error: string;
   message: string;
+  /** Machine-readable reason a client can branch on (4xx only). */
+  code?: string;
   details?: unknown;
   timestamp: string;
   path: string;
@@ -44,6 +46,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     let message = 'Internal server error';
     let details: unknown;
+    let code: string | undefined;
 
     if (exception instanceof HttpException) {
       const body = exception.getResponse();
@@ -55,6 +58,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
         // string in `message`, move the structured payload to `details`.
         if (typeof b.message === 'string') {
           message = b.message;
+          // A machine-readable `code` and any structured fields beside it
+          // (PATCH visa-type's ROUTE_INELIGIBLE + recommendedVisaaiId). The
+          // envelope used to drop them, so the web could not tell a refused
+          // route from a failed save (prod 2026-10-16).
+          if (typeof b.code === 'string') code = b.code;
+          const extra = Object.fromEntries(
+            Object.entries(b).filter(
+              ([k]) => !['statusCode', 'error', 'message', 'code'].includes(k),
+            ),
+          );
+          if (Object.keys(extra).length > 0 && status < 500) details = extra;
         } else if (b.message !== undefined) {
           message = 'Validation failed';
           details = b.message;
@@ -69,6 +83,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       statusCode: status,
       error: HttpStatus[status] ?? 'ERROR',
       message,
+      ...(code !== undefined && status < 500 ? { code } : {}),
       ...(details !== undefined ? { details } : {}),
       timestamp: new Date().toISOString(),
       path: req?.url ?? '',

@@ -15,6 +15,7 @@ import type {
   VoiceMessage,
 } from '@visaai/types';
 import { JwtGuard } from '../auth/jwt.guard';
+import { ApplicationAccessGuard } from '../auth/application-access.guard';
 import type { AuthUser } from '../auth/jwt.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { AttachmentService } from './attachment.service';
@@ -31,6 +32,7 @@ export class MessagingAttachmentsController {
   constructor(private readonly svc: AttachmentService) {}
 
   @Post(':applicationId/attachments/upload-url')
+  @UseGuards(ApplicationAccessGuard)
   uploadUrl(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -62,6 +64,7 @@ export class MessagingAttachmentsController {
   }
 
   @Post(':applicationId/attachments')
+  @UseGuards(ApplicationAccessGuard)
   confirm(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,
@@ -98,6 +101,7 @@ export class MessagingAttachmentsController {
   }
 
   @Post(':applicationId/voice')
+  @UseGuards(ApplicationAccessGuard)
   confirmVoice(
     @CurrentUser() user: AuthUser,
     @Param('applicationId') applicationId: string,

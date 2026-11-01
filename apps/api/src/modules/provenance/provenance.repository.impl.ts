@@ -12,6 +12,8 @@ import type {
  * createVersion delegates to the SECURITY DEFINER `field_provenance_create_version`
  * RPC (migration 20260606000008), which atomically supersedes the current row
  * and inserts the new one — append-only, one current per (application, field).
+ * retireDocumentFieldsExcept delegates to `field_provenance_retire` (migration
+ * 20261020120000), which only moves lineage pointers under the same lock.
  * This layer never issues a raw UPDATE/DELETE against value/source columns.
  * Service-role (admin) path. No constructor side effects.
  */
@@ -103,5 +105,23 @@ export class ProvenanceRepository implements IProvenanceRepository {
       .is('superseded_by', null);
     if (error) throw new Error(`getByDocument failed: ${error.message}`);
     return data ?? [];
+  }
+
+  async retireDocumentFieldsExcept(
+    applicationId: string,
+    documentId: string,
+    keep: string[],
+  ): Promise<{ field_key: string; retired: number; skipped_approved: boolean }[]> {
+    const { data, error } = await this.supabase.admin.rpc(
+      'field_provenance_retire',
+      {
+        p_application_id: applicationId,
+        p_document_id: documentId,
+        p_keep: keep,
+      },
+    );
+    if (error)
+      throw new Error(`retireDocumentFieldsExcept failed: ${error.message}`);
+    return (data ?? []) as { field_key: string; retired: number; skipped_approved: boolean }[];
   }
 }

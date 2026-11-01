@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
-import type { PrefilledFormField } from '@visaai/types'
+import { ALL_LETTER_TYPES, LETTER_TYPES, type LetterType, type PrefilledFormField } from '@visaai/types'
 import { Link } from '@/i18n/navigation'
 import { getSession } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
@@ -13,8 +13,7 @@ import { useToast } from '@/components/providers/toast-provider'
 import { handlePlanError } from '@/lib/plan-error'
 import { MarkdownView } from '@/components/ui/markdown-view'
 
-type DocType = 'loe' | 'itinerary' | 'cover_letter'
-const LETTER_TYPES: readonly string[] = ['loe', 'itinerary', 'cover_letter']
+type DocType = LetterType
 const FORM_TYPE = 'prefilled_form_json'
 
 interface GeneratedDocument {
@@ -26,7 +25,7 @@ interface GeneratedDocument {
 }
 
 function isLetter(d: GeneratedDocument): d is GeneratedDocument & { doc_type: DocType } {
-  return LETTER_TYPES.includes(d.doc_type)
+  return (LETTER_TYPES as readonly string[]).includes(d.doc_type)
 }
 
 /** The prefilled form's fields, or null when the stored JSON is unreadable. */
@@ -49,12 +48,20 @@ function groupFields(fields: PrefilledFormField[]): Array<[string, PrefilledForm
   return [...groups]
 }
 
-export default function NarrativeClient({ applicationId }: { applicationId: string }) {
+export default function NarrativeClient({
+  applicationId,
+  offeredTypes = ALL_LETTER_TYPES,
+}: {
+  applicationId: string
+  /** Letters this route uses, in order (@visaai/types route-letters). Default: the original three. */
+  offeredTypes?: readonly DocType[]
+}) {
   const t = useTranslations('narrative')
   const DOC_LABELS: Record<DocType, string> = {
     loe: t('docLoe'),
     itinerary: t('docItinerary'),
     cover_letter: t('docCoverLetter'),
+    invitation_letter: t('docInvitation'),
   }
   const { toast } = useToast()
   const [documents, setDocuments] = useState<GeneratedDocument[]>([])
@@ -203,8 +210,14 @@ export default function NarrativeClient({ applicationId }: { applicationId: stri
         <p className="mb-4 text-[13px] text-callout-red" role="alert">{error}</p>
       )}
 
+      {offeredTypes.length === 0 && (
+        <p className="mb-4 text-[13px] text-midtone-gray" role="note" data-testid="no-letters-for-route">
+          {t('noLettersForRoute')}
+        </p>
+      )}
+
       <div className="flex gap-2 mb-4 flex-wrap">
-        {(Object.keys(DOC_LABELS) as DocType[]).map(docType => {
+        {offeredTypes.map(docType => {
           const isQueued = queue.includes(docType)
           const waitingFor = isQueued
             ? (queue.indexOf(docType) === 0 ? generating : queue[queue.indexOf(docType) - 1])
@@ -255,7 +268,7 @@ export default function NarrativeClient({ applicationId }: { applicationId: stri
             </div>
           ))}
         </div>
-      ) : documents.length === 0 ? (
+      ) : documents.length === 0 && offeredTypes.length === 0 ? null : documents.length === 0 ? (
         <Card className="flex flex-col items-center justify-center py-16 text-center">
           <p className="text-[14px] text-midtone-gray">{t('noDocs')}</p>
           <p className="text-[12px] text-midtone-gray mt-1">

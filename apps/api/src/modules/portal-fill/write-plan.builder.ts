@@ -76,6 +76,7 @@ export class WritePlanBuilder {
         ...(m.op ? { op: m.op } : {}),
         ...(m.reveal ? { reveal: true } : {}),
         ...(m.dialog ? { dialog: true } : {}),
+        ...(m.awaitOptions ? { awaitOptions: true } : {}),
       }),
     );
 

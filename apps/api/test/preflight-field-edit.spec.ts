@@ -26,6 +26,13 @@ const ADMIN = { id: 'admin-1', appRole: 'admin' as const };
 
 class MemoryFormStore {
   record: PrefillFormRecord | null;
+  /** The interview profile the fake Supabase serves (shared object). */
+  profile: Record<string, unknown> = {};
+  async saveProfileValue(_app: string, key: string, value: string) {
+    const previous = this.profile[key];
+    this.profile[key] = value;
+    return { previous };
+  }
   constructor(payload: PrefilledFormPayload | null) {
     this.record = payload
       ? { id: 'gd-1', raw: JSON.stringify(payload), payload }
@@ -48,23 +55,26 @@ class MemoryFormStore {
   /** Simulates the applicant saving from the Forms page. */
   applicantSets(key: string, value: string) {
     const p = JSON.parse(this.record!.raw) as PrefilledFormPayload;
-    p.fields = p.fields.map((f) => (f.key === key ? { ...f, value } : f));
+    // As the server records it (prefill.service.ts): a changed value is the
+    // applicant's.
+    p.fields = p.fields.map((f) =>
+      f.key === key ? { ...f, value, source: 'applicant' as const } : f,
+    );
     this.record = { id: 'gd-1', raw: JSON.stringify(p), payload: p };
   }
 }
 
-function fakeSupabase(): SupabaseService {
+function fakeSupabase(profile: Record<string, unknown>): SupabaseService {
+  Object.assign(profile, {
+    full_name: 'MUZAFFAR AHMAD',
+    date_of_birth: '1961-06-15',
+    passport_number: 'AK1182091',
+    nationality: 'PAK',
+    purpose_of_visit: 56,
+  });
   const rows: Record<string, unknown> = {
     applications: { destination_country: 'CA' },
-    application_profiles: {
-      profile_json: {
-        full_name: 'MUZAFFAR AHMAD',
-        date_of_birth: '1961-06-15',
-        passport_number: 'AK1182091',
-        nationality: 'PAK',
-        purpose_of_visit: 56,
-      },
-    },
+    application_profiles: { profile_json: profile },
   };
   const from = (t: string) => {
     const c: Record<string, unknown> = {};
@@ -117,7 +127,7 @@ async function make(form: PrefilledFormPayload | null = FORM) {
   const verif = new VerificationService(noDrift, audit);
   const store = new MemoryFormStore(form);
   const mappings = new PreflightMappingService(
-    fakeSupabase(),
+    fakeSupabase(store.profile),
     store as unknown as PrefillFormStore,
     cons,
   );
@@ -370,11 +380,44 @@ describe('PreflightFieldEditService — extracted (OCR) fields', () => {
     ).rejects.toThrow(/unknown field/i);
   });
 
-  it('refuses a mapped edit when the applicant has no saved form yet', async () => {
-    const { edits } = await make(null);
+  it('with no saved form yet, corrects the interview profile — what auto-fill reads (live 2026-10-19)', async () => {
+    const { edits, store, auditRepo } = await make(null);
+    const out = await edits.editField(APP, CONS, 'purpose_of_visit', '9');
+    expect(store.profile.purpose_of_visit).toBe('9');
+    expect(
+      out.mappings.find((m) => m.fieldKey === 'purpose_of_visit')?.mappedValue,
+    ).toBe('9');
+    const ev = auditRepo.rows
+      .filter((e) => e.event_type === 'FIELD_EDITED')
+      .pop()!;
+    expect(ev.actor_id).toBe(CONS.id);
+    expect(ev.payload).toMatchObject({ profile_updated: true, form_updated: false });
+  });
+
+  it('with no saved form, a declaration stays the applicant\'s to change', async () => {
+    const { edits, store, mappings } = await make(null);
+    const { mapping } = await mappings.resolve(APP);
+    const decl = mapping?.find((f) => f.declaration);
+    expect(decl).toBeDefined();
     await expect(
-      edits.editField(APP, CONS, 'purpose_of_visit', '9'),
-    ).rejects.toThrow(/no saved application form/i);
+      edits.editField(APP, CONS, decl!.profileKey, 'No'),
+    ).rejects.toThrow(/declaration/i);
+    expect(store.profile[decl!.profileKey]).toBeUndefined();
+  });
+
+  it('with no saved form, a locked review still refuses the edit', async () => {
+    const { edits, preflight } = await make(null);
+    const r = await preflight.start(APP, { id: CONS.id, role: 'consultant' });
+    for (const c of ALL)
+      await preflight.recordCheck(r.id, c, true, APP, { id: CONS.id, role: 'consultant' });
+    await preflight.complete(
+      r.id,
+      await (await make(null)).mappings.forApplication(APP),
+      { id: CONS.id, role: 'consultant' },
+      APP,
+    );
+    expect((await preflight.getActive(APP))?.status).toBe('completed');
+    await expect(edits.editField(APP, CONS, 'purpose_of_visit', '9')).rejects.toThrow(/locked.*new review/i);
   });
 });
 

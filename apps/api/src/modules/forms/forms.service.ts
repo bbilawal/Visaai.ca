@@ -5,6 +5,9 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { evaluateRule } from '../visa-rules/rule-evaluator';
+import type { RuleNode } from '../visa-rules/rule.types';
+import { profileToRuleFacts } from '../visa-rules/profile-to-rule-facts';
 import { FormTemplateStore, type FormTemplateRow } from './form-template.store';
 import {
   requiredFormsFor,
@@ -135,7 +138,7 @@ export class FormsService {
     //   3. Neither present: nothing to offer.
     const visaTypeId = (app as { visa_type_id?: string | null }).visa_type_id;
     const fromRegistry = visaTypeId
-      ? await this.registryForms(db, visaTypeId)
+      ? await this.registryForms(db, visaTypeId, applicationId)
       : [];
 
     let countryCode: string;
@@ -253,10 +256,11 @@ export class FormsService {
   private async registryForms(
     db: SupabaseClient,
     visaTypeId: string,
+    applicationId: string,
   ): Promise<RequiredForm[]> {
     const { data, error } = await db
       .from('visa_requirements')
-      .select('official_form_code, official_form_url, label, requirement_code')
+      .select('official_form_code, official_form_url, label, requirement_code, rule')
       .eq('visa_type_id', visaTypeId)
       .eq('kind', 'form')
       .eq('status', 'active')
@@ -269,16 +273,27 @@ export class FormsService {
       return [];
     }
 
-    const seen = new Set<string>();
-    const out: RequiredForm[] = [];
-    for (const r of (data ?? []) as Array<{
+    // A form whose rule the applicant's answers rule OUT is not theirs: the
+    // common-law declaration (IMM 5409) was listed for a married study permit
+    // applicant (live E2E 2026-10-20). Same verdicts as the checklist: only a
+    // definite 'false' drops it; an unanswered fact keeps it listed.
+    const rows = (data ?? []) as Array<{
       official_form_code: string | null;
       official_form_url: string | null;
       label: string | null;
       requirement_code: string;
-    }>) {
+      rule?: unknown;
+    }>;
+    const facts = rows.some((r) => r.rule)
+      ? profileToRuleFacts(await this.profileOf(db, applicationId))
+      : {};
+
+    const seen = new Set<string>();
+    const out: RequiredForm[] = [];
+    for (const r of rows) {
       const formCode = r.official_form_code?.trim();
       if (!formCode || seen.has(formCode)) continue;
+      if (evaluateRule((r.rule ?? null) as RuleNode | null, facts) === 'false') continue;
       seen.add(formCode);
       out.push({
         formCode,
@@ -290,6 +305,26 @@ export class FormsService {
       });
     }
     return out;
+  }
+
+  /** The application's intake profile, or {} when it cannot be read. */
+  private async profileOf(
+    db: SupabaseClient,
+    applicationId: string,
+  ): Promise<Record<string, unknown>> {
+    const { data, error } = await db
+      .from('application_profiles')
+      .select('profile_json')
+      .eq('application_id', applicationId)
+      .maybeSingle();
+    if (error) {
+      // Unknown facts keep every form listed — today's behaviour.
+      this.log.warn(
+        `profile lookup failed for ${applicationId}: ${error.message} — conditional forms stay listed`,
+      );
+      return {};
+    }
+    return ((data as { profile_json?: Record<string, unknown> } | null)?.profile_json ?? {});
   }
 
   /**

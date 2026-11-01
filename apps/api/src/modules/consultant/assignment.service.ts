@@ -153,6 +153,7 @@ export class AssignmentService {
   ): Promise<ConsultantAssignment> {
     const app = await this.repo.getApplicationMeta(applicationId);
     if (!app) throw new NotFoundException('application not found');
+    notOwnApplication(app, consultantId);
 
     if (!app.destination_country) {
       throw new ForbiddenException(
@@ -215,6 +216,7 @@ export class AssignmentService {
     adminId: string,
   ): Promise<ConsultantAssignment> {
     const app = await this.loadApp(applicationId);
+    notOwnApplication(app, consultantId);
     const active = await this.repo.getActivePrimary(applicationId);
     if (active) {
       throw new ConflictException(
@@ -266,6 +268,7 @@ export class AssignmentService {
     adminId: string,
   ): Promise<ConsultantAssignment> {
     const app = await this.loadApp(applicationId);
+    notOwnApplication(app, consultantId);
     if (!app.destination_country) {
       throw new ForbiddenException('application has no destination country');
     }
@@ -319,6 +322,7 @@ export class AssignmentService {
     adminId: string,
   ): Promise<ConsultantAssignment> {
     const app = await this.loadApp(applicationId);
+    notOwnApplication(app, newConsultantId);
     const active = await this.repo.getActivePrimary(applicationId);
     const previousConsultantId = active?.consultant_id ?? null;
 
@@ -396,6 +400,7 @@ export class AssignmentService {
     adminId: string,
   ): Promise<void> {
     const app = await this.loadApp(applicationId);
+    notOwnApplication(app, consultantId);
     const target = await this.repo.getActiveAssignmentFor(
       applicationId,
       consultantId,
@@ -711,5 +716,20 @@ export class AssignmentService {
         actor_id: p.actorId,
       },
     });
+  }
+}
+
+/**
+ * A consultant never reviews their own application: the pre-submission lock
+ * exists so a second person checks what the Portal Assistant will write to a
+ * government portal. Live 2026-10-20: the admin Assign button's default pick
+ * was the applicant's own (consultant-role) account, which could then lock
+ * and approve its own application.
+ */
+function notOwnApplication(app: ApplicationMeta, consultantId: string): void {
+  if (app.user_id && app.user_id === consultantId) {
+    throw new ForbiddenException(
+      'a consultant cannot be assigned to their own application',
+    );
   }
 }

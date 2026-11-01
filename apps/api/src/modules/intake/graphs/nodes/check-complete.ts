@@ -42,6 +42,14 @@ export async function checkComplete(
   };
 }
 
-export function intakeRouter(state: IntakeState): 'ask_question' | '__end__' {
-  return state.isComplete ? '__end__' : 'ask_question';
+/**
+ * After the answer is written: keep interviewing while required answers are
+ * missing; once the intake is complete, a message is a correction or update,
+ * and `confirm_update` replies to it instead of asking a question. (It used to
+ * END here, re-delivering the previous question as the reply.)
+ */
+export function intakeRouter(
+  state: IntakeState,
+): 'ask_question' | 'confirm_update' {
+  return state.isComplete ? 'confirm_update' : 'ask_question';
 }

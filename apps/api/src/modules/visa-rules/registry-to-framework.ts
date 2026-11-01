@@ -45,6 +45,12 @@ export interface FrameworkRequirements {
      * generation for applicants who have never travelled.
      */
     required?: false;
+    /**
+     * Months the document must stay valid after the planned entry date, from
+     * the registry's `parameters.minimum_validity_months` (super visa medical
+     * insurance: 12). The expiry check measures against it.
+     */
+    validity_months?: number;
   }>;
   base_forms: Array<{
     form_code: string;
@@ -78,6 +84,12 @@ export interface RegistryRequirement {
   official_form_url: string | null;
   rule: unknown;
   display_order: number;
+  /**
+   * Structured figures from the registry row. Two keys matter to the
+   * checklist: `document_owner` ('sponsor' = the host/sponsor obtains it) and
+   * `minimum_validity_months`. Optional so older callers keep compiling.
+   */
+  parameters?: Record<string, unknown> | null;
 }
 
 export interface ConversionResult {
@@ -141,6 +153,32 @@ const DOCUMENT_KINDS = new Set(['evidence', 'recommended']);
  * applicant put this in a folder? If not, it is not evidence.
  */
 
+/**
+ * Requirements that are NEVER an upload, whatever kind they were extracted as.
+ *
+ * Dry run 2026-10-16 (Canada eTA): "An accepted credit or debit card" and "A
+ * valid email address" were extracted as `evidence`, became required upload
+ * slots, and a photo of a VOID card was accepted and marked Verified. A card
+ * image is cardholder data VisaAI has no reason to hold — the government takes
+ * the card on its own payment page — and an email address is typed, not
+ * scanned. Migration 20261016120000 re-kinds the eTA rows as `condition`; this
+ * guard holds before it is applied and against any extraction that repeats the
+ * mistake on another route.
+ */
+const NEVER_UPLOADED =
+  /(^|_)(payment_method|payment_card|credit_card|debit_card|card_details|email_address)(_|$)/;
+
+/**
+ * Proof of paying the government's own fee. It goes in with the application,
+ * but the applicant only gets it when they pay, at submission — so it is on
+ * the list and never a gate on preparing the forms. Live E2E 2026-10-19
+ * (spousal sponsorship): the Forms page refused to draft anything until an
+ * IRCC fee receipt was uploaded.
+ */
+// Anchored to the application's own fee: other receipts (Lebanon's
+// endorsement_fee_receipt_copy) are obtained BEFORE applying and must gate.
+const OBTAINED_AT_SUBMISSION = /^(processing|application|visa)_fee_receipt$/;
+
 export function convertRegistryToFramework(
   visaaiId: string,
   requirements: RegistryRequirement[],
@@ -191,14 +229,24 @@ export function convertRegistryToFramework(
       continue;
     }
 
-    if (DOCUMENT_KINDS.has(r.kind)) {
+    if (DOCUMENT_KINDS.has(r.kind) && !NEVER_UPLOADED.test(r.requirement_code)) {
+      // `may_follow_application`: officially required, but supplied after the
+      // application when the authority asks for it (super visa IME without an
+      // upfront exam). On the list, never a gate on preparing the forms.
       const optional =
-        r.kind === 'recommended' || r.officially_required === false;
+        r.kind === 'recommended' ||
+        r.officially_required === false ||
+        r.parameters?.may_follow_application === true ||
+        OBTAINED_AT_SUBMISSION.test(r.requirement_code);
+      const owner = ownerOf(r.parameters);
+      const validity = validityMonthsOf(r.parameters);
       base_documents.push({
         type: r.requirement_code,
         label: r.label,
+        ...(owner ? { owner } : {}),
         ...(r.description ? { specs: { note: r.description } } : {}),
         ...(optional ? { required: false as const } : {}),
+        ...(validity !== undefined ? { validity_months: validity } : {}),
       });
     }
     // condition / step / fee fall through: real requirements, not checklist
@@ -216,6 +264,25 @@ export function convertRegistryToFramework(
     undetermined,
     excluded,
   };
+}
+
+/**
+ * Who obtains a document. Only an explicit sponsor/host marker moves it off
+ * the applicant: a super visa host's invitation letter, status proof and
+ * income proof are the host's to produce, and the vault groups them so.
+ */
+function ownerOf(
+  parameters: Record<string, unknown> | null | undefined,
+): 'sponsor' | undefined {
+  const v = parameters?.document_owner;
+  return v === 'sponsor' || v === 'host' ? 'sponsor' : undefined;
+}
+
+function validityMonthsOf(
+  parameters: Record<string, unknown> | null | undefined,
+): number | undefined {
+  const v = parameters?.minimum_validity_months;
+  return typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : undefined;
 }
 
 /** Facts a rule reads. Local copy to keep this module free of a circular import. */

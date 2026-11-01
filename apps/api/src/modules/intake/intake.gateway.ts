@@ -13,8 +13,15 @@ import { randomUUID } from 'node:crypto';
 import { Server, Socket } from 'socket.io';
 import { SupabaseService } from '../shared/supabase/supabase.service';
 import { GuardrailsService } from '../shared/guardrails/guardrails.service';
-import { IntakeService } from './intake.service';
+import {
+  DuplicateIntakeMessageError,
+  IntakeService,
+  MESSAGE_IN_PROGRESS,
+} from './intake.service';
 import { webOrigins } from '../../config/web-origins';
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 interface AuthenticatedSocket extends Socket {
   data: { userId?: string; accessToken?: string };
@@ -93,6 +100,16 @@ export class IntakeGateway
     console.error(`[intake] ${context} failed:`, raw);
 
     const lower = raw.toLowerCase();
+    // Its own line: the generic one below sent the applicant into a retry
+    // that hit the same lock. A dropped connection mid-turn leaves the lock
+    // held (up to MESSAGE_LOCK_TTL_SECONDS) while that turn finishes.
+    if (raw === MESSAGE_IN_PROGRESS) {
+      return {
+        message:
+          'Your previous message is still being answered. Wait a moment, then send this one again.',
+        retryable: true,
+      };
+    }
     if (lower.includes('access denied') || lower.includes('forbidden')) {
       return {
         message: 'You do not have access to this application.',
@@ -137,9 +154,53 @@ export class IntakeGateway
       };
     }
     return {
-      message: 'Something went wrong starting your intake. Please try again.',
+      message:
+        context === 'intake:message'
+          ? 'Something went wrong with your message. Please try again.'
+          : 'Something went wrong starting your intake. Please try again.',
       retryable: true,
     };
+  }
+
+  /** The browser's message id, if it sent a well-formed one (a UUID). */
+  private clientMsgIdOf(data: { clientMsgId?: unknown }): string | undefined {
+    const id = data?.clientMsgId;
+    // Lower-cased: the id is a uuid primary key, and Postgres hands it back
+    // lower-case — an upper-case id would never match its own history row.
+    return typeof id === 'string' && UUID_RE.test(id)
+      ? id.toLowerCase()
+      : undefined;
+  }
+
+  /**
+   * The room for one user's sockets on one application. Joined only after
+   * intake:start has proved access, and keyed by user as well, so nothing
+   * broadcast to it can reach anyone else.
+   */
+  private roomOf(userId: string, applicationId: string): string {
+    return `intake:${userId}:${applicationId}`;
+  }
+
+  /**
+   * A resend of a message already stored: acknowledge it again and re-sync
+   * the transcript, which holds it (and its reply, if that turn has finished).
+   */
+  private async resyncDuplicate(
+    client: AuthenticatedSocket,
+    db: ReturnType<SupabaseService['forUser']>,
+    applicationId: string,
+    userId: string,
+    clientMsgId: string,
+  ) {
+    client.emit('intake:received', { clientMsgId });
+    try {
+      // Same shape as intake:start's history, so the browser does not lose
+      // the checklist snapshot or the completion state it renders.
+      const snap = await this.intake.snapshot(db, applicationId, userId);
+      client.emit('intake:history', { ...snap, receipts: true });
+    } catch (err) {
+      console.error('[intake] duplicate re-sync failed', err);
+    }
   }
 
   @SubscribeMessage('intake:start')
@@ -158,8 +219,6 @@ export class IntakeGateway
       return;
     }
 
-    client.join(`intake:${data.applicationId}`);
-
     try {
       // F1: RLS-scoped client built from the connection's access token.
       const db = this.supabase.forUser(token);
@@ -173,10 +232,15 @@ export class IntakeGateway
         data.applicationId,
         userId,
       );
+      // After access is proven — it used to be joined before the check.
+      void client.join(this.roomOf(userId, data.applicationId));
       client.emit('intake:history', {
         messages: history,
         checklistItems: state.checklistItems,
         isComplete: state.isComplete,
+        // This server acknowledges each stored message with intake:received;
+        // the browser only times out an unacknowledged one when it says so.
+        receipts: true,
       });
     } catch (err) {
       client.emit('intake:error', this.toClientMessage(err, 'intake:start'));
@@ -186,23 +250,68 @@ export class IntakeGateway
   @SubscribeMessage('intake:message')
   async handleMessage(
     @ConnectedSocket() client: AuthenticatedSocket,
-    @MessageBody() data: { applicationId: string; text: string },
+    @MessageBody()
+    data: { applicationId: string; text: string; clientMsgId?: string },
   ) {
     const userId = client.data.userId;
     const token = client.data.accessToken;
+    // The browser's id for the message, echoed on everything about this turn
+    // so it can tell which of its messages a receipt, reply or error is for.
+    const clientMsgId = this.clientMsgIdOf(data);
     if (!userId || !token) {
-      client.emit('intake:error', { message: 'Unauthorized' });
+      client.emit('intake:error', { message: 'Unauthorized', clientMsgId });
       return;
     }
 
+    // Receipt: `intake:received`, emitted from `onAccepted` — only once the
+    // applicant's message is STORED. The browser keeps the message marked
+    // "sending" until then and tells them it was not sent if that never
+    // happens; a send that died on the client (no socket yet, a socket
+    // replaced by an auth re-handshake) used to vanish without a trace (prod
+    // 2026-10-21, 2026-10-24). Emitting it on arrival instead lied whenever
+    // the turn then failed before the write (message lock, access check).
+    const onAccepted = clientMsgId
+      ? () => client.emit('intake:received', { clientMsgId })
+      : undefined;
+    const db = this.supabase.forUser(token);
+
     // Guardrail (pre-LLM): if the user is asking for legal advice, an approval
-    // prediction, or help to misrepresent, refuse and escalate. Do not run the graph.
+    // prediction, or help to misrepresent, refuse and escalate. Do not run the
+    // graph — but do record the exchange, or a reload would drop the
+    // applicant's message and the refusal it got.
     const intent = this.guardrails.classifyIntent(data.text);
     if (!intent.safe) {
+      try {
+        await this.intake.recordRefusedMessage(
+          db,
+          data.applicationId,
+          userId,
+          data.text,
+          this.guardrails.refusalMessage,
+          { clientMsgId, onAccepted },
+        );
+      } catch (err) {
+        if (err instanceof DuplicateIntakeMessageError) {
+          await this.resyncDuplicate(
+            client,
+            db,
+            data.applicationId,
+            userId,
+            err.clientMsgId,
+          );
+          return;
+        }
+        client.emit('intake:error', {
+          ...this.toClientMessage(err, 'intake:message'),
+          clientMsgId,
+        });
+        return;
+      }
       client.emit('intake:message', {
         role: 'assistant',
         content: this.guardrails.refusalMessage,
         guardrail: intent.label,
+        clientMsgId,
       });
       return;
     }
@@ -245,11 +354,18 @@ export class IntakeGateway
         turnId,
         content: output.safe ? raw : output.safeFallback,
         isComplete,
+        clientMsgId,
       });
+      // The applicant's OTHER sockets on this application (a reconnect, a
+      // second tab) did not get this reply: this socket may be the dead one a
+      // resend was re-synced away from. Tell them to re-read the transcript.
+      // A ping only — each re-reads under its own credentials.
+      client
+        .to(this.roomOf(userId, data.applicationId))
+        .emit('intake:refresh', { applicationId: data.applicationId });
     };
 
     try {
-      const db = this.supabase.forUser(token);
       const state = await this.intake.sendMessage(
         db,
         data.applicationId,
@@ -259,7 +375,8 @@ export class IntakeGateway
           // Fire-and-forget preview so the reply paints as it is written rather
           // than after the whole generation. A browser that has navigated away
           // simply stops receiving these.
-          onToken: (delta) => client.emit('intake:token', { turnId, delta }),
+          onToken: (delta) =>
+            client.emit('intake:token', { turnId, delta, clientMsgId }),
           // Delivery, the moment the reply exists — NOT when the graph
           // settles. update_checklist runs as a sibling branch and regularly
           // outlasts the question; delivering on graph completion left the
@@ -267,10 +384,12 @@ export class IntakeGateway
           // disabled behind a checklist rebuild they were not waiting for.
           onReady: (question, isComplete) => deliver(question, isComplete),
         },
+        { clientMsgId, onAccepted },
       );
 
-      // The turn ended without the node running — a completed intake stops at
-      // check_complete and never reaches ask_question.
+      // Safety net for a turn that ended without either reply node running
+      // (ask_question, or confirm_update once the intake is complete — both
+      // deliver through onReady).
       if (!delivered) {
         deliver(
           state.currentQuestion ?? 'Your intake is complete.',
@@ -278,15 +397,28 @@ export class IntakeGateway
         );
       }
     } catch (err) {
+      if (err instanceof DuplicateIntakeMessageError) {
+        // A resend of a message already stored: no second turn.
+        await this.resyncDuplicate(
+          client,
+          db,
+          data.applicationId,
+          userId,
+          err.clientMsgId,
+        );
+        return;
+      }
       if (!delivered) {
         // Close the stream first. The browser is holding a partial reply it
         // was told to expect a terminator for; leaving it there would show the
         // applicant half a sentence styled as a finished answer.
         client.emit('intake:token:abort', { turnId });
-        client.emit(
-          'intake:error',
-          this.toClientMessage(err, 'intake:message'),
-        );
+        client.emit('intake:error', {
+          ...this.toClientMessage(err, 'intake:message'),
+          // Names the message the failure is about, stored or not, so the
+          // browser keeps that bubble on screen with its retry.
+          clientMsgId,
+        });
         return;
       }
       // The reply is already on screen and only the sibling branch failed.

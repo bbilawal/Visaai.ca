@@ -59,6 +59,14 @@ describe('sync_checklist', () => {
     expect(checklistUpdates(calls)).toEqual([{ status: 'verified' }]);
   });
 
+  it('does not verify the slot on an expired document (prod 61f16bb5)', async () => {
+    // The 21st Century policy expired 2026-05-31 passed its identity read and
+    // so marked the super visa medical_insurance slot 'verified'.
+    const { client, calls } = makeSupabase();
+    await makeSyncChecklistNode(client)(state({ expiryStatus: 'fail' }));
+    expect(checklistUpdates(calls)).toEqual([]);
+  });
+
   it('re-opens the slot when the upload is the wrong document (#15)', async () => {
     const { client, calls } = makeSupabase();
     await makeSyncChecklistNode(client)(

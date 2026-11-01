@@ -80,8 +80,12 @@ export class ExecutionService {
 
     // 2. consultant approval still valid (no stale / revoked / rejected / missing).
     const rollup = await this.consultant.getApplicationApproval(applicationId);
+    // An unreadable review state blocks (fail closed) without claiming the
+    // consultant's state changed.
+    if (rollup.approvalCheckUnavailable)
+      reasons.add('approval_check_unavailable');
     const consultantBroken =
-      !rollup.applicationApproved ||
+      (!rollup.applicationApproved && !rollup.approvalCheckUnavailable) ||
       rollup.fields.some(
         (f) => f.stale || f.decision === 'revoked' || f.decision === 'rejected',
       );

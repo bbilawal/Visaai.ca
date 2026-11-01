@@ -80,6 +80,57 @@ export const RULE_FACTS = [
    */
   'uses_representative',
   'authorizes_information_release',
+  /**
+   * Added for Canada's eTA (dry run 2026-10-16). Who needs an eTA turns on
+   * all four: a U.S. lawful permanent resident needs none; the CAN+ branch
+   * (visa-required nationals who may apply for an eTA instead) needs a Canadian
+   * visa in the past 10 years OR a valid U.S. non-immigrant visa; and every
+   * eTA branch applies only to travel BY AIR. The eTA interview asks each.
+   */
+  'us_lpr',
+  'travel_by_air',
+  'valid_us_nonimmigrant_visa',
+  'canadian_visa_last_10y',
+  /**
+   * Added for Canada's business visitor route (audit 2026-10-18). IRCC asks for
+   * "warranty or service agreements, or contracts, if relevant to your visit"
+   * — relevant only to after-sales service (installing, repairing or servicing
+   * equipment sold to a Canadian buyer). Without this fact the row was a
+   * required upload for every business visitor.
+   *
+   * Closed vocabulary, set by profile-to-rule-facts.ts only when recognisable:
+   * after_sales_service | meetings | buying_goods | training. Unrecognised
+   * text leaves it unset, so a rule on it stays `unknown` ("may be required").
+   */
+  'business_activity',
+  /**
+   * Added for Canada's work permit checklist (registry v2, 2026-10-29). IRCC's
+   * forms-and-documents page splits the documents by permit kind: a positive
+   * LMIA and a job offer letter only "if your job requires an lmia", an offer
+   * of employment number only "if your job is lmia-exempt", the employer
+   * documents only for an employer-specific permit, and "not applicable" for
+   * an open permit. Without these facts every work permit applicant was asked
+   * for an LMIA.
+   *
+   * Set by profile-to-rule-facts.ts from the work interview's answers, through
+   * the @visaai/types classifiers the interview itself uses:
+   *   work_permit_type        lmia | lmia_exempt | open (SAWP is lmia);
+   *                           unrecognised text leaves it unset
+   *   works_in_quebec         the CAQ (Quebec + LMIA)
+   *   open_permit_principal   worker | student, for the family open permit
+   *   public_health_occupation, agricultural_occupation, ime_country_six_months
+   *                           the medical-exam triggers IRCC states beside the
+   *                           stay-and-residence one
+   *   resident_non_citizen    lives in a country they are not a citizen of
+   *                           (proof of present immigration status there)
+   */
+  'work_permit_type',
+  'works_in_quebec',
+  'open_permit_principal',
+  'public_health_occupation',
+  'agricultural_occupation',
+  'ime_country_six_months',
+  'resident_non_citizen',
 ] as const;
 
 export type RuleFact = (typeof RULE_FACTS)[number];

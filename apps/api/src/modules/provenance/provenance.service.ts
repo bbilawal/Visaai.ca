@@ -186,4 +186,48 @@ export class ProvenanceService {
   async getByDocument(documentId: string): Promise<FieldProvenance[]> {
     return this.repo.getByDocument(documentId);
   }
+
+  /**
+   * A re-read of a document no longer yields some fields it gave before (a
+   * lease once read as an ID card, live 2026-10-19: the landlord's CNIC stayed
+   * the application's current national_id_number and was offered to the
+   * consultant to approve). Its versions of those fields are retired — kept in
+   * the history, never current again — and each retirement is audited. The
+   * caller keeps every field the document's type may give, so a field a flaky
+   * read merely missed is never retired.
+   */
+  async retireDocumentFieldsExcept(
+    applicationId: string,
+    documentId: string,
+    keep: string[],
+    actor: ActorRef = SYSTEM,
+  ): Promise<string[]> {
+    const retired = await this.repo.retireDocumentFieldsExcept(
+      applicationId,
+      documentId,
+      keep,
+    );
+    for (const r of retired) {
+      await this.audit.append({
+        applicationId,
+        eventType: 'FIELD_EDITED',
+        actor,
+        valueHash: null,
+        refs: { fieldKey: r.field_key, documentId, ocrRunId: null },
+        // A consultant-approved current value is left alone, but recorded:
+        // the document no longer supports what the consultant approved.
+        payload: r.skipped_approved
+          ? {
+              retire_skipped: 'consultant_approved',
+              reason: 'not in the latest read of its document',
+            }
+          : {
+              retired: true,
+              reason: 'not in the latest read of its document',
+              versions_retired: r.retired,
+            },
+      });
+    }
+    return retired.filter((r) => !r.skipped_approved).map((r) => r.field_key);
+  }
 }

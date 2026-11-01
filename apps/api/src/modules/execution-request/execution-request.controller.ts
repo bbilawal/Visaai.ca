@@ -8,10 +8,11 @@ import { CurrentUser } from '../auth/current-user.decorator';
 import type { AuthUser } from '../auth/jwt.guard';
 import { ExecutionRequestService } from './execution-request.service';
 import { z } from 'zod';
+import { PORTAL_FILL_OPS } from '@visaai/types';
 import { parseBody } from '../../common/zod-body';
 
 /** Mirrors PreflightMappingInput. */
-const MappingDto = z.object({
+export const MappingDto = z.object({
   fieldKey: z.string().min(1),
   targetField: z.string().min(1),
   mappedValue: z.union([z.string(), z.number(), z.null()]),
@@ -28,11 +29,10 @@ const MappingDto = z.object({
   label: z.string().max(200).optional(),
   // Part of the lock hash (op / reveal / dialog) and the readback display
   // (declaration). Stripping them would turn a radio click into a value write.
-  op: z
-    .enum(['radio', 'check', 'select_text', 'dialog_open', 'dialog_save'])
-    .optional(),
+  op: z.enum(PORTAL_FILL_OPS).optional(),
   reveal: z.boolean().optional(),
   dialog: z.boolean().optional(),
+  awaitOptions: z.boolean().optional(),
   declaration: z.boolean().optional(),
 });
 

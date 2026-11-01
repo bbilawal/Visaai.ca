@@ -9,6 +9,8 @@ export interface DocumentRow {
   upload_status: string | null;
   ocr_status: string | null;
   created_at: string | null;
+  /** The checklist slot the upload belongs to; a newer upload there replaces it. */
+  checklist_item_id?: string | null;
 }
 
 export interface VerificationRow {
@@ -46,6 +48,16 @@ export interface DecisionRow {
   created_at: string;
 }
 
+/** document_holder_confirmations: the applicant's own "this passport is mine". */
+export interface HolderConfirmationRow {
+  application_id: string;
+  document_id: string;
+  confirmed_by: string | null;
+  holder_name: string | null;
+  stated_name: string | null;
+  created_at: string;
+}
+
 /**
  * Service-role data access for the consultant review surface. Every method is
  * keyed on the application id as well as the item id, so a document id from
@@ -62,6 +74,9 @@ export interface IReviewItemsRepository {
   listGenerated(applicationId: string): Promise<GeneratedRow[]>;
   getGenerated(applicationId: string, id: string): Promise<GeneratedRow | null>;
   listDecisions(applicationId: string): Promise<DecisionRow[]>;
+  listHolderConfirmations(
+    applicationId: string,
+  ): Promise<HolderConfirmationRow[]>;
   insertDecision(row: DecisionRow & { application_id: string }): Promise<void>;
   insertRevision(row: {
     generated_document_id: string;

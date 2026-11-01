@@ -2,7 +2,12 @@ import { ChatOpenAI } from '@langchain/openai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { Logger } from '@nestjs/common';
 import type { NarrativeState } from '../narrative.state';
-import { stayDirective } from './draft-document';
+import {
+  familyTiesDirective,
+  routeDirective,
+  stayDirective,
+} from './draft-document';
+import { evidenceDirective } from './document-evidence';
 import { languageDirective } from '../../../../i18n/language';
 import {
   asUntrustedData,
@@ -18,6 +23,7 @@ const REVIEW_PROMPT = `You are a strict immigration document reviewer. Review th
 3. Completeness for its document type
 4. No commentary addressed to the applicant (e.g. "Here is the letter", "Note: ...", offers to edit) — the text must be only the document
 5. Any length of stay matches the authoritative trip dates, when given
+6. Any route-specific facts and rules given below are followed exactly (who writes the letter, the figures, what it must contain)
 Respond with ONLY a JSON object: {"approved": boolean, "critique": "specific feedback if not approved, empty string if approved"}
 
 ${UNTRUSTED_DATA_DIRECTIVE}`;
@@ -72,7 +78,7 @@ export function makeSelfReviewNode(llm: ChatOpenAI, language?: string | null) {
         `Document type: ${state.docType}\n\n${asUntrustedData(
           'Applicant profile',
           state.context.profile,
-        )}${stayDirective(state.context)}\n\n${asUntrustedData('Draft document', state.draft)}\n\nReview as JSON:`,
+        )}${stayDirective(state.context)}${routeDirective(state.context, state.docType)}${familyTiesDirective(state.context, state.docType)}${evidenceDirective(state.context.evidence)}\n\n${asUntrustedData('Draft document', state.draft)}\n\nReview as JSON:`,
       ),
     ]);
 

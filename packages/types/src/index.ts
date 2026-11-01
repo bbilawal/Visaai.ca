@@ -12,6 +12,15 @@
 export type { Database, Json } from './database.types';
 export * from './stay-dates';
 export * from './intake-requirements';
+export * from './super-visa';
+export * from './canada-eta';
+export * from './canada-express-entry';
+export * from './canada-spousal-sponsorship';
+export * from './canada-study-permit';
+export * from './canada-work-permit';
+import { CA_ETA_VISAAI_ID } from './canada-eta';
+export * from './business-visitor';
+export * from './route-letters';
 
 export type PlanTier = 'none' | 'self_service' | 'copilot' | 'expert'
 
@@ -54,6 +63,37 @@ export function formatPlanPrice(tier: PaidPlanTier): string {
 /** "Expert Review ($250)" — the single source for any user-facing plan label. */
 export function planLabelWithPrice(tier: PaidPlanTier): string {
   return `${PLAN_LABELS[tier]} (${formatPlanPrice(tier)})`
+}
+
+/**
+ * One-time "AI Prefilled Application Form" fee, in CENTS (USD), per visa type.
+ * Same rule as PLAN_PRICE_CENTS: the API charges from here and the web app
+ * formats its display from here, so the two cannot drift.
+ *
+ * Keyed by `visa_types.visaai_id`. Anything not listed pays the default. The
+ * Canada eTA is a single short form, so it is priced lower (owner decision
+ * 2026-10-18); IRCC's own CAD $7 eTA fee is separate and paid on IRCC's site.
+ */
+export const PREFILL_PRICE_CENTS_DEFAULT = 2900
+
+export const PREFILL_PRICE_CENTS_BY_VISA: Readonly<Record<string, number>> = {
+  [CA_ETA_VISAAI_ID]: 1000,
+}
+
+/** The form fee in cents for an application's visa type (default when unknown). */
+export function prefillPriceCents(visaaiId?: string | null): number {
+  if (visaaiId && Object.prototype.hasOwnProperty.call(PREFILL_PRICE_CENTS_BY_VISA, visaaiId)) {
+    return PREFILL_PRICE_CENTS_BY_VISA[visaaiId]
+  }
+  return PREFILL_PRICE_CENTS_DEFAULT
+}
+
+/** "$10" / "$29" — the form fee as shown to the applicant. */
+export function formatPrefillPrice(visaaiId?: string | null): string {
+  const cents = prefillPriceCents(visaaiId)
+  return cents % 100 === 0
+    ? `$${cents / 100}`
+    : `$${(cents / 100).toFixed(2)}`
 }
 
 export type ApplicationStatus = 'draft' | 'ready' | 'submitted' | 'decided'
@@ -121,6 +161,17 @@ export interface ChecklistItemMeta {
   form_name?: string | null
   source_url?: string | null
   specs?: DocumentSpecs
+  /**
+   * Set on items that request a family member's civil document the profile
+   * still lacks (a child's birth certificate, the spouse's ID, the marriage
+   * certificate). `resolved` once the data arrived while a document is
+   * attached.
+   */
+  family_gap?: { key: string; person?: string; resolved?: boolean } | null
+  /** The item needs the client's attention, e.g. a flagged marriage date. */
+  needs_attention?: boolean
+  /** Why the item needs attention — shown with it. */
+  attention_message?: string | null
 }
 
 export interface ChecklistItem {
@@ -169,7 +220,12 @@ export interface VriRecommendation {
   priority: number
 }
 
-export type GeneratedDocType = 'loe' | 'itinerary' | 'cover_letter' | 'prefilled_form_json'
+export type GeneratedDocType =
+  | 'loe'
+  | 'itinerary'
+  | 'cover_letter'
+  | 'invitation_letter'
+  | 'prefilled_form_json'
 
 export interface GeneratedDocument {
   id: string
@@ -367,7 +423,14 @@ export function computeProgress(input: ProgressInput): AppProgress {
       gatingItems.filter(isChecklistItemSatisfied).length,
       gatingItems.length,
     ),
-    narrative: ratio(input.approvedGenTypes.length, input.requiredGenTypes.length),
+    // A route that needs no letters (Canada's eTA) has nothing to do here:
+    // 100, not 0 — see route-letters.ts.
+    narrative: input.requiredGenTypes.length === 0
+      ? 100
+      : ratio(
+          input.requiredGenTypes.filter(t => input.approvedGenTypes.includes(t)).length,
+          input.requiredGenTypes.length,
+        ),
     readiness: input.hasVriScore ? 100 : 0,
     prefill: input.hasPrefill ? 100 : 0,
     submission: input.submissionStatus === 'complete' ? 100
@@ -384,8 +447,7 @@ export function computeProgress(input: ProgressInput): AppProgress {
   const isComplete: Record<StageSlug, boolean> = {
     intake: input.hasProfile && input.intakeDone,
     documents: docsComplete,
-    narrative: input.requiredGenTypes.length > 0 &&
-      input.requiredGenTypes.every(t => input.approvedGenTypes.includes(t)),
+    narrative: input.requiredGenTypes.every(t => input.approvedGenTypes.includes(t)),
     readiness: input.hasVriScore,
     prefill: input.hasPrefill,
     submission: input.submissionStatus === 'complete',
@@ -922,6 +984,15 @@ export interface ReviewDocumentVerification {
   verifiedAt: string | null
 }
 
+export interface ReviewDocumentApplicantConfirmation {
+  confirmedBy: string | null
+  confirmedAt: string
+  /** The name printed on the passport when they confirmed. */
+  holderName: string | null
+  /** The name they had given. */
+  statedName: string | null
+}
+
 export interface ReviewDocumentField {
   fieldKey: string
   value: string | null
@@ -939,11 +1010,24 @@ export interface ReviewDocumentItem {
   verifications: ReviewDocumentVerification[]
   extractedFields: ReviewDocumentField[]
   decision: ReviewItemDecisionRecord | null
+  /**
+   * The applicant's own "this passport is mine" on a passport held because its
+   * name didn't match the name they gave — the latest
+   * document_holder_confirmations row (service-role written; not the
+   * owner-writable verification details). Null when they never confirmed it.
+   */
+  applicantConfirmation?: ReviewDocumentApplicantConfirmation | null
+  /**
+   * The applicant deleted this file while the consultant's re-upload /
+   * rejection request on it was open. Listed so the consultant can close the
+   * request (approve) — there is no file to open.
+   */
+  deleted?: boolean
 }
 
 export interface ReviewGeneratedItem {
   id: string
-  docType: 'loe' | 'itinerary' | 'cover_letter'
+  docType: 'loe' | 'itinerary' | 'cover_letter' | 'invitation_letter'
   contentMd: string
   approvedByUser: boolean
   generatedAt: string | null
@@ -1078,6 +1162,25 @@ export interface ConsultantApprovalRollup {
   fields: FieldApprovalStatus[]
   sections: SectionApprovalStatus[]
   applicationApproved: boolean
+  /**
+   * The latest application decision is an approval, but it predates the
+   * pre-submission lock now in force (or a new review is open), so it does
+   * not count: the consultant must lock and approve again. False when the
+   * lock could not be read (not approved, but not the consultant's to fix).
+   */
+  applicationApprovalStale?: boolean
+  /**
+   * Standing reasons the application cannot be approved (e.g. a document the
+   * consultant asked to have re-uploaded, with no replacement yet). Any entry
+   * makes applicationApproved false.
+   */
+  approvalBlockers?: string[]
+  /**
+   * The approval blockers could not be read (a transient error). Not approved
+   * (fail closed), but not the consultant's to fix: callers must not report
+   * it as a missing approval.
+   */
+  approvalCheckUnavailable?: boolean
 }
 
 // ======================================================================
@@ -1342,6 +1445,8 @@ export interface PreflightReview {
   started_at: string
   completed_at: string | null
   invalidated_at: string | null
+  /** GET /preflight/active, in-review only: whether the caller can lock it. */
+  can_lock?: boolean
 }
 
 /** One row in the 3-column preflight diff. */
@@ -1400,6 +1505,8 @@ export interface PreflightMappingInput {
   reveal?: boolean
   /** The target is inside the open dialog (an "add row" dialog). Part of the lock hash. */
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
   /**
    * A legal declaration (criminality, security, medical, immigration history).
    * Only ever mapped from the applicant's own explicit answer; shown apart in
@@ -1419,8 +1526,41 @@ export interface PreflightMappingInput {
  *  - dialog_open: click an "add row" button and wait for its dialog.
  *  - dialog_save: click the open dialog's Save button, wait for it to close and
  *    verify the table gained a row.
+ *  - row_add: make the inline row the selector names exist (IRCC PR portal,
+ *    `#from2`): nothing when it is there; otherwise, with the row before it
+ *    there, click the page's one "Add another" button and wait for it. Never
+ *    removes a row.
+ *  - dependant_open: IRCC PR portal profile, "Add dependant". The value is
+ *    "Name: …; Family name: …; Date of birth: …; Relationship: …;
+ *    Accompanying: …". Nothing when a saved card matches it field by field;
+ *    refused when a card has the same name and date of birth but other
+ *    answers, or the same family name and date of birth under another name,
+ *    or when an inline dependant form is open with values; otherwise
+ *    click the profile's one "Add dependant" button and wait for its inline
+ *    form. Fields of that form carry the `>> dependant` selector scope.
+ *  - dependant_save: click that inline form's "Save details" (enabled only),
+ *    wait for the form to close and a card matching the value exactly.
+ *    Nothing when the card was already there.
  */
-export type PortalFillOp = 'radio' | 'check' | 'select_text' | 'dialog_open' | 'dialog_save'
+export const PORTAL_FILL_OPS = [
+  'radio',
+  'check',
+  'select_text',
+  'dialog_open',
+  'dialog_save',
+  /** Attach a reviewed document to a file input (IRCC /doc-upload). */
+  'attach_file',
+  'row_add',
+  'dependant_open',
+  'dependant_save',
+] as const
+/**
+ * One list, so the request validators (preflight, execution request) can never
+ * fall behind the type again: 'attach_file' was added to the type only, and
+ * every review and execution request for an application with uploads failed
+ * validation (prod 2026-10-17).
+ */
+export type PortalFillOp = (typeof PORTAL_FILL_OPS)[number]
 
 /** Why an IRCC field is left for the applicant to fill. */
 export type PortalFillLeftReason =
@@ -1453,6 +1593,8 @@ export interface PreflightDiffEntry {
   op?: PortalFillOp
   reveal?: boolean
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
   sourceValueHash: ValueHash | null
   mappedValueHash: ValueHash | null
 }
@@ -1482,6 +1624,10 @@ export type EligibilityReason =
   | 'payment_missing'
   | 'consultant_missing'
   | 'consultant_stale'
+  /** A document the consultant sent back has no replacement yet. */
+  | 'document_review_open'
+  /** The consultant review state could not be read right now (transient). */
+  | 'approval_check_unavailable'
   | 'preflight_incomplete'
   | 'preflight_invalid'
   | 'verification_drift'
@@ -1549,6 +1695,8 @@ export type ExecutionFailReason =
   | 'consultant_state_changed'
   | 'verification_drift'
   | 'eligibility_recomputed_false'
+  /** The consultant review state could not be read right now (transient). */
+  | 'approval_check_unavailable'
   | 'replay_detected'
 
 export interface ExecutionResult {
@@ -1572,6 +1720,8 @@ export interface WritePlanEntry {
   op?: PortalFillOp
   reveal?: boolean
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
 }
 
 /**
@@ -1605,6 +1755,10 @@ export interface SignedWriteIntent {
   op?: PortalFillOp
   reveal?: boolean
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
+  /** The mapping's human label. Display only — not signed, never acted on. */
+  label?: string
   lockedDiffHash: string
   sig: string
 }
@@ -1656,6 +1810,26 @@ export interface PortalFillWriteCommand {
   op?: PortalFillOp
   reveal?: boolean
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
+  /** What the side panel shows for this step ("Passport number"). Display only. */
+  label?: string
+  /**
+   * op 'attach_file' only: the document's bytes, read by the server from the
+   * applicant's VisaAI storage at dispatch time. Never a URL — the extension
+   * fetches nothing the page or the command could point it at.
+   */
+  file?: PortalFillFile
+}
+
+/** A file the server hands the extension to attach (op 'attach_file'). */
+export interface PortalFillFile {
+  name: string
+  mimeType: string
+  size: number
+  /** sha256 of the bytes, hex — the extension re-hashes before attaching. */
+  sha256: string
+  base64: string
 }
 
 /** content script → background: result of one field (write → readback → compare). */
@@ -1684,6 +1858,19 @@ export interface PortalFillStageMessage {
   nextPage?: { page: string; title: string } | null
   /** Label of the write that failed, for the side panel. */
   failedLabel?: string
+  /**
+   * On completed, progressive page only (IRCC eTA): labels of reviewed
+   * answers whose questions are not on the page yet — revealed by a later
+   * answer or behind the portal's own Next button. A later launch fills them.
+   */
+  remaining?: string[]
+  /**
+   * On completed: labels of what the assistant leaves for the applicant on
+   * the page it filled (the coverage's `left`). The side panel's opt-in
+   * auto-advance never presses "Save and continue" when any is listed — or
+   * when this is absent (unknown).
+   */
+  left?: string[]
 }
 
 export type PortalFillMessage =

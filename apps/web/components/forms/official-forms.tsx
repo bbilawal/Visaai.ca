@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getSession } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
 import { ExternalLinkIcon } from '@/components/ui/icons'
@@ -51,6 +51,12 @@ interface OfficialFormsProps {
    * material. Defaults true: any other caller behaves exactly as before.
    */
   enabled?: boolean
+  /**
+   * Reports the form codes this section lists, once loaded, so the page can
+   * drop the matching "Required Forms" upload slots instead of listing a form
+   * twice. Never called on error — a failed load hides nothing.
+   */
+  onCodes?: (codes: string[]) => void
 }
 
 /**
@@ -65,9 +71,11 @@ interface OfficialFormsProps {
  * the pattern that hid a production billing outage. Only "no forms" or
  * "still loading" render nothing.
  */
-export function OfficialForms({ applicationId, country, enabled = true }: OfficialFormsProps) {
+export function OfficialForms({ applicationId, country, enabled = true, onCodes }: OfficialFormsProps) {
   const [forms, setForms] = useState<DeliveredForm[] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const onCodesRef = useRef(onCodes)
+  useEffect(() => { onCodesRef.current = onCodes }, [onCodes])
 
   useEffect(() => {
     let cancelled = false
@@ -102,7 +110,11 @@ export function OfficialForms({ applicationId, country, enabled = true }: Offici
           setError(`${res.status} · unexpected response${requestId ? ` · ${requestId}` : ''}`)
           return
         }
-        if (!cancelled) setForms(body as DeliveredForm[])
+        if (!cancelled) {
+          const list = body as DeliveredForm[]
+          setForms(list)
+          onCodesRef.current?.(list.map(f => f.formCode))
+        }
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'network error')
       }

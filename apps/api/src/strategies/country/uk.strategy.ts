@@ -29,8 +29,14 @@ export class UkStrategy extends BaseCountryStrategy {
       visitorVisaProgram('GB', {
         label: 'Standard Visitor Visa',
         compliance: this.compliance(),
+        registryVisaaiIds: [
+          'gb-standard-visitor-visa',
+          'gb-standard-visitor-visa-visit-on-business',
+        ],
       }),
-      studentVisaProgram('GB', this.compliance()),
+      studentVisaProgram('GB', this.compliance(), undefined, [], {
+        registryVisaaiIds: ['gb-student-visa'],
+      }),
     ];
   }
 }

@@ -45,8 +45,26 @@ export function lockReasonText(reason: string): string {
 export const CONSULTANT_NOT_APPROVED_TEXT =
   'Your consultant has locked the pre-submission review but has not approved the application yet. They need to press “Approve application” on their review screen — locking the review alone does not unlock auto-fill.'
 
+/**
+ * The consultant approved, but before the current review (re-locked or still
+ * open) — live 2026-10-19:
+ * a morning approval read "Approved" after a re-lock whose approval failed).
+ */
+export const APPROVAL_PREDATES_LOCK_TEXT =
+  'Your consultant changed the reviewed values after approving. They need to lock the new review and approve it again before the assistant can fill.'
+
+/** A document the consultant sent back (re-upload / rejected) has no replacement yet. */
+export const DOCUMENT_REVIEW_OPEN_TEXT =
+  'Your consultant asked you to replace a document. Upload the new file on the Documents page; auto-fill stays off until it is replaced or your consultant approves it.'
+
+/** The review state could not be read just now — not a missing approval. */
+export const APPROVAL_CHECK_UNAVAILABLE_TEXT =
+  'We could not check your consultant’s review just now. Please try again in a moment.'
+
 export const EXECUTION_REASON_TEXT: Record<string, string> = {
   consultant_missing: CONSULTANT_NOT_APPROVED_TEXT,
+  document_review_open: DOCUMENT_REVIEW_OPEN_TEXT,
+  approval_check_unavailable: APPROVAL_CHECK_UNAVAILABLE_TEXT,
   consultant_stale:
     'A value your consultant approved has changed since, so their approval is out of date. Your consultant needs to approve it again.',
   preflight_incomplete:
@@ -67,16 +85,20 @@ export function executionReasonText(reason: string): string {
 /**
  * Why the consultant's approval (not the lock) still blocks the fill, or null
  * when it does not. Mirrors ExecutionEligibilityService: a rejected or revoked
- * field, a stale approval, or no application-scope approval all block.
+ * field, a stale approval, an application approval older than the current
+ * lock, or no application-scope approval all block.
  */
 export function approvalBlockText(rollup: ConsultantApprovalRollup | null): string | null {
   if (!rollup || rollup.applicationApproved) return null
+  if (rollup.approvalCheckUnavailable) return APPROVAL_CHECK_UNAVAILABLE_TEXT
   const rejected = rollup.fields.filter((f) => f.decision === 'rejected' || f.decision === 'revoked')
   if (rejected.length > 0) {
     const keys = rejected.map((f) => f.fieldKey).join(', ')
     return `Your consultant rejected ${rejected.length === 1 ? 'a field' : `${rejected.length} fields`} (${keys}). Auto-fill stays off until they approve ${rejected.length === 1 ? 'it' : 'them'} or mark ${rejected.length === 1 ? 'it' : 'them'} not applicable.`
   }
   if (rollup.fields.some((f) => f.stale)) return EXECUTION_REASON_TEXT.consultant_stale
+  if (rollup.applicationApprovalStale) return APPROVAL_PREDATES_LOCK_TEXT
+  if (rollup.approvalBlockers?.length) return DOCUMENT_REVIEW_OPEN_TEXT
   return CONSULTANT_NOT_APPROVED_TEXT
 }
 

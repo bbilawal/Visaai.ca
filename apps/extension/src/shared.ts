@@ -21,7 +21,7 @@ export type ExtMessage =
   // writes, clicks, or navigates.
   // `ops` (parallel to selectors, protocol 2) names the rule each target must
   // pass: a radio input or an "add" button is present, not a data field.
-  | { type: 'readback'; selectors: string[]; ops?: Array<PortalFillOp | null> }
+  | { type: 'readback'; selectors: string[]; ops?: Array<PortalFillOp | null>; awaitOptions?: boolean[] }
   // Phase 7E — portal-fill executor SCAFFOLD (read-only dry run). Resolves +
   // reads back + compares the field's CURRENT value to the expected hash.
   // It does NOT write, mutate, submit, or navigate.
@@ -38,7 +38,26 @@ export type ExtMessage =
   | { type: 'pf-unbind-session' }
   // Phase 7K — read-only pre-flight. Asks the BOUND tab which selectors resolve,
   // before any write. Returns presence booleans only; never values.
-  | { type: 'pf-probe'; selectors: string[]; ops?: Array<PortalFillOp | null> }
+  | { type: 'pf-probe'; selectors: string[]; ops?: Array<PortalFillOp | null>; awaitOptions?: boolean[] }
+  // READ-ONLY: the text of the data rows in the bound tab's tables (side panel
+  // → background → content), for the stale-row notice. Never leaves the browser.
+  | { type: 'pf-page-rows' }
+  | { type: 'page-rows' }
+  // READ-ONLY: the questions on the screen (their label text), so a server-
+  // paged form's screen already filled is not filled again.
+  | { type: 'screen-questions' }
+  // READ-ONLY: the required document slots on IRCC /doc-upload and whether each
+  // shows a file, so the panel can say what still blocks payment.
+  | { type: 'pf-upload-status' }
+  | { type: 'upload-status' }
+  | { type: 'portal-session-warning'; shown: boolean }
+  // AUTO-ADVANCE (opt-in, IRCC Portal tr-rt only). advance-check is READ-ONLY:
+  // it waits for the page's rows to hold still and reports errors, empty
+  // required questions, an open dialog or the session warning. advance-press
+  // presses "Save and continue" (#next_path) once, only through
+  // control-actuator's guarded pressSaveAndContinue, only on `path`.
+  | { type: 'advance-check' }
+  | { type: 'advance-press'; path: string; rows: number }
 
 /** Current value of one portal field, read read-only from the live DOM. */
 export interface ReadbackResult {
@@ -47,6 +66,8 @@ export interface ReadbackResult {
   found: boolean
   /** The selector matched more than one element; reported as not found. */
   ambiguous?: boolean
+  /** The control is there, but its <select> does not list the scoped option. */
+  optionMissing?: boolean
 }
 
 /**
@@ -64,7 +85,16 @@ export const PENDING_SESSION_TTL_MS = 5 * 60 * 1000
 export const PORTAL_FILL_PROTOCOL_VERSION = 2
 
 /** Non-value operations (mirror of @visaai/types PortalFillOp). */
-export type PortalFillOp = 'radio' | 'check' | 'select_text' | 'dialog_open' | 'dialog_save'
+export type PortalFillOp =
+  | 'radio'
+  | 'check'
+  | 'select_text'
+  | 'dialog_open'
+  | 'dialog_save'
+  | 'attach_file'
+  | 'row_add'
+  | 'dependant_open'
+  | 'dependant_save'
 
 export type PortalFillFieldOutcome = 'verified' | 'failed'
 export type PortalFillFailReason =
@@ -92,6 +122,21 @@ export interface PortalFillWriteCommand {
   reveal?: boolean
   /** Lives inside the open "add row" dialog: resolve it there. */
   dialog?: boolean
+  /** A <select> whose options load after an earlier answer: wait for the option (eTA job title). */
+  awaitOptions?: boolean
+  /** What the panel shows for this step ("Passport number"). Display only. */
+  label?: string
+  /** op 'attach_file': the document's bytes, from the server (never a URL). */
+  file?: PortalFillFile
+}
+
+/** Mirror of @visaai/types PortalFillFile. */
+export interface PortalFillFile {
+  name: string
+  mimeType: string
+  size: number
+  sha256: string
+  base64: string
 }
 
 export interface PortalFillFieldResult {
@@ -116,6 +161,10 @@ export interface PortalFillStageMessage {
   filledPages?: string[]
   nextPage?: { page: string; title: string } | null
   failedLabel?: string
+  /** Progressive page (eTA): reviewed answers whose questions are not shown yet. */
+  remaining?: string[]
+  /** On completed: what the assistant leaves for the applicant on the page it filled (labels). */
+  left?: string[]
 }
 
 export function isPortalFillProtocolCompatible(protocol: number): boolean {
@@ -149,4 +198,10 @@ export function isTrustedApiUrl(apiUrl: string): boolean {
   } catch {
     return false
   }
+}
+
+/** One required document slot on IRCC /doc-upload. */
+export interface RequiredUpload {
+  name: string
+  uploaded: boolean
 }

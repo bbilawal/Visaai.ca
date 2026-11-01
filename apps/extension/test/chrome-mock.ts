@@ -21,6 +21,7 @@ export interface ChromeMock {
     tabsUpdated: Fn[]
     tabsRemoved: Fn[]
     onAlarm: Fn[]
+    storageChanged: Fn[]
   }
 }
 
@@ -33,6 +34,7 @@ export function installChromeMock(storage: Record<string, unknown> = {}): Chrome
     tabsUpdated: [],
     tabsRemoved: [],
     onAlarm: [],
+    storageChanged: [],
   }
   const ev = (arr: Fn[]) => ({ addListener: (fn: Fn) => arr.push(fn) })
   const chrome = {
@@ -55,6 +57,7 @@ export function installChromeMock(storage: Record<string, unknown> = {}): Chrome
           delete store[key]
         }),
       },
+      onChanged: ev(listeners.storageChanged),
     },
     action: {
       setBadgeText: jest.fn(async () => undefined),
@@ -73,6 +76,9 @@ export function installChromeMock(storage: Record<string, unknown> = {}): Chrome
     },
   }
   ;(globalThis as any).chrome = chrome
+  // Each test loads the content script afresh; its one-copy guard must not
+  // carry over from the previous test's load.
+  delete (globalThis as any).__visaaiPortalAssistantLoaded
   return { chrome, store, listeners }
 }
 

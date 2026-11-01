@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   ForbiddenException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import type {
@@ -48,6 +49,8 @@ const CHECK_KEYS: PreflightCheckKey[] = [
  */
 @Injectable()
 export class PreflightService {
+  private readonly logger = new Logger(PreflightService.name);
+
   constructor(
     @Inject(PREFLIGHT_REPOSITORY) private readonly repo: IPreflightRepository,
     private readonly provenance: ProvenanceService,
@@ -135,6 +138,7 @@ export class PreflightService {
         ...(m.op ? { op: m.op } : {}),
         ...(m.reveal ? { reveal: true } : {}),
         ...(m.dialog ? { dialog: true } : {}),
+        ...(m.awaitOptions ? { awaitOptions: true } : {}),
         sourceValueHash: current?.value_hash ?? null,
         mappedValueHash:
           m.mappedValue == null
@@ -277,12 +281,7 @@ export class PreflightService {
     // it when that is the assignee (an admin may have opened the review);
     // otherwise the lock would be broken on arrival (consultant_reassigned),
     // so refuse it instead of writing it.
-    const lockedBy: ActorRef | null =
-      actor.role === 'consultant' && actor.id === active.consultant_id
-        ? actor
-        : review.reviewer_id === active.consultant_id
-          ? { id: review.reviewer_id, role: 'consultant' }
-          : null;
+    const lockedBy = this.lockingActor(review, active.consultant_id, actor);
     if (!lockedBy) {
       throw new ConflictException(
         'Only the assigned consultant can lock this review. Ask them to complete it.',
@@ -411,6 +410,53 @@ export class PreflightService {
   /** The current review: the in-review one, else the latest live (completed) lock. */
   async getActive(applicationId: string): Promise<PreflightReview | null> {
     return this.repo.getActive(applicationId);
+  }
+
+  /**
+   * The current review plus whether THIS caller can lock it, by the rule
+   * complete() enforces (who may review, then who the lock binds to). An
+   * admin who opened the review was shown an enabled "Complete & lock" that
+   * the server then refused (live 2026-10-19).
+   */
+  async getActiveFor(
+    applicationId: string,
+    actor: ActorRef,
+  ): Promise<PreflightReview | null> {
+    const review = await this.repo.getActive(applicationId);
+    if (!review || review.status !== 'in_review') return review;
+    // complete() refuses anyone but a consultant or an admin outright.
+    if (actor.role !== 'consultant' && actor.role !== 'admin')
+      return { ...review, can_lock: false };
+    // Advisory only: a failed lookup, or no assignee (complete() refuses that
+    // for a different reason), leaves it out rather than failing /active.
+    try {
+      const active = await this.consultant.getAssignment(applicationId);
+      if (!active) return review;
+      const can_lock = !!this.lockingActor(review, active.consultant_id, actor);
+      return { ...review, can_lock };
+    } catch (err) {
+      this.logger.warn(
+        `can_lock left out for ${applicationId}: ${(err as Error).message}`,
+      );
+      return review;
+    }
+  }
+
+  /**
+   * Who a lock is bound to: the assignee locking it, or the assignee who
+   * opened it. The lock is the assigned consultant's attestation, and
+   * validateLock requires reviewer_id === the active assignee; anyone else
+   * gets null.
+   */
+  private lockingActor(
+    review: PreflightReview,
+    assigneeId: string,
+    actor: ActorRef,
+  ): ActorRef | null {
+    if (actor.role === 'consultant' && actor.id === assigneeId) return actor;
+    return review.reviewer_id === assigneeId
+      ? { id: review.reviewer_id, role: 'consultant' }
+      : null;
   }
 
   /** Read-only accessor (no logic change) — lets the execution gate compare the

@@ -17,6 +17,7 @@ function freshState(over: Partial<IntakeState> = {}): IntakeState {
     isComplete: false,
     currentQuestion: null,
     checklistBuiltAt: null,
+    profileChanges: [],
     ...over,
   };
 }

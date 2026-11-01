@@ -51,3 +51,40 @@ describe('loadNarrativeData — length of stay comes from the dates', () => {
     expect(out.context?.stay ?? null).toBeNull();
   });
 });
+
+describe('loadNarrativeData — the route names the visa', () => {
+  // Dry run 2026-10-16: an eTA applicant's LOE said "applying for a visitor
+  // visa". The registry flow never sets a framework, so the prompt received an
+  // empty visa name and the model filled the gap with the commonest answer.
+  function registryDb(): SupabaseClient {
+    const chain = (data: unknown) => {
+      const c: Record<string, unknown> = {};
+      c.select = () => c;
+      c.eq = () => c;
+      c.single = () => Promise.resolve({ data, error: null });
+      return c;
+    };
+    return {
+      from: (table: string) =>
+        table === 'applications'
+          ? chain({
+              vri_score: null,
+              destination_country: 'CA',
+              country_frameworks: null,
+              visa_types: {
+                visaai_id: 'ca-electronic-travel-authorization-eta',
+                official_name: 'Electronic travel authorization (eTA)',
+              },
+            })
+          : chain({ profile_json: { purpose_of_visit: 'tourism' } }),
+    } as unknown as SupabaseClient;
+  }
+
+  it('uses the registry visa type and destination when there is no framework', async () => {
+    const out = await makeLoadNarrativeDataNode(registryDb())({
+      applicationId: 'app-1',
+    } as NarrativeState);
+    expect(out.context?.visaType).toBe('Electronic travel authorization (eTA)');
+    expect(out.context?.countryCode).toBe('CA');
+  });
+});

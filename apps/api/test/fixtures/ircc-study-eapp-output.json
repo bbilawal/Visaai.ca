@@ -1,0 +1,1602 @@
+{
+  "entries": [
+    {
+      "profileKey": "eapp_purpose",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[1]\"]",
+      "action": "select",
+      "label": "What would you like to do in Canada? (Study)",
+      "category": "dates",
+      "labelMatch": "/what would you like to do in canada/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_stay_length",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[2]\"]",
+      "action": "select",
+      "label": "How long are you planning to stay in Canada?",
+      "category": "dates",
+      "labelMatch": "/how long are you planning to stay in canada/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_family_member_citizen_or_pr",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[5]\"]",
+      "action": "select",
+      "label": "Family member (18+) who is a Canadian citizen or permanent resident",
+      "category": "passport",
+      "labelMatch": "/family member who is a canadian citizen or permanent resident/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "date_of_birth",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[8]\"]",
+      "action": "select",
+      "label": "Date of birth — month",
+      "category": "passport",
+      "transform": "eapp_month",
+      "pageMatch": "/what is your date of birth/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_passport_code",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[3]\"]",
+      "action": "select",
+      "label": "Passport code",
+      "category": "passport",
+      "op": "select_text",
+      "labelMatch": "/select the code that matches the one on your passport/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_country_of_residence",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[4]\"]",
+      "action": "select",
+      "label": "Current country or territory of residence",
+      "category": "addresses",
+      "op": "select_text",
+      "labelMatch": "/current country or territory of residence/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "date_of_birth",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[7]\"]",
+      "action": "select",
+      "label": "Date of birth — year",
+      "category": "passport",
+      "op": "select_text",
+      "transform": "date_year",
+      "pageMatch": "/what is your date of birth/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "date_of_birth",
+      "page": "/eapp/eapp",
+      "selector": "select[id=\"answerlist[9]\"]",
+      "action": "select",
+      "label": "Date of birth — day",
+      "category": "passport",
+      "op": "select_text",
+      "transform": "date_day",
+      "pageMatch": "/what is your date of birth/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_attestation_letter",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception",
+      "category": "employment",
+      "labelMatch": "/provincial or territorial attestation letter or meet an exception/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_attestation_province",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Province or territory of the attestation letter",
+      "category": "addresses",
+      "parent": "eapp_attestation_letter",
+      "parentValue": "376806",
+      "labelMatch": "/which province or territory is your provincial attestation letter from/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_us_permanent_resident",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Lawful permanent resident of the United States",
+      "category": "passport",
+      "labelMatch": "/lawful permanent resident of the united states/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_accepted_to_dli",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Accepted to a designated learning institution",
+      "category": "employment",
+      "labelMatch": "/have you been accepted to a designated learning institution/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_post_secondary",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Attending a post-secondary designated learning institution",
+      "category": "employment",
+      "labelMatch": "/planning to attend a post-secondary designated learning institution/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_marital_status",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Marital status",
+      "category": "passport",
+      "labelMatch": "/what is your marital status/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_destination_province",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Province or territory of destination",
+      "category": "addresses",
+      "labelMatch": "/province or territory of destination/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_valid_permit",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Valid work or study permit and need a visa to return",
+      "category": "travel_history",
+      "labelMatch": "/valid work permit or study permit, and need a visa to return/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_exchange_student",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Exchange student",
+      "category": "employment",
+      "labelMatch": "/are you an exchange student/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_work_essential",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Work is an essential part of the studies (co-op)",
+      "category": "employment",
+      "labelMatch": "/is work an essential component of your studies/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_family_of_worker_or_student",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Spouse, partner or child of a skilled worker or full-time student in Canada",
+      "category": "travel_history",
+      "labelMatch": "/spouse, common-law partner or child of certain skilled worker/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_government_scholarship",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program",
+      "category": "employment",
+      "labelMatch": "/commonwealth scholarship/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_accompanying_family_member",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Accompanying a family member with status in Canada",
+      "category": "travel_history",
+      "labelMatch": "/accompanying a family member that has status in canada/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_criminality",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Committed, arrested, charged or convicted of a criminal offence",
+      "category": "travel_history",
+      "declaration": true,
+      "labelMatch": "/committed, been arrested for, been charged with, or convicted of any criminal offen[cs]e/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_medical_exam_12_months",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Medical exam by an IRCC panel physician in the last 12 months",
+      "category": "travel_history",
+      "declaration": true,
+      "labelMatch": "/medical exam performed by an ircc authori[sz]ed panel physician/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_designated_country",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Lived in or visited a designated country for 6 months in the last year",
+      "category": "travel_history",
+      "declaration": true,
+      "labelMatch": "/visited or lived in any one of the designated countries/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_family_member_application",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Submit an application for a family member",
+      "category": "travel_history",
+      "labelMatch": "/submit an application for a family member/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_representative_access",
+      "page": "/eapp/eapp",
+      "selector": "input[name=\"answerList[0].value\"]",
+      "action": "select",
+      "label": "Giving someone access to your application",
+      "category": "travel_history",
+      "op": "radio",
+      "choices": {
+        "No": "input[type=\"radio\"][name=\"answerList[0].value\"][value=\"7343\"]"
+      },
+      "pageMatch": "/are you giving someone access to your application/",
+      "hasDerive": true
+    },
+    {
+      "profileKey": "eapp_biometrics",
+      "page": "/eapp/eapp",
+      "selector": "select[id^=\"answerlist[\"]",
+      "action": "select",
+      "label": "Biometrics given for a Canadian application in the past 10 years",
+      "category": "travel_history",
+      "labelMatch": "/given your fingerprints and photo \\(biometrics\\)/",
+      "hasDerive": true
+    }
+  ],
+  "inputs": {
+    "recorded": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      },
+      {
+        "fieldKey": "eapp_stay_length",
+        "targetField": "select[id=\"answerlist[2]\"] >> label=/how long are you planning to stay in canada/i >> option=value:7347",
+        "mappedValue": "7347",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "How long are you planning to stay in Canada?"
+      },
+      {
+        "fieldKey": "eapp_family_member_citizen_or_pr",
+        "targetField": "select[id=\"answerlist[5]\"] >> label=/family member who is a canadian citizen or permanent resident/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Family member (18+) who is a Canadian citizen or permanent resident"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[8]\"] >> page=/what is your date of birth/i >> option=value:1822",
+        "mappedValue": "1822",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — month"
+      },
+      {
+        "fieldKey": "eapp_passport_code",
+        "targetField": "select[id=\"answerlist[3]\"] >> label=/select the code that matches the one on your passport/i >> option=text:PAK (Pakistan)",
+        "mappedValue": "PAK (Pakistan)",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Passport code",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_country_of_residence",
+        "targetField": "select[id=\"answerlist[4]\"] >> label=/current country or territory of residence/i >> option=text:Pakistan",
+        "mappedValue": "Pakistan",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Current country or territory of residence",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[7]\"] >> page=/what is your date of birth/i >> option=text:1991",
+        "mappedValue": "1991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — year",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[9]\"] >> page=/what is your date of birth/i >> option=text:14",
+        "mappedValue": "14",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — day",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_attestation_letter",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/provincial or territorial attestation letter or meet an exception/i >> option=value:376806",
+        "mappedValue": "376806",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception"
+      },
+      {
+        "fieldKey": "eapp_attestation_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/which province or territory is your provincial attestation letter from/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of the attestation letter"
+      },
+      {
+        "fieldKey": "eapp_us_permanent_resident",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/lawful permanent resident of the united states/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Lawful permanent resident of the United States"
+      },
+      {
+        "fieldKey": "eapp_accepted_to_dli",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/have you been accepted to a designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Accepted to a designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_post_secondary",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/planning to attend a post-secondary designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Attending a post-secondary designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_marital_status",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/what is your marital status/i >> option=value:2952",
+        "mappedValue": "2952",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Marital status"
+      },
+      {
+        "fieldKey": "eapp_destination_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/province or territory of destination/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of destination"
+      },
+      {
+        "fieldKey": "eapp_valid_permit",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/valid work permit or study permit, and need a visa to return/i >> option=value:7225",
+        "mappedValue": "7225",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Valid work or study permit and need a visa to return"
+      },
+      {
+        "fieldKey": "eapp_exchange_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/are you an exchange student/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Exchange student"
+      },
+      {
+        "fieldKey": "eapp_work_essential",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/is work an essential component of your studies/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Work is an essential part of the studies (co-op)"
+      },
+      {
+        "fieldKey": "eapp_family_of_worker_or_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/spouse, common-law partner or child of certain skilled worker/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Spouse, partner or child of a skilled worker or full-time student in Canada"
+      },
+      {
+        "fieldKey": "eapp_government_scholarship",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/commonwealth scholarship/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program"
+      },
+      {
+        "fieldKey": "eapp_accompanying_family_member",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/accompanying a family member that has status in canada/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Accompanying a family member with status in Canada"
+      },
+      {
+        "fieldKey": "eapp_criminality",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/committed, been arrested for, been charged with, or convicted of any criminal offen[cs]e/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Committed, arrested, charged or convicted of a criminal offence",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_medical_exam_12_months",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/medical exam performed by an ircc authori[sz]ed panel physician/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Medical exam by an IRCC panel physician in the last 12 months",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_designated_country",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/visited or lived in any one of the designated countries/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Lived in or visited a designated country for 6 months in the last year",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_family_member_application",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/submit an application for a family member/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Submit an application for a family member"
+      },
+      {
+        "fieldKey": "eapp_representative_access",
+        "targetField": "input[type=\"radio\"][name=\"answerList[0].value\"][value=\"7343\"] >> page=/are you giving someone access to your application/i",
+        "mappedValue": "No",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Giving someone access to your application",
+        "op": "radio"
+      },
+      {
+        "fieldKey": "eapp_biometrics",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/given your fingerprints and photo \\(biometrics\\)/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Biometrics given for a Canadian application in the past 10 years"
+      }
+    ],
+    "empty": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      }
+    ],
+    "dobOnly": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[8]\"] >> page=/what is your date of birth/i >> option=value:1822",
+        "mappedValue": "1822",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — month"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[7]\"] >> page=/what is your date of birth/i >> option=text:1991",
+        "mappedValue": "1991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — year",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[9]\"] >> page=/what is your date of birth/i >> option=text:14",
+        "mappedValue": "14",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — day",
+        "op": "select_text"
+      }
+    ],
+    "quebecException": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      },
+      {
+        "fieldKey": "eapp_stay_length",
+        "targetField": "select[id=\"answerlist[2]\"] >> label=/how long are you planning to stay in canada/i >> option=value:7347",
+        "mappedValue": "7347",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "How long are you planning to stay in Canada?"
+      },
+      {
+        "fieldKey": "eapp_family_member_citizen_or_pr",
+        "targetField": "select[id=\"answerlist[5]\"] >> label=/family member who is a canadian citizen or permanent resident/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Family member (18+) who is a Canadian citizen or permanent resident"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[8]\"] >> page=/what is your date of birth/i >> option=value:1822",
+        "mappedValue": "1822",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — month"
+      },
+      {
+        "fieldKey": "eapp_passport_code",
+        "targetField": "select[id=\"answerlist[3]\"] >> label=/select the code that matches the one on your passport/i >> option=text:PAK (Pakistan)",
+        "mappedValue": "PAK (Pakistan)",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Passport code",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_country_of_residence",
+        "targetField": "select[id=\"answerlist[4]\"] >> label=/current country or territory of residence/i >> option=text:Pakistan",
+        "mappedValue": "Pakistan",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Current country or territory of residence",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[7]\"] >> page=/what is your date of birth/i >> option=text:1991",
+        "mappedValue": "1991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — year",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[9]\"] >> page=/what is your date of birth/i >> option=text:14",
+        "mappedValue": "14",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — day",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_attestation_letter",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/provincial or territorial attestation letter or meet an exception/i >> option=value:376807",
+        "mappedValue": "376807",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception"
+      },
+      {
+        "fieldKey": "eapp_us_permanent_resident",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/lawful permanent resident of the united states/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Lawful permanent resident of the United States"
+      },
+      {
+        "fieldKey": "eapp_accepted_to_dli",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/have you been accepted to a designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Accepted to a designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_post_secondary",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/planning to attend a post-secondary designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Attending a post-secondary designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_marital_status",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/what is your marital status/i >> option=value:4677",
+        "mappedValue": "4677",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Marital status"
+      },
+      {
+        "fieldKey": "eapp_destination_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/province or territory of destination/i >> option=value:2732",
+        "mappedValue": "2732",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of destination"
+      },
+      {
+        "fieldKey": "eapp_valid_permit",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/valid work permit or study permit, and need a visa to return/i >> option=value:7225",
+        "mappedValue": "7225",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Valid work or study permit and need a visa to return"
+      },
+      {
+        "fieldKey": "eapp_exchange_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/are you an exchange student/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Exchange student"
+      },
+      {
+        "fieldKey": "eapp_work_essential",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/is work an essential component of your studies/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Work is an essential part of the studies (co-op)"
+      },
+      {
+        "fieldKey": "eapp_government_scholarship",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/commonwealth scholarship/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program"
+      },
+      {
+        "fieldKey": "eapp_criminality",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/committed, been arrested for, been charged with, or convicted of any criminal offen[cs]e/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Committed, arrested, charged or convicted of a criminal offence",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_medical_exam_12_months",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/medical exam performed by an ircc authori[sz]ed panel physician/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Medical exam by an IRCC panel physician in the last 12 months",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_designated_country",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/visited or lived in any one of the designated countries/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Lived in or visited a designated country for 6 months in the last year",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_family_member_application",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/submit an application for a family member/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Submit an application for a family member"
+      },
+      {
+        "fieldKey": "eapp_biometrics",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/given your fingerprints and photo \\(biometrics\\)/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Biometrics given for a Canadian application in the past 10 years"
+      }
+    ],
+    "yeses": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      },
+      {
+        "fieldKey": "eapp_stay_length",
+        "targetField": "select[id=\"answerlist[2]\"] >> label=/how long are you planning to stay in canada/i >> option=value:7347",
+        "mappedValue": "7347",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "How long are you planning to stay in Canada?"
+      },
+      {
+        "fieldKey": "eapp_family_member_citizen_or_pr",
+        "targetField": "select[id=\"answerlist[5]\"] >> label=/family member who is a canadian citizen or permanent resident/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Family member (18+) who is a Canadian citizen or permanent resident"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[8]\"] >> page=/what is your date of birth/i >> option=value:1822",
+        "mappedValue": "1822",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — month"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[7]\"] >> page=/what is your date of birth/i >> option=text:1991",
+        "mappedValue": "1991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — year",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[9]\"] >> page=/what is your date of birth/i >> option=text:14",
+        "mappedValue": "14",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — day",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_attestation_letter",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/provincial or territorial attestation letter or meet an exception/i >> option=value:376806",
+        "mappedValue": "376806",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception"
+      },
+      {
+        "fieldKey": "eapp_attestation_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/which province or territory is your provincial attestation letter from/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of the attestation letter"
+      },
+      {
+        "fieldKey": "eapp_us_permanent_resident",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/lawful permanent resident of the united states/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Lawful permanent resident of the United States"
+      },
+      {
+        "fieldKey": "eapp_accepted_to_dli",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/have you been accepted to a designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Accepted to a designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_post_secondary",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/planning to attend a post-secondary designated learning institution/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Attending a post-secondary designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_marital_status",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/what is your marital status/i >> option=value:2956",
+        "mappedValue": "2956",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Marital status"
+      },
+      {
+        "fieldKey": "eapp_destination_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/province or territory of destination/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of destination"
+      },
+      {
+        "fieldKey": "eapp_valid_permit",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/valid work permit or study permit, and need a visa to return/i >> option=value:7225",
+        "mappedValue": "7225",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Valid work or study permit and need a visa to return"
+      },
+      {
+        "fieldKey": "eapp_exchange_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/are you an exchange student/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Exchange student"
+      },
+      {
+        "fieldKey": "eapp_work_essential",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/is work an essential component of your studies/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Work is an essential part of the studies (co-op)"
+      },
+      {
+        "fieldKey": "eapp_family_of_worker_or_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/spouse, common-law partner or child of certain skilled worker/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Spouse, partner or child of a skilled worker or full-time student in Canada"
+      },
+      {
+        "fieldKey": "eapp_government_scholarship",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/commonwealth scholarship/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program"
+      },
+      {
+        "fieldKey": "eapp_accompanying_family_member",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/accompanying a family member that has status in canada/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Accompanying a family member with status in Canada"
+      },
+      {
+        "fieldKey": "eapp_criminality",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/committed, been arrested for, been charged with, or convicted of any criminal offen[cs]e/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Committed, arrested, charged or convicted of a criminal offence",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_medical_exam_12_months",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/medical exam performed by an ircc authori[sz]ed panel physician/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Medical exam by an IRCC panel physician in the last 12 months",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_designated_country",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/visited or lived in any one of the designated countries/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Lived in or visited a designated country for 6 months in the last year",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_representative_access",
+        "targetField": "input[type=\"radio\"][name=\"answerList[0].value\"][value=\"7343\"] >> page=/are you giving someone access to your application/i",
+        "mappedValue": "No",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Giving someone access to your application",
+        "op": "radio"
+      },
+      {
+        "fieldKey": "eapp_biometrics",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/given your fingerprints and photo \\(biometrics\\)/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Biometrics given for a Canadian application in the past 10 years"
+      }
+    ],
+    "workFactsOnStudy": [
+      {
+        "fieldKey": "eapp_purpose",
+        "targetField": "select[id=\"answerlist[1]\"] >> label=/what would you like to do in canada/i >> option=value:7120",
+        "mappedValue": "7120",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "What would you like to do in Canada? (Study)"
+      },
+      {
+        "fieldKey": "eapp_stay_length",
+        "targetField": "select[id=\"answerlist[2]\"] >> label=/how long are you planning to stay in canada/i >> option=value:7347",
+        "mappedValue": "7347",
+        "category": "dates",
+        "page": "/eapp/eapp",
+        "label": "How long are you planning to stay in Canada?"
+      },
+      {
+        "fieldKey": "eapp_family_member_citizen_or_pr",
+        "targetField": "select[id=\"answerlist[5]\"] >> label=/family member who is a canadian citizen or permanent resident/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Family member (18+) who is a Canadian citizen or permanent resident"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[8]\"] >> page=/what is your date of birth/i >> option=value:1822",
+        "mappedValue": "1822",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — month"
+      },
+      {
+        "fieldKey": "eapp_passport_code",
+        "targetField": "select[id=\"answerlist[3]\"] >> label=/select the code that matches the one on your passport/i >> option=text:PAK (Pakistan)",
+        "mappedValue": "PAK (Pakistan)",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Passport code",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_country_of_residence",
+        "targetField": "select[id=\"answerlist[4]\"] >> label=/current country or territory of residence/i >> option=text:Pakistan",
+        "mappedValue": "Pakistan",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Current country or territory of residence",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[7]\"] >> page=/what is your date of birth/i >> option=text:1991",
+        "mappedValue": "1991",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — year",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "date_of_birth",
+        "targetField": "select[id=\"answerlist[9]\"] >> page=/what is your date of birth/i >> option=text:14",
+        "mappedValue": "14",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Date of birth — day",
+        "op": "select_text"
+      },
+      {
+        "fieldKey": "eapp_attestation_letter",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/provincial or territorial attestation letter or meet an exception/i >> option=value:376806",
+        "mappedValue": "376806",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception"
+      },
+      {
+        "fieldKey": "eapp_attestation_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/which province or territory is your provincial attestation letter from/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of the attestation letter"
+      },
+      {
+        "fieldKey": "eapp_us_permanent_resident",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/lawful permanent resident of the united states/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Lawful permanent resident of the United States"
+      },
+      {
+        "fieldKey": "eapp_accepted_to_dli",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/have you been accepted to a designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Accepted to a designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_post_secondary",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/planning to attend a post-secondary designated learning institution/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Attending a post-secondary designated learning institution"
+      },
+      {
+        "fieldKey": "eapp_marital_status",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/what is your marital status/i >> option=value:2952",
+        "mappedValue": "2952",
+        "category": "passport",
+        "page": "/eapp/eapp",
+        "label": "Marital status"
+      },
+      {
+        "fieldKey": "eapp_destination_province",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/province or territory of destination/i >> option=value:2731",
+        "mappedValue": "2731",
+        "category": "addresses",
+        "page": "/eapp/eapp",
+        "label": "Province or territory of destination"
+      },
+      {
+        "fieldKey": "eapp_valid_permit",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/valid work permit or study permit, and need a visa to return/i >> option=value:7225",
+        "mappedValue": "7225",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Valid work or study permit and need a visa to return"
+      },
+      {
+        "fieldKey": "eapp_exchange_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/are you an exchange student/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Exchange student"
+      },
+      {
+        "fieldKey": "eapp_work_essential",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/is work an essential component of your studies/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Work is an essential part of the studies (co-op)"
+      },
+      {
+        "fieldKey": "eapp_family_of_worker_or_student",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/spouse, common-law partner or child of certain skilled worker/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Spouse, partner or child of a skilled worker or full-time student in Canada"
+      },
+      {
+        "fieldKey": "eapp_government_scholarship",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/commonwealth scholarship/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "employment",
+        "page": "/eapp/eapp",
+        "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program"
+      },
+      {
+        "fieldKey": "eapp_accompanying_family_member",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/accompanying a family member that has status in canada/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Accompanying a family member with status in Canada"
+      },
+      {
+        "fieldKey": "eapp_criminality",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/committed, been arrested for, been charged with, or convicted of any criminal offen[cs]e/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Committed, arrested, charged or convicted of a criminal offence",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_medical_exam_12_months",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/medical exam performed by an ircc authori[sz]ed panel physician/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Medical exam by an IRCC panel physician in the last 12 months",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_designated_country",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/visited or lived in any one of the designated countries/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Lived in or visited a designated country for 6 months in the last year",
+        "declaration": true
+      },
+      {
+        "fieldKey": "eapp_family_member_application",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/submit an application for a family member/i >> option=value:997",
+        "mappedValue": "997",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Submit an application for a family member"
+      },
+      {
+        "fieldKey": "eapp_representative_access",
+        "targetField": "input[type=\"radio\"][name=\"answerList[0].value\"][value=\"7343\"] >> page=/are you giving someone access to your application/i",
+        "mappedValue": "No",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Giving someone access to your application",
+        "op": "radio"
+      },
+      {
+        "fieldKey": "eapp_biometrics",
+        "targetField": "select[id^=\"answerlist[\"] >> label=/given your fingerprints and photo \\(biometrics\\)/i >> option=value:991",
+        "mappedValue": "991",
+        "category": "travel_history",
+        "page": "/eapp/eapp",
+        "label": "Biometrics given for a Canadian application in the past 10 years"
+      }
+    ]
+  },
+  "coverage": {
+    "recorded": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 27,
+          "left": [
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            }
+          ]
+        }
+      ]
+    },
+    "empty": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 1,
+          "left": [
+            {
+              "label": "How long are you planning to stay in Canada?",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Family member (18+) who is a Canadian citizen or permanent resident",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Date of birth",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Passport code",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Current country or territory of residence",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Lawful permanent resident of the United States",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Accepted to a designated learning institution",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Attending a post-secondary designated learning institution",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Marital status",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Province or territory of destination",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Valid work or study permit and need a visa to return",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Exchange student",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Work is an essential part of the studies (co-op)",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Spouse, partner or child of a skilled worker or full-time student in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Accompanying a family member with status in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Committed, arrested, charged or convicted of a criminal offence",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Medical exam by an IRCC panel physician in the last 12 months",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Lived in or visited a designated country for 6 months in the last year",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Submit an application for a family member",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Giving someone access to your application",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Biometrics given for a Canadian application in the past 10 years",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            }
+          ]
+        }
+      ]
+    },
+    "dobOnly": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 4,
+          "left": [
+            {
+              "label": "How long are you planning to stay in Canada?",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Family member (18+) who is a Canadian citizen or permanent resident",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Passport code",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Current country or territory of residence",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Provincial or territorial attestation letter (PAL/TAL) or an exception",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Lawful permanent resident of the United States",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Accepted to a designated learning institution",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Attending a post-secondary designated learning institution",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Marital status",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Province or territory of destination",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Valid work or study permit and need a visa to return",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Exchange student",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Work is an essential part of the studies (co-op)",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Spouse, partner or child of a skilled worker or full-time student in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Commonwealth scholarship, full CIDA bursary or Canadian aid program",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Accompanying a family member with status in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Committed, arrested, charged or convicted of a criminal offence",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Medical exam by an IRCC panel physician in the last 12 months",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Lived in or visited a designated country for 6 months in the last year",
+              "reason": "needs_your_answer"
+            },
+            {
+              "label": "Submit an application for a family member",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Giving someone access to your application",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Biometrics given for a Canadian application in the past 10 years",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            }
+          ]
+        }
+      ]
+    },
+    "quebecException": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 23,
+          "left": [
+            {
+              "label": "Spouse, partner or child of a skilled worker or full-time student in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Accompanying a family member with status in Canada",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Giving someone access to your application",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            },
+            {
+              "label": "Quebec: attestation letter province",
+              "reason": "fill_yourself",
+              "note": "Your school is in Quebec, which uses a CAQ. Answer the attestation questions yourself."
+            },
+            {
+              "label": "Giving someone access to your application",
+              "reason": "needs_your_answer",
+              "note": "Choose whether you appoint a representative, authorize IRCC to release information to someone, or both."
+            },
+            {
+              "label": "Your family member’s status in Canada",
+              "reason": "needs_your_answer",
+              "note": "You said a family member has status in Canada: answer the \"spouse or child of a skilled worker or student\" and \"accompanying a family member\" questions yourself."
+            }
+          ]
+        }
+      ]
+    },
+    "yeses": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 24,
+          "left": [
+            {
+              "label": "Passport code",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Current country or territory of residence",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Submit an application for a family member",
+              "reason": "not_in_profile"
+            },
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            }
+          ]
+        }
+      ]
+    },
+    "workFactsOnStudy": {
+      "pages": [
+        {
+          "page": "/eapp/eapp",
+          "title": "Eligibility questionnaire (secure account)",
+          "filled": 27,
+          "left": [
+            {
+              "label": "Information screens",
+              "reason": "fill_yourself",
+              "note": "Screens with only a Next button (the medical exam notice, your result, \"How to apply\") are yours: press Next or Continue yourself. The assistant fills each question screen when it opens."
+            },
+            {
+              "label": "Application fees: paying or fee-exempt",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Making digital copies of your documents",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Paying your fees online",
+              "reason": "fill_yourself"
+            },
+            {
+              "label": "Review your answers, then your document checklist",
+              "reason": "fill_yourself",
+              "note": "The assistant stops at \"Review your answers\". Check every answer there; the document checklist, uploads, signature and payment are yours."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

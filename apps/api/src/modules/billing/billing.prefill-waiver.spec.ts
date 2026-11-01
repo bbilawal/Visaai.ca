@@ -1,4 +1,5 @@
 import { ConfigService } from '@nestjs/config';
+import { CA_ETA_VISAAI_ID } from '@visaai/types';
 import { BillingService, PREFILL_PRICE } from './billing.service';
 
 const config = new ConfigService({
@@ -9,7 +10,11 @@ const config = new ConfigService({
 
 /** Minimal admin-client fake: applications lookup, payments lookup/insert, audit insert. */
 function makeAdmin(opts: {
-  app?: { id: string; user_id: string } | null;
+  app?: {
+    id: string;
+    user_id: string;
+    visa_types?: { visaai_id: string | null } | null;
+  } | null;
   existing?: { id: string }[];
   auditError?: unknown;
 }) {
@@ -84,7 +89,7 @@ describe('BillingService.waivePrefillFee (admin comp)', () => {
         status: 'complete',
         provider: 'waiver',
         amount_cents: 0,
-        discount_cents: PREFILL_PRICE.amount,
+        discount_cents: 2900,
       }),
     ]);
     expect(inserts.auth_audit_log).toEqual([
@@ -98,6 +103,20 @@ describe('BillingService.waivePrefillFee (admin comp)', () => {
           reason: 'dry-run test',
         },
       }),
+    ]);
+  });
+
+  it('waives the eTA at its own price ($10), not the default', async () => {
+    const { admin, inserts } = makeAdmin({
+      app: {
+        id: 'app-1',
+        user_id: 'owner-1',
+        visa_types: { visaai_id: CA_ETA_VISAAI_ID },
+      },
+    });
+    await svcWith(admin).waivePrefillFee('app-1', 'admin-1', 'x');
+    expect(inserts.payments).toEqual([
+      expect.objectContaining({ amount_cents: 0, discount_cents: 1000 }),
     ]);
   });
 
@@ -127,5 +146,85 @@ describe('BillingService.waivePrefillFee (admin comp)', () => {
       svcWith(admin).waivePrefillFee('app-1', 'admin-1', 'x'),
     ).rejects.toThrow(/audit failed/);
     expect(deletes).toEqual(['payments:pay-1']);
+  });
+});
+
+describe('BillingService.createPrefillCheckoutSession (per-visa price)', () => {
+  function checkout(app: unknown) {
+    const createCheckoutSession = jest
+      .fn()
+      .mockResolvedValue({ id: 'cs', url: 'https://checkout/x' });
+    const selects: string[] = [];
+    const db: any = {
+      from: () => {
+        const chain: any = {
+          select: (cols: string) => (selects.push(cols), chain),
+          eq: () => chain,
+          single: () => Promise.resolve({ data: app, error: null }),
+        };
+        return chain;
+      },
+    };
+    const svc = new BillingService(
+      config,
+      { admin: {} } as any,
+      {} as any,
+      {} as any,
+      { emit: jest.fn() } as any,
+      { name: 'stripe', createCheckoutSession } as any,
+      {} as any,
+      {} as any,
+    );
+    const run = svc.createPrefillCheckoutSession(db, {
+      userId: 'owner-1',
+      applicationId: 'app-1',
+      successUrl: 'https://app.visaai.test/ok',
+      cancelUrl: 'https://app.visaai.test/no',
+    });
+    return { run, createCheckoutSession, selects };
+  }
+
+  it('charges 1000 cents for a Canada eTA application', async () => {
+    const { run, createCheckoutSession, selects } = checkout({
+      id: 'app-1',
+      user_id: 'owner-1',
+      visa_types: { visaai_id: CA_ETA_VISAAI_ID },
+    });
+    await expect(run).resolves.toEqual({ url: 'https://checkout/x' });
+    expect(selects[0]).toContain('visa_types(visaai_id)');
+    const arg = createCheckoutSession.mock.calls[0][0];
+    expect(arg.lineItems).toEqual([
+      {
+        name: `VisaAI ${PREFILL_PRICE.label}`,
+        amount: { amountMinor: 1000, currency: 'usd' },
+        quantity: 1,
+      },
+    ]);
+    expect(arg.metadata).toMatchObject({ feature: 'prefill' });
+  });
+
+  it('charges the 2900-cent default for any other visa type', async () => {
+    const { run, createCheckoutSession } = checkout({
+      id: 'app-1',
+      user_id: 'owner-1',
+      visa_types: [{ visaai_id: 'ca-visitor-visa-trv' }],
+    });
+    await run;
+    expect(createCheckoutSession.mock.calls[0][0].lineItems[0].amount).toEqual({
+      amountMinor: 2900,
+      currency: 'usd',
+    });
+  });
+
+  it('charges the default when the application has no visa type', async () => {
+    const { run, createCheckoutSession } = checkout({
+      id: 'app-1',
+      user_id: 'owner-1',
+      visa_types: null,
+    });
+    await run;
+    expect(
+      createCheckoutSession.mock.calls[0][0].lineItems[0].amount.amountMinor,
+    ).toBe(2900);
   });
 });

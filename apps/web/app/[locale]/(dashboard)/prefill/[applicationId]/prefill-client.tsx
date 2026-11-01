@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/providers/toast-provider'
 import { handlePlanError } from '@/lib/plan-error'
 import { handlePaymentRequired } from '@/lib/payment-error'
+import { CA_ETA_VISAAI_ID, CA_SPOUSAL_VISAAI_ID, formatPrefillPrice, routeHasPortalFill } from '@visaai/types'
 import { OWNER_HEADINGS } from '@/lib/checklist-grouping'
 import { useRequiredDocsReady, MissingDocsPanel } from '@/components/required-docs-gate'
 import { docsGateItemsText } from '@/lib/required-docs'
@@ -52,9 +53,24 @@ interface OfficialForm {
   form_name: string
   owner?: 'applicant' | 'sponsor'
   official_supported: boolean
+  /** Set for forms VisaAI prepares from the application (IMM 5476). */
+  prepared_note?: string | null
 }
 
-export default function PrefillClient({ applicationId }: { applicationId: string }) {
+export default function PrefillClient({
+  applicationId,
+  visaaiId = null,
+}: {
+  applicationId: string
+  /** The application's `visa_types.visaai_id`; decides the form fee shown. */
+  visaaiId?: string | null
+}) {
+  // Same table the API charges from, so the number shown is the number billed.
+  const formFee = formatPrefillPrice(visaaiId)
+  const isEta = visaaiId === CA_ETA_VISAAI_ID
+  // No Portal Assistant fill for this route yet (Submit shows the manual
+  // route), so the page must not promise one.
+  const portalFill = routeHasPortalFill(visaaiId)
   const { toast } = useToast()
   const t = useTranslations('prefill')
   const locale = useLocale()
@@ -271,6 +287,10 @@ export default function PrefillClient({ applicationId }: { applicationId: string
         await handleDownload()
         return
       }
+      if (res.status === 404 && form.prepared_note) {
+        const body = (await res.json().catch(() => null)) as { message?: string } | null
+        throw new Error(body?.message ?? `${form.form_code} is not needed for this application`)
+      }
       if (!res.ok) throw new Error('Failed to download official form')
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
@@ -279,7 +299,12 @@ export default function PrefillClient({ applicationId }: { applicationId: string
       a.download = `visaai-${form.form_code.replace(/\s+/g, '_')}-${applicationId}.pdf`
       a.click()
       URL.revokeObjectURL(url)
-      toast(`${form.form_code} downloaded — verify every value before submission.`, 'success')
+      toast(
+        form.prepared_note
+          ? `${form.form_code} answers downloaded — copy them onto the official form, then follow the steps under the form.`
+          : `${form.form_code} downloaded — verify every value before submission.`,
+        'success',
+      )
     } catch (err) {
       toast(err instanceof Error ? err.message : 'Failed to download', 'error')
     } finally {
@@ -400,8 +425,14 @@ export default function PrefillClient({ applicationId }: { applicationId: string
       <Card variant="tight" className="mb-4">
         <p className="text-[13px] text-rich-black">
           <span className="font-medium">These forms auto-complete once every required document is uploaded and verified.</span>{' '}
-          Previewing and editing the values is free. Downloading the filled forms or letting VisaAI auto-submit them on the
-          official portal needs a one-time fee per visa.
+          {portalFill ? (
+            <>
+              Previewing and editing the values is free. Downloading the filled forms or letting VisaAI auto-submit them on the
+              official portal needs a one-time fee per visa.
+            </>
+          ) : (
+            <>Previewing and editing the values is free. Downloading the filled forms needs a one-time fee per visa.</>
+          )}
         </p>
       </Card>
 
@@ -415,13 +446,26 @@ export default function PrefillClient({ applicationId }: { applicationId: string
         <Card className="mb-4 border border-deep-black">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <p className="text-[14px] font-medium text-deep-black">Unlock downloads &amp; auto-submit</p>
-              <p className="text-[13px] text-midtone-gray mt-0.5">
-                One-time $29 for this visa. Download the filled PDF and the official government forms, and let VisaAI
-                auto-fill them on the immigration portal.
+              <p className="text-[14px] font-medium text-deep-black">
+                {portalFill ? <>Unlock downloads &amp; auto-submit</> : 'Unlock downloads'}
               </p>
+              <p className="text-[13px] text-midtone-gray mt-0.5">
+                {portalFill ? (
+                  <>
+                    One-time {formFee} for this visa. Download the filled PDF and the official government forms, and let VisaAI
+                    auto-fill them on the immigration portal.
+                  </>
+                ) : (
+                  <>One-time {formFee} for this visa. Download the filled PDF of these answers.</>
+                )}
+              </p>
+              {isEta && (
+                <p className="text-[13px] text-midtone-gray mt-0.5">
+                  IRCC&apos;s own CAD $7 eTA fee is separate — you pay it on the IRCC site.
+                </p>
+              )}
             </div>
-            <Button onClick={handleUnlock} size="lg" className="shrink-0">Unlock — $29</Button>
+            <Button onClick={handleUnlock} size="lg" className="shrink-0">Unlock — {formFee}</Button>
           </div>
         </Card>
       )}
@@ -431,7 +475,7 @@ export default function PrefillClient({ applicationId }: { applicationId: string
           <Card className="flex flex-col items-center justify-center py-16 text-center">
             <p className="text-[14px] text-rich-black mb-1">{t('noFormYet')}</p>
             <p className="text-[13px] text-midtone-gray mb-5 max-w-md">
-              {t('emptyExplainer')}
+              {t(portalFill ? 'emptyExplainer' : 'emptyExplainerManual')}
             </p>
             <Button onClick={handleGenerate} disabled={generating} size="lg">
               {generating ? t('generating') : t('generate')}
@@ -476,7 +520,7 @@ export default function PrefillClient({ applicationId }: { applicationId: string
                   {saving ? t('saving') : t('saveEdits')}
                 </Button>
                 <Button onClick={paid ? handleDownload : handleUnlock} disabled={downloading}>
-                  {downloading ? t('preparing') : paid ? t('downloadSummary') : 'Unlock to download — $29'}
+                  {downloading ? t('preparing') : paid ? t('downloadSummary') : `Unlock to download — ${formFee}`}
                 </Button>
               </div>
             </div>
@@ -504,9 +548,14 @@ export default function PrefillClient({ applicationId }: { applicationId: string
                           className="border border-subtle-ash rounded-[10px] px-3 py-2 flex items-center justify-between gap-3"
                         >
                           <div className="min-w-0">
-                            <p className="text-[13px] font-medium text-rich-black">{form.form_code}</p>
+                            <p className="text-[13px] font-medium text-rich-black">
+                              {form.prepared_note ? `${form.form_code} — pre-filled, print and sign` : form.form_code}
+                            </p>
                             {form.form_name && form.form_name !== form.form_code && (
                               <p className="text-[12px] text-midtone-gray truncate">{form.form_name}</p>
+                            )}
+                            {form.prepared_note && (
+                              <p className="text-[11px] text-midtone-gray mt-1">{form.prepared_note}</p>
                             )}
                           </div>
                           {form.official_supported ? (
@@ -567,7 +616,7 @@ export default function PrefillClient({ applicationId }: { applicationId: string
           <Card variant="tight">
             <p className="text-[13px] text-rich-black mb-2 font-medium">{t('readyTitle')}</p>
             <p className="text-[13px] text-midtone-gray mb-3">
-              {t('readyBody')}
+              {portalFill ? t('readyBody') : t(visaaiId === CA_SPOUSAL_VISAAI_ID ? 'readyBodyManualSpousal' : 'readyBodyManual')}
             </p>
             <Link href={`/submission/${applicationId}`} className="text-[13px] text-rich-black underline">
               {t('goToSubmit')}

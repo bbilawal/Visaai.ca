@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "visaai_id": "ca-sponsor-your-spouse-partner-or-child",
-  "extracted_at": "2026-08-21",
+  "extracted_at": "2026-10-19",
   "extraction_method": "manual",
   "extractor": "read directly from the official IRCC pages listed in source_roles",
   "policy": "Every entry quotes the official page it was read from. source_excerpt is verbatim government wording, lowercased by the normalizer. Nothing here is paraphrased into a requirement, and nothing is included that the page did not state.",
@@ -9,19 +9,26 @@
     "eligibility": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/eligibility.html",
     "application": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/family-sponsorship/spouse-partner-children/apply.html",
     "forms": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm1344.html",
-    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp"
+    "fees": "https://ircc.canada.ca/english/information/fees/fees.asp",
+    "documents": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/guide-5289-sponsor-your-spouse-common-law-partner-conjugal-partner-dependent-child-complete-guide.html"
   },
   "page_dates": {
     "eligibility": "2026-06-23",
     "application": "2026-06-23",
-    "forms": "2026-05-27"
+    "forms": "2026-05-27",
+    "documents": "2026-04-23"
   },
   "not_extracted": [
     "The registered 'landing' source (spouse-partner-children.html) states no requirements. Its fee widget failed server-side at read time — it renders 'sponsor a spouse or partner: from error loading fee. check the fee list .' — so no amount could be read from it. Fees below come from the fee list instead.",
     "Sponsor-side conditions are not gated by rules. IRCC's eligibility page is written about the sponsor ('are at least 18 years old'), while VisaAI's facts describe the applicant, and in this program the principal applicant is the person being sponsored, not the sponsor. Encoding the sponsor's age or status against applicant facts would gate the requirement on the wrong person, so those conditions carry no rule and state who they apply to in the label and description.",
     "Quebec's own eligibility and income requirements for sponsorship. The eligibility page links out to them; they live on Quebec government pages that were not read. The IRCC-stated step of signing a Quebec undertaking is included, described as Quebec-only, because VisaAI has no fact for the sponsor's province.",
     "How much money the income requirement demands. IRCC states only that the financial evaluation form (IMM 1283) explains it; the amount is on the form, which was not parsed.",
-    "The document checklist itself. IRCC's apply page points to a per-application 'application package' behind a generator, and states the checklist and the country-specific forms depend on where the sponsored people live. Nothing in that package was read, so no document beyond the photo IRCC states inline is listed here.",
+    "The document checklist PDF itself as a source. IRCC's spouse checklist (IMM 5533, edition 09-2022) is an encrypted XFA PDF. The registry sync decodes every fetched body as text and stores it in visa_source_versions.normalized_text, so this PDF would be stored as binary with NUL bytes, which a Postgres text column refuses. It cannot be a registered source until the sync extracts PDFs. Its items are quoted here only where IRCC states them on a readable page: the Complete Guide (IMM 5289, registered as 'documents'; guide 5525's URL serves the same page), the eligibility page or the IMM 1344 instructions. A description that cites IMM 5533 was transcribed from that PDF's form text on 2026-10-19 and is not machine-verified.",
+    "IMM 5533 items no readable page states, so they have no row: the principal applicant's proof of status in Canada (in-Canada applicants), national identity cards and family booklets, the principal applicant's own divorce, annulment or former-spouse death certificates and proof of legal separation, the explanation of a previous sponsorship, the sponsor's employment and income documents (employer letter plus Notice of Assessment or Option C; not for Quebec residents), proof of dependency for a child 22 or older, adoption papers, military service documents, and the panel physician's information sheet for a medical exam done in the last 12 months.",
+    "proof_of_status quotes IRCC's eligibility condition (the sponsor is a Canadian citizen, a permanent resident or registered under the Indian Act), not a sentence asking for a document. The document list is IMM 5533's and is given in the row's description. It is a required sponsor slot because no sponsor can file without proving that status.",
+    "Declaration From Non-Accompanying Parent/Guardian (IMM 5604). The guide requires it when a minor dependent child's other parent is not immigrating, and IMM 5533 when that parent is not the sponsor. VisaAI has no rule fact for either, and a form row with no rule would be listed for every applicant.",
+    "Supplementary Information - Your Travels (IMM 5562). The guide lists it 'if it applies to you' and names no trigger VisaAI can test.",
+    "The common-law (IMM 5589), conjugal (IMM 5629) and dependent-child (IMM 5534) checklists. Their document lists were not read; the common-law and conjugal rows below quote the guide's own definitions and point to those checklists.",
     "Intercountry adoption and orphaned-relative routes. The apply page carries links to both as separate processes.",
     "IMM 5476 as named on the IMM 1344 form page. That page flattens three collapsible branches (spouse/partner/dependent child, adopted child or other relatives, parents or grandparents) into one document, and the IMM 5476 sentences fall inside the second and third branches, not the spouse branch. The representative form is extracted from the spouse-specific apply page instead, where it is stated unambiguously.",
     "Processing times. The landing page publishes no number and links to a separate processing-times tool.",
@@ -153,6 +160,149 @@
       "source_excerpt_display": "You have to pay your fees online (opens in a new tab) and include the receipt with your application. The instruction guide can help you understand which fees apply to you."
     },
     {
+      "requirement_code": "passport",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Passport or travel document (principal applicant and each accompanying family member)",
+      "description": "IRCC's spouse checklist (IMM 5533) asks for copies of the most recently issued passport or travel document for you and each family member who will come with you: the pages showing the document number, issue and expiry dates, photo, name, and date and place of birth; any page with a Canadian entry stamp; and, if you live outside your country of nationality, your visa or residence permit there. Diplomatic, official and public-affairs passports are not accepted.",
+      "source_role": "documents",
+      "source_excerpt": "proof of identity is an important part of an application to become a permanent resident: carefully review the checklist sections on identity documents, travel documents, and passports.",
+      "display_order": 120,
+      "source_excerpt_display": "Proof of identity is an important part of an application to become a permanent resident: Carefully review the checklist sections on identity documents, travel documents, and passports."
+    },
+    {
+      "requirement_code": "birth_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Birth certificate (principal applicant and each dependant)",
+      "description": "For you and every dependant included in the application. IMM 5533 also accepts a baptismal certificate, and asks for one for each dependant whether or not they come to Canada. Check the country-specific requirements for the country that issued it.",
+      "source_role": "documents",
+      "source_excerpt": "make sure you submit a copy of your birth certificate, and (if you have included dependants in your application) the birth certificates of your family members.",
+      "display_order": 125,
+      "source_excerpt_display": "Make sure you submit a copy of your birth certificate, and (if you have included dependants in your application) the birth certificates of your family members."
+    },
+    {
+      "requirement_code": "marriage_certificate",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Marriage certificate, or proof the marriage was registered",
+      "description": "For a married couple. It must show the marriage was legally registered with the government where it took place. A record of solemnization (obtained in Canada) or a marriage licence is not accepted.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "eq",
+        "value": "married"
+      },
+      "source_role": "documents",
+      "source_excerpt": "for spousal sponsorships, make sure you include a valid marriage certificate or proof of registration of your marriage with your application (see checklist details). the document(s) you submit must show that the marriage was legally registered with the government where it took place. a record of solemnization (obtained in canada) or marriage license will not be accepted as proof that the sponsor and applicant are married.",
+      "display_order": 130,
+      "source_excerpt_display": "For spousal sponsorships, make sure you include a valid marriage certificate or proof of registration of your marriage with your application (see checklist details). The document(s) you submit must show that the marriage was legally registered with the government where it took place. A record of solemnization (obtained in Canada) or marriage license will not be accepted as proof that the sponsor and applicant are married."
+    },
+    {
+      "requirement_code": "common_law_relationship_proof",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Proof of a common-law relationship",
+      "description": "For a common-law partner. Proof that you share the same home, support each other financially and emotionally, have children together (if you do) and present yourselves in public as a couple. IRCC's common-law checklist (IMM 5589) lists the documents.",
+      "rule": {
+        "fact": "marital_status",
+        "op": "eq",
+        "value": "common_law"
+      },
+      "source_role": "documents",
+      "source_excerpt": "to show that you are in a common-law relationship, submit proof that you: share the same home, support each other financially and emotionally, have children together, if applicable, present yourselves in public as a couple.",
+      "display_order": 135,
+      "source_excerpt_display": "To show that you are in a common-law relationship, submit proof that you: share the same home, support each other financially and emotionally, have children together, if applicable, present yourselves in public as a couple."
+    },
+    {
+      "requirement_code": "conjugal_relationship_proof",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Proof of a conjugal relationship (conjugal partners only)",
+      "description": "Only for a conjugal partner: a relationship of at least one year where marrying or living together has not been possible. Proof of your attachment and interdependence, and of what prevents you from living together or marrying. IRCC's conjugal checklist (IMM 5629) lists the documents.",
+      "source_role": "documents",
+      "source_excerpt": "a significant degree of attachment and mutual interdependence between both partners must be shown. the couple must submit proof of the obstacles or restrictions that are preventing them from living together or getting married.",
+      "display_order": 140,
+      "source_excerpt_display": "A significant degree of attachment and mutual interdependence between both partners must be shown. The couple must submit proof of the obstacles or restrictions that are preventing them from living together or getting married."
+    },
+    {
+      "requirement_code": "relationship_evidence",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Evidence the relationship is genuine (proof of contact, living together, photos)",
+      "description": "What applies depends on your answers on IRCC's spouse checklist (IMM 5533, section 7). Not living together: proof of contact (letters, printed messages, emails or social media; at most 10 pages, translated if needed) and proof of the sponsor's visits. Living together: documents from at least two of IRCC's sets (joint property, a lease naming both, joint utility, credit card or bank accounts, vehicle insurance at the same address, government ID or other documents showing the same address). Unless all four are true (you live together, have children together, it is a first marriage for both, and you have been married at least two years), also up to 20 photos and documents from at least two of: recognition as spouses, financial support or shared expenses, recognition by family and friends, past cohabitation.",
+      "source_role": "documents",
+      "source_excerpt": "proof of communication documents that are not already in english or french, such as letters, printed text messages, emails or social media conversations, must also be translated. a maximum of 10 pages of proof of communication documents may be submitted with your application.",
+      "display_order": 145,
+      "source_excerpt_display": "Proof of communication documents that are not already in English or French, such as letters, printed text messages, emails or social media conversations, must also be translated. A maximum of 10 pages of proof of communication documents may be submitted with your application."
+    },
+    {
+      "requirement_code": "police_clearance",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Police certificates (principal applicant and family members 18 or older)",
+      "description": "From every country other than Canada where the person spent 6 or more months in a row since age 18, for the principal applicant and each family member 18 or older who is not a Canadian citizen or permanent resident. A certificate not in English or French must be submitted with its translation. IMM 5533 adds that some countries need IRCC's consent form instead, and that a Canadian police certificate is not needed now.",
+      "source_role": "documents",
+      "source_excerpt": "if you and your family members are 18 years of age and older and aren’t permanent residents or canadian citizens, you must provide a valid police certificate for any country other than canada in which you spent 6 or more months in a row since the age of 18.",
+      "display_order": 150,
+      "source_excerpt_display": "If you and your family members are 18 years of age and older and aren’t permanent residents or Canadian citizens, you must provide a valid police certificate for any country other than Canada in which you spent 6 or more months in a row since the age of 18."
+    },
+    {
+      "requirement_code": "proof_of_status",
+      "kind": "evidence",
+      "officially_required": true,
+      "label": "Sponsor's proof of Canadian citizenship, permanent residence or Indian status",
+      "description": "Proves the sponsor meets this eligibility condition. IRCC's spouse checklist (IMM 5533) asks for a copy of one of: a permanent resident card (both sides; an expired card is accepted) or Confirmation of Permanent Residence (CoPR or eCoPR); a Canadian citizenship certificate or card (both sides); a Canadian birth certificate (from Quebec, only one issued by the Directeur de l'état civil); the Canadian passport page with the passport number, dates, photo, name and date and place of birth; or an Indian status card.",
+      "parameters": {
+        "document_owner": "sponsor"
+      },
+      "source_role": "eligibility",
+      "source_excerpt": "are a canadian citizen, a permanent resident of canada, or a person registered in canada under the canadian indian act",
+      "display_order": 160,
+      "source_excerpt_display": "are a Canadian citizen, a permanent resident of Canada, or a person registered in Canada under the Canadian Indian Act"
+    },
+    {
+      "requirement_code": "sponsor_residence_proof",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Sponsor's proof they will live in Canada (Canadian citizen living abroad only)",
+      "description": "Only if the sponsor is a Canadian citizen living outside Canada: proof they will live in Canada when the person they sponsor becomes a permanent resident.",
+      "parameters": {
+        "document_owner": "sponsor"
+      },
+      "source_role": "documents",
+      "source_excerpt": "if you’re a canadian citizen living outside canada, you must show that you plan to live in canada when your sponsored relative becomes a permanent resident.",
+      "display_order": 165,
+      "source_excerpt_display": "if you’re a Canadian citizen living outside Canada, you must show that you plan to live in Canada when your sponsored relative becomes a permanent resident."
+    },
+    {
+      "requirement_code": "sponsor_previous_relationship_proof",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Sponsor's divorce certificate, if previously married",
+      "description": "Only if the sponsor was married before. IMM 5533 accepts, for each previous marriage, the final divorce certificate, the final annulment certificate or the former spouse's death certificate, and asks a sponsor still married to someone else but legally separated for proof of the separation.",
+      "parameters": {
+        "document_owner": "sponsor"
+      },
+      "source_role": "forms",
+      "source_excerpt": "you must tell us if you were previously married or in a common-law relationship. if you were previously married, a divorce certificate must be provided in order to proceed with your spousal sponsorship.",
+      "display_order": 170,
+      "source_excerpt_display": "You must tell us if you were previously married or in a common-law relationship. If you were previously married, a divorce certificate must be provided in order to proceed with your spousal sponsorship."
+    },
+    {
+      "requirement_code": "children_citizenship_proof",
+      "kind": "evidence",
+      "officially_required": false,
+      "label": "Proof of Canadian citizenship for a child you have together (if any)",
+      "description": "Only if the sponsor is a Canadian citizen and you have a child together who may be a Canadian citizen: a citizenship certificate or a copy of the Canadian passport, or for a child born in Canada the long-form birth certificate. IMM 5533 states the application is not returned if this is missing.",
+      "parameters": {
+        "document_owner": "sponsor"
+      },
+      "source_role": "documents",
+      "source_excerpt": "if you already have proof of canadian citizenship for your child, provide a copy of this proof (citizenship certificate or copy of canadian passport), to help us confirm that your child does not require immigrant processing.",
+      "display_order": 175,
+      "source_excerpt_display": "If you already have proof of Canadian citizenship for your child, provide a copy of this proof (citizenship certificate or copy of Canadian passport), to help us confirm that your child does not require immigrant processing."
+    },
+    {
       "requirement_code": "imm1344",
       "kind": "form",
       "officially_required": true,
@@ -181,6 +331,58 @@
       "source_excerpt": "if you want to use a paid representative, you must: download the use of a representative (imm 5476) form complete and sign it get your representative to sign it upload it with your application",
       "display_order": 210,
       "source_excerpt_display": "If you want to use a paid representative, you must: download the Use of a Representative (IMM 5476) form complete and sign it get your representative to sign it upload it with your application"
+    },
+    {
+      "requirement_code": "imm0008",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Generic Application Form for Canada",
+      "official_form_code": "IMM 0008",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm0008.html",
+      "description": "A digital form the principal applicant completes inside the Permanent Residence Portal, for themselves and their dependants. Do not fill out the PDF version.",
+      "source_role": "documents",
+      "source_excerpt": "the principal applicant must fill out these digital forms online: generic application form for canada (imm 0008)",
+      "display_order": 220,
+      "source_excerpt_display": "The principal applicant must fill out these digital forms online: Generic Application Form for Canada (IMM 0008)"
+    },
+    {
+      "requirement_code": "imm5669",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Schedule A – Background/Declaration",
+      "official_form_code": "IMM 5669",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5669.html",
+      "description": "A digital form in the Permanent Residence Portal. The principal applicant and each family member 18 or older complete their own.",
+      "source_role": "documents",
+      "source_excerpt": "the principal applicant must fill out these digital forms online: ... schedule a – background/declaration (imm 5669)",
+      "display_order": 230,
+      "source_excerpt_display": "The principal applicant must fill out these digital forms online: ... Schedule A – Background/Declaration (IMM 5669)"
+    },
+    {
+      "requirement_code": "imm5406",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Additional Family Information",
+      "official_form_code": "IMM 5406",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5406.html",
+      "description": "A digital form in the Permanent Residence Portal. The principal applicant and each family member 18 or older complete their own.",
+      "source_role": "documents",
+      "source_excerpt": "the principal applicant must fill out these digital forms online: ... additional family information (imm 5406)",
+      "display_order": 240,
+      "source_excerpt_display": "The principal applicant must fill out these digital forms online: ... Additional Family Information (IMM 5406)"
+    },
+    {
+      "requirement_code": "imm5532",
+      "kind": "form",
+      "officially_required": true,
+      "label": "Relationship Information and Sponsorship Evaluation",
+      "official_form_code": "IMM 5532",
+      "official_form_url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5532.html",
+      "description": "A PDF form completed by both people: per IRCC's checklist the sponsor answers Part A, the principal applicant Part B, and both Part C, and each signs their own declarations. Complete it, then 'print to PDF' to create a version that can be digitally signed. Not used when sponsoring only a dependent child (IMM 5481 instead).",
+      "source_role": "documents",
+      "source_excerpt": "if you’re sponsoring a spouse or partner (with or without dependent children), you must fill out sponsorship evaluation and relationship questionnaire [imm 5532]",
+      "display_order": 250,
+      "source_excerpt_display": "If you’re sponsoring a spouse or partner (with or without dependent children), you must fill out Sponsorship Evaluation and Relationship Questionnaire [IMM 5532]"
     },
     {
       "requirement_code": "two_applications_via_pr_portal",

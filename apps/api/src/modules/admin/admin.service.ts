@@ -37,16 +37,39 @@ export class AdminService {
   /**
    * All consultant users, for admin assignment pickers. Pages through the
    * GoTrue Admin Auth API (which returns ~50 users/page) so the picker is not
-   * truncated, then filters to app_metadata.role === 'consultant'.
+   * truncated. A user is a consultant the way JwtGuard.resolveAppRole decides
+   * it: app_metadata.role === 'consultant', or — when app_metadata carries no
+   * role — an RBAC grant of the `consultant` role (user_roles). Live
+   * 2026-10-20: User management showed two RBAC consultants the picker never
+   * offered, so the only assignable consultant was the applicant themself.
    */
   async listConsultants(): Promise<AdminUserView[]> {
+    const rbac = await this.rbacConsultantIds();
     const out: AdminUserView[] = [];
     for (const u of await allAuthUsers(this.supabase.admin as never)) {
-      if (roleOf(u.app_metadata) === 'consultant') {
+      const declared = (u.app_metadata as { role?: unknown } | undefined)?.role;
+      const isConsultant =
+        declared === undefined || declared === null
+          ? rbac.has(u.id)
+          : roleOf(u.app_metadata) === 'consultant';
+      if (isConsultant) {
         out.push({ id: u.id, email: u.email ?? '', appRole: 'consultant' });
       }
     }
     return out;
+  }
+
+  /** Users holding the RBAC `consultant` role. Empty on a read error. */
+  private async rbacConsultantIds(): Promise<Set<string>> {
+    const { data, error } = await this.supabase.admin
+      .from('user_roles')
+      .select('user_id, roles!inner(key)')
+      .eq('roles.key', 'consultant');
+    if (error) {
+      safeLog.error('admin', `consultant RBAC lookup failed: ${error.message}`);
+      return new Set();
+    }
+    return new Set((data ?? []).map((r: { user_id: string }) => r.user_id));
   }
 
   /**

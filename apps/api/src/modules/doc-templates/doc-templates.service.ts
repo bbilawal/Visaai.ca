@@ -12,9 +12,12 @@ import {
 import {
   documentTemplatesForApplication,
   documentTemplatesForCountry,
+  documentTemplatesForUnclaimedRoute,
+  documentTemplatesForRoute,
   type RequiredDocumentTemplate,
 } from './doc-template.catalog';
 import type { DocumentTemplateKind } from '../../strategies/types';
+import { strategyRegistry } from '../../strategies/strategy.registry';
 import { assessFreshness, type FreshnessLevel } from '../forms/freshness';
 
 /**
@@ -88,7 +91,7 @@ export class DocTemplatesService {
     const { data: app, error } = await db
       .from('applications')
       .select(
-        'id, destination_country, country_frameworks(country_code, visa_type)',
+        'id, destination_country, visa_type_id, visa_types(visaai_id), country_frameworks(country_code, visa_type)',
       )
       .eq('id', applicationId)
       .single();
@@ -116,12 +119,35 @@ export class DocTemplatesService {
     // Same resolution order as the forms path: an explicit framework wins;
     // otherwise destination_country (which the real intake path DOES populate)
     // and the union of every program's artifacts; otherwise nothing.
+    const visaaiId = (
+      app as { visa_types?: { visaai_id?: string | null } | null }
+    ).visa_types?.visaai_id;
+    const routed = strategyRegistry.resolveRoute(destinationCountry, visaaiId);
+
     let required: RequiredDocumentTemplate[];
-    if (framework) {
+    if (routed && !framework) {
+      // A PROGRAM CLAIMS THIS ROUTE: it gets the artifacts the program itself
+      // names, and none when it names none (the Canada eTA). The country
+      // fallback is "every artifact this country uses across all its
+      // programs" — for a claimed route that is the wrong answer (dry run
+      // 2026-10-16: an eTA applicant was handed visitor-visa artifacts).
+      // Unclaimed routes keep the country fallback below.
+      required = documentTemplatesForRoute(
+        destinationCountry!,
+        routed.program,
+        visaaiId!,
+      );
+    } else if (framework) {
       required = documentTemplatesForApplication(
         framework.country_code,
         framework.visa_type,
       );
+    } else if (destinationCountry && visaaiId) {
+      // A KNOWN route no program claims: only what applies to every program
+      // in the country. The union is reserved for an application whose route
+      // is unknown — handing a known route other programs' checklists was the
+      // bug (a Canada TRV applicant saw the study and work permit lists).
+      required = documentTemplatesForUnclaimedRoute(destinationCountry);
     } else if (destinationCountry) {
       required = documentTemplatesForCountry(destinationCountry);
     } else {

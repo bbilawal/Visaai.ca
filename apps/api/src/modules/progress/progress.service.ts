@@ -3,6 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import {
   computeProgress,
   isIntakeAnswered,
+  requiredGenTypesForRoute,
   STAGE_ORDER,
   type AppProgress,
   type ProgressInput,
@@ -10,9 +11,16 @@ import {
 } from '@visaai/types';
 import { AnalyticsEventBus } from '../analytics/analytics-event-bus';
 import { makeServerEvent } from '../analytics/events/catalog';
+import {
+  openRequestSlots,
+  withOpenRequestSlots,
+} from '../review-items/open-document-requests';
+import { safeLog } from '../shared/log/redact';
 
-// Narrative is "complete" when these doc types are approved. itinerary is intentionally optional.
-const REQUIRED_GEN_TYPES = ['loe', 'cover_letter'];
+// Narrative is "complete" when the ROUTE's letters are approved — LOE + cover
+// letter by default (itinerary optional), none for Canada's eTA. See
+// @visaai/types route-letters; the web copy in apps/web/lib/progress.ts reads
+// the same function.
 
 // Bound on the process-local dedup structures below. forApplication is driven
 // by both request traffic AND the RemindersService.runScan background sweep, so
@@ -74,7 +82,7 @@ export class ProgressService {
           // (IMM 5257, SCHENGEN-C, I-130 …) reported the Documents stage
           // incomplete forever and Submit stayed locked.
           .from('checklist_items')
-          .select('status, required, meta')
+          .select('id, status, required, meta')
           .eq('application_id', applicationId),
         db
           .from('generated_documents')
@@ -105,7 +113,27 @@ export class ProgressService {
           .maybeSingle(),
       ]);
 
-    const required = (checklist.data ?? []).filter(
+    // A slot whose document the consultant sent back is not done, whatever
+    // its stored status says — the same rule as the vault. Unreadable: count
+    // the stored statuses (progress is a display, not a gate).
+    let requestSlots = new Set<string>();
+    try {
+      requestSlots = await openRequestSlots(db, applicationId);
+    } catch (err) {
+      safeLog.warn(
+        'progress.reviews',
+        `open document requests unreadable for ${applicationId}: ${(err as Error).message}`,
+      );
+    }
+    const required = withOpenRequestSlots(
+      (checklist.data ?? []) as Array<{
+        id?: string | null;
+        status: ProgressInput['requiredChecklist'][number]['status'];
+        required: boolean;
+        meta?: { kind?: string | null } | null;
+      }>,
+      requestSlots,
+    ).filter(
       (c: { status: string; required: boolean }) => c.required,
     );
     const approvedGenTypes = (gens.data ?? [])
@@ -147,7 +175,7 @@ export class ProgressService {
           meta?: { kind?: string | null } | null;
         }) => ({ status: c.status, meta: c.meta ?? null }),
       ),
-      requiredGenTypes: REQUIRED_GEN_TYPES,
+      requiredGenTypes: requiredGenTypesForRoute(routeOf(app)),
       approvedGenTypes,
       hasVriScore: !!vri.data,
       hasPrefill: !!prefill.data,

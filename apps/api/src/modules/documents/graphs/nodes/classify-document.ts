@@ -18,16 +18,184 @@ import {
   looksLikeMarriageCertificate,
   parseBirthCertificates,
   parseCivilDate,
+  datesInText,
   parseMarriageCertificate,
   type BirthRecord,
 } from '../../ocr/civil-records';
 import { findByName } from '../../../shared/profile/family-members';
+import { isPhotoDocumentType } from '../../ocr/extraction-schema';
 
 // ─── Classification ──────────────────────────────────────────────────────────
 
+/** Markers only a panel physician's immigration medical exam record carries. */
+const IME_RECORD =
+  /\bpanel (?:physician|clinic)\b|\bUMI\b|\bIME (?:\/ ?UMI )?(?:number|no\.?)\b|\bupfront (?:immigration )?medical\b|\beMedical\b/i;
+
 const CNIC_NUMBER = /\b\d{5}-\d{7}-\d\b/;
+/**
+ * Proof of Canadian status: a PR card, a confirmation of permanent residence
+ * or a citizenship certificate. A sponsor's PR card was filed as a generic
+ * "document" (live E2E 2026-10-20, spousal sponsorship). Only the document's
+ * own title layout counts — the bilingual title pair, or a COPR with its IMM
+ * form number — because refusal letters, IMM 1344/5532/5533 and checklists
+ * quote "permanent resident card" too.
+ */
+const CANADIAN_STATUS_DOCUMENT =
+  /\bpermanent resident card\b[\s\S]{0,80}\bcarte de r[ée]sident permanent\b|\bcarte de r[ée]sident permanent\b[\s\S]{0,80}\bpermanent resident card\b|\bcitizenship certificate\b[\s\S]{0,80}\bcertificat de citoyennet[ée]|\bcertificat de citoyennet[ée][\s\S]{0,80}\bcitizenship certificate\b/i;
+const COPR =
+  /\bconfirmation of permanent residence\b/i;
+const COPR_FORM = /\bIMM ?(?:5292|5688)\b/i;
+
+function looksLikeCanadianStatusDocument(t: string): boolean {
+  return CANADIAN_STATUS_DOCUMENT.test(t) || (COPR.test(t) && COPR_FORM.test(t));
+}
+
+/** The certificate's own title, in the wordings police forces issue. */
+const POLICE_CERTIFICATE =
+  /\bpolice (?:character |clearance |conduct )?certificate\b|\bpolice clearance\b|\bcertificate of (?:good conduct|no criminal record)\b|\bcharacter certificate\b/i;
+/**
+ * A tax return or tax-authority record: a return of income (Pakistan FBR
+ * 114(1)), an income tax return (US 1040, India ITR), a notice of assessment
+ * (CRA), or an NTN certificate. Titles only: a bank statement, payslip,
+ * letterhead or invoice that prints a "National Tax Number", or a footer
+ * urging the reader to "file your return of income", is not one.
+ */
+const TAX_TITLE =
+  /\bnotice of assessment\b|\b(?:national tax number|NTN) certificate\b/i;
+// "Return of income" / "income tax return" as a title, not as an instruction
+// ("file your return of income", "returns filed", "to file").
+const RETURN_TITLE =
+  /(?<!\bfile (?:your |the |an |a )?|\bfiled |\bfiling (?:your |of )?)\b(?:return of income|income tax return)\b/i;
+// A Pakistani return of income names its section or tax year; prod's FBR
+// 114(1) heading is "114(1) (Return of Income filed voluntarily …)".
+const RETURN_OF_INCOME_CONTEXT =
+  /\b114 ?\(1\)|\btax year\b|\bfederal board of revenue\b/i;
+
+function looksLikeTaxRecord(t: string): boolean {
+  if (TAX_TITLE.test(t)) return true;
+  const m = RETURN_TITLE.exec(t);
+  if (!m) return false;
+  if (/income tax return/i.test(m[0])) return true;
+  return RETURN_OF_INCOME_CONTEXT.test(t);
+}
+
 const RELATIVE_LABEL =
   /\b(?:father|husband|guardian)(?:'?s)?\s*name\b|\b[sdw]\s*\/\s*o\b/i;
+
+// ─── Agreements that quote their parties' CNICs (prod 2026-10-19) ───────────
+//
+// A Pakistani rent deed on stamp paper names the landlord and the tenant as
+// "<name> S/O <father>, holder of CNIC No. xxxxx-xxxxxxx-x" — the CNIC
+// number beside a relative label is exactly the identity card's own
+// signature. Two shop lease deeds on a business-visitor application were
+// filed as `national_id`, and the LANDLORD's CNIC became the applicant's
+// pending national ID number.
+
+/** The agreement's own title: English, romanised Urdu, Urdu script. */
+const LEASE_TITLE = new RegExp(
+  [
+    String.raw`\b(?:rent(?:al)?|lease|tenancy|leave and licen[cs]e)\s+(?:agreement|deed|contract)\b`,
+    String.raw`\b(?:agreement|deed|contract)\s+(?:of|for)\s+(?:rent|lease|tenancy)\b`,
+    String.raw`\bkiraya\s*nama\b`,
+    String.raw`\bkirayanama\b`,
+    String.raw`کرای[ہه]\s*نام[ہه]`,
+    String.raw`معاہد[ہه]\s*کرای[ہه]`,
+  ].join('|'),
+  'i',
+);
+/** Both sides of a tenancy (or any contract), each in its usual names. */
+const LEASE_GRANTOR =
+  /\b(?:landlord|lessor|licensor|(?:shop )?owner)\b|مؤجر|موجر|مالک\s*(?:مکان|دکان)/i;
+const LEASE_HOLDER = /\b(?:tenant|lessee|licensee)\b|کرای[ہه]\s*دار|مستاجر/i;
+/** What a tenancy is about: the rent, the deposit, the premises. */
+const LEASE_TERMS =
+  /\bmonthly rent\b|\brent of rs\b|\b(?:security|advance) (?:deposit|money|rent)\b|\b(?:demised )?premises\b|\bshop (?:no|number)\b|\bperiod of (?:the )?(?:lease|tenancy)\b/i;
+/** The clauses any contract or deed carries and an identity card never does. */
+const CONTRACT_CLAUSES = [
+  /\bwitness(?:es)?\b|گواہ/i,
+  /\bfirst party\b|\bparty of the first part\b|فریق\s*اول/i,
+  /\bsecond party\b|\bparty of the second part\b|فریق\s*دوم/i,
+  /\bhereinafter\b/i,
+  /\bstamp paper\b|\bnon[- ]judicial\b/i,
+  /\bin witness whereof\b|\bexecuted (?:on|at|this)\b/i,
+];
+/** A contract's own title, for agreements other than a tenancy. */
+const CONTRACT_TITLE =
+  /\b(?:agreement|deed|contract|iqrar\s*nama)\b|اقرار\s*نام[ہه]|معاہد[ہه]/i;
+/** The layout of an identity card itself. */
+const ID_CARD_LAYOUT = [
+  /\bidentity\s*number\b/i,
+  /\bdate\s*of\s*issue\b/i,
+  /\bdate\s*of\s*expiry\b/i,
+  /\bholder'?s?\s*signature\b/i,
+];
+
+function contractClauseCount(t: string): number {
+  return CONTRACT_CLAUSES.filter((re) => re.test(t)).length;
+}
+
+/**
+ * Whether the text is a contract between parties that merely QUOTES their
+ * identity — a rent / lease / tenancy agreement (`lease_agreement`), or
+ * another deed or agreement between a first and second party
+ * (`agreement`) — rather than an identity document. Null otherwise.
+ *
+ *  - A tenancy titled as one (rent agreement, lease deed, kirayanama,
+ *    کرایہ نامہ) that names both parties (landlord + tenant, lessor +
+ *    lessee, first + second party) or carries two contract clauses is a
+ *    tenancy even with the parties' CNIC copies attached: the attachments
+ *    are the parties' cards, not the applicant's. The title alone is not
+ *    enough — a bank statement's "RENT AGREEMENT FEE" line or an
+ *    invitation letter's "a lease agreement for premises" mention it too.
+ *  - Untitled, it needs both parties (landlord + tenant, lessor + lessee),
+ *    tenancy terms or contract clauses, and none of a card's layout.
+ *  - Any other contract needs its title, both parties and a witness or
+ *    "hereinafter" clause, and at most one card label.
+ *
+ * `againstIdCard`: the text already looks like an identity card (a CNIC
+ * beside "S/O", "Identity Card No."), so the only question left is deed or
+ * card. A tenancy's title with its terms or one contract clause settles it —
+ * "RENT AGREEMENT … S/O … CNIC No … monthly rent … Witness" names its
+ * parties by name, not as landlord and tenant.
+ */
+export function agreementKind(
+  text: string | null | undefined,
+  options: { againstIdCard?: boolean } = {},
+): 'lease_agreement' | 'agreement' | null {
+  const t = (text ?? '').replace(/\s+/g, ' ').trim();
+  if (!t) return null;
+  const parties = LEASE_GRANTOR.test(t) && LEASE_HOLDER.test(t);
+  const bothSides = CONTRACT_CLAUSES[1].test(t) && CONTRACT_CLAUSES[2].test(t);
+  const terms = LEASE_TERMS.test(t);
+  const clauses = contractClauseCount(t);
+  const cardLabels = ID_CARD_LAYOUT.filter((re) => re.test(t)).length;
+
+  if (LEASE_TITLE.test(t) && (parties || bothSides || clauses >= 2)) {
+    return 'lease_agreement';
+  }
+  if (options.againstIdCard && LEASE_TITLE.test(t) && (terms || clauses >= 1)) {
+    return 'lease_agreement';
+  }
+  if (parties && (terms ? 1 : 0) + clauses >= 2 && cardLabels === 0) {
+    return 'lease_agreement';
+  }
+
+  if (
+    CONTRACT_TITLE.test(t) &&
+    bothSides &&
+    (CONTRACT_CLAUSES[0].test(t) || CONTRACT_CLAUSES[3].test(t)) &&
+    cardLabels <= 1
+  ) {
+    return 'agreement';
+  }
+  return null;
+}
+
+/** The types agreementKind files a contract under. */
+export function isAgreementType(documentType: string | null | undefined) {
+  const t = (documentType ?? '').toLowerCase().trim();
+  return t === 'lease_agreement' || t === 'agreement';
+}
 
 /**
  * Best-guess `document_type` for an upload from its OCR text, or null when the
@@ -48,10 +216,20 @@ export function classifyDocumentText(
       t,
     )
   ) {
-    return /\brefus|\bnot satisfied\b|\bdoes not meet\b/i.test(t)
-      ? 'refusal_letter'
-      : 'ircc_correspondence';
+    if (/\brefus|\bnot satisfied\b|\bdoes not meet\b/i.test(t)) {
+      return 'refusal_letter';
+    }
+    // A COPR and a citizenship certificate name IRCC; they are the status,
+    // not a letter. After the refusal check: a refusal quoting a PR card is
+    // still the refusal.
+    if (looksLikeCanadianStatusDocument(t)) return 'canadian_status_document';
+    // A panel physician's upfront-exam confirmation names IRCC too; it is the
+    // exam record, not a letter from IRCC (super visa, prod app 61f16bb5).
+    if (IME_RECORD.test(t)) return 'medical_exam';
+    return 'ircc_correspondence';
   }
+
+  if (looksLikeCanadianStatusDocument(t)) return 'canadian_status_document';
 
   // Passport machine-readable zone (ICAO 9303, TD3 line 1).
   if (/\bP[<A-Z][A-Z<]{3}[A-Z]+<</.test((text ?? '').replace(/ /g, ''))) {
@@ -63,6 +241,15 @@ export function classifyDocumentText(
   // is exactly the identity card's own signature (dry run 2026-10-15).
   if (looksLikeMarriageCertificate(t)) return 'marriage_certificate';
   if (looksLikeBirthCertificate(t)) return 'birth_certificate';
+  // So does a Pakistani police character certificate, and the Express Entry
+  // vault rejected one as "a national identity card" (prod 2026-10-19).
+  if (POLICE_CERTIFICATE.test(t)) return 'police_clearance';
+
+  // Tax returns and tax-authority records BEFORE insurance and the bank
+  // statement: an FBR return of income has an "Insurance Premium" deduction
+  // line and a wealth statement with a "Cash and Bank Balance", and was
+  // rejected as a medical insurance policy (prod 2026-10-29, TRV).
+  if (looksLikeTaxRecord(t)) return 'tax_return';
 
   // National identity card. The CNIC number alone is not enough — Pakistani
   // bank statements print the holder's CNIC too — so it must come with the
@@ -73,6 +260,11 @@ export function classifyDocumentText(
     ) ||
     (CNIC_NUMBER.test(t) && RELATIVE_LABEL.test(t))
   ) {
+    // So does a rent deed, naming landlord and tenant "S/O" with their CNICs
+    // (prod 2026-10-19), and any other deed between a first and a second
+    // party quoting their "Identity Card No.". It is still the deed.
+    const agreement = agreementKind(t, { againstIdCard: true });
+    if (agreement) return agreement;
     return 'national_id';
   }
 
@@ -80,9 +272,14 @@ export function classifyDocumentText(
   // talks about "medical" cover and can even mention a "medical examination"
   // for pre-existing conditions, but it is never the exam report (#33, prod
   // 2026-10-14: "Medical Insurance_compressed.pdf" filed as medical_exam).
+  // An "insurance premium" line item (a payslip deduction, a bank debit, a
+  // tax schedule) is not a policy, so it is no evidence either way.
+  const withoutPremiumLines = t.replace(/\binsurance premiums?\b/gi, ' ');
   if (
-    /\binsurance\b/i.test(t) &&
-    /\b(?:policy|insured|coverage|cover|premium|certificate)\b/i.test(t)
+    /\binsurance\b/i.test(withoutPremiumLines) &&
+    /\b(?:policy|insured|coverage|cover|premium|certificate)\b/i.test(
+      withoutPremiumLines,
+    )
   ) {
     return 'medical_insurance';
   }
@@ -111,7 +308,36 @@ export function classifyDocumentText(
     return 'employment_letter';
   }
 
+  // A lease that quotes no identity card. Last: a statement or letter that
+  // merely mentions a lease is that statement or letter.
+  if (agreementKind(t) === 'lease_agreement') return 'lease_agreement';
+
   return null;
+}
+
+/**
+ * Broad slots that prove a family relationship. A civil record dropped into
+ * one is that civil record: the slot says why it was uploaded, the text says
+ * what it is.
+ */
+const RELATIONSHIP_SLOT =
+  /relationship|family|relative|kinship|civil_status|dependa?nt|child|spouse|parent|genealog/;
+
+/**
+ * The civil-record type (birth_certificate / marriage_certificate) a document
+ * in a relationship slot really is, or null. Never for a narrow slot: a birth
+ * certificate in the bank-statement slot stays under the slot rules (#101),
+ * and an identity card in a relationship slot is not a civil record at all.
+ */
+export function civilRecordInRelationshipSlot(
+  slotType: string | null | undefined,
+  text: string | null | undefined,
+): 'birth_certificate' | 'marriage_certificate' | null {
+  const slot = (slotType ?? '').toLowerCase().trim();
+  if (!RELATIONSHIP_SLOT.test(slot)) return null;
+  // Already a civil-record slot: nothing to re-type.
+  if (/birth_cert|birth_registration|marriage|nikah/.test(slot)) return null;
+  return civilRecordKind(slot, text);
 }
 
 // ─── Date of birth ───────────────────────────────────────────────────────────
@@ -238,7 +464,7 @@ export function relativeFromIdCardText(text: string | null | undefined): {
 
 // ─── Field refinement ────────────────────────────────────────────────────────
 
-function isIdCardType(documentType: string): boolean {
+export function isIdCardType(documentType: string): boolean {
   const t = documentType.toLowerCase();
   return [
     'national_id',
@@ -250,8 +476,10 @@ function isIdCardType(documentType: string): boolean {
   ].some((p) => t === p || t.startsWith(`${p}_`));
 }
 
-function isPassportType(documentType: string): boolean {
+/** `passport_copy`, `passport_bio_page` — never `passport_photo(s)`. */
+export function isPassportType(documentType: string): boolean {
   const t = documentType.toLowerCase();
+  if (isPhotoDocumentType(t)) return false;
   return t === 'passport' || t.startsWith('passport_');
 }
 
@@ -281,6 +509,90 @@ function mrzLines(text: string): { line1?: string; line2: string } | null {
   return null;
 }
 
+/**
+ * A CNIC prints "Date of Issue" and "Date of Expiry" as DD.MM.YYYY. IRCC's
+ * /national-id-doc asks for the issue date, and the model extractor left both
+ * out on the dry run's card (2026-10-16), so they are read from the labels.
+ *
+ * OCR gives two layouts: each label followed by its date, or a row of labels
+ * ("Date of Birth  Date of Issue  Date of Expiry") with the dates underneath
+ * in the same order. A label's own date is the one before the next label;
+ * labels without one take the dates after the last label, in order. Date of
+ * birth is a label too, only so its date is not handed to the next label.
+ */
+type CardDateKey = 'date_of_birth' | 'issue_date' | 'expiry_date';
+const CARD_DATE_LABELS: Array<[RegExp, CardDateKey]> = [
+  [/date\s*of\s*birth/gi, 'date_of_birth'],
+  [/date\s*of\s*issue|issue\s*date/gi, 'issue_date'],
+  [/date\s*of\s*expiry|expiry\s*date/gi, 'expiry_date'],
+];
+const CARD_DATE = /\b(\d{1,2})[./-](\d{1,2})[./-](\d{4})\b/g;
+
+function isoFromCardDate(m: RegExpExecArray): string | undefined {
+  const [day, month, year] = [Number(m[1]), Number(m[2]), m[3]];
+  if (month < 1 || month > 12 || day < 1 || day > 31) return undefined;
+  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+export function cardDatesFromLabels(text: string): {
+  issue_date?: string;
+  expiry_date?: string;
+} {
+  const labels: Array<{ key: CardDateKey; start: number; end: number }> = [];
+  for (const [re, key] of CARD_DATE_LABELS) {
+    for (const m of text.matchAll(re)) {
+      const start = m.index ?? 0;
+      labels.push({ key, start, end: start + m[0].length });
+    }
+  }
+  if (!labels.some((l) => l.key !== 'date_of_birth')) return {};
+  labels.sort((a, b) => a.start - b.start);
+
+  const dates: Array<{ at: number; iso: string }> = [];
+  for (const m of text.matchAll(CARD_DATE)) {
+    const iso = isoFromCardDate(m);
+    if (iso) dates.push({ at: m.index ?? 0, iso });
+  }
+
+  const found: Partial<Record<CardDateKey, string>> = {};
+  const used = new Set<number>();
+  const pending: CardDateKey[] = [];
+  labels.forEach((l, i) => {
+    const isLast = i === labels.length - 1;
+    // In a row of labels the dates after the last label belong to the whole
+    // row, not to the last label alone.
+    if (isLast && pending.length) {
+      pending.push(l.key);
+      return;
+    }
+    const limit = labels[i + 1]?.start ?? l.end + 40;
+    const own = dates.findIndex(
+      (d, j) => !used.has(j) && d.at >= l.end && d.at < limit,
+    );
+    if (own >= 0) {
+      used.add(own);
+      found[l.key] ??= dates[own].iso;
+    } else {
+      pending.push(l.key);
+    }
+  });
+  const last = labels[labels.length - 1].end;
+  const after = dates
+    .map((d, j) => ({ ...d, j }))
+    .filter((d) => d.at >= last && !used.has(d.j));
+  pending.forEach((key, i) => {
+    if (after[i]) found[key] ??= after[i].iso;
+  });
+
+  const out: { issue_date?: string; expiry_date?: string } = {};
+  if (found.issue_date) out.issue_date = found.issue_date;
+  if (found.expiry_date) out.expiry_date = found.expiry_date;
+  // A card that expires before it was issued was misread.
+  if (out.issue_date && out.expiry_date && out.expiry_date <= out.issue_date)
+    return {};
+  return out;
+}
+
 function sexFromLabel(text: string): string | undefined {
   for (const label of text.matchAll(SEX_LABEL)) {
     const start = (label.index ?? 0) + label[0].length;
@@ -298,8 +610,9 @@ function sexFromLabel(text: string): string | undefined {
  *
  *  - passport: `sex` from the MRZ (TD3 line 2, position 21) and the two MRZ
  *    lines as `mrz` (prefill derives the passport type from them);
- *  - national ID card: `national_id_number` (Pakistan CNIC xxxxx-xxxxxxx-x)
- *    and `sex` from the card's "Gender"/"Sex" label.
+ *  - national ID card: `national_id_number` (Pakistan CNIC xxxxx-xxxxxxx-x),
+ *    `sex` from the card's "Gender"/"Sex" label, and `issue_date` /
+ *    `expiry_date` from "Date of Issue" / "Date of Expiry".
  *
  * Only identity document types are read — a Pakistani bank statement prints
  * the holder's CNIC too, and that is not this document's number.
@@ -307,7 +620,13 @@ function sexFromLabel(text: string): string | undefined {
 export function identityFieldsFromText(
   documentType: string | null | undefined,
   text: string | null | undefined,
-): { sex?: string; mrz?: string; national_id_number?: string } {
+): {
+  sex?: string;
+  mrz?: string;
+  national_id_number?: string;
+  issue_date?: string;
+  expiry_date?: string;
+} {
   const type = documentType ?? '';
   const t = text ?? '';
   if (!t.trim()) return {};
@@ -323,15 +642,58 @@ export function identityFieldsFromText(
   }
 
   if (isIdCardType(type)) {
-    const out: { sex?: string; national_id_number?: string } = {};
+    const out: {
+      sex?: string;
+      national_id_number?: string;
+      issue_date?: string;
+      expiry_date?: string;
+    } = {};
     const cnic = CNIC_ANY.exec(t);
     if (cnic) out.national_id_number = `${cnic[1]}-${cnic[2]}-${cnic[3]}`;
     const sex = sexFromLabel(t);
     if (sex) out.sex = sex;
+    Object.assign(out, cardDatesFromLabels(t));
     return out;
   }
 
   return {};
+}
+
+// ─── Medical exam dates ──────────────────────────────────────────────────────
+
+const EXAM_DATE_LABEL =
+  /(?:exam(?:ination)?\s*date|date\s*of\s*(?:the\s*)?(?:medical\s*)?exam(?:ination)?)\s*[:-]?\s*/gi;
+
+/**
+ * When `expiryDate` is really the exam date of a medical exam record, return
+ * it (as printed in the field); otherwise null.
+ */
+function examDateFromText(
+  documentType: string,
+  text: string | null | undefined,
+  expiryDate: unknown,
+): string | null {
+  if (typeof expiryDate !== 'string' || !expiryDate.trim() || !text) {
+    return null;
+  }
+  if (
+    !/medical|panel_physician|health_exam|\bime\b/.test(
+      documentType.toLowerCase(),
+    )
+  ) {
+    return null;
+  }
+  if (/insurance/.test(documentType.toLowerCase())) return null;
+  const wanted = birthDateCandidates(expiryDate);
+  if (wanted.length === 0) return null;
+  for (const label of text.matchAll(EXAM_DATE_LABEL)) {
+    const start = (label.index ?? 0) + label[0].length;
+    const date = DATE_TOKEN.exec(text.slice(start, start + 40));
+    if (date && birthDateCandidates(date[0]).some((d) => wanted.includes(d))) {
+      return expiryDate;
+    }
+  }
+  return null;
 }
 
 // ─── Per-slot content check (#15) ────────────────────────────────────────────
@@ -353,8 +715,13 @@ const CONTENT_FAMILY: Record<string, string> = {
   ircc_correspondence: 'refusal',
   medical_insurance: 'medical_insurance',
   medical_exam: 'medical_exam',
+  tax_return: 'tax',
   bank_statement: 'financial',
   employment_letter: 'employment',
+  police_clearance: 'police',
+  canadian_status_document: 'status',
+  lease_agreement: 'agreement',
+  agreement: 'agreement',
 };
 
 /**
@@ -364,8 +731,10 @@ const CONTENT_FAMILY: Record<string, string> = {
  * "proof of ties", "supporting documents" — is broad, and only an identity
  * document is flagged in it.
  */
-const SLOT_FAMILIES: Array<[RegExp, string]> = [
-  [/photo|picture/, 'photo'],
+// The photo matcher is the shared one, so a `passport_photocopy` slot stays a
+// passport slot and a `photo_id` slot is not a photograph slot.
+const SLOT_FAMILIES: Array<[Pick<RegExp, 'test'>, string]> = [
+  [{ test: isPhotoDocumentType }, 'photo'],
   [/passport|travel_document/, 'passport'],
   [/national_id|id_card|identity_card|cnic|nicop|^nic(?:_|$)/, 'national_id'],
   [/insurance/, 'medical_insurance'],
@@ -373,14 +742,21 @@ const SLOT_FAMILIES: Array<[RegExp, string]> = [
   [/refus|ircc|correspondence/, 'refusal'],
   [/bank|statement|fund|financ|saving|deposit/, 'financial'],
   [/employ|job_letter|salary|pay_?stub|payslip/, 'employment'],
+  [/police|clearance|(?:^|_)pcc(?:_|$)|good_conduct/, 'police'],
 ];
 
 /**
  * Broad slots that legitimately hold someone's identity document: a sponsor's
  * or relative's passport/CNIC is how a relationship or sponsorship is shown.
  */
+// `status`: a sponsor's proof of Canadian status may be their Canadian
+// passport (spousal sponsorship's proof_of_status slot, review of #250).
 const IDENTITY_FRIENDLY_SLOT =
-  /identity|(?:^|_)id(?:_|$)|sponsor|host|relationship|family|parent|spouse|guarantor|invit|dependa?ent|child|civil_status/;
+  /identity|(?:^|_)id(?:_|$)|sponsor|host|relationship|family|parent|spouse|guarantor|invit|dependa?ent|child|civil_status|(?:^|_)status(?:_|$)/;
+
+/** Slots for someone other than the applicant: a spouse, sponsor, relative. */
+const OTHER_PERSON_SLOT =
+  /spouse|partner|sponsor|host|parent|child|relative|family|guarantor|invit|dependa?nt/;
 
 /**
  * Pages beyond the bio page: a visa foil (MRZ starting `V`) or entry/exit
@@ -403,8 +779,13 @@ const CONTENT_LABEL: Record<string, string> = {
   ircc_correspondence: 'a letter from IRCC',
   medical_insurance: 'a medical insurance policy',
   medical_exam: 'a medical exam report',
+  tax_return: 'a tax return or tax record',
   bank_statement: 'a bank statement',
   employment_letter: 'an employment letter',
+  police_clearance: 'a police certificate',
+  canadian_status_document: 'a Canadian PR card or citizenship certificate',
+  lease_agreement: 'a rent or lease agreement',
+  agreement: 'an agreement between two parties',
 };
 
 function humanize(type: string): string {
@@ -436,9 +817,42 @@ export function slotContentMismatch(
 
   const slotFamily = SLOT_FAMILIES.find(([re]) => re.test(slot))?.[1];
   if (slotFamily === contentFamily) return null;
+  // A lease or other contract is legitimate evidence in most slots (business
+  // premises, property, ties, even rental income as funds). It is only
+  // plainly wrong where an identity document belongs (prod 2026-10-19).
+  if (
+    contentFamily === 'agreement' &&
+    slotFamily !== 'passport' &&
+    slotFamily !== 'national_id'
+  ) {
+    return null;
+  }
+  // A tax return is income and funds evidence: it belongs in income,
+  // employment and financial slots, and in any broad slot.
+  if (
+    contentFamily === 'tax' &&
+    (!slotFamily || slotFamily === 'employment' || slotFamily === 'financial')
+  ) {
+    return null;
+  }
+  // IRCC's own medical instructions are what an applicant without an upfront
+  // exam holds for this slot until the exam is done.
+  if (slotFamily === 'medical_exam' && detected === 'ircc_correspondence') {
+    return null;
+  }
 
   const isIdentity =
     contentFamily === 'passport' || contentFamily === 'national_id';
+  // Another person's identity slot ("National ID card or passport — <spouse>")
+  // takes either identity document — or their Canadian status card (a
+  // sponsor's PR card). The applicant's own slots stay strict.
+  if (
+    (isIdentity || contentFamily === 'status') &&
+    (slotFamily === 'passport' || slotFamily === 'national_id') &&
+    OTHER_PERSON_SLOT.test(slot)
+  ) {
+    return null;
+  }
   if (!slotFamily) {
     if (!isIdentity) return null;
     if (IDENTITY_FRIENDLY_SLOT.test(slot)) return null;
@@ -458,6 +872,49 @@ export function slotContentMismatch(
     detected,
     message:
       `This looks like ${what}, but this slot is for ${slotName}.${hint} ` +
+      'Remove it and upload the right document here.',
+  };
+}
+
+/** Identity a contract only quotes from its parties (or their card copies). */
+const AGREEMENT_DROPPED_KEYS = [
+  'full_name',
+  'given_name',
+  'family_name',
+  'date_of_birth',
+  'sex',
+  'nationality',
+  'place_of_birth',
+  'national_id_number',
+  'passport_number',
+  'mrz',
+  'father_name',
+  'mother_name',
+  'issue_date',
+  'expiry_date',
+  'holder_unknown',
+];
+
+/**
+ * The mismatch for an upload typed as an identity document whose text is an
+ * agreement (agreementKind), when `slotType` is a passport / national ID
+ * slot; null for any other slot. Built from the agreement already detected,
+ * never re-detected from the text: a deed that quotes no CNIC next to "S/O"
+ * would not be re-detected, and would then pass as a verified supporting
+ * document in the ID slot.
+ */
+export function agreementInIdentitySlot(
+  slotType: string | null | undefined,
+  kind: 'lease_agreement' | 'agreement',
+): SlotMismatch | null {
+  const slot = (slotType ?? '').toLowerCase().trim();
+  const family = SLOT_FAMILIES.find(([re]) => re.test(slot))?.[1];
+  if (family !== 'passport' && family !== 'national_id') return null;
+  return {
+    expected: slot,
+    detected: kind,
+    message:
+      `This looks like ${CONTENT_LABEL[kind]}, but this slot is for ${humanize(slot)}. ` +
       'Remove it and upload the right document here.',
   };
 }
@@ -483,6 +940,26 @@ export function refineIdentityFields<T extends Record<string, unknown>>(
   const type = documentType ?? '';
   const role = identityRole(type);
 
+  // A lease or other contract names its parties — landlord and tenant, each
+  // "S/O" somebody with a CNIC — and none of them is "the person the
+  // document is about". Nothing it quotes is an identity read: the
+  // landlord's CNIC was the applicant's pending national ID number (prod
+  // 2026-10-19). Also guards an ID-typed or untyped upload whose text is
+  // plainly a contract, should it reach here without being re-typed.
+  if (
+    isAgreementType(type) ||
+    ((isIdCardType(type) || role === 'generic') &&
+      agreementKind(text, { againstIdCard: isIdCardType(type) }))
+  ) {
+    for (const key of AGREEMENT_DROPPED_KEYS) {
+      if (out[key] === undefined) continue;
+      delete out[key];
+      adjustments[key] =
+        'dropped: an agreement quotes its parties; it is not an identity document';
+    }
+    return { fields: out as T, adjustments };
+  }
+
   const civil = civilRecordKind(type, text);
 
   const dob = out.date_of_birth;
@@ -496,6 +973,30 @@ export function refineIdentityFields<T extends Record<string, unknown>>(
     delete out.date_of_birth;
     adjustments.date_of_birth =
       'dropped: not an identity document and no birth label beside the date';
+  }
+
+  // An immigration medical exam record states the EXAM date; extractors asked
+  // for an expiry_date return it there, and the exam then "expired" the day
+  // it was taken (prod app 61f16bb5). A date printed beside an exam-date label
+  // is the exam date. The expiry check derives validity from it.
+  const exam = examDateFromText(type, text, out.expiry_date);
+  if (exam) {
+    if (out.exam_date === undefined || out.exam_date === '') {
+      out.exam_date = exam;
+    }
+    delete out.expiry_date;
+    adjustments.expiry_date =
+      'moved to exam_date: the date is printed as the exam date';
+  }
+
+  // A currency is a code (CAD, PKR), never prose — DUMMY_insurance.pdf
+  // yielded currency "paid in full".
+  if (
+    typeof out.currency === 'string' &&
+    !/^[A-Za-z]{3}$/.test(out.currency.trim())
+  ) {
+    delete out.currency;
+    adjustments.currency = 'dropped: not a currency code';
   }
 
   // An ID card carries a national identity number, not a passport number.
@@ -532,7 +1033,55 @@ export function refineIdentityFields<T extends Record<string, unknown>>(
       delete out.full_name;
       adjustments.full_name =
         'dropped: ambiguous — the card names a relative and the holder name is unreadable';
+      // Whose card it is is unknown. Live E2E 2026-10-18: a tenancy
+      // agreement with the parties' CNICs attached was read as an ID card,
+      // and the landlord's card date and number became the applicant's
+      // ("DOB 2025-11-06"). The date of birth goes; the number stays, because
+      // matching it against the CNIC the applicant typed is how their own
+      // card with an unreadable name is still recognised — but the card is
+      // marked so nothing treats it as the applicant's without that match.
+      if (out.date_of_birth !== undefined) {
+        delete out.date_of_birth;
+        adjustments.date_of_birth =
+          'dropped: the holder of this card is unknown';
+      }
+      out.holder_unknown = true;
+      adjustments.holder_unknown =
+        "set: only a match on the national ID number makes it the applicant's";
     }
+  }
+
+  // An ID card with no holder name at all is just as unknown: a tenancy
+  // agreement's attached CNIC copies came back nameless on a re-read.
+  if (
+    isIdCardType(type) &&
+    !['full_name', 'given_name', 'family_name'].some(
+      (k) => typeof out[k] === 'string' && (out[k] as string).trim(),
+    ) &&
+    out.holder_unknown !== true
+  ) {
+    if (out.date_of_birth !== undefined) {
+      delete out.date_of_birth;
+      adjustments.date_of_birth = 'dropped: the holder of this card is unknown';
+    }
+    out.holder_unknown = true;
+    adjustments.holder_unknown =
+      "set: no holder name; only a match on the national ID number makes it the applicant's";
+  }
+
+  // A bank statement names its holder as the account holder; the extractor's
+  // `full_name` there has been an address line ("Loroy Chowk Gujrat Fateh
+  // Pur", live E2E 2026-10-18) that the consistency check then compared with
+  // the passport.
+  const accountHolder = out.account_holder_name;
+  if (
+    typeof accountHolder === 'string' &&
+    accountHolder.trim() &&
+    typeof out.full_name === 'string' &&
+    out.full_name.trim() !== accountHolder.trim()
+  ) {
+    out.full_name = accountHolder.trim();
+    adjustments.full_name = 'replaced with the account holder name';
   }
 
   if (civil === 'birth_certificate') {
@@ -635,19 +1184,41 @@ function fillFromMarriageCertificate(
     if (rec.marriage_date_conflict) {
       out.marriage_date_conflict = rec.marriage_date_conflict.join(', ');
     }
-  } else if (typeof have === 'string' && !ISO_DATE.test(have.trim())) {
-    // No labelled line to check against: convert only an unambiguous print.
-    const iso = parseCivilDate(have);
-    if (iso) {
-      out.marriage_date = iso;
+  } else if (typeof have === 'string' && !isBlank(have)) {
+    // No readable date on the certificate to check against. A model's date
+    // that appears nowhere in the text was invented (prod 2026-10-16:
+    // "1999-09-16" for a certificate that only ever prints 1988): drop it
+    // rather than let it reach the profile and the IRCC form.
+    const asIso = ISO_DATE.test(have.trim())
+      ? have.trim()
+      : parseCivilDate(have, { dayFirst: true });
+    const printed = new Set([
+      ...datesInText(text, { dayFirst: true }),
+      ...datesInText(text),
+    ]);
+    if (!asIso || !printed.has(asIso)) {
+      delete out.marriage_date;
+      adjustments.marriage_date = `dropped "${have}": not on the certificate`;
+    } else if (asIso !== have) {
+      out.marriage_date = asIso;
       adjustments.marriage_date = `normalised "${have}" to YYYY-MM-DD`;
     }
   }
 
+  // The parties read from the certificate's own text win over a model's read,
+  // as the date does: prod 2026-10-16 the model returned "uzaffar Ahmad S/O M",
+  // and sync-family, unable to match the applicant, ignored the certificate.
   for (const key of ['bridegroom_name', 'bride_name'] as const) {
-    if (rec[key] && isBlank(out[key])) {
-      out[key] = rec[key];
+    const read = rec[key];
+    if (!read) continue;
+    const have = out[key];
+    if (isBlank(have)) {
+      out[key] = read;
       adjustments[key] = 'filled from the certificate text';
+    } else if (typeof have === 'string' && have.trim() !== read) {
+      out[key] = read;
+      adjustments[key] =
+        `replaced "${have}" with the name read from the certificate text`;
     }
   }
 }

@@ -137,6 +137,9 @@ export function classifyDocumentSubject(
   applicantName: string | null | undefined,
 ): DocumentSubject {
   if (HOST_TYPES.has(documentType)) return 'host';
+  // An ID card whose holder could not be read (classify-document marks it):
+  // never the applicant's identity on the form (live E2E 2026-10-18).
+  if (fields.holder_unknown === true) return 'unattributed';
   const holder = holderNameOf(fields);
   if (holder && nameTokens(applicantName).length > 0) {
     return namesMatch(applicantName, holder) ? 'applicant' : 'third_party';

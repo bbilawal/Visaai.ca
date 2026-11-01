@@ -34,6 +34,24 @@ export class StrategyRegistry {
     return { country, program };
   }
 
+  /**
+   * The program behind a registry route (`visa_types.visaai_id`), or
+   * undefined when no program claims it — callers then keep their defaults.
+   */
+  resolveRoute(
+    code: CountryCode | null | undefined,
+    visaaiId: string | null | undefined,
+  ): ResolvedStrategy | undefined {
+    if (!code || !visaaiId) return undefined;
+    const country = this.getCountry(code);
+    if (!country) return undefined;
+    const id = visaaiId.trim();
+    const program = country
+      .programs()
+      .find((p) => p.registryVisaaiIds?.includes(id));
+    return program ? { country, program } : undefined;
+  }
+
   listCountries(): { code: string; name: string; programs: string[] }[] {
     return [...this.countries.values()]
       .filter((c) => c.selectable !== false) // hide non-selectable (SCHENGEN bloc)

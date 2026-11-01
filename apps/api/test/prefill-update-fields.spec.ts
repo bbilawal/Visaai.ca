@@ -1,6 +1,10 @@
 import { ConflictException } from '@nestjs/common';
 import type { PrefilledFormPayload } from '@visaai/types';
 import { PrefillService } from '../src/modules/prefill/prefill.service';
+import {
+  ROUTE_UNANSWERED_NOTE,
+  UNANSWERED_NOTE,
+} from '../src/modules/prefill/graphs/nodes/finalize-fields';
 
 /**
  * Review finding (2026-10-15): the applicant's Forms save replaced the whole
@@ -163,6 +167,67 @@ describe('PrefillService.updateFields — concurrency + source', () => {
     expect(listener.onApplicantFormSaved).toHaveBeenCalledWith('app-1', [
       'occupation',
     ]);
+  });
+
+  it('an unanswered IRCC question stays unanswered until typed, then is the applicant’s', async () => {
+    const withQuestions = stored();
+    withQuestions.fields.push(
+      {
+        key: 'father_occupation',
+        label: "What is your father's current occupation?",
+        value: '',
+        group: 'Family',
+        needsReview: true,
+        note: UNANSWERED_NOTE,
+      },
+      {
+        key: 'travel_by_air',
+        label: 'Are you travelling to Canada by air? (Yes/No)',
+        value: '',
+        group: 'Travel',
+        needsReview: true,
+        note: UNANSWERED_NOTE,
+      },
+    );
+    const { svc, db } = make(withQuestions);
+    const { version } = await svc.get(db, 'app-1', 'u1');
+    const next = fieldsFrom(withQuestions);
+    next[2].value = 'Retired';
+    const out = await svc.updateFields(db, 'app-1', 'u1', next, version!);
+    const [, , father, air] = out.payload.fields;
+    expect(father).toEqual({
+      key: 'father_occupation',
+      label: "What is your father's current occupation?",
+      value: 'Retired',
+      group: 'Family',
+      source: 'applicant',
+    });
+    // Still empty: kept, still flagged, and still nobody's answer.
+    expect(air).toMatchObject({
+      value: '',
+      needsReview: true,
+      note: UNANSWERED_NOTE,
+    });
+    expect(air.source).toBeUndefined();
+  });
+
+  it('a spousal question added unanswered stops asking once typed', async () => {
+    const withQuestion = stored();
+    withQuestion.fields.push({
+      key: 'first_met_date',
+      label: 'Date you first met in person',
+      value: '',
+      group: 'Relationship',
+      source: 'inferred',
+      note: ROUTE_UNANSWERED_NOTE,
+    });
+    const { svc, db } = make(withQuestion);
+    const { version } = await svc.get(db, 'app-1', 'u1');
+    const next = fieldsFrom(withQuestion);
+    next[2].value = '2022-09-10';
+    const out = await svc.updateFields(db, 'app-1', 'u1', next, version!);
+    expect(out.payload.fields[2].note).toBeUndefined();
+    expect(out.payload.fields[2].source).toBe('applicant');
   });
 });
 

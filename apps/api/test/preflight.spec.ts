@@ -234,6 +234,25 @@ describe('PreflightService — the lock covers how a target is operated', () => 
     ]);
     expect(declared.diffHash).toBe(asRadio.diffHash);
   });
+
+  it('awaitOptions (a select that waits for its options) is part of the lock, only when set', async () => {
+    const { svc } = makeAssigned();
+    const base = {
+      fieldKey: 'job_title',
+      targetField: '#t',
+      mappedValue: 'Cashiers',
+      category: 'employment' as const,
+      page: '/eta/welcome',
+      op: 'select_text' as const,
+    };
+    const plain = await svc.assembleDiff(APP, [base]);
+    const waits = await svc.assembleDiff(APP, [
+      { ...base, awaitOptions: true },
+    ]);
+    expect(plain.entries[0]).not.toHaveProperty('awaitOptions');
+    expect(waits.entries[0]).toMatchObject({ awaitOptions: true });
+    expect(waits.diffHash).not.toBe(plain.diffHash);
+  });
 });
 
 describe('PreflightService — completion + lock (B, C, D, F)', () => {
@@ -532,6 +551,43 @@ describe('PreflightService — who may review, and what gets locked', () => {
     expect(done.reviewer_role).toBe('consultant');
     const v = await svc.validateLock(review.id, MAPPINGS, APP);
     expect(v).toEqual({ valid: true, reasons: [] });
+  });
+
+  it('tells each caller whether they can lock, by the rule complete() enforces (live 2026-10-19)', async () => {
+    const { svc } = makeAssigned();
+    const byAdmin = await svc.start(APP, ADMIN);
+    expect((await svc.getActiveFor(APP, ADMIN))?.can_lock).toBe(false);
+    expect((await svc.getActiveFor(APP, C1))?.can_lock).toBe(true);
+    expect(
+      (await svc.getActiveFor(APP, { id: 'cons-9', role: 'consultant' }))?.can_lock,
+    ).toBe(false);
+    expect((await svc.getActiveFor(APP, ADMIN))?.id).toBe(byAdmin.id);
+  });
+
+  it('an applicant never can lock; a completed review carries no can_lock', async () => {
+    const { svc, prov } = makeAssigned();
+    await seedProv(prov, 'passport_number', 'X1');
+    const review = await svc.start(APP, C1);
+    expect((await svc.getActiveFor(APP, APPLICANT))?.can_lock).toBe(false);
+    await setAllChecks(svc, review.id);
+    await svc.complete(review.id, MAPPINGS, C1, APP);
+    expect(await svc.getActiveFor(APP, C1)).not.toHaveProperty('can_lock');
+  });
+
+  it('leaves can_lock out, never failing, with no assignee or a failed lookup', async () => {
+    const { svc, cons } = makeAssigned();
+    await svc.start(APP, C1);
+    const spy = jest.spyOn(cons, 'getAssignment');
+    spy.mockResolvedValueOnce(null as never);
+    expect(await svc.getActiveFor(APP, ADMIN)).not.toHaveProperty('can_lock');
+    spy.mockRejectedValueOnce(new Error('db down'));
+    expect(await svc.getActiveFor(APP, ADMIN)).not.toHaveProperty('can_lock');
+  });
+
+  it('a review the assignee opened can be locked by an admin, on their behalf', async () => {
+    const { svc } = makeAssigned();
+    await svc.start(APP, C1);
+    expect((await svc.getActiveFor(APP, ADMIN))?.can_lock).toBe(true);
   });
 
   it('refuses a lock that would not be bound to the assigned consultant', async () => {

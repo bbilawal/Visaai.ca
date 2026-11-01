@@ -1,5 +1,9 @@
 import {
+  REMOVED_CHILDREN_KEY,
+  isRemovedChild,
+  withoutRemovedChildren,
   findByName,
+  isSamePerson,
   mergePeopleByName,
   mergeProfileUpdate,
   normalizePersonName,
@@ -78,5 +82,66 @@ describe('family members are matched by name, not position', () => {
     expect(
       (out.children as Array<{ occupation: string }>).map((c) => c.occupation),
     ).toEqual(['Engineer', 'Surgeon']);
+  });
+});
+
+describe('isSamePerson — OCR slips (prod 2026-10-16)', () => {
+  it('matches a name whose first letter the OCR dropped', () => {
+    expect(isSamePerson('uzaffar Ahmad', 'Muzaffar Ahmad')).toBe(true);
+  });
+  it('matches a one-letter transliteration difference', () => {
+    expect(isSamePerson('Muzaffar Ahmed', 'Muzaffar Ahmad')).toBe(true);
+  });
+  it('does not stretch a single-token name', () => {
+    expect(isSamePerson('Ahmed', 'Ahmad')).toBe(false);
+  });
+  it('still tells different people apart', () => {
+    expect(isSamePerson('Sumera Ahmad', 'Muzaffar Ahmad')).toBe(false);
+    expect(isSamePerson('Mian Muhammad Sajawal', 'Mian Muhammad Bilawal')).toBe(
+      false,
+    );
+  });
+});
+
+describe('removing a child (dry run 2026-10-16)', () => {
+  const sons = [
+    { name: 'Mian Muhammad Sajawal', relationship: 'son' },
+    { name: 'Mian Muhammad Bilawal', relationship: 'son' },
+    { name: 'Mian Talha', relationship: 'son', birth_year: 2000 },
+  ];
+
+  it('drops the named child and records the removal', () => {
+    const out = mergeProfileUpdate(
+      { children: sons },
+      { children: [{ name: 'Mian Talha', remove: true }] },
+    );
+    expect((out.children as { name: string }[]).map((c) => c.name)).toEqual([
+      'Mian Muhammad Sajawal',
+      'Mian Muhammad Bilawal',
+    ]);
+    expect(out[REMOVED_CHILDREN_KEY]).toEqual(['Mian Talha']);
+  });
+
+  it('never adds a removal item as a child', () => {
+    const out = mergePeopleByName(sons.slice(0, 2), [
+      { name: 'Someone Else', remove: true },
+    ]);
+    expect(out).toHaveLength(2);
+  });
+
+  it('a child named again is taken off the removal list', () => {
+    const out = mergeProfileUpdate(
+      { children: sons.slice(0, 2), [REMOVED_CHILDREN_KEY]: ['Mian Talha'] },
+      { children: [{ name: 'Mian Talha', relationship: 'son' }] },
+    );
+    expect(out[REMOVED_CHILDREN_KEY]).toEqual([]);
+    expect((out.children as unknown[]).length).toBe(3);
+  });
+
+  it('withoutRemovedChildren filters by name', () => {
+    const profile = { [REMOVED_CHILDREN_KEY]: ['Mian Talha'] };
+    expect(isRemovedChild(profile, 'mian  talha')).toBe(true);
+    expect(isRemovedChild(profile, 'Mian Muhammad Bilawal')).toBe(false);
+    expect(withoutRemovedChildren(profile, sons)).toHaveLength(2);
   });
 });

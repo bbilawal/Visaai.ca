@@ -3,7 +3,11 @@ import {
   documentTemplatesForApplication,
   documentTemplatesForCountry,
   allCatalogedDocumentTemplates,
+  documentTemplatesForRoute,
+  documentTemplatesForUnclaimedRoute,
 } from './doc-template.catalog';
+import { strategyRegistry } from '../../strategies';
+import { CA_ETA_VISAAI_ID } from '@visaai/types';
 import { SCHENGEN_MEMBER_CODES } from '../../strategies/country/schengen-members';
 
 describe('documentTemplatesForApplication', () => {
@@ -63,6 +67,59 @@ describe('documentTemplatesForCountry', () => {
       expect(photo).toBeDefined();
       expect(photo!.documentCode).toBe('photo');
     }
+  });
+});
+
+describe('documentTemplatesForRoute', () => {
+  const routed = (visaaiId: string) => {
+    const r = strategyRegistry.resolveRoute('CA', visaaiId);
+    return r
+      ? documentTemplatesForRoute('CA', r.program, visaaiId).map(
+          (t) => `${t.templateCode}@${t.portalId}`,
+        )
+      : null;
+  };
+
+  it("the business visitor gets its own program's artifacts, not the country union", () => {
+    // Unclaimed, it was handed the super visa's IMM 5409 and the study and
+    // work permit checklists (audit 2026-10-18).
+    expect(routed('ca-business-visitors')).toEqual([
+      'IMM 5476@ircc',
+      'IMM 5484@ircc',
+    ]);
+  });
+
+  it('the eTA, which names none, still gets none', () => {
+    expect(routed(CA_ETA_VISAAI_ID)).toEqual([]);
+  });
+
+  it('the visitor visa gets its own checklist, not the study and work permit ones', () => {
+    // Unclaimed until 2026-11-01, it got the union of every Canada program.
+    expect(routed('ca-visitor-visa-temporary-resident-visa')).toEqual([
+      'IMM 5476@ircc',
+      'IMM 5484@ircc',
+    ]);
+  });
+
+  it('an unknown route is not resolved', () => {
+    expect(routed('ca-no-such-route')).toBeNull();
+  });
+});
+
+describe('documentTemplatesForUnclaimedRoute', () => {
+  it("serves only the country's wildcard artifacts", () => {
+    expect(
+      documentTemplatesForUnclaimedRoute('GB').map((t) => t.templateCode),
+    ).toEqual(['UKV-DOCS']);
+    expect(
+      documentTemplatesForUnclaimedRoute('AU')
+        .map((t) => t.templateCode)
+        .sort(),
+    ).toEqual(['80', '956']);
+  });
+
+  it('serves nothing for a country with no programs', () => {
+    expect(documentTemplatesForUnclaimedRoute('ZZ')).toEqual([]);
   });
 });
 

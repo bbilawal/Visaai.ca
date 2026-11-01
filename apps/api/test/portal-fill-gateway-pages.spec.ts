@@ -140,6 +140,8 @@ describe('portal-fill:start — the open page', () => {
         '#moneyDetails_input',
       ],
       [null, 'radio', null],
+      // No IRCC tr-rt target waits for its options (eTA job title only).
+      [false, false, false],
     );
   });
 

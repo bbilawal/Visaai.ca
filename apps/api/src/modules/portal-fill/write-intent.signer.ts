@@ -42,6 +42,7 @@ export class WriteIntentSigner {
         ...(e.op ? { op: e.op } : {}),
         ...(e.reveal ? { reveal: true } : {}),
         ...(e.dialog ? { dialog: true } : {}),
+        ...(e.awaitOptions ? { awaitOptions: true } : {}),
         lockedDiffHash: plan.lockedDiffHash,
         sig: this.signOne(
           executionId,

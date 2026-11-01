@@ -115,3 +115,26 @@ describe('makeAggregateScoreNode — escalate-below trigger', () => {
     expect(out.escalationReason).toBeNull();
   });
 });
+
+describe('makeAggregateScoreNode — factors the route does not weigh', () => {
+  const route = (visaaiId: string) =>
+    ({
+      ...stateWith(SAMPLES[2]),
+      data: { destinationCountry: 'CA', visaaiId },
+    }) as unknown as VriState;
+
+  it('Express Entry: home ties and travel history are not assessed (prod 2026-10-19)', async () => {
+    const out = await makeAggregateScoreNode()(route('ca-express-entry'));
+    expect(out.unassessedFactors).toEqual(
+      expect.arrayContaining(['home_ties_pct', 'travel_history_pct']),
+    );
+    expect(out.unassessedFactors).not.toContain('financial_pct');
+  });
+
+  it('a route with every factor weighted adds nothing', async () => {
+    const out = await makeAggregateScoreNode()(
+      route('ca-visitor-visa-temporary-resident-visa'),
+    );
+    expect(out.unassessedFactors).toBeUndefined();
+  });
+});

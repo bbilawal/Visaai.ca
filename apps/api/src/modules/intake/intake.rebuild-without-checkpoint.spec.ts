@@ -137,3 +137,52 @@ describe('IntakeService.rebuildChecklist — no checkpoint', () => {
     expect(checkpoint.load).toHaveBeenCalledWith('app-1');
   });
 });
+
+/**
+ * A saved checkpoint carries the `requirementsJson` that was current when the
+ * interview ran. Rebuilding from it re-derived the checklist from a registry
+ * that had since been corrected, so a registry fix never reached an existing
+ * application.
+ *
+ * Observed on production 2026-10-16: the super visa registry gained passport
+ * and medical-insurance documents (v2 promoted), app 61f16bb5 rebuilt its
+ * checklist after a profile change, and still showed the eight v1 slots with
+ * no passport or insurance slot.
+ */
+describe('IntakeService.rebuildChecklist — saved checkpoint', () => {
+  it('re-reads the registry instead of the checkpoint’s requirements', async () => {
+    const checkpoint = {
+      load: jest.fn().mockResolvedValue({
+        applicationId: 'app-1',
+        userId: 'user-1',
+        destinationCountry: 'CA',
+        visaTypeId: 'visa-super',
+        profile: {},
+        requirementsJson: { base_documents: [{ type: 'stale_v1_slot' }] },
+        checklistItems: [],
+        checklistBuiltAt: '2020-01-01T00:00:00.000Z',
+      }),
+      save: jest.fn().mockResolvedValue(undefined),
+    };
+    const svc = makeService(checkpoint);
+
+    const db = makeDb({
+      applications: {
+        id: 'app-1',
+        user_id: 'user-1',
+        destination_country: 'CA',
+        destination_state: null,
+        visa_type_id: 'visa-super',
+        framework_id: null,
+      },
+      // Profile moved after the last build, so the build is not "fresh".
+      application_profiles: { last_updated_at: '2026-10-16T21:30:00.000Z' },
+      checklist_items: [{ id: 'item-1', application_id: 'app-1' }],
+      visa_countries: null,
+    });
+
+    await svc.rebuildChecklist(db as never, 'app-1', 'user-1');
+
+    expect(db.touched).toContain('visa_countries');
+  });
+});

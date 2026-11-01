@@ -10,6 +10,7 @@ import {
 import {
   CNIC_SPOUSE,
   NIKAH_NAMA,
+  NIKAH_NAMA_AZURE_READ,
   ONTARIO_BIRTH_CERT,
   PUNJAB_BIRTH_CERT_SAJAWAL,
   PUNJAB_BIRTH_CERTS_TWO_CHILDREN,
@@ -194,6 +195,22 @@ describe('refineIdentityFields', () => {
     expect(r.adjustments.full_name).toMatch(/ambiguous/);
   });
 
+  it("drops an unknown holder's date of birth, keeps the number, marks the card", () => {
+    const r = refineIdentityFields(
+      'national_id',
+      'National Identity Card\nFather Name\nMian Abdul Rasheed',
+      {
+        full_name: 'Mian Abdul Rasheed',
+        date_of_birth: '2025-11-06',
+        national_id_number: '34201-9465270-5',
+      },
+    );
+    expect(r.fields.date_of_birth).toBeUndefined();
+    expect(r.fields.national_id_number).toBe('34201-9465270-5');
+    expect((r.fields as Record<string, unknown>).holder_unknown).toBe(true);
+    expect(r.adjustments.date_of_birth).toMatch(/holder of this card is unknown/);
+  });
+
   it('leaves fields untouched when nothing applies', () => {
     const fields = { full_name: 'Bilawal Muzaffar', account_balance: 5 };
     const r = refineIdentityFields('bank_statement', BANK, fields);
@@ -297,6 +314,20 @@ describe('slotContentMismatch', () => {
     expect(slotContentMismatch(slot, text)).toBeNull();
   });
 
+  it("accepts either identity document in a relative's ID slot (spouse_national_id)", () => {
+    // The family-gap request reads "National ID card or passport — <spouse>".
+    expect(slotContentMismatch('spouse_national_id', CNIC)).toBeNull();
+    expect(slotContentMismatch('spouse_national_id', PASSPORT_BIO)).toBeNull();
+    expect(slotContentMismatch('sponsor_passport', CNIC)).toBeNull();
+    // The applicant's own slots stay strict.
+    expect(slotContentMismatch('national_id', PASSPORT_BIO)?.detected).toBe(
+      'passport',
+    );
+    expect(slotContentMismatch('spouse_national_id', BANK)?.detected).toBe(
+      'bank_statement',
+    );
+  });
+
   it('accepts a full passport scan with visa stamps as travel evidence', () => {
     expect(
       slotContentMismatch('previous_travel_evidence', PASSPORT_WITH_STAMPS),
@@ -333,6 +364,8 @@ describe('identityFieldsFromText (#34)', () => {
     expect(identityFieldsFromText('national_id', CNIC)).toEqual({
       national_id_number: '35202-1234567-1',
       sex: 'M',
+      issue_date: '2018-01-10',
+      expiry_date: '2028-01-10',
     });
   });
 
@@ -453,6 +486,30 @@ describe('civil records — birth and marriage certificates (dry run 2026-10-15)
     });
   });
 
+  it("drops a model's marriage date that appears nowhere on the certificate", () => {
+    // Prod 2026-10-16: the model returned 1999-09-16; the OCR text has no 1999.
+    const { fields, adjustments } = refineIdentityFields(
+      'marriage_certificate',
+      'Nikah Nama\nThe date when the marriage was celebrated\nSd ....',
+      { marriage_date: '1999-09-16' },
+    );
+    expect(fields.marriage_date).toBeUndefined();
+    expect(adjustments.marriage_date).toMatch(/not on the certificate/);
+  });
+
+  it("replaces a model's garbled party name with the one read from the certificate", () => {
+    // Prod 2026-10-16: the model returned "uzaffar Ahmad S/O M"; sync-family
+    // then could not match the applicant and ignored the whole certificate.
+    const { fields, adjustments } = refineIdentityFields(
+      'marriage_certificate',
+      NIKAH_NAMA_AZURE_READ,
+      { bridegroom_name: 'uzaffar Ahmad S/O M', bride_name: 'Sumera Bano' },
+    );
+    expect(fields.bridegroom_name).toBe('Muzaffar Ahmad');
+    expect(adjustments.bridegroom_name).toMatch(/uzaffar Ahmad S\/O M/);
+    expect(fields.bride_name).toBe('Sumera Bano');
+  });
+
   it('keeps the date of birth printed on a birth certificate', () => {
     const { fields } = refineIdentityFields(
       'birth_certificate',
@@ -477,5 +534,112 @@ describe('relativeFromIdCardText', () => {
 
   it('returns nothing for a card without a relative', () => {
     expect(relativeFromIdCardText('Name\nJane Doe')).toEqual({});
+  });
+});
+
+describe('refineIdentityFields — attribution (live E2E 2026-10-18)', () => {
+  it("a bank statement's full name is its account holder, not an address line", () => {
+    const { fields, adjustments } = refineIdentityFields(
+      'bank_statement_3mo',
+      'UBL Account Statement',
+      {
+        full_name: 'Loroy Chowk Gujrat Fateh Pur',
+        account_holder_name: 'Chaudhary Zeeshan Ali',
+      },
+    );
+    expect(fields.full_name).toBe('Chaudhary Zeeshan Ali');
+    expect(adjustments.full_name).toMatch(/account holder/);
+  });
+
+  it('leaves an absent full name absent', () => {
+    const { fields } = refineIdentityFields(
+      'bank_statement_3mo',
+      '',
+      { account_holder_name: 'Chaudhary Zeeshan Ali' } as Record<string, unknown>,
+    );
+    expect(fields.full_name).toBeUndefined();
+  });
+});
+
+describe('refineIdentityFields — nameless ID card (live E2E 2026-10-18)', () => {
+  it('marks a card with no holder name at all', () => {
+    const r = refineIdentityFields('national_id', 'CNIC copy', {
+      national_id_number: '34101-9795712-1',
+      date_of_birth: '2025-11-06',
+    } as Record<string, unknown>);
+    expect(r.fields.holder_unknown).toBe(true);
+    expect(r.fields.date_of_birth).toBeUndefined();
+    expect(r.fields.national_id_number).toBe('34101-9795712-1');
+  });
+
+  it('leaves a named card alone', () => {
+    const r = refineIdentityFields('national_id', 'CNIC', {
+      full_name: 'Chaudhary Zeeshan Ali',
+      national_id_number: '34101-9231766-1',
+    } as Record<string, unknown>);
+    expect(r.fields.holder_unknown).toBeUndefined();
+  });
+});
+
+
+describe('police certificates (Express Entry E2E, prod 2026-10-19)', () => {
+  // The layout of a Punjab Police character certificate: the holder's CNIC
+  // beside "Father's name" — the national-ID card's own signature.
+  const PUNJAB_PCC = `Police Character Certificate - Punjab Police
+Name AHMED RAZA
+Father's name MUHAMMAD RAZA
+CNIC 35202-1234567-1
+Passport AB1234567
+Issued 20 September 2026
+It is certified that no criminal record was found against the above-named person.`;
+
+  it('classifies it as a police certificate, not a national identity card', () => {
+    expect(classifyDocumentText(PUNJAB_PCC)).toBe('police_clearance');
+    expect(
+      classifyDocumentText('Certificate of good conduct issued by the police'),
+    ).toBe('police_clearance');
+  });
+
+  it('fits the police certificate slot', () => {
+    expect(slotContentMismatch('police_certificates', PUNJAB_PCC)).toBeNull();
+    expect(slotContentMismatch('police_clearance', PUNJAB_PCC)).toBeNull();
+  });
+
+  it('is still flagged in a narrow slot it does not belong to', () => {
+    expect(slotContentMismatch('passport', PUNJAB_PCC)?.detected).toBe(
+      'police_clearance',
+    );
+  });
+
+  it('a CNIC in the police certificate slot is still flagged', () => {
+    expect(slotContentMismatch('police_certificates', CNIC)?.detected).toBe(
+      'national_id',
+    );
+  });
+});
+
+describe('classifyDocumentText — Canadian status documents', () => {
+  it('reads a PR card, a COPR and a citizenship certificate as status proof, not IRCC mail', () => {
+    expect(classifyDocumentText('GOVERNMENT OF CANADA PERMANENT RESIDENT CARD CARTE DE RÉSIDENT PERMANENT TEST, SARA')).toBe('canadian_status_document');
+    expect(classifyDocumentText('Immigration, Refugees and Citizenship Canada Confirmation of Permanent Residence IMM 5292 TEST SARA')).toBe('canadian_status_document');
+    expect(classifyDocumentText('Citizenship Certificate / Certificat de citoyenneté TEST SARA')).toBe('canadian_status_document');
+  });
+
+  it('a refusal letter or a checklist quoting a PR card is not status proof', () => {
+    expect(
+      classifyDocumentText('Immigration, Refugees and Citizenship Canada. Your application is refused: the sponsor did not provide a copy of their permanent resident card / carte de résident permanent.'),
+    ).toBe('refusal_letter');
+    expect(classifyDocumentText('IMM 5533 Document checklist. Copy of the sponsor\'s permanent resident card (both sides). Citizenship certificate.')).not.toBe('canadian_status_document');
+    expect(slotContentMismatch('prior_refusal_letter', 'IRCC: your application is refused. Copy of the permanent resident card / carte de résident permanent missing.')).toBeNull();
+  });
+
+  it('a sponsor\'s PR card fits their own ID slot', () => {
+    expect(slotContentMismatch('sponsor_national_id', 'PERMANENT RESIDENT CARD CARTE DE RÉSIDENT PERMANENT TEST SARA')).toBeNull();
+  });
+
+  it('a PR card in a passport slot is flagged; in the sponsor status slot it fits', () => {
+    const card = 'PERMANENT RESIDENT CARD CARTE DE RÉSIDENT PERMANENT TEST SARA';
+    expect(slotContentMismatch('passport', card)).not.toBeNull();
+    expect(slotContentMismatch('proof_of_status', card)).toBeNull();
   });
 });

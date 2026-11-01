@@ -16,6 +16,7 @@ import {
 import { DOCUMENT_QUEUE } from '../shared/queue/queue.constants';
 import { PrefillService } from '../prefill/prefill.service';
 import { ProvenanceService } from '../provenance/provenance.service';
+import { extractionFieldsFor } from './ocr/extraction-schema';
 import { VerificationService } from '../verification/verification.service';
 import { TranslationService } from './translation/translation.service';
 import { safeLog } from '../shared/log/redact';
@@ -191,6 +192,27 @@ export class DocumentsProcessor extends WorkerHost implements OnModuleInit {
     } catch (err) {
       console.error(
         `[documents.processor] provenance/verification ingestion failed for ${documentId}:`,
+        err instanceof Error ? err.message : err,
+      );
+    }
+
+    // A re-read that no longer yields a field its document's type cannot give
+    // takes back this document's earlier word on it (a lease first read as an
+    // ID card left the landlord's CNIC current, live 2026-10-19). Fields the
+    // type may give are kept: a flaky read that merely missed one never
+    // retires it — unless this read re-typed the document from its content,
+    // when the earlier reads were made under the wrong schema and only what
+    // this read gave stands. Best effort, after verification seeding.
+    try {
+      await this.provenance.retireDocumentFieldsExcept(applicationId, documentId, [
+        ...Object.keys(result.extractedFields),
+        ...(result.classifiedFromContent
+          ? []
+          : extractionFieldsFor(result.documentType).map((f) => f.key)),
+      ]);
+    } catch (err) {
+      console.error(
+        `[documents.processor] provenance retirement failed for ${documentId}:`,
         err instanceof Error ? err.message : err,
       );
     }

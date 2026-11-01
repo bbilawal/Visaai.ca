@@ -77,4 +77,45 @@ describe('composePurposeOfVisit', () => {
       /^Visit to my son from March 1, 2027/,
     );
   });
+
+  it('states a year-long super visa stay in months, not as a 365-day visit', () => {
+    expect(
+      composePurposeOfVisit({
+        purpose_of_visit: 'family visit',
+        planned_entry_date: '2027-03-01',
+        planned_departure_date: '2028-02-28',
+      }),
+    ).toBe(
+      'Family visit from March 1, 2027 to February 28, 2028 (12 months). I will return home on February 28, 2028.',
+    );
+  });
+});
+
+describe('composePurposeOfVisit — no repeated detail (live E2E 2026-10-18)', () => {
+  it('drops a detail that only repeats the phrase', () => {
+    const out = composePurposeOfVisit(
+      {
+        planned_entry_date: '2027-03-10',
+        planned_departure_date: '2027-03-17',
+        purpose_of_visit_details:
+          'Business; meeting suppliers and negotiating purchase contracts',
+      },
+      'Business visit to TEST Metals Recycling Inc. for meeting suppliers and negotiating purchase contracts',
+    );
+    expect(out).toBe(
+      'Business visit to TEST Metals Recycling Inc. for meeting suppliers and negotiating purchase contracts from March 10, 2027 to March 17, 2027 (8 days). I will return home on March 17, 2027.',
+    );
+  });
+
+  it('keeps a short or partial-word detail', () => {
+    const out = composePurposeOfVisit(
+      {
+        planned_entry_date: '2027-03-10',
+        planned_departure_date: '2027-03-17',
+        purpose_of_visit_details: 'Wedding: Ahmed',
+      },
+      'Visit my son Ahmed',
+    );
+    expect(out).toMatch(/: Wedding: Ahmed\./);
+  });
 });

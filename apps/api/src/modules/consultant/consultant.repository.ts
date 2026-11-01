@@ -23,6 +23,13 @@ export interface IConsultantRepository {
     consultantId: string,
   ): Promise<ConsultantAssignment | null>;
 
+  /** Stamp completed_at on a consultant's active assignment (stops the SLA clock). */
+  markCompleted(
+    applicationId: string,
+    consultantId: string,
+    completedAt: string,
+  ): Promise<void>;
+
   /** Full assignment history for an application, oldest -> newest. */
   listAssignments(applicationId: string): Promise<ConsultantAssignment[]>;
 

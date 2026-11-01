@@ -74,16 +74,10 @@ const CANADA: DocumentTemplateTable[string] = {
   [PROGRAM_WILDCARD]: [IMM_5476],
   visitor_visa: [IMM_5484],
   business_visa: [IMM_5484],
-  family_sponsorship: [
-    IMM_5484,
-    {
-      templateCode: 'IMM 5409',
-      templateName: 'Statutory Declaration of Common-Law Union',
-      kind: 'declaration',
-      documentCode: 'proof_of_relationship',
-      sourceUrl: `${IRCC_GUIDES}/imm5409.html`, // 200 → imm5409e.pdf (1.4 MB)
-    },
-  ],
+  // Claimed only by the Super Visa (parents and grandparents). IMM 5409, the
+  // common-law declaration, is a spousal/partner form and was removed
+  // 2026-11-01; spousal sponsorship has its own program with no templates.
+  family_sponsorship: [IMM_5484],
   student_visa: [
     {
       templateCode: 'IMM 5483',

@@ -152,6 +152,65 @@ describe('preflight mapping derivation — saved form wins', () => {
     );
   });
 
+  it('an empty generated form value does not erase a later profile answer', () => {
+    const merged = applyPrefillOverrides(MAPPING, PROFILE, [
+      { key: 'date_of_birth', label: 'DOB', value: '', source: 'inferred' },
+      { key: 'employer_name', label: 'Employer', value: '' },
+    ]);
+    expect(merged.date_of_birth).toBe('1815-12-10');
+    expect(merged.employer_name).toBe('Analytical Engines Ltd');
+  });
+
+  it('a generated form snapshot never overrides a newer profile answer (dry run 2026-10-16)', () => {
+    const merged = applyPrefillOverrides(MAPPING, PROFILE, [
+      {
+        key: 'date_of_birth',
+        label: 'DOB',
+        value: '1999-09-16',
+        source: 'profile',
+      },
+      {
+        key: 'employer_name',
+        label: 'Employer',
+        value: 'Old Ltd',
+        source: 'document',
+      },
+    ]);
+    expect(merged.date_of_birth).toBe('1815-12-10');
+    expect(merged.employer_name).toBe('Analytical Engines Ltd');
+  });
+
+  it("a person's edit on the form still wins", () => {
+    const merged = applyPrefillOverrides(MAPPING, PROFILE, [
+      {
+        key: 'date_of_birth',
+        label: 'DOB',
+        value: '1815-12-11',
+        source: 'applicant',
+      },
+      {
+        key: 'employer_name',
+        label: 'Employer',
+        value: 'Fixed Ltd',
+        source: 'consultant',
+      },
+    ]);
+    expect(merged.date_of_birth).toBe('1815-12-11');
+    expect(merged.employer_name).toBe('Fixed Ltd');
+  });
+
+  it('a value a person cleared on the form stays cleared', () => {
+    const merged = applyPrefillOverrides(MAPPING, PROFILE, [
+      {
+        key: 'employer_name',
+        label: 'Employer',
+        value: '',
+        source: 'applicant',
+      },
+    ]);
+    expect(merged.employer_name).toBe('');
+  });
+
   it('only overlays mapped keys — form fields cannot widen what gets written', () => {
     const merged = applyPrefillOverrides(MAPPING, PROFILE, form);
     expect(merged).not.toHaveProperty('unrelated_field');
@@ -160,7 +219,12 @@ describe('preflight mapping derivation — saved form wins', () => {
 
   it('an applicant who blanked a field in the form drops it (no stale profile value)', () => {
     const merged = applyPrefillOverrides(MAPPING, PROFILE, [
-      { key: 'duration_of_stay_days', label: 'Duration', value: '' },
+      {
+        key: 'duration_of_stay_days',
+        label: 'Duration',
+        value: '',
+        source: 'applicant',
+      },
     ]);
     expect(
       buildMappingInputs(MAPPING, merged).some(
@@ -247,7 +311,14 @@ describe('duration of stay comes from the dates (#20)', () => {
         planned_departure_date: '2027-03-10',
         purpose_of_visit: 'x',
       },
-      [{ key: 'purpose_of_visit', label: 'Purpose', value: '' }],
+      [
+        {
+          key: 'purpose_of_visit',
+          label: 'Purpose',
+          value: '',
+          source: 'applicant',
+        },
+      ],
     );
     expect(buildMappingInputs(purposeMapping, blank)).toEqual([]);
   });

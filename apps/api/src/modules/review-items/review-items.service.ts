@@ -4,11 +4,13 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  type OnModuleInit,
 } from '@nestjs/common';
 import { createHash } from 'node:crypto';
 import type {
   ConsultantReviewItems,
   PrefilledFormField,
+  ReviewDocumentApplicantConfirmation,
   ReviewGeneratedItem,
   ReviewItemDecision,
   ReviewItemDecisionRecord,
@@ -23,6 +25,7 @@ import {
   type DecisionRow,
   type IReviewItemsRepository,
 } from './review-items.repository';
+import { openDocumentRequests } from './open-document-requests';
 
 export interface ReviewCaller {
   id: string;
@@ -36,7 +39,12 @@ export interface DecideInput {
   note?: string;
 }
 
-const LETTER_TYPES = ['loe', 'itinerary', 'cover_letter'] as const;
+const LETTER_TYPES = [
+  'loe',
+  'itinerary',
+  'cover_letter',
+  'invitation_letter',
+] as const;
 type LetterType = (typeof LETTER_TYPES)[number];
 const FORM_TYPE = 'prefilled_form_json';
 
@@ -51,6 +59,7 @@ const LETTER_LABEL: Record<string, string> = {
   loe: 'Letter of explanation',
   itinerary: 'Travel itinerary',
   cover_letter: 'Cover letter',
+  invitation_letter: 'Letter of invitation',
   [FORM_TYPE]: 'Application form',
 };
 
@@ -81,7 +90,7 @@ const DECISION_LABEL: Record<ReviewItemDecision, string> = {
  *   the preflight field-edit path, which keeps the auto-fill lock honest.
  */
 @Injectable()
-export class ReviewItemsService {
+export class ReviewItemsService implements OnModuleInit {
   private readonly log = new Logger(ReviewItemsService.name);
 
   constructor(
@@ -92,6 +101,41 @@ export class ReviewItemsService {
     private readonly messaging: MessagingService,
     private readonly supabase: SupabaseService,
   ) {}
+
+  onModuleInit(): void {
+    this.consultant.registerApplicationApprovalBlocker((id) =>
+      this.approvalBlocker(id),
+    );
+  }
+
+  /**
+   * The application cannot be approved while any of its documents carries an
+   * open consultant request (latest decision needs_reupload / rejected, not
+   * replaced by a newer upload in its slot — see open-document-requests.ts).
+   * Read errors propagate: approval fails closed.
+   */
+  async approvalBlocker(applicationId: string): Promise<string | null> {
+    const [docs, decisions] = await Promise.all([
+      this.repo.listDocuments(applicationId),
+      this.repo.listDecisions(applicationId),
+    ]);
+    const open = [...openDocumentRequests(docs, decisions).values()];
+    if (open.length === 0) return null;
+    const names = open
+      .map(
+        ({ doc, decision }) =>
+          `${doc ? (doc.file_name ?? doc.document_type ?? 'Document') : 'a document the applicant deleted'} (${
+            decision.decision === 'rejected' ? 'rejected' : 're-upload requested'
+          })`,
+      )
+      .join(', ');
+    return (
+      `Cannot approve yet: ${open.length === 1 ? 'a document has' : `${open.length} documents have`} ` +
+      `an open review request: ${names}. Wait for the applicant to upload a replacement, ` +
+      `or approve ${open.length === 1 ? 'it' : 'them'} under Uploaded documents to close the request` +
+      `${open.some((o) => !o.doc) ? ' (a deleted document is listed there as "Deleted by the applicant")' : ''}.`
+    );
+  }
 
   private async authorize(
     applicationId: string,
@@ -107,12 +151,29 @@ export class ReviewItemsService {
     caller: ReviewCaller,
   ): Promise<ConsultantReviewItems> {
     await this.authorize(applicationId, caller);
-    const [docs, generated, fields, decisions] = await Promise.all([
-      this.repo.listDocuments(applicationId),
-      this.repo.listGenerated(applicationId),
-      this.repo.listExtractedFields(applicationId),
-      this.repo.listDecisions(applicationId),
-    ]);
+    const [docs, generated, fields, decisions, confirmations] =
+      await Promise.all([
+        this.repo.listDocuments(applicationId),
+        this.repo.listGenerated(applicationId),
+        this.repo.listExtractedFields(applicationId),
+        this.repo.listDecisions(applicationId),
+        this.repo.listHolderConfirmations(applicationId),
+      ]);
+    // The applicant's latest "this passport is mine" per document, from the
+    // service-role table — never from details_json, which the owner can edit.
+    const confirmationOf = new Map<
+      string,
+      ReviewDocumentApplicantConfirmation
+    >();
+    for (const c of [...confirmations]
+      .filter((x) => x.application_id === applicationId)
+      .sort((a, b) => String(a.created_at).localeCompare(String(b.created_at))))
+      confirmationOf.set(c.document_id, {
+        confirmedBy: c.confirmed_by,
+        confirmedAt: c.created_at,
+        holderName: c.holder_name,
+        statedName: c.stated_name,
+      });
     const verifications = await this.repo.listVerifications(
       docs.map((d) => d.id),
     );
@@ -157,7 +218,26 @@ export class ReviewItemsService {
             confidence: f.confidence,
           })),
         decision: latest.get(`document:${d.id}`) ?? null,
-      })),
+        applicantConfirmation: confirmationOf.get(d.id) ?? null,
+      })).concat(
+        // A requested file the applicant deleted: listed so the consultant can
+        // close the request (approve). Nothing to open.
+        [...openDocumentRequests(docs, decisions).entries()]
+          .filter(([, o]) => !o.doc)
+          .map(([id]) => ({
+            id,
+            type: null,
+            name: null,
+            uploadStatus: 'deleted',
+            ocrStatus: null,
+            createdAt: null,
+            verifications: [],
+            extractedFields: [],
+            decision: latest.get(`document:${id}`) ?? null,
+            applicantConfirmation: null,
+            deleted: true,
+          })),
+      ),
       generated: generated
         .filter((g): g is typeof g & { doc_type: LetterType } =>
           (LETTER_TYPES as readonly string[]).includes(g.doc_type),
@@ -331,8 +411,20 @@ export class ReviewItemsService {
   ): Promise<string> {
     if (input.itemKind === 'document') {
       const d = await this.repo.getDocument(applicationId, input.itemId);
-      if (!d) throw new NotFoundException('document not found');
-      return d.file_name ?? d.document_type ?? 'Document';
+      if (d) return d.file_name ?? d.document_type ?? 'Document';
+      // Deleted by the applicant after a decision: the consultant may still
+      // close the request (approve) — otherwise approval would stay blocked
+      // until some unrelated upload. Nothing else applies to a missing file.
+      const decided = (await this.repo.listDecisions(applicationId)).some(
+        (r) => r.item_kind === 'document' && r.item_id === input.itemId,
+      );
+      if (!decided) throw new NotFoundException('document not found');
+      if (input.decision !== 'approved') {
+        throw new BadRequestException(
+          'This document was deleted by the applicant; approve it to close the request, or wait for a replacement upload.',
+        );
+      }
+      return 'Deleted document';
     }
     const g = await this.repo.getGenerated(applicationId, input.itemId);
     if (!g) throw new NotFoundException('generated document not found');

@@ -1,7 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import type {
   PreflightCategory,
   PreflightCheckKey,
@@ -13,6 +14,8 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/providers/toast-provider'
+import { consultantActionError } from '@/lib/api/consultant-action-error'
+import { InlineConfirm } from '@/components/ui/inline-confirm'
 import {
   completePreflight,
   editPreflightField,
@@ -22,7 +25,7 @@ import {
   startPreflight,
   validatePreflightLock,
 } from '@/lib/api/preflight-client'
-import { onPreflightChanged } from '@/lib/preflight-events'
+import { notifyPreflightLockChanged, onPreflightChanged } from '@/lib/preflight-events'
 
 /**
  * Pre-submission review. The consultant sees exactly the fields that portal
@@ -62,9 +65,29 @@ const LOCK_REASON_TEXT: Record<string, string> = {
   no_active_consultant: 'no consultant is assigned',
 }
 
-export default function PreflightPanel({ applicationId }: { applicationId: string }) {
+export default function PreflightPanel({
+  applicationId,
+  canReview = true,
+  viewerIsAdmin = false,
+}: {
+  applicationId: string
+  /**
+   * Whether the API lets this viewer start a review (assertReviewer: an
+   * active assignee, primary or backup, or an admin). False → Start and
+   * lock are disabled with the reason, instead of a click the server refuses.
+   */
+  canReview?: boolean
+  /** An admin who is not the assignee: may start a review, but only the assignee can lock it. */
+  viewerIsAdmin?: boolean
+}) {
   const router = useRouter()
   const { toast } = useToast()
+  // `t` is taken: withToken's callbacks name the access token `t`.
+  const tc = useTranslations('consultant')
+  // Read through a ref: router.refresh() hands the provider new messages and
+  // so a new translator, which as a dependency would re-run the load.
+  const tcRef = useRef(tc)
+  useEffect(() => { tcRef.current = tc }, [tc])
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [draftReason, setDraftReason] = useState('')
@@ -93,7 +116,7 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
         setLockReasons(null)
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not load the review')
+      setError(consultantActionError(err, tcRef.current('loadReviewFailed')))
     }
   }, [applicationId])
 
@@ -114,28 +137,47 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
         editPreflightField(t, applicationId, fieldKey, draft, reason),
       )
       setMappings(out.mappings)
-      setReview(out.review)
+      setReview(keepCanLock(out.review))
       setEditing(null)
-      toast('Saved. The category was un-ticked — re-check it before locking.', 'success')
+      notifyPreflightLockChanged(applicationId) // an edit can break the lock: re-check Approve
+      toast(tc('toastSavedUnticked'), 'success')
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save that change')
+      setError(consultantActionError(err, tc('saveChangeFailed')))
     } finally { setBusy(null) }
   }
 
+  /** Live 2026-10-21: Start did nothing when the values to review had not loaded. */
+  function needMappings(): PreflightMappingInput[] | null {
+    if (mappings) return mappings
+    setError('The values to review did not load, so a review cannot start. Reload the page and try again.')
+    return null
+  }
+
   async function handleNewReview() {
+    if (!canReview) return
+    const mappings = needMappings()
     if (!mappings) return
-    if (!window.confirm('Start a new review? The current lock is retired and the applicant cannot run auto-fill until you lock again.')) return
+    // Confirmed in the page by InlineConfirm below, not window.confirm.
     setBusy('start'); setError(null)
     try {
       setReview(await withToken((t) => startPreflight(t, applicationId, mappings)))
       setLockReasons(null)
+      notifyPreflightLockChanged(applicationId) // the lock is gone: Approve must re-disable
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not start a new review')
+      setError(consultantActionError(err, tc('startNewReviewFailed')))
     } finally { setBusy(null) }
   }
 
   useEffect(() => { void load() }, [load])
+
+  // Only GET /active says whether this viewer can lock; the check and edit
+  // responses are the bare row. Keep it, or the reason vanishes on the first
+  // tick and the button the server refuses comes back.
+  const keepCanLock = (next: PreflightReview | null) =>
+    next && next.can_lock === undefined && review?.id === next.id
+      ? { ...next, can_lock: review.can_lock }
+      : next
 
   // A correction in the Fields table or the Documents & forms panel resets a
   // check on the server. Re-read so the boxes show what the server will
@@ -143,12 +185,14 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
   useEffect(() => onPreflightChanged(applicationId, () => { void load() }), [applicationId, load])
 
   async function handleStart() {
+    if (!canReview) return
+    const mappings = needMappings()
     if (!mappings) return
     setBusy('start'); setError(null)
     try {
       setReview(await withToken((t) => startPreflight(t, applicationId, mappings)))
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not start the review')
+      setError(consultantActionError(err, tc('startReviewFailed')))
     } finally { setBusy(null) }
   }
 
@@ -156,11 +200,12 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
     if (!review) return
     setBusy(check); setError(null)
     try {
-      setReview(await withToken((t) =>
+      const next = await withToken((t) =>
         recordPreflightCheck(t, applicationId, review.id, check, value),
-      ))
+      )
+      setReview(keepCanLock(next))
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not record that check')
+      setError(consultantActionError(err, tc('recordCheckFailed')))
     } finally { setBusy(null) }
   }
 
@@ -171,9 +216,10 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
       setReview(await withToken((t) =>
         completePreflight(t, applicationId, review.id, mappings),
       ))
-      toast('Review locked. If you have not yet, press “Approve application” above — auto-fill stays off until the application is approved.', 'success')
+      notifyPreflightLockChanged(applicationId) // enables "Approve application"
+      toast(tc('toastReviewLocked'), 'success')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not complete the review')
+      setError(consultantActionError(err, tc('completeReviewFailed')))
       // The server refuses to lock values that moved since this page loaded
       // (409). Show the current values and the reset checks.
       void load()
@@ -188,9 +234,9 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
         validatePreflightLock(t, applicationId, review.id, mappings),
       )
       setLockReasons(v.valid ? [] : v.reasons)
-      toast(v.valid ? 'Lock is still valid.' : 'Lock is no longer valid.', v.valid ? 'success' : 'error')
+      toast(v.valid ? tc('toastLockValid') : tc('toastLockInvalid'), v.valid ? 'success' : 'error')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not validate the lock')
+      setError(consultantActionError(err, tc('validateLockFailed')))
     } finally { setBusy(null) }
   }
 
@@ -216,6 +262,12 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
   }
 
   const locked = review?.status === 'completed' && Boolean(review.locked_diff_hash)
+  // A lock broken after the fact (the data changed) still reads as completed;
+  // say so at the top, not only under the field list.
+  const lockBroken = locked && lockReasons != null && lockReasons.length > 0
+  // The server binds a lock to the assigned consultant and refuses anyone
+  // else (an admin who opened the review): don't offer a button that fails.
+  const cannotLock = review != null && !locked && review.can_lock === false
   const allChecked =
     review != null && CATEGORIES.every((c) => review[c.check]) && review.final_approval
   // Say what is still missing rather than leaving a silently disabled button.
@@ -231,7 +283,15 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
     <Card>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
         <h3 className="type-h4">Pre-submission review</h3>
-        {locked ? <Badge>Locked</Badge> : review ? <Badge>In review</Badge> : <Badge>Not started</Badge>}
+        {lockBroken ? (
+          <Badge>Lock out of date</Badge>
+        ) : locked ? (
+          <Badge>Locked</Badge>
+        ) : review ? (
+          <Badge>In review</Badge>
+        ) : (
+          <Badge>Not started</Badge>
+        )}
       </div>
 
       <p className="mono" style={{ fontSize: '0.75rem', marginTop: 8 }}>
@@ -243,6 +303,13 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
         {' '}Completing the review locks them; the applicant cannot run the fill
         until it is locked, and any later change to the data breaks the lock.
       </p>
+
+      {lockBroken && (
+        <p role="alert" className="mono" style={{ fontSize: '0.75rem', color: 'var(--color-rose, #b53030)', marginTop: 8 }}>
+          Lock invalid — {lockReasons!.map((r) => LOCK_REASON_TEXT[r] ?? r).join('; ')}.
+          {' '}The fields below are the current values, not the locked ones. Start a new review to re-check and lock again.
+        </p>
+      )}
 
       {CATEGORIES.map((cat) => {
         const fields = mappings.filter((m) => m.category === cat.key)
@@ -348,19 +415,34 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
         </label>
       )}
 
-      {lockReasons != null && lockReasons.length > 0 && (
-        <p className="mono" style={{ fontSize: '0.75rem', color: 'var(--color-rose, #b53030)', marginTop: 12 }}>
-          Lock invalid — {lockReasons.map((r) => LOCK_REASON_TEXT[r] ?? r).join('; ')}.
-          {' '}Start a new review to re-check and lock again.
-        </p>
-      )}
       {error && (
         <p className="mono" style={{ fontSize: '0.75rem', color: 'var(--color-rose, #b53030)', marginTop: 12 }}>
           {error}
         </p>
       )}
 
-      {missingChecks.length > 0 && (
+      {!canReview && (
+        <p className="mono" role="note" style={{ fontSize: '0.75rem', color: 'var(--color-rose, #b53030)', marginTop: 12 }}>
+          Only the assigned consultant (or an admin) can run the pre-submission review for this application.
+        </p>
+      )}
+
+      {/* Before a review exists or while one is locked. In review, the server's
+          can_lock decides (an admin may lock a review the assignee opened). */}
+      {canReview && viewerIsAdmin && !cannotLock && (!review || locked) && (
+        <p className="mono text-muted" role="note" style={{ fontSize: '0.75rem', marginTop: 12 }}>
+          You are not the assigned consultant. As an admin you can start a review and tick its checks, but only the
+          assigned consultant can lock it — starting a new review retires the current lock until they do.
+        </p>
+      )}
+
+      {cannotLock && (
+        <p className="mono" style={{ fontSize: '0.75rem', color: 'var(--color-rose, #b53030)', marginTop: 12 }}>
+          Only the assigned consultant can lock this review. Ask them to complete it, or sign in as them.
+        </p>
+      )}
+
+      {missingChecks.length > 0 && !cannotLock && (
         <p className="mono text-muted" style={{ fontSize: '0.75rem', marginTop: 12 }}>
           Complete &amp; lock unlocks once you tick: {missingChecks.join(', ')}.
           {' '}A correction to a value un-ticks the category that covers it.
@@ -369,12 +451,12 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
 
       <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
         {!review && (
-          <Button onClick={() => void handleStart()} disabled={busy != null}>
+          <Button onClick={() => void handleStart()} disabled={!canReview || busy != null}>
             {busy === 'start' ? 'Starting…' : 'Start review'}
           </Button>
         )}
         {review && !locked && (
-          <Button onClick={() => void handleComplete()} disabled={!allChecked || busy != null}>
+          <Button onClick={() => void handleComplete()} disabled={!canReview || !allChecked || cannotLock || busy != null}>
             {busy === 'complete' ? 'Locking…' : 'Complete & lock'}
           </Button>
         )}
@@ -384,9 +466,18 @@ export default function PreflightPanel({ applicationId }: { applicationId: strin
           </Button>
         )}
         {locked && (
-          <Button variant="secondary" onClick={() => void handleNewReview()} disabled={busy != null}>
-            {busy === 'start' ? 'Starting…' : 'Start a new review'}
-          </Button>
+          <InlineConfirm
+            triggerClassName="btn btn-secondary"
+            confirmClassName="btn btn-primary"
+            cancelClassName="btn btn-ghost"
+            label={busy === 'start' ? tc('startingNewReview') : tc('startNewReview')}
+            question={tc('confirmNewReview')}
+            confirmLabel={tc('confirmNewReviewYes')}
+            cancelLabel={tc('cancel')}
+            onConfirm={() => void handleNewReview()}
+            disabled={!canReview || busy != null}
+            busy={busy === 'start'}
+          />
         )}
       </div>
     </Card>

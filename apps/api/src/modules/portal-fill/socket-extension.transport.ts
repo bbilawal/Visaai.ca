@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Optional } from '@nestjs/common';
 import {
   PORTAL_FILL_PROTOCOL_VERSION,
   isPortalFillProtocolCompatible,
@@ -11,6 +11,8 @@ import type {
   SignedWriteIntent,
 } from '@visaai/types';
 import type { IExtensionTransport } from './field-executor.port';
+import { PortalDocumentFiles } from './portal-document-files';
+import { documentIdOf } from '../automation/portal-fills/ircc-uploads';
 
 /**
  * The only socket surface this transport uses. Declaring it structurally keeps
@@ -29,6 +31,12 @@ export const PORTAL_FILL_PROBE_EVENT = 'portal-fill:probe';
 export interface SelectorProbe {
   selector: string;
   found: boolean;
+  /**
+   * The control is on the screen but its <select> does not list the reviewed
+   * answer (a question-scoped selector's `option=` part). Reported so the
+   * screen is refused before anything on it is written.
+   */
+  optionMissing?: boolean;
 }
 
 /**
@@ -64,24 +72,37 @@ export class SocketExtensionTransport implements IExtensionTransport {
 
   /** executionId → the one socket authorized to receive that run's intents. */
   private readonly bound = new Map<string, ExtensionSocket>();
+  /** executionId → its application, for reading a document to attach. */
+  private readonly applications = new Map<string, string>();
+
+  constructor(@Optional() private readonly files?: PortalDocumentFiles) {}
 
   /**
    * Bind an execution run to a socket. Re-binding the same execution to a new
    * socket replaces the old one: a reconnecting extension must be able to
    * resume, and the previous socket is by definition gone.
    */
-  bind(executionId: string, socket: ExtensionSocket): void {
+  bind(
+    executionId: string,
+    socket: ExtensionSocket,
+    applicationId?: string,
+  ): void {
     this.bound.set(executionId, socket);
+    if (applicationId) this.applications.set(executionId, applicationId);
   }
 
   unbind(executionId: string): void {
     this.bound.delete(executionId);
+    this.applications.delete(executionId);
   }
 
   /** Drop every binding held by a socket. Called on disconnect. */
   unbindSocket(socket: ExtensionSocket): void {
     for (const [executionId, bound] of this.bound) {
-      if (bound.id === socket.id) this.bound.delete(executionId);
+      if (bound.id === socket.id) {
+        this.bound.delete(executionId);
+        this.applications.delete(executionId);
+      }
     }
   }
 
@@ -126,6 +147,13 @@ export class SocketExtensionTransport implements IExtensionTransport {
     executionId: string,
     selectors: string[],
     ops?: Array<PortalFillOp | null>,
+    /**
+     * Parallel to `selectors`: a <select> whose options load after an
+     * earlier answer (eTA job title) is present while disabled for loading;
+     * the write then waits for its option. Sent only when one is set, so
+     * every other probe is byte-for-byte what it was.
+     */
+    awaitOptions?: boolean[],
   ): Promise<{ results: SelectorProbe[]; page: string | null } | null> {
     const socket = this.bound.get(executionId);
     if (!socket) return null;
@@ -137,6 +165,7 @@ export class SocketExtensionTransport implements IExtensionTransport {
         executionId,
         selectors,
         ...(ops ? { ops } : {}),
+        ...(awaitOptions?.some(Boolean) ? { awaitOptions } : {}),
       }),
       PROBE_TIMEOUT_MS,
     );
@@ -162,7 +191,13 @@ export class SocketExtensionTransport implements IExtensionTransport {
       if (typeof r?.selector !== 'string' || typeof r?.found !== 'boolean') {
         return null; // a malformed row makes the whole answer untrustworthy
       }
-      out.push({ selector: r.selector, found: r.found });
+      out.push({
+        selector: r.selector,
+        found: r.found,
+        ...(r.optionMissing === true && !r.found
+          ? { optionMissing: true }
+          : {}),
+      });
     }
     // Every selector asked about must be answered, or we know nothing.
     if (out.length !== selectors.length) return null;
@@ -194,7 +229,23 @@ export class SocketExtensionTransport implements IExtensionTransport {
       ...(intent.op ? { op: intent.op } : {}),
       ...(intent.reveal ? { reveal: true } : {}),
       ...(intent.dialog ? { dialog: true } : {}),
+      ...(intent.awaitOptions ? { awaitOptions: true } : {}),
+      ...(intent.label ? { label: intent.label.slice(0, 200) } : {}),
     };
+
+    // A document to attach travels as bytes the SERVER read from the
+    // applicant's storage, for the document the locked value names. The
+    // extension is never given a URL to fetch.
+    if (intent.op === 'attach_file') {
+      const applicationId = this.applications.get(intent.executionId);
+      const documentId = documentIdOf(intent.mappedValue);
+      const file =
+        applicationId && documentId && this.files
+          ? await this.files.load(applicationId, documentId, intent.fieldKey)
+          : null;
+      if (!file) return this.fail(intent, 'transport_error');
+      command.file = file;
+    }
 
     const raw = await this.emitOnce(socket, command);
     return this.normalize(intent, raw);

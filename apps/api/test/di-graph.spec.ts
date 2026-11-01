@@ -59,6 +59,16 @@ describe('Phase 2C — Gate 2 DI graph', () => {
     await moduleRef.close();
   });
 
+  it('registers the approve-needs-a-valid-lock gate when PreflightModule boots', async () => {
+    const moduleRef = await boot();
+    await moduleRef.init();
+    const svc = moduleRef.get(ConsultantApprovalService);
+    expect(
+      (svc as unknown as { approvalGates: unknown[] }).approvalGates,
+    ).toHaveLength(1);
+    await moduleRef.close();
+  });
+
   it('forbids other modules from injecting the audit repository (write enforcement)', async () => {
     // A foreign module imports AuditModule and tries to inject the audit repo.
     // AUDIT_REPOSITORY is NOT exported, so Nest must fail to resolve the graph.

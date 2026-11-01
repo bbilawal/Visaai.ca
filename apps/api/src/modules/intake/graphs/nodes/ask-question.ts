@@ -1,3 +1,5 @@
+import { CA_ETA_CONDITIONAL, CA_ETA_VISA_EXEMPT } from '@visaai/types';
+import { withoutRemovedChildFacts } from '../../../shared/profile/intake-children';
 import { ChatOpenAI } from '@langchain/openai';
 import {
   HumanMessage,
@@ -11,7 +13,12 @@ import {
   asUntrustedData,
   UNTRUSTED_DATA_DIRECTIVE,
 } from '../../../shared/ai/untrusted';
-import { requiredQuestionsBlock } from './required-facts';
+import {
+  answeredQuestionsBlock,
+  requiredQuestionsBlock,
+  routeGuidanceBlock,
+  routeNoticeFor,
+} from './required-facts';
 
 const COUNTRY_NAMES: Record<string, string> = {
   US: 'the United States',
@@ -145,6 +152,17 @@ As the interview wraps up and you have enough profile information to move on, AL
 
 You should also surface a single one-line nudge toward the relevant next stage whenever the user finishes a major milestone in the conversation (e.g. once a visa type is locked in, once core profile data is captured, once they ask "what's next").`;
 
+/**
+ * Canada's two visitor routes are mutually exclusive by NATIONALITY, and the
+ * model kept recommending the eTA to visa-required nationals (dry run
+ * 2026-10-16). The rule is stated, from IRCC's own lists, before it recommends.
+ */
+function canadaEtaDiscoveryNote(country: string | null): string {
+  if ((country ?? '').toUpperCase() !== 'CA') return '';
+  return `- CANADA VISITORS: a visitor needs EITHER an eTA OR a visitor visa (TRV), never both, and nationality decides which. Recommend the eTA ONLY to citizens of IRCC's eTA-required (visa-exempt) countries (${CA_ETA_VISA_EXEMPT.join(', ')}) who will FLY, or to citizens of the conditional CAN+ countries (${CA_ETA_CONDITIONAL.join(', ')}) who fly AND held a Canadian visa in the past 10 years or hold a valid U.S. non-immigrant visa. Everyone else (for example Pakistan, India, Nigeria, Bangladesh) needs a visitor visa (TRV). U.S. citizens and U.S. green-card holders need neither. Ask nationality before recommending either.
+`;
+}
+
 function discoverySystemPrompt(
   country: string | null,
   state: string | null,
@@ -181,7 +199,7 @@ Recommended visa types:
 
 To choose one, pick it in the "Which visa are you applying for?" selector above this chat — that is what builds your official document checklist. (Or tell me if your situation is different and I'll re-evaluate.)
 
-- Use the OFFICIAL visa names and codes for ${countryStr} (e.g. for the US: B-1/B-2, F-1, H-1B, O-1, L-1, EB-2 NIW, K-1; for Canada: TRV/Visitor, Study Permit, Work Permit, Express Entry, PNP, Super Visa; for the UK: Standard Visitor, Skilled Worker, Student, Global Talent; for Australia: subclass 600, 482, 500, 189, 190; and so on for other countries).
+${canadaEtaDiscoveryNote(country)}- Use the OFFICIAL visa names and codes for ${countryStr} (e.g. for the US: B-1/B-2, F-1, H-1B, O-1, L-1, EB-2 NIW, K-1; for Canada: TRV/Visitor, Study Permit, Work Permit, Express Entry, PNP, Super Visa; for the UK: Standard Visitor, Skilled Worker, Student, Global Talent; for Australia: subclass 600, 482, 500, 189, 190; and so on for other countries).
 - The applicant can ONLY set their visa type with the "Which visa are you applying for?" selector above the chat. Naming a route in chat does NOT record it. If the applicant names or picks a route in chat, do NOT say, claim or imply that their choice was recorded, saved, selected or locked in, and do NOT proceed as if a route is set — briefly ask them to select it in the "Which visa are you applying for?" selector above the chat, then keep gathering the general profile details still missing.`;
 }
 
@@ -294,7 +312,7 @@ What is the purpose of your visit to ${c}? (e.g. tourism, work, study, family, e
     }
 
     const profileSummary =
-      Object.entries(state.profileJson)
+      Object.entries(withoutRemovedChildFacts(state.profileJson))
         .map(([k, v]) => `${k}: ${JSON.stringify(v)}`)
         .join('\n') || 'No profile data yet.';
 
@@ -309,6 +327,8 @@ What is the purpose of your visit to ${c}? (e.g. tourism, work, study, family, e
 
     const checklistSummary = summarizeChecklist(state.checklistItems);
     const requiredBlock = inDiscoveryMode ? '' : requiredQuestionsBlock(state);
+    const routeBlock = inDiscoveryMode ? '' : routeGuidanceBlock(state);
+    const answeredBlock = inDiscoveryMode ? '' : answeredQuestionsBlock(state);
 
     const messages = [
       new SystemMessage(
@@ -322,8 +342,8 @@ ${asUntrustedData('Applicant profile so far', profileSummary)}
 ${asUntrustedData('Live document checklist', checklistSummary)}
 
 Conversation history length: ${state.messages.length} messages.
-${requiredBlock ? `\n${requiredBlock}\n` : ''}
-The checklist above is already shown to the applicant in the sidebar. Do NOT re-list items that are already on it. This turn, surface only what is NEW — a document, form, or evidence source not already tracked, plus where/how to obtain new evidence — then end with the single most important next question. If nothing is new to add, just ask the next question.`,
+${routeBlock ? `\n${routeBlock}\n` : ''}${requiredBlock ? `\n${requiredBlock}\n` : ''}${answeredBlock ? `\n${answeredBlock}\n` : ''}
+The checklist above is already shown to the applicant in the sidebar. Do NOT re-list items that are already on it. This turn, surface only what is NEW — a document, form, or evidence source not already tracked, plus where/how to obtain new evidence — then end with the single most important next question. If nothing is new to add, just ask the next question. Never say you recorded or saved a fact unless it appears in the applicant profile above.`,
       ),
       ...state.messages,
     ];
@@ -336,9 +356,17 @@ The checklist above is already shown to the applicant in the sidebar. Do NOT re-
         inDiscoveryMode,
         ')',
       );
-      const question = onToken
-        ? await streamQuestion(llm, messages, onToken)
-        : await generateQuestion(llm, messages);
+      // A chosen route the profile has since ruled out (a Pakistani passport
+      // on Canada's eTA) opens EVERY reply with a fixed notice until the
+      // applicant switches — not left to the model to remember. Streamed
+      // first, so it paints before the model's text.
+      const notice = routeNoticeFor(state);
+      if (notice) onToken?.(notice);
+      const question =
+        notice +
+        (onToken
+          ? await streamQuestion(llm, messages, onToken)
+          : await generateQuestion(llm, messages));
 
       console.log('[ask-question] Generated question:', question);
       // Deliver before returning: the graph still has a sibling branch running
@@ -359,7 +387,7 @@ The checklist above is already shown to the applicant in the sidebar. Do NOT re-
 }
 
 /** Single-shot generation. The path every non-streaming caller takes. */
-async function generateQuestion(
+export async function generateQuestion(
   llm: ChatOpenAI,
   messages: BaseMessage[],
 ): Promise<string> {
@@ -383,7 +411,7 @@ async function generateQuestion(
  * keep-alive) contributes nothing and is skipped rather than stringified into
  * the applicant's reply.
  */
-async function streamQuestion(
+export async function streamQuestion(
   llm: ChatOpenAI,
   messages: BaseMessage[],
   onToken: QuestionTokenSink,

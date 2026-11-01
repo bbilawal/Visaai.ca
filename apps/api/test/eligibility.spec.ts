@@ -152,6 +152,13 @@ async function buildEligible() {
       creditExpertReview: () => Promise.resolve({ recorded: false }),
     } as unknown as PlanReviewPayoutService,
   );
+  // The pre-submission lock gate is PreflightModule's (approval-lock.gate.spec);
+  // approval fails closed without one, so register a pass-through here. Same
+  // for the lock an approval must postdate: no portal fill, nothing to cover.
+  cons.registerApplicationApprovalGate(() => Promise.resolve());
+  cons.registerApplicationApprovalLockSource(() =>
+    Promise.resolve({ requiresLock: false, lockedAt: null }),
+  );
   const preflight = new PreflightService(
     new FakePreflightRepository(),
     prov,
@@ -244,6 +251,30 @@ describe('ExecutionEligibilityService — predicate failures (C)', () => {
     const r = await svc.evaluate(input);
     expect(r.eligible).toBe(false);
     expect(r.reasons).toContain('consultant_missing');
+  });
+
+  // Live 2026-10-20 follow-up: a document the consultant sent back blocks the
+  // approval — with its own reason, not "consultant has not approved".
+  it('open document request: document_review_open, not consultant_missing', async () => {
+    const { svc, input, cons } = await buildEligible();
+    cons.registerApplicationApprovalBlocker(() =>
+      Promise.resolve('Cannot approve yet: passport.pdf (re-upload requested).'),
+    );
+    const r = await svc.evaluate(input);
+    expect(r.eligible).toBe(false);
+    expect(r.reasons).toContain('document_review_open');
+    expect(r.reasons).not.toContain('consultant_missing');
+  });
+
+  it('unreadable review state: approval_check_unavailable, not consultant_missing', async () => {
+    const { svc, input, cons } = await buildEligible();
+    cons.registerApplicationApprovalBlocker(() =>
+      Promise.reject(new Error('db down')),
+    );
+    const r = await svc.evaluate(input);
+    expect(r.eligible).toBe(false);
+    expect(r.reasons).toContain('approval_check_unavailable');
+    expect(r.reasons).not.toContain('consultant_missing');
   });
 
   it('preflight failure (review never completed)', async () => {

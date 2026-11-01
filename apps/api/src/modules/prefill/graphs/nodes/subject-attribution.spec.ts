@@ -131,3 +131,16 @@ describe('classifyDocumentSubject', () => {
     ).toBe('unattributed');
   });
 });
+
+describe('classifyDocumentSubject — card holder unknown (live E2E 2026-10-18)', () => {
+  it('a card marked holder_unknown is never the applicant\'s', () => {
+    expect(
+      classifyDocumentSubject(
+        'national_id',
+        { national_id_number: '34201-9465270-5', holder_unknown: true },
+        'Chaudhary Zeeshan Ali',
+      ),
+    ).toBe('unattributed');
+  });
+});
+

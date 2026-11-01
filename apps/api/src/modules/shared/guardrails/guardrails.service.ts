@@ -145,7 +145,7 @@ const OUTPUT_FORBIDDEN: Array<{ re: RegExp; tag: string }> = [
   },
 ];
 
-const SAFE_FALLBACK =
+export const SAFE_FALLBACK =
   'I can not predict visa decisions or give legal advice. I can help you prepare a complete, ' +
   'consistent application and flag common issues. For advice about your specific case, I can ' +
   'connect you with a licensed immigration consultant (RCIC).';

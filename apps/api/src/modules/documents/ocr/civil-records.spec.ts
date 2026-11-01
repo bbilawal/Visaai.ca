@@ -11,6 +11,7 @@ import {
   ONTARIO_BIRTH_CERT,
   PUNJAB_BIRTH_CERT_SAJAWAL,
   PUNJAB_BIRTH_CERTS_TWO_CHILDREN,
+  NIKAH_NAMA_AZURE_READ,
 } from './__fixtures__/civil-records.fixtures';
 
 describe('parseCivilDate', () => {
@@ -162,5 +163,26 @@ describe('civilRecordKind', () => {
   it('leaves identity documents alone', () => {
     expect(civilRecordKind('national_id', CNIC_SPOUSE)).toBeNull();
     expect(civilRecordKind('passport', PUNJAB_BIRTH_CERT_SAJAWAL)).toBeNull();
+  });
+});
+
+describe('parseMarriageCertificate — real Azure read layout (prod 2026-10-16)', () => {
+  it('takes the date the certificate repeats when no label sits beside one', () => {
+    const rec = parseMarriageCertificate(NIKAH_NAMA_AZURE_READ);
+    expect(rec.marriage_date).toBe('1988-09-16');
+    expect(rec.marriage_date_label).toBe('repeated');
+  });
+
+  it('reads the parties, not the next printed question', () => {
+    const rec = parseMarriageCertificate(NIKAH_NAMA_AZURE_READ);
+    expect(rec.bridegroom_name).toBe('Muzaffar Ahmad');
+    expect(rec.bride_name).toBe('Sumera Bano');
+  });
+
+  it('does not guess when no date clearly dominates', () => {
+    const rec = parseMarriageCertificate(
+      'Nikah Nama\nThe date when the marriage was celebrated\nsomething\n12-3-1990\n4-5-1991',
+    );
+    expect(rec.marriage_date).toBeUndefined();
   });
 });

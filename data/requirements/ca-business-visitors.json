@@ -176,34 +176,41 @@
     },
     {
       "requirement_code": "visitor_visa_if_applicable",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
       "label": "Valid visitor visa, if one is required",
       "source_role": "application",
       "source_excerpt": "a valid visitor visa, if applicable",
       "display_order": 310,
-      "source_excerpt_display": "a valid visitor visa, if applicable"
+      "source_excerpt_display": "a valid visitor visa, if applicable",
+      "description": "What a visa-required business visitor carries at entry: the visitor visa this application obtains. It cannot be uploaded with the application that produces it, so it is a condition, not an upload slot."
     },
     {
       "requirement_code": "same_passport_used_for_eta",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
       "label": "The same passport used in the eTA application",
       "source_role": "application",
       "source_excerpt": "if you need an eta, the same passport you used in your application",
       "display_order": 320,
-      "source_excerpt_display": "if you need an eTA, the same passport you used in your application"
+      "source_excerpt_display": "if you need an eTA, the same passport you used in your application",
+      "description": "An instruction about WHICH passport to carry, for travellers who hold an eTA: the passport linked to the eTA is the one presented at entry. It is not a separate document, and an applicant filing a visitor visa application (IMM 5257) has no eTA, so it is never an upload slot."
     },
     {
       "requirement_code": "us_green_card_and_passport",
       "kind": "evidence",
       "officially_required": true,
       "label": "US green card and a valid passport, for lawful permanent residents of the United States",
-      "description": "Left unruled on purpose. VisaAI records a residence country, which is not the same thing as lawful permanent residence — someone can live in the US without a green card. Showing this item to everyone is the safe error; hiding it from a green-card holder is not.",
+      "description": "Rule: applies only to lawful permanent residents of the United States (us_lpr, asked in the visitor interview as us_permanent_resident). Until that is answered the item shows as “may be required”; for anyone who answers no it does not apply.",
       "source_role": "application",
       "source_excerpt": "if you’re a lawful permanent resident of the united states (us), a valid green card (or equivalent official proof of status in the u s ) and a valid passport from your country of nationality (or an equivalent document)",
       "display_order": 330,
-      "source_excerpt_display": "if you’re a lawful permanent resident of the United States (US), a valid green card (or equivalent official proof of status in the U S) and a valid passport from your country of nationality (or an equivalent document)"
+      "source_excerpt_display": "if you’re a lawful permanent resident of the United States (US), a valid green card (or equivalent official proof of status in the U S) and a valid passport from your country of nationality (or an equivalent document)",
+      "rule": {
+        "fact": "us_lpr",
+        "op": "eq",
+        "value": true
+      }
     },
     {
       "requirement_code": "letters_of_support_and_invitation",
@@ -223,27 +230,35 @@
       "source_role": "application",
       "source_excerpt": "other documents such as warranty or service agreements, or contracts, if relevant to your visit",
       "display_order": 350,
-      "source_excerpt_display": "other documents such as warranty or service agreements, or contracts, if relevant to your visit"
+      "source_excerpt_display": "other documents such as warranty or service agreements, or contracts, if relevant to your visit",
+      "description": "Rule: applies when the visit is after-sales service — installing, repairing or servicing equipment sold to a Canadian buyer — which is the activity these documents prove. Until the activity is known the item shows as “may be required”; for meetings, buying goods or training it does not apply.",
+      "rule": {
+        "fact": "business_activity",
+        "op": "eq",
+        "value": "after_sales_service"
+      }
     },
     {
       "requirement_code": "host_24_hour_contact_details",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
       "label": "24-hour contact details for your business host in Canada",
       "source_role": "application",
       "source_excerpt": "24-hour contact details of your business host in canada",
       "display_order": 360,
-      "source_excerpt_display": "24-hour contact details of your business host in Canada"
+      "source_excerpt_display": "24-hour contact details of your business host in Canada",
+      "description": "Typed details (name, phone number, email) of the Canadian business host, entered on the application form and carried at entry. It is information, not a document to upload."
     },
     {
       "requirement_code": "proof_of_funds_at_border",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
       "label": "Proof of funds covering the stay in Canada and the return home",
       "source_role": "application",
       "source_excerpt": "proof that you have enough money to cover both your stay in canada and your return home",
       "display_order": 370,
-      "source_excerpt_display": "proof that you have enough money to cover both your stay in Canada and your return home"
+      "source_excerpt_display": "proof that you have enough money to cover both your stay in Canada and your return home",
+      "description": "Checked by the border officer at entry. The obligation itself is recorded as sufficient_funds_for_stay_and_return; the documents that prove it are the applicant's financial evidence, so this is not a second upload slot."
     },
     {
       "requirement_code": "minor_entry_requirements",
@@ -262,10 +277,10 @@
     },
     {
       "requirement_code": "two_original_invitation_letters",
-      "kind": "evidence",
+      "kind": "condition",
       "officially_required": true,
       "label": "Two originals of the letter of invitation — one to submit, one to present at entry",
-      "description": "IRCC addresses this page to the Canadian host company. Only the parts that change what the visitor must carry are recorded here; the letter's required contents are the host's obligation, not an applicant upload.",
+      "description": "IRCC addresses this page to the Canadian host company. It is an instruction to the host about how many ORIGINALS of the invitation letter to send — one submitted with the application, one carried at entry. The letter itself is the upload slot letters_of_support_and_invitation; an instruction about physical originals is not a second one.",
       "source_role": "documents",
       "source_excerpt": "your company should send each visitor two originals of the letter of invitation, one for them to submit when applying for their visa and one to present when they enter canada.",
       "display_order": 500,

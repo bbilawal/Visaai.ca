@@ -10,9 +10,11 @@ import { relativeFromIdCardText } from './classify-document';
 import {
   findByName,
   isPeopleList,
+  isRemovedChild,
   isSamePerson,
   peopleInProfile,
   personName,
+  withoutRemovedChildren,
 } from '../../../shared/profile/family-members';
 
 /**
@@ -74,6 +76,12 @@ export interface FamilyMergeInput {
    * `_document_sources`; a value equal to one of these came from a document.
    */
   priorDocumentMarriageDates?: string[];
+  /**
+   * False when the document is known to be somebody else's (uploaded to a
+   * host / sponsor / family-request slot): a birth certificate there is never
+   * the applicant's own, whatever the names say. Default true.
+   */
+  applicantOwnAllowed?: boolean;
 }
 
 export interface FamilyMergeResult {
@@ -84,6 +92,8 @@ export interface FamilyMergeResult {
   skipped: string[];
   /** Human-readable decisions, for the log. */
   notes: string[];
+  /** A birth certificate any of whose records was filed as the applicant's own. */
+  applicantOwnRecord: boolean;
 }
 
 type Person = Record<string, unknown>;
@@ -173,6 +183,7 @@ class ProfileWriter {
   readonly added: string[] = [];
   readonly skipped: string[] = [];
   readonly notes: string[] = [];
+  applicantOwnRecord = false;
   private sources: Record<string, DocumentSource>;
 
   constructor(
@@ -349,6 +360,33 @@ function parentMatch(
   return 'none';
 }
 
+/**
+ * Is a birth record whose name matches the applicant really the applicant's?
+ * Not when the slot says it is someone else's, when the name matches several
+ * records, when the record names the applicant as a parent, or when its date
+ * of birth contradicts the one the profile holds.
+ */
+function isApplicantsOwnRecord(
+  rec: BirthRecord,
+  profile: Record<string, unknown>,
+  applicant: string,
+  nameHits: number,
+  input: FamilyMergeInput,
+): boolean {
+  if (input.applicantOwnAllowed === false) return false;
+  if (nameHits > 1) return false;
+  if (
+    [rec.father_name, rec.mother_name].some(
+      (p) => p && isSamePerson(p, applicant),
+    )
+  ) {
+    return false;
+  }
+  const known = parseCivilDate(profile.date_of_birth, { dayFirst: true });
+  if (known && rec.date_of_birth && known !== rec.date_of_birth) return false;
+  return true;
+}
+
 function mergeBirthCertificate(input: FamilyMergeInput, w: ProfileWriter) {
   let records = parseBirthCertificates(input.rawText);
   if (records.length === 0) {
@@ -370,11 +408,24 @@ function mergeBirthCertificate(input: FamilyMergeInput, w: ProfileWriter) {
   }
 
   const applicant = applicantNameOf(w.next);
+  // Prod 2026-10-16 (super visa): the applicant's name had been polluted to
+  // "MIAN MUHAMMAD" by the host's passport, which is a subset of BOTH sons'
+  // names on their two-record certificate, so the sons' certificate was filed
+  // as the applicant's own (her sex, parents, place of birth). A name that
+  // fits more than one record cannot pick out the applicant.
+  const nameHits = applicant
+    ? records.filter((r) => r.full_name && isSamePerson(r.full_name, applicant))
+        .length
+    : 0;
   for (const rec of records) {
     if (!rec.full_name) continue;
 
     // The applicant's own certificate.
-    if (applicant && isSamePerson(rec.full_name, applicant)) {
+    if (
+      applicant &&
+      isSamePerson(rec.full_name, applicant) &&
+      isApplicantsOwnRecord(rec, w.next, applicant, nameHits, input)
+    ) {
       w.fill('date_of_birth', rec.date_of_birth);
       w.fill('place_of_birth', rec.place_of_birth);
       w.fill('country_of_birth', rec.country_of_birth);
@@ -382,6 +433,7 @@ function mergeBirthCertificate(input: FamilyMergeInput, w: ProfileWriter) {
       w.fill('mother_name', rec.mother_name);
       w.fill('sex', rec.sex);
       w.notes.push(`${rec.full_name}: the applicant's own birth certificate`);
+      w.applicantOwnRecord = true;
       continue;
     }
 
@@ -390,6 +442,12 @@ function mergeBirthCertificate(input: FamilyMergeInput, w: ProfileWriter) {
     const known = findByName(people, rec.full_name);
     const child = childFromRecord(rec);
 
+    if (isRemovedChild(w.next, rec.full_name)) {
+      w.notes.push(
+        `${rec.full_name}: removed from the children by the applicant — not added back`,
+      );
+      continue;
+    }
     if (match === 'none') {
       w.notes.push(
         `${rec.full_name}: parents are neither the applicant nor the spouse — not added as the applicant's child`,
@@ -541,6 +599,7 @@ export function mergeFamilyDocument(
     added: w.added,
     skipped: w.skipped,
     notes: w.notes,
+    applicantOwnRecord: w.applicantOwnRecord,
   };
 }
 
@@ -554,7 +613,8 @@ export interface ConsistencyFlag {
 
 const CHILD_RELATION = /^(son|daughter|child|step[-\s]?(son|daughter|child))$/i;
 
-function childrenOf(profile: Record<string, unknown>): Person[] {
+/** Every child record in a profile: the children lists and any person whose relationship is a child. */
+export function childrenOf(profile: Record<string, unknown>): Person[] {
   const out: Person[] = [];
   for (const key of ['children', 'children_details']) {
     const list = profile[key];
@@ -565,7 +625,7 @@ function childrenOf(profile: Record<string, unknown>): Person[] {
     const rel = str(p.relationship) ?? str(p.relation);
     if (rel && CHILD_RELATION.test(rel)) out.push(p);
   }
-  return out;
+  return withoutRemovedChildren(profile, out);
 }
 
 /**

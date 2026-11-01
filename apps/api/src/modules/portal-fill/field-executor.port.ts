@@ -24,6 +24,8 @@ export interface IExtensionTransport {
 export const EXTENSION_TRANSPORT = Symbol('IExtensionTransport');
 
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** op 'attach_file': read from storage, send, attach, wait for the portal. */
+const ATTACH_TIMEOUT_MS = 60_000;
 
 /** Distinguishes a timeout from other transport errors (no string matching). */
 class TimeoutError extends Error {
@@ -72,7 +74,13 @@ export class ExtensionBridgeExecutor implements IFieldExecutor {
 
     let raw: FieldExecResult;
     try {
-      raw = await this.race(this.transport.send(intent), this.timeoutMs);
+      // Attaching a document moves up to 5 MB and waits for the portal to take
+      // the file; it gets longer than a typed value.
+      const limit =
+        intent.op === 'attach_file'
+          ? Math.max(this.timeoutMs, ATTACH_TIMEOUT_MS)
+          : this.timeoutMs;
+      raw = await this.race(this.transport.send(intent), limit);
     } catch (err) {
       return {
         fieldKey: intent.fieldKey,

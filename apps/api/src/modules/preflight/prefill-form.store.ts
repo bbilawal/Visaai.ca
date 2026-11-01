@@ -80,4 +80,38 @@ export class PrefillFormStore {
       .eq('id', record.id);
     if (error) throw new Error(`could not save the form: ${error.message}`);
   }
+
+  /**
+   * Set one key of the applicant's interview profile — the auto-fill source
+   * when no form has been generated. Only that key is replaced; the rest is
+   * written back as read.
+   */
+  async saveProfileValue(
+    applicationId: string,
+    key: string,
+    value: string,
+  ): Promise<{ previous: unknown }> {
+    const { data, error } = await this.supabase.admin
+      .from('application_profiles')
+      .select('profile_json')
+      .eq('application_id', applicationId)
+      .maybeSingle();
+    if (error)
+      throw new Error(`could not read the profile: ${error.message}`);
+    const before = (data as { profile_json?: unknown } | null)?.profile_json;
+    const profile =
+      before && typeof before === 'object' && !Array.isArray(before)
+        ? (before as Record<string, unknown>)
+        : null;
+    if (!profile)
+      throw new ConflictException(
+        'The applicant has no interview answers yet, so there is nothing to correct.',
+      );
+    const { error: upErr } = await this.supabase.admin
+      .from('application_profiles')
+      .update({ profile_json: { ...profile, [key]: value } })
+      .eq('application_id', applicationId);
+    if (upErr) throw new Error(`could not save the profile: ${upErr.message}`);
+    return { previous: profile[key] };
+  }
 }

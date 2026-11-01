@@ -68,6 +68,7 @@ interface Overrides {
   noDrift?: boolean;
   eligible?: boolean;
   eligThrows?: boolean;
+  checkUnavailable?: boolean;
 }
 
 function makeExecution(o: Overrides = {}) {
@@ -89,6 +90,7 @@ function makeExecution(o: Overrides = {}) {
     getApplicationApproval: jest.fn().mockResolvedValue({
       applicationId: APP,
       applicationApproved: o.approved ?? true,
+      approvalCheckUnavailable: o.checkUnavailable ?? false,
       fields: [
         {
           fieldKey: 'f',
@@ -196,6 +198,17 @@ describe('ExecutionService — single execution choke point (Phase 3G)', () => {
     const out = await svc.execute(APP, rbt.mint(basePayload()));
     expect(out.started).toBe(false);
     expect(out.reasons).toContain('consultant_state_changed');
+  });
+
+  it('an unreadable review state blocks without claiming the consultant state changed', async () => {
+    const { svc, rbt } = makeExecution({
+      approved: false,
+      checkUnavailable: true,
+    });
+    const out = await svc.execute(APP, rbt.mint(basePayload()));
+    expect(out.started).toBe(false);
+    expect(out.reasons).toContain('approval_check_unavailable');
+    expect(out.reasons).not.toContain('consultant_state_changed');
   });
 
   it('blocks on verification drift', async () => {

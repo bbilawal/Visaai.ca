@@ -1,7 +1,9 @@
 import {
+  ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
@@ -13,6 +15,41 @@ import { DOCUMENT_QUEUE } from '../shared/queue/queue.constants';
 import { safeLog } from '../shared/log/redact';
 import type { Env } from '../../config/configuration';
 import { reviewStoredCrossCheck } from './graphs/nodes/identity-compare';
+import { makeSyncProfileNode } from './graphs/nodes/sync-profile';
+import type { DocumentState } from './graphs/document.state';
+import { HOLDER_CONFIRMATIONS_TABLE } from '../prefill/graphs/nodes/held-identity';
+import type { AuthUser } from '../auth/jwt.guard';
+import {
+  isSuperseded,
+  latestDocumentDecisions,
+  type RequestDecisionRow,
+} from '../review-items/open-document-requests';
+import {
+  isApplicantPhotoType,
+  isPhotoDocumentType,
+} from './ocr/extraction-schema';
+
+/**
+ * What the applicant sees of the consultant's review of one document: the
+ * latest decision, its note and date. Never the reviewer's identity or role.
+ * `open`: a needs_reupload / rejected request not yet answered by a newer
+ * upload in the same slot — the vault stops counting that slot as verified.
+ */
+export interface ApplicantDocumentReview {
+  decision: 'approved' | 'needs_reupload' | 'rejected';
+  note: string | null;
+  decided_at: string;
+  open: boolean;
+}
+
+/** BullMQ states in which a re-read is already on its way. */
+const PENDING_JOB_STATES = new Set([
+  'waiting',
+  'active',
+  'delayed',
+  'prioritized',
+  'waiting-children',
+]);
 
 export interface DocumentJob {
   documentId: string;
@@ -137,14 +174,38 @@ export class DocumentsService {
       if (exact?.id) {
         resolvedChecklistItemId = exact.id;
       } else {
-        const { data: prefix } = await db
+        // `passport%` also matches the `passport_photos` slot, so a passport
+        // must not land in a photo slot, nor a photo in a passport one
+        // (prod 2026-10-24). The applicant's photo goes into THE missing
+        // applicant-photo slot (`photo` -> `passport_photos`), which no prefix
+        // would find — only when there is exactly one, and never a wedding
+        // photo slot, since a photo there is graded pass.
+        const photo = isPhotoDocumentType(documentType);
+        const applicantPhoto = isApplicantPhotoType(documentType);
+        let candidates = db
           .from('checklist_items')
-          .select('id')
+          .select('id, document_type')
           .eq('application_id', params.applicationId)
-          .eq('status', 'missing')
-          .like('document_type', `${documentType}%`)
-          .limit(1)
-          .maybeSingle();
+          .eq('status', 'missing');
+        if (!applicantPhoto) {
+          candidates = candidates.like('document_type', `${documentType}%`);
+        }
+        const { data: found } = await candidates;
+        const slots = (found ?? []) as Array<{
+          id: string;
+          document_type: string;
+        }>;
+        let prefix: { id: string } | undefined;
+        if (applicantPhoto) {
+          const photoSlots = slots.filter((i) =>
+            isApplicantPhotoType(i.document_type),
+          );
+          prefix = photoSlots.length === 1 ? photoSlots[0] : undefined;
+        } else {
+          prefix = slots.find(
+            (i) => isPhotoDocumentType(i.document_type) === photo,
+          );
+        }
         if (prefix?.id) resolvedChecklistItemId = prefix.id;
       }
     }
@@ -228,6 +289,16 @@ export class DocumentsService {
       .select('*')
       .eq('application_id', applicationId);
 
+    const reviews = await this.applicantDocumentReviews(
+      db,
+      applicationId,
+      (documents ?? []) as Array<{
+        id: string;
+        checklist_item_id?: string | null;
+        created_at: string | null;
+      }>,
+    );
+
     // Stored rows are not revisited when the comparison rules change; apply
     // the current untyped-upload rules on the way out (identity-compare.ts).
     const now = new Date();
@@ -242,9 +313,65 @@ export class DocumentsService {
       .filter((row) => row !== null);
 
     return {
-      documents: documents ?? [],
+      documents: ((documents ?? []) as Array<{ id: string }>).map((d) => ({
+        ...d,
+        consultant_review: reviews.get(d.id) ?? null,
+      })),
       crossVerifications: current,
     };
+  }
+
+  /**
+   * The consultant's latest decision per document, read with the caller's own
+   * client: application_item_reviews RLS admits the application's owner, and
+   * only decision + note + date are selected (no reviewer id or role).
+   * A read error leaves the documents without a review rather than failing
+   * the vault — logged, because it hides a consultant's request.
+   */
+  private async applicantDocumentReviews(
+    db: SupabaseClient,
+    applicationId: string,
+    docs: Array<{
+      id: string;
+      checklist_item_id?: string | null;
+      created_at: string | null;
+    }>,
+  ): Promise<Map<string, ApplicantDocumentReview>> {
+    const out = new Map<string, ApplicantDocumentReview>();
+    if (docs.length === 0) return out;
+    const { data, error } = await db
+      .from('application_item_reviews')
+      .select('item_kind, item_id, decision, note, created_at')
+      .eq('application_id', applicationId)
+      .eq('item_kind', 'document');
+    if (error) {
+      safeLog.warn(
+        'documents.reviews',
+        `consultant reviews unreadable for ${applicationId}: ${error.message}`,
+      );
+      return out;
+    }
+    const latest = latestDocumentDecisions(
+      (data ?? []) as RequestDecisionRow[],
+    );
+    for (const doc of docs) {
+      const r = latest.get(doc.id);
+      if (!r) continue;
+      if (
+        r.decision !== 'approved' &&
+        r.decision !== 'needs_reupload' &&
+        r.decision !== 'rejected'
+      )
+        continue;
+      out.set(doc.id, {
+        decision: r.decision,
+        note: r.decision === 'approved' ? null : r.note,
+        decided_at: r.created_at,
+        open:
+          r.decision !== 'approved' && !isSuperseded(doc, docs, r.created_at),
+      });
+    }
+    return out;
   }
 
   async deleteDocument(db: SupabaseClient, documentId: string, userId: string) {
@@ -331,6 +458,235 @@ export class DocumentsService {
     return { deleted: true };
   }
 
+  /**
+   * Re-run OCR and extraction on a document's stored file — the same pipeline
+   * an upload runs, on the file already in storage.
+   *
+   * Parser fixes (#111) only reached new uploads: a nikah nama uploaded before
+   * the fix kept yielding the old wrong marriage date. A re-read lets the
+   * corrected parser replace that document-sourced value (sync-family's rules:
+   * only a value an earlier document read produced is ever replaced, never the
+   * applicant's own answer).
+   *
+   * Allowed to the application's owner, an admin, and the consultant with an
+   * ACTIVE assignment. Anyone else gets 404, as for a missing document, so the
+   * route is not an existence oracle. Idempotent: one re-read per document at
+   * a time (BullMQ job id), and a second request while one is queued or
+   * running is answered without queueing again. Audit-logged as an `ocr`
+   * access.
+   */
+  async reprocessDocument(documentId: string, user: AuthUser) {
+    const admin = this.supabase.admin;
+    const { data: doc, error } = await admin
+      .from('documents')
+      .select(
+        'id, application_id, storage_path, mime_type, document_type, ocr_status',
+      )
+      .eq('id', documentId)
+      .maybeSingle();
+    if (error) throw new Error(`Failed to read document: ${error.message}`);
+    const row: {
+      id: string;
+      application_id: string;
+      storage_path: string;
+      mime_type: string;
+      document_type: string | null;
+      ocr_status: string;
+    } | null = doc;
+    if (!row || !(await this.mayActOnApplication(row.application_id, user))) {
+      throw new NotFoundException('Document not found');
+    }
+
+    const jobId = `reprocess-${documentId}`;
+    const existing = await this.documentQueue.getJob(jobId);
+    if (existing) {
+      const state = await existing.getState();
+      if (PENDING_JOB_STATES.has(state)) {
+        return { documentId, queued: false, status: 'already_queued' as const };
+      }
+      // A finished job kept under the same id would make BullMQ ignore the
+      // new one.
+      await existing.remove().catch(() => undefined);
+    }
+
+    // Pending BEFORE queueing: the worker may finish before a later write,
+    // which would then overwrite its terminal status.
+    await admin
+      .from('documents')
+      .update({ ocr_status: 'pending' })
+      .eq('id', documentId);
+    try {
+      await this.documentQueue.add(
+        'process',
+        {
+          documentId,
+          applicationId: row.application_id,
+          storagePath: row.storage_path,
+          mimeType: row.mime_type,
+          documentType: row.document_type ?? 'document',
+        } satisfies DocumentJob,
+        {
+          jobId,
+          attempts: 3,
+          backoff: { type: 'exponential', delay: 5000 },
+          removeOnComplete: true,
+          removeOnFail: true,
+        },
+      );
+    } catch (err) {
+      await admin
+        .from('documents')
+        .update({ ocr_status: row.ocr_status })
+        .eq('id', documentId);
+      throw err;
+    }
+
+    await this.logAccess({
+      documentId,
+      applicationId: row.application_id,
+      userId: user.id,
+      action: 'ocr',
+    });
+    return { documentId, queued: true, status: 'queued' as const };
+  }
+
+  /**
+   * "This is my passport": the applicant confirms a passport / ID that
+   * sync_profile held because its name shares nothing with the name they gave
+   * (holder_mismatch.needs_confirmation). Recorded append-only in
+   * document_holder_confirmations — the audit trail the consultant sees, and
+   * what releases the hold for the prefill and the portal attachment like a
+   * consultant approval (held-identity.ts, portal-documents.ts). The profile
+   * is then re-synced from the document's stored read (no new OCR), so its
+   * identity fills the profile and the stated name stays as an other name.
+   *
+   * The application's OWNER only, checked with the caller's own client (RLS):
+   * a consultant approves instead. A document that is clearly someone else's
+   * (clearly_other) is never confirmable; nor is one that is not held.
+   */
+  async confirmHolder(db: SupabaseClient, documentId: string, user: AuthUser) {
+    const { data: doc, error } = await db
+      .from('documents')
+      .select('id, application_id, document_type')
+      .eq('id', documentId)
+      .maybeSingle();
+    if (error) throw new Error(`Failed to read document: ${error.message}`);
+    const row: {
+      id: string;
+      application_id: string;
+      document_type: string | null;
+    } | null = doc;
+    if (!row || !user?.id) throw new NotFoundException('Document not found');
+    const { data: app, error: appErr } = await db
+      .from('applications')
+      .select('id')
+      .eq('id', row.application_id)
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (appErr || !app) throw new NotFoundException('Document not found');
+
+    const admin = this.supabase.admin;
+    const { data: vers, error: vErr } = await admin
+      .from('document_verifications')
+      .select('id, details_json')
+      .eq('document_id', documentId)
+      .eq('verification_type', 'identity')
+      .order('verified_at', { ascending: false })
+      .limit(1);
+    if (vErr) throw new Error(`Failed to read verification: ${vErr.message}`);
+    const details = (
+      (Array.isArray(vers) ? vers[0] : null) as {
+        details_json?: Record<string, unknown> | null;
+      } | null
+    )?.details_json;
+    const mismatch = details?.holder_mismatch as
+      | {
+          holder?: unknown;
+          applicant?: unknown;
+          needs_confirmation?: unknown;
+          clearly_other?: unknown;
+        }
+      | undefined;
+    if (mismatch?.clearly_other === true) {
+      throw new ConflictException(
+        'This document names someone else and cannot be confirmed as yours. Upload your own.',
+      );
+    }
+    if (mismatch?.needs_confirmation !== true) {
+      throw new ConflictException(
+        'This document is not waiting for your confirmation.',
+      );
+    }
+
+    const text = (v: unknown) =>
+      typeof v === 'string' && v.trim() ? v.trim().slice(0, 300) : null;
+    const { error: insErr } = await admin
+      .from(HOLDER_CONFIRMATIONS_TABLE)
+      .insert({
+        document_id: documentId,
+        application_id: row.application_id,
+        confirmed_by: user.id,
+        holder_name: text(mismatch.holder),
+        stated_name: text(mismatch.applicant),
+      });
+    if (insErr) {
+      // e.g. the table is not migrated yet: a clean, retryable 503 — the
+      // database's message stays in the log, not the response.
+      safeLog.warn(
+        'documents.confirm_holder',
+        `could not record confirmation for ${documentId}: ${insErr.message}`,
+      );
+      throw new ServiceUnavailableException(
+        "We couldn't record your confirmation right now. Please try again in a few minutes.",
+      );
+    }
+
+    // Re-sync now from the stored read. sync_profile never throws.
+    const extracted = details?.extracted_fields;
+    const classified = details?.classified_from_content;
+    await makeSyncProfileNode(admin)({
+      documentId,
+      applicationId: row.application_id,
+      documentType:
+        typeof classified === 'string' && classified
+          ? classified
+          : (row.document_type ?? 'passport'),
+      rawOcrText: '',
+      extractedFields:
+        extracted && typeof extracted === 'object' && !Array.isArray(extracted)
+          ? extracted
+          : {},
+      error: null,
+    } as unknown as DocumentState);
+
+    return { documentId, confirmed: true };
+  }
+
+  /** Owner, admin, or the consultant with an ACTIVE assignment (fails closed). */
+  private async mayActOnApplication(
+    applicationId: string,
+    user: AuthUser,
+  ): Promise<boolean> {
+    if (!user?.id) return false;
+    if (user.appRole === 'admin') return true;
+    const admin = this.supabase.admin;
+    const { data: app, error } = await admin
+      .from('applications')
+      .select('user_id')
+      .eq('id', applicationId)
+      .maybeSingle();
+    if (error || !app) return false;
+    if ((app as { user_id?: string }).user_id === user.id) return true;
+    const { data: assignment, error: aErr } = await admin
+      .from('consultant_assignments')
+      .select('id')
+      .eq('application_id', applicationId)
+      .eq('consultant_id', user.id)
+      .eq('status', 'active')
+      .maybeSingle();
+    return !aErr && !!assignment;
+  }
+
   async getAccessLog(
     db: SupabaseClient,
     applicationId: string,
@@ -380,6 +736,10 @@ export class DocumentsService {
   }
 }
 
+/** A filename that says photo and nothing else: `photo 2.jpg`, `my pictures.png`. */
+const BARE_PHOTO_NAME =
+  /^(?=.*\b(?:photo|photos|photograph|photographs|picture|pictures)\b)(?:(?:my|applicant|digital|recent|colou?r|size|photo|photos|photograph|photographs|picture|pictures|img|jpg|jpeg|png|heic|webp|\d+)(?: |$))+$/;
+
 /**
  * Filename fallback, used only when the upload is not tied to a checklist slot
  * (the "Other documents" catch-all). Ordered most-specific first: the old list
@@ -396,6 +756,20 @@ export function inferDocumentType(fileName: string): string {
   // word character, so `\bitr\b` does NOT match `itr_2024`.
   const name = fileName.toLowerCase().replace(/[^a-z0-9]+/g, ' ');
 
+  // `passport photo.jpg` is the photograph, not the passport (prod
+  // 2026-10-24). Only an unambiguous photo name, though: "photo of passport",
+  // "passport photo page", "passport photo copy", "cnic photo" and "bank
+  // statement photo" are each
+  // the document, and fall through to the rules below.
+  if (
+    /\bpassport (?:size )?(?:photo|photos|photograph|photographs)\b(?! (?:page|copy|scan)\b)/.test(
+      name,
+    ) ||
+    BARE_PHOTO_NAME.test(name.trim())
+  ) {
+    return 'photo';
+  }
+
   const rules: Array<[RegExp, string]> = [
     [/passport|travel doc/, 'passport'],
     [
@@ -405,7 +779,8 @@ export function inferDocumentType(fileName: string): string {
     [/\bbirth\b/, 'birth_certificate'],
     [/marriage|nikah|wedding cert/, 'marriage_certificate'],
     [
-      /propert|deed|title doc|land (record|title)|mutation/,
+      // `lease deed.pdf` is a tenancy (below), not a title deed.
+      /propert|(?<!(?:lease|rent|tenancy) )deed|title doc|land (record|title)|mutation/,
       'property_document',
     ],
     [/bank|statement|passbook/, 'bank_statement'],
@@ -422,6 +797,12 @@ export function inferDocumentType(fileName: string): string {
     [/insurance|policy/, 'medical_insurance'],
     [/medical|imm exam|panel physician/, 'medical_exam'],
     [/proof of funds|funds|fixed deposit/, 'proof_of_funds'],
+    // After bank and funds: `bank statement rent.pdf` is the statement, and
+    // `rental income proof.pdf` / `rent receipts.pdf` are not the lease.
+    [
+      /\brent (?:agreement|deed|contract)\b|\blease\b|\btenancy\b|\bkiraya ?nama\b/,
+      'lease_agreement',
+    ],
     // Deliberately last: `letter` alone says only that it is a letter.
     [/letter/, 'employment_letter'],
   ];

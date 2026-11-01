@@ -18,6 +18,7 @@ describe('IntakeGateway — streamed preview vs delivered reply', () => {
     const client = {
       data: { userId: 'user-1', accessToken: 'token-1' },
       join: jest.fn(),
+      to: jest.fn(() => ({ emit: jest.fn() })),
       emit: (event: string, payload: unknown) => {
         emitted.push({ event, payload });
       },
@@ -159,7 +160,12 @@ describe('IntakeGateway — streamed preview vs delivered reply', () => {
   });
 
   it('does not open a stream for a turn refused before the model runs', async () => {
-    const intake = { sendMessage: jest.fn() };
+    // The refused exchange is recorded (so a reload still shows it), but the
+    // graph — and so the stream — never runs.
+    const intake = {
+      sendMessage: jest.fn(),
+      recordRefusedMessage: jest.fn().mockResolvedValue(undefined),
+    };
     const { client, emitted } = makeClient();
 
     await gatewayWith(intake, {
@@ -192,6 +198,7 @@ describe('IntakeGateway — delivery does not wait for the graph', () => {
       client: {
         data: { userId: 'user-1', accessToken: 'token-1' },
         join: jest.fn(),
+        to: jest.fn(() => ({ emit: jest.fn() })),
         emit: (event: string, payload: unknown) => {
           emitted.push({ event, payload });
         },

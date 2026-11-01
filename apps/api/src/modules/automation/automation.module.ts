@@ -6,6 +6,7 @@ import { SessionTokenService } from './session-token.service';
 import { EligibilityModule } from '../eligibility/eligibility.module';
 import { PortalFillModule } from '../portal-fill/portal-fill.module';
 import { ExecutionModule } from '../execution/execution.module';
+import { PreflightModule } from '../preflight/preflight.module';
 
 /**
  * Phase 3E: EligibilityModule imported so AutomationService can expose a
@@ -16,7 +17,13 @@ import { ExecutionModule } from '../execution/execution.module';
  * live lock revalidation, signed intents, orchestrated single-cursor write.
  */
 @Module({
-  imports: [EligibilityModule, PortalFillModule, ExecutionModule],
+  imports: [
+    EligibilityModule,
+    PortalFillModule,
+    ExecutionModule,
+    // PreflightMappingService: per-page coverage for the panel's auto-advance.
+    PreflightModule,
+  ],
   controllers: [AutomationController],
   providers: [AutomationService, AutomationGateway, SessionTokenService],
 })

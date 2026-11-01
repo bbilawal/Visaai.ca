@@ -1,5 +1,5 @@
 import type { SignedWriteIntent } from '@visaai/types';
-import { selectPageGroups } from './page-groups';
+import { pageMatches, selectPageGroups } from './page-groups';
 
 const intent = (selector: string, page?: string): SignedWriteIntent => ({
   executionId: 'e',
@@ -155,5 +155,114 @@ describe('selectPageGroups — by the open page (protocol 2)', () => {
       '/bio-data-travel-docs',
     );
     expect(r).toMatchObject({ ok: false, reason: 'none_present' });
+  });
+});
+
+/**
+ * A progressive page (IRCC eTA: one path, questions revealed as earlier ones
+ * are answered and as the applicant presses Next) cannot be all-or-nothing:
+ * most of its targets are not on the page yet. What is on the page now runs;
+ * the rest waits.
+ */
+describe('selectPageGroups — a progressive page', () => {
+  const ETA = '/eta/welcome';
+  const E = [
+    intent('#rep', ETA),
+    intent('#docType', ETA),
+    intent('#citizenship', ETA),
+  ];
+  const SEL = E.map((i) => i.selector);
+  const progressive = (p: string) => p === ETA;
+
+  it('runs the targets present now and lists the ones still waiting', () => {
+    const r = selectPageGroups(E, probe(['#rep'], SEL), ETA, progressive);
+    expect(r).toEqual({
+      ok: true,
+      intents: [E[0]],
+      pages: [ETA],
+      waiting: [E[1], E[2]],
+    });
+  });
+
+  it('with nothing present yet, fills nothing', () => {
+    const r = selectPageGroups(E, probe([], SEL), ETA, progressive);
+    expect(r).toMatchObject({ ok: false, reason: 'none_present' });
+  });
+
+  it('a multi-page portal keeps the all-or-nothing rule', () => {
+    const r = selectPageGroups(
+      BIO,
+      probe(['#lastName_input'], SELS),
+      '/bio-data',
+      progressive,
+    );
+    expect(r).toMatchObject({ ok: false, reason: 'partial_page' });
+  });
+});
+
+describe('selectPageGroups — a progressive screen whose list lacks the answer', () => {
+  const intent = (selector: string): SignedWriteIntent =>
+    ({
+      executionId: 'e',
+      fieldKey: selector,
+      page: '/eapp/eapp',
+      selector,
+      mappedValue: 'v',
+      expectedValueHash: 'h',
+      category: 'passport',
+      lockedDiffHash: 'l',
+      sig: 's',
+    }) as SignedWriteIntent;
+
+  it('refuses the whole screen up front (nothing on it is written)', () => {
+    const r = selectPageGroups(
+      [intent('a'), intent('b'), intent('c')],
+      [
+        { selector: 'a', found: true },
+        { selector: 'b', found: false, optionMissing: true },
+        { selector: 'c', found: false },
+      ],
+      '/eapp/eapp',
+      () => true,
+    );
+    expect(r).toEqual({ ok: false, reason: 'option_missing', missing: ['b'] });
+  });
+
+  it('without a missing option the present ones run as before', () => {
+    const r = selectPageGroups(
+      [intent('a'), intent('c')],
+      [
+        { selector: 'a', found: true },
+        { selector: 'c', found: false },
+      ],
+      '/eapp/eapp',
+      () => true,
+    );
+    expect(r.ok && r.intents.map((i) => i.selector)).toEqual(['a']);
+  });
+});
+
+describe('pageMatches', () => {
+  it('matches a page by its path suffix, segment-wise', () => {
+    expect(pageMatches('/en/x/nationality', '/nationality')).toBe(true);
+    expect(pageMatches('/en/x/nationality/', '/nationality')).toBe(true);
+    expect(pageMatches('/en/x/foo-nationality', '/nationality')).toBe(false);
+    expect(
+      pageMatches('/en/application/case/1/imm0008/page3', '/imm0008/page3'),
+    ).toBe(true);
+    expect(
+      pageMatches('/en/application/case/1/imm0008/page3', '/imm0008/page2'),
+    ).toBe(false);
+  });
+
+  // IRCC's Permanent Residence Portal puts the application id in the path.
+  it('a * segment stands for exactly one path segment', () => {
+    const page = '/application/profile/*';
+    expect(pageMatches('/en/application/profile/4989734', page)).toBe(true);
+    expect(pageMatches('/en/application/profile/4989734/', page)).toBe(true);
+    expect(pageMatches('/en/application/profile', page)).toBe(false);
+    expect(pageMatches('/en/application/profile/1/extra', page)).toBe(false);
+    expect(pageMatches('/en/application/case/4989734', page)).toBe(false);
+    expect(pageMatches('/fr/application/profile/7', page)).toBe(true);
   });
 });

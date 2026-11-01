@@ -31,6 +31,8 @@ export interface FieldEditResult {
   /** The current review after any check reset (null when none exists). */
   review: PreflightReview | null;
   formUpdated: boolean;
+  /** No saved form: the correction went to the interview profile. */
+  profileUpdated: boolean;
   provenanceUpdated: boolean;
 }
 
@@ -111,9 +113,12 @@ export class PreflightFieldEditService {
     if (unreadable) {
       const expected: Record<string, string> = {
         ircc_country: 'a country (e.g. PAK or Pakistan)',
-        strip_dashes: 'letters, numbers and spaces (dashes are removed)',
+        strip_dashes:
+          'letters, numbers and spaces (other characters are removed)',
         digits: 'a number',
         whole_number: 'an amount',
+        ircc_medical_number:
+          'an IME number (8 digits) or a UMI number (2 letters and 8 or 9 digits, or U and 9 digits)',
       };
       throw new BadRequestException(
         `${fieldKey} must be ${expected[unreadable.transform!] ?? 'a date as YYYY-MM-DD'}.`,
@@ -149,13 +154,37 @@ export class PreflightFieldEditService {
     if (!mapped && !formField && !current) {
       throw new NotFoundException(`unknown field: ${fieldKey}`);
     }
+    // No Forms page yet: the interview profile is what auto-fill reads
+    // (applyPrefillOverrides), so the correction goes there. Before, this was
+    // a 409 and the consultant could correct nothing until the applicant
+    // generated a form (live 2026-10-19, eTA app 691755df). A legal
+    // declaration stays the applicant's own answer, as on the form path.
+    let profileUpdated = false;
+    let profilePrevious: unknown = undefined;
     if (mapped && !form) {
-      throw new ConflictException(
-        'The applicant has no saved application form yet. Ask them to generate it on the Forms page first.',
+      if (mapped.declaration) {
+        throw new ConflictException(
+          'This is a declaration, so only the applicant can change it. Ask them to correct it in their interview.',
+        );
+      }
+      const { previous: was } = await this.forms.saveProfileValue(
+        applicationId,
+        fieldKey,
+        value,
       );
+      profilePrevious = was;
+      profileUpdated =
+        (typeof was === 'string' ? was.trim() : JSON.stringify(was)) !== value;
     }
 
-    const previous = formField?.value ?? current?.value_snapshot ?? null;
+    const previous =
+      formField?.value ??
+      current?.value_snapshot ??
+      (profilePrevious === undefined
+        ? null
+        : typeof profilePrevious === 'string'
+          ? profilePrevious
+          : JSON.stringify(profilePrevious));
 
     // 1. the saved form (the auto-fill source)
     let formUpdated = false;
@@ -200,14 +229,14 @@ export class PreflightFieldEditService {
     if (
       mapped &&
       review?.status === 'in_review' &&
-      (formUpdated || provenanceUpdated)
+      (formUpdated || provenanceUpdated || profileUpdated)
     ) {
       await this.preflight.resetChecks(review.id, [
         CATEGORY_CHECK[mapped.category],
       ]);
     }
 
-    if (formUpdated || provenanceUpdated) {
+    if (formUpdated || provenanceUpdated || profileUpdated) {
       await this.audit.append({
         applicationId,
         eventType: 'FIELD_EDITED',
@@ -220,6 +249,7 @@ export class PreflightFieldEditService {
           previous_value_hash:
             previous == null ? null : this.provenance.valueHash(previous),
           form_updated: formUpdated,
+          profile_updated: profileUpdated,
           provenance_updated: provenanceUpdated,
           portal_mapped: Boolean(mapped),
           preflight_id: review?.id ?? null,
@@ -231,6 +261,7 @@ export class PreflightFieldEditService {
       mappings: await this.mappings.forApplication(applicationId),
       review: await this.preflight.getActive(applicationId),
       formUpdated,
+      profileUpdated,
       provenanceUpdated,
     };
   }

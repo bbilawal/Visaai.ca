@@ -8,6 +8,7 @@ import {
   FIELD_EXECUTOR,
 } from './field-executor.port';
 import { SocketExtensionTransport } from './socket-extension.transport';
+import { PortalDocumentFiles } from './portal-document-files';
 import { PreflightModule } from '../preflight/preflight.module';
 import { ProvenanceModule } from '../provenance/provenance.module';
 
@@ -30,6 +31,7 @@ import { ProvenanceModule } from '../provenance/provenance.module';
     WritePlanBuilder,
     WriteIntentSigner,
     PortalFillOrchestrator,
+    PortalDocumentFiles,
     SocketExtensionTransport,
     { provide: FIELD_EXECUTOR, useClass: ExtensionBridgeExecutor },
     { provide: EXTENSION_TRANSPORT, useExisting: SocketExtensionTransport },

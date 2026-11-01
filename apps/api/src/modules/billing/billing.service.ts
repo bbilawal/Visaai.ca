@@ -10,6 +10,8 @@ import { ConfigService } from '@nestjs/config';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Env } from '../../config/configuration';
 import type { ConsultantServiceType, PlanTier } from '@visaai/types';
+import { prefillPriceCents } from '@visaai/types';
+import { embeddedVisaaiId } from '../../strategies';
 import { SupabaseService } from '../shared/supabase/supabase.service';
 import { PricingService } from '../pricing/pricing.service';
 import { CommissionService } from '../commission/commission.service';
@@ -30,8 +32,12 @@ import { makeServerEvent } from '../analytics/events/catalog';
 import { PLAN_PRICES } from './plan-prices';
 import { safeLog } from '../shared/log/redact';
 
+/**
+ * The one-time form fee. The amount is per visa type — `prefillPriceCents`
+ * in @visaai/types (the eTA is cheaper than the default) — and is resolved
+ * from the application's own visa type here, never from the client.
+ */
 export const PREFILL_PRICE = {
-  amount: 2900,
   label: 'AI Prefilled Application Form',
 };
 
@@ -238,7 +244,7 @@ export class BillingService {
 
     const { data: app } = await db
       .from('applications')
-      .select('id, user_id')
+      .select('id, user_id, visa_types(visaai_id)')
       .eq('id', params.applicationId)
       .eq('user_id', params.userId)
       .single();
@@ -249,7 +255,7 @@ export class BillingService {
       lineItems: [
         {
           name: `VisaAI ${PREFILL_PRICE.label}`,
-          amount: money(PREFILL_PRICE.amount, 'usd'),
+          amount: money(prefillPriceCents(embeddedVisaaiId(app)), 'usd'),
           quantity: 1,
         },
       ],
@@ -283,7 +289,7 @@ export class BillingService {
     const db = this.supabase.admin;
     const { data: app } = await db
       .from('applications')
-      .select('id, user_id')
+      .select('id, user_id, visa_types(visaai_id)')
       .eq('id', applicationId)
       .maybeSingle();
     if (!app) throw new NotFoundException('Application not found');
@@ -307,7 +313,7 @@ export class BillingService {
         status: 'complete',
         provider: 'waiver',
         amount_cents: 0,
-        discount_cents: PREFILL_PRICE.amount,
+        discount_cents: prefillPriceCents(embeddedVisaaiId(app)),
         currency: 'usd',
       })
       .select('id')

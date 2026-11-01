@@ -5,6 +5,7 @@ import type {
   DocumentRow,
   ExtractedFieldRow,
   GeneratedRow,
+  HolderConfirmationRow,
   IReviewItemsRepository,
   VerificationRow,
 } from './review-items.repository';
@@ -26,7 +27,7 @@ export class ReviewItemsRepository implements IReviewItemsRepository {
     const { data, error } = await this.db
       .from('documents')
       .select(
-        'id, application_id, document_type, file_name, storage_path, upload_status, ocr_status, created_at',
+        'id, application_id, document_type, file_name, storage_path, upload_status, ocr_status, created_at, checklist_item_id',
       )
       .eq('application_id', applicationId)
       .order('created_at', { ascending: false });
@@ -41,7 +42,7 @@ export class ReviewItemsRepository implements IReviewItemsRepository {
     const { data, error } = await this.db
       .from('documents')
       .select(
-        'id, application_id, document_type, file_name, storage_path, upload_status, ocr_status, created_at',
+        'id, application_id, document_type, file_name, storage_path, upload_status, ocr_status, created_at, checklist_item_id',
       )
       .eq('application_id', applicationId)
       .eq('id', documentId)
@@ -113,6 +114,28 @@ export class ReviewItemsRepository implements IReviewItemsRepository {
       .eq('application_id', applicationId)
       .order('created_at', { ascending: true });
     if (error) throw new Error(`listDecisions failed: ${error.message}`);
+    return data ?? [];
+  }
+
+  /**
+   * The applicant's own confirmations. A missing table (migration
+   * 20261030120000 not applied yet) reads as none — no confirmation can exist
+   * then. Any other error throws, like every read here.
+   */
+  async listHolderConfirmations(
+    applicationId: string,
+  ): Promise<HolderConfirmationRow[]> {
+    const { data, error } = await this.db
+      .from('document_holder_confirmations')
+      .select(
+        'application_id, document_id, confirmed_by, holder_name, stated_name, created_at',
+      )
+      .eq('application_id', applicationId)
+      .order('created_at', { ascending: true });
+    if (error) {
+      if (error.code === '42P01' || error.code === 'PGRST205') return [];
+      throw new Error(`listHolderConfirmations failed: ${error.message}`);
+    }
     return data ?? [];
   }
 

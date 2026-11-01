@@ -36,6 +36,11 @@ jobs:
           node ../../scripts/lint-ratchet.mjs < /tmp/lint.json
       - name: Jest (unit + integration + api + security + ai-agent)
         run: pnpm --filter api exec jest --ci
+      - name: Jest SQL (migrations on real Postgres via PGlite)
+        # Plpgsql functions, triggers and grants under Supabase-style default
+        # privileges (apps/api/test/sql). Own config: PGlite needs
+        # --experimental-vm-modules, which the main jest run does not set.
+        run: pnpm --filter api run test:sql --ci
       - name: Jest e2e (payment/subscription/payout money-path)
         # Self-contained e2e (in-memory Supabase) gate the money path on every
         # merge. The RLS / cross-tenant suites need a real Supabase and are

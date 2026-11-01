@@ -21,8 +21,6 @@
 export interface RefocusInput {
   /** The model is still replying; the box is disabled and must stay so. */
   isLoading: boolean
-  /** The interview is over; the box is permanently disabled. */
-  isComplete: boolean
   /** `document.activeElement` at the moment of the check. */
   active: Element | null
   /** `document.body` — where the browser parks focus after a disable. */
@@ -33,13 +31,14 @@ export interface RefocusInput {
 
 export function shouldReclaimFocus({
   isLoading,
-  isComplete,
   active,
   body,
   input,
 }: RefocusInput): boolean {
-  // Nothing to focus, or nothing focusable yet.
-  if (isLoading || isComplete || !input) return false
+  // Nothing to focus, or nothing focusable yet. A COMPLETE interview is not
+  // in this list: it still takes corrections (dry run 2026-10-15), so its box
+  // is as usable as any other turn's.
+  if (isLoading || !input) return false
   // Already there: refocusing would be a no-op that still resets the caret
   // position mid-word if the applicant started typing early.
   if (active === input) return false

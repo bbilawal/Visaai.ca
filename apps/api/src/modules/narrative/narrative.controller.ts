@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { parseBody } from '../../common/zod-body';
 
 const GenerateDto = z.object({
-  docType: z.enum(['loe', 'itinerary', 'cover_letter']),
+  docType: z.enum(['loe', 'itinerary', 'cover_letter', 'invitation_letter']),
 });
 const ApproveDto = z.object({
   editedContent: z.string().max(100_000).optional(),

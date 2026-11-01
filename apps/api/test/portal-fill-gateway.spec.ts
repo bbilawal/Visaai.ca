@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import type { ReadbackTokenPayload, WritePlan } from '@visaai/types';
 import { AutomationGateway } from '../src/modules/automation/automation.gateway';
 import { SocketExtensionTransport } from '../src/modules/portal-fill/socket-extension.transport';
@@ -66,7 +67,12 @@ function build(
 ) {
   const audit = { append: jest.fn().mockResolvedValue(undefined) };
   const automation = { updateStatus: jest.fn().mockResolvedValue(undefined) };
-  const readbackTokens = { verify: over.verify ?? (() => payload()) };
+  const readbackTokens = {
+    verify: over.verify ?? (() => payload()),
+    mint: jest.fn(
+      (p: Omit<ReadbackTokenPayload, 'issuedAt'>) => `renewed:${p.sessionId}`,
+    ),
+  };
   const writePlans = {
     build: over.buildPlan ?? (() => Promise.resolve(plan())),
   };
@@ -94,8 +100,11 @@ function build(
         : { results, page: over.page === undefined ? null : over.page };
     });
 
+  const tokens = {
+    mintResume: jest.fn(async () => 'resume-2'),
+  };
   const gateway = new AutomationGateway(
-    {} as never,
+    tokens as never,
     automation as never,
     audit as never,
     readbackTokens as never,
@@ -104,7 +113,15 @@ function build(
     orchestrator as never,
     transport,
   );
-  return { gateway, audit, automation, signer, orchestrator, transport };
+  return {
+    gateway,
+    audit,
+    automation,
+    signer,
+    orchestrator,
+    transport,
+    readbackTokens,
+  };
 }
 
 const stages = (c: ReturnType<typeof makeClient>) =>
@@ -240,7 +257,8 @@ describe('AutomationGateway — portal-fill:start', () => {
     });
 
     expect(orchestrator.run).toHaveBeenCalledTimes(1);
-    expect(automation.updateStatus).toHaveBeenCalledWith(SESSION, 'complete');
+    // The session continues to the next page (one launch, every page).
+    expect(automation.updateStatus).toHaveBeenCalledWith(SESSION, 'active');
     expect(stages(client)).toEqual([
       expect.objectContaining({ stage: 'started' }),
       expect.objectContaining({ stage: 'completed' }),
@@ -400,5 +418,162 @@ describe('AutomationGateway — portal-fill:start', () => {
       const started = stages(client)[0] as { executionId: string };
       expect(transport.isBound(started.executionId)).toBe(false);
     });
+  });
+});
+
+describe('AutomationGateway — one launch follows the portal (dry run 2026-10-16)', () => {
+  const renewed = (c: ReturnType<typeof makeClient>) =>
+    c.emitted.filter((e) => e.event === 'portal-fill:renewed');
+
+  it('renews the approval after a completed page, same scope, fresh window', async () => {
+    const { gateway, readbackTokens } = build();
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(renewed(client)).toHaveLength(1);
+    expect(renewed(client)[0].payload).toMatchObject({
+      readbackToken: `renewed:${SESSION}`,
+    });
+    const minted = readbackTokens.mint.mock.calls[0][0];
+    expect(minted).not.toHaveProperty('issuedAt');
+    expect(minted).toMatchObject({
+      applicationId: APP,
+      sessionId: SESSION,
+      userId: USER,
+      lockedDiffHash: LOCK,
+    });
+  });
+
+  it('renews on a page with nothing to fill, so the next page still fills', async () => {
+    const { gateway } = build({ probe: [] });
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(renewed(client)).toHaveLength(1);
+  });
+
+  it('a run that throws is reported as failed and still renews, so later pages fill', async () => {
+    const { gateway, transport } = build({
+      run: jest.fn().mockRejectedValue(new Error('audit insert failed')),
+    });
+    const unbind = jest.spyOn(transport, 'unbind');
+    const client = makeClient();
+    await expect(
+      gateway.handlePortalFillStart(client as never, { readbackToken: 't' }),
+    ).resolves.toBeUndefined();
+    expect(stages(client)).toContainEqual(
+      expect.objectContaining({ stage: 'failed', reason: 'transport_error' }),
+    );
+    expect(unbind).toHaveBeenCalled();
+    expect(renewed(client)).toHaveLength(1);
+  });
+
+  it('a run that throws is logged and audited as run_threw', async () => {
+    const log = jest
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    const { gateway, audit } = build({
+      run: jest.fn().mockRejectedValue(new Error('boom')),
+    });
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(log).toHaveBeenCalledWith(expect.stringMatching(/app-1.*boom/s));
+    expect(audit.append).toHaveBeenCalledWith(
+      expect.objectContaining({
+        applicationId: APP,
+        payload: expect.objectContaining({ reason: 'run_threw' }),
+      }),
+    );
+    log.mockRestore();
+  });
+
+  it('a failing audit of the thrown run does not stop the report or the renewal', async () => {
+    const log = jest
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    const { gateway, audit } = build({
+      run: jest.fn().mockRejectedValue(new Error('boom')),
+    });
+    audit.append.mockRejectedValue(new Error('audit down'));
+    const client = makeClient();
+    await expect(
+      gateway.handlePortalFillStart(client as never, { readbackToken: 't' }),
+    ).resolves.toBeUndefined();
+    expect(stages(client)).toContainEqual(
+      expect.objectContaining({ stage: 'failed' }),
+    );
+    expect(renewed(client)).toHaveLength(1);
+    log.mockRestore();
+  });
+
+  it('a status update that fails does not swallow the page report or the renewal', async () => {
+    const { gateway, automation } = build();
+    automation.updateStatus.mockRejectedValue(new Error('db down'));
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(stages(client)).toContainEqual(
+      expect.objectContaining({ stage: 'completed' }),
+    );
+    expect(renewed(client)).toHaveLength(1);
+  });
+
+  it('never renews an invalid token', async () => {
+    const { gateway } = build({ verify: () => null });
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 'x',
+    });
+    expect(renewed(client)).toHaveLength(0);
+  });
+
+  it('never renews when the lock changed since the token', async () => {
+    const { gateway } = build({
+      buildPlan: () => Promise.resolve(plan({ lockedDiffHash: 'other' })),
+    });
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(renewed(client)).toHaveLength(0);
+  });
+
+  it('never renews when the write plan is rejected', async () => {
+    const { gateway } = build({
+      buildPlan: () => Promise.reject(new Error('lock gone')),
+    });
+    const client = makeClient();
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(renewed(client)).toHaveLength(0);
+  });
+});
+
+describe('AutomationGateway — a multi-page session stays resumable (dry run 2026-10-16)', () => {
+  it('keeps the session active after a page, and rotates the resume token', async () => {
+    const { gateway, automation } = build();
+    const client = makeClient();
+    client.data = {
+      ...client.data,
+      resumableUntil: Date.now() + 60_000,
+    } as never;
+    await gateway.handlePortalFillStart(client as never, {
+      readbackToken: 't',
+    });
+    expect(automation.updateStatus).toHaveBeenCalledWith(SESSION, 'active');
+    expect(automation.updateStatus).not.toHaveBeenCalledWith(
+      SESSION,
+      'complete',
+    );
+    const renewed = client.emitted.find(
+      (e) => e.event === 'portal-fill:renewed',
+    );
+    expect(renewed?.payload).toMatchObject({ resumeToken: 'resume-2' });
   });
 });

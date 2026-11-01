@@ -10,5 +10,15 @@ export default async function PrefillPage({ params }: { params: Promise<{ applic
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect({ href: '/login', locale })
 
-  return <PrefillClient applicationId={applicationId} />
+  // The form fee depends on the visa type (the eTA is cheaper), so the page
+  // needs it to show the price the API will actually charge.
+  const { data: application } = await supabase
+    .from('applications')
+    .select('visa_types(visaai_id)')
+    .eq('id', applicationId)
+    .maybeSingle()
+  const vt = (application as { visa_types?: { visaai_id?: string | null } | { visaai_id?: string | null }[] | null } | null)?.visa_types
+  const visaaiId = (Array.isArray(vt) ? vt[0] : vt)?.visaai_id ?? null
+
+  return <PrefillClient applicationId={applicationId} visaaiId={visaaiId} />
 }

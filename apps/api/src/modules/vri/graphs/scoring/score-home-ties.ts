@@ -1,3 +1,4 @@
+import { isSuperVisaRoute } from '@visaai/types';
 import type { VriState } from '../vri.state';
 import {
   boolFact,
@@ -192,7 +193,13 @@ export async function scoreHomeTies(
     /immediate_family_in_destination/,
     /children_in_destination/,
   ]);
-  if (familyInDest === true) {
+  if (familyInDest === true && isSuperVisaRoute(state.data.visaaiId)) {
+    // The host child or grandchild in Canada is the super visa's eligibility
+    // basis, not a counter-pull: no penalty.
+    notes.push(
+      'Children live in Canada — the basis of the super visa, so not weighed against the home ties.',
+    );
+  } else if (familyInDest === true) {
     score -= 10;
     notes.push(
       'Immediate family lives in the destination — a counter-pull the officer will weigh against the home ties.',

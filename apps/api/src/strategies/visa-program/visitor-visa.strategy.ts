@@ -13,6 +13,13 @@ export interface VisitorVisaOpts {
   extraDocuments?: DocumentRequirement[];
   compliance?: ComplianceRequirement[];
   forms?: FormSpec[];
+  /**
+   * Registry routes (`visa_types.visaai_id`) this program IS. A claimed route
+   * is served this program's own official artifacts, not the union of every
+   * program in the country (a Canada visitor-visa route was handed the study
+   * and work permit checklists).
+   */
+  registryVisaaiIds?: readonly string[];
 }
 
 /**
@@ -28,6 +35,9 @@ export function visitorVisaProgram(
   return {
     id: 'visitor_visa',
     country,
+    ...(opts.registryVisaaiIds
+      ? { registryVisaaiIds: opts.registryVisaaiIds }
+      : {}),
     label: opts.label ?? 'Visitor Visa',
     requiredDocuments: () => [
       ...docs('passport', 'photo', 'proof_of_funds', 'travel_itinerary'),

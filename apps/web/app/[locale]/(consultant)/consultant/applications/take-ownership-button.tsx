@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { getSession } from '@/lib/supabase/client'
 import { useToast } from '@/components/providers/toast-provider'
 import { selfAssign } from '@/lib/api/assignment-client'
+import { InlineConfirm } from '@/components/ui/inline-confirm'
 
 /**
  * "Take Ownership" — claims an eligible unassigned application for the current
@@ -22,8 +23,7 @@ export function TakeOwnershipButton({ applicationId }: { applicationId: string }
 
   async function onClick() {
     if (busy || done) return
-    if (!window.confirm(t('confirmTake')))
-      return
+    // Confirmed in the page by InlineConfirm below, not window.confirm.
     setBusy(true)
     setDone(true) // optimistic
     try {
@@ -49,13 +49,16 @@ export function TakeOwnershipButton({ applicationId }: { applicationId: string }
   }
 
   return (
-    <button
-      className="btn btn-primary btn-sm"
-      onClick={() => void onClick()}
-      disabled={busy || done}
-      aria-busy={busy}
-    >
-      {busy ? t('claiming') : done ? t('claimed') : t('takeOwnership')}
-    </button>
+    <InlineConfirm
+      triggerClassName="btn btn-primary btn-sm"
+      cancelClassName="btn btn-ghost btn-sm"
+      label={busy ? t('claiming') : done ? t('claimed') : t('takeOwnership')}
+      question={t('confirmTake')}
+      confirmLabel={t('confirmTakeYes')}
+      cancelLabel={t('cancel')}
+      onConfirm={() => void onClick()}
+      disabled={done}
+      busy={busy}
+    />
   )
 }

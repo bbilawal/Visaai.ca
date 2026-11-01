@@ -4,6 +4,7 @@ import { safeLog } from '../../../shared/log/redact';
 import {
   resolveExpiryPolicy,
   evaluateExpiry,
+  expiryFromFields,
   extractTravelDate,
   parseDate,
 } from '../expiry-policy';
@@ -28,7 +29,9 @@ export function makeEvaluateExpiryNode(supabase: SupabaseClient) {
     if (state.error) return {};
 
     const policy = resolveExpiryPolicy(state.documentType);
-    const expiry = parseDate(state.extractedFields.expiry_date);
+    const expiry =
+      parseDate(state.extractedFields.expiry_date) ??
+      expiryFromFields(policy.id, state.extractedFields ?? {});
 
     // No expiry extracted.
     if (!expiry) {
@@ -74,6 +77,7 @@ export function makeEvaluateExpiryNode(supabase: SupabaseClient) {
       travelDate,
       now: new Date(),
       policy,
+      minValidityMonths: await slotValidityMonths(supabase, state.documentId),
     });
 
     await insertExpiryRow(supabase, state.documentId, verdict.status, {
@@ -96,6 +100,37 @@ export function makeEvaluateExpiryNode(supabase: SupabaseClient) {
       daysUntilExpiry: verdict.daysUntilExpiry,
     };
   };
+}
+
+/**
+ * The route's minimum validity for the slot this document fills, from the
+ * checklist item's meta (`min_validity_months`, set from the registry). Null
+ * when the document has no slot or the slot states none. Never throws.
+ */
+async function slotValidityMonths(
+  supabase: SupabaseClient,
+  documentId: string,
+): Promise<number | null> {
+  try {
+    const { data: doc } = await supabase
+      .from('documents')
+      .select('checklist_item_id')
+      .eq('id', documentId)
+      .maybeSingle();
+    const itemId = (doc as { checklist_item_id?: string | null } | null)
+      ?.checklist_item_id;
+    if (!itemId) return null;
+    const { data: item } = await supabase
+      .from('checklist_items')
+      .select('meta')
+      .eq('id', itemId)
+      .maybeSingle();
+    const v = (item as { meta?: { min_validity_months?: unknown } } | null)
+      ?.meta?.min_validity_months;
+    return typeof v === 'number' && v > 0 ? v : null;
+  } catch {
+    return null;
+  }
 }
 
 async function insertExpiryRow(

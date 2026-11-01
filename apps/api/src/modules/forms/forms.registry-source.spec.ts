@@ -17,6 +17,7 @@ function dbWith(opts: {
   visaTypeId: string | null;
   registryRows?: Array<Record<string, unknown>>;
   registryError?: { message: string };
+  profile?: Record<string, unknown>;
 }) {
   const app = {
     data: {
@@ -43,6 +44,10 @@ function dbWith(opts: {
               : { data: opts.registryRows ?? [], error: null },
           ),
       };
+      if (table === 'application_profiles') {
+        chain.maybeSingle = () =>
+          Promise.resolve({ data: opts.profile ? { profile_json: opts.profile } : null, error: null });
+      }
       if (table !== 'visa_requirements' && table !== 'applications') {
         chain.order = () => Promise.resolve({ data: [], error: null });
       }
@@ -182,5 +187,33 @@ describe('FormsService — official forms follow the selected visa type', () => 
     );
 
     expect(forms.map((f) => f.formCode)).toEqual(['IMM 1294']);
+  });
+});
+
+describe('FormsService — a form the applicant\'s answers rule out is not listed', () => {
+  const ROWS = [
+    { ...STUDY_PERMIT_ROWS[0], rule: null },
+    {
+      ...STUDY_PERMIT_ROWS[1],
+      rule: { fact: 'marital_status', op: 'in', value: ['common_law', 'de_facto', 'partnered'] },
+    },
+  ];
+  const codes = async (profile?: Record<string, unknown>) =>
+    (
+      await new FormsService(store()).listForApplication(
+        dbWith({ visaTypeId: 'visa-study', registryRows: ROWS, profile }),
+        'app-1',
+        'user-1',
+      )
+    ).map((f) => f.formCode);
+
+  it('drops the common-law declaration for a married applicant (live E2E 2026-10-20)', async () => {
+    expect(await codes({ marital_status: 'Married' })).toEqual(['IMM 1294']);
+  });
+
+  it('keeps it for a common-law applicant, and when the status is not answered yet', async () => {
+    expect(await codes({ marital_status: 'Common-law' })).toEqual(['IMM 1294', 'IMM 5409']);
+    expect(await codes({})).toEqual(['IMM 1294', 'IMM 5409']);
+    expect(await codes(undefined)).toEqual(['IMM 1294', 'IMM 5409']);
   });
 });

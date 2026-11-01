@@ -11,6 +11,16 @@ import {
   asUntrustedData,
   UNTRUSTED_DATA_DIRECTIVE,
 } from '../../../shared/ai/untrusted';
+import { isFamilyGapItem } from '../../../documents/family-gaps/family-gaps';
+import { strategyRegistry } from '../../../../strategies';
+import { routeVisaaiId } from './check-complete';
+import { syncFamilyGapsForApplication } from '../../../documents/family-gaps/family-gaps.sync';
+import { linkOrphanDocuments } from '../../../documents/slot-link';
+import { preparedFormNote } from '../../../../strategies/form-mapping/prepared-forms';
+import {
+  planRegistryReconcile,
+  sourcedDocumentMeta,
+} from './registry-reconcile';
 
 /**
  * The slice of AiCacheService this node needs.
@@ -190,6 +200,16 @@ export function completedItemsOnly(
 /** Called with each newly-completed batch of items while the model streams. */
 export type DiscoveryProgress = (items: PendingAdd[]) => void | Promise<void>;
 
+/** The form's guidance plus, for a form VisaAI prepares, where to get it. */
+function withPreparedNote(
+  formCode: string,
+  specs: Record<string, string> | undefined,
+): Record<string, string> | undefined {
+  const prepared = preparedFormNote(formCode);
+  if (!prepared) return specs;
+  return { ...(specs ?? {}), visaai: prepared };
+}
+
 export function makeUpdateChecklistNode(
   supabase: SupabaseClient,
   llm: ChatOpenAI,
@@ -209,6 +229,28 @@ export function makeUpdateChecklistNode(
   return async function updateChecklist(
     state: IntakeState,
   ): Promise<Partial<IntakeState>> {
+    const result = await buildChecklist(state);
+    // Family documents the profile still lacks (a child's birth certificate,
+    // the spouse's ID, the marriage certificate) are requested as missing
+    // items — for configured routes only, and closed again when the data
+    // arrives. Reads the stored profile: the document pipeline writes there,
+    // and the checkpoint's copy can be older. Never throws.
+    await syncFamilyGapsForApplication(
+      supabase,
+      state.applicationId,
+      undefined,
+      state.visaTypeId ?? undefined,
+    );
+    // A slot that appeared on this build may already have its file: one the
+    // applicant uploaded to "Additional document" when the slot did not exist
+    // (prod app 61f16bb5: passport and insurance policy). Never throws.
+    await linkOrphanDocuments(supabase, state.applicationId);
+    return result;
+  };
+
+  async function buildChecklist(
+    state: IntakeState,
+  ): Promise<Partial<IntakeState>> {
     // Which requirements do we HAVE — not which table they came from.
     //
     // This branched on `state.frameworkId`, and that is the wrong question.
@@ -226,6 +268,15 @@ export function makeUpdateChecklistNode(
     //
     // frameworkChecklist emits static labels from those requirements (no LLM),
     // so only the LLM-driven discovery path threads the language directive.
+    // A route whose official list is short BY DESIGN opts out of discovery
+    // entirely — supplement and fallback alike. Canada's eTA asks for a
+    // passport; discovery's "strengthening" evidence (invitation letters, a
+    // son's funds and accommodation) was visitor-visa advice the eTA never
+    // asks for (dry run 2026-10-16).
+    if (!routeAllowsDiscovery(state)) {
+      return frameworkChecklist(state, supabase);
+    }
+
     if (hasRequirements(state)) {
       const fromRequirements = await frameworkChecklist(state, supabase);
       const sourcedState: IntakeState = fromRequirements.checklistItems
@@ -287,7 +338,16 @@ export function makeUpdateChecklistNode(
       cache,
       onProgress,
     );
-  };
+  }
+}
+
+/** False when the route's program says its sourced list must stand alone. */
+function routeAllowsDiscovery(state: IntakeState): boolean {
+  const program = strategyRegistry.resolveRoute(
+    state.destinationCountry,
+    routeVisaaiId(state),
+  )?.program;
+  return program?.checklistSupplement !== false;
 }
 
 /** At or below this many sourced documents, discovery supplements the list. */
@@ -302,7 +362,10 @@ const THIN_SOURCED_DOCUMENTS = 3;
  * existing list, so without it every turn would ask again and every answer
  * would add a few more "new" items.
  */
-function needsSupplement(items: ChecklistItemSnapshot[]): boolean {
+function needsSupplement(all: ChecklistItemSnapshot[]): boolean {
+  // Family-gap requests describe the applicant's family, not the route: they
+  // neither fill a thin sourced list nor count as discovery having run.
+  const items = all.filter((i) => !isFamilyGapItem(i));
   const alreadyDiscovered = items.some((i) => {
     const reason = i.added_reason ?? '';
     const meta = (i.meta ?? {}) as { strength?: unknown };
@@ -345,6 +408,7 @@ async function frameworkChecklist(
     owner?: Owner;
     specs?: Record<string, string>;
     required?: boolean;
+    validity_months?: number;
   }> = Array.isArray(state.requirementsJson.base_documents)
     ? (state.requirementsJson.base_documents as Array<{
         type: string;
@@ -352,6 +416,7 @@ async function frameworkChecklist(
         owner?: Owner;
         specs?: Record<string, string>;
         required?: boolean;
+        validity_months?: number;
       }>)
     : [];
   // Optional framework field: official forms required by the visa category.
@@ -374,13 +439,68 @@ async function frameworkChecklist(
 
   const { data: currentItems } = await supabase
     .from('checklist_items')
-    .select('id, document_type, required, added_reason, meta')
+    .select('id, document_type, label, required, added_reason, meta')
     .eq('application_id', state.applicationId);
 
+  // Registry-sourced checklists are kept IN STEP with the registry, not only
+  // added to: a relabelled requirement, or one reclassified as a condition
+  // (super visa's "the invitation letter must state the family-size list"),
+  // must change the applicant's existing rows too. See registry-reconcile.ts.
+  const fromRegistry = state.requirementsJson.source === 'visa_registry';
+  let reconcileUpdates: Array<{ id: string; values: Record<string, unknown> }> =
+    [];
+  const removedIds = new Set<string>();
+  if (fromRegistry && currentItems && currentItems.length > 0) {
+    try {
+      const { data: linked } = await supabase
+        .from('documents')
+        .select('checklist_item_id')
+        .eq('application_id', state.applicationId);
+      const used = new Set(
+        ((linked ?? []) as Array<{ checklist_item_id?: string | null }>)
+          .map((d) => d.checklist_item_id)
+          .filter((id): id is string => Boolean(id)),
+      );
+      const plan = planRegistryReconcile(
+        currentItems,
+        baseDocuments,
+        undeterminedOf(state)
+          .filter((u) => u.kind !== 'form')
+          .map((u) => u.requirement_code),
+        used,
+      );
+      reconcileUpdates = plan.updates;
+      if (plan.deletes.length > 0) {
+        const { error } = await supabase
+          .from('checklist_items')
+          .delete()
+          .in('id', plan.deletes);
+        if (error) {
+          console.warn(
+            '[update-checklist] reconcile delete failed:',
+            error.message,
+          );
+        } else {
+          plan.deletes.forEach((id) => removedIds.add(id));
+        }
+      }
+    } catch (err) {
+      console.warn(
+        '[update-checklist] reconcile skipped:',
+        err instanceof Error ? err.message : err,
+      );
+    }
+  }
+
   const toAdd: PendingAdd[] = [];
+  // A family-gap row ("Birth certificate — <child>") is a request for one
+  // person's document; it must not stand in for the route's own requirement
+  // of the same type, which would vanish when the gap closes.
   const existingTypes = new Set(
-    currentItems?.map((i) => i.document_type) ??
-      state.checklistItems.map((i) => i.document_type),
+    (currentItems ?? state.checklistItems)
+      .filter((i) => !isFamilyGapItem(i))
+      .filter((i: { id?: string }) => !i.id || !removedIds.has(i.id))
+      .map((i) => i.document_type),
   );
 
   // Items added earlier as "may be required" whose rule has since resolved
@@ -396,7 +516,9 @@ async function frameworkChecklist(
       maybeRows.set(row.document_type, row.id);
     }
   }
-  const promotions: Array<{ id: string; values: Record<string, unknown> }> = [];
+  const promotions: Array<{ id: string; values: Record<string, unknown> }> = [
+    ...reconcileUpdates,
+  ];
   // Registry rows the source marks optional but that an earlier build inserted
   // as required (before `required: false` was carried). Only our own
   // `base_requirement` rows are touched — never discovery or applicant rows.
@@ -408,6 +530,7 @@ async function frameworkChecklist(
     added_reason?: string | null;
   }>) {
     if (
+      !fromRegistry && // registry rows are maintained by the reconcile above
       row.id &&
       row.required === true &&
       row.added_reason === 'base_requirement'
@@ -434,8 +557,10 @@ async function frameworkChecklist(
         form_code: form.form_code,
         form_name: form.form_name,
         source_url: form.source_url ?? null,
-        ...(compactSpecs(form.specs)
-          ? { specs: compactSpecs(form.specs) }
+        ...(compactSpecs(withPreparedNote(form.form_code, form.specs))
+          ? {
+              specs: compactSpecs(withPreparedNote(form.form_code, form.specs)),
+            }
           : {}),
       },
     };
@@ -462,11 +587,7 @@ async function frameworkChecklist(
       label: doc.label,
       ...(optional ? { required: false } : {}),
       added_reason: 'base_requirement',
-      meta: {
-        kind: 'document',
-        owner: doc.owner === 'sponsor' ? 'sponsor' : 'applicant',
-        ...(compactSpecs(doc.specs) ? { specs: compactSpecs(doc.specs) } : {}),
-      },
+      meta: sourcedDocumentMeta(doc),
     };
     if (maybeRows.has(doc.type)) {
       promotions.push({
@@ -567,7 +688,20 @@ async function frameworkChecklist(
     }
   }
 
-  if (promotedValues.size === 0) return persistAdds(state, supabase, toAdd);
+  if (removedIds.size > 0) {
+    state = {
+      ...state,
+      checklistItems: state.checklistItems.filter(
+        (i) => !i.id || !removedIds.has(i.id),
+      ),
+    };
+  }
+  if (promotedValues.size === 0) {
+    const added = await persistAdds(state, supabase, toAdd);
+    return added.checklistItems || removedIds.size === 0
+      ? added
+      : { checklistItems: state.checklistItems };
+  }
   // Keep the in-memory snapshot in step with the promoted rows.
   const promotedState: IntakeState = {
     ...state,
@@ -653,9 +787,9 @@ async function discoveryChecklist(
   //
   // It is wrong once the applicant has named their route, and that case is
   // common: 31 of the 177 visa types with requirements have NO document-kind
-  // rows at all (every Japanese status of residence, five French routes,
-  // Canada's Express Entry), so the registry yields nothing to upload and
-  // discovery is the only thing left. A brand-new application then showed an
+  // rows at all (every Japanese status of residence, five French routes, and
+  // Canada's Express Entry until 2026-10-19), so the registry yields nothing
+  // to upload and discovery is the only thing left. A brand-new application then showed an
   // empty vault with no explanation — observed 2026-09-04 on an Express Entry
   // application, where the rebuild returned `[]` in 18ms because this line was
   // reached before any model call.
@@ -837,7 +971,7 @@ async function discoveryChecklist(
      * Streamed so the applicant sees the list being written, not a spinner.
      *
      * This generation was measured at 9-21s, and for the 31 visa types whose
-     * registry carries no document-kind rows at all (Express Entry among them)
+     * registry carries no document-kind rows at all (Express Entry was one)
      * it is the ONLY thing that produces a checklist — so those applicants
      * watched an empty vault for the whole of it.
      *

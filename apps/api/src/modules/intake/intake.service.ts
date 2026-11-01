@@ -25,12 +25,17 @@ import {
 } from './graphs/nodes/update-checklist';
 import { makeLoadFrameworkNode } from './graphs/nodes/load-framework';
 import { checkComplete } from './graphs/nodes/check-complete';
+import { routeEligibility, rulesRouteOut } from './graphs/nodes/required-facts';
+import type { RouteEligibility } from '../../strategies/visa-program/base-visa-program.strategy';
 import { chatModelForTask } from '../shared/ai/model-factory';
 import type { AskQuestionHooks } from './graphs/nodes/ask-question';
 import { classifyIntakeMessage } from './scope-guard';
+import { SAFE_FALLBACK } from '../shared/guardrails/guardrails.service';
 import type { IntakeState } from './graphs/intake.state';
 import type { Env } from '../../config/configuration';
 import type { Database } from '@visaai/types';
+import { isIntakeAnswered } from '@visaai/types';
+import { linkOrphanDocuments } from '../documents/slot-link';
 
 /**
  * Columns selected from `visa_types`, pinned to the generated schema.
@@ -61,6 +66,81 @@ const START_LOCK_TTL_SECONDS = 180;
 const START_WAIT_MS = 90_000;
 const START_POLL_MS = 750;
 const MESSAGE_LOCK_TTL_SECONDS = 180;
+
+/** Thrown when the lock says an earlier turn on this application is still running. */
+export const MESSAGE_IN_PROGRESS =
+  'A previous intake message is still being processed; retry shortly';
+
+/**
+ * The applicant's message is already stored under this client id: a resend of
+ * a message whose receipt was lost. Nothing is written or generated a second
+ * time; the caller re-acknowledges it instead.
+ */
+export class DuplicateIntakeMessageError extends Error {
+  constructor(readonly clientMsgId: string) {
+    super('Intake message already received');
+    this.name = 'DuplicateIntakeMessageError';
+  }
+}
+
+/**
+ * The stored transcript minus guardrail-refused exchanges.
+ *
+ * A refused turn (legal advice, an approval prediction, help to
+ * misrepresent) is stored so the applicant still sees it, but it must never
+ * reach the model again: replaying "will I be approved?" and the refusal on
+ * every later turn invites the model to argue with its own guardrail. The
+ * refusal is the fixed SAFE_FALLBACK text — the only assistant row ever
+ * stored with exactly that content (a reply suppressed by the OUTPUT filter
+ * is stored as the model wrote it) — so it marks the pair without a schema
+ * change: drop it and the applicant message immediately before it.
+ */
+export function withoutRefusedTurns<
+  T extends { role: string; content: string },
+>(rows: T[]): T[] {
+  const out: T[] = [];
+  for (const row of rows) {
+    if (row.role === 'assistant' && row.content === SAFE_FALLBACK) {
+      if (out.at(-1)?.role === 'user') out.pop();
+      continue;
+    }
+    out.push(row);
+  }
+  return out;
+}
+
+export interface SendMessageOptions {
+  /**
+   * The browser's id for this message (a UUID). Stored as the row id, so the
+   * history hands it back and a resend can be recognised.
+   */
+  clientMsgId?: string;
+  /**
+   * Called once the applicant's message is STORED — never before. The gateway
+   * acknowledges the message here; acknowledging any earlier told the browser
+   * a message was safe when the turn could still fail before writing it (the
+   * message lock, the access check, the session open).
+   */
+  onAccepted?: () => void;
+}
+
+/**
+ * The profile a turn starts from: the row, with any fact only the checkpoint
+ * holds kept.
+ *
+ * The checkpoint is a snapshot from when the session opened. Documents
+ * processed since then write into the row — marriage_date from the nikah
+ * nama, children from birth certificates — and update_profile writes every
+ * answer there too, so the row is the newer of the two. Starting a turn from
+ * the checkpoint alone showed the extractor a profile without the
+ * document-filled fact the applicant was correcting (dry run 2026-10-15).
+ */
+export function withRowProfile(
+  checkpoint: Record<string, unknown>,
+  row: Record<string, unknown> | null,
+): Record<string, unknown> {
+  return { ...(checkpoint ?? {}), ...(row ?? {}) };
+}
 
 /** The checklist as `getChecklist` returns it. Derived from that method rather
  *  than restated, so the in-flight cache below can never drift from it. */
@@ -245,6 +325,12 @@ export class IntakeService {
       tally.set(id, (tally.get(id) ?? 0) + 1);
     }
 
+    // Whether THIS applicant may use each route, re-read on every call. The
+    // selector re-fetches after each interview answer, so a route the profile
+    // has since ruled out (a Pakistani passport on Canada's eTA) is flagged
+    // where it is changed — without deleting the applicant's choice.
+    const profile = await this.readProfileJson(db, applicationId);
+
     return data.map((t) => {
       // Cast through `unknown`: VISA_TYPE_COLUMNS is joined at runtime, and
       // supabase-js can only infer row shapes from a LITERAL select string, so
@@ -258,6 +344,11 @@ export class IntakeService {
         category: string | null;
         data_quality: string | null;
       };
+      const verdict = routeEligibility(
+        app.destination_country as string | null,
+        row.visaai_id,
+        profile,
+      );
       return {
         id: row.id,
         visaaiId: row.visaai_id,
@@ -267,6 +358,7 @@ export class IntakeService {
         dataQuality: row.data_quality,
         /** Sourced requirements behind this route. 0 means discovery mode. */
         requirementCount: tally.get(row.id) ?? 0,
+        ...(verdict ? { eligibility: publicVerdict(verdict) } : {}),
       };
     });
   }
@@ -294,16 +386,23 @@ export class IntakeService {
     const app = await this.getApplication(db, applicationId, userId);
     if (!app) throw new ForbiddenException('Access denied');
 
+    // Read once, used for the route's eligibility gate and for telling the
+    // page whether the interview still has questions for the new route.
+    const profile = await this.readProfileJson(db, applicationId);
+    let visaaiId: string | null = null;
+    let verdict: RouteEligibility | null = null;
+
     if (visaTypeId !== null) {
       const { data: visaType } = await db
         .from('visa_types')
-        .select('id, lifecycle_state, visa_countries!inner(code)')
+        .select('id, visaai_id, lifecycle_state, visa_countries!inner(code)')
         .eq('id', visaTypeId)
         .maybeSingle();
 
       if (!visaType) throw new BadRequestException('Unknown visa type');
 
       const row = visaType as unknown as {
+        visaai_id?: string | null;
         lifecycle_state: string;
         visa_countries: { code: string } | { code: string }[];
       };
@@ -318,10 +417,56 @@ export class IntakeService {
           'That visa type belongs to a different country than this application',
         );
       }
+
+      // THE ROUTE MUST FIT THE APPLICANT.
+      //
+      // Dry run 2026-10-16 (app a37a534b): the interview had told a Pakistani
+      // applicant they need a visitor visa, and this endpoint still accepted
+      // Canada's eTA — the checklist then "Verified" a Pakistani passport as a
+      // visa-exempt one. A program that knows who may use it (see
+      // VisaProgramStrategy.assessEligibility) is asked here. Only a definite
+      // answer refuses: 'unknown' is accepted, because nationality is often
+      // not known yet and the interview asks it.
+      visaaiId = row.visaai_id ?? null;
+      verdict = routeEligibility(
+        app.destination_country as string | null,
+        visaaiId,
+        profile,
+      );
+      if (rulesRouteOut(verdict)) {
+        throw new BadRequestException({
+          statusCode: 400,
+          error: 'Bad Request',
+          code: 'ROUTE_INELIGIBLE',
+          message: verdict.recommendedLabel
+            ? `${verdict.reason} Choose “${verdict.recommendedLabel}” instead.`
+            : verdict.reason,
+          eligibility: verdict.status,
+          ...(verdict.recommendedVisaaiId
+            ? { recommendedVisaaiId: verdict.recommendedVisaaiId }
+            : {}),
+        });
+      }
     }
 
+    // Whether the new route's required answers are all on the profile. The
+    // page uses it to stay in the interview instead of jumping to Documents
+    // while the route's own questions are still unasked (dry run 2026-10-16).
+    const intakeComplete = isIntakeAnswered(profile, {
+      country: (app.destination_country as string | null) ?? null,
+      visaaiId,
+    });
+
+    // An accepted route the program could not yet judge ('unknown' — e.g.
+    // the eTA before nationality is known) is accepted WITH its reason, so the
+    // page can say eligibility depends on the passport (prod 2026-10-16, app
+    // 5d3a17a4: accepted silently, ruled out only later). Absent for routes
+    // no program judges.
+    const eligibility = verdict ? { eligibility: publicVerdict(verdict) } : {};
+
     const previous = (app.visa_type_id as string | null) ?? null;
-    if (previous === visaTypeId) return { visaTypeId, changed: false };
+    if (previous === visaTypeId)
+      return { visaTypeId, changed: false, intakeComplete, ...eligibility };
 
     const { error } = await db
       .from('applications')
@@ -366,7 +511,27 @@ export class IntakeService {
       }),
     );
 
-    return { visaTypeId, changed: true };
+    return { visaTypeId, changed: true, intakeComplete, ...eligibility };
+  }
+
+  /** The stored intake profile, or {} — never throws (a missing row is normal). */
+  private async readProfileJson(
+    db: SupabaseClient,
+    applicationId: string,
+  ): Promise<Record<string, unknown>> {
+    try {
+      const { data } = await db
+        .from('application_profiles')
+        .select('profile_json')
+        .eq('application_id', applicationId)
+        .maybeSingle();
+      const pj = (data as { profile_json?: unknown } | null)?.profile_json;
+      return pj && typeof pj === 'object' && !Array.isArray(pj)
+        ? (pj as Record<string, unknown>)
+        : {};
+    } catch {
+      return {};
+    }
   }
 
   /**
@@ -472,6 +637,39 @@ export class IntakeService {
     }
   }
 
+  /**
+   * When the route's registry requirements last changed — any status, so a
+   * retirement counts too — or null when unknown (no route, or the read
+   * failed; then only the profile decides). The service client: the public
+   * read policy shows active rows only, which would hide a retirement.
+   */
+  private async registryChangedAt(
+    db: SupabaseClient,
+    visaTypeId: string | null,
+  ): Promise<string | null> {
+    if (!visaTypeId) return null;
+    try {
+      const client = this.supabase?.admin ?? db;
+      const { data, error } = await client
+        .from('visa_requirements')
+        .select('updated_at')
+        .eq('visa_type_id', visaTypeId)
+        .order('updated_at', { ascending: false })
+        .limit(1);
+      if (error) {
+        console.warn(
+          `[intake] registry freshness unreadable for ${visaTypeId}: ${error.message}`,
+        );
+        return null;
+      }
+      const at = (data as Array<{ updated_at?: string | null }> | null)?.[0]
+        ?.updated_at;
+      return at ?? null;
+    } catch {
+      return null;
+    }
+  }
+
   /** The actual rebuild. Callers go through `rebuildChecklist`, which
    *  authorizes them and coalesces concurrent builds onto one run. */
   private async buildChecklist(
@@ -528,13 +726,29 @@ export class IntakeService {
       .maybeSingle();
     const profileAt = profileRow?.last_updated_at;
     const builtAt = base.checklistBuiltAt ?? null;
+    // The registry can change the answer too: rows added for the route after
+    // the last build (prod 2026-10-20: spousal sponsorship's 15 new documents
+    // and forms never reached an application whose profile had not moved).
+    const registryAt = await this.registryChangedAt(
+      db,
+      (app.visa_type_id as string | null) ?? base.visaTypeId ?? null,
+    );
     const isFresh =
       existing.length > 0 &&
       builtAt !== null &&
-      (!profileAt || profileAt <= builtAt);
+      // As instants: PostgREST writes '+00:00' and microseconds, the
+      // checkpoint 'Z' and milliseconds, so the strings do not order.
+      (!profileAt || Date.parse(profileAt) <= Date.parse(builtAt)) &&
+      (!registryAt || Date.parse(registryAt) <= Date.parse(builtAt));
     if (isFresh) {
       console.log('[intake:timing] rebuild_checklist skipped (fresh)');
-      return existing;
+      // The list is current, but the files in it may not be settled: a valid
+      // file sitting unlinked beside a slot that holds only an expired one,
+      // or a slot 'verified' on an expired file (prod app 61f16bb5,
+      // 2026-10-16). Data-only — no model call — and never throws, so it runs
+      // on every visit to the documents page.
+      await linkOrphanDocuments(db, applicationId);
+      return this.getChecklist(db, applicationId, userId);
     }
 
     const language = await this.getUserLanguage(db, userId);
@@ -566,15 +780,18 @@ export class IntakeService {
     };
 
     // `updateChecklist` reads `requirementsJson` to decide between the sourced
-    // registry and discovery, and a rehydrated state has none — it lives only
-    // on the checkpoint. Load it the same way the graph's first node does, so
-    // both paths derive from the same requirements.
-    const state: IntakeState = saved
-      ? withRoute
-      : {
-          ...withRoute,
-          ...(await makeLoadFrameworkNode(db)(withRoute)),
-        };
+    // registry and discovery. Load it the same way the graph's first node does,
+    // on EVERY rebuild: a saved checkpoint carries the requirements that were
+    // current when the interview ran, so rebuilding from it re-derived the
+    // checklist from a registry that had since been corrected (prod 2026-10-16:
+    // super visa v2 added passport + insurance, app 61f16bb5 kept the v1 slots).
+    // Stamped before the registry is read: a change landing during the
+    // 9–21s generation is then newer than this build, not mistaken for it.
+    const buildStartedAt = new Date().toISOString();
+    const state: IntakeState = {
+      ...withRoute,
+      ...(await makeLoadFrameworkNode(db)(withRoute)),
+    };
 
     const startedAt = Date.now();
     try {
@@ -582,7 +799,7 @@ export class IntakeService {
       await this.checkpoint.save(applicationId, {
         ...state,
         ...result,
-        checklistBuiltAt: new Date().toISOString(),
+        checklistBuiltAt: buildStartedAt,
       });
     } catch (err) {
       // A failed rebuild must not deny the applicant the documents they already
@@ -732,6 +949,7 @@ export class IntakeService {
       isComplete: false,
       currentQuestion: null,
       checklistBuiltAt: null,
+      profileChanges: [],
     };
   }
 
@@ -805,6 +1023,12 @@ export class IntakeService {
     const saved = (await this.checkpoint.load(
       applicationId,
     )) as IntakeState | null;
+
+    // A FINISHED session is only finished while its answers still are — see
+    // reopenIfIncomplete. Prod 2026-10-29, app 945eb7f1.
+    if (saved?.currentQuestion && saved.isComplete) {
+      return this.reopenIfIncomplete(db, applicationId, userId, saved);
+    }
 
     // Resume: return cached state untouched. Re-invoking the graph on every
     // reload would append a fresh AIMessage (last message is AI → ask_question)
@@ -970,6 +1194,168 @@ export class IntakeService {
   }
 
   /**
+   * Resume a session whose checkpoint says "complete" — unless it no longer is.
+   *
+   * `isComplete` is cached when the interview ends. A required fact added
+   * since (spouse_name, PR #295) reopened the Intake stage in the nav while
+   * the page resumed this checkpoint as "Intake complete" and never asked.
+   * Prod 2026-10-29, app 945eb7f1.
+   *
+   * The decision is the nav's, input for input (progress.service intakeDone):
+   * the profile ROW and the application's destination + registry visa type —
+   * not the checkpoint's copy of either, so a checkpoint-only fact or a
+   * missing `visaai_id` cannot hide a missing answer. When it is incomplete,
+   * the graph asks the next missing question from the row's profile.
+   *
+   * It runs under the MESSAGE lock, re-reading the checkpoint once held: an
+   * applicant's turn and a reopen both write the checkpoint and the
+   * transcript, and must not interleave (two questions; the last save
+   * silently dropping the other's message). A caller that cannot take the
+   * lock — a second tab, or a turn already running — waits for that writer's
+   * checkpoint instead of returning the stale "complete" one.
+   */
+  private async reopenIfIncomplete(
+    db: SupabaseClient,
+    applicationId: string,
+    userId: string,
+    saved: IntakeState,
+  ): Promise<IntakeState> {
+    const nav = await this.navIntakeView(db, applicationId);
+    if (!nav || nav.answered) return saved;
+
+    const token = randomUUID();
+    if (
+      !(await this.checkpoint.acquireMessageLock(
+        applicationId,
+        token,
+        MESSAGE_LOCK_TTL_SECONDS,
+      ))
+    ) {
+      return (await this.awaitCheckpointChange(applicationId, saved)) ?? saved;
+    }
+    try {
+      const current =
+        ((await this.checkpoint.load(applicationId)) as IntakeState | null) ??
+        saved;
+      // Someone else's turn landed between our read and the lock: theirs
+      // already re-decided completeness.
+      if (
+        !current.isComplete ||
+        current.currentQuestion !== saved.currentQuestion
+      ) {
+        return current;
+      }
+      const language = await this.getUserLanguage(db, userId);
+      const graph = buildIntakeGraph(db, this.openaiKey, language, this.meter, {
+        applicationId,
+        userId,
+      });
+      // Last message is the closing AI line → load_framework → ask_question.
+      const result = await graph.invoke(
+        { ...current, profileJson: nav.profileJson, isComplete: false },
+        { configurable: { thread_id: applicationId } },
+      );
+      await this.checkpoint.save(applicationId, result);
+      if (
+        result.currentQuestion &&
+        result.currentQuestion !== current.currentQuestion
+      ) {
+        await this.persistMessage(
+          db,
+          applicationId,
+          'assistant',
+          result.currentQuestion,
+        );
+      }
+      return result;
+    } finally {
+      await this.checkpoint
+        .releaseMessageLock(applicationId, token)
+        .catch(() => {
+          // The TTL frees it.
+        });
+    }
+  }
+
+  /**
+   * Intake completeness exactly as the stage nav computes it, or null when it
+   * cannot be read (then nothing is reopened). No registry visa type means
+   * discovery mode, which is not reopened either.
+   */
+  private async navIntakeView(
+    db: SupabaseClient,
+    applicationId: string,
+  ): Promise<{
+    answered: boolean;
+    profileJson: Record<string, unknown>;
+  } | null> {
+    try {
+      const [app, profile] = await Promise.all([
+        db
+          .from('applications')
+          .select('visa_type_id, destination_country, visa_types(visaai_id)')
+          .eq('id', applicationId)
+          .maybeSingle(),
+        db
+          .from('application_profiles')
+          .select('profile_json')
+          .eq('application_id', applicationId)
+          .maybeSingle(),
+      ]);
+      if (app.error || profile.error || !app.data) return null;
+      const a = app.data as {
+        visa_type_id?: string | null;
+        destination_country?: string | null;
+        visa_types?:
+          | { visaai_id?: string | null }
+          | { visaai_id?: string | null }[]
+          | null;
+      };
+      if (!a.visa_type_id) return null;
+      const vt = Array.isArray(a.visa_types) ? a.visa_types[0] : a.visa_types;
+      const raw = (profile.data as { profile_json?: unknown } | null)
+        ?.profile_json;
+      const profileJson =
+        raw && typeof raw === 'object' && !Array.isArray(raw)
+          ? (raw as Record<string, unknown>)
+          : {};
+      return {
+        answered:
+          !!profile.data &&
+          isIntakeAnswered(profileJson, {
+            country: a.destination_country ?? null,
+            visaaiId: vt?.visaai_id ?? null,
+          }),
+        profileJson,
+      };
+    } catch (err) {
+      console.error('[intake] could not read intake completeness:', err);
+      return null;
+    }
+  }
+
+  /** Wait for whoever holds the message lock to write a different checkpoint. */
+  private async awaitCheckpointChange(
+    applicationId: string,
+    seen: IntakeState,
+  ): Promise<IntakeState | null> {
+    const deadline = Date.now() + START_WAIT_MS;
+    while (Date.now() < deadline) {
+      await new Promise((r) => setTimeout(r, START_POLL_MS));
+      const now = (await this.checkpoint.load(
+        applicationId,
+      )) as IntakeState | null;
+      if (
+        now?.currentQuestion &&
+        (!now.isComplete || now.currentQuestion !== seen.currentQuestion)
+      ) {
+        return now;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Wait for whoever holds the start lock to publish their checkpoint, so a
    * reconnecting client resumes their transcript instead of generating a rival
    * opening turn. Returns null if they do not finish in time.
@@ -1005,7 +1391,9 @@ export class IntakeService {
      * on the returned state's `currentQuestion`.
      */
     hooks?: AskQuestionHooks,
+    opts: SendMessageOptions = {},
   ): Promise<IntakeState> {
+    const { clientMsgId, onAccepted } = opts;
     // SEC-104: authorize BEFORE touching the checkpoint.
     //
     // The ownership check used to run second. IntakeGateway passes the
@@ -1024,6 +1412,22 @@ export class IntakeService {
     const app = await this.getApplication(db, applicationId, userId);
     if (!app) throw new ForbiddenException('Access denied');
 
+    // A resend of a message already stored. Two very different cases:
+    //  - it was ANSWERED (its receipt or reply was lost in a reconnect):
+    //    acknowledge and re-sync; running the turn again would answer twice.
+    //  - it was stored but its turn FAILED afterwards (model timeout, 429):
+    //    the applicant pressed Retry precisely to get it answered. Run the
+    //    turn — once, under the lock — without storing the message again.
+    //    Re-acknowledging it instead cleared their "failed" mark and never
+    //    ran the turn: a silently dropped correction.
+    // A turn still running for it holds the lock, and gets MESSAGE_IN_PROGRESS
+    // below rather than a re-ack.
+    const stored = await this.findStored(db, applicationId, clientMsgId);
+    if (stored?.answered) {
+      throw new DuplicateIntakeMessageError(stored.id);
+    }
+    if (stored) userText = stored.content;
+
     const messageLockToken = randomUUID();
     const gotMessageLock = await this.checkpoint.acquireMessageLock(
       applicationId,
@@ -1031,9 +1435,7 @@ export class IntakeService {
       MESSAGE_LOCK_TTL_SECONDS,
     );
     if (!gotMessageLock) {
-      throw new ConflictException(
-        'A previous intake message is still being processed; retry shortly',
-      );
+      throw new ConflictException(MESSAGE_IN_PROGRESS);
     }
 
     try {
@@ -1063,7 +1465,11 @@ export class IntakeService {
         });
       }
 
-      await this.persistMessage(db, applicationId, 'user', userText);
+      if (!stored) {
+        await this.persistUserMessage(db, applicationId, userText, clientMsgId);
+      }
+      // Stored: from here on the message survives anything that fails.
+      onAccepted?.();
 
       // Scope gate, BEFORE the graph. An off-topic turn ("write me a Python
       // script") is answered with a fixed redirect and never reaches the model:
@@ -1094,6 +1500,11 @@ export class IntakeService {
 
       const stateWithAnswer: IntakeState = {
         ...saved,
+        profileJson: await this.turnProfile(
+          db,
+          applicationId,
+          saved.profileJson ?? {},
+        ),
         messages: [...saved.messages, new HumanMessage(userText)],
       };
 
@@ -1114,6 +1525,10 @@ export class IntakeService {
         {
           onToken: hooks?.onToken,
           onReady: async (question, isComplete) => {
+            // A failed reply write is logged, not fatal: the applicant still
+            // sees the answer. Accepted trade-off: findStored then reads the
+            // message as unanswered, so a resend whose receipt was lost can
+            // run the turn a second time (rare: needs both failures).
             await this.persistMessage(db, applicationId, 'assistant', question);
             persisted = true;
             await hooks?.onReady?.(question, isComplete);
@@ -1125,8 +1540,8 @@ export class IntakeService {
       });
 
       await this.checkpoint.save(applicationId, result);
-      // Fallback for the turn that produced a question without going through the
-      // node's hook — a completed intake ends at check_complete, and any future
+      // Fallback for the turn that produced a reply without going through a
+      // node's hook (ask_question and confirm_update both use it) — any future
       // path that sets currentQuestion elsewhere must still be recorded.
       if (result.currentQuestion && !persisted) {
         await this.persistMessage(
@@ -1143,6 +1558,38 @@ export class IntakeService {
         .catch(() => {
           // The TTL protects the next request if Redis cleanup is unavailable.
         });
+    }
+  }
+
+  /**
+   * The profile this turn starts from (see `withRowProfile`). A failed read
+   * degrades to the checkpoint — the old behaviour — rather than failing the
+   * applicant's turn; update_profile re-reads the row before it writes.
+   */
+  private async turnProfile(
+    db: SupabaseClient,
+    applicationId: string,
+    checkpoint: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
+    try {
+      const { data, error } = await db
+        .from('application_profiles')
+        .select('profile_json')
+        .eq('application_id', applicationId)
+        .maybeSingle();
+      if (error) {
+        console.error('[intake] failed to read profile row:', error.message);
+        return checkpoint;
+      }
+      const raw = (data as { profile_json?: unknown } | null)?.profile_json;
+      const row =
+        raw && typeof raw === 'object' && !Array.isArray(raw)
+          ? (raw as Record<string, unknown>)
+          : null;
+      return withRowProfile(checkpoint, row);
+    } catch (err) {
+      console.error('[intake] failed to read profile row:', err);
+      return checkpoint;
     }
   }
 
@@ -1183,13 +1630,144 @@ export class IntakeService {
       return [];
     }
 
-    return (data ?? []).map((m) => {
-      const row = m;
-      return row.role === 'user'
+    return withoutRefusedTurns(data ?? []).map((row) =>
+      row.role === 'user'
         ? new HumanMessage(row.content)
-        : new AIMessage(row.content);
-    });
+        : new AIMessage(row.content),
+    );
   }
+
+  /**
+   * A message refused by the pre-LLM guardrail (legal advice, an approval
+   * prediction, help to misrepresent). The graph never runs, but the turn is
+   * still part of the conversation: the applicant's message and the refusal
+   * are both stored, so a reload or a reconnect shows what was said and the
+   * browser can confirm the message like any other. The pair is never fed
+   * back to the model (see `withoutRefusedTurns`).
+   */
+  async recordRefusedMessage(
+    db: SupabaseClient,
+    applicationId: string,
+    userId: string,
+    userText: string,
+    refusal: string,
+    opts: SendMessageOptions = {},
+  ): Promise<void> {
+    const app = await this.getApplication(db, applicationId, userId);
+    if (!app) throw new ForbiddenException('Access denied');
+    const stored = await this.findStored(db, applicationId, opts.clientMsgId);
+    if (stored?.answered) throw new DuplicateIntakeMessageError(stored.id);
+    if (!stored) {
+      await this.persistUserMessage(
+        db,
+        applicationId,
+        userText,
+        opts.clientMsgId,
+      );
+    }
+    opts.onAccepted?.();
+    await this.persistMessage(db, applicationId, 'assistant', refusal);
+  }
+
+  /**
+   * The applicant message already stored under this client id on this
+   * application, and whether anything has answered it since. Null when there
+   * is none — or when it cannot be read: a failed read is not proof of a
+   * duplicate, and the insert (the id is the primary key) is the backstop.
+   */
+  private async findStored(
+    db: SupabaseClient,
+    applicationId: string,
+    clientMsgId: string | undefined,
+  ): Promise<{ id: string; content: string; answered: boolean } | null> {
+    if (!clientMsgId) return null;
+    const { data, error } = await db
+      .from('intake_messages')
+      .select('id, content, created_at')
+      .eq('id', clientMsgId)
+      .eq('application_id', applicationId)
+      .eq('role', 'user')
+      .maybeSingle();
+    if (error || !data) return null;
+    const row = data as { id: string; content: string; created_at: string };
+    // Answered means a reply between THIS message and the applicant's next
+    // one. A later message's reply is not this one's: "A failed, B typed and
+    // answered, Retry A" must run A's turn, not re-sync it into silence.
+    const { data: next } = await db
+      .from('intake_messages')
+      .select('created_at')
+      .eq('application_id', applicationId)
+      .eq('role', 'user')
+      .gt('created_at', row.created_at)
+      .order('created_at', { ascending: true })
+      .limit(1);
+    const nextAt = Array.isArray(next) && next.length
+      ? (next[0] as { created_at: string }).created_at
+      : undefined;
+    let replyQuery = db
+      .from('intake_messages')
+      .select('id')
+      .eq('application_id', applicationId)
+      .eq('role', 'assistant')
+      .gt('created_at', row.created_at);
+    if (nextAt) replyQuery = replyQuery.lt('created_at', nextAt);
+    const { data: replies } = await replyQuery.limit(1);
+    return {
+      id: row.id,
+      content: row.content,
+      answered: Array.isArray(replies) && replies.length > 0,
+    };
+  }
+
+  /**
+   * Store the applicant's message, under the client's id when there is one.
+   *
+   * With an id the write must succeed: the browser is told the message is
+   * safe only after this, so a failed write fails the turn (and the message
+   * stays on the applicant's screen to retry) instead of being logged and
+   * forgotten. Without one — an older client — the old best-effort write.
+   */
+  private async persistUserMessage(
+    db: SupabaseClient,
+    applicationId: string,
+    content: string,
+    clientMsgId: string | undefined,
+  ): Promise<void> {
+    if (!clientMsgId) {
+      await this.persistMessage(db, applicationId, 'user', content);
+      return;
+    }
+    const { error } = await db.from('intake_messages').insert({
+      id: clientMsgId,
+      application_id: applicationId,
+      role: 'user',
+      content,
+    });
+    if (!error) return;
+    if (error.code === '23505') {
+      // The same id raced in: ours if it is on this application.
+      const raced = await this.findStored(db, applicationId, clientMsgId);
+      if (raced) throw new DuplicateIntakeMessageError(raced.id);
+    }
+    throw new Error(`Could not save the message: ${error.message}`);
+  }
+
+  /**
+   * The transcript as the browser sees it, plus the interview state it is
+   * shown with — no graph run. Used to re-sync a socket outside intake:start.
+   */
+  async snapshot(db: SupabaseClient, applicationId: string, userId: string) {
+    const messages = await this.getMessages(db, applicationId, userId);
+    const saved = (await this.checkpoint
+      .load(applicationId)
+      .catch(() => null)) as IntakeState | null;
+    return {
+      messages,
+      checklistItems: saved?.checklistItems,
+      isComplete: saved?.isComplete,
+    };
+  }
+
 
   private async persistMessage(
     db: SupabaseClient,
@@ -1203,4 +1781,16 @@ export class IntakeService {
     if (error)
       console.error('[intake] failed to persist message:', error.message);
   }
+}
+
+/** A route verdict as the page receives it — the applicant-safe fields only. */
+function publicVerdict(v: RouteEligibility): RouteEligibility {
+  return {
+    status: v.status,
+    reason: v.reason,
+    ...(v.recommendedVisaaiId
+      ? { recommendedVisaaiId: v.recommendedVisaaiId }
+      : {}),
+    ...(v.recommendedLabel ? { recommendedLabel: v.recommendedLabel } : {}),
+  };
 }

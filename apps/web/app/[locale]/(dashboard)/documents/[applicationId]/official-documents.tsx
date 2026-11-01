@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getSession } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
 import { ExternalLinkIcon } from '@/components/ui/icons'
@@ -65,6 +65,12 @@ interface OfficialDocumentsProps {
    * so any other caller behaves exactly as before.
    */
   enabled?: boolean
+  /**
+   * Reports the form codes this section lists, once loaded, so the page can
+   * drop the matching "Required Forms" upload slots instead of listing a form
+   * twice. Never called on error — a failed load hides nothing.
+   */
+  onCodes?: (codes: string[]) => void
 }
 
 /**
@@ -78,9 +84,11 @@ interface OfficialDocumentsProps {
  * — rendering null on error is the pattern that once hid a production billing
  * outage — and only "nothing to show" or "still loading" render nothing.
  */
-export function OfficialDocuments({ applicationId, country, enabled = true }: OfficialDocumentsProps) {
+export function OfficialDocuments({ applicationId, country, enabled = true, onCodes }: OfficialDocumentsProps) {
   const [templates, setTemplates] = useState<DeliveredDocumentTemplate[] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const onCodesRef = useRef(onCodes)
+  useEffect(() => { onCodesRef.current = onCodes }, [onCodes])
 
   useEffect(() => {
     let cancelled = false
@@ -112,7 +120,11 @@ export function OfficialDocuments({ applicationId, country, enabled = true }: Of
           setError(`${res.status} · unexpected response${requestId ? ` · ${requestId}` : ''}`)
           return
         }
-        if (!cancelled) setTemplates(body as DeliveredDocumentTemplate[])
+        if (!cancelled) {
+          const list = body as DeliveredDocumentTemplate[]
+          setTemplates(list)
+          onCodesRef.current?.(list.map(t => t.templateCode))
+        }
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'network error')
       }

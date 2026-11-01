@@ -27,6 +27,8 @@ export interface PrefillContext {
   otherPartyDocuments: OtherPartyDocument[];
   /** Applicant's name as on the passport (fallback: intake profile). */
   applicantName: string | null;
+  /** Each uploaded insurance policy's extracted fields, one per document. */
+  insurancePolicies?: Array<Record<string, unknown>>;
   /**
    * Identity and contact details the applicant already gave us on their ACCOUNT
    * — onboarding (`users.full_name`, `users.nationality`) and Settings
@@ -41,6 +43,12 @@ export interface PrefillContext {
    * has not filled those screens in.
    */
   accountProfile: Record<string, unknown>;
+  /**
+   * Answers people entered on the stored Forms page (applicant typed,
+   * consultant corrected). A regeneration starts from them, so the questions
+   * it adds see what the applicant already typed (dry run 2026-10-18).
+   */
+  personFields?: PrefilledFormField[];
 }
 
 export const PrefillAnnotation = Annotation.Root({

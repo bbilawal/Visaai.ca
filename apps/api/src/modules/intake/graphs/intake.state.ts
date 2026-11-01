@@ -27,6 +27,13 @@ export interface SuggestedVisaType {
   reason: string;
 }
 
+/** One fact an answer changed: what it said before, and what it says now. */
+export interface ProfileChange {
+  key: string;
+  from: unknown;
+  to: unknown;
+}
+
 export interface IntakeStateFields {
   applicationId: string;
   frameworkId: string | null;
@@ -53,6 +60,12 @@ export interface IntakeStateFields {
    * checkpoint, which is exactly when a rebuild is mandatory.
    */
   checklistBuiltAt: string | null;
+  /**
+   * The facts the latest answer changed. Read by `confirm_update`, which
+   * replies to a message sent after the interview is complete by saying what
+   * was corrected — rather than by re-asking a question.
+   */
+  profileChanges: ProfileChange[];
 }
 
 export const IntakeAnnotation = Annotation.Root({
@@ -108,6 +121,10 @@ export const IntakeAnnotation = Annotation.Root({
   checklistBuiltAt: Annotation<string | null>({
     reducer: (existing, update) => update ?? existing,
     default: () => null,
+  }),
+  profileChanges: Annotation<ProfileChange[]>({
+    reducer: (_existing, update) => update ?? [],
+    default: () => [],
   }),
 });
 
